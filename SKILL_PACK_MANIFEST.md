@@ -3,6 +3,7 @@
 ## 路由入口
 
 - `industry-research-router`：产业链、公司研究、股票弹性问题的入口路由技能。
+- `ai-chain-research-orchestrator`: strongest available Grok/Gemini modes when used, Grok/X discovery, Codex web checks, local market data, ranked AI supply-chain stock mapping, and optional Gemini counter-checks.
 
 ## 行业与竞争格局
 
@@ -53,4 +54,3 @@
 - `cto-advisor`
 - `senior-architect`
 - `arm-cortex-expert`
-

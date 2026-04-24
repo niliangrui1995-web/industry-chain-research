@@ -27,6 +27,7 @@
 | A股/港股/美股实时行情、K线、盘口 | `allstock-data` for CN/HK/US quick checks; `yfinance` / `stocks` for global; `alpha-vantage` for indicators | Tencent API returns GBK text and may delay up to 15 minutes. Always normalize exchange/ticker suffix. |
 | 海外公司、ETF、期权、股息、财报历史 | `yfinance` + `stocks` + `alpha-vantage` | Use official filings and reputable data sources for financial claims. |
 | 新闻、公告、年报、官网、PDF抓取 | `web-scraper` + `firecrawl-scraper` + `tavily` + `finance-news` | Try lightweight extraction first, escalate to browser/crawler only when needed, cite sources. |
+| AI产业链最新消息、Grok/X爆料、A股映射、必要时Gemini反证 | `industry-research-router` + `ai-chain-research-orchestrator` + `finance-news` + `allstock-data` + `advanced-evaluation` | Default to Grok/X discovery, Codex web verification, and local market data; use Gemini only for major unresolved or conflicting lines. |
 | 表格、评分卡、watchlist、Excel模型 | `Spreadsheet` + `xlsx-official` + `advanced-evaluation` | Preserve existing formatting; formulas must recalc without errors. |
 | 多因子选股、量化规则、策略配置 | `multi-factor-strategy` + `data-scientist` + `senior-data-scientist` | Define factor universe, rebalance rules, risk controls, and validation method. |
 | AI、软件、芯片、技术栈壁垒 | `ai-engineer` / `ai-ml` + `tech-stack-evaluator` + `cto-advisor` / `senior-architect` | Judge whether moat comes from architecture, ecosystem, data, deployment, or switching cost. |
@@ -83,6 +84,7 @@
 | `tavily` | Web/news/finance search and extraction with filters and citations. |
 | `apify-market-research` | Broader market condition and geographic opportunity research. |
 | `apify-competitor-intelligence` | Competitor strategy, pricing, ads, positioning, social signals. |
+| `ai-chain-research-orchestrator` | AI supply-chain latest-news workflow that coordinates Grok/X discovery, Codex web checks, local market data, ranked stock mapping, and optional Gemini counter-checks. |
 
 ## Technical Moat Specialists
 
@@ -106,4 +108,5 @@
 | “国产替代谁最有机会？” | `industry-research-router` + `20-andruia-niche-intelligence` + `competitive-landscape` |
 | “帮我做公司对比表/打分表” | `industry-research-router` + `Spreadsheet` + `xlsx-official` |
 | “帮我抓公告/年报/官网资料” | `industry-research-router` + `web-scraper` + `firecrawl-scraper` |
+| “用Grok/X帮我抓AI产业链最近48小时消息并映射股票，必要时再用Gemini反证” | `industry-research-router` + `ai-chain-research-orchestrator` + `finance-news` + `allstock-data` |
 | “研究 AI/芯片/软件技术壁垒” | `industry-research-router` + `ai-engineer` or `tech-stack-evaluator` + `cto-advisor` |

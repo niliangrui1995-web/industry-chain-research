@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Chain Research Orchestrator"
+  short_description: "Coordinate AI chain research sources."
+  default_prompt: "Use $ai-chain-research-orchestrator to research the latest AI supply-chain signals with the strongest available Grok/Gemini modes when used, multilingual Grok/X discovery, Codex web checks, market data, and ranked stock mapping."
