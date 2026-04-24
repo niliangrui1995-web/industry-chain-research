@@ -20,7 +20,7 @@ Choose the smallest useful combination:
 - Overseas oligarch data: `yfinance`, `stocks`, `alpha-vantage`.
 - Structured comparison, scoring, or watchlist tables: `Spreadsheet`, `xlsx-official`, `advanced-evaluation`.
 - Web/news/filings collection: `web-scraper`, `firecrawl-scraper`, `tavily`, `finance-news`.
-- AI supply-chain latest-news and rumor verification: `ai-chain-research-orchestrator`, plus `finance-news`, `web-scraper`, `allstock-data`, and `advanced-evaluation` as needed.
+- AI supply-chain latest-news and rumor verification: `ai-chain-research-orchestrator` with mandatory Grok/X first-pass discovery, plus `finance-news`, `web-scraper`, `allstock-data`, and `advanced-evaluation` as needed.
 - AI/software/chip technical moat: `ai-engineer`, `ai-ml`, `tech-stack-evaluator`, `cto-advisor`, `senior-architect`.
 
 If a named companion skill is unavailable in the current session, continue with the same analytical framework and say briefly which companion skill was unavailable only if it materially affects the answer.

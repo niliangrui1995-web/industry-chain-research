@@ -5,6 +5,8 @@ Use these prompts as starting points. Replace bracketed fields before sending.
 ## Grok/X Discovery
 
 ```text
+这是实时新闻/爆料任务，必须优先使用 Grok 的 X 原生搜索能力；不要只用普通网页搜索替代。
+
 请优先使用当前网页中可用的最强 Grok 模型和最强搜索/研究/专家模式；如果模型名或模式名不确定，请选择看起来能力最高、最适合深度搜索的会员可用选项。
 
 请用你的实时搜索能力和 X/网页公开信息，收集最近 [24/48/72] 小时 [AI产业链/具体赛道] 的新增消息、爆料和可交易线索。
@@ -35,6 +37,8 @@ Use these prompts as starting points. Replace bracketed fields before sending.
 ## Grok/X Rumor-Only Pass
 
 ```text
+这是爆料/传闻任务，必须优先使用 Grok 的 X 原生搜索能力；没有 X 链接或账号的传闻不要列为有效线索。
+
 请优先使用当前网页中可用的最强 Grok 模型和最强搜索/研究/专家模式；重点利用 X 原生搜索能力。
 
 继续补充一轮：只查最近 [24/48/72] 小时内 X 平台、供应链论坛、券商路演纪要中关于 [赛道] 的爆料/传闻/未完全证实信息。不要重复硬新闻。
