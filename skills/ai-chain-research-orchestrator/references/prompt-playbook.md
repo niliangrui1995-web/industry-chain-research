@@ -2,6 +2,33 @@
 
 Use these prompts as starting points. Replace bracketed fields before sending.
 
+## Generic Evidence Collection
+
+Use this for Grok, Gemini, Perplexity, or similar assistant/search products when the task is evidence collection. Do not ask these tools to rank stocks, make investment calls, or explain what the event means.
+
+```text
+You are an evidence collection tool, not an analyst.
+
+Topic: [topic]
+Time range: [time range]
+Market/industry scope: [scope]
+
+Collect objective, source-backed information only.
+
+Rules:
+- Do not provide investment advice, rankings, forecasts, target prices, conclusions, causal explanations, or "what it means" analysis.
+- Do not infer beyond the source text.
+- Prefer primary sources: company releases, exchange filings, regulator notices, official datasets, conference transcripts, direct posts, and original media reports.
+- For social posts or rumors, mark them as unverified unless backed by a primary source or multiple independent sources.
+- If you mention a claim, include the source link. If no source link is available, say "no source link".
+- Keep model-generated summaries separate from source facts.
+
+Return only this table:
+| source_type | date_time | entity/company | original_source_or_author | factual_item | numbers_or_terms | source_url | verification_status |
+
+After the table, add a short "source gaps" list only if important evidence is missing.
+```
+
 ## Grok/X Discovery
 
 ```text
@@ -54,6 +81,38 @@ Use these prompts as starting points. Replace bracketed fields before sending.
 爆料内容 | 发布时间 | 来源链接/账号 | 来源语言 | 可信度C1-C3 | 涉及环节 | 可能映射标的 | 为什么值得跟踪 | 如何验证 | 如何证伪
 
 严格要求：没有链接或账号的不列；明显旧闻不列；无法确认必须写“待核实”。
+```
+
+## Perplexity Source Search
+
+Use this after Grok/X discovery and before Codex final verification. Perplexity is a source finder, not the final analyst.
+
+```text
+You are a source-discovery tool, not an investment analyst.
+
+Topic: [topic]
+Time range: [YYYY-MM-DD HH:mm to YYYY-MM-DD HH:mm, timezone]
+Scope: [industry segment / market / companies]
+
+Task:
+Collect web-source-backed information that can verify, refute, or add context to the Grok/X leads below.
+
+Rules:
+- Do not provide investment advice, rankings, target prices, trading conclusions, or causal interpretation.
+- Do not infer beyond the source text.
+- Prefer primary sources: company releases, IR pages, exchange filings, regulator notices, earnings call transcripts, official datasets, and direct media reports.
+- Include source URLs for every factual item. If no source URL is available, write "no source link".
+- Mark X posts, forum posts, screenshots, and unsourced market chatter as unverified unless backed by primary sources or multiple independent reputable sources.
+- Separate model-generated summaries from source facts.
+- Use English or original market language for global AI, semiconductor, datacenter, and supply-chain topics unless the task is China-local.
+
+Grok/X leads to check:
+[paste lead table]
+
+Return only this table:
+| source_type | date_time | entity/company | original_source_or_author | factual_item | numbers_or_terms | source_url | verification_status |
+
+After the table, add a short "source gaps" list only if important evidence is missing.
 ```
 
 ## Optional Gemini Verification And Counter-Evidence
