@@ -1,4 +1,4 @@
 interface:
   display_name: "AI Chain Research Orchestrator"
   short_description: "Coordinate AI chain research sources."
-  default_prompt: "Use $ai-chain-research-orchestrator to research AI supply-chain live news and rumors with mandatory multilingual Grok/X discovery first, Perplexity source search next, Codex web verification, market data, optional Gemini counter-checks, and ranked stock mapping."
+  default_prompt: "Use $ai-chain-research-orchestrator to research AI supply-chain live news and rumors with parallel mandatory multilingual Grok/X native X-only collection plus Perplexity core open-web news/source collection, followed by Codex supplemental web verification, market data, optional Gemini counter-checks, and ranked stock mapping."

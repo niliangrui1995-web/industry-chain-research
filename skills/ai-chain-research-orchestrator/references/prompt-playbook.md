@@ -4,7 +4,7 @@ Use these prompts as starting points. Replace bracketed fields before sending.
 
 ## Generic Evidence Collection
 
-Use this for Grok, Gemini, Perplexity, or similar assistant/search products when the task is evidence collection. Do not ask these tools to rank stocks, make investment calls, or explain what the event means.
+Use this for Perplexity, Gemini, or similar assistant/search products when the task is evidence collection. For Grok, use the X-only prompt below. Do not ask these tools to rank stocks, make investment calls, or explain what the event means.
 
 ```text
 You are an evidence collection tool, not an analyst.
@@ -31,12 +31,16 @@ After the table, add a short "source gaps" list only if important evidence is mi
 
 ## Grok/X Discovery
 
+Grok is only for X/Twitter-native collection. Do not ask Grok to use public web search, web-grounded research, or non-X source discovery. Use Perplexity and Codex for open-web search.
+
 ```text
-这是实时新闻/爆料任务，必须优先使用 Grok 的 X 原生搜索能力；不要只用普通网页搜索替代。
+这是实时新闻/爆料任务，必须优先使用 Grok 的 X 原生搜索能力；只收集 X/Twitter 上的帖子、账号、转发链、引用链、互动热度和情绪。
 
-请优先使用当前网页中可用的最强 Grok 模型和最强搜索/研究/专家模式；如果模型名或模式名不确定，请选择看起来能力最高、最适合深度搜索的会员可用选项。
+不要使用 Grok 的普通网页搜索、联网搜索、web-grounded research 或非 X 来源发现能力；开放网页搜索交给 Perplexity 和 Codex。
 
-请用你的实时搜索能力和 X/网页公开信息，收集最近 [24/48/72] 小时 [AI产业链/具体赛道] 的新增消息、爆料和可交易线索。
+请优先使用当前网页中可用的最强 Grok 模型和最适合 X 原生搜索/社交情绪收集的会员可用选项；如果模型名或模式名不确定，请选择看起来最适合 X 搜索的选项。
+
+请用你的 X/Twitter 原生搜索能力，收集最近 [24/48/72] 小时 [AI产业链/具体赛道] 在 X 上的新增消息、爆料、热度、情绪和可交易线索。
 
 时间范围：[YYYY-MM-DD HH:mm] 至 [YYYY-MM-DD HH:mm]，时区：[北京时间/美东/当地时区]。
 
@@ -63,10 +67,12 @@ After the table, add a short "source gaps" list only if important evidence is mi
 
 ## Grok/X Rumor-Only Pass
 
+Grok rumor passes are also X-only. No public web search through Grok.
+
 ```text
 这是爆料/传闻任务，必须优先使用 Grok 的 X 原生搜索能力；没有 X 链接或账号的传闻不要列为有效线索。
 
-请优先使用当前网页中可用的最强 Grok 模型和最强搜索/研究/专家模式；重点利用 X 原生搜索能力。
+请优先使用当前网页中可用的最强 Grok 模型和最适合 X 原生搜索/社交情绪收集的会员可用选项；重点利用 X 原生搜索能力，不要使用 Grok 的普通网页搜索。
 
 继续补充一轮：只查最近 [24/48/72] 小时内 X 平台、供应链论坛、券商路演纪要中关于 [赛道] 的爆料/传闻/未完全证实信息。不要重复硬新闻。
 
@@ -85,7 +91,7 @@ After the table, add a short "source gaps" list only if important evidence is mi
 
 ## Perplexity Source Search
 
-Use this after Grok/X discovery and before Codex final verification. Perplexity is a source finder, not the final analyst.
+Use this as a peer collection prompt alongside Grok/X discovery and before Codex final verification. Perplexity is the core open-web news/source finder, not Grok's verifier and not the final analyst; Codex will verify both Grok/X and Perplexity items with supplemental web search and source checks.
 
 ```text
 You are a source-discovery tool, not an investment analyst.
@@ -95,7 +101,7 @@ Time range: [YYYY-MM-DD HH:mm to YYYY-MM-DD HH:mm, timezone]
 Scope: [industry segment / market / companies]
 
 Task:
-Collect web-source-backed information that can verify, refute, or add context to the Grok/X leads below.
+Collect open-web, source-backed news items, official releases, reputable media reports, and factual claims for the topic and time range below. Do not limit yourself to Grok/X leads and do not treat this as a Grok verification task; overlaps are useful but Codex will handle verification and reconciliation.
 
 Rules:
 - Do not provide investment advice, rankings, target prices, trading conclusions, or causal interpretation.
@@ -106,8 +112,8 @@ Rules:
 - Separate model-generated summaries from source facts.
 - Use English or original market language for global AI, semiconductor, datacenter, and supply-chain topics unless the task is China-local.
 
-Grok/X leads to check:
-[paste lead table]
+Optional topic seeds or known leads:
+[paste topic seeds, company names, event keywords, or Grok/X lead table if available]
 
 Return only this table:
 | source_type | date_time | entity/company | original_source_or_author | factual_item | numbers_or_terms | source_url | verification_status |
@@ -117,10 +123,10 @@ After the table, add a short "source gaps" list only if important evidence is mi
 
 ## Optional Gemini Verification And Counter-Evidence
 
-Use this only when quick Grok/X discovery plus Codex web verification leaves a major unresolved or conflicting line.
+Use this only when parallel Grok/X plus Perplexity collection and Codex verification leave a major unresolved or conflicting line. Gemini reviews the collected source set unless the user explicitly asks for Gemini web Deep Research.
 
 ```text
-请优先使用当前网页中可用的最强 Gemini 模型和最强 Deep Research / web-grounded / 长上下文模式。
+请优先使用当前网页中可用的最强 Gemini 模型和最强长上下文/资料审阅模式；默认基于已收集来源核验，不把 Gemini 作为默认联网搜索入口。
 
 请对下面这些 AI产业链线索做核验和反证，不要直接相信原结论。
 
