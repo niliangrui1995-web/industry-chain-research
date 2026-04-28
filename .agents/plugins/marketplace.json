@@ -1,0 +1,20 @@
+{
+  "name": "vcp-hunter-local",
+  "interface": {
+    "displayName": "VCP Hunter Local"
+  },
+  "plugins": [
+    {
+      "name": "document-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/document-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "document-skills",
+  "version": "0.1.0",
+  "description": "Local Codex plugin bundling Anthropic document skills for Word, PDF, PowerPoint, and spreadsheet workflows.",
+  "author": {
+    "name": "Anthropic / Local Codex wrapper",
+    "email": "support@anthropic.com",
+    "url": "https://github.com/anthropics/skills"
+  },
+  "homepage": "https://github.com/anthropics/skills",
+  "repository": "https://github.com/anthropics/skills",
+  "license": "Proprietary. See bundled skill LICENSE.txt files.",
+  "keywords": [
+    "document",
+    "docx",
+    "pdf",
+    "pptx",
+    "xlsx",
+    "libreoffice"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Document Skills",
+    "shortDescription": "Work with Word, PDF, PowerPoint, and spreadsheet files",
+    "longDescription": "Document Skills bundles docx, pdf, pptx, and xlsx skills so Codex can create, read, edit, convert, and validate common office documents using the installed LibreOffice runtime when needed.",
+    "developerName": "Anthropic / Local Codex wrapper",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/anthropics/skills",
+    "privacyPolicyURL": "https://www.anthropic.com/legal/privacy",
+    "termsOfServiceURL": "https://www.anthropic.com/legal/commercial-terms",
+    "defaultPrompt": [
+      "Extract tables from this PDF into Excel",
+      "Turn this research note into a Word report",
+      "Create a PPT deck from this spreadsheet"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}
