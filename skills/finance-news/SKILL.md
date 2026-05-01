@@ -128,7 +128,7 @@ finance-news news TSLA
 
 ### Portfolio CSV Format
 
-Location: `~/clawd/skills/finance-news/config/portfolio.csv`
+Location: `skills/finance-news/config/portfolio.csv`
 
 ```csv
 symbol,name,category,notes
@@ -139,7 +139,7 @@ MSFT,Microsoft Corporation,Tech,
 
 ### Sources Configuration
 
-Location: `~/clawd/skills/finance-news/config/config.json` (legacy fallback: `config/sources.json`)
+Location: `skills/finance-news/config/config.json` (legacy fallback: `skills/finance-news/config/sources.json`)
 
 - RSS feeds for WSJ, Barron's, CNBC, Yahoo
 - Market indices by region
@@ -153,22 +153,22 @@ Location: `~/clawd/skills/finance-news/config/config.json` (legacy fallback: `co
 # Add morning briefing cron job
 openclaw cron add --schedule "30 6 * * 1-5" \
   --timezone "America/Los_Angeles" \
-  --command "bash ~/clawd/skills/finance-news/cron/morning.sh"
+  --command "bash skills/finance-news/cron/morning.sh"
 
 # Add evening briefing cron job
 openclaw cron add --schedule "0 13 * * 1-5" \
   --timezone "America/Los_Angeles" \
-  --command "bash ~/clawd/skills/finance-news/cron/evening.sh"
+  --command "bash skills/finance-news/cron/evening.sh"
 ```
 
 ### Manual Cron (crontab)
 
 ```cron
 # Morning briefing (6:30 AM PT, weekdays)
-30 6 * * 1-5 bash ~/clawd/skills/finance-news/cron/morning.sh
+30 6 * * 1-5 bash skills/finance-news/cron/morning.sh
 
 # Evening briefing (1:00 PM PT, weekdays)
-0 13 * * 1-5 bash ~/clawd/skills/finance-news/cron/evening.sh
+0 13 * * 1-5 bash skills/finance-news/cron/evening.sh
 ```
 
 ## Sample Output

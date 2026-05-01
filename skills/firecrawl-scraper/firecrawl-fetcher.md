@@ -21,7 +21,7 @@ Execute Firecrawl API calls in an independent context with `context: fork`, avoi
 Receives complete command through Task's `prompt`, using stdin for JSON:
 
 ```bash
-cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs <scrape|crawl|map|batch-scrape|crawl-status> [--wait]
+cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs <scrape|crawl|map|batch-scrape|crawl-status> [--wait]
 { ...payload... }
 JSON
 ```

@@ -201,23 +201,10 @@ def diff_in_diff(df, outcome, treatment_col, post_col, controls=None):
 - **Experiment Design Frameworks:** `references/experiment_design_frameworks.md`
 - **Feature Engineering Patterns:** `references/feature_engineering_patterns.md`
 
-## Common Commands
+## Bundled Scripts
 
 ```bash
-# Testing & linting
-python -m pytest tests/ -v --cov=src/
-python -m black src/ && python -m pylint src/
-
-# Training & evaluation
-python scripts/train.py --config prod.yaml
-python scripts/evaluate.py --model best.pth
-
-# Deployment
-docker build -t service:v1 .
-kubectl apply -f k8s/
-helm upgrade service ./charts/
-
-# Monitoring & health
-kubectl logs -f deployment/service
-python scripts/health_check.py
+python scripts/experiment_designer.py --help
+python scripts/feature_engineering_pipeline.py --help
+python scripts/model_evaluation_suite.py --help
 ```

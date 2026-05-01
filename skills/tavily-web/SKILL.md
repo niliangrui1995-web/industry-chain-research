@@ -35,22 +35,22 @@ Use the terminal tool to run the bundled CLI script (prints JSON).
 
 ```bash
 # Search (general)
-python3 SKILL_DIR/scripts/tavily.py search --query "latest OpenAI API changes" --max-results 5
+python3 skills/tavily-web/scripts/tavily.py search --query "latest OpenAI API changes" --max-results 5
 
 # Search (news) with recency filter
-python3 SKILL_DIR/scripts/tavily.py search --query "latest OpenAI API changes" --topic news --time-range week --max-results 5
+python3 skills/tavily-web/scripts/tavily.py search --query "latest OpenAI API changes" --topic news --time-range week --max-results 5
 
 # High-precision search (more cost/latency)
-python3 SKILL_DIR/scripts/tavily.py search --query "OpenAI API rate limits March 2026" --search-depth advanced --chunks-per-source 3 --max-results 5
+python3 skills/tavily-web/scripts/tavily.py search --query "OpenAI API rate limits March 2026" --search-depth advanced --chunks-per-source 3 --max-results 5
 
 # Search + answer (still cite URLs from results)
-python3 SKILL_DIR/scripts/tavily.py search --query "What is X?" --include-answer basic --max-results 5
+python3 skills/tavily-web/scripts/tavily.py search --query "What is X?" --include-answer basic --max-results 5
 
 # Extract (targeted chunks; prefer this over include_raw_content on search)
-python3 SKILL_DIR/scripts/tavily.py extract --url "https://example.com" --query "pricing" --chunks-per-source 3 --format markdown
+python3 skills/tavily-web/scripts/tavily.py extract --url "https://example.com" --query "pricing" --chunks-per-source 3 --format markdown
 
 # Research (creates task + polls until complete)
-python3 SKILL_DIR/scripts/tavily.py research --input "Summarize the EU AI Act enforcement timeline. Provide numbered citations." --model auto --citation-format numbered --max-wait-seconds 180
+python3 skills/tavily-web/scripts/tavily.py research --input "Summarize the EU AI Act enforcement timeline. Provide numbered citations." --model auto --citation-format numbered --max-wait-seconds 180
 ```
 
 Use returned `results[].url` fields as citations/sources in your final answer.
@@ -96,7 +96,7 @@ curl -s "https://api.tavily.com/extract" \
 
 ## Verification
 
-- Check credits/limits: `python3 SKILL_DIR/scripts/tavily.py usage`
+- Check credits/limits: `python3 skills/tavily-web/scripts/tavily.py usage`
 - Add `--include-usage` on `search`/`extract` if you want per-request usage info.
 
 ## References

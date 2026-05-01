@@ -38,7 +38,7 @@ Use Task tool to invoke `firecrawl-fetcher` sub-skill, passing command and JSON 
 Task parameters:
 - subagent_type: Bash
 - description: "Call Firecrawl API"
-- prompt: cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs <scrape|crawl|map|batch-scrape|crawl-status> [--wait]
+- prompt: cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs <scrape|crawl|map|batch-scrape|crawl-status> [--wait]
   { ...payload... }
   JSON
 ```
@@ -48,7 +48,7 @@ Task parameters:
 ### 1) Scrape Single Page
 
 ```bash
-cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs scrape
+cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs scrape
 {
   "url": "https://example.com",
   "formats": ["markdown", "links"],
@@ -69,7 +69,7 @@ JSON
 ### 2) Scrape with Actions (Page Interaction)
 
 ```bash
-cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs scrape
+cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs scrape
 {
   "url": "https://example.com",
   "formats": ["markdown"],
@@ -89,7 +89,7 @@ JSON
 ### 3) Parse PDF
 
 ```bash
-cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs scrape
+cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs scrape
 {
   "url": "https://example.com/document.pdf",
   "formats": ["markdown"],
@@ -101,7 +101,7 @@ JSON
 ### 4) Extract Structured JSON
 
 ```bash
-cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs scrape
+cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs scrape
 {
   "url": "https://example.com/product",
   "formats": [
@@ -126,7 +126,7 @@ JSON
 ### 5) Crawl Entire Website
 
 ```bash
-cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs crawl
+cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs crawl
 {
   "url": "https://docs.example.com",
   "formats": ["markdown"],
@@ -143,7 +143,7 @@ JSON
 ### 5.1) Crawl + Wait for Completion
 
 ```bash
-cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs crawl --wait
+cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs crawl --wait
 {
   "url": "https://docs.example.com",
   "formats": ["markdown"],
@@ -155,7 +155,7 @@ JSON
 ### 6) Map Website URLs
 
 ```bash
-cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs map
+cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs map
 {
   "url": "https://example.com",
   "search": "documentation",
@@ -167,7 +167,7 @@ JSON
 ### 7) Batch Scrape Multiple URLs
 
 ```bash
-cat <<'JSON' | node .claude/skills/firecrawl-scraper/firecrawl-api.cjs batch-scrape
+cat <<'JSON' | node skills/firecrawl-scraper/firecrawl-api.cjs batch-scrape
 {
   "urls": [
     "https://example.com/page1",
@@ -182,13 +182,13 @@ JSON
 ### 8) Check Crawl Status
 
 ```bash
-node .claude/skills/firecrawl-scraper/firecrawl-api.cjs crawl-status <crawl-id>
+node skills/firecrawl-scraper/firecrawl-api.cjs crawl-status <crawl-id>
 ```
 
 Wait for completion:
 
 ```bash
-node .claude/skills/firecrawl-scraper/firecrawl-api.cjs crawl-status <crawl-id> --wait
+node skills/firecrawl-scraper/firecrawl-api.cjs crawl-status <crawl-id> --wait
 ```
 
 ## Key Features
@@ -231,7 +231,7 @@ node .claude/skills/firecrawl-scraper/firecrawl-api.cjs crawl-status <crawl-id> 
 Two ways to configure API Key (priority: environment variable > `.env`):
 
 1. Environment variable: `FIRECRAWL_API_KEY`
-2. `.env` file: Place in `.claude/skills/firecrawl-scraper/.env`, can copy from `.env.example`
+2. `.env` file: Place in `skills/firecrawl-scraper/.env`, can copy from `.env.example`
 
 ## Response Format
 
