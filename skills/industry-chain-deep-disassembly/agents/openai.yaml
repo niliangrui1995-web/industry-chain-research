@@ -1,0 +1,4 @@
+interface:
+  display_name: "Industry Chain Deep Disassembly"
+  short_description: "Find supply-chain bottlenecks and pure-play stock exposure."
+  default_prompt: "Use $industry-chain-deep-disassembly to decompose a growth industry into demand signals, BOM cost nodes, supply bottlenecks, pricing power, and evidence-backed stock candidates."

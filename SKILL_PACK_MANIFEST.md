@@ -11,6 +11,7 @@
 
 - `20-andruia-niche-intelligence`
 - `deep-research`：长周期研究规划、证据分层和综合框架；不包含本地 `scripts/research.py` 或 Gemini API 执行脚本。
+- `industry-chain-deep-disassembly`：成长行业供需传导、产业链拓扑、BOM/价值节点、交货时滞、HHI、利润池迁移、定价权、纯度筛股和财务验证技能；内置 PCB/CCL、液冷、光模块、数据中心电力适配器，并提供 CSV/JSON/JSONL/XLSX 数据接口归一化脚本。
 - `competitive-landscape`
 - `competitive-intel`
 - `business-analyst`

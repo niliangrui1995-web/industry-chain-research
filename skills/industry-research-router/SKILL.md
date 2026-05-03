@@ -16,6 +16,7 @@ This router is for the `产业链投研` project. It is not a daily-report autom
 Choose the smallest useful combination:
 
 - Semiconductor/AI-chain structure and A-share mapping: `semiconductor-ai-chain-investment-researcher`; add `ai-chain-research-orchestrator` when current evidence, rumors, Grok/X, Gemini, or live web verification matters.
+- Growth-industry bottleneck disassembly across supply-chain topology, BOM/value nodes, lead times, HHI, profit-pool migration, pricing power, pure-play stock exposure, and user-provided data normalization: `industry-chain-deep-disassembly`; it has adapters for PCB/CCL, liquid cooling, optical modules, and data-center power, plus data-interface contracts for global leaders, chain nodes, China candidates, financial validation, and market snapshots.
 - Browser Grok/Gemini collection: `browser-grok-gemini-research` only when the user asks for webpage Grok/Gemini, when X/Grok discovery is needed, or when Gemini can materially help with source discovery, counter-evidence, or Gemini web Deep Research.
 - General industry essence and technology moat: `deep-research` as a long-research framework, not a local API executor; use `20-andruia-niche-intelligence` only as optional background framing for non-semiconductor niche work.
 - Competitive landscape and true leaders: `competitive-landscape`, `competitive-intel`.
@@ -33,6 +34,7 @@ Choose the smallest useful combination:
 - `ai-chain-research-orchestrator` coordinates evidence collection and rumor discipline; it does not make final A-share recommendations.
 - `browser-grok-gemini-research` operates webpages and collector prompts only; it is not a final analyst.
 - `semiconductor-ai-chain-investment-researcher` is the main top-down AI/semiconductor investment skill: segment priority, bottleneck, overseas oligarchs, A-share mapping, and within-segment comparison.
+- `industry-chain-deep-disassembly` is the cross-industry bottleneck skill: terminal-demand transmission, BOM/value-node table, lead-time and supply-rigidity scoring, HHI concentration, profit-pool migration, pure-play filtering, financial confirmation, supported industry adapter loading, and normalization of user-provided CSV/JSON/JSONL/XLSX research inputs.
 - `advanced-evaluation` checks score consistency and bias; it does not replace source verification or domain judgment.
 - `stock-evaluator` and `business-analyst` are used after segment selection for company-level fundamentals.
 - `allstock-data` and local market data provide timing, liquidity, valuation, and risk context only.
@@ -48,10 +50,11 @@ If a named companion skill is unavailable in the current session, continue with 
    - Industry-chain map
    - Company comparison
    - Technology moat
+   - Supply-chain bottleneck, BOM, lead-time, HHI, or pricing-power disassembly
    - Domestic substitution
    - Fundamental investment ranking
    - Trading elasticity ranking
-   - Data table or watchlist construction
+   - Data table, normalized evidence pack, or watchlist construction
    - Latest news, rumor, or source-gap verification
    - Official-source search or long-source summarization
    - Dividend, low-volatility, or bond-yield comparison
