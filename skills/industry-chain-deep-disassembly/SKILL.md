@@ -1,17 +1,23 @@
 ---
 name: industry-chain-deep-disassembly
-description: Use when researching a growth industry through supply-chain topology, BOM cost nodes, lead-time bottlenecks, profit-pool migration, HHI concentration, pricing power, pure-play exposure, and A-share or global stock screening.
+description: Use when researching a growth industry through supply-chain topology, BOM/value nodes, current supply-gap bottlenecks, choke-point mechanisms, lead-time and qualified-capacity constraints, profit-pool migration, and future supply-gap migration. Stock mapping is optional and only follows node diagnosis.
 ---
 
 # Industry Chain Deep Disassembly
 
 ## Purpose
 
-Use this skill after `industry-research-router` when the user wants to find the scarce, high-premium node in a growing industry rather than rank companies by a static industry label.
+Use this skill after `industry-research-router` when the user wants to understand how a growing industry works, where obvious supply gaps exist, what mechanism creates the bottleneck, and where the next supply gap may migrate.
+
+This is an industry-chain research and node-disassembly skill first. A-share, HK-share, or global listed-company mapping is a downstream optional step after the bottleneck ledger is built; it must not drive the thesis.
+
+Definition gate:
+
+In this skill, 堵点/卡点 means an industry-chain node with an obvious supply gap in the stated time window: verified or strongly forecast demand exceeds qualified supply, usable capacity, yield, delivery capability, or customer-qualified vendor availability. High value share, high margin, high HHI, technical difficulty, long certification, domestic-substitution difficulty, or stock-market heat are not bottlenecks by themselves unless they create or prove a supply gap.
 
 The core lens is:
 
-`terminal demand -> BOM/value node -> capacity and lead-time constraint -> pricing power -> pure-play stock exposure -> financial and market validation`
+`terminal demand -> chain topology -> BOM/value node -> demand-vs-qualified-supply gap -> current bottleneck -> constraint mechanism -> future supply-gap migration -> evidence gap -> optional company mapping`
 
 ## When To Use
 
@@ -19,8 +25,10 @@ Use for:
 
 - Growth industries where demand is accelerating but the winning node is unclear.
 - AI hardware, manufacturing equipment, new materials, energy equipment, robotics, data-center infrastructure, high-end components, and other multi-layer supply chains.
-- Questions about bottlenecks, choke points, shortages, delivery cycles, BOM value share, profit pools, HHI, oligopoly, domestic substitution, or true beneficiary stocks.
-- Stock screening after the user provides `target_industry` and optionally `target_stocks`.
+- Questions about bottlenecks, choke points, shortages, delivery cycles, capacity expansion, yield ramps, BOM value share, profit pools, HHI, oligopoly, domestic substitution, or route-level supply constraints.
+- Requests to identify current industry-chain堵点/卡点 and forecast likely future堵点/卡点 as technology generations, customer architectures, qualification cycles, or capacity plans change.
+- Requests where 堵点/卡点 should specifically mean an obvious supply gap, not merely a moat, pricing-power node, or A-share concept label.
+- Optional company or stock mapping only after the user asks for investable exposure, and only after the node-level bottleneck diagnosis is complete.
 
 Do not use this as a live-news collector by itself. If the thesis depends on fresh news, rumors, Grok/X, Gemini, policy, prices, or filings, first use the project evidence route (`ai-chain-research-orchestrator`, `search-specialist`, web tools, or market-data skills as appropriate).
 
@@ -35,8 +43,11 @@ Do not use this as a live-news collector by itself. If the thesis depends on fre
 - Read `references/source-priority.md` when source discovery, BOM, lead time, market share, or financial-validation evidence is incomplete.
 - Read a matching `references/adapters/*.md` file when the target industry matches a supported adapter. If no adapter exists, continue with the generic workflow and do not invent industry-specific node data.
 - Read `references/data-interfaces.md` when the user provides CSV/JSON/JSONL/XLSX files, asks for data connectors, or wants reusable evidence tables.
-- Run `scripts/normalize_research_inputs.py` on user-provided raw data before HHI, bottleneck scoring, financial validation, or stock screening. Missing required fields must stay as `N/A` and be treated as evidence gaps.
-- Separate global leader benchmarking from China tradable mapping: identify overseas/global oligarchs and the real technology path first, then map A-share/HK-share/China-local candidates after the bottleneck node is selected.
+- Run `scripts/normalize_research_inputs.py` on user-provided raw data before HHI, bottleneck scoring, future-bottleneck scenarios, financial validation, or optional stock mapping. Missing required fields must stay as `N/A` and be treated as evidence gaps.
+- Do not jump from A-share names to an industry conclusion. Stock mapping cannot replace chain topology, BOM/value-node analysis, current bottleneck diagnosis, or future bottleneck forecasting.
+- Separate current bottlenecks from future bottlenecks. Current bottlenecks require demand-side evidence and supply-gap evidence such as extended lead time, allocation, price pressure, backlog, capacity utilization, qualified-capacity shortage, yield limit, certification queue, customer-lock-in, or downstream ramp delay. Future bottlenecks may be scenario-based but must state demand trigger, supply-lag mechanism, timing, and evidence gap.
+- Do not classify a node as 堵点/卡点 if it only has high technology difficulty, high HHI, high gross margin, high BOM share, or long qualification cycle but no visible or forecast supply gap. Classify it as `strategic_node`, `pricing_power_node`, or `watch` instead.
+- Separate global leader benchmarking from China tradable mapping: identify overseas/global oligarchs and the real technology path first, then map A-share/HK-share/China-local candidates only if the user asks for listed exposure after the bottleneck node is selected.
 
 Evidence grades:
 
@@ -46,7 +57,7 @@ Evidence grades:
 | B | Reputable data vendor, industry association, sell-side report with cited source, credible media with named source |
 | C | Unsourced web claim, social post, model output, concept-board label, or unverifiable secondary summary |
 
-C-grade evidence can guide search priority only. It cannot support a main conclusion or stock pick without A/B confirmation.
+C-grade evidence can guide search priority only. It cannot support a main bottleneck conclusion, future bottleneck forecast, or stock pick without A/B confirmation.
 
 ## Industry Adapters
 
@@ -72,10 +83,12 @@ Canonical tables:
 
 | Table | Role | Use Timing |
 |---|---|---|
-| `global_leaders` | Overseas/global oligarchs, technology path, profit-pool benchmark | Before China stock mapping |
+| `global_leaders` | Overseas/global oligarchs, technology path, profit-pool benchmark | Before bottleneck diagnosis |
 | `supply_chain_nodes` | BOM/value nodes, lead time, rigidity, substitution, concentration | Before bottleneck scoring and HHI |
-| `china_candidates` | A-share/HK-share/China-local tradable exposure mapping | After node selection |
-| `financial_validation` | Margin, turnover, cash flow, capex, leverage checks | Before final stock verdict |
+| `bottleneck_ledger` | Current堵点/卡点 with explicit supply-gap evidence, constraint mechanism, affected downstream nodes | Before any company mapping |
+| `future_bottleneck_scenarios` | Future supply-gap migration, trigger, supply-lag mechanism, timing, confidence, evidence gap | Before final conclusion |
+| `china_candidates` | A-share/HK-share/China-local tradable exposure mapping | Optional, only after node selection |
+| `financial_validation` | Margin, turnover, cash flow, capex, leverage checks | For pricing-power and optional company validation |
 | `market_snapshot` | Market cap, float, valuation, turnover, trend, crowding | For timing and trading elasticity only |
 | `source_evidence` | Claim-to-source ledger and limitations | Whenever evidence is mixed or disputed |
 
@@ -89,7 +102,7 @@ Connector boundary:
 
 ### 1. Define Demand Transmission
 
-Identify the terminal product and demand driver before mapping stocks.
+Identify the terminal product and demand driver before mapping companies.
 
 Output one demand table:
 
@@ -129,29 +142,46 @@ Required columns:
 | pricing_mechanism | contract, spot, cost-plus, allocation, long-term agreement, qualification lock-in |
 | evidence_grade | A/B/C/N/A |
 
-### 3. Identify Bottleneck And Pricing Power
+### 3. Diagnose Current Bottlenecks And Constraint Mechanisms
 
-Score each key node separately. Keep the raw reason next to every score.
+Score each key node separately. Keep the raw reason next to every score, and distinguish "verified supply gap" from "high margin", "high value share", and "strategically important".
 
 | Dimension | Score Guide |
 |---|---|
 | demand_pass_through | 0-5: terminal demand growth converts into this node's volume or ASP |
+| supply_gap_severity | 0-5: verified demand exceeds qualified supply, usable capacity, yield, or delivery capability in the stated window |
 | supply_rigidity | 0-5: new capacity, yield, certification, equipment, and permits are hard to add quickly |
 | lead_time_pressure | 0-5: delivery or capacity cycle is long relative to demand change |
 | substitution_resistance | 0-5: customers cannot switch technology or vendor quickly |
 | concentration_pricing | 0-5: HHI, CR3/CR5, customer switching cost, allocation power, cost pass-through |
 | profit_pool_migration | 0-5: margin, ASP, mix, or bargaining power is moving toward this node |
 | financial_confirmation | 0-5: gross margin, net margin, receivables, inventory, and cash conversion confirm power |
+| evidence_strength | 0-5: A/B evidence directly supports the supply gap rather than only a concept label |
 
 Suggested classification:
 
 | Pattern | Interpretation |
 |---|---|
-| high demand + high rigidity + low substitution | true choke point |
+| high demand + clear supply gap + high rigidity + low substitution | true choke point |
 | high demand + low rigidity | volume beneficiary, not pricing-power asset |
 | high HHI + weak demand | oligopoly without near-term elasticity |
+| high rigidity + no supply gap | strategic node or watch item, not a bottleneck |
 | high concept heat + weak financial confirmation | story risk |
 | high working-capital stress + rising revenue | possible forced shipment or weak bargaining power |
+
+Build a current bottleneck ledger before moving on:
+
+| Field | Required Check |
+|---|---|
+| bottleneck_node | precise material, component, equipment, process, capacity type, or qualification step |
+| affected_chain_layer | upstream/midstream/downstream nodes constrained by it |
+| demand_evidence | orders, capex, utilization, customer ramp, attach rate, backlog, policy, or guidance proving demand |
+| supply_evidence | qualified capacity, usable capacity, yield, vendor availability, delivery capability, capex lag, or certification queue |
+| supply_gap_evidence | direct proof that demand exceeds qualified supply: allocation, extended lead time, price pressure, unsatisfied orders, ramp delay, or explicit shortage |
+| constraint_mechanism | capacity, yield, lead time, qualification, IP, equipment, raw material, regulation, customer lock-in, or logistics |
+| severity | hard_bottleneck / soft_bottleneck / watch / rejected |
+| time_horizon | current quarter, 6 months, 12 months, or longer |
+| key_reversal | what would remove or reduce the bottleneck |
 
 When a node scoring table is available, run:
 
@@ -161,7 +191,36 @@ python skills/industry-chain-deep-disassembly/scripts/score_bottleneck_nodes.py 
 
 The scoring script is a consistency aid. A node with only C-grade or missing evidence cannot be promoted above watch level.
 
-### 4. Calculate Concentration
+### 4. Forecast Future Bottleneck Migration
+
+After current bottlenecks are identified, forecast how the supply-gap map can change over 6-24 months. Do not extrapolate today's shortage mechanically.
+
+Check at least these migration drivers:
+
+| Driver | Question |
+|---|---|
+| technology generation | Does the next product generation change material, component, process, power, thermal, packaging, or testing requirements? |
+| demand step-up | Does a product ramp, customer architecture, policy, or capex cycle create demand above qualified supply? |
+| capacity pipeline | Which announced capacity actually becomes qualified supply, and when? |
+| yield ramp | Which node has hard yield learning curves or reliability requirements? |
+| second-source qualification | Which customers can qualify alternative suppliers, and what cycle time is required? |
+| architecture shift | Does customer architecture move value from one node to another? |
+| regulation/resource constraint | Do export controls, permits, energy, water, mineral, or logistics constraints create a new choke point? |
+| profit-pool migration | Is margin power moving upstream, midstream, downstream, or into equipment/software/IP? |
+
+Classify future nodes as:
+
+- `likely_future_bottleneck`: demand step-up and supply-lag mechanism are clear, and evidence is A/B or strongly triangulated.
+- `watch`: plausible but demand trigger, supply-lag evidence, or timing is incomplete.
+- `downgraded`: current bottleneck likely eases because capacity, yield, or second sourcing is improving.
+- `resolved`: bottleneck evidence no longer holds under verified capacity or demand conditions.
+
+Output a future scenario table:
+
+| node | current status | future status | demand trigger | supply-lag mechanism | likely timing | confidence | evidence gap | reversal indicator |
+|---|---|---|---|---|---|---|---|---|
+
+### 5. Calculate Concentration As A Supporting Test
 
 When share data exists:
 
@@ -180,11 +239,13 @@ Gate rules:
 
 - No verified market-share data: HHI is `N/A`; use concentration language only qualitatively.
 - Share data not summing to about 100%: treat HHI as partial coverage and state the residual gap.
-- HHI can upgrade confidence only when demand pass-through, supply rigidity, and substitution resistance are also supported by A/B evidence.
+- HHI can upgrade confidence only when demand pass-through, an actual current or forecast supply gap, supply rigidity, substitution resistance, and the current/future constraint mechanism are also supported by A/B evidence.
 
-### 5. Map Stocks Only After Node Selection
+### 6. Optional Company Or Stock Mapping After Node Selection
 
-Do not start from hot stock names. First select bottleneck nodes, then map companies.
+Skip this section unless the user explicitly asks for listed companies, tradable exposure, or investment mapping.
+
+Do not start from hot stock names. First select bottleneck nodes and future-bottleneck scenarios, then map companies.
 
 For every candidate stock, verify:
 
@@ -204,9 +265,9 @@ Classify candidates as:
 - `theme_adjacent`: concept relation exists but exposure is weak or diluted.
 - `reject`: no hard evidence, wrong node, or financials contradict the story.
 
-### 6. Separate The Three Rankings
+### 7. Separate The Three Rankings When Stocks Are Requested
 
-Always separate:
+When stocks are requested, always separate:
 
 - Fundamental quality: moat, customer quality, margin durability, balance-sheet quality, long-term competitive position.
 - Earnings elasticity: revenue contribution, ASP leverage, capacity utilization, operating leverage, gross margin sensitivity.
@@ -214,9 +275,9 @@ Always separate:
 
 Do not merge these into one vague "best stock" score.
 
-### 7. Risk And Reversal Watch
+### 8. Risk And Reversal Watch
 
-For every selected node and stock, state what would break the thesis:
+For every selected node, future scenario, and optional stock, state what would break the thesis:
 
 - Downstream inventory-to-sales ratio rises or orders are pulled forward.
 - Lead time normalizes faster than expected.
@@ -232,19 +293,26 @@ Start with conclusion, then evidence tables.
 
 ```text
 结论先行：
-- 当前最大供需矛盾：
-- 最可能拥有高溢价的瓶颈节点：
-- 可进入主结论的股票：
-- 只能观察或剔除的股票：
+- 当前产业链最大供需矛盾：
+- 当前最关键堵点/卡点（必须是明显供应缺口）：
+- 供应缺口证据：
+- 堵点形成机制：
+- 未来 6-24 个月最可能迁移到的新供应缺口：
 - 最大反转风险：
 
 产业链拓扑与 BOM：
 | layer | node | BOM/value share | lead time | supply rigidity | substitution | top players | evidence |
 
-瓶颈评分：
-| node | demand | rigidity | lead time | substitution | HHI/pricing | profit migration | verdict |
+当前堵点台账：
+| node | affected layer | demand evidence | supply evidence | supply gap evidence | constraint mechanism | severity | time horizon | reversal |
 
-个股交叉验证：
+未来卡点预判：
+| node | current status | future status | demand trigger | supply-lag mechanism | likely timing | confidence | evidence gap | reversal indicator |
+
+集中度/定价权辅助验证：
+| node | HHI/CR3 | pricing mechanism | demand pass-through | substitution resistance | verdict |
+
+可选：个股交叉验证（只有用户要求股票映射时输出）：
 | company | ticker | node exposure | pure-play | customer proof | financial proof | fundamental quality | earnings elasticity | trading elasticity | verdict |
 
 跟踪指标：
@@ -258,8 +326,11 @@ Start with conclusion, then evidence tables.
 ## Common Mistakes
 
 - Starting from `target_stocks` and reverse-writing an industry story.
+- Letting A-share/HK-share/US-share mapping dominate a task that is asking for industry-chain structure and bottleneck disassembly.
 - Treating HHI as proof of pricing power without demand and switching-cost evidence.
+- Treating high HHI, high margin, high BOM value, high technical barrier, or domestic-substitution difficulty as 堵点/卡点 without evidence of a supply gap.
 - Calling every long lead-time product a bottleneck while ignoring capacity expansion already under way.
+- Confusing current堵点/卡点 with future potential bottlenecks, or listing current shortages without forecasting where the next choke point may migrate.
 - Mixing board-level PCB, ABF substrate, CCL, resin, glass fiber, copper foil, equipment, and assembly as one undifferentiated "AI hardware" bucket.
 - Using concept-board names instead of exact product exposure and revenue materiality.
 - Ignoring working capital. Real bargaining power usually improves cash conversion or at least prevents severe deterioration.

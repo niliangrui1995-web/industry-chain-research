@@ -37,9 +37,43 @@ Alias: `supply_chain_nodes` in the data-interface normalizer.
 | evidence_grade | string | A, B, C, or N/A |
 | source | string | source note |
 
+### bottleneck_ledger
+
+| column | type | note |
+|---|---|---|
+| bottleneck_node | string | precise material/component/equipment/process/capacity/qualification step |
+| affected_chain_layer | string | upstream, midstream, downstream, or cross-layer |
+| demand_evidence | string | orders, capex, utilization, customer ramp, attach rate, backlog, policy, or guidance proving demand |
+| supply_evidence | string | qualified capacity, usable capacity, yield, vendor availability, delivery capability, capex lag, or certification queue |
+| supply_gap_evidence | string | proof that demand exceeds qualified supply: allocation, extended lead time, price pressure, unsatisfied orders, ramp delay, or explicit shortage |
+| constraint_mechanism | string | capacity, yield, lead time, qualification, IP, equipment, raw material, regulation, customer lock-in, or logistics |
+| severity | string | hard_bottleneck, soft_bottleneck, watch, or rejected |
+| time_horizon | string | current quarter, 6 months, 12 months, or longer |
+| key_reversal | string | what removes or reduces the bottleneck |
+| evidence_grade | string | A, B, C, or N/A |
+| source | string | source note |
+
+### future_bottleneck_scenarios
+
+| column | type | note |
+|---|---|---|
+| node | string | precise future bottleneck candidate |
+| current_status | string | current bottleneck status or N/A |
+| future_status | string | likely_future_bottleneck, watch, downgraded, or resolved |
+| demand_trigger | string | product ramp, customer architecture, capex cycle, policy, or technology change that raises demand |
+| supply_lag_mechanism | string | capacity, yield, qualification, equipment, raw material, regulation, or logistics lag that can create a supply gap |
+| likely_timing | string | expected scenario window |
+| confidence | string | high, medium, low, or N/A |
+| evidence_gap | string | missing evidence needed to raise confidence |
+| reversal_indicator | string | data point that breaks the scenario |
+| evidence_grade | string | A, B, C, or N/A |
+| source | string | source note |
+
 ### stock_candidates
 
 Alias: `china_candidates` in the data-interface normalizer.
+
+Use only when the user asks for listed exposure after node diagnosis.
 
 | column | type | note |
 |---|---|---|
@@ -125,11 +159,13 @@ This table can be passed to `scripts/score_bottleneck_nodes.py`.
 |---|---|---|
 | node | string | precise node name |
 | demand_pass_through | number | 0-5 |
+| supply_gap_severity | number | 0-5 supply-gap score |
 | supply_rigidity | number | 0-5 |
 | lead_time_pressure | number | 0-5 |
 | substitution_resistance | number | 0-5 |
 | concentration_pricing | number | 0-5 |
 | profit_pool_migration | number | 0-5 |
 | financial_confirmation | number | 0-5 |
+| evidence_strength | number | optional 0-5 evidence-strength score |
 | evidence_grade | string | A, B, C, or N/A |
 | reason | string | short evidence-backed explanation |

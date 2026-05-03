@@ -12,13 +12,18 @@ from typing import TextIO
 
 
 SCORE_COLUMNS = {
-    "demand_pass_through": 0.18,
-    "supply_rigidity": 0.18,
-    "lead_time_pressure": 0.14,
-    "substitution_resistance": 0.16,
-    "concentration_pricing": 0.14,
-    "profit_pool_migration": 0.10,
-    "financial_confirmation": 0.10,
+    "demand_pass_through": 0.16,
+    "supply_gap_severity": 0.22,
+    "supply_rigidity": 0.14,
+    "lead_time_pressure": 0.12,
+    "substitution_resistance": 0.12,
+    "concentration_pricing": 0.09,
+    "profit_pool_migration": 0.07,
+    "financial_confirmation": 0.08,
+}
+
+OPTIONAL_SCORE_COLUMNS = {
+    "evidence_strength": 0.10,
 }
 
 MAIN_EVIDENCE = {"A", "B"}
@@ -39,9 +44,11 @@ def _normalize_grade(raw: str | None) -> str:
     return grade if grade in {"A", "B", "C", "N/A", "NA", ""} else "N/A"
 
 
-def _classify(score: float, evidence_grade: str) -> tuple[str, str]:
+def _classify(score: float, evidence_grade: str, supply_gap_severity: float) -> tuple[str, str]:
     if evidence_grade not in MAIN_EVIDENCE:
         return "watch_only", "C-grade or missing evidence caps the node at watch level"
+    if supply_gap_severity < 3:
+        return "watch_or_strategic_node", "supply-gap score is too weak for bottleneck status"
     if score >= 80:
         return "true_choke_point", "high weighted score with A/B evidence"
     if score >= 65:
@@ -53,15 +60,26 @@ def _classify(score: float, evidence_grade: str) -> tuple[str, str]:
 
 def score_row(row: dict[str, str]) -> dict[str, object]:
     weighted = 0.0
+    total_weight = 0.0
     raw_scores: dict[str, float] = {}
     for column, weight in SCORE_COLUMNS.items():
         value = _parse_score(row, column)
         raw_scores[column] = value
         weighted += value * weight
+        total_weight += weight
 
-    score = round((weighted / 5) * 100, 2)
+    for column, weight in OPTIONAL_SCORE_COLUMNS.items():
+        raw = (row.get(column) or "").strip()
+        if not raw:
+            continue
+        value = _parse_score(row, column)
+        raw_scores[column] = value
+        weighted += value * weight
+        total_weight += weight
+
+    score = round((weighted / (5 * total_weight)) * 100, 2)
     evidence_grade = _normalize_grade(row.get("evidence_grade"))
-    verdict, gate_note = _classify(score, evidence_grade)
+    verdict, gate_note = _classify(score, evidence_grade, raw_scores["supply_gap_severity"])
     return {
         "node": (row.get("node") or "").strip() or "N/A",
         "bottleneck_score": score,
