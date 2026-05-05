@@ -6,7 +6,9 @@ __pycache__/
 
 # Virtual environments
 .venv/
+.venv_*/
 venv/
+artifacts/**/.venv*/
 
 # Environment and secrets
 .env
@@ -19,6 +21,14 @@ venv/
 *.tmp
 *.bak
 ~$*.xlsx
+
+# Generated research and capture artifacts
+_downloads/
+artifacts/
+._static_js_static_js_*.js
+q4_attendee_*.html
+q4_chunk_*.js
+q4_event_*.json
 
 # Test and tool caches
 .pytest_cache/

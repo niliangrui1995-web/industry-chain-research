@@ -20,6 +20,7 @@ Choose the smallest useful combination:
 - Browser Grok/Gemini collection: `browser-grok-gemini-research` only when the user asks for webpage Grok/Gemini, when X/Grok discovery is needed, or when Gemini can materially help with source discovery, counter-evidence, or Gemini web Deep Research.
 - General industry essence and technology moat: `deep-research` as a long-research framework, not a local API executor; use `20-andruia-niche-intelligence` only as optional background framing for non-semiconductor niche work.
 - Competitive landscape and true leaders: `competitive-landscape`, `competitive-intel`.
+- Earnings releases, management guidance, and conference-call analysis: `earnings-call-investment-analyst`.
 - Company fundamentals and valuation after segment selection: `stock-evaluator`, `business-analyst`, plus market-data skills according to listing market.
 - A-share/HK/US live data and K-line checks: `allstock-data`, `banana-farmer`, `stock-data-skill`, or `finance`; market data cannot prove beneficiary status.
 - Overseas oligarch data: `yfinance-mcp-server`, `stocks`, `alpha-vantage`.
@@ -49,6 +50,7 @@ If a named companion skill is unavailable in the current session, continue with 
 1. Classify the task before answering:
    - Industry-chain map
    - Company comparison
+   - Earnings release, guidance, conference call, or expectation-gap analysis
    - Technology moat
    - Supply-chain bottleneck, BOM, lead-time, HHI, or pricing-power disassembly
    - Domestic substitution

@@ -1,6 +1,6 @@
 ---
 name: industry-chain-deep-disassembly
-description: Use when researching a growth industry through supply-chain topology, BOM/value nodes, current supply-gap bottlenecks, choke-point mechanisms, lead-time and qualified-capacity constraints, profit-pool migration, and future supply-gap migration. Stock mapping is optional and only follows node diagnosis.
+description: Use when researching a growth industry through supply-chain topology, BOM/value nodes, current supply-gap bottlenecks, choke-point mechanisms, lead-time and qualified-capacity constraints, profit-pool migration, future supply-gap migration, and mandatory deep dives with duration estimates for identified bottleneck nodes. Stock mapping is optional and only follows node diagnosis.
 ---
 
 # Industry Chain Deep Disassembly
@@ -15,9 +15,11 @@ Definition gate:
 
 In this skill, 堵点/卡点 means an industry-chain node with an obvious supply gap in the stated time window: verified or strongly forecast demand exceeds qualified supply, usable capacity, yield, delivery capability, or customer-qualified vendor availability. High value share, high margin, high HHI, technical difficulty, long certification, domestic-substitution difficulty, or stock-market heat are not bottlenecks by themselves unless they create or prove a supply gap.
 
+Mandatory follow-through: whenever a specified industry analysis identifies a node as `hard_bottleneck` or `soft_bottleneck`, continue with a deep dive on that exact node and estimate how long the bottleneck may persist before moving to final conclusions or optional stock mapping.
+
 The core lens is:
 
-`terminal demand -> chain topology -> BOM/value node -> demand-vs-qualified-supply gap -> current bottleneck -> constraint mechanism -> future supply-gap migration -> evidence gap -> optional company mapping`
+`terminal demand -> chain topology -> BOM/value node -> demand-vs-qualified-supply gap -> current bottleneck -> constraint mechanism -> bottleneck-node deep dive -> persistence estimate -> future supply-gap migration -> evidence gap -> optional company mapping`
 
 ## When To Use
 
@@ -46,6 +48,7 @@ Do not use this as a live-news collector by itself. If the thesis depends on fre
 - Run `scripts/normalize_research_inputs.py` on user-provided raw data before HHI, bottleneck scoring, future-bottleneck scenarios, financial validation, or optional stock mapping. Missing required fields must stay as `N/A` and be treated as evidence gaps.
 - Do not jump from A-share names to an industry conclusion. Stock mapping cannot replace chain topology, BOM/value-node analysis, current bottleneck diagnosis, or future bottleneck forecasting.
 - Separate current bottlenecks from future bottlenecks. Current bottlenecks require demand-side evidence and supply-gap evidence such as extended lead time, allocation, price pressure, backlog, capacity utilization, qualified-capacity shortage, yield limit, certification queue, customer-lock-in, or downstream ramp delay. Future bottlenecks may be scenario-based but must state demand trigger, supply-lag mechanism, timing, and evidence gap.
+- If any current supply-gap bottleneck is identified, do not stop at naming or ranking it. Deep-dive the node's exact constrained product or capacity, why adjacent supply cannot solve it, demand trigger, qualified vendor base, usable capacity/yield, expansion pipeline, customer qualification path, estimated persistence window, confidence, evidence basis, and reversal indicators.
 - Do not classify a node as 堵点/卡点 if it only has high technology difficulty, high HHI, high gross margin, high BOM share, or long qualification cycle but no visible or forecast supply gap. Classify it as `strategic_node`, `pricing_power_node`, or `watch` instead.
 - Separate global leader benchmarking from China tradable mapping: identify overseas/global oligarchs and the real technology path first, then map A-share/HK-share/China-local candidates only if the user asks for listed exposure after the bottleneck node is selected.
 
@@ -191,9 +194,30 @@ python skills/industry-chain-deep-disassembly/scripts/score_bottleneck_nodes.py 
 
 The scoring script is a consistency aid. A node with only C-grade or missing evidence cannot be promoted above watch level.
 
-### 4. Forecast Future Bottleneck Migration
+### 4. Deep-Dive Confirmed Bottleneck Nodes And Estimate Duration
 
-After current bottlenecks are identified, forecast how the supply-gap map can change over 6-24 months. Do not extrapolate today's shortage mechanically.
+After the current bottleneck ledger, every node classified as `hard_bottleneck` or `soft_bottleneck` must receive a node-level deep dive before final synthesis or optional company mapping.
+
+For each confirmed bottleneck, answer:
+
+- What exact product, material grade, process step, capacity type, yield stage, or customer qualification is short.
+- Why ordinary adjacent capacity, lower-end product capacity, or theme-adjacent supply cannot solve the shortage.
+- Which demand trigger creates the gap and how terminal demand converts into this node's volume, value, or qualification load.
+- Which supply constraints matter most: qualified vendors, usable capacity, yield ramp, equipment, permits, upstream raw material, logistics, or certification queue.
+- What expansion or easing path exists, including announced capacity, second-source qualification, substitute route, yield improvement, or architecture redesign.
+- How long the bottleneck may persist: give a quarter range, month range, or `N/A` if evidence is insufficient; include confidence and the evidence basis.
+- What reversal indicators would show the bottleneck is easing.
+
+Output a bottleneck deep-dive table:
+
+| node | exact shortage | why adjacent supply cannot solve it | demand trigger | capacity/qualification constraint | expansion/easing path | estimated persistence | confidence | evidence basis | reversal indicator |
+|---|---|---|---|---|---|---|---|---|---|
+
+If persistence timing is not supported by A/B evidence or strong triangulation, mark the duration as `N/A` or `watch`, state the evidence gap, and avoid implying that the bottleneck will persist just because the stock theme is hot.
+
+### 5. Forecast Future Bottleneck Migration
+
+After current bottlenecks are identified and deep-dived, forecast how the supply-gap map can change over 6-24 months. Do not extrapolate today's shortage mechanically.
 
 Check at least these migration drivers:
 
@@ -220,7 +244,7 @@ Output a future scenario table:
 | node | current status | future status | demand trigger | supply-lag mechanism | likely timing | confidence | evidence gap | reversal indicator |
 |---|---|---|---|---|---|---|---|---|
 
-### 5. Calculate Concentration As A Supporting Test
+### 6. Calculate Concentration As A Supporting Test
 
 When share data exists:
 
@@ -241,7 +265,7 @@ Gate rules:
 - Share data not summing to about 100%: treat HHI as partial coverage and state the residual gap.
 - HHI can upgrade confidence only when demand pass-through, an actual current or forecast supply gap, supply rigidity, substitution resistance, and the current/future constraint mechanism are also supported by A/B evidence.
 
-### 6. Optional Company Or Stock Mapping After Node Selection
+### 7. Optional Company Or Stock Mapping After Node Selection
 
 Skip this section unless the user explicitly asks for listed companies, tradable exposure, or investment mapping.
 
@@ -265,7 +289,7 @@ Classify candidates as:
 - `theme_adjacent`: concept relation exists but exposure is weak or diluted.
 - `reject`: no hard evidence, wrong node, or financials contradict the story.
 
-### 7. Separate The Three Rankings When Stocks Are Requested
+### 8. Separate The Three Rankings When Stocks Are Requested
 
 When stocks are requested, always separate:
 
@@ -275,7 +299,7 @@ When stocks are requested, always separate:
 
 Do not merge these into one vague "best stock" score.
 
-### 8. Risk And Reversal Watch
+### 9. Risk And Reversal Watch
 
 For every selected node, future scenario, and optional stock, state what would break the thesis:
 
@@ -297,6 +321,7 @@ Start with conclusion, then evidence tables.
 - 当前最关键堵点/卡点（必须是明显供应缺口）：
 - 供应缺口证据：
 - 堵点形成机制：
+- 已识别堵点的深拆和持续时间判断：
 - 未来 6-24 个月最可能迁移到的新供应缺口：
 - 最大反转风险：
 
@@ -305,6 +330,9 @@ Start with conclusion, then evidence tables.
 
 当前堵点台账：
 | node | affected layer | demand evidence | supply evidence | supply gap evidence | constraint mechanism | severity | time horizon | reversal |
+
+堵点深拆与持续时间：
+| node | exact shortage | why adjacent supply cannot solve it | demand trigger | capacity/qualification constraint | expansion/easing path | estimated persistence | confidence | evidence basis | reversal indicator |
 
 未来卡点预判：
 | node | current status | future status | demand trigger | supply-lag mechanism | likely timing | confidence | evidence gap | reversal indicator |
