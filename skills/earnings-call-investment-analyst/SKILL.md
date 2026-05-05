@@ -41,21 +41,38 @@ State the source gap clearly if the company has not posted the original earnings
 
 When a company-linked event platform exposes only live/DVR caption playlists, check whether the playlist has `EXT-X-ENDLIST`. If it does not, treat the captions as a partial sliding-window capture, not a complete official transcript.
 
-If official IR, the company-hosted event page, or the official event platform does not expose a complete transcript, audio replay, or video replay, the agent must keep searching for complete call audio or transcript through reputable fallback paths before giving up. Try StockAnalysis, Quartr, Motley Fool, Seeking Alpha, Benzinga, Alpha Spread, and EarningsCall.biz. If a reputable third-party full transcript and original call audio are both available, use the full transcript as the primary working source and use the audio only for targeted verification of decision-useful wording, disputed passages, and transcript quality issues. Do not run full-audio ASR by default in that case. If a complete recording is found on StockAnalysis, Quartr, or another transcript/audio aggregator, treat the content as original call audio but label the hosting as third-party hosted. Cross-check decision-useful claims against the official release, SEC or exchange filing, and company-linked event page.
+If official IR, the company-hosted event page, or the official event platform does not expose a complete transcript, audio replay, or video replay, keep looking for complete call content through any efficient and defensible route. Reputable transcript or audio providers, search results, browser inspection, page source, network requests, HTTP probes, direct downloads, and event-platform payloads are all valid routes when they fit the source problem. Provider names such as StockAnalysis, Quartr, Motley Fool, Seeking Alpha, Benzinga, Alpha Spread, and EarningsCall.biz are examples and search seeds, not a mandatory checklist. The hard requirement is to label final source quality, call-content completeness, source gaps, and confidence. If a script cannot fetch, parse, or download the relevant material, continue through another route and record the script limitation only if the script was actually used. If a reputable third-party full transcript and original call audio are both available, use the full transcript as the primary working source and use the audio only for targeted verification of decision-useful wording, disputed passages, and transcript quality issues. Do not run full-audio ASR by default in that case. If a complete recording is found on a transcript/audio aggregator, treat the content as original call audio but label the hosting as third-party hosted. Cross-check decision-useful claims against the official release, SEC or exchange filing, and company-linked event page.
 
 ## Bundled Resources
 
-Use bundled resources only when they help the specific task.
+Use bundled resources only when they clearly help the specific task. Do not run a script merely because it exists.
 
-- Read `references/source-workflow.md` when the user asks for original-source collection, replay extraction, transcript evidence packs, or audio-first call analysis.
-- Use `scripts/source_discovery.py` to build an initial official-source inventory for a ticker, company, quarter, and fiscal year.
-- Use `scripts/webcast_asset_fetcher.py` to inspect an earnings webcast or replay page and extract candidate audio, video, transcript, subtitle, JSON, and script assets.
-- Use `scripts/caption_playlist_fetcher.py` to download and merge official HLS caption playlists such as Q4 `subtitles.m3u8` when the webcast exposes captions but not a plain transcript.
-- When official webcast assets are incomplete, use the targeted search URLs from `source_discovery.py` to inspect third-party transcript/audio fallback pages, then run `scripts/webcast_asset_fetcher.py` on the chosen StockAnalysis, Quartr, Motley Fool, Seeking Alpha, Benzinga, Alpha Spread, or EarningsCall.biz page.
+- Read `references/source-workflow.md` when the task needs original-source collection, replay extraction, transcript evidence packs, or audio-first call analysis.
+- Prefer agent-led source discovery: choose the fastest reliable path for the source problem, then preserve enough evidence for another analyst to understand source quality and gaps.
+- Optionally use `scripts/source_discovery.py` to create a repeatable official-source inventory after or during manual discovery. If automation input includes exact report date, call date, call URL, or fiscal period not accepted by the script, carry those fields manually into notes or the evidence pack.
+- Optionally use `scripts/webcast_asset_fetcher.py` as a first-pass webcast asset probe. If it finds only shell pages, adapter JSON, static scripts, 401/403 errors, or no recording, continue with manual web/browser/network inspection.
+- Optionally use `scripts/caption_playlist_fetcher.py` to download and merge official HLS caption playlists such as Q4 `subtitles.m3u8` when the webcast exposes captions but not a plain transcript.
+- Use fallback transcript/audio providers directly when needed. Treat provider lists as examples and search seeds; do not require every named provider to be checked when the agent already has complete, reliable call content.
 - Use `scripts/audio_transcriber.py --check-deps` before audio-first work, then use `scripts/audio_transcriber.py` only when no reputable full transcript is available, when the user explicitly asks for audio-first analysis, or when transcript/audio spot checks reveal a material transcript-quality problem. Prefer the project ASR venv plus `--provider faster-whisper --device auto --compute-type auto`; use `--no-ffmpeg` only when PyAV can read the source media directly. Use OpenAI transcription only when the API package and `OPENAI_API_KEY` are configured.
 - Use `scripts/setup_asr_env.ps1` on Windows to create a local Python ASR environment from `requirements-asr.txt` when faster-whisper or OpenAI transcription packages are missing.
-- Use `scripts/earnings_pack_builder.py` to merge source inventory, webcast assets, transcript output, and optional actuals/guidance/consensus JSON into a standard evidence pack.
+- Use `scripts/earnings_pack_builder.py` to merge source inventory, webcast assets, transcript output, and optional actuals/guidance/consensus JSON into a standard evidence pack when enough structured inputs exist. If the final source is a third-party transcript found manually, still record the provider, URL, source type, retrieval time, and official-source gap in final notes or `evidence_pack.json`.
 - Read `references/evidence-schema.md` when building, validating, or extending the evidence pack format.
+
+## Agent-First Collection Rule
+
+Start from the live source problem, not from the scripts. The agent should actively search, inspect, open, compare, and download sources. Scripts are accelerators for repeatable inventory, caption merging, transcription, and evidence packaging. They are never a reason to stop.
+
+When a script is used, record:
+
+| Field | Meaning |
+|---|---|
+| `script_used` | Script name and command purpose |
+| `script_result` | `found`, `partial`, `none`, `failed`, or `blocked` |
+| `script_limitation` | Missing parameter, 401/403, JS-only page, no recording, stale provider, parser miss, or other issue |
+| `manual_fallback_path` | Search/browser/HTTP/network/direct-download path used after the script |
+| `final_source_type` | `company_original`, `regulatory_filing`, `official_event_platform`, `third_party_transcript`, `original_call_audio`, or other schema value |
+
+If only third-party transcript/audio is available after reasonable original-source collection, mark the analysis as provisional, explain the missing official materials, and include a concrete official replay/transcript recheck time when timing matters.
 
 ## Core Workflow
 

@@ -39,9 +39,14 @@ For example, a Quartr audio file can be `source_type: original_call_audio` and `
   "quarter": "Q1",
   "fiscal_year": "2026",
   "company_original_status": "found | partial | missing | unavailable",
+  "provisional": false,
+  "fallback_completed": false,
+  "recheck_after": "ISO-8601 timestamp or empty string",
   "source_policy": {},
   "sources": [],
   "discovery": {},
+  "script_runs": [],
+  "fallback_source_matrix": [],
   "webcast": {},
   "transcript": {},
   "actuals": {},
@@ -69,6 +74,39 @@ For example, a Quartr audio file can be `source_type: original_call_audio` and `
   "origin_source_id": "",
   "content_origin": "",
   "notes": "Official company-hosted release"
+}
+```
+
+## Script Run Object
+
+Use this only when a helper script was actually run. Scripts are optional helpers and must not define the task boundary.
+
+```json
+{
+  "script_used": "webcast_asset_fetcher.py",
+  "purpose": "Probe official webcast page for replay assets",
+  "script_result": "found | partial | none | failed | blocked",
+  "script_limitation": "401/403, JS-only page, no recording, stale provider, parser miss, unsupported argument, or empty string",
+  "manual_fallback_path": "Search/provider/browser/HTTP/network/direct-download path used after the script",
+  "final_source_type": "company_original | regulatory_filing | official_event_platform | original_call_audio | third_party_transcript | media_or_analyst | unknown",
+  "notes": ""
+}
+```
+
+## Fallback Source Matrix Object
+
+Use this when official call transcript/audio/video/captions are incomplete and third-party transcript or audio fallback materially affects confidence or source selection. Record routes actually used or checked; provider names are examples, not a mandatory checklist.
+
+```json
+{
+  "provider": "StockAnalysis | Quartr | Motley Fool | Seeking Alpha | Benzinga | Alpha Spread | EarningsCall.biz | search | browser | HTTP | event platform | other",
+  "status": "found | stale | missing | blocked | partial",
+  "url": "https://...",
+  "source_type": "third_party_transcript | original_call_audio | media_or_analyst | unknown",
+  "complete": "yes | no | partial | unknown",
+  "access_or_failure_note": "403, login wall, older quarter only, no target transcript, complete transcript found, etc.",
+  "used": true,
+  "source_refs": ["S010"]
 }
 ```
 
@@ -197,3 +235,5 @@ Use this for every important conclusion or data point:
 - When a reputable full transcript and original call audio are both available from fallback providers, use the full transcript as the primary working source and record audio only as targeted verification evidence unless full-audio ASR was explicitly requested.
 - The final analysis should not cite `media_or_analyst` as the sole source for reported results.
 - Missing official company materials must create a `gaps` entry.
+- A script returning no usable asset, 401/403, stale data, or a parser miss must create a `script_runs` entry if the script was run, and must not be treated as completion of fallback search.
+- If official transcript, official replay, official audio/video, and official complete captions are missing while the call analysis uses third-party transcript or third-party-hosted original audio, set `provisional: true`, set `fallback_completed: true` only after obtaining complete reliable fallback call content or documenting a reasonable source-specific search, list `missing_materials` in `gaps`, and set `recheck_after` when a near-term official replay/transcript update is likely.
