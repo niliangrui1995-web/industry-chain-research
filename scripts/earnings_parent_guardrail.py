@@ -7,6 +7,8 @@ This script deliberately handles deterministic mechanics only:
 - compute the strict future window and child run times
 - validate ticker/company/market identity for candidate events
 - scan child automation TOMLs, detect duplicates, stale tasks, and rrule drift
+- surface soft official-source probes, review queues, and legacy-name warnings
+- optionally export a lightweight automation-state snapshot into the project repo
 - optionally apply mechanical child TOML create/update/pause changes
 
 It does not decide whether a web page is sufficient official evidence and it
@@ -19,12 +21,15 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
+import html
 import json
 import os
 import re
 import shutil
 import sys
 import tomllib
+import urllib.error
+import urllib.request
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any
@@ -71,6 +76,21 @@ DEFAULT_CODEX_HOME = Path.home() / ".codex"
 DEFAULT_PROJECT_ROOT = Path("D:/vcp_hunter") / "\u4ea7\u4e1a\u94fe\u6295\u7814"
 DEFAULT_ZIJIN_ROOT = Path("D:/vcp_hunter") / "\u7d2b\u91d1\u7814\u9009"
 CHILD_NAME_PREFIX = "\u8d22\u62a5\u7535\u8bdd\u4f1a\u6df1\u6316"
+SNAPSHOT_ROOT_NAME = "automation_snapshots"
+SNAPSHOT_KIND = "earnings-parent-22-30-2"
+AIRTIME_EVENT_PATTERN = re.compile(
+    r"https?://(?:www\.)?appairtime\.com/event/([0-9a-fA-F-]{36})"
+)
+AIRTIME_SEED_BLOCKLIST = (
+    "emops.twse.com.tw",
+    "mops.twse.com.tw",
+    "kind.krx.co.kr",
+    "dart.fss.or.kr",
+    "jpx.co.jp",
+    "tdnet.info",
+    "finance.yahoo",
+    "nasdaq.com",
+)
 
 
 @dataclass(frozen=True)
@@ -117,6 +137,19 @@ class ChildRecord:
 
 def _json_string(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False)
+
+
+def _normalize_for_match(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
+
+
+def _safe_url(value: str) -> str | None:
+    text = html.unescape(str(value or "").strip())
+    if not text or text.upper() == "N/A":
+        return None
+    if not re.match(r"^https?://", text, re.I):
+        return None
+    return text
 
 
 def _dump_toml(data: dict[str, Any]) -> str:
@@ -185,6 +218,18 @@ def _parse_beijing_time(value: str) -> dt.datetime | None:
         return None
     try:
         return dt.datetime.strptime(value.strip(), "%Y-%m-%d %H:%M").replace(tzinfo=BEIJING_TZ)
+    except ValueError:
+        return None
+
+
+def _parse_iso_with_offset(value: str) -> dt.datetime | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    # Airtime-style payloads use offsets such as +0200; Python expects +02:00.
+    text = re.sub(r"([+-]\d{2})(\d{2})$", r"\1:\2", text)
+    try:
+        return dt.datetime.fromisoformat(text)
     except ValueError:
         return None
 
@@ -581,9 +626,168 @@ def _review_items(events: list[PlannedEvent]) -> list[dict[str, Any]]:
                 "reason": reason,
                 "calendar_source": event.calendar_source,
                 "calendar_caveat": event.calendar_caveat,
+                "suggested_official_checks": _suggested_official_checks(event),
+                "hard_stop": False,
             }
         )
     return items
+
+
+def _suggested_official_checks(event: PlannedEvent) -> list[str]:
+    market = event.market.upper()
+    checks = ["Company IR"]
+    if market == "TW":
+        checks.extend(["MOPS material information", "TWSE/MOPS investor conference disclosure"])
+    elif market == "KR":
+        checks.extend(["KIND disclosure", "DART filing if OPENDART_API_KEY is available"])
+    elif market == "JP":
+        checks.extend(["TDnet disclosure", "JPX listing/company calendar"])
+    elif market in EU_MARKETS:
+        checks.extend(["IR financial calendar", "IR-linked webcast platform such as Airtime"])
+    elif market == "US":
+        checks.extend(["SEC EDGAR 8-K/6-K", "official IR event page"])
+    else:
+        checks.append("local exchange/regulator disclosure")
+    checks.append("third-party calendars as leads only")
+    return checks
+
+
+def _http_json_post(url: str, payload: Any, timeout: int = 12) -> Any:
+    body = json.dumps(payload).encode("utf-8")
+    request = urllib.request.Request(
+        url,
+        data=body,
+        headers={
+            "Content-Type": "application/json",
+            "User-Agent": "Codex earnings parent guardrail soft probe",
+        },
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310
+        raw = response.read().decode("utf-8", errors="replace")
+    return json.loads(raw)
+
+
+def _http_text_get(url: str, timeout: int = 12) -> str:
+    request = urllib.request.Request(
+        url,
+        headers={"User-Agent": "Codex earnings parent guardrail soft probe"},
+        method="GET",
+    )
+    with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310
+        charset = response.headers.get_content_charset() or "utf-8"
+        return response.read().decode(charset, errors="replace")
+
+
+def _seed_urls_for_probe(event: PlannedEvent, child: ChildRecord | None) -> list[str]:
+    values = [
+        event.call_time_source_url,
+        event.official_source_url,
+    ]
+    if child:
+        prompt = str(child.data.get("prompt", "") or "")
+        values.extend(
+            [
+                _prompt_field(prompt, "Call time source URL"),
+                _prompt_field(prompt, "Official source URL"),
+            ]
+        )
+    urls: list[str] = []
+    for value in values:
+        url = _safe_url(value)
+        if url and url not in urls:
+            urls.append(url)
+    return urls
+
+
+def _probe_airtime_event(event_id: str) -> dict[str, Any] | None:
+    payload = _http_json_post(
+        f"https://www.appairtime.com/services/event/GetExternalEvent",
+        [event_id, "en"],
+    )
+    if not isinstance(payload, list) or not payload:
+        return None
+    event = payload[0]
+    if not isinstance(event, dict):
+        return None
+    start = _parse_iso_with_offset(str(event.get("startDate", "") or ""))
+    end = _parse_iso_with_offset(str(event.get("endDate", "") or ""))
+    if start is None:
+        return None
+    company = event.get("company") if isinstance(event.get("company"), dict) else {}
+    return {
+        "provider": "Airtime",
+        "event_id": event_id,
+        "event_name": event.get("name", ""),
+        "event_type": event.get("type", ""),
+        "event_status": event.get("status", ""),
+        "company_name": company.get("name", ""),
+        "start_raw": event.get("startDate", ""),
+        "end_raw": event.get("endDate", ""),
+        "candidate_call_beijing": _format_beijing_time(start),
+        "candidate_end_beijing": _format_beijing_time(end) if end else "",
+        "source_url": f"https://www.appairtime.com/event/{event_id}",
+        "source_type": "official_ir_linked_webcast_candidate",
+        "confidence": "candidate_only_requires_agent_review",
+        "hard_stop": False,
+    }
+
+
+def _probe_official_sources(
+    events: list[PlannedEvent],
+    children: list[ChildRecord],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    candidates: list[dict[str, Any]] = []
+    errors: list[dict[str, Any]] = []
+    for event in events:
+        if event.schedule_basis == "official_call_plus_3h":
+            continue
+        child, _ = _match_child(event, children)
+        for seed_url in _seed_urls_for_probe(event, child):
+            if any(blocked in seed_url.lower() for blocked in AIRTIME_SEED_BLOCKLIST):
+                continue
+            try:
+                page = _http_text_get(seed_url)
+            except (OSError, urllib.error.URLError, TimeoutError) as exc:
+                errors.append(
+                    {
+                        "ticker": event.ticker,
+                        "seed_url": seed_url,
+                        "problem": "seed_fetch_failed",
+                        "detail": str(exc),
+                        "hard_stop": False,
+                    }
+                )
+                continue
+            airtime_ids = sorted(set(AIRTIME_EVENT_PATTERN.findall(page)))
+            for airtime_id in airtime_ids:
+                try:
+                    candidate = _probe_airtime_event(airtime_id)
+                except (OSError, urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+                    errors.append(
+                        {
+                            "ticker": event.ticker,
+                            "seed_url": seed_url,
+                            "provider": "Airtime",
+                            "event_id": airtime_id,
+                            "problem": "provider_probe_failed",
+                            "detail": str(exc),
+                            "hard_stop": False,
+                        }
+                    )
+                    continue
+                if candidate:
+                    candidate.update(
+                        {
+                            "ticker": event.ticker,
+                            "company": event.company,
+                            "report_date": event.report_date,
+                            "task_key": event.task_key,
+                            "seed_url": seed_url,
+                        }
+                    )
+                    candidates.append(candidate)
+    return candidates, errors
 
 
 def _build_action_plan(
@@ -673,6 +877,109 @@ def _build_action_plan(
                 }
             )
     return actions, blockers
+
+
+def _legacy_name_warnings(children: list[ChildRecord]) -> list[dict[str, Any]]:
+    warnings: list[dict[str, Any]] = []
+    for child in children:
+        child_id = str(child.data.get("id", ""))
+        name = str(child.data.get("name", ""))
+        normalized_id = _normalize_for_match(child_id)
+        normalized_name = _normalize_for_match(name)
+        normalized_company = _normalize_for_match(child.company)
+        normalized_ticker = _normalize_for_match(child.ticker)
+        normalized_date = _normalize_for_match(child.report_date)
+        if normalized_company and normalized_company not in normalized_name:
+            warnings.append(
+                {
+                    "child_id": child_id,
+                    "task_key": child.task_key,
+                    "problem": "name_company_mismatch",
+                    "name": name,
+                    "prompt_company": child.company,
+                    "hard_stop": False,
+                }
+            )
+        if normalized_ticker and normalized_ticker not in normalized_name:
+            warnings.append(
+                {
+                    "child_id": child_id,
+                    "task_key": child.task_key,
+                    "problem": "name_ticker_mismatch",
+                    "name": name,
+                    "prompt_ticker": child.ticker,
+                    "hard_stop": False,
+                }
+            )
+        if normalized_date and normalized_date not in normalized_name:
+            warnings.append(
+                {
+                    "child_id": child_id,
+                    "task_key": child.task_key,
+                    "problem": "name_report_date_mismatch",
+                    "name": name,
+                    "prompt_report_date": child.report_date,
+                    "hard_stop": False,
+                }
+            )
+        id_tokens = [token for token in re.split(r"[^a-z0-9]+", child_id.lower()) if token]
+        ticker_tokens = {token for token in re.split(r"[^a-z0-9]+", child.ticker.lower()) if token}
+        date_tokens = {child.report_date.replace("-", ""), *child.report_date.split("-")}
+        ignored_tokens = {"ec", "earnings", "call", "tw", "ks", "t", "de", "us", "jp", "hk"} | ticker_tokens | date_tokens
+        alias_tokens = [
+            token
+            for token in id_tokens
+            if token not in ignored_tokens and not re.fullmatch(r"[0-9a-f]{6,}", token)
+        ]
+        if alias_tokens and normalized_company and not any(token in normalized_company for token in alias_tokens):
+            warnings.append(
+                {
+                    "child_id": child_id,
+                    "task_key": child.task_key,
+                    "problem": "id_company_alias_mismatch",
+                    "id_alias_tokens": alias_tokens,
+                    "prompt_company": child.company,
+                    "hard_stop": False,
+                }
+            )
+    return warnings
+
+
+def _source_header_warnings(events: list[PlannedEvent], children: list[ChildRecord]) -> list[dict[str, Any]]:
+    warnings: list[dict[str, Any]] = []
+    for event in events:
+        child, _ = _match_child(event, children)
+        if not child:
+            continue
+        prompt = str(child.data.get("prompt", "") or "")
+        existing_confidence = _prompt_field(prompt, "Source confidence")
+        existing_rank = SOURCE_CONFIDENCE_RANK.get(existing_confidence, 0)
+        event_rank = SOURCE_CONFIDENCE_RANK.get(event.source_confidence, 0)
+        if existing_rank > event_rank:
+            warnings.append(
+                {
+                    "child_id": child.data.get("id"),
+                    "ticker": event.ticker,
+                    "report_date": event.report_date,
+                    "problem": "existing_source_header_stronger_than_calendar",
+                    "existing_source_confidence": existing_confidence,
+                    "calendar_source_confidence": event.source_confidence,
+                    "hard_stop": False,
+                }
+            )
+        elif existing_rank < event_rank:
+            warnings.append(
+                {
+                    "child_id": child.data.get("id"),
+                    "ticker": event.ticker,
+                    "report_date": event.report_date,
+                    "problem": "calendar_source_header_stronger_than_existing",
+                    "existing_source_confidence": existing_confidence or "missing",
+                    "calendar_source_confidence": event.source_confidence,
+                    "hard_stop": False,
+                }
+            )
+    return warnings
 
 
 def _apply_actions(
@@ -771,6 +1078,72 @@ def _apply_actions(
     return {"applied": True, "changed": changed, "backups": backups}
 
 
+def _snapshot_child(child: ChildRecord) -> dict[str, Any]:
+    prompt = str(child.data.get("prompt", "") or "")
+    return {
+        "child_id": child.data.get("id"),
+        "name": child.data.get("name"),
+        "status": child.data.get("status"),
+        "task_key": child.task_key,
+        "ticker": child.ticker,
+        "company": child.company,
+        "report_date": child.report_date,
+        "fiscal_period": child.fiscal_period,
+        "planned_child_start_beijing": child.planned_child_start_beijing,
+        "schedule_basis": child.schedule_basis,
+        "rrule": child.data.get("rrule"),
+        "rrule_ok": child.rrule_ok,
+        "has_memory": child.has_memory,
+        "calendar_source": _prompt_field(prompt, "Calendar source"),
+        "event_status": _prompt_field(prompt, "Event status"),
+        "source_confidence": _prompt_field(prompt, "Source confidence"),
+        "official_source_url": _prompt_field(prompt, "Official source URL"),
+        "prompt_sha1": hashlib.sha1(prompt.encode("utf-8")).hexdigest(),
+    }
+
+
+def _write_snapshot(
+    report: dict[str, Any],
+    children: list[ChildRecord],
+    project_root: Path,
+    now: dt.datetime,
+    *,
+    history: bool,
+) -> dict[str, Any]:
+    snapshot_root = project_root / SNAPSHOT_ROOT_NAME / SNAPSHOT_KIND
+    snapshot_root.mkdir(parents=True, exist_ok=True)
+    lightweight = {
+        "generated_at_beijing": _format_beijing_time(now),
+        "status": report.get("status"),
+        "mode": report.get("mode"),
+        "window": {
+            "now_beijing": report.get("now_beijing"),
+            "window_end_beijing": report.get("window_end_beijing"),
+        },
+        "calendar_read": report.get("calendar_read"),
+        "action_counts": {
+            key: len(report.get("actions", {}).get(key, []))
+            for key in ["create", "update", "pause", "validate_pending", "repair_rrule"]
+        },
+        "review_items": report.get("review_items", []),
+        "soft_probe_candidates": report.get("soft_probe_candidates", []),
+        "soft_warnings": report.get("soft_warnings", {}),
+        "final_validation": report.get("final_validation"),
+        "touch_contract": report.get("touch_contract"),
+        "children": [_snapshot_child(child) for child in children],
+    }
+    latest_path = snapshot_root / "latest.json"
+    latest_path.write_text(json.dumps(lightweight, ensure_ascii=False, indent=2), encoding="utf-8")
+    written = [str(latest_path)]
+    if history:
+        history_dir = snapshot_root / "history"
+        history_dir.mkdir(parents=True, exist_ok=True)
+        history_path = history_dir / f"{now.strftime('%Y%m%d-%H%M')}.json"
+        history_path.write_text(json.dumps(lightweight, ensure_ascii=False, indent=2), encoding="utf-8")
+        written.append(str(history_path))
+    return {"written": written, "child_count": len(children)}
+
+
 def _preflight(project_root: Path, zijin_root: Path, automations_root: Path) -> list[dict[str, Any]]:
     problems: list[dict[str, Any]] = []
     required = {
@@ -795,6 +1168,21 @@ def main() -> int:
     parser.add_argument("--window-hours", type=int, default=72)
     parser.add_argument("--now", help="Override Beijing now, format YYYY-MM-DD HH:MM")
     parser.add_argument("--apply-mechanical", action="store_true", help="Apply deterministic TOML create/update/pause actions.")
+    parser.add_argument(
+        "--probe-official-sources",
+        action="store_true",
+        help="Run soft official-source probes such as IR-linked Airtime discovery. Candidate evidence only.",
+    )
+    parser.add_argument(
+        "--write-snapshot",
+        action="store_true",
+        help="Write a lightweight automation state snapshot under the project repo.",
+    )
+    parser.add_argument(
+        "--snapshot-history",
+        action="store_true",
+        help="Also write a timestamped history snapshot in addition to latest.json.",
+    )
     parser.add_argument("--output", choices=["json", "text"], default="json")
     args = parser.parse_args()
 
@@ -847,6 +1235,10 @@ def main() -> int:
     children, child_scan_problems = _scan_children(automations_root)
     actions, blockers = _build_action_plan(future_events, children, now)
     review_items = _review_items(future_events)
+    soft_probe_candidates: list[dict[str, Any]] = []
+    soft_probe_errors: list[dict[str, Any]] = []
+    if args.probe_official_sources:
+        soft_probe_candidates, soft_probe_errors = _probe_official_sources(future_events, children)
 
     status = "ok"
     if mapping_errors:
@@ -881,6 +1273,10 @@ def main() -> int:
             bad_rrules.append(child_id)
     duplicate_task_keys = {key: ids for key, ids in key_index.items() if key and len(ids) > 1}
     duplicate_ticker_dates = {key: ids for key, ids in ticker_date_index.items() if key and len(ids) > 1}
+    soft_warnings = {
+        "legacy_name": _legacy_name_warnings(children),
+        "source_header": _source_header_warnings(future_events, children),
+    }
 
     report = {
         "status": status,
@@ -897,6 +1293,9 @@ def main() -> int:
         },
         "future_candidates": [asdict(event) for event in future_events],
         "review_items": review_items,
+        "soft_probe_candidates": soft_probe_candidates,
+        "soft_probe_errors": soft_probe_errors,
+        "soft_warnings": soft_warnings,
         "mapping_errors": mapping_errors,
         "child_scan_problems": child_scan_problems,
         "blockers": blockers,
@@ -917,6 +1316,16 @@ def main() -> int:
             "market_calendar_refresh_touched": False,
         },
     }
+    if args.write_snapshot:
+        report["snapshot_result"] = _write_snapshot(
+            report,
+            children,
+            project_root,
+            now,
+            history=args.snapshot_history,
+        )
+    else:
+        report["snapshot_result"] = {"written": []}
 
     if args.output == "json":
         print(json.dumps(report, ensure_ascii=False, indent=2))
@@ -925,6 +1334,8 @@ def main() -> int:
         print(f"window: {report['now_beijing']} -> {report['window_end_beijing']}")
         print(f"future candidates: {len(future_events)}")
         print(f"review items: {len(review_items)}")
+        print(f"soft probe candidates: {len(soft_probe_candidates)}")
+        print(f"legacy warnings: {len(soft_warnings['legacy_name'])}")
         print(f"create/update/pause: {len(actions['create'])}/{len(actions['update'])}/{len(actions['pause'])}")
         print(f"bad rrules: {len(bad_rrules)}")
     return 0 if status == "ok" else 2
