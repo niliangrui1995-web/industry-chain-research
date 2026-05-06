@@ -300,6 +300,7 @@ Conclusion First:
 - Most important call takeaway:
 - Stock-reaction view:
 - Key follow-up indicators:
+- Source status: company_original_status / call_content_status / final_source_type / missing_materials / provisional true/false / confidence level
 
 1. Company Fundamental Baseline
 [one-paragraph business model, business map table, and earnings interpretation bridge]
@@ -366,6 +367,7 @@ A good earnings-call analysis must include:
 - At least five call takeaways ranked by importance.
 - Clear distinction between fact, management claim, analyst inference, and our inference.
 - An upstream bottleneck check that explicitly marks each relevant item as mentioned, mitigated, future risk, not mentioned, or third-party only.
+- Final source-status fields: `company_original_status`, `call_content_status`, `final_source_type`, `missing_materials`, `provisional true/false`, and `confidence level`.
 - Upside catalysts and downside risks.
 - Specific post-call tracking indicators.
 
