@@ -1,6 +1,6 @@
 ---
 name: earnings-call-investment-analyst
-description: Use this skill to analyze public-company earnings releases, financial results, management guidance, and earnings-call transcripts or replays. It is optimized for investment research, beat-or-miss analysis, expectation-gap judgment, guidance quality, conference-call extraction, original-source collection, audio replay transcription, and post-earnings stock-reaction assessment.
+description: Use this skill to analyze public-company earnings releases, financial results, management guidance, and earnings-call transcripts or replays. It is optimized for investment research, beat-or-miss analysis, expectation-gap judgment, guidance quality, conference-call extraction, upstream supply-chain bottleneck extraction, original-source collection, audio replay transcription, and post-earnings stock-reaction assessment.
 ---
 
 # Earnings Call Investment Analyst
@@ -15,6 +15,8 @@ Answer four questions first:
 2. What changed versus prior guidance, consensus, and our previous forecast?
 3. What did management say that changes the next one to four quarters?
 4. What should be tracked after the print for stock reaction, thesis validation, and risk control?
+
+Before answering those questions, build a concise company baseline so the earnings analysis is anchored in what the company actually does.
 
 ## Source Priority
 
@@ -75,6 +77,42 @@ When a script is used, record:
 If only third-party transcript/audio is available after reasonable original-source collection, mark the analysis as provisional, explain the missing official materials, and include a concrete official replay/transcript recheck time when timing matters.
 
 ## Core Workflow
+
+### 0. Build The Company Fundamental Baseline
+
+Before collecting or analyzing the earnings release, call, and Q&A, build a concise company baseline in three layers. Do not skip this step; it defines what matters in the quarter.
+
+First, write a one-paragraph business model answer:
+
+- What the company sells.
+- Who buys it.
+- Why customers need it.
+- How the company makes money: unit volume, ASP, mix, utilization, yield, service/software attach, financing, or one-time items.
+
+Second, build a business map table:
+
+| Business / Product Line | Segment Role | What It Sells | Value-Chain Position | Customers / End Market | Competitive Position | AI Exposure Path | Quarter-Sensitive KPIs |
+|---|---|---|---|---|---|---|---|
+
+Fill the table with evidence-based labels:
+
+- `Segment Role`: core growth engine, margin engine, cash-cow, cyclical drag, turnaround, early option, or discontinued/immaterial.
+- `Value-Chain Position`: upstream material, component, device, module, system, equipment, software/service, distributor/channel, or end customer.
+- `Competitive Position`: global leader, regional leader, niche leader, qualified challenger, price taker, commodity supplier, or unclear. Support this with share, customer wins, technology generation, capacity, margin, or management claims; do not use vague praise.
+- `AI Exposure Path`: direct AI infrastructure, indirect AI infrastructure, AI-adjacent, non-AI cyclical, or no meaningful AI exposure. Explain the path from product to AI capex; do not label a business "AI" only because the company uses AI language.
+- `Quarter-Sensitive KPIs`: the specific metrics that should move this business in the earnings release or call, such as units, ASP, backlog, bookings, utilization, yield, gross margin, lead time, inventory, capex, customer qualification, design wins, or regulatory approvals.
+
+Third, create an earnings interpretation bridge before reading the quarter:
+
+- Which businesses should drive current-quarter revenue, gross margin, operating leverage, cash flow, and guidance?
+- Which businesses are legacy drags, cyclical noise, or non-core and should not dominate the thesis?
+- Which customer, order, capacity, pricing, inventory, and upstream-input terms must be searched in the call and Q&A?
+- What would make the print high quality versus low quality for this specific company?
+- Which claims require caution because they depend on one customer, unqualified capacity, future ramps, regulatory approvals, or undisclosed end users?
+
+Use official filings, company IR, investor presentations, and recent earnings materials first. If the baseline cannot be built from reliable sources, label the source gap and keep later conclusions provisional.
+
+Do not analyze beat/miss, guidance, Q&A, or upstream bottlenecks before this baseline is clear enough to interpret which business lines and bottleneck terms matter.
 
 ### 1. Define The Earnings Setup
 
@@ -186,6 +224,35 @@ Required topics:
 - Management tone: more confident, more cautious, or materially changed versus prior calls.
 - Analyst Q&A: questions management avoided, clarified, or answered with unusual detail.
 
+### Upstream Bottleneck Evidence Rule
+
+For every post-earnings call analysis, actively search the earnings release, investor presentation, prepared remarks, and Q&A for upstream bottlenecks. Do not rely only on generic "supply chain" wording. Search for the company's actual upstream terms, including supplier, substrate, wafer, fab, material, component, capacity, equipment, lead time, yield, inventory, allocation, qualification, long-term agreement, prepayment, take-or-pay, shortage, constraint, tightness, bottleneck, and the segment-specific product names.
+
+Always separate:
+
+- Confirmed current bottleneck: management explicitly says a supply, capacity, material, equipment, yield, supplier, or qualification issue limits shipments or margins now.
+- Future bottleneck risk: management says future ramp, 2027 demand, new capacity, customer qualification, or supplier expansion could become constrained.
+- Covered or mitigated risk: management says the bottleneck exists in the market but is covered by LTAs, inventory, internal capacity, alternate suppliers, or customer agreements.
+- Not mentioned: the filing, prepared remarks, and Q&A do not mention the alleged bottleneck.
+
+Do not infer a bottleneck from a hot theme, stock move, segment shortage headlines, or a third-party summary when management did not say it. If the user asks about a specific upstream item, such as InP, substrate, pump lasers, memory, advanced packaging substrate, CCL, copper foil, liquid-cooling components, transformers, or power equipment, answer explicitly whether it was mentioned, not mentioned, denied, mitigated, or only inferable.
+
+Use this table when upstream bottlenecks matter:
+
+| Upstream Item | Mention Status | Evidence Location | Management Wording | Bottleneck Type | Timeframe | Investment Meaning | Confidence |
+|---|---|---|---|---|---|---|---|
+
+Allowed `Mention Status` values:
+
+- `mentioned_current_bottleneck`
+- `mentioned_future_risk`
+- `mentioned_mitigated`
+- `mentioned_not_bottleneck`
+- `not_mentioned`
+- `third_party_only`
+
+If no upstream bottleneck is found, say so plainly and keep the conclusion at `not_mentioned` or `evidence_absent`. Do not fill the gap with industry knowledge unless clearly labeled as outside-call context.
+
 Separate:
 
 - Hard fact.
@@ -234,25 +301,31 @@ Conclusion First:
 - Stock-reaction view:
 - Key follow-up indicators:
 
-1. Actual Results vs Expectations
+1. Company Fundamental Baseline
+[one-paragraph business model, business map table, and earnings interpretation bridge]
+
+2. Actual Results vs Expectations
 [table]
 
-2. Guidance vs Expectations
+3. Guidance vs Expectations
 [table]
 
-3. Conference-Call Takeaways
+4. Conference-Call Takeaways
 [table]
 
-4. Difference vs Our Prior Forecast
+5. Upstream Bottleneck Check
+[table with mention status; say "not mentioned" when absent]
+
+6. Difference vs Our Prior Forecast
 [table]
 
-5. Investment Judgment
+7. Investment Judgment
 - Fundamental change:
 - Earnings elasticity change:
 - Trading elasticity change:
 - Biggest risk:
 
-6. Follow-Up Checklist
+8. Follow-Up Checklist
 [3-7 specific indicators]
 ```
 
@@ -264,6 +337,7 @@ For AXTI, optical modules, compound semiconductors, InP, GaAs, Ge, SiC, substrat
 - AI data-center demand versus telecom, consumer, and industrial demand.
 - Backlog size and whether backlog is cancellable.
 - Capacity expansion timing, equipment lead time, yield, and customer qualification.
+- Upstream bottlenecks named in the earnings release, prepared remarks, and Q&A, especially substrates, wafers, fab capacity, epitaxy, pumps, lasers, MEMS, rare earths, tools, qualified suppliers, and contract manufacturing.
 - Export-license status: granted, pending, denied, not required, or management inference.
 - Domestic shipments versus export shipments.
 - Customer geography and end-user ambiguity.
@@ -275,6 +349,9 @@ Do not assume:
 - A U.S.-listed customer means the shipment destination is the United States.
 - Backlog equals revenue.
 - Added nameplate capacity equals qualified capacity.
+- A market-wide shortage headline means this company confirmed the same bottleneck.
+- A future capacity project means current upstream supply is already short.
+- A supplier or substrate risk is material if management says it is covered, mitigated, or mostly under control.
 - Export-license improvement means regulatory risk is gone.
 - Bullish management tone means orders will convert.
 
@@ -282,11 +359,13 @@ Do not assume:
 
 A good earnings-call analysis must include:
 
+- A concise company baseline before earnings interpretation: what the company does, main businesses, competitive strength, AI relevance, and baseline risks.
 - Company original-source status: found, partially found, missing, or unavailable.
 - Numeric beat-or-miss table.
 - Guidance midpoint comparison.
 - At least five call takeaways ranked by importance.
 - Clear distinction between fact, management claim, analyst inference, and our inference.
+- An upstream bottleneck check that explicitly marks each relevant item as mentioned, mitigated, future risk, not mentioned, or third-party only.
 - Upside catalysts and downside risks.
 - Specific post-call tracking indicators.
 
