@@ -78,6 +78,8 @@ DEFAULT_ZIJIN_ROOT = Path("D:/vcp_hunter") / "\u7d2b\u91d1\u7814\u9009"
 CHILD_NAME_PREFIX = "\u8d22\u62a5\u7535\u8bdd\u4f1a\u6df1\u6316"
 SNAPSHOT_ROOT_NAME = "automation_snapshots"
 SNAPSHOT_KIND = "earnings-parent-22-30-2"
+CHILD_TEMPLATE_RELATIVE_PATH = Path("docs") / "earnings_parent" / "CHILD_PROMPT_TEMPLATE.md"
+CHILD_BODY_MARKER = "CHILD TASK SKILL HARD GATE:"
 AIRTIME_EVENT_PATTERN = re.compile(
     r"https?://(?:www\.)?appairtime\.com/event/([0-9a-fA-F-]{36})"
 )
@@ -415,7 +417,14 @@ def _scan_children(automations_root: Path) -> tuple[list[ChildRecord], list[dict
     return children, problems
 
 
-def _template_body(children: list[ChildRecord]) -> str | None:
+def _template_body(project_root: Path, children: list[ChildRecord]) -> str | None:
+    template_path = project_root / CHILD_TEMPLATE_RELATIVE_PATH
+    if template_path.exists():
+        text = template_path.read_text(encoding="utf-8")
+        index = text.find(CHILD_BODY_MARKER)
+        if index >= 0:
+            return "\n\n" + text[index:].strip() + "\n"
+
     marker = "\n\nCHILD TASK SKILL HARD GATE:"
     for child in children:
         prompt = str(child.data.get("prompt", "") or "")
@@ -991,7 +1000,7 @@ def _apply_actions(
     run_ms: int,
     backup_tag: str,
 ) -> dict[str, Any]:
-    template = _template_body(children)
+    template = _template_body(project_root, children)
     if not template:
         return {"applied": False, "problem": "child_template_body_not_found"}
 

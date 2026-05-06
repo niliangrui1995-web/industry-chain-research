@@ -1,11 +1,14 @@
-# 财报电话会深挖子任务 Prompt 模板
+# Earnings Call Deep-Dive Child Prompt Template
 
-母任务创建或更新单公司 child automation 时，必须按本模板生成 prompt。方括号内为运行时填充值；没有可信值时写 `N/A` 或 `not_found`，不要删除字段。
+Use this template whenever the parent automation creates or updates a single-company child automation. Fill every bracketed value at runtime. If a credible value is unavailable, write `N/A` or `not_found`; do not delete header fields.
+
+The child prompt body must be written in English. The only Chinese text should be the final-answer requirement and the exact final judgment labels that the child must use in its Chinese output.
 
 ## Header
 
 ```text
 TASK_KEY: [ticker]|[report_date]|[fiscal_period]
+Automation parent: 22-30-2
 Company: [company]
 Ticker: [ticker]
 Market: [market]
@@ -26,36 +29,32 @@ Official source URL: [official URL or N/A]
 Calendar caveat: [one-line caveat explaining official, estimate, conflict, skipped DART, or mismatch status]
 ```
 
-## Literal hard gate
+## Prompt Body
 
-Every generated child prompt must contain this block exactly:
-
-```text
 CHILD TASK SKILL HARD GATE: At the start of this single-company child task, before collecting or analyzing anything, invoke and follow the skill earnings-call-investment-analyst. The project-local skill directory hint is D:\vcp_hunter\产业链投研\skills\earnings-call-investment-analyst, so use that project skill location when resolving the skill. This skill is invoked only by the child task at runtime, not by the parent scheduler. If the child task cannot invoke earnings-call-investment-analyst from that project-local skill location, stop immediately and report missing_skill: earnings-call-investment-analyst. Do not silently substitute industry-research-router, finance-news, stock-evaluator, generic web search, or your own framework for this child task. Do not claim skill invocation by merely reading SKILL.md as a plain file; normal skill resolution may read that SKILL.md.
-```
 
 ## Scope
 
-- 只分析 header 指定的单一公司和 ticker，不扩展成行业通用研究或多公司横评。
-- 开始时必须先调用 `earnings-call-investment-analyst`；该 skill 成功调用后，才允许进入资料抓取、财务核对、电话会分析和投资判断。
-- 抓取和核对公司 IR、财报 PDF、presentation、SEC/交易所文件、conference call audio/video/transcript、Q&A。
+- Analyze only the company and ticker specified in the header. Do not turn this task into a sector overview or multi-company comparison.
+- Invoke `earnings-call-investment-analyst` first. Only after that skill is successfully invoked may you collect materials, verify financials, analyze the call, and form an investment judgment.
+- Collect and verify the company's IR materials, earnings release, financial statements, presentation, SEC or exchange filings, conference call webcast, audio/video replay, transcript, captions, and Q&A when available.
 
-## Fundamental baseline hard constraint
+## Fundamental Baseline Hard Constraint
 
-Before reading or analyzing the earnings release, conference call, transcript, or Q&A, the child task must first complete the earnings-call-investment-analyst Company Fundamental Baseline:
+Before reading or analyzing the earnings release, conference call, transcript, or Q&A, first complete the earnings-call-investment-analyst Company Fundamental Baseline:
 
 - one-paragraph business model
-- business / product-line map
+- business and product-line map
 - competitive position by business
 - AI exposure path by business
 - quarter-sensitive KPIs
 - earnings interpretation bridge
 
-Beat/miss, guidance, Q&A, bottleneck analysis, and supply-chain impact must be based on that baseline.
+Base beat/miss assessment, guidance interpretation, Q&A reading, bottleneck analysis, and supply-chain impact on this baseline.
 
-## Upstream bottleneck evidence hard constraint
+## Upstream Bottleneck Evidence Hard Constraint
 
-In the earnings release, prepared remarks, and Q&A, the child task must actively search for upstream bottleneck evidence and label each relevant item with mention status:
+In the earnings release, prepared remarks, and Q&A, actively search for upstream bottleneck evidence and label each relevant item with one mention status:
 
 - `mentioned_current_bottleneck`
 - `mentioned_future_risk`
@@ -64,33 +63,35 @@ In the earnings release, prepared remarks, and Q&A, the child task must actively
 - `not_mentioned`
 - `third_party_only`
 
-If the company did not mention an alleged upstream bottleneck, write `not_mentioned` or `evidence_absent`; do not infer it from industry headlines, stock moves, or theme logic.
+If the company did not mention an alleged upstream bottleneck, write `not_mentioned` or `evidence_absent`. Do not infer bottlenecks from industry headlines, stock moves, or theme logic.
 
-## Evidence and source rules
+## Evidence and Source Rules
 
-- 公司 IR、官方文件、SEC 或交易所、官方链出的 webcast/replay/transcript/captions 优先用于核对财务数字和管理层原话。
-- 第三方财经日历只能用于确认事件线索，不能作为 reported facts 的最终依据。
-- 若官方 transcript、audio replay、video replay、完整 captions 或 Q&A 尚未发布或不可完整访问，agent 必须继续寻找能支撑投资判断的完整电话会内容。
-- 资料获取路径由 agent 自主选择：官方页面、SEC/交易所页面、联网搜索、可靠第三方 transcript/audio provider、浏览器检查、HTTP、页面源码、network request、直接下载或项目脚本均可。
-- StockAnalysis、Quartr、Motley Fool、Seeking Alpha、Benzinga、Alpha Spread、EarningsCall.biz 等只是可选搜索种子，不是必须逐个检查的清单。
-- 可靠第三方 full transcript 或第三方托管的原始电话会音频可作为 fallback 证据，但必须标注为 `third_party_transcript` 或 `original_call_audio + third_party_hosted`，不能列入官方来源。
-- 如果可靠 full transcript 和原始电话会音频都可用，以 full transcript 为主要工作材料；音频只用于核验关键措辞、争议段落和转录质量，默认不要跑完整音频 ASR。
-- hard gate 中禁止 generic web search 的含义是不得用通用搜索替代 skill invocation；skill 成功调用后，可按 `earnings-call-investment-analyst` 的 agent-first / source-quality-first 原则使用任意高效可靠路径找资料。
-- 脚本只是可选辅助工具；不要因为脚本存在就必须先跑脚本。只有实际使用脚本时，才记录 `script_used`、`script_result`、`script_limitation`、`manual_fallback_path`、`final_source_type`。
-- 脚本失败、无结果、401/403、页面 JS 化、provider stale 或 parser miss 都不能作为停止理由。
+- Prefer company IR, official company files, SEC filings, exchange filings, and official IR-linked webcast/replay/transcript/captions for financial facts and management wording.
+- Third-party financial calendars may only confirm event leads. Do not use them as final evidence for reported facts.
+- If official transcript, audio replay, video replay, complete captions, or Q&A are not yet published or fully accessible, keep looking for complete call content that can support the investment judgment.
+- Choose the retrieval path pragmatically: official pages, SEC or exchange pages, web search, reliable third-party transcript or audio providers, browser inspection, HTTP, page source, network requests, direct downloads, or project scripts are all allowed after the hard-gate skill invocation succeeds.
+- StockAnalysis, Quartr, Motley Fool, Seeking Alpha, Benzinga, Alpha Spread, and EarningsCall.biz are optional search seeds, not a mandatory checklist.
+- Reliable third-party full transcripts or third-party-hosted original call audio may be used as fallback evidence, but label them as `third_party_transcript` or `original_call_audio + third_party_hosted`; do not classify them as official sources.
+- If both a reliable full transcript and original call audio are available, use the full transcript as the main working material. Use audio only to verify key wording, disputed passages, or transcript quality; do not run full-call ASR by default.
+- The hard gate's ban on generic web search means generic search cannot substitute for skill invocation. Once the skill is invoked successfully, use any efficient and reliable retrieval route allowed by the skill's agent-first and source-quality-first principles.
+- Scripts are optional helpers. Do not run a script merely because it exists. If a script is actually used, record `script_used`, `script_result`, `script_limitation`, `manual_fallback_path`, and `final_source_type`.
+- Script failure, no result, 401/403, JavaScript-rendered pages, stale provider data, or parser misses are not valid stop reasons.
 
-## Required analysis
+## Required Analysis
 
-核对并分析：
+Verify and analyze:
 
-- 收入、EPS、利润率、订单、库存、资本开支、指引与一致预期。
-- 电话会和 Q&A 的未来展望、客户下单意愿、AI/数据中心需求、价格、库存、交期、产能、上游瓶颈和产业链影响。
-- 明确结论：超预期 / 符合 / 低于 / 证据不足。
-- 给出 confidence level，并说明证据来源层级。
+- revenue, EPS, margins, orders, backlog, inventory, capital expenditure, guidance, and consensus expectations
+- call and Q&A evidence on outlook, customer ordering intent, AI/data-center demand, pricing, inventory, lead times, capacity, upstream bottlenecks, and supply-chain impact
+- whether the quarter was above expectations, in line, below expectations, or not sufficiently evidenced
+- confidence level and the evidence tier supporting that confidence
 
-## Required final fields
+## Final Output Requirement
 
-最终中文输出必须说明：
+Write the final answer in Chinese. Use one of these exact Chinese judgment labels where applicable: `超预期` / `符合` / `低于` / `证据不足`.
+
+The final Chinese output must include:
 
 - `company_original_status`
 - `call_content_status`

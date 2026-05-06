@@ -113,7 +113,7 @@ RRULE:FREQ=WEEKLY;BYDAY=<weekday>;BYHOUR=<hour>;BYMINUTE=<minute>;COUNT=1
 ^DTSTART:\d{8}T\d{6}\nRRULE:FREQ=WEEKLY;BYDAY=(SU|MO|TU|WE|TH|FR|SA);BYHOUR=\d{1,2};BYMINUTE=\d{1,2};COUNT=1$
 ```
 
-- 子任务 prompt 必须按 `CHILD_PROMPT_TEMPLATE.md` 生成，并保留其中的 literal hard gate、baseline、upstream bottleneck evidence、source-quality 和中文输出要求。
+- 子任务 prompt 必须按 `CHILD_PROMPT_TEMPLATE.md` 生成，并保留其中的 literal hard gate、baseline、upstream bottleneck evidence、source-quality 和最终中文输出要求。子任务 prompt 正文必须使用英文；除本地路径和最终中文输出标签外，不要混用中文说明。
 
 ## 子任务收尾清理
 
