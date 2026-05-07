@@ -31,13 +31,13 @@ Calendar caveat: [one-line caveat explaining official, estimate, conflict, skipp
 
 ## Prompt Body
 
-CHILD TASK SKILL HARD GATE: At the start of this single-company child task, before collecting or analyzing anything, invoke and follow the skill earnings-call-investment-analyst. The project-local skill directory hint is D:\vcp_hunter\产业链投研\skills\earnings-call-investment-analyst, so use that project skill location when resolving the skill. This skill is invoked only by the child task at runtime, not by the parent scheduler. If the child task cannot invoke earnings-call-investment-analyst from that project-local skill location, stop immediately and report missing_skill: earnings-call-investment-analyst. Do not silently substitute industry-research-router, finance-news, stock-evaluator, generic web search, or your own framework for this child task. Do not claim skill invocation by merely reading SKILL.md as a plain file; normal skill resolution may read that SKILL.md.
+CHILD TASK SKILL HARD GATE: At the start of this single-company child task, before collecting or analyzing anything, invoke and follow the skill earnings-call-investment-analyst. The project-local skill directory hint is D:\vcp_hunter\产业链投研\skills\earnings-call-investment-analyst, so use that project skill location when resolving the skill. Project-local skill resolution is successful if that project-local SKILL.md exists and you use it as the earnings-call-investment-analyst skill entrypoint; absence from the global skill inventory alone is not missing_skill. This skill is invoked only by the child task at runtime, not by the parent scheduler. If the child task cannot invoke earnings-call-investment-analyst from that project-local skill location, stop immediately and report missing_skill: earnings-call-investment-analyst. Do not silently substitute industry-research-router, finance-news, stock-evaluator, generic web search, or your own framework for this child task. Do not claim skill invocation by merely reading SKILL.md as a plain file; normal skill resolution may read that SKILL.md, but you must follow the SKILL.md workflow as the task skill.
 
 ## Scope
 
 - Analyze only the company and ticker specified in the header. Do not turn this task into a sector overview or multi-company comparison.
 - Invoke `earnings-call-investment-analyst` first. Only after that skill is successfully invoked may you collect materials, verify financials, analyze the call, and form an investment judgment.
-- Collect and verify the company's IR materials, earnings release, financial statements, presentation, SEC or exchange filings, conference call webcast, audio/video replay, transcript, captions, and Q&A when available.
+- Collect and verify the company's IR materials, earnings release, financial statements, presentation, SEC or exchange filings, conference call, earnings webcast, results briefing, investor meeting, audio/video replay, transcript, captions, and Q&A when available.
 
 ## Fundamental Baseline Hard Constraint
 
@@ -69,10 +69,10 @@ If the company did not mention an alleged upstream bottleneck, write `not_mentio
 
 - Prefer company IR, official company files, SEC filings, exchange filings, and official IR-linked webcast/replay/transcript/captions for financial facts and management wording.
 - Third-party financial calendars may only confirm event leads. Do not use them as final evidence for reported facts.
-- If official transcript, audio replay, video replay, complete captions, or Q&A are not yet published or fully accessible, keep looking for complete call content that can support the investment judgment.
+- If official transcript, audio replay, video replay, complete captions, Q&A, results-briefing material, or investor-meeting material is not yet published or fully accessible, keep looking for complete event content that can support the investment judgment.
 - Choose the retrieval path pragmatically: official pages, SEC or exchange pages, web search, reliable third-party transcript or audio providers, browser inspection, HTTP, page source, network requests, direct downloads, or project scripts are all allowed after the hard-gate skill invocation succeeds.
 - StockAnalysis, Quartr, Motley Fool, Seeking Alpha, Benzinga, Alpha Spread, and EarningsCall.biz are optional search seeds, not a mandatory checklist.
-- Reliable third-party full transcripts or third-party-hosted original call audio may be used as fallback evidence, but label them as `third_party_transcript` or `original_call_audio + third_party_hosted`; do not classify them as official sources.
+- Reliable third-party full transcripts or third-party-hosted original call/briefing audio may be used as fallback evidence, but label them as `third_party_transcript` or `original_call_audio + third_party_hosted`; do not classify them as official sources.
 - If both a reliable full transcript and original call audio are available, use the full transcript as the main working material. Use audio only to verify key wording, disputed passages, or transcript quality; do not run full-call ASR by default.
 - The hard gate's ban on generic web search means generic search cannot substitute for skill invocation. Once the skill is invoked successfully, use any efficient and reliable retrieval route allowed by the skill's agent-first and source-quality-first principles.
 - Scripts are optional helpers. Do not run a script merely because it exists. If a script is actually used, record `script_used`, `script_result`, `script_limitation`, `manual_fallback_path`, and `final_source_type`.
@@ -80,10 +80,14 @@ If the company did not mention an alleged upstream bottleneck, write `not_mentio
 
 ## Required Analysis
 
+Before retrieving prior-quarter financials or prior-quarter conference-call content, explicitly resolve which period "the immediately preceding quarter" means. If the header has a month-ended fiscal period such as `Mar/2026`, subtract three calendar months, e.g. `Mar/2026 -> Dec/2025`. If the header uses a fiscal-quarter label such as `FY2026 Q3`, verify the company's fiscal calendar from official filings or IR materials and resolve the prior fiscal quarter, e.g. `FY2026 Q3 -> FY2026 Q2`; if the current period is Q1, the prior quarter is the previous fiscal year's Q4. If `Fiscal period` is `N/A`, infer the current reporting period from the official earnings release, Form 10-Q/10-K, Form 8-K/6-K, exchange filing, or company IR event title. If the period still cannot be resolved, write `prior-quarter period unresolved`, avoid unsupported quarter-over-quarter or prior-call comparisons, and downgrade confidence.
+
 Verify and analyze:
 
 - revenue, EPS, margins, orders, backlog, inventory, capital expenditure, guidance, and consensus expectations
-- call and Q&A evidence on outlook, customer ordering intent, AI/data-center demand, pricing, inventory, lead times, capacity, upstream bottlenecks, and supply-chain impact
+- quarter-over-quarter growth using prior-quarter actuals from the resolved prior-quarter official materials
+- call, webcast, results-briefing, investor-meeting, and Q&A evidence on outlook, customer ordering intent, AI/data-center demand, pricing, inventory, lead times, capacity, upstream bottlenecks, and supply-chain impact
+- changes versus the resolved prior-quarter conference call, earnings webcast, results briefing, or investor meeting, using prior-quarter transcript/replay/captions or reliable third-party full transcript when official event content is unavailable
 - whether the quarter was above expectations, in line, below expectations, or not sufficiently evidenced
 - confidence level and the evidence tier supporting that confidence
 

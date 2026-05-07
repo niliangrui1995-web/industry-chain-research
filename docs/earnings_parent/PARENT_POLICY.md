@@ -21,7 +21,7 @@
 - 台湾 PCB 回归硬门失败：Wus 必须是 `2316.TW`，Compeq 必须是 `2313.TW`，Tripod 必须是 `3044.TW`。若本轮涉及台湾 PCB 且发现错配、重复、缺失或无法确认，报告 `ticker_company_mapping_failed`。
 - 同一 `TASK_KEY` 或兜底同 ticker + report_date 命中多场明显冲突财报，报告 `duplicate_key_ambiguous`。
 - 子任务 rrule 无法保持 `DTSTART + RRULE:FREQ=WEEKLY;...;COUNT=1`，报告 `child_rrule_update_failed`。
-- 官方电话会写回抛出 `ConfirmedEventWriteError`、写后无法读回、或读回字段不一致，报告 `confirmed_event_write_failed` 或 `writeback_verify_failed`，并改用默认代理排期。
+- 官方电话会、webcast、results briefing 或 investor meeting 时间已经核验，但无法在 child header 保留官方时间、URL、时区和 `call_time_source_type`，报告 `writeback_verify_failed`，不得创建或更新受影响子任务。
 - 任何操作需要手工写 `confirmed_events.json`、手工执行 SQLite SQL、写 `kv_store.trade_dates`、调用 `MarketCalendar.load_trade_dates()`、`MarketCalendar._schedule_trade_dates_refresh()` 或其他交易日历刷新路径时，停止并报告 unsafe write path。
 
 ## 读取和候选范围
@@ -57,11 +57,12 @@
 - 必须用 IANA 时区和 DST 规则换算北京时间：ET=`America/New_York`，PT=`America/Los_Angeles`，JST=`Asia/Tokyo`，KST=`Asia/Seoul`，HKT=`Asia/Hong_Kong`，CST/China/Taiwan=`Asia/Shanghai`。
 - 官方电话会时间写回只能调用 `GlobalEarningsCalendarService().upsert_confirmed_event(EarningsCalendarEvent(...))`。
 - 写回后必须立即用 `load_events(..., allow_network=False)` 验证对应 ticker 可读，且 company/ticker/status/beijing_time/call_time_source_type 与写入值一致。
+- 若官方电话会、webcast、results briefing 或 investor meeting 时间已由官方来源核验，但 `upsert_confirmed_event()` 抛出 `ConfirmedEventWriteError`、写后无法读回、或读回字段不一致，不得降级为默认代理排期。此时只允许在 child prompt header 中保留已核验的官方时间、原始时间文本、IANA 时区、URL 和 `call_time_source_type`，`Schedule basis` 仍写 `official_call_plus_3h`，并在 `Calendar caveat` 中追加 `writeback_failed_not_persisted`；最终报告 `confirmed_event_write_failed` 或 `writeback_failed_not_persisted`。如果这些官方证据不能被完整保留，停止受影响事件并报告 `writeback_verify_failed`。
 
 ## 排期规则
 
-- 有可信官方电话会或 webcast 北京时间：子任务开始时间 = 电话会或 webcast 北京时间 + 3 小时，计划依据写 `official_call_plus_3h`。
-- 没有可信官方电话会时间：计划依据写 `default_proxy_not_call_time`，不写本地确认时间，不得写 `official_call_plus_3h`。
+- 有可信官方电话会、webcast、results briefing 或 investor meeting 北京时间：子任务开始时间 = 该官方事件北京时间 + 3 小时，计划依据写 `official_call_plus_3h`。
+- 没有可信官方电话会、webcast、results briefing 或 investor meeting 时间：计划依据写 `default_proxy_not_call_time`，不写本地确认时间，不得写 `official_call_plus_3h`。
 - 默认代理排期必须确定：
   - US 盘后或只知道盘后财报日期 -> 财报日次日北京时间 08:00。
   - US 盘前 -> 财报日北京时间 23:30。
@@ -97,7 +98,7 @@ D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe D:\vcp_hunter\产业链投�
 ## 子任务自动化合同
 
 - 每家公司必须创建独立 cron 子任务，命名：`财报电话会深挖 {ticker} {company} {report_date}`。
-- 子任务工作区仅 `D:\vcp_hunter\产业链投研`，`executionEnvironment=local`，`model=gpt-5.5`，`reasoningEffort=xhigh`。
+- 子任务工作区仅 `D:\vcp_hunter\产业链投研`，`executionEnvironment=local`，`model=gpt-5.5`，UI/提示词标签可写 `reasoningEffort=xhigh`，实际 TOML 字段必须写 `reasoning_effort = "xhigh"`。
 - 子任务 rrule 必须使用一次性周规则：
 
 ```text
@@ -113,7 +114,8 @@ RRULE:FREQ=WEEKLY;BYDAY=<weekday>;BYHOUR=<hour>;BYMINUTE=<minute>;COUNT=1
 ^DTSTART:\d{8}T\d{6}\nRRULE:FREQ=WEEKLY;BYDAY=(SU|MO|TU|WE|TH|FR|SA);BYHOUR=\d{1,2};BYMINUTE=\d{1,2};COUNT=1$
 ```
 
-- 子任务 prompt 必须按 `CHILD_PROMPT_TEMPLATE.md` 生成，并保留其中的 literal hard gate、baseline、upstream bottleneck evidence、source-quality 和最终中文输出要求。子任务 prompt 正文必须使用英文；除本地路径和最终中文输出标签外，不要混用中文说明。
+- 子任务 prompt 必须按 `CHILD_PROMPT_TEMPLATE.md` 生成，并保留其中的 literal hard gate、project-local skill resolution、baseline、upstream bottleneck evidence、source-quality、prior-quarter period resolution、QoQ growth、prior-quarter conference-call / earnings-webcast / results-briefing / investor-meeting comparison 和最终中文输出要求。子任务 prompt 正文必须使用英文；除本地路径和最终中文输出标签外，不要混用中文说明。
+- 已存在的未来 ACTIVE 子任务如果缺少上述 prior-quarter / QoQ / prior-call comparison 标记，必须更新为当前 `CHILD_PROMPT_TEMPLATE.md` 正文；不得仅因 header、rrule、model、reasoningEffort 正确就视为有效。
 
 ## 子任务收尾清理
 

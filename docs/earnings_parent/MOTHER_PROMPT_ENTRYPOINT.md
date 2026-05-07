@@ -5,6 +5,8 @@ This prompt is the concise run entrypoint, not the full policy. Before any candi
 - D:\vcp_hunter\产业链投研\docs\earnings_parent\CHILD_PROMPT_TEMPLATE.md
 If either file is missing or unreadable, stop and report policy_file_missing. Conflict precedence: hard-stop safety rules in this prompt and PARENT_POLICY > CHILD_PROMPT_TEMPLATE for child prompt content > guardrail soft outputs > cached third-party calendar fields.
 
+Child prompt sync addendum: every created or updated single-company child prompt must include the current CHILD_PROMPT_TEMPLATE prior-quarter and source-terminology rules: resolve the immediately preceding quarter before retrieval, calculate QoQ growth from resolved prior-quarter official actuals, retrieve the resolved prior-quarter conference-call / earnings-webcast / results-briefing / investor-meeting content, compare it against the current event, and treat the project-local SKILL.md as the valid skill entrypoint when present. If an existing future child is missing those markers, update its prompt from the current template instead of treating it as valid.
+
 运行边界和预检硬门：
 - 所有母任务和子任务只在 D:\vcp_hunter\产业链投研 运行；D:\vcp_hunter\紫金研选 只作财报日历数据源和官方电话会时间写回目标。
 - 单公司子任务必须使用项目本地 skill D:\vcp_hunter\产业链投研\skills\earnings-call-investment-analyst。
@@ -19,14 +21,14 @@ If either file is missing or unreadable, stop and report policy_file_missing. Co
 5. 若 guardrail helper 存在，child create/update/pause 前先运行 dry-run：D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe D:\vcp_hunter\产业链投研\scripts\earnings_parent_guardrail.py --output json。可在需要时加 --probe-official-sources 和 --write-snapshot；这些只提供 soft_probe_candidates、review_items、soft_warnings 和审计 snapshot，不替代母任务判断。
 6. 按 TASK_KEY=ticker+report_date+fiscal_period、兼容 legacy/new id、并兜底同 ticker+report_date 扫描 $CODEX_HOME\automations\*\automation.toml；同一事件只能更新，不得重复创建。冲突不清时报告 duplicate_key_ambiguous。
 7. 缺少可信官方电话会/webcast 时间时必须联网查 official earnings call/webcast/results call；只允许 Company IR、SEC、交易所公告、官方 IR 明确链出的 webcast 作为 confirmed writeback 和 official_call_plus_3h 证据。Yahoo/Nasdaq/Alpha Vantage/媒体转载只能作线索。
-8. 官方 call time 写回只能调用 GlobalEarningsCalendarService().upsert_confirmed_event(EarningsCalendarEvent(...))；写回后立即用 load_events(..., allow_network=False) 验证。不得手工编辑 confirmed_events.json，不得手工执行 SQLite SQL，不得写 kv_store.trade_dates，不得调用 MarketCalendar.load_trade_dates()、MarketCalendar._schedule_trade_dates_refresh() 或任何交易日历刷新路径。
+8. 官方 call time 写回只能调用 GlobalEarningsCalendarService().upsert_confirmed_event(EarningsCalendarEvent(...))；写回后立即用 load_events(..., allow_network=False) 验证。若官方 call/webcast/briefing 时间已核验但写回或读回验证失败，不得降级为 default_proxy_not_call_time；用已核验官方时间创建/更新 child，Schedule basis 保持 official_call_plus_3h，并在 Calendar caveat 标注 writeback_failed_not_persisted。只有无法在 child header 保留官方时间、URL、时区和 source_type 时，才停止受影响事件并报告 writeback_verify_failed。不得手工编辑 confirmed_events.json，不得手工执行 SQLite SQL，不得写 kv_store.trade_dates，不得调用 MarketCalendar.load_trade_dates()、MarketCalendar._schedule_trade_dates_refresh() 或任何交易日历刷新路径。
 9. 有可信官方 call/webcast 北京时间时，子任务开始时间=call/webcast 北京时间+3h，Schedule basis=official_call_plus_3h；否则使用 PARENT_POLICY 默认代理排期，Schedule basis=default_proxy_not_call_time，不写本地确认时间。
-10. 每个 child 必须是独立 cron，name=财报电话会深挖 {ticker} {company} {report_date}，cwd=D:\vcp_hunter\产业链投研，executionEnvironment=local，model=gpt-5.5，reasoningEffort=xhigh。prompt 必须按 CHILD_PROMPT_TEMPLATE.md 填充；child prompt 正文使用英文，仅最终输出要求中文，并包含 literal CHILD TASK SKILL HARD GATE、Calendar source/Event status/Source confidence/Official source URL/Calendar caveat、baseline、upstream bottleneck 和 source-quality 规则。
+10. 每个 child 必须是独立 cron，name=财报电话会深挖 {ticker} {company} {report_date}，cwd=D:\vcp_hunter\产业链投研，executionEnvironment=local，model=gpt-5.5，reasoningEffort=xhigh（TOML 字段名为 reasoning_effort = "xhigh"）。prompt 必须按 CHILD_PROMPT_TEMPLATE.md 填充；child prompt 正文使用英文，仅最终输出要求中文，并包含 literal CHILD TASK SKILL HARD GATE、Calendar source/Event status/Source confidence/Official source URL/Calendar caveat、baseline、upstream bottleneck 和 source-quality 规则。
 11. 子任务 rrule 必须是一次性周规则：DTSTART:YYYYMMDDTHHMMSS\nRRULE:FREQ=WEEKLY;BYDAY=<weekday>;BYHOUR=<hour>;BYMINUTE=<minute>;COUNT=1。DTSTART、BYDAY、BYHOUR、BYMINUTE 全部来自同一个最终北京时间；禁止裸 DTSTART、DAILY、HOURLY 或无 COUNT=1 的重复规则。创建/更新/暂停后必须读取 child automation.toml 并用 PARENT_POLICY 正则校验，失败则修正或报告 child_rrule_update_failed。
 12. 每轮结束必须扫描所有含 TASK_KEY: 和 CHILD TASK SKILL HARD GATE 的单公司 child。ACTIVE 且 memory.md、运行历史或 final inbox item 显示已完成的，先修复/保留一次性 weekly COUNT=1 rrule，再设 PAUSED 并报告 executed_child_paused 或 stale_child_paused。不要暂停未运行且无完成证据的未来 ACTIVE child，只校验并报告 pending_child_validated。
 
 硬停/软审计边界：
-- 硬停：环境预检失败、candidate mapping 无法确认、台湾 PCB 回归失败、duplicate_key_ambiguous、unsafe write path、confirmed writeback/verify fail、child rrule 无法修复。
+- 硬停：环境预检失败、candidate mapping 无法确认、台湾 PCB 回归失败、duplicate_key_ambiguous、unsafe write path、官方时间写回失败且无法在 child header 保留核验证据、child rrule 无法修复。
 - 软审计：review_items、soft_probe_candidates、soft_probe_errors、soft_warnings、Yahoo estimate、MOPS/交易所 date-only、legacy-name warning、snapshot。软审计用于人工判断和汇报，不得自动降级已有 official_disclosure 或 official_confirmed child header。
 
 完成后用中文汇报：72 小时窗口、候选事件、official_call_plus_3h 子任务、default_proxy_not_call_time 子任务、官方写回成功/失败、未写本地原因、创建/更新/跳过结果、子任务 rrule 校验结果、executed_child_paused、stale_child_paused、pending_child_validated，以及是否触碰 trade_dates/交易日历路径。

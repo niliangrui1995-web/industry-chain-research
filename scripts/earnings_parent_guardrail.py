@@ -80,6 +80,13 @@ SNAPSHOT_ROOT_NAME = "automation_snapshots"
 SNAPSHOT_KIND = "earnings-parent-22-30-2"
 CHILD_TEMPLATE_RELATIVE_PATH = Path("docs") / "earnings_parent" / "CHILD_PROMPT_TEMPLATE.md"
 CHILD_BODY_MARKER = "CHILD TASK SKILL HARD GATE:"
+REQUIRED_CHILD_PROMPT_MARKERS = (
+    "Project-local skill resolution is successful",
+    "earnings webcast, results briefing, or investor meeting",
+    'resolve which period "the immediately preceding quarter" means',
+    "quarter-over-quarter growth using prior-quarter actuals",
+    "changes versus the resolved prior-quarter conference call",
+)
 AIRTIME_EVENT_PATTERN = re.compile(
     r"https?://(?:www\.)?appairtime\.com/event/([0-9a-fA-F-]{36})"
 )
@@ -477,13 +484,24 @@ def _event_with_preserved_source(event: PlannedEvent, existing_prompt: str) -> P
     event_rank = SOURCE_CONFIDENCE_RANK.get(event.source_confidence, 0)
     if existing_rank <= event_rank:
         return event
+    existing_call_block = {
+        "planned_child_start_beijing": _prompt_field(existing_prompt, "Planned child start Beijing"),
+        "schedule_basis": _prompt_field(existing_prompt, "Schedule basis"),
+        "official_call_beijing": _prompt_field(existing_prompt, "Official call Beijing time"),
+        "original_call_time_text": _prompt_field(existing_prompt, "Original call time text"),
+        "original_timezone": _prompt_field(existing_prompt, "Original timezone"),
+        "call_time_source_url": _prompt_field(existing_prompt, "Call time source URL"),
+        "call_time_source_type": _prompt_field(existing_prompt, "Call time source type"),
+    }
+    if all(existing_call_block.values()):
+        return replace(event, **existing, **existing_call_block)
     return replace(
         event,
         calendar_source=existing["calendar_source"],
         event_status=existing["event_status"],
         source_confidence=existing["source_confidence"],
         official_source_url=existing["official_source_url"],
-        calendar_caveat=existing["calendar_caveat"],
+        calendar_caveat=f"{existing['calendar_caveat']} source_downgrade_needs_review",
     )
 
 
@@ -593,6 +611,7 @@ def _child_matches_event(child: ChildRecord, event: PlannedEvent) -> tuple[bool,
     # Preserve stronger agent-reviewed source fields. The service cache can lag a
     # manual official-source check, so the guardrail may upgrade but not downgrade.
     source_ok = source_header_present and existing_source_rank >= event_source_rank
+    template_markers_ok = all(marker in prompt for marker in REQUIRED_CHILD_PROMPT_MARKERS)
     checks = {
         "status": str(child.data.get("status")) == "ACTIVE",
         "task_key": child.task_key == event.task_key,
@@ -603,6 +622,7 @@ def _child_matches_event(child: ChildRecord, event: PlannedEvent) -> tuple[bool,
         "schedule_basis": child.schedule_basis == event.schedule_basis,
         "official_call_beijing": _prompt_field(prompt, "Official call Beijing time") == event.official_call_beijing,
         "source_header": source_ok,
+        "prompt_template_body": template_markers_ok,
         "rrule": str(child.data.get("rrule", "")) == expected_rrule,
         "model": child.data.get("model") == "gpt-5.5",
         "reasoning_effort": child.data.get("reasoning_effort") == "xhigh",
@@ -837,6 +857,7 @@ def _build_action_plan(
                 validated_child_ids.add(child_id)
             else:
                 actions["update"].append({"child_id": child_id, "update_reasons": failed, **payload})
+                validated_child_ids.add(child_id)
         else:
             actions["create"].append({"child_id": _child_id_for(event), **payload})
 

@@ -9,6 +9,8 @@ description: Use this skill to analyze public-company earnings releases, financi
 
 Use this skill to turn earnings releases, financial statements, guidance, and conference-call content into an investment-grade analysis.
 
+Terminology: in this skill, "call content" includes a U.S.-style earnings call, earnings webcast, results briefing, investor meeting, corporate briefing, management Q&A, official captions, replay audio, or replay video. For Japan, Taiwan, Korea, Hong Kong, and Europe, do not assume the company holds a U.S.-style quarterly conference call; use the closest official IR event and label the source type precisely.
+
 Answer four questions first:
 
 1. Did the company beat, meet, or miss expectations?
@@ -126,7 +128,7 @@ Identify:
 - The user's prior forecast if available.
 - Key thesis variables going into the print.
 - The immediately preceding quarter's official earnings release, financial supplement, investor presentation, and regulatory filing URL. Find these through live web/IR/SEC or exchange search; do not rely on memory or the current-quarter release alone for prior-quarter actuals.
-- The immediately preceding quarter's conference-call source: official transcript, audio/video replay, webcast page, captions, or reliable third-party full transcript when official call content is unavailable. Find it through live web/IR/event-platform/transcript-provider search and record URL, source type, completeness, and retrieval time.
+- The immediately preceding quarter's conference-call, earnings-webcast, results-briefing, or investor-meeting source: official transcript, audio/video replay, webcast page, captions, or reliable third-party full transcript when official event content is unavailable. Find it through live web/IR/event-platform/transcript-provider search and record URL, source type, completeness, and retrieval time.
 
 For a pre-earnings preview, separate:
 
@@ -143,6 +145,23 @@ For a post-earnings review, separate:
 - Conference-call incremental information.
 - Conference-call changes versus the immediately preceding quarter's prepared remarks and Q&A.
 - Stock reaction.
+
+### 1A. Resolve The Prior-Quarter Identity
+
+Before retrieving prior-quarter financials or call content, explicitly determine and write the prior-quarter period you are searching for. Do not leave "prior quarter" as an implicit phrase.
+
+Use these rules:
+
+- If the task header provides a month-ended fiscal period such as `Mar/2026`, `Jun/2026`, `Sep/2026`, or `Dec/2026`, treat it as the current quarter-end month and subtract three calendar months. Example: `Mar/2026 -> Dec/2025`; `Jun/2026 -> Mar/2026`; `Sep/2026 -> Jun/2026`; `Dec/2026 -> Sep/2026`.
+- If the task header provides `FY2026 Q3`, `Fiscal 2026 third quarter`, or another quarter label without a month-end date, use the company's official filing or IR material to identify the quarter-end date and then resolve the immediately preceding fiscal quarter. Example: `FY2026 Q3 -> FY2026 Q2` only after checking the company's fiscal calendar.
+- If the current period is `Q1`, the prior quarter is the previous fiscal year's `Q4`; verify the fiscal year rollover from official filings or IR materials.
+- If `Fiscal period` is `N/A`, infer the current reporting period from the official earnings release, Form 10-Q/10-K, Form 8-K/6-K, exchange filing, or company IR event title before searching prior-quarter sources.
+- If the current period cannot be resolved from official material, write `prior-quarter period unresolved`, search using ticker/company plus report date and "previous quarter earnings call" as a fallback, and downgrade confidence for prior-quarter comparisons.
+
+Record this compactly before the results table:
+
+| Current Period Evidence | Resolved Current Period | Resolved Prior Quarter | Resolution Source | Confidence |
+|---|---|---|---|---|
 
 ### 2. Extract Core Financial Results
 
@@ -223,7 +242,7 @@ Compare guidance against:
 
 Extract only decision-useful content.
 
-Before analyzing the current call in isolation, retrieve the immediately preceding quarter's call content through the same source-quality hierarchy used for the current call. Prefer official company transcript, company-hosted replay, official event-platform replay/captions, or regulatory filing exhibits. If those are unavailable, use a reliable third-party full transcript as a fallback and label it as `prior_quarter_third_party_transcript`. If no complete prior-quarter call content can be found after reasonable source discovery, write `prior-quarter call source gap`, list the missing material, and avoid making unsupported tone-change claims.
+Before analyzing the current call in isolation, retrieve the immediately preceding quarter's call, earnings-webcast, results-briefing, or investor-meeting content through the same source-quality hierarchy used for the current event. Prefer official company transcript, company-hosted replay, official event-platform replay/captions, or regulatory filing exhibits. If those are unavailable, use a reliable third-party full transcript as a fallback and label it as `prior_quarter_third_party_transcript`. If no complete prior-quarter event content can be found after reasonable source discovery, write `prior-quarter call source gap`, list the missing material, and avoid making unsupported tone-change claims.
 
 Use this table:
 
@@ -244,7 +263,7 @@ Required topics:
 
 ### 5A. Compare With The Prior-Quarter Call
 
-Every post-earnings call analysis must include a prior-quarter call comparison when the prior-quarter call content is available. Compare current-quarter prepared remarks and Q&A against the immediately preceding quarter, not against vague historical memory.
+Every post-earnings call, webcast, results-briefing, or investor-meeting analysis must include a prior-quarter event comparison when the prior-quarter event content is available. Compare current-quarter prepared remarks, management discussion, and Q&A against the immediately preceding quarter, not against vague historical memory.
 
 Use this table:
 
