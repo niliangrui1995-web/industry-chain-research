@@ -1,75 +1,27 @@
 {
-  "generated_at_beijing": "2026-05-06 23:35",
+  "generated_at_beijing": "2026-05-08 01:42",
   "status": "ok",
-  "mode": "dry_run",
+  "mode": "apply_mechanical",
   "window": {
-    "now_beijing": "2026-05-06 23:35",
-    "window_end_beijing": "2026-05-09 23:35"
+    "now_beijing": "2026-05-08 01:42",
+    "window_end_beijing": "2026-05-11 01:42"
   },
   "calendar_read": {
-    "today_arg": "2026-05-05",
+    "today_arg": "2026-05-07",
     "lookahead_days": 5,
     "allow_network": false,
-    "event_count": 23,
-    "future_candidate_count": 13,
+    "event_count": 24,
+    "future_candidate_count": 4,
     "past_event_count": 10
   },
   "action_counts": {
     "create": 0,
     "update": 0,
     "pause": 0,
-    "validate_pending": 13,
+    "validate_pending": 4,
     "repair_rrule": 0
   },
   "review_items": [
-    {
-      "ticker": "042700.KS",
-      "company": "Hanmi Semi",
-      "report_date": "2026-05-07",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
-      "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "KIND disclosure",
-        "DART filing if OPENDART_API_KEY is available",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    },
-    {
-      "ticker": "2313.TW",
-      "company": "Compeq",
-      "report_date": "2026-05-07",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
-      "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "MOPS material information",
-        "TWSE/MOPS investor conference disclosure",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    },
-    {
-      "ticker": "6594.T",
-      "company": "Nidec",
-      "report_date": "2026-05-07",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
-      "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "TDnet disclosure",
-        "JPX listing/company calendar",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    },
     {
       "ticker": "2449.TW",
       "company": "KYEC",
@@ -134,6 +86,10 @@
     "bad_rrules": [],
     "active_with_memory": [],
     "active_past": [],
+    "bad_static_contract": [],
+    "active_missing_template_markers": [],
+    "active_missing_source_headers": [],
+    "active_unmatched_future": [],
     "duplicate_task_keys": {},
     "duplicate_ticker_dates": {}
   },
@@ -167,7 +123,7 @@
     {
       "child_id": "2313-tw-wus-2026-05-07",
       "name": "财报电话会深挖 2313.TW Compeq 2026-05-07",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "2313.TW|2026-05-07|",
       "ticker": "2313.TW",
       "company": "Compeq",
@@ -177,12 +133,12 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "DTSTART:20260507T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
       "official_source_url": "N/A",
-      "prompt_sha1": "4a66292957e1fcf5ce6674587cc2c2d1e579ba12"
+      "prompt_sha1": "2e632b10f5d8dd05d66c140115089b3f0449dc02"
     },
     {
       "child_id": "3044-tw-compeq-2026-05-07",
@@ -207,7 +163,7 @@
     {
       "child_id": "6594-t-nidec-2026-05-07",
       "name": "财报电话会深挖 6594.T Nidec 2026-05-07",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "6594.T|2026-05-07|",
       "ticker": "6594.T",
       "company": "Nidec",
@@ -217,12 +173,12 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "DTSTART:20260507T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
       "official_source_url": "N/A",
-      "prompt_sha1": "842bd55cb05b8b97db05223c630c9ae5eb7cb646"
+      "prompt_sha1": "947377d73c8cb70423c17981bfa40c9d0e88b631"
     },
     {
       "child_id": "adtn-adtran-2026-05-04",
@@ -247,7 +203,7 @@
     {
       "child_id": "ec-042700-ks-20260507-26a7bc",
       "name": "财报电话会深挖 042700.KS Hanmi Semi 2026-05-07",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "042700.KS|2026-05-07|",
       "ticker": "042700.KS",
       "company": "Hanmi Semi",
@@ -257,12 +213,12 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "DTSTART:20260507T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
       "official_source_url": "N/A",
-      "prompt_sha1": "106c991979c70987860707792d3c74643133aa3f"
+      "prompt_sha1": "55f83648306657280ad67e2f7bf6ef32f749de05"
     },
     {
       "child_id": "ec-2449-tw-20260508-a0811c",
@@ -282,12 +238,12 @@
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
       "official_source_url": "N/A",
-      "prompt_sha1": "fec2f54b63357b5a7574adb33481c021e3ec0a4d"
+      "prompt_sha1": "a56c6f966d6181089714464dbd911f41c1e8f5ae"
     },
     {
       "child_id": "ec-2802-t-20260507-8aa06a",
       "name": "财报电话会深挖 2802.T Ajinomoto 2026-05-07",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "2802.T|2026-05-07|",
       "ticker": "2802.T",
       "company": "Ajinomoto",
@@ -297,12 +253,12 @@
       "schedule_basis": "official_call_plus_3h",
       "rrule": "DTSTART:20260507T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://www.ajinomoto.com/ir/event/calendar.html",
-      "prompt_sha1": "ff590a2fde6c6ca47d8f24e9d47cceaf8370914c"
+      "prompt_sha1": "e66806610d04b5d5c21fc05c0789ac3c6aee6173"
     },
     {
       "child_id": "ec-3044-tw-20260508-b606b6",
@@ -322,7 +278,7 @@
       "event_status": "confirmed",
       "source_confidence": "official_disclosure",
       "official_source_url": "https://emops.twse.com.tw/server-java/t05st01_e?step=1&amp;co_id=3044&amp;spoke_date=20260429&amp;spoke_time=144122&amp;seq_no=1",
-      "prompt_sha1": "052f07ed30ad84e658821d634b242858843105b7"
+      "prompt_sha1": "77e535cf2ba8532592fbd7d38372770604477f12"
     },
     {
       "child_id": "ec-3661-tw-20260508-6c8bb6",
@@ -342,7 +298,7 @@
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://www.alchip.com/en/Investors/financials/seminar",
-      "prompt_sha1": "217da154319b45f7f040b620b4960cd8316aa003"
+      "prompt_sha1": "072526fd96cfc252c482440161e5c0821a201f26"
     },
     {
       "child_id": "ec-alab-20260505-cf1b21",
@@ -407,7 +363,7 @@
     {
       "child_id": "ec-arm-20260506-363658",
       "name": "财报电话会深挖 ARM ARM 2026-05-06",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "ARM|2026-05-06|Mar/2026",
       "ticker": "ARM",
       "company": "ARM",
@@ -417,17 +373,17 @@
       "schedule_basis": "official_call_plus_3h",
       "rrule": "DTSTART:20260507T080000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=8;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://investors.arm.com/news-events/news/news-details/2026/Arm-Holdings-plc-to-Report-Results-for-the-Fourth-Quarter-and-Full-Fiscal-Year-2026/default.aspx",
-      "prompt_sha1": "57207c32bb06db20083316ca085ce52480f3839e"
+      "prompt_sha1": "6ef28660ab37f83a3583c7b8fa865f130bef7b82"
     },
     {
       "child_id": "ec-cohr-20260506-625aed",
       "name": "财报电话会深挖 COHR Coherent 2026-05-06",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "COHR|2026-05-06|Mar/2026",
       "ticker": "COHR",
       "company": "Coherent",
@@ -437,12 +393,12 @@
       "schedule_basis": "official_call_plus_3h",
       "rrule": "DTSTART:20260507T073000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=7;BYMINUTE=30;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://investor.coherent.com/events-and-presentations/events/event-details/2026/Coherent-Corp.-Announces-Date-for-Third-Quarter-Fiscal-2026-Financial-Results/default.aspx",
-      "prompt_sha1": "63e2318201d620f2f2d566922d2d9273323b0784"
+      "prompt_sha1": "6a05d48430f370e4d41b70faafdcd816de6bd947"
     },
     {
       "child_id": "ec-crwv-20260507-2cc071",
@@ -462,7 +418,7 @@
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://investors.coreweave.com/events-and-presentations/event-details/2026/CoreWeave-First-Quarter-2026-Earnings-Conference-Call/default.aspx",
-      "prompt_sha1": "1e2ca925e8acdcaf3aa0c30de4fed9e8e7395c20"
+      "prompt_sha1": "49736811ca13477294c3ed8f53106c29bd0485d9"
     },
     {
       "child_id": "ec-etn-20260505-2d208f",
@@ -527,7 +483,7 @@
     {
       "child_id": "ec-mksi-20260506-c6c6f6",
       "name": "财报电话会深挖 MKSI MKS Instruments 2026-05-06",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "MKSI|2026-05-06|Mar/2026",
       "ticker": "MKSI",
       "company": "MKS Instruments",
@@ -537,17 +493,17 @@
       "schedule_basis": "official_call_plus_3h",
       "rrule": "DTSTART:20260507T233000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=23;BYMINUTE=30;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://investor.mks.com/events/event-details/mks-q1-2026-earnings-conference-call",
-      "prompt_sha1": "a61888cc3ceb31611f776ceaccff1fc6527535de"
+      "prompt_sha1": "5241654e745125cf9b8830fc8e6fd0a3372d0c4a"
     },
     {
       "child_id": "ec-mtsi-20260507-98cf4a",
       "name": "财报电话会深挖 MTSI MACOM 2026-05-07",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "MTSI|2026-05-07|Mar/2026",
       "ticker": "MTSI",
       "company": "MACOM",
@@ -557,12 +513,12 @@
       "schedule_basis": "official_call_plus_3h",
       "rrule": "DTSTART:20260507T233000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=23;BYMINUTE=30;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://ir.macom.com/events/event-details/macom-technology-solutions-second-quarter-fiscal-year-2026-financial-results",
-      "prompt_sha1": "aa8174e4ffbde8a429e06db228a711920f74853c"
+      "prompt_sha1": "e4a46235fa6b3c87194225fa351f36c70f9928bf"
     },
     {
       "child_id": "ec-onto-20260505-e93443",
@@ -587,7 +543,7 @@
     {
       "child_id": "ec-tpe-de-20260507-1db033",
       "name": "财报电话会深挖 TPE.DE PVA TePla 2026-05-07",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "TPE.DE|2026-05-07|",
       "ticker": "TPE.DE",
       "company": "PVA TePla",
@@ -597,12 +553,12 @@
       "schedule_basis": "official_call_plus_3h",
       "rrule": "DTSTART:20260507T180000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=18;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://www.appairtime.com/event/5ec0928a-24c7-42e1-a7b1-79c60ce05ac8",
-      "prompt_sha1": "ea646e186e7f199a85e318f26040fecb772cabea"
+      "prompt_sha1": "f271919956aecb748f3d89df290fa53c7615e155"
     },
     {
       "child_id": "fn-fabrinet-2026-05-04",

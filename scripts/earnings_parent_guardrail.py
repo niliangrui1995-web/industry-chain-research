@@ -87,6 +87,13 @@ REQUIRED_CHILD_PROMPT_MARKERS = (
     "quarter-over-quarter growth using prior-quarter actuals",
     "changes versus the resolved prior-quarter conference call",
 )
+SOURCE_HEADER_FIELDS = (
+    "Calendar source",
+    "Event status",
+    "Source confidence",
+    "Official source URL",
+    "Calendar caveat",
+)
 AIRTIME_EVENT_PATTERN = re.compile(
     r"https?://(?:www\.)?appairtime\.com/event/([0-9a-fA-F-]{36})"
 )
@@ -630,6 +637,27 @@ def _child_matches_event(child: ChildRecord, event: PlannedEvent) -> tuple[bool,
     }
     failed = [name for name, ok in checks.items() if not ok]
     return not failed, failed
+
+
+def _static_contract_failures(child: ChildRecord, project_root: Path) -> list[str]:
+    checks = {
+        "kind": child.data.get("kind") == "cron",
+        "model": child.data.get("model") == "gpt-5.5",
+        "reasoning_effort": child.data.get("reasoning_effort") == "xhigh",
+        "execution_environment": child.data.get("execution_environment") == "local",
+        "cwds": child.data.get("cwds") == [str(project_root)],
+    }
+    return [name for name, ok in checks.items() if not ok]
+
+
+def _missing_prompt_markers(child: ChildRecord) -> list[str]:
+    prompt = str(child.data.get("prompt", "") or "")
+    return [marker for marker in REQUIRED_CHILD_PROMPT_MARKERS if marker not in prompt]
+
+
+def _missing_source_headers(child: ChildRecord) -> list[str]:
+    prompt = str(child.data.get("prompt", "") or "")
+    return [field for field in SOURCE_HEADER_FIELDS if not _prompt_field(prompt, field)]
 
 
 def _review_items(events: list[PlannedEvent]) -> list[dict[str, Any]]:
@@ -1291,18 +1319,49 @@ def main() -> int:
     active_with_memory: list[str] = []
     active_past: list[str] = []
     bad_rrules: list[str] = []
+    bad_static_contract: list[dict[str, Any]] = []
+    active_missing_template_markers: list[dict[str, Any]] = []
+    active_missing_source_headers: list[dict[str, Any]] = []
+    active_unmatched_future: list[str] = []
+    future_task_keys = {event.task_key for event in future_events}
+    future_ticker_dates = {(event.ticker, event.report_date) for event in future_events}
     for child in children:
         child_id = str(child.data.get("id"))
         key_index.setdefault(child.task_key, []).append(child_id)
         ticker_date_index.setdefault(f"{child.ticker}|{child.report_date}", []).append(child_id)
+        static_failures = _static_contract_failures(child, project_root)
+        if static_failures:
+            bad_static_contract.append({"child_id": child_id, "failures": static_failures})
         if str(child.data.get("status")) == "ACTIVE" and child.has_memory:
             active_with_memory.append(child_id)
         if str(child.data.get("status")) == "ACTIVE" and child.planned_dt and child.planned_dt < now:
             active_past.append(child_id)
         if not child.rrule_ok:
             bad_rrules.append(child_id)
+        if str(child.data.get("status")) == "ACTIVE":
+            marker_failures = _missing_prompt_markers(child)
+            if marker_failures:
+                active_missing_template_markers.append({"child_id": child_id, "missing": marker_failures})
+            source_failures = _missing_source_headers(child)
+            if source_failures:
+                active_missing_source_headers.append({"child_id": child_id, "missing": source_failures})
+            if child.task_key not in future_task_keys and (child.ticker, child.report_date) not in future_ticker_dates:
+                active_unmatched_future.append(child_id)
     duplicate_task_keys = {key: ids for key, ids in key_index.items() if key and len(ids) > 1}
     duplicate_ticker_dates = {key: ids for key, ids in ticker_date_index.items() if key and len(ids) > 1}
+    final_validation_issues = {
+        "bad_rrules": bad_rrules,
+        "active_with_memory": active_with_memory,
+        "active_past": active_past,
+        "bad_static_contract": bad_static_contract,
+        "active_missing_template_markers": active_missing_template_markers,
+        "active_missing_source_headers": active_missing_source_headers,
+        "active_unmatched_future": active_unmatched_future,
+        "duplicate_task_keys": duplicate_task_keys,
+        "duplicate_ticker_dates": duplicate_ticker_dates,
+    }
+    if args.apply_mechanical and status == "ok" and any(final_validation_issues.values()):
+        status = "post_apply_validation_failed"
     soft_warnings = {
         "legacy_name": _legacy_name_warnings(children),
         "source_header": _source_header_warnings(future_events, children),
@@ -1333,11 +1392,7 @@ def main() -> int:
         "apply_result": apply_result,
         "final_validation": {
             "child_count": len(children),
-            "bad_rrules": bad_rrules,
-            "active_with_memory": active_with_memory,
-            "active_past": active_past,
-            "duplicate_task_keys": duplicate_task_keys,
-            "duplicate_ticker_dates": duplicate_ticker_dates,
+            **final_validation_issues,
         },
         "touch_contract": {
             "refresh_events_called": False,
