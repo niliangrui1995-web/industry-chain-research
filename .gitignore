@@ -17,6 +17,7 @@ artifacts/**/.venv*/
 !**/.env.example
 
 # Logs and temporary files
+.cache/
 *.log
 *.tmp
 *.bak
@@ -24,7 +25,9 @@ artifacts/**/.venv*/
 
 # Generated research and capture artifacts
 _downloads/
-artifacts/
+artifacts/*
+!artifacts/weekly_chain_tracking/
+!artifacts/weekly_chain_tracking/**
 ._static_js_static_js_*.js
 q4_attendee_*.html
 q4_chunk_*.js
