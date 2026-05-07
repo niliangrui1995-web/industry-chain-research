@@ -125,6 +125,8 @@ Identify:
 - Street consensus for revenue, EPS, margin, and next-quarter guidance.
 - The user's prior forecast if available.
 - Key thesis variables going into the print.
+- The immediately preceding quarter's official earnings release, financial supplement, investor presentation, and regulatory filing URL. Find these through live web/IR/SEC or exchange search; do not rely on memory or the current-quarter release alone for prior-quarter actuals.
+- The immediately preceding quarter's conference-call source: official transcript, audio/video replay, webcast page, captions, or reliable third-party full transcript when official call content is unavailable. Find it through live web/IR/event-platform/transcript-provider search and record URL, source type, completeness, and retrieval time.
 
 For a pre-earnings preview, separate:
 
@@ -136,16 +138,28 @@ For a pre-earnings preview, separate:
 For a post-earnings review, separate:
 
 - Actual results.
+- Prior-quarter actuals from the immediately preceding quarter's official materials.
 - New guidance.
 - Conference-call incremental information.
+- Conference-call changes versus the immediately preceding quarter's prepared remarks and Q&A.
 - Stock reaction.
 
 ### 2. Extract Core Financial Results
 
-Use a compact comparison table:
+Before filling the results table, independently retrieve the immediately preceding quarter's official earnings materials through live web/IR/SEC or exchange search. Use the prior-quarter official release, financial supplement, investor presentation, Form 10-Q/10-K, Form 8-K/6-K, or exchange filing as the source for prior-quarter actuals. If the current-quarter release repeats prior-quarter numbers, still verify them against the prior-quarter source when feasible. Record the prior-quarter period, source URL, source type, and retrieval time in the notes.
 
-| Metric | Actual | Prior Guidance | Consensus | Prior Quarter | YoY | QoQ | Beat/Miss |
-|---|---:|---:|---:|---:|---:|---:|---:|
+Use a compact comparison table that explicitly includes quarter-over-quarter growth rate (`QoQ Growth`, 季度环比增速):
+
+| Metric | Actual | Prior Guidance | Consensus | Prior Quarter Actual | QoQ Growth | YoY | Beat/Miss | Source Notes |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+
+For QoQ Growth:
+
+- Calculate it from current actual versus prior-quarter actual: `(current quarter actual - prior quarter actual) / abs(prior quarter actual)`.
+- Use percentage growth for revenue, segment revenue, backlog, bookings, inventory, capex, cash flow, and other level metrics.
+- Use basis-point change for margins and margin-like rates.
+- For EPS or net income when either period is negative, near zero, or affected by one-time items, show the dollar change and explain why a percentage growth rate may be misleading.
+- If a prior-quarter value cannot be verified from a reliable source, write `prior-quarter source gap`, leave the QoQ field blank or `n/a`, and downgrade confidence for that metric rather than estimating from memory.
 
 Check at least:
 
@@ -158,6 +172,7 @@ Check at least:
 - Free cash flow when disclosed.
 - Backlog, bookings, deferred revenue, prepayments, or order indicators when relevant.
 - Segment, product, geography, and customer mix.
+- Quarter-over-quarter growth for total revenue, EPS, gross margin, major segment revenue, backlog/orders, inventory, capex, and free cash flow when the relevant prior-quarter actual is available.
 - Share count and dilution.
 
 Never mix GAAP and non-GAAP numbers without labeling them.
@@ -171,6 +186,7 @@ Calculate:
 - Gross-margin surprise in basis points.
 - Guidance midpoint versus consensus.
 - Guidance midpoint versus prior-quarter run rate.
+- QoQ acceleration or deceleration versus the prior quarter for total company and thesis-critical segments.
 - Whether the surprise came from demand, pricing, mix, pull-forward, cost control, tax, share count, one-time items, or accounting.
 
 Classify the print:
@@ -207,6 +223,8 @@ Compare guidance against:
 
 Extract only decision-useful content.
 
+Before analyzing the current call in isolation, retrieve the immediately preceding quarter's call content through the same source-quality hierarchy used for the current call. Prefer official company transcript, company-hosted replay, official event-platform replay/captions, or regulatory filing exhibits. If those are unavailable, use a reliable third-party full transcript as a fallback and label it as `prior_quarter_third_party_transcript`. If no complete prior-quarter call content can be found after reasonable source discovery, write `prior-quarter call source gap`, list the missing material, and avoid making unsupported tone-change claims.
+
 Use this table:
 
 | Topic | Management Said | Evidence Type | Investment Meaning | Follow-Up |
@@ -223,6 +241,37 @@ Required topics:
 - Balance sheet: cash burn, financing, dilution, debt maturity.
 - Management tone: more confident, more cautious, or materially changed versus prior calls.
 - Analyst Q&A: questions management avoided, clarified, or answered with unusual detail.
+
+### 5A. Compare With The Prior-Quarter Call
+
+Every post-earnings call analysis must include a prior-quarter call comparison when the prior-quarter call content is available. Compare current-quarter prepared remarks and Q&A against the immediately preceding quarter, not against vague historical memory.
+
+Use this table:
+
+| Topic | Prior-Quarter Call | Current-Quarter Call | Change | Evidence Type | Investment Meaning | Follow-Up |
+|---|---|---|---|---|---|---|
+
+Required comparison topics:
+
+- Demand and end-market tone: AI data center, telecom, industrial, consumer, auto, or company-specific end markets.
+- Orders and backlog: visibility, cancellation risk, order duration, LTAs, bookings, backlog conversion, or customer ordering intent.
+- Guidance drivers: whether management raised, narrowed, softened, or changed the assumptions behind next-quarter or full-year guidance.
+- Capacity and bottlenecks: utilization, expansion timing, internal constraints, upstream constraints, lead times, yield, and supplier qualification.
+- Pricing and margins: ASP, mix, cost pass-through, raw materials, yield, utilization, freight, labor, and gross-margin bridge.
+- Customer signals: named customers, design wins, qualification status, concentration risk, geographic or end-user ambiguity.
+- Inventory and channel: customer inventory, company inventory, channel digestion, pull-forward, or allocation.
+- Q&A behavior: newly detailed answers, avoided questions, changed wording, or analyst concerns that repeated across quarters.
+
+Classify each change as one of:
+
+- `improved`
+- `deteriorated`
+- `unchanged`
+- `new_disclosure`
+- `walked_back`
+- `prior-quarter source gap`
+
+When the prior-quarter call and current-quarter call use different source types, state the source-quality mismatch. Do not overstate wording changes if one side is an official transcript and the other side is a third-party transcript.
 
 ### Upstream Bottleneck Evidence Rule
 
@@ -305,14 +354,14 @@ Conclusion First:
 1. Company Fundamental Baseline
 [one-paragraph business model, business map table, and earnings interpretation bridge]
 
-2. Actual Results vs Expectations
-[table]
+2. Actual Results vs Expectations and QoQ
+[table with actual, prior guidance, consensus, prior-quarter actual, QoQ Growth, YoY, beat/miss, and source notes]
 
 3. Guidance vs Expectations
 [table]
 
-4. Conference-Call Takeaways
-[table]
+4. Conference-Call Takeaways and Prior-Quarter Call Comparison
+[current-call takeaway table plus prior-quarter call comparison table with prior-quarter source status, current-quarter source status, change classification, evidence type, investment meaning, and follow-up]
 
 5. Upstream Bottleneck Check
 [table with mention status; say "not mentioned" when absent]
@@ -363,8 +412,11 @@ A good earnings-call analysis must include:
 - A concise company baseline before earnings interpretation: what the company does, main businesses, competitive strength, AI relevance, and baseline risks.
 - Company original-source status: found, partially found, missing, or unavailable.
 - Numeric beat-or-miss table.
+- Prior-quarter official-source status and QoQ growth calculations for total results and thesis-critical segments.
 - Guidance midpoint comparison.
+- Current-quarter call source status and prior-quarter call source status.
 - At least five call takeaways ranked by importance.
+- A prior-quarter call comparison covering demand, orders/backlog, guidance drivers, capacity/bottlenecks, pricing/margins, customer signals, inventory/channel, and Q&A behavior when prior-quarter call content is available.
 - Clear distinction between fact, management claim, analyst inference, and our inference.
 - An upstream bottleneck check that explicitly marks each relevant item as mentioned, mitigated, future risk, not mentioned, or third-party only.
 - Final source-status fields: `company_original_status`, `call_content_status`, `final_source_type`, `missing_materials`, `provisional true/false`, and `confidence level`.

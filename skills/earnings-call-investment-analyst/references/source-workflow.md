@@ -47,10 +47,15 @@ artifacts/earnings/<ticker_or_company>/<fiscal_period>/
     replay_audio.mp3
     replay_video.mp4
     captions.vtt
+    prior_quarter_earnings_release.pdf
+    prior_quarter_10q_or_8k.html
+    prior_quarter_webcast_page.html
   transcript/
     transcript_raw.txt
     transcript_timestamped.srt
     transcript_cn_notes.md
+    prior_quarter_transcript_raw.txt
+    prior_quarter_transcript_cn_notes.md
   analysis/
     earnings_review.md
 ```
@@ -79,6 +84,7 @@ Use the route that best fits the live source problem. Do not execute these as a 
 
 - Start from likely authoritative material: company IR, exchange/SEC filings, official event pages, earnings releases, presentations, and supplemental tables.
 - Look for complete call content through whichever route is most efficient: official transcript, replay, audio/video file, captions, event-platform payloads, browser/network inspection, search results, direct HTTP, page source, or reputable third-party transcript/audio.
+- Retrieve the immediately preceding quarter's call content for comparison when doing a post-earnings review. Use the same source-ranking rules as the current call. If prior-quarter official call content is unavailable, a reliable third-party full transcript is acceptable as fallback, but label the source-quality mismatch before comparing wording or tone.
 - Treat provider names such as StockAnalysis, Quartr, Motley Fool, Seeking Alpha, Benzinga, Alpha Spread, and EarningsCall.biz as search seeds and examples, not a mandatory provider checklist.
 - Optionally run `scripts/source_discovery.py` to create a repeatable official-source inventory. If automation input has exact report date, call date, call URL, or fiscal period that the script does not accept, preserve those fields manually in notes or the evidence pack.
 - Optionally run `scripts/webcast_asset_fetcher.py` on an official webcast or replay page as a first-pass asset probe. If it returns only adapter JSON, static scripts, 401/403, JavaScript shells, or no recording/transcript, record that limitation only if useful and continue through another route.
@@ -127,6 +133,8 @@ For a serious post-earnings review, try to collect:
 
 - Earnings release.
 - Actual reported financial table.
+- Immediately preceding quarter's official earnings release, financial supplement, investor presentation, and regulatory filing when available. Use these to verify prior-quarter actuals and calculate QoQ growth instead of relying on memory or the current-quarter release alone.
+- Immediately preceding quarter's conference-call transcript, replay, captions, or reliable third-party full transcript when available. Use this to compare current-quarter call content against the prior quarter's actual prepared remarks and Q&A, not against memory.
 - Prior-quarter guidance.
 - Consensus estimates.
 - Current guidance.
