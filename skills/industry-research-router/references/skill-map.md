@@ -12,7 +12,7 @@
    - Digest sources: annual reports, quarterly reports, whitepapers, sell-side reports, transcripts, long PDFs, and multi-source evidence sets.
    - Assess technology: AI, software stack, chips, embedded systems, architecture defensibility.
 3. Choose the smallest useful skill mix. Add live-data or web skills whenever the task depends on current price, market cap, PE/PB, volume, financial reports, orders, policy, regulation, or news.
-4. Use Grok/X for live AI-chain or rumor discovery by default. Use Gemini only when it adds value: user explicitly asks, Gemini web Deep Research is useful, source gaps matter, conflicting evidence needs counter-checking, or hard-to-find official/media/PDF sources are needed.
+4. Use Grok/X through the logged-in Chrome plugin path for live AI-chain or rumor discovery by default. Use Gemini through Chrome only when it adds value: user explicitly asks, Gemini web Deep Research is useful, source gaps matter, conflicting evidence needs counter-checking, or hard-to-find official/media/PDF sources are needed.
 5. Keep three investment rankings separate: fundamental quality, earnings elasticity, and trading elasticity. Do not turn "best company" into "highest stock elasticity" without market-data evidence.
 6. If a referenced skill is unavailable, keep the same framework and state the gap only when it changes confidence.
 
@@ -112,7 +112,7 @@
 
 | Skill | Use Case |
 |---|---|
-| `browser-grok-gemini-research` | Use the in-app browser or webpage workflow for Grok/X discovery and Gemini source/counter-evidence collection. |
+| `browser-grok-gemini-research` | Use the logged-in Chrome plugin path by default for Grok/X discovery and Gemini source/counter-evidence collection. |
 | `web-scraper` | Extract web pages, news, metadata, structured entities. |
 | `firecrawl-scraper` | Crawl websites, parse PDFs, extract structured data from pages. |
 | `tavily-web` | Web/news/finance search and extraction with filters and citations. |

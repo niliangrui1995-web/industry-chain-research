@@ -13,6 +13,8 @@
 
 ## 网页 Grok/Gemini 原则
 
+- Grok/Gemini 网页端默认使用 `@chrome` / Chrome 插件，因为用户的 Grok 与 Gemini 账号在 Chrome 中保持登录。除非用户明确指定 `@浏览器` / Browser Use，或 Chrome 不可用且用户接受 fallback，不默认切换到内置浏览器。
+- Playwright 只作为诊断或脚本化 fallback；除非能连接同一个已登录 Chrome 上下文，不能把 Playwright 结果当成默认 Chrome 会员账号结果。
 - Grok/X 是实时消息、爆料、社交热度和 X/Twitter 线索的优先发现层，尤其适合最近 24/48/72 小时的 AI 产业链突发变化。
 - Gemini 网页端是适当时使用的补充证据层：用户明确要求、需要 Gemini web Deep Research、需要找官方/媒体链接、Grok 线索冲突、或需要反证时再调用。
 - Grok、X、Gemini 以及其他网页模型只作为信息采集工具；Codex 必须负责核验、证据分级、产业链映射、股票筛选和最终结论。

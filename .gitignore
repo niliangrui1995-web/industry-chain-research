@@ -28,6 +28,8 @@ _downloads/
 artifacts/*
 !artifacts/weekly_chain_tracking/
 !artifacts/weekly_chain_tracking/**
+!artifacts/company_tracking/
+!artifacts/company_tracking/**
 ._static_js_static_js_*.js
 q4_attendee_*.html
 q4_chunk_*.js

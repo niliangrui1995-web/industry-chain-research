@@ -1,31 +1,31 @@
 {
-  "generated_at_beijing": "2026-05-08 01:42",
+  "generated_at_beijing": "2026-05-08 22:37",
   "status": "ok",
-  "mode": "apply_mechanical",
+  "mode": "agent_filtered_apply",
   "window": {
-    "now_beijing": "2026-05-08 01:42",
-    "window_end_beijing": "2026-05-11 01:42"
+    "now_beijing": "2026-05-08 22:37",
+    "window_end_beijing": "2026-05-11 22:37"
   },
   "calendar_read": {
     "today_arg": "2026-05-07",
     "lookahead_days": 5,
     "allow_network": false,
-    "event_count": 24,
-    "future_candidate_count": 4,
-    "past_event_count": 10
+    "event_count": 20,
+    "future_candidate_count": 2,
+    "processed_candidate_count": 1
   },
   "action_counts": {
-    "create": 0,
+    "create": 1,
     "update": 0,
-    "pause": 0,
-    "validate_pending": 4,
+    "pause": 4,
+    "validate_pending": 0,
     "repair_rrule": 0
   },
   "review_items": [
     {
-      "ticker": "2449.TW",
-      "company": "KYEC",
-      "report_date": "2026-05-08",
+      "ticker": "3017.TW",
+      "company": "AVC",
+      "report_date": "2026-05-11",
       "status": "needs_agent_review",
       "reason": "third_party_estimate_no_official_call_time",
       "calendar_source": "Yahoo Finance",
@@ -39,17 +39,17 @@
       "hard_stop": false
     },
     {
-      "ticker": "3044.TW",
-      "company": "Tripod",
-      "report_date": "2026-05-08",
+      "ticker": "4062.T",
+      "company": "Ibiden",
+      "report_date": "2026-05-11",
       "status": "needs_agent_review",
       "reason": "official_date_or_disclosure_without_precise_call_time",
-      "calendar_source": "MOPS",
-      "calendar_caveat": "MOPS confirms an earnings/report disclosure event, not a call/webcast time; scheduled by default proxy.",
+      "calendar_source": "JPX",
+      "calendar_caveat": "Official date/disclosure source found, but no credible call/webcast time was available; scheduled by default proxy.",
       "suggested_official_checks": [
         "Company IR",
-        "MOPS material information",
-        "TWSE/MOPS investor conference disclosure",
+        "TDnet disclosure",
+        "JPX listing/company calendar",
         "third-party calendars as leads only"
       ],
       "hard_stop": false
@@ -82,7 +82,7 @@
     "source_header": []
   },
   "final_validation": {
-    "child_count": 24,
+    "child_count": 25,
     "bad_rrules": [],
     "active_with_memory": [],
     "active_past": [],
@@ -223,7 +223,7 @@
     {
       "child_id": "ec-2449-tw-20260508-a0811c",
       "name": "财报电话会深挖 2449.TW KYEC 2026-05-08",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "2449.TW|2026-05-08|",
       "ticker": "2449.TW",
       "company": "KYEC",
@@ -233,7 +233,7 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "DTSTART:20260508T200000\nRRULE:FREQ=WEEKLY;BYDAY=FR;BYHOUR=20;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
@@ -263,7 +263,7 @@
     {
       "child_id": "ec-3044-tw-20260508-b606b6",
       "name": "财报电话会深挖 3044.TW Tripod 2026-05-08",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "3044.TW|2026-05-08|",
       "ticker": "3044.TW",
       "company": "Tripod",
@@ -273,7 +273,7 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "DTSTART:20260508T200000\nRRULE:FREQ=WEEKLY;BYDAY=FR;BYHOUR=20;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "MOPS",
       "event_status": "confirmed",
       "source_confidence": "official_disclosure",
@@ -283,7 +283,7 @@
     {
       "child_id": "ec-3661-tw-20260508-6c8bb6",
       "name": "财报电话会深挖 3661.TW Alchip 2026-05-08",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "3661.TW|2026-05-08|",
       "ticker": "3661.TW",
       "company": "Alchip",
@@ -293,12 +293,32 @@
       "schedule_basis": "official_call_plus_3h",
       "rrule": "DTSTART:20260508T173000\nRRULE:FREQ=WEEKLY;BYDAY=FR;BYHOUR=17;BYMINUTE=30;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://www.alchip.com/en/Investors/financials/seminar",
       "prompt_sha1": "072526fd96cfc252c482440161e5c0821a201f26"
+    },
+    {
+      "child_id": "ec-4062-t-20260511-5b6957",
+      "name": "财报电话会深挖 4062.T Ibiden 2026-05-11",
+      "status": "ACTIVE",
+      "task_key": "4062.T|2026-05-11|本決算 / 2026-03-31",
+      "ticker": "4062.T",
+      "company": "Ibiden",
+      "report_date": "2026-05-11",
+      "fiscal_period": "本決算 / 2026-03-31",
+      "planned_child_start_beijing": "2026-05-11 20:00",
+      "schedule_basis": "default_proxy_not_call_time",
+      "rrule": "DTSTART:20260511T200000\nRRULE:FREQ=WEEKLY;BYDAY=MO;BYHOUR=20;BYMINUTE=0;COUNT=1",
+      "rrule_ok": true,
+      "has_memory": false,
+      "calendar_source": "Company IR",
+      "event_status": "confirmed",
+      "source_confidence": "official_disclosure",
+      "official_source_url": "https://www.ibiden.com/ir/calendar/",
+      "prompt_sha1": "ae3779b096bf09b4e9ac877ea25c0cadb0008657"
     },
     {
       "child_id": "ec-alab-20260505-cf1b21",
@@ -403,7 +423,7 @@
     {
       "child_id": "ec-crwv-20260507-2cc071",
       "name": "财报电话会深挖 CRWV CoreWeave 2026-05-07",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "CRWV|2026-05-07|Mar/2026",
       "ticker": "CRWV",
       "company": "CoreWeave",
@@ -413,12 +433,12 @@
       "schedule_basis": "official_call_plus_3h",
       "rrule": "DTSTART:20260508T080000\nRRULE:FREQ=WEEKLY;BYDAY=FR;BYHOUR=8;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://investors.coreweave.com/events-and-presentations/event-details/2026/CoreWeave-First-Quarter-2026-Earnings-Conference-Call/default.aspx",
-      "prompt_sha1": "49736811ca13477294c3ed8f53106c29bd0485d9"
+      "prompt_sha1": "a52060aae79f9bb6fd117b2a4022c7f498fb6cb4"
     },
     {
       "child_id": "ec-etn-20260505-2d208f",
