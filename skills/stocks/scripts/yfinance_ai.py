@@ -6,7 +6,7 @@ author_url: https://lucas0.com
 funding_url: https://github.com/sponsors/lucas0
 version: 3.0.4
 license: MIT
-requirements: yfinance>=0.2.66,pandas>=2.2.0,pydantic>=2.0.0,requests>=2.28.0
+requirements: yfinance>=0.2.66,pandas>=2.2.0,pydantic>=2.0.0,requests>=2.28.0,python-dateutil>=2.8.2,pytz>=2024.1
 repository: https://github.com/lucas0/yfinance-ai
 
 INTEGRATION WITH OTHER AI TOOLS:

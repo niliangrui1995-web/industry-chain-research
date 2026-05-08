@@ -9,6 +9,7 @@ authors = [{ name = "Martin Kessler", email = "martin@kessler.io" }]
 
 dependencies = [
     "feedparser>=6.0.11",
+    "pandas>=2.2.0",
     "yfinance>=0.2.40",
 ]
 
