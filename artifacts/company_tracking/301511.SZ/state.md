@@ -1,7 +1,8 @@
 # 德福科技 301511.SZ 滚动状态
 
 更新日期：2026-05-09  
-grok_status: unavailable_chrome_tool_not_exposed  
+browser_scope: not_available
+grok_status: unavailable: chrome plugin tool not exposed
 用途：公司跟踪状态，不构成买卖建议。
 
 ## 当前跟踪结论
@@ -18,8 +19,9 @@ grok_status: unavailable_chrome_tool_not_exposed
 - 公司 IR：官网投资者关系入口 `https://301511.ir-online.cn/` 和官网新闻页未识别到 2026-05-08 至 2026-05-09 新增可归档 IR 或新闻更新。
 - 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 对 2026-05-08 至 2026-05-09 返回空；最近一条德福科技龙虎榜记录为 2026-05-06“日涨幅达到15%的前5只证券”，窗口外。
 - 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` / `RPT_BLOCKTRADE_STA` 对 2026-05-08 至 2026-05-09 返回空。
-- Grok/X：当前没有 `@chrome` 工具暴露，按任务规则记录为 `unavailable_chrome_tool_not_exposed`；未用普通网页搜索冒充 Grok/X。
-- 本次状态变化：未发现需追加的新官方事件；仅更新日更核对结果和 Grok/X source gap。
+- Grok/X：当前没有 `@chrome` 工具暴露，按任务规则记录为 `unavailable: chrome plugin tool not exposed`；未用普通网页搜索冒充 Grok/X。
+- open web fallback：普通联网搜索作为观察池使用，状态为 `searched/no_new_hard_signal`；不把该层当作确认事实来源。
+- 本次状态变化：未发现需追加的新官方事件；仅补齐本轮 `browser_scope`、Grok/X source gap 和 open-web fallback 口径。
 
 ## 关键假设
 
@@ -62,7 +64,7 @@ grok_status: unavailable_chrome_tool_not_exposed
 - 慧儒科技收购正式价格、交割和并表时间：N/A。
 - 2026-05-08 至 2026-05-09 新增官方公告 / IR：未发现。
 - 2026-05-08 至 2026-05-09 龙虎榜 / 大宗交易：未发现。
-- Grok/X 观察层：unavailable_chrome_tool_not_exposed。
+- Grok/X 观察层：unavailable: chrome plugin tool not exposed。
 
 ## Next Questions
 

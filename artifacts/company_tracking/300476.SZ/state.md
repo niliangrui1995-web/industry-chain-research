@@ -3,9 +3,20 @@
 company: 胜宏科技  
 ticker: 300476.SZ  
 exchange: SZSE  
-last_updated: 2026-05-09  
-grok_status: unavailable_chrome_tool_not_exposed  
+last_updated: 2026-05-11
+browser_scope: fallback_no_browser
+grok_status: unavailable_chrome_extension_backend_not_available
 not_investment_advice: true
+
+## 2026-05-11 worker 复核
+
+- 核对窗口：2026-05-11 及必要最近交易日；上次总控运行至 2026-05-10 晚。
+- 浏览器/Grok：按总控确认，本轮不使用 Browser Use 或 Playwright；记录 `grok_status=unavailable_chrome_extension_backend_not_available`、`browser_scope=fallback_no_browser`，普通网页检索仅作为 `open_web_fallback` 观察层。
+- 公告/IR：CNINFO `hisAnnouncement/query` 在 2026-05-10 至 2026-05-11 返回 0 条；东方财富公告 `np-anotice-stock` 同口径返回 0 条；未发现新的官方公告或公司 IR 正文。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 在 2026-05-09 至 2026-05-11 返回空，未发现胜宏科技新上榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 返回 1 条 2026-05-11 记录，成交价 286.93 元，成交 1.41 万股，成交额 404.57 万元，较收盘价 378.24 元折价约 24.14%；买卖席位均为长江证券股份有限公司衡阳解放大道证券营业部。该事件已追加至 `events.jsonl`。
+- open-web fallback：公开网页搜索主要返回 2026-05-03/05-08 投资者关系记录镜像、4 月 H 股/月报/解禁类旧公告以及 4 月/5 月早前大宗交易页面；未发现独立新增订单、客户、收入占比、产能节点或官方基本面披露。
+- 本轮状态：新增一条小额大宗交易硬数据；它是交易观察项，不改变“高端订单和毛利率能否覆盖大规模扩产与高估值”的核心跟踪判断。
 
 ## 2026-05-09 日更
 
@@ -86,3 +97,12 @@ not_investment_advice: true
 - fallback 状态：`open_web_fallback_status=searched/confirmed_same_ir_event`。
 - 观察结果：普通公开网页检索主要返回胜宏科技 2026-05-08 投资者关系记录及公告镜像，与 worker 已入账 IR 事件一致；未发现独立新增订单、客户、收入占比或龙虎榜/大宗交易信号。
 - 证据边界：该层不是 Grok/X、不是 Chrome 登录态结果；公告镜像用于交叉验证，不替代正式公告源。
+
+## 2026-05-09 batch_no=1 worker 复核
+
+- 复核窗口：2026-05-09 与最近交易日 2026-05-08；2026-05-09 为周六。
+- 公告/披露：CNINFO `hisAnnouncement/query` 同窗口返回 0 条；公司官网信息披露页最新 A 股定期报告仍为 2026-04-29 一季报；普通网页 fallback 与东方财富公告镜像确认同一条 2026-05-08 投资者关系活动记录，`events.jsonl` 已有入账，未重复追加。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 同窗口返回空；未发现 2026-05-08/2026-05-09 胜宏科技龙虎榜记录。
+- 深市大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 同窗口返回空；深交所大宗交易接口本轮未返回有效表格数据，公开网页 fallback 未发现同窗口新增大宗交易。
+- open_web_fallback：`searched/confirmed_same_ir_event`，仅作观察池；不作为 Grok/X 或 Chrome 登录态确认事实。
+- 本轮状态：无新增公告事件、无新增龙虎榜事件、无新增大宗交易事件；核心跟踪问题仍是高端订单兑现、ASIC/大客户新产品进度、1.6T 光模块 mSAP 产能利用率、扩产转固与毛利率延续性。

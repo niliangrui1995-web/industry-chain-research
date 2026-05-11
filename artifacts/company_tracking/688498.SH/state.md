@@ -1,6 +1,6 @@
 # 源杰科技（688498.SH）滚动跟踪状态
 
-updated_at: 2026-05-09T05:16:18+08:00  
+updated_at: 2026-05-09T20:08:34+08:00
 company: 源杰科技  
 ticker: 688498.SH  
 exchange: SSE STAR  
@@ -43,6 +43,18 @@ not_investment_advice: true
 - open-web fallback：已用 Codex 自身联网能力搜索“源杰科技/688498”最近消息，返回结果主要是一季报解读、公告列表、旧龙虎榜/旧 H 股申请与 IR 记录；未发现 2026-05-08 至 2026-05-09 新增公司特异性信号，状态记为 `open_web_fallback_status=searched_no_signal`。该层仅为公开网页观察层，不等同于 Grok/X 发现层。
 
 日更结论：本窗口无新增官方公告、无龙虎榜、无大宗交易、无 open-web 新信号；不追加 `events.jsonl` 新事件。当前 baseline 主线不变，继续跟踪 CW 光源订单持续性、200G PAM4 EML 验证转量产、客户集中度和回款质量。
+
+## 2026-05-09 Batch 2 复核
+
+核对窗口：2026-05-09 及最近交易日 2026-05-08（北京）。
+- browser_scope：not_available；当前未暴露 Chrome/Grok 主控工具，未使用 Grok，也未把普通网页搜索冒充 Grok/X 结果。
+- grok_status：unavailable: chrome plugin tool not exposed。
+- 官方公告/交易所披露：东方财富公告接口按 `stock_list=688498.SH`、`begin_time=2026-05-08`、`end_time=2026-05-09` 返回 `total_hits=0`；CNINFO `hisAnnouncement/query` 按 `stock=688498`、`seDate=2026-05-08~2026-05-09` 返回 `totalAnnouncement=0`；上交所官网公告页未见本窗口新增源杰科技公告。
+- 公司 IR：公司官网投资者关系页当前可见“公司公告”跳转上交所、“一图读懂 | 财报”列表，最新可见为 2026 年一季度财报和 2025 年年度财报入口，未见 2026-05-08 至 2026-05-09 独立新增 IR 事件。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=688498`、`TRADE_DATE=2026-05-08~2026-05-09` 返回空数据，未发现本窗口龙虎榜记录。
+- 大宗交易：东方财富 `RPT_BLOCKTRADE_STA` 与 `RPT_DATA_BLOCKTRADE` 按同一股票和日期窗口返回空数据，未发现本窗口大宗交易记录。
+- open_web_fallback：已用普通联网搜索核对“源杰科技/688498/EML/DFB/laser chip/InP”近 24-48 小时公开网页结果，主要仍是一季报、4 月公告、旧龙虎榜和 H 股申请相关内容；未发现可作为确认事实的新公司级信号。该层仅作观察池，不作为官方确认。
+Batch 2 结论：无新增官方公告、无龙虎榜、无大宗交易、无新增可确认重大观察；不追加 `events.jsonl`。跟踪主线维持为数据中心 CW 光源收入兑现、200G PAM4 EML 仍等待从客户验证到批量收入的硬证据。
 
 ## 观察池
 

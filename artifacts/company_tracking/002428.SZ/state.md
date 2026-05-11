@@ -85,3 +85,15 @@ Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`
 - fallback 状态：`open_web_fallback_status=searched/no_new_hard_signal`。
 - 观察结果：普通公开网页检索未发现比公司 2026-05-09 网上业绩说明会公告更高等级的新硬事实；检索结果主要是云南锗业一季报简析、InP 扩产旧公告和弱社交/论坛材料。
 - 证据边界：该层不是 Grok/X、不是 Chrome 登录态结果；弱社交材料只作观察池，不进入确认事实。
+
+## 2026-05-09 batch 1 company worker 核查
+
+- 运行时间：2026-05-09 20:05:43 +08:00。
+- browser_scope：`not_available`。
+- grok_status：`unavailable: chrome plugin tool not exposed`。
+- open_web_fallback_status：`searched/one_recent_ir_event_added`；普通联网搜索只作观察池，不替代官方确认。
+- 公告/IR：东方财富公告接口在 2026-05-07 至 2026-05-09 窗口返回 2 条：2026-05-09《 关于举行2025年度网上业绩说明会的公告》、2026-05-07《2026年5月7日投资者关系活动记录表》。前者 events 已有记录；后者本次追加到 events。
+- CNINFO/SZSE：CNINFO static PDF `1225285353.PDF` 可访问；深交所 `annList` 本次仍返回 500，未作为唯一确认来源。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 查询 2026-05-08 至 2026-05-09 返回空；公开搜索仅见 2026-05-06 龙虎榜旧记录，未进入本窗口新增事件。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 查询 2026-05-08 至 2026-05-09 返回空。
+- 新增判断：2026-05-07 IR 记录补强 InP 跟踪问题：2026 年计划生产 InP 晶片 18 万片（2-6 英寸、以 3-4 英寸为主），扩产项目按计划开展，良品率逐步提升，客户为外延厂商或具备外延能力的器件厂商，客户认证周期数月至一年甚至更长，认证已基本覆盖国内下游知名厂商；但未披露客户名单、订单金额、良率数值或 6 英寸稳定量产证据。

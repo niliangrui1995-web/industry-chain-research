@@ -77,3 +77,15 @@ grok_status: unavailable_chrome_tool_not_exposed
 - fallback 状态：`open_web_fallback_status=searched/secondary_research_only`。
 - 观察结果：普通公开网页检索未发现 2026-05-08 至 2026-05-09 新公告、龙虎榜或大宗交易；发现近期券商/财经平台继续讨论数据中心光纤利润弹性，但属于二级研究观点，不是公司新披露。
 - 证据边界：该层不是 Grok/X、不是 Chrome 登录态结果；二级研究只进观察池，不改变基线。
+
+## 2026-05-09 worker batch_no=1 复核
+
+- worker_scope：仅复核 `601869.SH`，未改动 watchlist Excel、日报 `artifacts/company_tracking/2026-05-09.md` 或 `run_status.md`。
+- browser_scope：`not_available`。
+- grok_status：`unavailable: chrome plugin tool not exposed`。
+- open_web_fallback_status：`searched/secondary_research_only`；普通联网搜索仅作为观察池，不作为确认事实。
+- 公告/交易所披露：东方财富公告 `np-anotice-stock`、CNINFO `hisAnnouncement/query` 按 2026-05-08 至 2026-05-09 查询均返回 0；上交所公告接口本轮命令行直连未成功返回可解析 JSON，因此以上交所公开检索和东方财富/CNINFO 交叉结果判定未发现本窗口新增正式公告。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=601869`、2026-05-08 至 2026-05-09 查询返回 0，未发现本窗口龙虎榜。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按同一窗口查询均返回 0，未发现本窗口大宗交易。
+- 状态变化：`state_updated_no_event`；未发现需要追加 `events.jsonl` 的新公告、龙虎榜、大宗交易或已验证重大观察。
+- 风险备注：公司官网 IR 中文页面本轮仍存在直连失败/连接中断风险；open web 中的价格弹性、数据中心需求讨论多为二级研究或行情页面，应继续放在观察池，不能替代公司公告、交易所披露或后续财报验证。

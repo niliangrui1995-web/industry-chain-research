@@ -94,3 +94,15 @@ metadata:
 5. 硅光占比超过一半后，能否看到良率、成本和毛利率的进一步可验证改善？
 6. H 股招股书是否披露更细的客户、产品、区域和产能信息？
 7. 本次股权激励归属股份何时完成登记并上市流通，股份支付费用和摊薄影响是否需要纳入 Q2/Q3 模型？
+## 2026-05-09 Batch 2 Worker Recheck
+
+- batch_no: 2
+- checked_at_beijing: 2026-05-09
+- browser_scope: not_available
+- grok_status: unavailable: chrome plugin tool not exposed
+- open_web_fallback_status: searched/no_new_confirmed_signal
+- announcements_checked: 东方财富公告接口确认 2026-05-09 有 11 条公告，均为第五届董事会第三十二次会议及第三期/第四期限制性股票激励计划归属、价格调整、作废、法律意见书、薪酬与考核委员会核查意见；与已记录事件属于同一组事项，未重复追加 events.jsonl。
+- lhb_checked: 东方财富 RPT_DAILYBILLBOARD_DETAILSNEW 在 2026-05-08 至 2026-05-09 窗口返回空数据，未见本窗口龙虎榜。
+- block_trade_checked: 东方财富 RPT_BLOCKTRADE_STA 与 RPT_DATA_BLOCKTRADE 在 2026-05-08 至 2026-05-09 窗口返回空数据，未见本窗口大宗交易。
+- material_changes: 无新增经营类、订单类、800G/1.6T、硅光、客户需求、上游物料或毛利率硬证据；维持上一轮“股权激励事项为治理/人才绑定，不改变核心产业判断”的结论。
+- miss_risk_notes: CNINFO hisAnnouncement 条件查询本轮返回 0，但 CNINFO 静态 PDF 与东方财富公告接口可访问并相互印证；普通网页搜索只作观察池，不能替代 Grok/X 或官方确认。

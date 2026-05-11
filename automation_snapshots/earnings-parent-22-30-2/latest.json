@@ -1,75 +1,27 @@
 {
-  "generated_at_beijing": "2026-05-10 22:36",
+  "generated_at_beijing": "2026-05-11 22:36",
   "status": "ok",
-  "mode": "dry_run",
+  "mode": "apply_mechanical",
   "window": {
-    "now_beijing": "2026-05-10 22:36",
-    "window_end_beijing": "2026-05-13 22:36"
+    "now_beijing": "2026-05-11 22:36",
+    "window_end_beijing": "2026-05-14 22:36"
   },
   "calendar_read": {
-    "today_arg": "2026-05-09",
+    "today_arg": "2026-05-10",
     "lookahead_days": 5,
     "allow_network": false,
-    "event_count": 25,
-    "future_candidate_count": 19,
-    "past_event_count": 0
+    "event_count": 26,
+    "future_candidate_count": 22,
+    "past_event_count": 3
   },
   "action_counts": {
-    "create": 1,
+    "create": 0,
     "update": 0,
     "pause": 0,
-    "validate_pending": 18,
+    "validate_pending": 22,
     "repair_rrule": 0
   },
   "review_items": [
-    {
-      "ticker": "042700.KS",
-      "company": "Hanmi Semi",
-      "report_date": "2026-05-11",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
-      "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "KIND disclosure",
-        "DART filing if OPENDART_API_KEY is available",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    },
-    {
-      "ticker": "3017.TW",
-      "company": "AVC",
-      "report_date": "2026-05-11",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
-      "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "MOPS material information",
-        "TWSE/MOPS investor conference disclosure",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    },
-    {
-      "ticker": "4062.T",
-      "company": "Ibiden",
-      "report_date": "2026-05-11",
-      "status": "needs_agent_review",
-      "reason": "official_date_or_disclosure_without_precise_call_time",
-      "calendar_source": "JPX",
-      "calendar_caveat": "Official date/disclosure source found, but no credible call/webcast time was available; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "TDnet disclosure",
-        "JPX listing/company calendar",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    },
     {
       "ticker": "1303.TW",
       "company": "Nan Ya",
@@ -309,6 +261,86 @@
         "third-party calendars as leads only"
       ],
       "hard_stop": false
+    },
+    {
+      "ticker": "3017.TW",
+      "company": "AVC",
+      "report_date": "2026-05-14",
+      "status": "needs_agent_review",
+      "reason": "official_date_or_disclosure_without_precise_call_time",
+      "calendar_source": "MOPS",
+      "calendar_caveat": "MOPS confirms an earnings/report disclosure event, not a call/webcast time; scheduled by default proxy.",
+      "suggested_official_checks": [
+        "Company IR",
+        "MOPS material information",
+        "TWSE/MOPS investor conference disclosure",
+        "third-party calendars as leads only"
+      ],
+      "hard_stop": false
+    },
+    {
+      "ticker": "5803.T",
+      "company": "Fujikura",
+      "report_date": "2026-05-14",
+      "status": "needs_agent_review",
+      "reason": "official_date_or_disclosure_without_precise_call_time",
+      "calendar_source": "JPX",
+      "calendar_caveat": "Official date/disclosure source found, but no credible call/webcast time was available; scheduled by default proxy.",
+      "suggested_official_checks": [
+        "Company IR",
+        "TDnet disclosure",
+        "JPX listing/company calendar",
+        "third-party calendars as leads only"
+      ],
+      "hard_stop": false
+    },
+    {
+      "ticker": "6113.T",
+      "company": "AMADA",
+      "report_date": "2026-05-14",
+      "status": "needs_agent_review",
+      "reason": "official_date_or_disclosure_without_precise_call_time",
+      "calendar_source": "JPX",
+      "calendar_caveat": "Official date/disclosure source found, but no credible call/webcast time was available; scheduled by default proxy.",
+      "suggested_official_checks": [
+        "Company IR",
+        "TDnet disclosure",
+        "JPX listing/company calendar",
+        "third-party calendars as leads only"
+      ],
+      "hard_stop": false
+    },
+    {
+      "ticker": "6594.T",
+      "company": "Nidec",
+      "report_date": "2026-05-14",
+      "status": "needs_agent_review",
+      "reason": "third_party_estimate_no_official_call_time",
+      "calendar_source": "Yahoo Finance",
+      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
+      "suggested_official_checks": [
+        "Company IR",
+        "TDnet disclosure",
+        "JPX listing/company calendar",
+        "third-party calendars as leads only"
+      ],
+      "hard_stop": false
+    },
+    {
+      "ticker": "6925.T",
+      "company": "Ushio",
+      "report_date": "2026-05-14",
+      "status": "needs_agent_review",
+      "reason": "official_date_or_disclosure_without_precise_call_time",
+      "calendar_source": "JPX",
+      "calendar_caveat": "Official date/disclosure source found, but no credible call/webcast time was available; scheduled by default proxy.",
+      "suggested_official_checks": [
+        "Company IR",
+        "TDnet disclosure",
+        "JPX listing/company calendar",
+        "third-party calendars as leads only"
+      ],
+      "hard_stop": false
     }
   ],
   "soft_probe_candidates": [],
@@ -338,7 +370,7 @@
     "source_header": []
   },
   "final_validation": {
-    "child_count": 42,
+    "child_count": 48,
     "bad_rrules": [],
     "active_with_memory": [],
     "active_past": [],
@@ -479,7 +511,7 @@
     {
       "child_id": "ec-042700-ks-20260511-345a8e",
       "name": "财报电话会深挖 042700.KS Hanmi Semi 2026-05-11",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "042700.KS|2026-05-11|",
       "ticker": "042700.KS",
       "company": "Hanmi Semi",
@@ -489,7 +521,7 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "DTSTART:20260511T200000\nRRULE:FREQ=WEEKLY;BYDAY=MO;BYHOUR=20;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
@@ -555,6 +587,26 @@
       "source_confidence": "official_confirmed",
       "official_source_url": "https://www.ajinomoto.com/ir/event/calendar.html",
       "prompt_sha1": "e66806610d04b5d5c21fc05c0789ac3c6aee6173"
+    },
+    {
+      "child_id": "ec-3017-tw-20260514-c84558",
+      "name": "财报电话会深挖 3017.TW AVC 2026-05-14",
+      "status": "ACTIVE",
+      "task_key": "3017.TW|2026-05-14|",
+      "ticker": "3017.TW",
+      "company": "AVC",
+      "report_date": "2026-05-14",
+      "fiscal_period": "",
+      "planned_child_start_beijing": "2026-05-14 20:00",
+      "schedule_basis": "default_proxy_not_call_time",
+      "rrule": "DTSTART:20260514T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
+      "rrule_ok": true,
+      "has_memory": false,
+      "calendar_source": "MOPS",
+      "event_status": "confirmed",
+      "source_confidence": "official_disclosure",
+      "official_source_url": "https://emops.twse.com.tw/server-java/t05st01_e?step=1&amp;co_id=3017&amp;spoke_date=20260506&amp;spoke_time=134212&amp;seq_no=1",
+      "prompt_sha1": "d4d8da4bfc9ff42e8a8bf056d36b4c5c6966fa72"
     },
     {
       "child_id": "ec-3044-tw-20260508-b606b6",
@@ -679,7 +731,7 @@
     {
       "child_id": "ec-4062-t-20260511-5b6957",
       "name": "财报电话会深挖 4062.T Ibiden 2026-05-11",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "4062.T|2026-05-11|本決算 / 2026-03-31",
       "ticker": "4062.T",
       "company": "Ibiden",
@@ -689,7 +741,7 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "DTSTART:20260511T200000\nRRULE:FREQ=WEEKLY;BYDAY=MO;BYHOUR=20;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "Company IR",
       "event_status": "confirmed",
       "source_confidence": "official_disclosure",
@@ -797,6 +849,46 @@
       "prompt_sha1": "706df5a4535a5122ef3f0439fb8148b346102a20"
     },
     {
+      "child_id": "ec-5803-t-20260514-e930ee",
+      "name": "财报电话会深挖 5803.T Fujikura 2026-05-14",
+      "status": "ACTIVE",
+      "task_key": "5803.T|2026-05-14|本決算 / 2026-03-31",
+      "ticker": "5803.T",
+      "company": "Fujikura",
+      "report_date": "2026-05-14",
+      "fiscal_period": "本決算 / 2026-03-31",
+      "planned_child_start_beijing": "2026-05-14 20:00",
+      "schedule_basis": "default_proxy_not_call_time",
+      "rrule": "DTSTART:20260514T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
+      "rrule_ok": true,
+      "has_memory": false,
+      "calendar_source": "JPX",
+      "event_status": "confirmed",
+      "source_confidence": "official_disclosure",
+      "official_source_url": "https://www.jpx.co.jp/listing/event-schedules/financial-announcement/tvdivq0000001ofb-att/kessan03_0501.xlsx",
+      "prompt_sha1": "e025614c72beee41dcbdfb73d744a12d2409108b"
+    },
+    {
+      "child_id": "ec-6113-t-20260514-ed1d31",
+      "name": "财报电话会深挖 6113.T AMADA 2026-05-14",
+      "status": "ACTIVE",
+      "task_key": "6113.T|2026-05-14|本決算 / 2026-03-31",
+      "ticker": "6113.T",
+      "company": "AMADA",
+      "report_date": "2026-05-14",
+      "fiscal_period": "本決算 / 2026-03-31",
+      "planned_child_start_beijing": "2026-05-14 20:00",
+      "schedule_basis": "default_proxy_not_call_time",
+      "rrule": "DTSTART:20260514T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
+      "rrule_ok": true,
+      "has_memory": false,
+      "calendar_source": "JPX",
+      "event_status": "confirmed",
+      "source_confidence": "official_disclosure",
+      "official_source_url": "https://www.jpx.co.jp/listing/event-schedules/financial-announcement/tvdivq0000001ofb-att/kessan03_0501.xlsx",
+      "prompt_sha1": "cf5b9aa6a1f749f08e8d0c254f42ef4e33f47aa0"
+    },
+    {
       "child_id": "ec-6278-t-20260513-4c7a0a",
       "name": "财报电话会深挖 6278.T Union Tool 2026-05-13",
       "status": "ACTIVE",
@@ -815,6 +907,26 @@
       "source_confidence": "official_disclosure",
       "official_source_url": "https://www.jpx.co.jp/listing/event-schedules/financial-announcement/tvdivq0000001ofb-att/kessan03_0501.xlsx",
       "prompt_sha1": "dc8e15cbeca2276aad9f13b58e5a0249c205f269"
+    },
+    {
+      "child_id": "ec-6594-t-20260514-a89c4a",
+      "name": "财报电话会深挖 6594.T Nidec 2026-05-14",
+      "status": "ACTIVE",
+      "task_key": "6594.T|2026-05-14|",
+      "ticker": "6594.T",
+      "company": "Nidec",
+      "report_date": "2026-05-14",
+      "fiscal_period": "",
+      "planned_child_start_beijing": "2026-05-14 20:00",
+      "schedule_basis": "default_proxy_not_call_time",
+      "rrule": "DTSTART:20260514T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
+      "rrule_ok": true,
+      "has_memory": false,
+      "calendar_source": "Yahoo Finance",
+      "event_status": "estimated_unverified",
+      "source_confidence": "non_official_estimate",
+      "official_source_url": "N/A",
+      "prompt_sha1": "56b06c22ade010a2176630d74184e653bcc82575"
     },
     {
       "child_id": "ec-6752-t-20260512-12e2a3",
@@ -855,6 +967,26 @@
       "source_confidence": "official_disclosure",
       "official_source_url": "https://www.jpx.co.jp/listing/event-schedules/financial-announcement/tvdivq0000001ofb-att/kessan03_0501.xlsx",
       "prompt_sha1": "eba978bf0e960de7a0bbacfea72e428351f8e7c9"
+    },
+    {
+      "child_id": "ec-6925-t-20260514-03473a",
+      "name": "财报电话会深挖 6925.T Ushio 2026-05-14",
+      "status": "ACTIVE",
+      "task_key": "6925.T|2026-05-14|本決算 / 2026-03-31",
+      "ticker": "6925.T",
+      "company": "Ushio",
+      "report_date": "2026-05-14",
+      "fiscal_period": "本決算 / 2026-03-31",
+      "planned_child_start_beijing": "2026-05-14 20:00",
+      "schedule_basis": "default_proxy_not_call_time",
+      "rrule": "DTSTART:20260514T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
+      "rrule_ok": true,
+      "has_memory": false,
+      "calendar_source": "JPX",
+      "event_status": "confirmed",
+      "source_confidence": "official_disclosure",
+      "official_source_url": "https://www.jpx.co.jp/listing/event-schedules/financial-announcement/tvdivq0000001ofb-att/kessan03_0501.xlsx",
+      "prompt_sha1": "68c9ceed447bc0980483791ca59f91eb4bd0a5b5"
     },
     {
       "child_id": "ec-7729-t-20260513-8e0cd1",
@@ -1155,6 +1287,26 @@
       "source_confidence": "",
       "official_source_url": "",
       "prompt_sha1": "8c7269a9d77c4b81b0ab18bddd426c3116498cc8"
+    },
+    {
+      "child_id": "ec-sie-de-20260513-c66422",
+      "name": "财报电话会深挖 SIE.DE Siemens EDA 2026-05-13",
+      "status": "ACTIVE",
+      "task_key": "SIE.DE|2026-05-13|Q2 FY2026",
+      "ticker": "SIE.DE",
+      "company": "Siemens EDA",
+      "report_date": "2026-05-13",
+      "fiscal_period": "Q2 FY2026",
+      "planned_child_start_beijing": "2026-05-13 18:30",
+      "schedule_basis": "official_call_plus_3h",
+      "rrule": "DTSTART:20260513T183000\nRRULE:FREQ=WEEKLY;BYDAY=WE;BYHOUR=18;BYMINUTE=30;COUNT=1",
+      "rrule_ok": true,
+      "has_memory": false,
+      "calendar_source": "confirmed",
+      "event_status": "confirmed",
+      "source_confidence": "official_confirmed",
+      "official_source_url": "https://press.siemens.com/global/de/event/geschaeftszahlen-fuer-das-2-quartal-2026",
+      "prompt_sha1": "bec3510444cdc65bb7cb87bfd41889323e9e44ef"
     },
     {
       "child_id": "ec-tpe-de-20260507-1db033",

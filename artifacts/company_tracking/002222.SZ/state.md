@@ -93,3 +93,27 @@
 - fallback 状态：`open_web_fallback_status=searched/no_new_hard_signal`。
 - 观察结果：普通公开网页检索未发现新增官方公告或可信媒体硬事实；当前新增信息仍以 2026-05-08 龙虎榜交易数据为主。
 - 证据边界：该层不是 Grok/X、不是 Chrome 登录态结果；普通网页/数据页只能作为观察线索。
+
+## 2026-05-09 公司级 worker batch 1 复核
+
+- worker_scope：仅复核 `002222.SZ`，未改动 watchlist、日报 `artifacts/company_tracking/2026-05-09.md` 或 `run_status.md`。
+- browser_scope：`not_available`。
+- grok_status：`unavailable: chrome plugin tool not exposed`。
+- open_web_fallback_status：`searched/no_new_hard_signal`；普通联网搜索只作为观察池，不作为确认事实来源。
+- 公告/披露：东方财富公告接口、CNINFO 历史公告接口在 2026-05-08 至 2026-05-09 窗口均返回 0 条；深交所公告 API 本轮直连返回维护/50x，改用公开索引搜索复核，未发现 2026-05-08 或 2026-05-09 新增披露。
+- 龙虎榜：东方财富数据中心确认 2026-05-08 福晶科技因“连续三个交易日内涨幅偏离值累计达到20%”“日振幅值达到15%”“日涨幅偏离值达到7%”三类条件上榜；该事件已存在于 `events.jsonl`，本轮不重复追加。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 在 2026-05-08 至 2026-05-09 窗口均返回空数据。
+- 状态变化：无新增基本面公告、IR 或订单确认；状态维持“高交易弹性/高预期拥挤，基本面需等待订单、收入拆分和毛利率验证”。
+- 漏检风险：深交所 API 当轮不可用，已由 CNINFO、东方财富公告接口和普通网页搜索交叉补位；Grok/Chrome 未接入，社交平台线索未覆盖。
+
+## 2026-05-11 worker batch 1 复核
+
+- worker_scope：仅复核 `002222.SZ`，未改动 watchlist、日报、run_status 或 Excel。
+- browser_scope：`fallback_no_browser`。
+- grok_status：`unavailable_chrome_extension_backend_not_available`；本轮未使用 Browser Use、Playwright，也未把普通网页搜索称作 Grok/X。
+- 官方披露：深交所上市公司公告检索到 `2026-05-11` 发布的《股票交易异常波动公告》（公告编号 2026-017），对应 2026-05-06、2026-05-07、2026-05-08 连续三个交易日收盘价格涨幅偏离值累计超过 20%。公司核查称无应披露未披露重大事项，近期经营情况及内外部经营环境未发生重大变化，异常波动期间控股股东、实际控制人未买卖公司股票。
+- CNINFO/公告交叉核对：CNINFO 历史公告接口在 2026-05-10 至 2026-05-11 窗口返回 0 条；深交所公告 API 返回上述 1 条。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 在 2026-05-10 至 2026-05-11 窗口返回空数据；本轮未发现 2026-05-11 新龙虎榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` / `RPT_BLOCKTRADE_STA` 在 2026-05-10 至 2026-05-11 窗口返回空数据。
+- open_web_fallback_status：`searched/material_official_announcement_found`。普通网页观察层主要复核到东方财富转载该异常波动公告；未发现新的订单、客户、产能、法拉第旋光片价格/产量或 WSS 量产硬披露。
+- 状态变化：新增官方异常波动公告事件；基本面判断不变，继续按“交易热度高、预期拥挤，基本面需等待订单/收入拆分/毛利率验证”跟踪。

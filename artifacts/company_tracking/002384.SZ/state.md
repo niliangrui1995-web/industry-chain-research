@@ -4,6 +4,9 @@
 状态文件用途：记录当前跟踪结论、关键假设、最新证据、观察池、source gaps 和后续问题。  
 Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`  
 Open web fallback：`open_web_fallback_status: searched`
+Browser scope：`browser_scope: not_available`
+Batch 2 Grok status：`grok_status: unavailable: chrome plugin tool not exposed`
+Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observation_pool_only`
 
 ## 当前跟踪结论
 
@@ -39,6 +42,16 @@ Open web fallback：`open_web_fallback_status: searched`
 - 龙虎榜：东方财富数据中心 2026-05-08~2026-05-09 无上榜记录；最近可见上榜为 2026-05-07（日涨幅偏离值达到 7%，榜单净卖出约 5,464.84 万元），不计入本窗口新事件。
 - 大宗交易：东方财富数据中心 2026-05-08~2026-05-09 无记录；最近可见为 2026-03-10 机构专用对机构专用成交 853.67 万元，不计入本窗口新事件。
 - 影响判断：本次新事件是持续督导/合规确认型，不改变“AI PCB + 索尔思光模块兑现仍需订单、客户、毛利率、产能和现金流证据验证”的主线。
+
+## 2026-05-09 batch 2 复核
+
+- `batch_no`: `2`；`browser_scope`: `not_available`；`grok_status`: `unavailable: chrome plugin tool not exposed`；`open_web_fallback_status`: `searched_observation_pool_only`。本次没有使用 Grok、X 或已登录 Chrome 插件结果，普通联网搜索只作为观察池，硬事实仍以 CNINFO/交易所/数据页可核对项为准。
+- 公告/CNINFO/SZSE：复核 2026-05-09 与最近交易日 2026-05-08，未发现除既有《2025年度保荐工作报告》以外的新公告。该报告已在 events.jsonl 记录，本次不重复追加。
+- IR/官网：未看到 2026-05-08~2026-05-09 新增投资者关系活动记录；最近仍为 2026-04-28 业绩说明会/投资者关系记录。
+- 龙虎榜：同花顺/东方财富可见的最近上榜日期仍为 2026-05-07；未确认 2026-05-08 新增上榜。5月7日上榜属于前一交易窗口参考，不作为 batch 2 新事件追加。
+- 大宗交易：同花顺/搜狐等数据页显示最近记录仍为 2026-03-10 机构专用对机构专用成交 853.67 万元；未确认 2026-05-08 或 2026-05-09 新增大宗交易。
+- 状态变化：无实质变化。跟踪主线仍是索尔思并表后的光模块/光芯片利润贡献、Multek AI PCB 产能释放、客户/订单/毛利率披露、库存和现金流验证。
+- 误差风险：周末与数据源刷新时滞可能导致 2026-05-08 盘后数据延迟；普通网页搜索不能替代交易所/官方数据终局确认，下一轮需继续查 CNINFO、深交所披露、龙虎榜和大宗交易正式数据页。
 
 ## 观察池
 
