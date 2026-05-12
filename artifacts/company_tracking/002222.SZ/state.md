@@ -1,6 +1,6 @@
 # 福晶科技（002222.SZ）滚动状态
 
-> 更新日期：2026-05-09  
+> 更新日期：2026-05-12
 > 档案状态：baseline_created  
 > grok_status: unavailable_chrome_tool_not_exposed
 
@@ -117,3 +117,15 @@
 - 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` / `RPT_BLOCKTRADE_STA` 在 2026-05-10 至 2026-05-11 窗口返回空数据。
 - open_web_fallback_status：`searched/material_official_announcement_found`。普通网页观察层主要复核到东方财富转载该异常波动公告；未发现新的订单、客户、产能、法拉第旋光片价格/产量或 WSS 量产硬披露。
 - 状态变化：新增官方异常波动公告事件；基本面判断不变，继续按“交易热度高、预期拥挤，基本面需等待订单/收入拆分/毛利率验证”跟踪。
+
+## 2026-05-12 worker batch 1 复核
+
+- worker_scope：仅复核 `002222.SZ`，未改动 watchlist、日报、run_status 或 Excel。
+- browser_scope：`fallback_no_browser`。
+- grok_status：`unavailable_chrome_plugin_not_exposed`；本轮未使用 Browser Use、Playwright，也未把普通网页搜索称作 Grok/X。
+- 官方披露：东方财富公告接口、CNINFO 历史公告接口、深交所公告 API 在 2026-05-12 窗口均返回 0 条；未发现新的公告、定期报告或正式 IR 记录。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 在 2026-05-12 窗口返回空数据；未发现 2026-05-12 新龙虎榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` / `RPT_BLOCKTRADE_STA` 在 2026-05-12 窗口返回空数据。
+- open_web_fallback_status：`searched/secondary_ir_repost_found`。普通网页观察层发现证券之星转载格隆汇称，公司在投资者互动平台表示目前未生产磷化铟光芯片；本轮未直接打开官方互动易原文，按二级转载线索记录，不作为交易所公告或订单/收入确认。
+- 状态变化：新增一条概念澄清类观察事件，主要用于压低“磷化铟光芯片”外推风险；公司核心跟踪框架仍维持“WSS 衍射光栅、精密光学、晶体和激光器件为主，交易热度高，基本面等待订单/收入拆分/毛利率验证”。
+- 漏检风险：Grok/Chrome 未接入，社交平台原生线索未覆盖；互动易原文未直接打开，相关问答暂按可信二级转载处理。

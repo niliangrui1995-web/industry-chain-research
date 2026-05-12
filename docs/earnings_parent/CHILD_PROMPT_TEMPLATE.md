@@ -52,6 +52,36 @@ Before reading or analyzing the earnings release, conference call, transcript, o
 
 Base beat/miss assessment, guidance interpretation, Q&A reading, bottleneck analysis, and supply-chain impact on this baseline.
 
+## Downstream Demand Outlook Hard Constraint
+
+In the earnings release, guidance, prepared remarks, and Q&A, actively extract downstream demand and customer-outlook evidence. Do not stop at financial metrics, supply-chain wording, or upstream bottleneck checks.
+
+Separate:
+
+- End-market demand: AI data center, hyperscaler, enterprise, telecom, consumer, industrial, auto, or company-specific end markets.
+- Customer ordering intent: bookings, backlog conversion, cancellations, long-term agreements, take-or-pay, design wins, qualification status, pull-forward, push-outs, or channel inventory.
+- Guidance coverage: revenue already covered by backlog, contracts, qualified demand, permits, or contracted shipments versus revenue still dependent on future orders, approvals, qualifications, ramps, or macro recovery.
+- Demand quality: durable ramp, pull-forward, inventory rebuild, price/mix effect, one-time shipment, cyclical recovery, or weak/uncertain demand.
+- Management tone: stronger, weaker, unchanged, or ambiguous versus the resolved prior-quarter event.
+
+Use this table when downstream demand outlook matters:
+
+| Downstream Demand Item | Mention Status | Evidence Location | Management Wording | Timeframe | Demand Quality | Investment Meaning | Confidence |
+|---|---|---|---|---|---|---|---|
+
+Allowed `Mention Status` values:
+
+- `demand_accelerating`
+- `demand_stable`
+- `demand_decelerating`
+- `demand_uncertain`
+- `customer_pull_forward`
+- `inventory_digesting`
+- `not_mentioned`
+- `third_party_only`
+
+If downstream demand or customer ordering intent is not discussed in the available materials, write `not_mentioned` or `evidence_absent`. Do not infer demand strength from industry headlines, stock moves, or supplier commentary unless clearly labeled as outside-call context.
+
 ## Upstream Bottleneck Evidence Hard Constraint
 
 In the earnings release, prepared remarks, and Q&A, actively search for upstream bottleneck evidence and label each relevant item with one mention status:

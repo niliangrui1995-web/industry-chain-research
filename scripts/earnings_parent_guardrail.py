@@ -83,6 +83,7 @@ CHILD_BODY_MARKER = "CHILD TASK SKILL HARD GATE:"
 REQUIRED_CHILD_PROMPT_MARKERS = (
     "Project-local skill resolution is successful",
     "earnings webcast, results briefing, or investor meeting",
+    "Downstream Demand Outlook Hard Constraint",
     'resolve which period "the immediately preceding quarter" means',
     "quarter-over-quarter growth using prior-quarter actuals",
     "changes versus the resolved prior-quarter conference call",

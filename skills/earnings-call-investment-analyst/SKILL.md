@@ -292,6 +292,36 @@ Classify each change as one of:
 
 When the prior-quarter call and current-quarter call use different source types, state the source-quality mismatch. Do not overstate wording changes if one side is an official transcript and the other side is a third-party transcript.
 
+### Downstream Demand Outlook Rule
+
+For every post-earnings call, webcast, results-briefing, or investor-meeting analysis, actively search the earnings release, guidance, prepared remarks, and Q&A for downstream demand and customer-outlook evidence. Do not stop at financial metrics, supply-chain wording, or upstream bottleneck checks.
+
+Always separate:
+
+- End-market demand: AI data center, hyperscaler, enterprise, telecom, consumer, industrial, auto, or company-specific end markets.
+- Customer ordering intent: bookings, backlog conversion, cancellations, long-term agreements, take-or-pay, design wins, qualification status, pull-forward, push-outs, or channel inventory.
+- Guidance coverage: revenue already covered by backlog, contracts, qualified demand, permits, or contracted shipments versus revenue still dependent on future orders, approvals, qualifications, ramps, or macro recovery.
+- Demand quality: durable ramp, pull-forward, inventory rebuild, price/mix effect, one-time shipment, cyclical recovery, or weak/uncertain demand.
+- Management tone: stronger, weaker, unchanged, or ambiguous versus the resolved prior-quarter event.
+
+Use this table when downstream demand outlook matters:
+
+| Downstream Demand Item | Mention Status | Evidence Location | Management Wording | Timeframe | Demand Quality | Investment Meaning | Confidence |
+|---|---|---|---|---|---|---|---|
+
+Allowed `Mention Status` values:
+
+- `demand_accelerating`
+- `demand_stable`
+- `demand_decelerating`
+- `demand_uncertain`
+- `customer_pull_forward`
+- `inventory_digesting`
+- `not_mentioned`
+- `third_party_only`
+
+If downstream demand or customer ordering intent is not discussed in the available materials, write `not_mentioned` or `evidence_absent`. Do not infer demand strength from industry headlines, stock moves, or supplier commentary unless clearly labeled as outside-call context.
+
 ### Upstream Bottleneck Evidence Rule
 
 For every post-earnings call analysis, actively search the earnings release, investor presentation, prepared remarks, and Q&A for upstream bottlenecks. Do not rely only on generic "supply chain" wording. Search for the company's actual upstream terms, including supplier, substrate, wafer, fab, material, component, capacity, equipment, lead time, yield, inventory, allocation, qualification, long-term agreement, prepayment, take-or-pay, shortage, constraint, tightness, bottleneck, and the segment-specific product names.
@@ -436,6 +466,7 @@ A good earnings-call analysis must include:
 - Current-quarter call source status and prior-quarter call source status.
 - At least five call takeaways ranked by importance.
 - A prior-quarter call comparison covering demand, orders/backlog, guidance drivers, capacity/bottlenecks, pricing/margins, customer signals, inventory/channel, and Q&A behavior when prior-quarter call content is available.
+- A downstream demand outlook check covering end-market demand, customer ordering intent, guidance coverage, demand quality, and management tone.
 - Clear distinction between fact, management claim, analyst inference, and our inference.
 - An upstream bottleneck check that explicitly marks each relevant item as mentioned, mitigated, future risk, not mentioned, or third-party only.
 - Final source-status fields: `company_original_status`, `call_content_status`, `final_source_type`, `missing_materials`, `provisional true/false`, and `confidence level`.

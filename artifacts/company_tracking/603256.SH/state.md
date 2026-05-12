@@ -14,6 +14,20 @@ grok_status: unavailable_chrome_tool_not_exposed
 
 当前跟踪优先级：先跟价格和特种布收入占比，再跟扩产资金链和客户认证转收入，不把“PCB 概念”本身当作结论。
 
+## 2026-05-12 单公司 worker 日更
+
+本轮只处理 603256.SH 宏和科技，运行时间 2026-05-12 20:13:16 +08:00。按总控约束记录：`browser_scope=fallback_no_browser`，`grok_status=unavailable_chrome_plugin_not_exposed`；未使用 Browser Use 或 Playwright 顶替。普通公开网页搜索仅作为 `open_web_fallback` 观察层，不冒充 Grok/X。
+
+公告/交易所/CNINFO：CNINFO `hisAnnouncement/query` 按 `stock=603256`、`seDate=2026-05-10~2026-05-12` 返回 0；东方财富公告接口 `np-anotice-stock` 按 `stock_list=603256.SH`、`begin_time=2026-05-10`、`end_time=2026-05-12` 返回 0。普通网页搜索发现财联社/东方财富、每日经济新闻/搜狐均称公司 2026-05-12 晚间公告董高减持计划已实施完毕，但当前接口窗口暂未拿到官方 PDF，因此本轮按 `reported_by_reputable_media_pending_official_pdf` 记录，下一轮必须复扫 CNINFO/SSE 官方公告。
+
+龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=603256`、`TRADE_DATE=2026-05-10~2026-05-12` 返回空数据，未发现本窗口新增龙虎榜。
+
+大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 按同一窗口返回空数据，未发现本窗口大宗交易。
+
+Open-web fallback：财联社/东方财富报道称，毛嘉明于 2026-05-11 至 2026-05-12 通过集中竞价减持 240,725 股，占总股本 0.0266%，减持金额约 3,563.85 万元；邹新娥同期减持 75,000 股，占总股本 0.0083%，减持金额约 1,094.55 万元；两人减持计划已实施完毕。每日经济新闻/搜狐报道口径基本一致。该事项是 2026-04-14 已披露减持计划的执行完成，比例小，不改变基本面，但在高估值、高涨幅阶段强化交易情绪和管理层套现观察。
+
+状态变化：追加一条待官方 PDF 复核的减持完成事件；基本面判断不变，交易风险观察继续偏高。后续需要把“董高减持完成”与 Low CTE/特种电子布收入、电子布/电子纱价差和黄石扩产资金链分开判断。
+
 ## 2026-05-09 日更
 
 本次独立日更只覆盖 603256.SH 宏和科技，检查窗口为 2026-05-08 至 2026-05-09。Grok/X 因当前没有 `@chrome` 工具暴露，记录为 `grok_status=unavailable_chrome_tool_not_exposed`，未使用普通网页搜索冒充 Grok/X。按补充要求启用 Codex 自身联网能力做 open-web fallback，状态为 `open_web_fallback_status=searched`。

@@ -97,3 +97,14 @@ Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`
 - 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 查询 2026-05-08 至 2026-05-09 返回空；公开搜索仅见 2026-05-06 龙虎榜旧记录，未进入本窗口新增事件。
 - 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 查询 2026-05-08 至 2026-05-09 返回空。
 - 新增判断：2026-05-07 IR 记录补强 InP 跟踪问题：2026 年计划生产 InP 晶片 18 万片（2-6 英寸、以 3-4 英寸为主），扩产项目按计划开展，良品率逐步提升，客户为外延厂商或具备外延能力的器件厂商，客户认证周期数月至一年甚至更长，认证已基本覆盖国内下游知名厂商；但未披露客户名单、订单金额、良率数值或 6 英寸稳定量产证据。
+
+## 2026-05-12 batch 1 company worker 核查
+
+- 运行日期：2026-05-12（北京时间）。
+- browser_scope：`fallback_no_browser`。
+- grok_status：`unavailable_chrome_plugin_not_exposed`。
+- open_web_fallback_status：`searched/trading_events_found_no_new_fundamental_signal`；普通 open-web 搜索只作 observation fallback，不冒充 Grok/X 或 Chrome 登录态结果。
+- 公告/IR：CNINFO `hisAnnouncement/query` 查询 2026-05-10 至 2026-05-12 返回 0 条；未发现 2026-05-12 新公司公告或新 IR 记录。此前 2026-05-09 业绩说明会公告、2026-05-07 投资者关系记录仍是最近正式披露增量。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 查询 2026-05-12 返回 2 条。公司当日收盘 101.42 元，涨幅 10.00%，换手率 17.2648%；因日涨幅偏离值达到 7% 和连续三个交易日内涨幅偏离值累计达到 20% 上榜。日榜买入 17.49 亿元、卖出 15.43 亿元、净买入 2.06 亿元；区间榜买入 46.85 亿元、卖出 40.40 亿元、净买入 6.44 亿元。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 查询 2026-05-12 返回 2 条，成交价均为 87.59 元，成交量分别为 20.00 万股、21.99 万股，成交额分别为 1751.80 万元、1926.10 万元，买方均为机构专用，卖方均为中国中金财富证券有限公司上海黄浦区中山东二路证券营业部。
+- 新增判断：2026-05-12 新增的是交易层硬事件，确认交易弹性与拥挤度继续升高，并出现高位折价大宗交易；但未新增 InP/GaAs 客户、订单、良率、6 英寸量产或利润兑现证据，基本面结论不因本次交易事件上调。
