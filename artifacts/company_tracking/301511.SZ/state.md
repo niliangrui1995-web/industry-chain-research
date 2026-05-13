@@ -1,8 +1,9 @@
 # 德福科技 301511.SZ 滚动状态
 
-更新日期：2026-05-09  
-browser_scope: not_available
-grok_status: unavailable: chrome plugin tool not exposed
+更新日期：2026-05-13
+browser_scope: fallback_no_browser
+grok_status: unavailable_chrome_plugin_not_exposed
+open_web_fallback_status: searched_no_new_hard_signal
 用途：公司跟踪状态，不构成买卖建议。
 
 ## 当前跟踪结论
@@ -23,6 +24,18 @@ grok_status: unavailable: chrome plugin tool not exposed
 - open web fallback：普通联网搜索作为观察池使用，状态为 `searched/no_new_hard_signal`；不把该层当作确认事实来源。
 - 本次状态变化：未发现需追加的新官方事件；仅补齐本轮 `browser_scope`、Grok/X source gap 和 open-web fallback 口径。
 
+## 2026-05-13 日更
+
+核查窗口：2026-05-13 及最近交易日（北京时间晚间）。本次只处理 301511.SZ 独立公司任务，不更新 Excel、日报、run_status 或其他公司目录。
+
+- 公告 / CNINFO / 交易所披露：普通公开检索和公告入口复核未发现 2026-05-13 当日新增德福科技官方公告；可见结果仍主要回到 2026-04-25 年报、2026Q1、质量回报双提升进展公告，以及 2026-05-06 回购进展 / 龙虎榜等既有事项。
+- 公司 IR：公开投资者关系与互动信息未识别到 2026-05-13 新增可归档的调研纪要、正式 IR 记录或能量化 HVLP/RTF 收入占比的披露。
+- 龙虎榜：公开龙虎榜页面显示最近可见上榜仍为 2026-05-06“日收盘价格涨幅达到15%的证券”；未发现 2026-05-13 新龙虎榜记录。
+- 大宗交易：公开大宗交易页面未发现 2026-05-13 新增德福科技大宗交易；最近可见记录仍非本轮窗口内新事件。
+- Grok/X：父任务未暴露 Chrome/Grok/@chrome 工具面，按用户指令记录为 `unavailable_chrome_plugin_not_exposed`；未使用 Browser Use / Playwright 替代登录态。
+- open web fallback：普通公开网页搜索作为观察池使用，状态为 `searched_no_new_hard_signal`；未发现 HVLP/RTF 铜箔新增客户认证、批量交付、正式订单、收入占比或毛利率量化披露。
+- 本次状态变化：仅更新本轮浏览器范围、Grok/X 不可用口径和 2026-05-13 来源缺口；没有新增硬事件，未追加 `events.jsonl`。
+
 ## 关键假设
 
 1. 若 2026 年头部 CCL 意向书转化为正式订单，且 HVLP4/RTF 高端品稳定批量交付，电子电路铜箔的利润弹性会明显上升。
@@ -34,6 +47,7 @@ grok_status: unavailable: chrome plugin tool not exposed
 
 | 日期 | 来源类型 | 证据 | 当前解读 |
 |---|---|---|---|
+| 2026-05-13 | 日更核对 | 2026-05-13 及最近交易日未发现新增公告、公司 IR、龙虎榜或大宗交易；open web fallback 未发现 HVLP/RTF 新增硬证据；Grok/X 不可用。 | 本窗口没有新增可归档公司事件，继续等待 HVLP/RTF 正式订单、批量交付和收入占比披露。 |
 | 2026-05-09 | 日更核对 | 2026-05-08 至 2026-05-09 未发现新增公告、CNINFO 披露、公司 IR、龙虎榜或大宗交易；Grok/X 不可用。 | 本窗口没有新增可归档公司事件，继续观察 HVLP/RTF 订单兑现和交易拥挤度。 |
 | 2026-05-08 | 行情数据 | 收盘 94.60 元，总市值约 596.28 亿元，流通市值约 354.40 亿元，换手率 12.06%，TTM PE 约 101.25，PB 约 14.34。 | 交易弹性高，但估值和拥挤度已放大。 |
 | 2026-04-25 | 官方财报 | 2026Q1 收入 43.38 亿元，归母净利润 1.47 亿元，经营现金流 -3.35 亿元。 | 业绩弹性确认，现金流压力未解除。 |
@@ -62,9 +76,12 @@ grok_status: unavailable: chrome plugin tool not exposed
 - 2026 年头部 CCL 意向书最低采购数量和金额：N/A。
 - HVLP5 正式批量交付客户和收入确认：N/A。
 - 慧儒科技收购正式价格、交割和并表时间：N/A。
+- 2026-05-13 新增官方公告 / IR：未发现。
+- 2026-05-13 新增 HVLP / RTF 客户认证、批量交付、收入占比硬证据：未发现。
+- 2026-05-13 龙虎榜 / 大宗交易：未发现新增。
 - 2026-05-08 至 2026-05-09 新增官方公告 / IR：未发现。
 - 2026-05-08 至 2026-05-09 龙虎榜 / 大宗交易：未发现。
-- Grok/X 观察层：unavailable: chrome plugin tool not exposed。
+- Grok/X 观察层：unavailable_chrome_plugin_not_exposed。
 
 ## Next Questions
 

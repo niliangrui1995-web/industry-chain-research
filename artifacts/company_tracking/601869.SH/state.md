@@ -89,3 +89,41 @@ grok_status: unavailable_chrome_tool_not_exposed
 - 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按同一窗口查询均返回 0，未发现本窗口大宗交易。
 - 状态变化：`state_updated_no_event`；未发现需要追加 `events.jsonl` 的新公告、龙虎榜、大宗交易或已验证重大观察。
 - 风险备注：公司官网 IR 中文页面本轮仍存在直连失败/连接中断风险；open web 中的价格弹性、数据中心需求讨论多为二级研究或行情页面，应继续放在观察池，不能替代公司公告、交易所披露或后续财报验证。
+
+## 2026-05-13 worker batch_no=1 复核
+
+### 独立任务块
+
+- company：长飞光纤光缆股份有限公司
+- ticker：`601869.SH`
+- aliases：长飞光纤、长飞光纤光缆、YOFC、06869.HK
+- tracking_focus：光纤价格周期、AI 光联接/数据中心、光互联组件、空芯光纤、海外扩张、交易拥挤度。
+- browser_scope：`fallback_no_browser`
+- grok_status：`unavailable_chrome_plugin_not_exposed`
+- open_web_fallback_status：`searched/no_new_hard_event`
+
+### 完成清单
+
+- baseline_read：yes；本轮基线已 done，未写 `baseline.md`。
+- state_read：yes。
+- events_read：yes；未发现重复或需要补写的硬事件。
+- announcements_checked：yes；CNINFO `hisAnnouncement/query` 按 2026-05-10 至 2026-05-13 返回 0，东方财富公告日期窗查询返回 0；公开检索未发现 2026-05-13 新正式公告。
+- investor_relations_checked：partial；公司官网 IR 页面命令行直连仍出现连接意外关闭，需后续在可访问官网或 Chrome 登录环境下补查。
+- hkex_checked：partial；HKEX 页面可达，但本轮 open-web 未发现 06869.HK 在 2026-05-13 的新增公告信号。
+- lhb_checked：yes；东方财富龙虎榜接口按 2026-05-10 至 2026-05-13 查询返回空，最近历史龙虎榜仍为 2026-03-26。
+- block_trade_checked：yes；东方财富大宗交易接口按 2026-05-10 至 2026-05-13 查询返回空，最近历史大宗交易仍为 2025-09-30。
+- grok_checked：no；Chrome/Grok 工具面未暴露，未使用 Browser Use/Playwright 替代登录态。
+- open_web_fallback_checked：yes；普通公开网页仅发现 2026-05-12 收盘后的资金流、行情和二级研究延续讨论，属于 open-web fallback 观察层，不作为 Grok/X 或公司确认事实。
+- events_appended：no；无新增 official_announcement、trading_event_lhb、trading_event_block_trade、investor_relations、trusted_media 硬事件。
+- state_updated：yes；仅记录本轮来源边界、完成清单和 source gap。
+
+### 状态判断
+
+本轮未改变核心假设：长飞光纤仍处在光纤周期修复、AI 光联接叙事和海外扩张共同驱动的高预期阶段。2026-05-13 的新增公开信号主要是行情/资金流与二级研究延续，不构成公司新披露或交易所交易事件。短期继续把 2026Q2 毛利率、光互联组件增长、空芯光纤规模化节点、海外收入/利润质量作为下一轮硬验证项。
+
+### 本轮 source gaps / miss risk
+
+- 公司官网 IR 页面仍有命令行直连失败风险，可能漏掉官网投资者服务栏目的非交易所同步内容。
+- HKEX 仅做 open-web 信号复核，未完成结构化公告列表抓取；若 H 股端先发通函，需后续补查。
+- Chrome/Grok 未暴露，缺少登录态 Grok/X 对海外讨论、社交热度和非中文线索的发现层。
+- 普通 open-web fallback 不能替代 Grok/X，也不能替代公告、交易所披露和公司 IR。

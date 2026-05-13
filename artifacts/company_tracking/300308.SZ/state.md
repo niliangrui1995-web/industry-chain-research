@@ -4,10 +4,10 @@ metadata:
 - company: 中际旭创股份有限公司
 - ticker: 300308.SZ
 - exchange: SZSE
-- updated_at: 2026-05-09
+- updated_at: 2026-05-13
 - state_type: company_tracking
-- grok_status: unavailable_chrome_tool_not_exposed
-- open_web_fallback_status: searched/no_signal
+- grok_status: unavailable_chrome_plugin_not_exposed
+- open_web_fallback_status: searched/block_trade_signal_only
 - advice_status: 不是买卖建议
 
 ## 当前跟踪结论
@@ -84,6 +84,7 @@ metadata:
 - 未披露“部分原材料偏紧”的具体物料、供应商、缺口比例和交期。
 - Grok/X 未运行，本次按 `grok_status: unavailable_chrome_tool_not_exposed` 处理；未使用普通网页搜索冒充 Grok/X。
 - 2026-05-09 已执行 open web fallback 搜索，状态为 `searched/no_signal`；公开网页结果主要为历史公告、二级数据页和 Q1 点评复述，未发现独立于正式公告的新经营信号。
+- 2026-05-13 复扫上一轮 CNINFO 访问缺口：CNINFO hisAnnouncement 在 2026-05-10 至 2026-05-13 窗口正常返回 0 条，未复现 504；公司 IR 最新财报列表仍停留在 2026-04-20，未见新的 800G/1.6T、硅光、客户需求、上游物料或毛利率硬披露。
 
 ## Next Questions
 
@@ -106,3 +107,19 @@ metadata:
 - block_trade_checked: 东方财富 RPT_BLOCKTRADE_STA 与 RPT_DATA_BLOCKTRADE 在 2026-05-08 至 2026-05-09 窗口返回空数据，未见本窗口大宗交易。
 - material_changes: 无新增经营类、订单类、800G/1.6T、硅光、客户需求、上游物料或毛利率硬证据；维持上一轮“股权激励事项为治理/人才绑定，不改变核心产业判断”的结论。
 - miss_risk_notes: CNINFO hisAnnouncement 条件查询本轮返回 0，但 CNINFO 静态 PDF 与东方财富公告接口可访问并相互印证；普通网页搜索只作观察池，不能替代 Grok/X 或官方确认。
+
+## 2026-05-13 Batch 2 Worker Recheck
+
+- batch_no: 2
+- checked_at_beijing: 2026-05-13 晚间
+- browser_scope: fallback_no_browser
+- grok_status: unavailable_chrome_plugin_not_exposed
+- open_web_fallback_status: searched/block_trade_signal_only
+- task_block: 中际旭创 300308.SZ；aliases=中际旭创/旭创科技/Innolight；tracking_focus=800G/1.6T、硅光、客户需求、上游物料、毛利率、公告/交易事件
+- checklist: baseline_read=done; state_read=done; events_read=done; announcements_checked=done; lhb_checked=done; block_trade_checked=done; grok_checked=unavailable; open_web_fallback=done; events_appended=1; state_updated=done
+- announcements_checked: CNINFO hisAnnouncement 查询 2026-05-10 至 2026-05-13 返回 0 条，未复现上一轮 CNINFO 504；公司 IR 页面最新财务报告仍为 2026-04-20 的 2026Q1/2025年报，未见 2026-05-13 新公告或新投资者关系记录。
+- lhb_checked: 东方财富 RPT_DAILYBILLBOARD_DETAILSNEW 在 2026-05-13 窗口返回空数据，未见当日龙虎榜。
+- block_trade_checked: 东方财富 RPT_BLOCKTRADE_STA/RPT_DATA_BLOCKTRADE 显示 2026-05-13 有 3 笔大宗交易，合计 1.07 万股、1122.65 万元，成交价 1049.20 元，买卖双方均为机构专用；已追加 events.jsonl。
+- open_web_fallback_observation: 新浪财经/证券时报系转载与东方财富数据口径一致，指向同一组大宗交易；证券之星资金流报道仅作二级市场观察，不作为经营硬证据。
+- material_changes: 无新增经营类、订单类、800G/1.6T、硅光、客户需求、上游物料或毛利率硬披露；新增项仅为交易事件大宗交易。
+- miss_risk_notes: Chrome/Grok/@chrome 工具面未暴露，未执行 Grok/X；本轮 open-web fallback 不能替代登录态 Grok/X。CNINFO 当前窗口返回 0 条可降低“504漏公告”风险，但仍需下轮继续跟踪 H 股招股书、Q2 经营口径和新增 IR 记录。

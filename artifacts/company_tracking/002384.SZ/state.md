@@ -53,6 +53,17 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 状态变化：无实质变化。跟踪主线仍是索尔思并表后的光模块/光芯片利润贡献、Multek AI PCB 产能释放、客户/订单/毛利率披露、库存和现金流验证。
 - 误差风险：周末与数据源刷新时滞可能导致 2026-05-08 盘后数据延迟；普通网页搜索不能替代交易所/官方数据终局确认，下一轮需继续查 CNINFO、深交所披露、龙虎榜和大宗交易正式数据页。
 
+## 2026-05-13 batch 2 晚间复核
+
+- 独立任务块：`ticker=002384.SZ`，`name=东山精密`，`batch_no=2`，`browser_scope=fallback_no_browser`，`grok_status=unavailable_chrome_plugin_not_exposed`，`open_web_fallback_status=searched_observation_pool_only`。本轮未使用 Browser Use、Playwright、Grok、X 或已登录 Chrome 结果。
+- 完成清单：`baseline_read=true`，`state_read=true`，`events_read=true`，`announcements_checked=true`，`ir_checked=true`，`lhb_checked=true`，`block_trade_checked=true`，`grok_checked=false_unavailable`，`open_web_fallback_checked=true`，`state_updated=true`，`events_appended=false_no_new_hard_event`。
+- 公告/CNINFO/SZSE：按 CNINFO `orgId=9900011647` 复核 2026-05-08~2026-05-13，仅返回 2026-05-09 已记录的《2025年度保荐工作报告》，未发现 2026-05-12 或 2026-05-13 新公告；公司官网投资者入口指向深交所公告与互动易，未看到官网自有新增 IR 新闻。
+- 龙虎榜：公开网页与交易公开信息镜像仍显示最近可核对上榜为 2026-05-07（日涨幅偏离值达 7%），未看到 2026-05-12 或 2026-05-13 新上榜记录；5 月 7 日已作为前序交易热度参考，不在本轮重复追加。
+- 大宗交易：搜狐/同花顺/中财网等大宗交易页显示最近可见记录仍为 2026-03-10 机构专用对机构专用成交 853.67 万元，未看到 2026-05-12 或 2026-05-13 新大宗交易。
+- open-web 观察：2026-05-12 新浪财经转载英才商业文章继续强化“索尔思是利润核心、800G/1.6T 放量、Meta/微软/亚马逊等客户导入、AI PCB 第二曲线”等叙事，并给出多个出货、产能和利润推算。但该文大量使用“根据现有资料、市场预期、外资卖方预测、反推”等表述，未给出公司公告、客户官方确认或可核验订单文件，不能作为 confirmed hard evidence。
+- 硬证据判断：本轮没有发现新的 official_announcement、investor_relations、trading_event_lhb、trading_event_block_trade 或可独立验证的客户/订单硬事件；索尔思/AI server PCB 叙事仍停留在年报、业绩说明会、卖方/媒体推算和公开观察层之间，未补齐客户、订单金额、单独收入、毛利率、良率或产能爬坡的正式披露。
+- 状态变化：主结论不变，新增 source gap 记录。下一轮重点继续追 2026-05-15 股东会后是否有公告或交流材料、索尔思单独经营数据、AI PCB 第一期产能节点、以及 5 月中旬是否出现新的龙虎榜/大宗交易。
+
 ## 观察池
 
 - 市场正在把东山精密从“消费电子 FPC/PCB”重新定价为“AI 数据中心硬件核心器件平台”，估值锚从传统制造切换到 AI PCB + 光模块。
@@ -71,6 +82,7 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 海外客户名称、第一大客户具体身份、云厂商客户收入占比均为 N/A。
 - GMD 并表后的收入、利润、现金流和整合成本需要后续定期报告拆解。
 - 2026-05-09 本轮 `open_web_fallback` 只确认到 CNINFO 新增保荐工作报告和窗口内无龙虎榜/大宗交易；由于 `@chrome`/Grok 当前不可用，实时 X/Grok 发现层仍是来源缺口。
+- 2026-05-13 本轮 `open_web_fallback` 观察到索尔思客户、出货、产能与利润推算继续升温，但未找到公司公告、IR、客户官方或交易所文件作硬证据；不能把媒体/卖方推算写成确认事实。
 
 ## Next questions
 
@@ -99,3 +111,6 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 2025 年度保荐工作报告（CNINFO）：https://static.cninfo.com.cn/finalpage/2026-05-09/1225285013.PDF
 - 东方财富龙虎榜数据（5 月 7 日最近上榜参考）：https://emwap.eastmoney.com/a/202605073730082694.html
 - 东方财富大宗交易数据页：https://data.eastmoney.com/dzjy/detail/002384.html
+- 公司官网投资者入口：https://cn.dsbj.com/
+- 新浪财经 open-web 观察文章（非硬证据）：https://finance.sina.com.cn/roll/2026-05-12/doc-inhxrshk9916093.shtml
+- 搜狐大宗交易数据页：https://q.stock.sohu.com/cn/002384/dzjy.shtml

@@ -108,3 +108,18 @@ Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`
 - 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 查询 2026-05-12 返回 2 条。公司当日收盘 101.42 元，涨幅 10.00%，换手率 17.2648%；因日涨幅偏离值达到 7% 和连续三个交易日内涨幅偏离值累计达到 20% 上榜。日榜买入 17.49 亿元、卖出 15.43 亿元、净买入 2.06 亿元；区间榜买入 46.85 亿元、卖出 40.40 亿元、净买入 6.44 亿元。
 - 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 查询 2026-05-12 返回 2 条，成交价均为 87.59 元，成交量分别为 20.00 万股、21.99 万股，成交额分别为 1751.80 万元、1926.10 万元，买方均为机构专用，卖方均为中国中金财富证券有限公司上海黄浦区中山东二路证券营业部。
 - 新增判断：2026-05-12 新增的是交易层硬事件，确认交易弹性与拥挤度继续升高，并出现高位折价大宗交易；但未新增 InP/GaAs 客户、订单、良率、6 英寸量产或利润兑现证据，基本面结论不因本次交易事件上调。
+
+## 2026-05-13 batch 1 company worker 核查
+
+- 运行日期：2026-05-13（北京时间晚间）。
+- 独立任务块：002428.SZ 云南锗业；aliases：云南锗业、云南临沧鑫圆锗业股份有限公司；tracking_focus：InP/GaAs 化合物半导体材料、锗资源与精深加工、光通信/光模块概念、出口管制、交易拥挤度与筹码变化。
+- browser_scope：`fallback_no_browser`。
+- grok_status：`unavailable_chrome_plugin_not_exposed`。
+- open_web_fallback_status：`searched/one_official_risk_announcement_added`；本轮没有 Chrome/Grok/@chrome 工具面，未使用 Browser Use 或 Playwright 替代登录态，普通 open-web 仅作为 fallback observation。
+- 完成清单：baseline_read=done；state_read=done；events_read=done；announcements_checked=done；cninfo_checked=done；szse_checked=done_via_cninfo_and_public_disclosure_mirror；investor_relations_checked=done_no_new_post_meeting_record_found；lhb_checked=done_no_2026_05_13_record_found；block_trade_checked=done_no_2026_05_13_record_found；grok_checked=unavailable；open_web_fallback_checked=done；events_appended=1；state_updated=done。
+- 公告/IR：CNINFO `hisAnnouncement/query` 以 `002428` 检索 2026-05-10 至 2026-05-13 返回 1 条新增公告：2026-05-13《股票交易异常波动公告》（公告编号 2026-031，PDF `1225302159`）。公告确认 2026-05-08、2026-05-11、2026-05-12 连续三个交易日收盘价格涨幅偏离值累计超过 20%；提示静态市盈率 3287.97、滚动市盈率 3476.46、市净率 45.09，显著高于行业；提示化合物半导体材料收入约 1.38 亿元、占营收 12.93%、毛利占合并毛利 14.29%；并称不存在应披露而未披露重大事项，控股股东及实控人在异常波动期间不存在买卖公司股票。
+- 业绩说明会后记录：open-web 检索到 2026-05-13 业绩说明会召开安排，但截至本轮核查未找到新的正式投资者关系活动记录表或问答全文；下一轮需继续补看全景网/巨潮/公司 IR。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 查询 2026-05-13 返回空；普通网页检索未发现 2026-05-13 新龙虎榜硬记录。最近硬记录仍为 2026-05-12 龙虎榜。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 查询 2026-05-13 返回空；普通网页检索未发现 2026-05-13 新大宗交易硬记录。最近硬记录仍为 2026-05-12 两笔折价大宗交易。
+- 行情观察：腾讯行情快照显示 2026-05-13 16:14 左右价格 101.51 元，较前收 101.42 元涨 0.09%，换手率 16.52%，成交额约 109.11 亿元，总市值约 662.90 亿元；交易拥挤度仍高。
+- 新增判断：本轮新增硬事件是官方异常波动和风险提示公告。它强化“交易端热度领先基本面兑现”的结论，但没有新增 InP/GaAs 客户、订单、良率、6 英寸量产、出口许可或利润兑现证据；基本面质量不因本公告上调，后续重点转向业绩说明会问答是否披露实质增量。

@@ -3,10 +3,20 @@
 company: 胜宏科技  
 ticker: 300476.SZ  
 exchange: SZSE  
-last_updated: 2026-05-11
+last_updated: 2026-05-13
 browser_scope: fallback_no_browser
-grok_status: unavailable_chrome_extension_backend_not_available
+grok_status: unavailable_chrome_plugin_not_exposed
 not_investment_advice: true
+
+## 2026-05-13 batch_no=1 worker 复核
+
+- 独立任务块：`300476.SZ` 胜宏科技，run_date=2026-05-13，北京时间晚间；本轮未使用 Browser Use、Playwright 或登录态替代工具。
+- 浏览器/Grok：按父任务工具面限制记录 `browser_scope=fallback_no_browser`、`grok_status=unavailable_chrome_plugin_not_exposed`；普通公开网页检索仅作为 `open_web_fallback` 观察层，不能冒充 Grok/X。
+- 公告/IR：CNINFO `hisAnnouncement/query` 在 2026-05-08 至 2026-05-13 返回 0 条；东方财富公告接口在同窗口仅返回上一轮已入账的 2026-05-08 投资者关系记录；公司官网信息披露页最新 A 股定期报告仍显示 2026-04-29 一季报，未见 2026-05-13 新公告或 IR 正文。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 在 2026-05-11 至 2026-05-13 返回空，未发现胜宏科技新增龙虎榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 在 2026-05-11 至 2026-05-13 仅返回已入账的 2026-05-11 小额大宗交易；2026-05-12 至 2026-05-13 单独窗口返回空，未追加事件。
+- 可信媒体/open-web：公开网页结果主要复现已披露的 2026-05-08 投资者关系记录、公司官网披露列表、第三方交易提示/大宗交易页；未发现可独立确认的新订单、客户、产能节点、公告或交易异常。
+- 本轮状态：无新硬事件追加 `events.jsonl`；核心跟踪问题不变，仍看高端订单兑现、ASIC/大客户新产品进展、1.6T 光模块 mSAP 产能利用率、扩产转固与毛利率延续性。
 
 ## 2026-05-11 worker 复核
 

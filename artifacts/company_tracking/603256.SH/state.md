@@ -1,8 +1,8 @@
 # 宏和科技（603256.SH）滚动跟踪状态
 
-更新日期：2026-05-09  
+更新日期：2026-05-13
 研究性质：公司跟踪状态，不构成买卖建议  
-grok_status: unavailable_chrome_tool_not_exposed
+grok_status: unavailable_chrome_plugin_not_exposed
 
 ## 当前跟踪结论
 
@@ -13,6 +13,24 @@ grok_status: unavailable_chrome_tool_not_exposed
 交易层面，风险已明显升高：2026-05-08 收盘价 148.87 元/股，公司公告披露滚动市盈率 418.80 倍，且自 2025-05-29 起累计上涨 1,286.13%。
 
 当前跟踪优先级：先跟价格和特种布收入占比，再跟扩产资金链和客户认证转收入，不把“PCB 概念”本身当作结论。
+
+## 2026-05-13 单公司 worker 日更
+
+本轮只处理 603256.SH 宏和科技，batch_no=1，运行窗口为 2026-05-13 北京时间晚间。按父任务约束记录：`browser_scope=fallback_no_browser`，`grok_status=unavailable_chrome_plugin_not_exposed`；未使用 Browser Use 或 Playwright 顶替登录态。普通公开网页检索仅作为 `open_web_fallback` 观察层，不冒充 Grok/X。
+
+任务块完成清单：baseline_read=done；state_read=done；events_read=done；announcements_checked=done；investor_relations_checked=done；lhb_checked=done；block_trade_checked=done；grok_checked=unavailable_chrome_plugin_not_exposed；open_web_fallback=searched；events_appended=1；state_updated=yes。
+
+公告/CNINFO/SSE/IR：CNINFO 全文检索已核到 2026-05-13 `宏和科技董事高管减持股份结果公告`，公告 ID 为 `1225301009`，PDF 路径为 `https://static.cninfo.com.cn/finalpage/2026-05-13/1225301009.PDF`；东方财富公告镜像同步显示公告代码 `AN202605121822216736`，附件 PDF 为 `https://pdf.dfcfw.com/pdf/H2_AN202605121822216736_1.pdf`。本轮因此把上一轮“董高减持完成待官方 PDF 复核”的来源缺口关闭。未发现同日新增业绩说明会、投资者关系活动记录或比该公告更高等级的新经营催化。
+
+减持结果：公告确认毛嘉明于 2026-05-11 至 2026-05-12 通过集中竞价合计减持 240,700 股，占总股本 0.0266%，减持价格区间 141.15-152.00 元/股，减持总金额 35,638,528.00 元，减持完成后持股 722,200 股、持股比例 0.0798%；邹新娥同期通过集中竞价减持 75,000 股，占总股本 0.0083%，减持价格区间 143.78-148.36 元/股，减持总金额 10,945,496.00 元，减持完成后持股 225,000 股、持股比例 0.0249%。公告同时确认本次减持遵守相关规则、与此前计划一致，减持计划实施完毕。
+
+龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=603256`、`TRADE_DATE=2026-05-12~2026-05-13` 查询未返回新增记录；本轮未发现 2026-05-13 或最近交易日新增龙虎榜事件。
+
+大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 按 `SECURITY_CODE=603256`、`TRADE_DATE=2026-05-12~2026-05-13` 查询未返回新增记录；本轮未发现新增大宗交易。
+
+Open-web fallback：普通公开网页检索发现新浪财经公告页、雷达财经/新浪财经头条等已同步报道董高减持计划实施完毕，内容与官方公告核心数据一致；该类来源只作为公告发现与交叉观察，不替代 CNINFO 官方公告。
+
+状态变化：新增官方公告确认“董高减持计划实施完毕”，关闭上一轮 `reported_by_reputable_media_pending_official_pdf` 缺口。基本面判断不变；交易风险观察维持偏高，原因是减持发生在高涨幅、高估值阶段，但减持比例较小，不构成对 Low CTE/特种电子布收入、价格价差或黄石扩产资金链的直接验证。
 
 ## 2026-05-12 单公司 worker 日更
 

@@ -1,12 +1,12 @@
 # 源杰科技（688498.SH）滚动跟踪状态
 
-updated_at: 2026-05-12T20:18:13+08:00
+updated_at: 2026-05-13T21:30:00+08:00
 company: 源杰科技  
 ticker: 688498.SH  
 exchange: SSE STAR  
 coverage_type: daily_update_after_first_baseline  
 grok_status: unavailable_chrome_plugin_not_exposed
-open_web_fallback_status: searched_with_official_announcement_signal
+open_web_fallback_status: searched_official_source_resolved_no_new_operating_signal
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -110,3 +110,20 @@ Batch 2 结论：新增三条官方公告镜像事件并已追加 `events.jsonl`
 - 2026-05-09 日更交易核对（东方财富数据中心）：https://datacenter-web.eastmoney.com/
 - 2026-05-09 日更公司 IR 核对：https://www.yj-semitech.com/index.php?c=category&id=36
 - 2026-05-09 open-web fallback 参考：新浪财经公告页 https://money.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/688498.phtml
+## 2026-05-13 Batch 2 日更
+
+独立任务块：
+- company: 源杰科技；ticker: 688498.SH；aliases: 陕西源杰、源杰半导体；tracking_focus: 高速激光芯片、硅光 CW 光源、100G/200G PAM4 EML、AI 数据中心客户验证、量产节奏、收入占比、交易风险。
+- browser_scope: fallback_no_browser；grok_status: unavailable_chrome_plugin_not_exposed；本轮未使用 Browser Use/Playwright 替代 Chrome/Grok 登录态。
+- checklist: baseline_read=done；state_read=done；events_read=done；announcements_checked=done；cninfo_checked=done；sse_star_checked=done；company_ir_checked=done；lhb_checked=done；block_trade_checked=done；open_web_fallback=searched；state_updated=done；events_appended=no_new_hard_event。
+
+核对窗口：2026-05-13 及最近交易日 2026-05-12、2026-05-11（北京时间晚间）。
+- 上交所官方公告：`queryCompanyBulletin.do` 按 `productId=688498`、`beginDate=2026-05-12`、`endDate=2026-05-13` 返回 4 条记录，补齐上轮公告镜像的官方源：2026-05-13《陕西源杰半导体科技股份有限公司关于股票交易风险提示公告》（官方 PDF：`https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-13/688498_20260513_ATM2.pdf`）；2026-05-12《陕西源杰半导体科技股份有限公司2025年年度权益分派实施公告》（官方 PDF：`https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-12/688498_20260512_P4IT.pdf`）；2026-05-12《陕西源杰半导体科技股份有限公司关于参加2026年陕西辖区上市公司投资者集体接待日暨2025年度业绩说明会的公告》（官方 PDF：`https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-12/688498_20260512_E1OL.pdf`）；以及同日《北京市金杜律师事务所关于陕西源杰半导体科技股份有限公司差异化权益分派的专项法律意见书》（官方 PDF：`https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-05-12/688498_20260512_X1AW.pdf`）。
+- CNINFO：`hisAnnouncement/query` 按 `stock=688498`、`seDate=2026-05-12~2026-05-13` 返回 `totalAnnouncement=0`，本轮仍未用 CNINFO 补到同窗口公告。
+- 公司 IR：公司官网投资者关系页可访问，仍以跳转公告/财报入口为主；未发现 2026-05-13 独立新增的投资者关系问答或调研纪要硬披露。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=688498`、`TRADE_DATE=2026-05-11~2026-05-13` 返回空数据，未发现本窗口龙虎榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 按同一股票和日期窗口返回空数据，未发现本窗口大宗交易记录。
+- 行情观察：腾讯行情显示 2026-05-13 16:14:53 最新/收盘价 1708.00 元，较前收盘 1731.00 元下跌 1.33%，成交额约 57.89 亿元，换手率约 4.05%，滚动市盈率约 412.30 倍；交易拥挤和估值敏感度仍高。
+- open-web fallback：普通联网搜索未发现 2026-05-13 新增可确认的高速激光芯片、200G EML、AI 客户验证、量产或收入占比硬披露；搜索结果主要仍是公告转载、Q1/年报解读和券商观点，不作为 Grok/X 或官方确认。
+
+Batch 2 结论：本轮主要变化是“上轮公告镜像已补到上交所官方源”，并新增确认同日差异化权益分派法律意见书的官方记录；未发现新的经营类硬披露，尤其没有 200G PAM4 EML 量产收入、AI 客户定点、CW 新功率段放量或收入占比更新。因上轮已将权益分派、业绩说明会和交易风险提示写入 `events.jsonl`，本轮不重复追加事件；核心跟踪主线不变，下一步等待 2026-05-20 业绩说明会是否释放订单、客户验证、回款和产能口径。

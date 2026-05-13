@@ -129,3 +129,16 @@
 - open_web_fallback_status：`searched/secondary_ir_repost_found`。普通网页观察层发现证券之星转载格隆汇称，公司在投资者互动平台表示目前未生产磷化铟光芯片；本轮未直接打开官方互动易原文，按二级转载线索记录，不作为交易所公告或订单/收入确认。
 - 状态变化：新增一条概念澄清类观察事件，主要用于压低“磷化铟光芯片”外推风险；公司核心跟踪框架仍维持“WSS 衍射光栅、精密光学、晶体和激光器件为主，交易热度高，基本面等待订单/收入拆分/毛利率验证”。
 - 漏检风险：Grok/Chrome 未接入，社交平台原生线索未覆盖；互动易原文未直接打开，相关问答暂按可信二级转载处理。
+
+## 2026-05-13 worker batch 1 复核
+
+- worker_scope：仅复核 `002222.SZ` 福晶科技；未改动 watchlist、日报、run_status、Excel 或 baseline。
+- independent_task_block：ticker=`002222.SZ`，name=`福晶科技`，batch_no=`1`，run_date=`2026-05-13`，browser_scope=`fallback_no_browser`，grok_status=`unavailable_chrome_plugin_not_exposed`。
+- checklist：baseline_read=done；state_read=done；events_read=done；announcements_checked=done；cninfo_checked=done；szse_checked=attempted_50x；company_ir_checked=done；lhb_checked=done；block_trade_checked=done；grok_checked=unavailable；open_web_fallback=searched；state_updated=done；events_appended=no_new_hard_event。
+- 官方公告/IR：东方财富公告接口在 `2026-05-12` 至 `2026-05-13` 窗口返回 0 条；CNINFO 历史公告接口同窗口返回 0 条；深交所公告 API 本轮返回维护/50x 页面；公司官网投资者关系公开页未发现 2026-05-13 新公告或正式 IR 记录。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 在 `2026-05-12` 至 `2026-05-13` 窗口返回空数据；本轮未发现 2026-05-13 新龙虎榜事件。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 在 `2026-05-12` 至 `2026-05-13` 窗口均返回空数据；本轮未发现新大宗交易事件。
+- 行情观察：东方财富行情接口显示 2026-05-13 收盘 116.32 元，涨幅 2.61%，成交额约 57.92 亿元，换手率 10.84%；仍属于高交易热度延续，但不构成新的公告、订单、客户或收入确认事件。
+- open_web_fallback_status：`searched/no_new_hard_signal`。普通公开网页检索看到 5 月 12 日至 5 月 13 日的资金流、行情解读和行业媒体讨论，主要延续“交易热度高、法拉第旋光片/光通信上游受关注、公司目前未生产磷化铟光芯片”等既有观察；未找到新增官方订单、客户验证、产能达产、收入拆分或监管问询等硬披露。
+- state_change：无新增基本面硬事件；状态维持“高交易弹性、高预期拥挤，基本面等待 WSS/ROADM、法拉第旋光片/磁光器件、精密光学、毛利率和应收回款的后续公告或定期报告验证”。
+- miss_risk_notes：Grok/Chrome 工具未暴露，未覆盖 X/Grok 原生线索；深交所公告 API 本轮 50x，已由 CNINFO、东方财富公告接口、公司官网投资者关系页和普通 open-web 检索交叉补位；公开网页媒体内容未作为确认事实写入 events。
