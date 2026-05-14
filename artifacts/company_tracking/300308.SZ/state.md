@@ -123,3 +123,13 @@ metadata:
 - open_web_fallback_observation: 新浪财经/证券时报系转载与东方财富数据口径一致，指向同一组大宗交易；证券之星资金流报道仅作二级市场观察，不作为经营硬证据。
 - material_changes: 无新增经营类、订单类、800G/1.6T、硅光、客户需求、上游物料或毛利率硬披露；新增项仅为交易事件大宗交易。
 - miss_risk_notes: Chrome/Grok/@chrome 工具面未暴露，未执行 Grok/X；本轮 open-web fallback 不能替代登录态 Grok/X。CNINFO 当前窗口返回 0 条可降低“504漏公告”风险，但仍需下轮继续跟踪 H 股招股书、Q2 经营口径和新增 IR 记录。
+
+## 2026-05-14 recheck
+
+browser_scope: fallback_no_browser
+grok_status: unavailable_chrome_plugin_not_exposed
+open_web_fallback_status: searched_trading_event_only
+
+CNINFO 2026-05-10 至 2026-05-14 无新增公告，龙虎榜为空。新增 1 笔小额大宗交易：成交价 1078.00 元，成交 0.50 万股，成交金额 539.00 万元，机构专用对机构专用，折溢价率约 0%。
+
+本轮结论：新增仅为交易层小额机构换手，不构成 800G/1.6T、硅光、客户需求、上游物料或毛利率的新经营披露。核心跟踪假设维持不变。

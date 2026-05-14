@@ -116,3 +116,13 @@ not_investment_advice: true
 - 深市大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 同窗口返回空；深交所大宗交易接口本轮未返回有效表格数据，公开网页 fallback 未发现同窗口新增大宗交易。
 - open_web_fallback：`searched/confirmed_same_ir_event`，仅作观察池；不作为 Grok/X 或 Chrome 登录态确认事实。
 - 本轮状态：无新增公告事件、无新增龙虎榜事件、无新增大宗交易事件；核心跟踪问题仍是高端订单兑现、ASIC/大客户新产品进度、1.6T 光模块 mSAP 产能利用率、扩产转固与毛利率延续性。
+
+## 2026-05-14 batch_no=1 worker 复核
+
+browser_scope: fallback_no_browser
+grok_status: unavailable_chrome_plugin_not_exposed
+open_web_fallback_status: searched_no_new_verified_operating_signal
+
+公告层面，东方财富公告最新仍为 2026-05-08 投资者关系记录，公司官网 A 股业绩报告最新为 2026-04-29 一季报，未见今日新公告。东方财富龙虎榜与大宗交易接口在 2026-05-12 至 2026-05-14 返回空，本轮无新增交易事件。
+
+open-web 主要复现 2026-05-08 IR 和二级市场/AI 生成叙事，未发现可独立验证的新订单、客户、产能或毛利率披露。中财网显示 2026-05-14 股价跌 8.41%、成交额约 274 亿元、换手率 8.64%，仅作为交易拥挤/波动观察，不改变基本面状态。

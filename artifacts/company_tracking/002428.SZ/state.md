@@ -123,3 +123,13 @@ Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`
 - 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 查询 2026-05-13 返回空；普通网页检索未发现 2026-05-13 新大宗交易硬记录。最近硬记录仍为 2026-05-12 两笔折价大宗交易。
 - 行情观察：腾讯行情快照显示 2026-05-13 16:14 左右价格 101.51 元，较前收 101.42 元涨 0.09%，换手率 16.52%，成交额约 109.11 亿元，总市值约 662.90 亿元；交易拥挤度仍高。
 - 新增判断：本轮新增硬事件是官方异常波动和风险提示公告。它强化“交易端热度领先基本面兑现”的结论，但没有新增 InP/GaAs 客户、订单、良率、6 英寸量产、出口许可或利润兑现证据；基本面质量不因本公告上调，后续重点转向业绩说明会问答是否披露实质增量。
+
+## 2026-05-14 worker check
+
+browser_scope: fallback_no_browser
+grok_status: unavailable_chrome_plugin_not_exposed
+open_web_fallback_status: searched_post_meeting_observation_found
+
+CNINFO 2026-05-14 未见新公告，最新硬公告仍为 2026-05-13 股票交易异常波动公告。全景路演确认 2025 年度网上业绩说明会已结束，open-web fallback 摘要补充公司仍强调 InP 扩产、6 英寸建设中、化合物半导体占比低、客户认证推进，但未披露客户名称、订单金额、良率数值或 6 英寸稳定量产证据。
+
+本轮结论：会后摘要补充 source gap，但不构成 InP/GaAs 基本面兑现硬证据。交易热度仍高，基本面结论不因本轮信息上调；继续等待正式 IR 记录、客户认证、订单、良率、出口许可和 6 英寸量产进展。
