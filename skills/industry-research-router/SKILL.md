@@ -23,7 +23,7 @@ Choose the smallest useful combination:
 - Earnings releases, management guidance, and conference-call analysis: `earnings-call-investment-analyst`.
 - Company fundamentals and valuation after segment selection: `stock-evaluator`, `business-analyst`, plus market-data skills according to listing market.
 - A-share/HK/US live data and K-line checks: `allstock-data`, `banana-farmer`, `stock-data-skill`, or `finance`; market data cannot prove beneficiary status.
-- Overseas oligarch data: `yfinance-mcp-server`, `stocks`, `alpha-vantage`.
+- Overseas oligarch data: `finance` with Financial Datasets when `FINANCIAL_DATASETS_API_KEY` is configured, plus `yfinance-mcp-server`, `stocks`, `alpha-vantage`; if Financial Datasets has no credits, no coverage, or missing fields, continue with official filings, web search, and other market-data sources.
 - Structured comparison, score consistency, bias control, or watchlist tables: `spreadsheet`, `xlsx-official`, `advanced-evaluation`; scoring helpers do not replace domain judgment.
 - Web/news/filings collection: `web-scraper`, `firecrawl-scraper`, `tavily-web`; use browser Grok/Gemini only when it adds a distinct discovery or source-gap value.
 - Source discovery and dense-source digestion: use `search-specialist` for official-source search strategy, source priority, and contradiction tracking; use `research-summarizer` to digest long reports, filings, whitepapers, transcripts, PDFs, and multi-source evidence sets.
