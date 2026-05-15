@@ -12,7 +12,7 @@
 6. 不要把 Grok/X、社交平台、模型摘要或 open-web fallback 搜索结果直接写成确认事实；只能放入观察池，除非另有官方或可信来源确认。
 7. 调用 Grok/X 或 Gemini 网页时，默认使用 `@chrome` / Chrome 插件里的已登录会员账号；不要默认使用内置浏览器。只有用户明确要求、Chrome 不可用且用户接受 fallback，或做诊断测试时，才使用 `@browser` / Browser Use 或 Playwright。
 8. 每家公司必须作为独立工作单元处理。浏览器能力可用时，为每家公司单独打开或切换一个 Chrome/Grok 标签页或窗口，按公司独立查询、独立摘录、独立关闭/保留；浏览器不可用时，也必须保留独立公司任务块和完成清单，不能把多家公司混在一次泛查询里。
-9. 必须显式调用多智能体/子智能体来执行公司级跟踪研究：每家公司分配一个独立 worker/sub-agent 作为研究单元，最多同时运行 6 个公司 worker。默认模型策略为主任务和公司 worker 使用 `gpt-5.4` + `reasoning_effort=high`；只有遇到复杂新增/刷新基线、重大公告冲突、多来源证据互相矛盾、长篇招股书/年报深读或用户明确要求时，才可手动升档到 `gpt-5.5` + `reasoning_effort=xhigh`，并在 `run_status.md` 说明升档原因。总控智能体只负责队列调度、全局汇总、Excel/日报/run_status 写入和最终核对；不得只用一个主智能体批量脚本查询来替代公司级 worker。若当前运行环境没有可调用的子智能体工具，必须在 `run_status.md` 和 completion table 中标记 `multi_agent_status=unavailable` 并说明降级原因。
+9. 必须显式调用多智能体/子智能体来执行公司级跟踪研究：每家公司分配一个独立 worker/sub-agent 作为研究单元，最多同时运行 6 个公司 worker。默认模型策略改为主任务和公司 worker 统一使用 `gpt-5.5` + `reasoning_effort=xhigh`；如后续需要临时降档，必须有明确成本/时延理由，并在 `run_status.md` 说明。总控智能体只负责队列调度、全局汇总、Excel/日报/run_status 写入和最终核对；不得只用一个主智能体批量脚本查询来替代公司级 worker。若当前运行环境没有可调用的子智能体工具，必须在 `run_status.md` 和 completion table 中标记 `multi_agent_status=unavailable` 并说明降级原因。
 10. 并行上限按 6 个公司 worker 处理：如果启用公司超过 6 家，先启动第一批最多 6 个 worker；任一公司 worker 完成后，从待处理队列补入下一家公司，直到全部 enabled 公司完成。不要因为并行上限遗漏后续公司。
 11. 每次结束时，除了写文件，还必须在对话窗口给出简短摘要，方便用户不打开文件也能看懂重点。
 
