@@ -98,7 +98,7 @@ D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe D:\vcp_hunter\产业链投�
 ## 子任务自动化合同
 
 - 每家公司必须创建独立 cron 子任务，命名：`财报电话会深挖 {ticker} {company} {report_date}`。
-- 子任务工作区仅 `D:\vcp_hunter\产业链投研`，`executionEnvironment=local`，`model=gpt-5.5`，UI/提示词标签可写 `reasoningEffort=xhigh`，实际 TOML 字段必须写 `reasoning_effort = "xhigh"`。
+- 子任务工作区仅 `D:\vcp_hunter\产业链投研`，`executionEnvironment=local`。模型按分层策略写入 TOML：`official_call_plus_3h`、`priority=strategic_giant` 或其他明确核心寡头事件使用 `model="gpt-5.5"`、`reasoning_effort="xhigh"`；`default_proxy_not_call_time`、日期-only、非核心观察项使用 `model="gpt-5.4"`、`reasoning_effort="high"`。UI/提示词标签必须与 TOML 字段一致。
 - 子任务 rrule 必须使用一次性周规则：
 
 ```text

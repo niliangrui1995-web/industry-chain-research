@@ -122,6 +122,7 @@ class PlannedEvent:
     event_status: str
     event_source: str
     source_type: str
+    priority: str
     planned_child_start_beijing: str
     schedule_basis: str
     official_call_beijing: str
@@ -167,6 +168,22 @@ def _safe_url(value: str) -> str | None:
     if not re.match(r"^https?://", text, re.I):
         return None
     return text
+
+
+def _model_policy_for_event(event: PlannedEvent) -> tuple[str, str]:
+    priority = str(event.priority or "").strip().lower()
+    if event.schedule_basis == "official_call_plus_3h" or priority == "strategic_giant":
+        return "gpt-5.5", "xhigh"
+    return "gpt-5.4", "high"
+
+
+def _model_policy_for_child(child: ChildRecord) -> tuple[str, str]:
+    prompt = str(child.data.get("prompt", "") or "")
+    if child.schedule_basis == "official_call_plus_3h":
+        return "gpt-5.5", "xhigh"
+    if _prompt_field(prompt, "Source confidence") == "official_confirmed":
+        return "gpt-5.5", "xhigh"
+    return "gpt-5.4", "high"
 
 
 def _dump_toml(data: dict[str, Any]) -> str:
@@ -386,6 +403,7 @@ def _plan_event(event: Any, market_from_ticker) -> PlannedEvent:
         event_status=event_status,
         event_source=calendar_source,
         source_type=str(event.call_time_source_type or "").strip(),
+        priority=str(getattr(event, "priority", "") or "").strip(),
         planned_child_start_beijing=_format_beijing_time(planned),
         schedule_basis=basis,
         official_call_beijing=official_call,
@@ -620,6 +638,7 @@ def _child_matches_event(child: ChildRecord, event: PlannedEvent) -> tuple[bool,
     # manual official-source check, so the guardrail may upgrade but not downgrade.
     source_ok = source_header_present and existing_source_rank >= event_source_rank
     template_markers_ok = all(marker in prompt for marker in REQUIRED_CHILD_PROMPT_MARKERS)
+    expected_model, expected_reasoning = _model_policy_for_event(event)
     checks = {
         "status": str(child.data.get("status")) == "ACTIVE",
         "task_key": child.task_key == event.task_key,
@@ -632,8 +651,8 @@ def _child_matches_event(child: ChildRecord, event: PlannedEvent) -> tuple[bool,
         "source_header": source_ok,
         "prompt_template_body": template_markers_ok,
         "rrule": str(child.data.get("rrule", "")) == expected_rrule,
-        "model": child.data.get("model") == "gpt-5.5",
-        "reasoning_effort": child.data.get("reasoning_effort") == "xhigh",
+        "model": child.data.get("model") == expected_model,
+        "reasoning_effort": child.data.get("reasoning_effort") == expected_reasoning,
         "execution_environment": child.data.get("execution_environment") == "local",
     }
     failed = [name for name, ok in checks.items() if not ok]
@@ -643,11 +662,13 @@ def _child_matches_event(child: ChildRecord, event: PlannedEvent) -> tuple[bool,
 def _static_contract_failures(child: ChildRecord, project_root: Path) -> list[str]:
     checks = {
         "kind": child.data.get("kind") == "cron",
-        "model": child.data.get("model") == "gpt-5.5",
-        "reasoning_effort": child.data.get("reasoning_effort") == "xhigh",
         "execution_environment": child.data.get("execution_environment") == "local",
         "cwds": child.data.get("cwds") == [str(project_root)],
     }
+    if str(child.data.get("status")) == "ACTIVE":
+        expected_model, expected_reasoning = _model_policy_for_child(child)
+        checks["model"] = child.data.get("model") == expected_model
+        checks["reasoning_effort"] = child.data.get("reasoning_effort") == expected_reasoning
     return [name for name, ok in checks.items() if not ok]
 
 
@@ -870,6 +891,7 @@ def _build_action_plan(
         if problem:
             blockers.append({"ticker": event.ticker, "report_date": event.report_date, "problem": problem})
             continue
+        expected_model, expected_reasoning = _model_policy_for_event(event)
         payload = {
             "ticker": event.ticker,
             "company": event.company,
@@ -877,6 +899,8 @@ def _build_action_plan(
             "task_key": event.task_key,
             "planned_child_start_beijing": event.planned_child_start_beijing,
             "schedule_basis": event.schedule_basis,
+            "model": expected_model,
+            "reasoning_effort": expected_reasoning,
         }
         if child:
             child_id = str(child.data.get("id"))
@@ -1083,6 +1107,7 @@ def _apply_actions(
         if planned_dt is None:
             continue
         event = _event_with_preserved_source(event, str(child.data.get("prompt", "") or ""))
+        model, reasoning_effort = _model_policy_for_event(event)
         data = dict(child.data)
         data.update(
             {
@@ -1090,8 +1115,8 @@ def _apply_actions(
                 "prompt": _child_prompt(event, template),
                 "status": "ACTIVE",
                 "rrule": _make_one_shot_rrule(planned_dt),
-                "model": "gpt-5.5",
-                "reasoning_effort": "xhigh",
+                "model": model,
+                "reasoning_effort": reasoning_effort,
                 "execution_environment": "local",
                 "cwds": [str(project_root)],
                 "updated_at": run_ms,
@@ -1116,6 +1141,7 @@ def _apply_actions(
             child_dir = automations_root / f"{child_id}-{suffix}"
             suffix += 1
         child_dir.mkdir(parents=True, exist_ok=True)
+        model, reasoning_effort = _model_policy_for_event(event)
         data = {
             "version": 1,
             "id": child_dir.name,
@@ -1124,8 +1150,8 @@ def _apply_actions(
             "prompt": _child_prompt(event, template),
             "status": "ACTIVE",
             "rrule": _make_one_shot_rrule(planned_dt),
-            "model": "gpt-5.5",
-            "reasoning_effort": "xhigh",
+            "model": model,
+            "reasoning_effort": reasoning_effort,
             "execution_environment": "local",
             "cwds": [str(project_root)],
             "created_at": run_ms,
@@ -1152,6 +1178,8 @@ def _snapshot_child(child: ChildRecord) -> dict[str, Any]:
         "schedule_basis": child.schedule_basis,
         "rrule": child.data.get("rrule"),
         "rrule_ok": child.rrule_ok,
+        "model": child.data.get("model"),
+        "reasoning_effort": child.data.get("reasoning_effort"),
         "has_memory": child.has_memory,
         "calendar_source": _prompt_field(prompt, "Calendar source"),
         "event_status": _prompt_field(prompt, "Event status"),
