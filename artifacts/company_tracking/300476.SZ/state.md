@@ -3,10 +3,21 @@
 company: 胜宏科技  
 ticker: 300476.SZ  
 exchange: SZSE  
-last_updated: 2026-05-13
+last_updated: 2026-05-16
 browser_scope: fallback_no_browser
 grok_status: unavailable_chrome_plugin_not_exposed
 not_investment_advice: true
+
+## 2026-05-16 batch_no=1 worker 复核
+
+- 独立任务块：`300476.SZ` 胜宏科技，run_time_beijing=2026-05-16 20:02；2026-05-16 为周六，最近交易日按 2026-05-15 检查。
+- 浏览器/Grok：本轮 Chrome/@chrome/Grok 工具未暴露，未使用 Browser Use 或 Playwright 冒充登录态；记录 `browser_scope=fallback_no_browser`、`grok_status=unavailable_chrome_plugin_not_exposed`。Codex open-web fallback 仅作为 `observation_only`。
+- 公告硬门：CNINFO `hisAnnouncement/query` 按 `300476/胜宏科技` 检索 `2026-05-16~2026-05-17` 返回 0 条；东方财富公告接口按 `300476.SZ`、`2026-05-16~2026-05-17` 返回 `total_hits=0`；公司官网信息披露页最新 A 股业绩报告仍显示 2026-04-29 一季报。completion 字段应写 `announcement_window_checked=T_and_T_plus_1`。
+- 交易所/互联互通：上交所 2026-05-15 发布《 关于沪港通下港股通标的调整的通知 》，确认 VGT（02476）因 2026-05-16 香港市场价格稳定期结束且相应 A 股上市满 10 个交易日，被调入沪港通下港股通，并自下一港股通交易日起生效。该事项影响 H 股南向流动性和 A/H 联动预期，不是 A 股经营类公告，也不代表新增订单或毛利率变化。
+- 投资者关系/open-web fallback：公开网页发现中财网镜像《胜宏科技:300476胜宏科技投资者关系管理信息20260515》，活动时间为 2026-05-11 至 2026-05-15，参与机构约 370 位。要点包括高端产能供给偏紧、ASIC 客户业务进展顺利、GPU/TPU 配套板供应规模继续扩大、关键原材料供应稳定且高端产品价格相对稳定、泰国 A1 二期高端产能已通过多个客户审厂并开始生产 AI 产品验证板、A2 厂房近期完成主体封顶、mSAP 产能用于 1.6T 光模块且在手订单饱满、公司推进 CoWop 技术研发及生产。因本轮 CNINFO/东方财富公告接口未补到该记录，按 `observation_only_secondary_mirror` 入账，下一轮需继续补官方原文链接。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=300476`、`TRADE_DATE=2026-05-15` 返回空数据；未发现最近交易日新增龙虎榜记录。2026-05-16 为周六，无 A 股交易。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 按 `SECURITY_CODE=300476`、`TRADE_DATE=2026-05-15` 返回空数据；未发现最近交易日新增大宗交易记录。2026-05-16 为周六，无 A 股交易。
+- 本轮状态：追加 2 条事件，一条为二级镜像 IR 观察项，一条为上交所确认的港股通调入交易结构事件。核心主线维持为 AI 服务器 PCB / 高阶 HDI / 高多层板订单兑现、海外产能认证与良率爬坡、毛利率能否覆盖扩产费用和高估值；未发现新的量化订单、具体客户、收入占比或平台份额披露。
 
 ## 2026-05-13 batch_no=1 worker 复核
 
