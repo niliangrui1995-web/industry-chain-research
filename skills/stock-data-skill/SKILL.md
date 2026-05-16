@@ -1,6 +1,6 @@
 ---
-name: stock_data
-description: "Fetch comprehensive stock data from Simplywall.st. Use when user asks about stock prices, valuation, financials, dividend, or investment analysis for any global stock."
+name: stock-data-skill
+description: "Optional Simplywall.st stock data helper. In 产业链投研, use only as supplemental market/fundamental data after official filings, exchange disclosures, and project market-data skills; do not treat it as default investment research."
 metadata:
   openclaw:
     emoji: "📈"

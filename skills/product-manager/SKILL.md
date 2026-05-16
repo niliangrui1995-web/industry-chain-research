@@ -1,5 +1,5 @@
 ---
-name: Product Manager
+name: product-manager
 description: Build products users love with discovery, prioritization, roadmapping, and cross-functional leadership.
 metadata: {"clawdbot":{"emoji":"🎯","os":["linux","darwin","win32"]}}
 ---

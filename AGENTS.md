@@ -8,6 +8,7 @@
 - AI/半导体产业链任务分两层：需要实时消息、爆料、Grok/X、Gemini 或网页证据时，先用 `skills/ai-chain-research-orchestrator` 协调证据；需要网页操作时再用 `skills/browser-grok-gemini-research` 作为浏览器采集辅助；之后用 `skills/semiconductor-ai-chain-investment-researcher` 做细分环节深研和 A 股硬证据映射。
 - 非实时、非消息驱动的产业链学习或公司对比，不默认调用网页 Grok/Gemini；先用本地 skill 框架和必要的公开资料核对即可。
 - 需要找官方资料、公告、年报、PDF、客户/供应商证据或多来源反证时，先用 `skills/search-specialist` 设计检索与证据优先级，再用网页/抓取技能获取材料；长文、研报、白皮书和多来源材料用 `skills/research-summarizer` 先结构化消化。
+- A 股公司持续跟踪、watchlist 日更、baseline/state/events 维护时，用 `skills/a-share-company-tracking`；涉及公告、CNINFO、交易所披露、龙虎榜、大宗交易或 20:00 后 T/T+1 公告窗口时，加 `skills/a-share-disclosure-trading-data`。
 - 红利、低波、股息率溢价、股债性价比和防御风格问题可加 `skills/dividend-premium-tracker`，但它只提供风格和宏观背景，不替代个股基本面判断。
 - 当技能选择不明确时，先读 `skills/industry-research-router/references/skill-map.md` 的路由表，再选择最小必要技能组合。
 
@@ -42,6 +43,7 @@
 - 龙头/竞格：`industry-research-router` + `competitive-landscape` + `competitive-intel`
 - 公司基本面：`industry-research-router` + `stock-evaluator` + `business-analyst`
 - 股票弹性：`industry-research-router` + `allstock-data` + `banana-farmer` + `advanced-evaluation`
+- A 股公司持续跟踪：`industry-research-router` + `a-share-company-tracking` + `a-share-disclosure-trading-data` + `search-specialist` + `research-summarizer`
 - 官方资料/公告/PDF/来源反证：`industry-research-router` + `search-specialist` + `web-scraper` / `firecrawl-scraper` / `tavily-web`；材料较长时加 `research-summarizer`
 - 研报/白皮书/多来源消化：`industry-research-router` + `research-summarizer` + `advanced-evaluation`
 - 红利低波/股息率溢价：`industry-research-router` + `dividend-premium-tracker` + `stock-evaluator` + 市场数据技能

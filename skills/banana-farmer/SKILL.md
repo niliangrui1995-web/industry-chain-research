@@ -1,6 +1,6 @@
 ---
-name: financial-intel
-description: Stock momentum scanner and portfolio intelligence. Look up any ticker for momentum scores, RSI, coil breakout patterns, and AI analysis. Scan top signals across 6,500+ stocks and crypto. Track portfolio holdings with real-time alerts. Market pulse, sector trends, win/loss proof data, and risk assessment — all through natural conversation. Powered by 730 days of backtested data with an 80% 5-day win rate.
+name: banana-farmer
+description: Optional momentum scanner and portfolio intelligence skill. In 产业链投研, use only as a trading-elasticity and technical-risk supplement after beneficiary evidence is established; do not use it to prove fundamental quality or real supply-chain exposure.
 metadata: {"clawdbot": {"requires": {"bins": ["python3"], "env": ["BF_API_KEY"]}, "primaryEnv": "BF_API_KEY", "emoji": "📊", "version": "1.9.0", "author": "clawd", "license": "MIT", "homepage": "https://bananafarmer.app", "tags": ["stocks", "crypto", "momentum", "portfolio", "market-data", "trading", "signals", "technical-analysis", "financial-data", "scanner"]}}
 ---
 

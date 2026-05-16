@@ -1,6 +1,6 @@
 # 产业链投研
 
-Last verified: 2026-05-09
+Last verified: 2026-05-16
 
 这是一个面向产业链研究、公司研究、全球龙头梳理、技术壁垒分析、国产替代研究、股票基本面比较和交易弹性判断的 Codex 本地工作区。它的核心目标不是生成日报或自动化流水线，而是把“证据收集 -> 产业链拆解 -> 公司映射 -> 基本面/业绩/交易弹性分层判断”固定成可复用的投研流程。
 
@@ -22,6 +22,8 @@ Last verified: 2026-05-09
 - `skills/browser-grok-gemini-research/`：网页 Grok/Gemini 采集辅助技能，只负责浏览器采集和结果交接。
 - `skills/search-specialist/`：公告、年报、官网、客户/供应商证据、PDF 和反证材料的检索设计。
 - `skills/research-summarizer/`：研报、白皮书、公告、会议纪要、PDF 和多来源材料的结构化消化。
+- `skills/a-share-company-tracking/`：A 股 watchlist 持续跟踪、baseline/state/events 维护、公司级 worker 批处理和 run_status 核对。
+- `skills/a-share-disclosure-trading-data/`：CNINFO、交易所公告、IR 记录、龙虎榜、大宗交易和 20:00 后 T/T+1 公告窗口检查。
 - `artifacts/`：研究过程材料、证据包、公司跟踪、周度跟踪和专题输出。
 - `watchlists/`：观察池、跟踪名单和后续维护表。
 - `docs/`：项目说明、父任务或专题研究文档。
@@ -44,6 +46,7 @@ Last verified: 2026-05-09
 - 龙头/竞争格局/真假受益：`industry-research-router` + `competitive-landscape` + `competitive-intel`。
 - 公司基本面和估值：`industry-research-router` + `stock-evaluator` + `business-analyst` + 市场数据技能。
 - 股票弹性和短线催化：`industry-research-router` + `allstock-data` + `banana-farmer` + `advanced-evaluation`。
+- A 股公司持续跟踪和日更：`industry-research-router` + `a-share-company-tracking` + `a-share-disclosure-trading-data` + `search-specialist` + `research-summarizer`。
 - 官方资料、公告、PDF、客户/供应商证据和来源反证：`industry-research-router` + `search-specialist` + `web-scraper` / `firecrawl-scraper` / `tavily-web`。
 - 研报、白皮书、会议纪要和多来源材料消化：`industry-research-router` + `research-summarizer` + `advanced-evaluation`。
 - 红利低波、股息率溢价和股债性价比：`industry-research-router` + `dividend-premium-tracker` + `stock-evaluator` + 市场数据技能。

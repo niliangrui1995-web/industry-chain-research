@@ -1,6 +1,6 @@
 ---
 name: finance-news
-description: "Market news briefings with AI summaries. Use when asked about stock news, market updates, portfolio performance, morning/evening briefings, financial headlines, or price alerts. Supports US/Europe/Japan markets, WhatsApp delivery, and English/German output."
+description: "Optional market-news briefing skill. In 产业链投研, use only when the user explicitly asks for news briefings, morning/evening briefs, alerts, or delivery workflows; do not route ordinary company research or industry-chain analysis here by default."
 ---
 
 # Finance News Skill

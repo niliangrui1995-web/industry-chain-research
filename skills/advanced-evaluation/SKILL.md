@@ -1,6 +1,6 @@
 ---
 name: advanced-evaluation
-description: This skill should be used when the user asks to "implement LLM-as-judge", "compare model outputs", "create evaluation rubrics", "mitigate evaluation bias", or mentions direct scoring, pairwise comparison, position bias, evaluation pipelines, or automated quality assessment.
+description: Use for evaluation rubrics, LLM-as-judge, pairwise comparison, bias mitigation, score consistency, and project-local investment ranking in 产业链投研, especially when separating fundamental quality, earnings elasticity, and trading elasticity for stock or industry-chain comparisons.
 ---
 
 # Advanced Evaluation
@@ -8,6 +8,18 @@ description: This skill should be used when the user asks to "implement LLM-as-j
 This skill covers production-grade techniques for evaluating LLM outputs using LLMs as judges. It synthesizes research from academic papers, industry practices, and practical implementation experience into actionable patterns for building reliable evaluation systems.
 
 **Key insight**: LLM-as-a-Judge is not a single technique but a family of approaches, each suited to different evaluation contexts. Choosing the right approach and mitigating known biases is the core competency this skill develops.
+
+## Project Use In 产业链投研
+
+For investment research, use this skill as a consistency and bias-control layer after evidence collection and domain judgment. It does not replace `industry-research-router`, `stock-evaluator`, `semiconductor-ai-chain-investment-researcher`, or source verification.
+
+When ranking companies or segments, keep three lenses separate:
+
+- fundamental quality;
+- earnings elasticity;
+- trading elasticity.
+
+Read `references/investment-three-layer-scoring.md` when building a stock/segment scorecard, resolving ranking conflicts, or auditing whether a conclusion overweights market heat, concept labels, or C-grade rumors.
 
 ## When to Activate
 
@@ -431,6 +443,7 @@ Internal reference:
 - [LLM-as-Judge Implementation Patterns](./references/implementation-patterns.md)
 - [Bias Mitigation Techniques](./references/bias-mitigation.md)
 - [Metric Selection Guide](./references/metrics-guide.md)
+- [Investment Three-Layer Scoring](./references/investment-three-layer-scoring.md)
 
 External research:
 - [Eugene Yan: Evaluating the Effectiveness of LLM-Evaluators](https://eugeneyan.com/writing/llm-evaluators/)
@@ -451,4 +464,3 @@ Related skills in this collection:
 **Last Updated**: 2024-12-24
 **Author**: Muratcan Koylan
 **Version**: 1.0.0
-

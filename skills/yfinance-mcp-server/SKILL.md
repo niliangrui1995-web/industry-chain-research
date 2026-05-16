@@ -1,6 +1,6 @@
 ---
-name: yfinance
-description: Access Yahoo Finance data — stock prices, history, financials, options, dividends, news, and market screeners
+name: yfinance-mcp-server
+description: Optional Yahoo Finance data helper for overseas prices, history, financials, options, dividends, news, and screeners. In 产业链投研, use as market-data support and not as proof of company-original facts.
 ---
 
 # YFinance MCP Server

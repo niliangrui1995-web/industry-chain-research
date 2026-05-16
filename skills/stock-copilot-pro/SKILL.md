@@ -1,6 +1,6 @@
 ---
 name: stock-copilot-pro
-description: OpenClaw stock analysis skill for US/HK/CN markets. Combines QVeris data sources (THS, Caidazi, Alpha Vantage, Finnhub, X sentiment) for quote, fundamentals, technicals, news radar, morning/evening brief, and actionable investment insights.
+description: Optional QVeris/OpenClaw stock analysis helper for US/HK/CN quotes, fundamentals, technicals, news radar, and sentiment. In 产业链投研, use only as a supplemental data/news tool when explicitly useful; do not auto-route default investment conclusions, morning/evening briefs, or actionable calls here.
 env:
   - QVERIS_API_KEY
 requirements:
@@ -20,7 +20,7 @@ network:
   outbound_hosts:
     - qveris.ai
 metadata: {"openclaw":{"requires":{"env":["QVERIS_API_KEY"]},"primaryEnv":"QVERIS_API_KEY","homepage":"https://qveris.ai"}}
-auto_invoke: true
+auto_invoke: false
 source: https://qveris.ai
 examples:
   - "Analyze AAPL with a comprehensive report"
@@ -318,4 +318,3 @@ When analyzing `radar` output, cluster signals into investable themes and provid
 - Distinguish short-term trade vs mid-term allocation.
 - Keep each theme concise (<200 characters preferred).
 - End with a QVeris source disclosure line listing channels that contributed to this radar run.
-

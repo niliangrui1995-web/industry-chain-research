@@ -1,6 +1,6 @@
 ---
-name: tavily
-description: Web search and content extraction using Tavily Search/Extract/Research APIs (Bearer auth). Use when you need web results (general/news/finance), date/topic/domain filtering, source citations, or want Tavily instead of built-in web_search/Firecrawl. Requires TAVILY_API_KEY.
+name: tavily-web
+description: Optional Tavily Search/Extract/Research API helper for source discovery, date/topic/domain filtering, citations, and web extraction. In 产业链投研, use after search-specialist when Tavily adds source coverage; do not use as the default route when built-in web, official sources, or project data tools are sufficient.
 version: 1.0.0
 compatibility: Requires env var TAVILY_API_KEY
 requires_env: [TAVILY_API_KEY]

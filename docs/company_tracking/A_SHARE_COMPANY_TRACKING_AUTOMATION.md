@@ -43,6 +43,13 @@ For every enabled company:
 9. Append new events to `events.jsonl`.
 10. Update `state.md` only for real changes, unresolved questions, source gaps, and next tracking points.
 
+20:00 announcement hard gate:
+
+- At or after 20:00 Beijing time, every enabled company must be checked across announcement date `T` and `T+1`.
+- Before 20:00, record `pending_evening_rescan` unless a later evening/T+1 rescan is completed.
+- The completion table must include `announcement_window_checked`.
+- If a missed announcement is flagged, rescan company-by-company by ticker, company name, and aliases for the affected date window, then update `events.jsonl`, `state.md`, the daily report, and `run_status.md`.
+
 Multi-agent requirement:
 
 - This automation must explicitly call multi-agent/sub-agent workers for company-level tracking whenever sub-agent tools are available.

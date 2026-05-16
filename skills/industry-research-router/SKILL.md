@@ -21,6 +21,7 @@ Choose the smallest useful combination:
 - General industry essence and technology moat: `deep-research` as a long-research framework, not a local API executor; use `20-andruia-niche-intelligence` only as optional background framing for non-semiconductor niche work.
 - Competitive landscape and true leaders: `competitive-landscape`, `competitive-intel`.
 - Earnings releases, management guidance, and conference-call analysis: `earnings-call-investment-analyst`.
+- A-share watchlist tracking, company baseline/state/events maintenance, and daily run reconciliation: `a-share-company-tracking`; add `a-share-disclosure-trading-data` whenever CNINFO, exchange announcements, investor-relations records, dragon-tiger lists, block trades, or T/T+1 evening announcement windows matter.
 - Company fundamentals and valuation after segment selection: `stock-evaluator`, `business-analyst`, plus market-data skills according to listing market.
 - A-share/HK/US live data and K-line checks: `allstock-data`, `banana-farmer`, `stock-data-skill`, or `finance`; market data cannot prove beneficiary status.
 - Overseas oligarch data: `finance` with Financial Datasets when `FINANCIAL_DATASETS_API_KEY` is configured, plus `yfinance-mcp-server`, `stocks`, `alpha-vantage`; if Financial Datasets has no credits, no coverage, or missing fields, continue with official filings, web search, and other market-data sources.
@@ -38,6 +39,7 @@ Choose the smallest useful combination:
 - `industry-chain-deep-disassembly` is the cross-industry bottleneck skill: terminal-demand transmission, chain topology, BOM/value-node table, current堵点/卡点 ledger with explicit supply-gap evidence, constraint-mechanism diagnosis, future supply-gap migration, lead-time and qualified-supply scoring, HHI as a supporting test, supported industry adapter loading, and normalization of user-provided CSV/JSON/JSONL/XLSX research inputs. Listed-company mapping is optional after node diagnosis.
 - `advanced-evaluation` checks score consistency and bias; it does not replace source verification or domain judgment.
 - `stock-evaluator` and `business-analyst` are used after segment selection for company-level fundamentals.
+- `a-share-company-tracking` owns watchlist-driven A-share daily tracking and durable company files; `a-share-disclosure-trading-data` owns official announcement and trading-event evidence discipline.
 - `allstock-data` and local market data provide timing, liquidity, valuation, and risk context only.
 - `search-specialist` and `research-summarizer` improve evidence quality and source digestion; they do not replace industry judgment or stock ranking skills.
 - `dividend-premium-tracker` is a macro/style lens for dividend assets; it cannot prove payout sustainability or stock elasticity.
@@ -56,6 +58,8 @@ If a named companion skill is unavailable in the current session, continue with 
    - Domestic substitution
    - Fundamental investment ranking
    - Trading elasticity ranking
+   - A-share company tracking, baseline refresh, daily update, or watchlist maintenance
+   - A-share announcement, CNINFO, IR record, dragon-tiger list, or block-trade verification
    - Data table, normalized evidence pack, or watchlist construction
    - Latest news, rumor, or source-gap verification
    - Official-source search or long-source summarization

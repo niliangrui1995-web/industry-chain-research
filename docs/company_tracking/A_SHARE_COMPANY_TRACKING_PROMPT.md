@@ -5,6 +5,7 @@
 ## Hard Gates
 
 1. 先阅读本项目 `AGENTS.md`，并从 `skills/industry-research-router` 进入研究路由。
+1A. 本任务必须调用并遵循项目 skill：`skills/a-share-company-tracking`；公告、CNINFO、交易所披露、龙虎榜、大宗交易和公告窗口核验必须调用并遵循 `skills/a-share-disclosure-trading-data`。
 2. 读取 `watchlists/a_share_company_watchlist.xlsx` 的 `watchlist` 工作表，只处理 `enabled=Y` 的公司。
 3. 首次或新增公司规则：`baseline_status` 为 `pending`、`refresh_needed` 或空值的公司，必须先做完整公司基线深研；本任务首跑要一次性完成全部待建基线公司。
 4. Grok/X 是发现层，不是阻断项。Grok 失败、不可用、超时、无结果时，继续完成公告、龙虎榜、大宗交易和本地档案更新；如果 `@chrome` / Grok 不可用，必须改用 Codex 自身联网能力对该公司做最近消息搜索，作为 `open_web_fallback` 观察层。
@@ -15,12 +16,15 @@
 9. 必须显式调用多智能体/子智能体来执行公司级跟踪研究：每家公司分配一个独立 worker/sub-agent 作为研究单元，最多同时运行 6 个公司 worker。默认模型策略改为主任务和公司 worker 统一使用 `gpt-5.5` + `reasoning_effort=xhigh`；创建每个公司 worker/sub-agent 时必须显式传入 `model="gpt-5.5"` 和 `reasoning_effort="xhigh"`，不要只依赖继承默认值；如后续需要临时降档，必须有明确成本/时延理由，并在 `run_status.md` 说明。总控智能体只负责队列调度、全局汇总、Excel/日报/run_status 写入和最终核对；不得只用一个主智能体批量脚本查询来替代公司级 worker。若当前运行环境没有可调用的子智能体工具，必须在 `run_status.md` 和 completion table 中标记 `multi_agent_status=unavailable` 并说明降级原因。
 10. 并行上限按 6 个公司 worker 处理：如果启用公司超过 6 家，先启动第一批最多 6 个 worker；任一公司 worker 完成后，从待处理队列补入下一家公司，直到全部 enabled 公司完成。不要因为并行上限遗漏后续公司。
 11. 每次结束时，除了写文件，还必须在对话窗口给出简短摘要，方便用户不打开文件也能看懂重点。
+12. 20:00 后公告硬门：若本轮运行开始时间为北京时间 20:00 或之后，每家 enabled 公司必须检查公告日期 `T` 和 `T+1`，覆盖晚间公告披露但公告日期滚到次日的情况；completion table 必须记录 `announcement_window_checked=T_and_T_plus_1` 或失败原因。若运行早于 20:00，必须记录 `pending_evening_rescan`。
 
 ## Skill Route
 
 默认使用：
 
 - `industry-research-router`：入口和证据纪律。
+- `a-share-company-tracking`：A 股 watchlist 日更、baseline/state/events、公司级 worker、run_status 和最终核对。
+- `a-share-disclosure-trading-data`：CNINFO、交易所公告、IR 记录、龙虎榜、大宗交易和 T/T+1 公告窗口硬门。
 - `search-specialist`：官方公告、交易所、CNINFO、公司 IR、龙虎榜、大宗交易的检索策略。
 - `research-summarizer`：消化公告、年报、季报、投资者关系记录等长材料。
 - `stock-evaluator` + `business-analyst`：公司基本面、业务结构、财务质量和风险。
@@ -105,6 +109,7 @@ Batching rule:
    - investor-relations records;
    - dragon-tiger list;
    - block trades.
+2A. If `run_time_beijing >= 20:00`, announcement checks must cover both announcement date `T` and `T+1`; write `announcement_window_checked=T_and_T_plus_1`. If the run is before 20:00, write `announcement_window_checked=pending_evening_rescan` unless a later rescan is completed.
 3. Run Grok/X last-24-hour discovery in that company's own Chrome/Grok tab or window when available, using:
    - `name`
    - `ticker`
@@ -166,6 +171,7 @@ The daily report must include:
    - `announcements_checked`
    - `lhb_checked`
    - `block_trade_checked`
+   - `announcement_window_checked`
    - `grok_status`
    - `state_change`
    - `miss_risk_notes`

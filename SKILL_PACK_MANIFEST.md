@@ -6,6 +6,8 @@
 - `ai-chain-research-orchestrator`：AI 产业链实时消息、Grok/X 线索、Gemini 辅助证据、Codex 复核、证据分级和股票映射协调技能。
 - `browser-grok-gemini-research`：网页 Grok/Gemini 采集辅助技能。只负责浏览器采集、提示词边界和采集结果交接，不负责最终投资判断。
 - `semiconductor-ai-chain-investment-researcher`：AI/半导体细分环节优先级、技术瓶颈、海外寡头、A 股硬证据映射和环节内横向比较主技能。
+- `a-share-company-tracking`：A 股 watchlist 持续跟踪、baseline/state/events 维护、公司级 worker 批处理、Grok/open-web fallback 记录和 run_status 核对技能。
+- `a-share-disclosure-trading-data`：CNINFO、交易所公告、IR 记录、龙虎榜、大宗交易和 T/T+1 公告窗口检查技能。
 
 ## 行业与竞争格局
 
@@ -26,6 +28,7 @@
 ## 股票与财务数据
 
 - `stock-evaluator`
+- `a-share-disclosure-trading-data`
 - `allstock-data`
 - `banana-farmer`
 - `stock-data-skill`
