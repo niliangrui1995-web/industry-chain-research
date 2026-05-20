@@ -1,10 +1,10 @@
 {
-  "generated_at_beijing": "2026-05-19 22:35",
+  "generated_at_beijing": "2026-05-19 01:21",
   "status": "ok",
-  "mode": "dry_run",
+  "mode": "apply_mechanical",
   "window": {
-    "now_beijing": "2026-05-19 22:35",
-    "window_end_beijing": "2026-05-22 22:35"
+    "now_beijing": "2026-05-19 01:21",
+    "window_end_beijing": "2026-05-22 01:21"
   },
   "calendar_read": {
     "today_arg": "2026-05-18",

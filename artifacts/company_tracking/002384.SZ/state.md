@@ -64,6 +64,13 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 硬证据判断：本轮没有发现新的 official_announcement、investor_relations、trading_event_lhb、trading_event_block_trade 或可独立验证的客户/订单硬事件；索尔思/AI server PCB 叙事仍停留在年报、业绩说明会、卖方/媒体推算和公开观察层之间，未补齐客户、订单金额、单独收入、毛利率、良率或产能爬坡的正式披露。
 - 状态变化：主结论不变，新增 source gap 记录。下一轮重点继续追 2026-05-15 股东会后是否有公告或交流材料、索尔思单独经营数据、AI PCB 第一期产能节点、以及 5 月中旬是否出现新的龙虎榜/大宗交易。
 
+## 2026-05-19 晚间 T/T+1 复扫
+
+- 独立任务块：`ticker=002384.SZ`，`name=东山精密`，`batch_no=2`。公司 worker 超时未回传，已由总控按独立公司任务块完成公告、龙虎榜、大宗交易和 open-web fallback 核对。
+- 公告窗口：北京时间 20:00 后补扫公告日期 `2026-05-19` 和 `2026-05-20`，CNINFO/东方财富公告镜像未发现新增公司公告或 IR 记录；completion 记录 `announcement_window_checked=T_and_T_plus_1`。
+- 龙虎榜/大宗交易：2026-05-19 未发现新增龙虎榜或大宗交易记录。
+- 本轮状态：没有新增 official_announcement、investor_relations、trading_event_lhb 或 trading_event_block_trade；索尔思/AI PCB 主线仍等待客户、订单金额、单独收入、毛利率、良率或产能爬坡的正式披露。
+
 ## 观察池
 
 - 市场正在把东山精密从“消费电子 FPC/PCB”重新定价为“AI 数据中心硬件核心器件平台”，估值锚从传统制造切换到 AI PCB + 光模块。

@@ -1,10 +1,10 @@
 {
-  "generated_at_beijing": "2026-05-19 22:35",
+  "generated_at_beijing": "2026-05-19 01:20",
   "status": "ok",
   "mode": "dry_run",
   "window": {
-    "now_beijing": "2026-05-19 22:35",
-    "window_end_beijing": "2026-05-22 22:35"
+    "now_beijing": "2026-05-19 01:20",
+    "window_end_beijing": "2026-05-22 01:20"
   },
   "calendar_read": {
     "today_arg": "2026-05-18",
@@ -15,10 +15,10 @@
     "past_event_count": 0
   },
   "action_counts": {
-    "create": 0,
+    "create": 2,
     "update": 0,
     "pause": 0,
-    "validate_pending": 2,
+    "validate_pending": 0,
     "repair_rrule": 0
   },
   "review_items": [
@@ -66,7 +66,7 @@
     "source_header": []
   },
   "final_validation": {
-    "child_count": 52,
+    "child_count": 50,
     "bad_rrules": [],
     "active_with_memory": [],
     "active_past": [],
@@ -679,28 +679,6 @@
       "prompt_sha1": "6946e0a5058ba2b4e106dcc3d16f8c89a3260303"
     },
     {
-      "child_id": "ec-6594-t-20260521-88fd00",
-      "name": "财报电话会深挖 6594.T Nidec 2026-05-21",
-      "status": "ACTIVE",
-      "task_key": "6594.T|2026-05-21|",
-      "ticker": "6594.T",
-      "company": "Nidec",
-      "report_date": "2026-05-21",
-      "fiscal_period": "",
-      "planned_child_start_beijing": "2026-05-21 20:00",
-      "schedule_basis": "default_proxy_not_call_time",
-      "rrule": "DTSTART:20260521T200000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=20;BYMINUTE=0;COUNT=1",
-      "rrule_ok": true,
-      "model": "gpt-5.4",
-      "reasoning_effort": "high",
-      "has_memory": false,
-      "calendar_source": "Yahoo Finance",
-      "event_status": "estimated_unverified",
-      "source_confidence": "non_official_estimate",
-      "official_source_url": "N/A",
-      "prompt_sha1": "9599b7ffac9c9752ba867284fa23575743b37b1f"
-    },
-    {
       "child_id": "ec-6752-t-20260512-12e2a3",
       "name": "财报电话会深挖 6752.T Panasonic 2026-05-12",
       "status": "PAUSED",
@@ -1095,28 +1073,6 @@
       "source_confidence": "official_confirmed",
       "official_source_url": "https://ir.macom.com/events/event-details/macom-technology-solutions-second-quarter-fiscal-year-2026-financial-results",
       "prompt_sha1": "e4a46235fa6b3c87194225fa351f36c70f9928bf"
-    },
-    {
-      "child_id": "ec-nvda-20260520-1f5b7a",
-      "name": "财报电话会深挖 NVDA NVIDIA 2026-05-20",
-      "status": "ACTIVE",
-      "task_key": "NVDA|2026-05-20|Apr/2026",
-      "ticker": "NVDA",
-      "company": "NVIDIA",
-      "report_date": "2026-05-20",
-      "fiscal_period": "Apr/2026",
-      "planned_child_start_beijing": "2026-05-21 08:00",
-      "schedule_basis": "official_call_plus_3h",
-      "rrule": "DTSTART:20260521T080000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=8;BYMINUTE=0;COUNT=1",
-      "rrule_ok": true,
-      "model": "gpt-5.5",
-      "reasoning_effort": "xhigh",
-      "has_memory": false,
-      "calendar_source": "confirmed",
-      "event_status": "confirmed",
-      "source_confidence": "official_confirmed",
-      "official_source_url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Sets-Conference-Call-for-First-Quarter-Financial-Results/default.aspx",
-      "prompt_sha1": "8628b9a7cb2649ddb45340a1e3cc0b2685bbb847"
     },
     {
       "child_id": "ec-onto-20260505-e93443",
