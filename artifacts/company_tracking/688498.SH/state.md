@@ -1,12 +1,12 @@
 # 源杰科技（688498.SH）滚动跟踪状态
 
-updated_at: 2026-05-13T21:30:00+08:00
+updated_at: 2026-05-20T20:02:00+08:00
 company: 源杰科技  
 ticker: 688498.SH  
 exchange: SSE STAR  
 coverage_type: daily_update_after_first_baseline  
 grok_status: unavailable_chrome_plugin_not_exposed
-open_web_fallback_status: searched_official_source_resolved_no_new_operating_signal
+open_web_fallback_status: searched_no_new_hard_signal_2026-05-20
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -138,3 +138,19 @@ Batch 2 结论：本轮主要变化是“上轮公告镜像已补到上交所官
 - CNINFO 按公司名检索 `2026-05-15~2026-05-16` 确认新增 `关于副总经理无法正常履职暨离任的公告`。
 - 公告要点：副总经理陈文君因涉嫌刑事犯罪被公安机关刑事拘留，无法正常履行副总经理职责；截至公告披露日，公司未接到公安机关对该事件的通知。公司 2026-05-14 召开董事会，解除其副总经理职务，解聘后仍在公司担任其他职务。陈文君原主要分管产品销售及营销相关工作，持有公司股份 308,625 股；公司称生产经营正常稳定，事件不影响正常经营活动。
 - 结论修正：这是管理层和销售营销条线风险事件，需跟踪客户沟通、订单导入、200G/EML 放量节奏是否受扰动；目前官方口径是不影响正常经营。
+
+## 2026-05-20 Batch 2 日更
+
+独立任务块：
+- company: 源杰科技；ticker: 688498.SH；aliases: 源杰科技、Yuanjie Semiconductor、EML、DFB、laser chip；tracking_focus: 高速激光芯片、200G EML、AI客户验证、量产和收入占比。
+- browser_scope: fallback_no_browser；grok_status: unavailable_chrome_plugin_not_exposed；本轮未使用 Browser Use 或 Playwright 替代 Chrome/Grok 登录态。
+- checklist: baseline_read=done；state_read=done；events_read=done；announcements_checked=done；cninfo_checked=done；sse_star_checked=done；company_ir_checked=done；lhb_checked=done；block_trade_checked=done；open_web_fallback=searched_no_new_hard_signal；state_updated=source_gap_only；events_appended=0。
+
+核对窗口：公告日期 `2026-05-20` 和 `2026-05-21`，最近交易日 `2026-05-20`。
+- 公告/交易所/CNINFO：上交所 `queryCompanyBulletin.do` 按 `productId=688498`、`beginDate=2026-05-20`、`endDate=2026-05-21` 返回 `total=0`；CNINFO `hisAnnouncement/query` 按 `stock=688498`、`seDate=2026-05-20~2026-05-21` 返回 `totalAnnouncement=0`；东方财富公告镜像同窗口返回 `total_hits=0`。本轮记录 `announcement_window_checked=T_and_T_plus_1`。
+- 公司 IR：公司官网投资者关系页最新可见仍为 2026-05-06 `2026年一季度财报` 一图读懂，企业公示页最新为 2026-01-05 二期项目环评公众参与第一次信息公示；未见 2026-05-20 业绩说明会后的正式问答记录或新 IR 文档。该项是本轮 source gap，下一轮需复扫全景路演、CNINFO 和上交所是否补发投资者关系活动记录表。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=688498`、`TRADE_DATE=2026-05-20` 返回 `count=0`，未发现当日龙虎榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按 `SECURITY_CODE=688498`、`TRADE_DATE=2026-05-20` 均返回 `count=0`，未发现当日大宗交易记录。
+- open_web_fallback：普通联网搜索 `源杰科技/688498/EML/DFB/laser chip/InP/200G EML/CW光源` 最近 24 小时结果主要为旧风险提示、旧 H 股上市解读、研报/媒体观点和股王叙事；未发现可确认的新增订单、客户验证、200G EML 量产收入、CW 新功率段批量交付或收入占比披露。该层仅为 observation_only。
+
+Batch 2 结论：本轮无新增官方公告、无龙虎榜、无大宗交易、无可确认的经营硬事件；不追加 `events.jsonl`。核心主线维持为数据中心 CW 光源收入已兑现、200G PAM4 EML 仍待从客户验证走向批量收入证据；新增待复扫项是 2026-05-20 业绩说明会是否后续发布正式问答或投资者关系活动记录。

@@ -4,10 +4,10 @@ metadata:
 - company: 中际旭创股份有限公司
 - ticker: 300308.SZ
 - exchange: SZSE
-- updated_at: 2026-05-13
+- updated_at: 2026-05-20
 - state_type: company_tracking
 - grok_status: unavailable_chrome_plugin_not_exposed
-- open_web_fallback_status: searched/block_trade_signal_only
+- open_web_fallback_status: searched/observation_only_no_new_hard_signal
 - advice_status: 不是买卖建议
 
 ## 当前跟踪结论
@@ -151,3 +151,20 @@ CNINFO 2026-05-10 至 2026-05-14 无新增公告，龙虎榜为空。新增 1 �
 - CNINFO 按公司名检索 `2026-05-15~2026-05-16` 确认新增 `投资者关系活动记录表20260515`。
 - IR 要点：公司称高端光模块产品订单和出货持续增加；1.6T 产品早已批量出货且持续起量；3.2T 产品仍在持续研发和完善；供应链稳定，并通过核心原材料备货、备选供应商和保障协议保障交付；目前在手订单充足；H 股发行相关工作稳步推进；NPO 产品仍处于技术完善和客户验证阶段。公司同时强调未发布业绩指引，纪要不代表盈利预测和业绩指引。
 - 结论修正：这条 IR 比小额大宗交易更重要，应从“仅交易层事件”修正为“交易层事件 + 经营层 IR 口径更新”。但其仍未量化收入、客户、毛利率或 H 股时间表，不能直接外推业绩指引。
+
+## 2026-05-20 Batch 2 Worker Recheck
+
+- batch_no: 2
+- checked_at_beijing: 2026-05-20 20:02
+- browser_scope: fallback_no_browser
+- grok_status: unavailable_chrome_plugin_not_exposed
+- open_web_fallback_status: searched/observation_only_no_new_hard_signal
+- task_block: 中际旭创 300308.SZ；aliases=中际旭创/Innolight/800G/1.6T/optical module/silicon photonics；tracking_focus=800G/1.6T交付、硅光、客户需求、上游物料和毛利率
+- checklist: baseline_read=done; state_read=done; events_read=done; announcements_checked=done; announcement_window_checked=T_and_T_plus_1; lhb_checked=done; block_trade_checked=done; grok_checked=unavailable; open_web_fallback=done; events_appended=0; state_updated=source_gap_only
+- announcements_checked: CNINFO `hisAnnouncement/query` 按证券代码和公司名检索 `2026-05-20~2026-05-21` 均返回 0 条；东方财富公告接口按 `300308.SZ` 和 `0.300308` 同窗口均返回 0 条；公司官网投资者关系页最新公告仍停留在 2026-04-17 一季报，财务报告页最新为 2026-04-20 一季报/年报入口，未见 2026-05-20 或 2026-05-21 新公告。
+- source_gap: 深交所 `annList` 本轮三种参数组合均返回 500，未能直接完成 SZSE 页面核验；已用 CNINFO、东方财富公告镜像和公司官网投资者关系页交叉替代，下一轮继续抽查深交所恢复情况。
+- lhb_checked: 东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=300308`、`TRADE_DATE=2026-05-20` 返回空数据，未发现当日新增龙虎榜。
+- block_trade_checked: 东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按 `SECURITY_CODE=300308`、`TRADE_DATE=2026-05-20` 均返回空数据，未发现当日新增大宗交易。
+- open_web_fallback_observation: 普通网页检索仅观察到 2026-05-15 IR 复述、2026Q1 点评、5月19日行情/资金流和论坛级产业链讨论；未发现可升级为官方或交易硬事件的新 800G/1.6T、硅光、客户、物料或毛利率信号。
+- material_changes: 无新增经营类、订单类、财务类、800G/1.6T、硅光、客户需求、上游物料或毛利率硬披露；无新增龙虎榜或大宗交易事件，`events.jsonl` 不追加。
+- miss_risk_notes: Chrome/@chrome/Grok 工具面未暴露，未执行登录态 Grok/X；open-web fallback 仅作观察池，不替代 Grok/X 或官方确认。公司官网公告页存在同步滞后风险，正式公告仍以 CNINFO/交易所/公告镜像为主。

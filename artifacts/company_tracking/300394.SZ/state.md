@@ -1,10 +1,10 @@
 # 300394.SZ 天孚通信 跟踪状态
 
 baseline_status: done  
-last_checked: 2026-05-14 Asia/Shanghai  
+last_checked: 2026-05-20 Asia/Shanghai
 browser_scope: fallback_no_browser  
-grok_status: not_run_manual_add; reason=chrome_plugin_not_exposed_in_active_tools  
-open_web_fallback_status: completed  
+grok_status: unavailable_chrome_plugin_not_exposed
+open_web_fallback_status: searched_no_material_signal
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -57,3 +57,10 @@ not_investment_advice: true
 - 新增交易事件：2026-05-19 出现两笔大宗交易，成交价均为 363 元，合计成交 276,200 股，成交金额 100,262,400 元，买方均为机构专用。
 - 投资含义：这是交易结构信号，成交价等于当日收盘价，暂不改变精密无源/高速有源/CPO/1.6T 主线基本面判断。
 - open-web fallback：仅发现 CPO 板块回调类市场观察，不写成公司确认订单或基本面事件。
+
+## 2026-05-20 batch_no=2 例行复核
+
+- 公告窗口：北京时间 20:00 后复核公告日期 `2026-05-20` 和 `2026-05-21`，CNINFO/SZSE 口径未发现新增官方公告或公司 IR 硬事件；completion 记录 `announcement_window_checked=T_and_T_plus_1`。
+- 龙虎榜：东方财富龙虎榜数据口径未检出 2026-05-20 天孚通信上榜记录。
+- 大宗交易：2026-05-20 出现 1 笔大宗交易，成交价 358.99 元，成交 23,800 股，成交金额 8,544,000 元，买卖方均为机构专用，折溢价 0%；金额较小，仅作交易结构观察，不追加为 material event。
+- open-web fallback：未发现近 24 小时公司级新增硬事件；网页结果主要是 5 月 20 日大宗交易、行情/资金流和既有 CPO/FAU/ELS 信息重复，不写成公司确认订单或基本面变化。

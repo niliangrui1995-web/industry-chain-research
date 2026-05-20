@@ -8,6 +8,16 @@ browser_scope: fallback_no_browser
 grok_status: unavailable_chrome_plugin_not_exposed
 not_investment_advice: true
 
+## 2026-05-20 batch_no=1 worker 复核
+
+- 独立任务块：`300476.SZ` 胜宏科技，run_time_beijing=2026-05-20 20:02；按 20:00 后规则检查公告日期 `2026-05-20` 和 `2026-05-21`。
+- 浏览器/Grok：本轮 Chrome/@chrome/Grok 工具未暴露，未使用 Browser Use 或 Playwright 冒充登录态；记录 `browser_scope=fallback_no_browser`、`grok_status=unavailable_chrome_plugin_not_exposed`，open-web fallback 仅作为 `observation_only`。
+- 公告硬门：CNINFO `hisAnnouncement/query` 按 `300476,SZ`、`2026-05-20~2026-05-21` 返回 0 条；东方财富公告接口同窗口 `total_hits=0`；公司官网 A 股披露页最新仍为 2026-04-29 一季报，未见 2026-05-20/21 新公告或新经营披露。
+- 源缺口：深交所 `annList` 公告接口本轮返回 50x/维护页面，未能直接完成 SZSE 页面核验；已用 CNINFO、东方财富公告镜像和公司官网披露页交叉替代，后续仍需在深交所恢复后抽查。
+- 龙虎榜/大宗交易：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 与 `RPT_DATA_BLOCKTRADE` 按 `SECURITY_CODE=300476`、`TRADE_DATE=2026-05-20` 均返回空数据，未发现 2026-05-20 新增龙虎榜或大宗交易记录。
+- open-web fallback：最近 24 小时公开网页主要返回公司官网、5 月 15 日投关记录、5 月 18 日券商/媒体对 H 股与 AI PCB 叙事的复述，以及估值/行情类页面；未发现可由官方公告或交易数据确认的新订单、客户、产能节点、毛利率或异常交易信号。
+- 本轮状态：无新增硬经营事件、无新增交易事件，`events.jsonl` 不追加；核心主线仍是高端订单兑现、ASIC/大客户新产品进展、海外产能认证与毛利率延续性。
+
 ## 2026-05-19 晚间 T/T+1 复扫
 
 - 公告窗口：北京时间 20:00 后补扫公告日期 `2026-05-19` 和 `2026-05-20`，CNINFO、东方财富公告镜像和公司 IR 平台均未发现新公告或新经营披露；此前 2026-05-18 H 股稳定价格期结束公告无 T+1 状态变化，未重复入账。
