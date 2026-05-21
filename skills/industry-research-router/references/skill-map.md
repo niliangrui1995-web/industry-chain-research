@@ -27,7 +27,7 @@
 | `browser-grok-gemini-research` | Webpage operation and collector prompt discipline for Grok/X and Gemini | Does not verify or conclude; hands objective items back to Codex |
 | `semiconductor-ai-chain-investment-researcher` | Main top-down AI/semiconductor investment skill: segment priority, technology bottleneck, overseas oligarchs, A-share mapping, within-segment comparison | Must start from segment universe, not from hot stock names |
 | `advanced-evaluation` | Three-layer score consistency, rank sanity checks, and bias control | Does not replace domain judgment or source verification |
-| `stock-fundamental-moat-triad` | Company-level fundamental moat test using value-chain position, international peer benchmarking, Porter Five Forces, and customer-certification barriers | Does not replace source collection, financial data, valuation, or trading-elasticity analysis |
+| `stock-fundamental-moat-triad` | Company-level future-highlight test: what can change, how it becomes earnings, and whether value-chain, peers, competition, and customer milestones support it | Does not replace source collection, financial data, valuation, or trading-elasticity analysis |
 | `stock-evaluator` + `business-analyst` | Company fundamentals, valuation, financial quality, and hard-evidence checks after segment selection | Does not decide segment priority alone |
 | `allstock-data` + `banana-farmer` | Quotes, K-lines, liquidity, trend, timing, and risk context | Cannot prove beneficiary status |
 | `search-specialist` + `research-summarizer` | Source discovery, source-quality ranking, contradiction tracking, long-source digestion, and citation extraction | Does not make final investment conclusions |
@@ -78,7 +78,7 @@
 | `competitive-landscape` | Competitive landscape, Porter-style structure, differentiation, true leader vs concept stock. |
 | `competitive-intel` | Competitor tracking, market moves, positioning, battlecards. |
 | `business-analyst` | Business model, KPI logic, operating indicators, strategic analysis. |
-| `stock-fundamental-moat-triad` | Fundamental moat framework for exact value-chain exposure, same-node international peer benchmarking, five-forces competition, and customer-certification evidence before valuation. |
+| `stock-fundamental-moat-triad` | Future-first fundamental framework that judges future highlight potential and earnings path, then uses exact value-chain exposure, same-node international peers, five-forces competition, and customer-certification evidence as support. |
 | `product-manager` / `product-manager-toolkit` | Customer purchase logic, product-market fit, buyer workflow, adoption barriers. |
 
 ## Stock And Financial Data
@@ -86,7 +86,7 @@
 | Skill | Use Case |
 |---|---|
 | `stock-evaluator` | Project-local stock evaluation after route/source collection, separating fundamental quality, earnings elasticity, trading elasticity, valuation, evidence strength, and risks. |
-| `stock-fundamental-moat-triad` | Pre-valuation company moat filter combining value-chain analysis, international peer benchmarking, Porter Five Forces, and customer-certification barriers. |
+| `stock-fundamental-moat-triad` | Pre-valuation future-highlight filter that starts with future drivers and earnings path, then tests value-chain position, international peers, Porter Five Forces, and customer-certification barriers. |
 | `a-share-company-tracking` | A-share watchlist baseline, daily update, per-company worker isolation, Grok/open-web fallback status, and durable `artifacts/company_tracking` records. |
 | `a-share-disclosure-trading-data` | CNINFO, exchange announcements, IR records, dragon-tiger lists, block trades, and T/T+1 announcement-window evidence. |
 | `allstock-data` | A-share, Hong Kong, US quotes, K-lines, order book, lightweight China market data. |

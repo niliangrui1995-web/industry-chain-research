@@ -1,17 +1,17 @@
 ---
 name: stock-fundamental-moat-triad
-description: Use for individual-stock or peer-company fundamental research when the user wants to combine value-chain analysis, international peer benchmarking, Porter Five Forces, and customer-certification barrier analysis. Trigger on 个股基本面, 价值链分析, 国际同行, 同行对标, 波特五力, 客户认证壁垒, 客户导入, AVL/BOM, 产业链位置, true beneficiary, moat, competitive structure, supplier status, or company comparison. This skill judges whether a listed company has real value-chain exposure, same-node global competitiveness, durable competitive position, and verifiable customer-entry evidence before valuation or trading-elasticity analysis.
+description: Use for future-oriented individual-stock or peer-company fundamental research when the user wants to judge whether a company has future business highlights, inflection points, earnings upside, product/customer breakthroughs, value-chain migration, international peer catch-up potential, and customer-certification milestones. Trigger on 个股基本面, 未来亮点, 未来空间, 拐点, 成长性, 业绩弹性, 价值链分析, 国际同行, 同行对标, 波特五力, 客户认证壁垒, 客户导入, AVL/BOM, 产业链位置, true beneficiary, moat, competitive structure, supplier status, or company comparison. This skill puts the future thesis first; value-chain, peer, Porter, and certification checks are supporting tools for judging whether the future can be monetized.
 ---
 
 # Stock Fundamental Moat Triad
 
 ## Purpose
 
-Use this skill as a company-level fundamental filter inside `产业链投研`: first prove where the company sits in the value chain, then judge the competitive structure, then test whether customer certification creates a real entry barrier.
+Use this skill as a future-oriented company research framework inside `产业链投研`: first answer what could become materially different in the next 6-24 months, then use value-chain position, international peers, competitive structure, and customer certification only as tools to judge whether that future can be monetized.
 
 This skill does not replace source collection, financial data, valuation, or trading analysis. It feeds `stock-evaluator`, `advanced-evaluation`, and market-data skills after the core business exposure is clear.
 
-International peer benchmarking is a mandatory gate, not an optional note inside Porter rivalry. Do not enter the integrated verdict until the target company has been benchmarked against same-node global leaders or until the peer evidence is explicitly marked `N/A`.
+International peer benchmarking is a mandatory future-check, not an optional note inside Porter rivalry. Its main purpose is to judge whether the target company can catch up, substitute, localize, or lose share in the future; do not let peer benchmarking turn the report into a static history comparison.
 
 ## Default Route
 
@@ -30,7 +30,36 @@ Separate evidence into these buckets:
 - `undisclosed`: no public proof for exact BOM position, customer, share, ASP, quantity, or revenue.
 - `rumor only`: social/media/model claims without hard source; use only as a lead.
 
-Use `N/A` rather than inventing data. Label value-share, TAM, or BOM-cost ranges as research estimates unless they come from a public teardown or company filing.
+Use `N/A` rather than inventing data. Label value-share, TAM, or BOM-cost ranges as research estimates unless they come from a public teardown or company filing. Past and current facts are inputs for probability, milestones, and invalidation risk; they are not the center of the answer when the user asks about the future.
+
+## Future-First Principle
+
+Do not reduce the analysis to "what is proven today." The main output is a forward-looking judgment: whether the company has a credible future highlight that can change revenue, margins, valuation narrative, or industry position.
+
+Lead every report with the future answer:
+
+- Does the company have a future highlight: `strong`, `medium`, `weak`, or `not visible`?
+- What is the single most important future variable?
+- How can that variable become revenue, margin, profit, or valuation re-rating?
+- What evidence would confirm, delay, or kill the thesis in the next 1-2 reports?
+
+Separate supporting evidence into two layers:
+
+- `current evidence verdict`: what is already proven by filings, customers, product data, revenue, or public certification evidence.
+- `future highlight rating`: what could improve in 6-24 months, why it could matter, and which observable milestones would upgrade or kill the thesis.
+
+A company with weak current proof can still be an `early optionality` case. Do not reject it only because current revenue is small; reject or downgrade it when the future route is vague, the node has little value capture, the peer gap has no catch-up path, or there is no trackable customer/product milestone.
+
+For the future highlight layer, explicitly test:
+
+- demand inflection: new downstream demand, product generation change, AI/server/auto/robot/energy transition, policy localization, or capacity-cycle shift;
+- product upgrade: higher ASP, harder specs, route migration, package/material/process change, or move from commodity to qualified node;
+- customer-entry trajectory: sample -> validation -> reliability test -> AVL/BOM -> pilot -> mass production;
+- margin translation: product mix, yield, capacity utilization, depreciation absorption, price discipline, or operating leverage;
+- bottleneck/profit-pool migration: whether the value node may move toward or away from the company product;
+- catalyst timeline: what must be seen in the next 1-2 reports, investor records, product pages, orders, or peer disclosures.
+
+When the user asks about the future, spend most of the answer on future variables, probability, milestones, and earnings translation. Keep current and past facts concise and use them only to explain why the future thesis is credible, early, or weak.
 
 ## Workflow
 
@@ -46,7 +75,26 @@ Minimum identity check:
 - whether revenue exposure is direct, indirect, option-like, or unproven;
 - source timestamp and evidence grade.
 
-### 2. Value-Chain Analysis
+### 2. Future Highlight And Inflection Thesis
+
+Before any static analysis, write the future thesis in one tight paragraph:
+
+`future demand/change -> company product/node -> expected business effect -> required proof -> risk that invalidates it`
+
+Then classify the future highlight:
+
+- `clear future highlight`: credible future route, meaningful value capture, visible customer/product milestones, and at least partial source support.
+- `early optionality`: plausible route and meaningful upside, but current proof is mostly product/application/certification clue.
+- `watch only`: interesting direction, but value capture, peer gap, customer path, or financial translation is too unclear.
+- `low future relevance`: no credible path from future demand to company earnings.
+
+Minimum table:
+
+```text
+| future driver | company product/node | business effect | probability | time window | required proof | invalidation risk |
+```
+
+### 3. Value-Chain Analysis
 
 Map from end demand back to the company product:
 
@@ -62,7 +110,7 @@ For each node, answer:
 
 Do not stop at an industry label. A company can be in the right theme but the wrong node, or in the right node with too little value share to move earnings.
 
-### 3. International Peer Benchmarking
+### 4. International Peer Benchmarking
 
 Complete this step before Porter Five Forces and before any integrated verdict.
 
@@ -94,7 +142,7 @@ Minimum table:
 
 If no same-node international peer can be identified, say so explicitly and explain whether the node is too niche, too opaque, or the comparison requires further source work.
 
-### 4. Porter Five Forces
+### 5. Porter Five Forces
 
 Apply the five forces at the exact value-chain node, not at the broad industry level.
 
@@ -106,7 +154,7 @@ Apply the five forces at the exact value-chain node, not at the broad industry l
 
 Conclude with pricing power and margin durability: `strong`, `moderate`, `weak`, or `not proven`.
 
-### 5. Customer Certification Barrier Model
+### 6. Customer Certification Barrier Model
 
 Place the company on the customer-entry ladder:
 
@@ -137,9 +185,18 @@ Analyze whether certification is a real moat:
 - whether dual sourcing caps supplier profit;
 - whether the customer or upstream chip/platform owner controls specs.
 
-### 6. Integrated Verdict
+### 7. Integrated Verdict
 
-Combine the four models into one fundamental judgment:
+Combine the models into a future-first judgment, then attach the evidence state:
+
+`future conclusion`:
+
+- `strong future highlight`: material driver, meaningful earnings path, credible customer/product/catch-up milestones, and observable confirmation path.
+- `medium future highlight`: real future driver, but value capture, peer gap, customer entry, or financial translation still needs proof.
+- `weak future highlight`: plausible story, but earnings path is small, delayed, low-value, or mostly dependent on external narrative.
+- `not visible`: no credible path from future demand to company earnings.
+
+`current evidence verdict`:
 
 - `core beneficiary`: exact high-value or bottleneck node, near-parity or leading peer benchmark, favorable forces, and A/B customer proof.
 - `qualified supplier with upside`: real node and improving certification evidence, but international peer gap, value share, or customer proof is still incomplete.
@@ -147,7 +204,14 @@ Combine the four models into one fundamental judgment:
 - `concept-adjacent`: theme exposure exists, but the value-chain node or customer proof is weak.
 - `reject`: no credible evidence for the claimed exposure.
 
-Do not assign `core beneficiary` if same-node international peers are materially ahead on key specs, customer design-in, or manufacturing scale and the target company's catch-up path is not evidenced.
+`future highlight rating`:
+
+- `clear future highlight`: material future driver, meaningful node, credible catch-up/customer path, and observable next signals.
+- `early optionality`: future route is plausible and potentially meaningful, but proof is still early.
+- `watch only`: worth monitoring, but the path from product to earnings is not yet strong enough.
+- `low future relevance`: future story is too vague, low-value, or structurally disadvantaged.
+
+Do not assign `core beneficiary` if same-node international peers are materially ahead on key specs, customer design-in, or manufacturing scale and the target company's catch-up path is not evidenced. If the company has a future path but lacks proof, say `current evidence: option-like` and `future highlight: early optionality` rather than forcing one blended label.
 
 Do not turn this verdict into a buy/sell call unless valuation, current market data, and trading context have also been checked.
 
@@ -157,24 +221,32 @@ For a single company:
 
 ```text
 结论先行：
-- 基本面定性：core beneficiary / qualified supplier with upside / option-like candidate / concept-adjacent / reject
+- 未来结论：strong / medium / weak / not visible
+- 核心未来变量：
+- 对收入/利润/估值的传导路径：
+- 未来 1-2 个报告期需要验证的信号：
+- 当前证据定性：core beneficiary / qualified supplier with upside / option-like candidate / concept-adjacent / reject
+- 未来亮点等级：clear future highlight / early optionality / watch only / low future relevance
 - 关键依据：
 - 最大证据缺口：
 - 下一步跟踪指标：
 
-一、价值链位置
+一、未来亮点与拐点假设
+| future driver | company product/node | business effect | probability | time window | required proof | invalidation risk |
+
+二、价值链位置
 | downstream product | BOM/node | company product | role | value capture | evidence grade | source |
 
-二、国际同行基准对标
+三、国际同行基准对标
 | peer | country/listing | same node? | product/spec benchmark | customer/BOM proof | manufacturing moat | commercial scale | gap vs target | evidence grade |
 
-三、波特五力
+四、波特五力
 | force | verdict | evidence | implication |
 
-四、客户认证壁垒
+五、客户认证壁垒
 | stage | evidence grade | current proof | missing proof | next signal |
 
-五、综合判断
+六、综合判断
 | dimension | verdict | reason | risk |
 ```
 
@@ -183,6 +255,8 @@ For peer comparison, use the scorecard in `references/scorecard-template.md` whe
 ## Common Mistakes
 
 - Do not infer BOM entry from a product launch alone.
+- Do not let current proof alone answer the whole question; always separate current evidence from future highlight potential.
+- Do not make the report mainly about past and present when the user asks about the future; past and current evidence should support the future thesis, not replace it.
 - Do not flatten `certification`, `sample delivery`, `batch supply`, and `mass production` into one phrase.
 - Do not compare companies before explaining whether they sit at the same value-chain node.
 - Do not hide international peer benchmarking inside Porter rivalry; complete the same-node peer table before the integrated verdict.

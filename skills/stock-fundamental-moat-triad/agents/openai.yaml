@@ -1,4 +1,4 @@
 interface:
   display_name: "Stock Fundamental Moat Triad"
-  short_description: "Value chain, peers, forces, certification"
-  default_prompt: "Use $stock-fundamental-moat-triad to evaluate this stock with value-chain position, international peer benchmarking, Porter Five Forces, and customer-certification barriers."
+  short_description: "Future highlights and monetization path"
+  default_prompt: "Use $stock-fundamental-moat-triad to judge this stock's future highlights first, then use value-chain position, international peers, Porter Five Forces, and customer-certification milestones to test whether the future can become earnings."
