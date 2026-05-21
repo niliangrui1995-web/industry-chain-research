@@ -27,6 +27,7 @@
 | `browser-grok-gemini-research` | Webpage operation and collector prompt discipline for Grok/X and Gemini | Does not verify or conclude; hands objective items back to Codex |
 | `semiconductor-ai-chain-investment-researcher` | Main top-down AI/semiconductor investment skill: segment priority, technology bottleneck, overseas oligarchs, A-share mapping, within-segment comparison | Must start from segment universe, not from hot stock names |
 | `advanced-evaluation` | Three-layer score consistency, rank sanity checks, and bias control | Does not replace domain judgment or source verification |
+| `stock-fundamental-moat-triad` | Company-level fundamental moat test using value-chain position, international peer benchmarking, Porter Five Forces, and customer-certification barriers | Does not replace source collection, financial data, valuation, or trading-elasticity analysis |
 | `stock-evaluator` + `business-analyst` | Company fundamentals, valuation, financial quality, and hard-evidence checks after segment selection | Does not decide segment priority alone |
 | `allstock-data` + `banana-farmer` | Quotes, K-lines, liquidity, trend, timing, and risk context | Cannot prove beneficiary status |
 | `search-specialist` + `research-summarizer` | Source discovery, source-quality ranking, contradiction tracking, long-source digestion, and citation extraction | Does not make final investment conclusions |
@@ -44,7 +45,7 @@
 | 谁是真龙头、谁蹭概念、竞争格局、海外寡头 | `industry-research-router` + `competitive-landscape` + `competitive-intel` | Separate market share, customer validation, profitability, and narrative heat. |
 | AI/半导体国产替代、卡脖子、进口替代难度 | `industry-research-router` + `semiconductor-ai-chain-investment-researcher` + `competitive-landscape` | Focus on exact segment exposure, customer certification, yield, process know-how, reliability, switching cost, and A-share hard evidence. |
 | 单只股票能买吗、估值、买卖点、仓位 | `industry-research-router` + `stock-evaluator` + market data skill | Never fabricate numbers. Use current data or mark unavailable values as `N/A`. |
-| 多家公司谁更好、基本面排序 | `industry-research-router` + `stock-evaluator` + `business-analyst` + `advanced-evaluation` | Build explicit rubric and cite hard data. |
+| 多家公司谁更好、基本面排序 | `industry-research-router` + `stock-fundamental-moat-triad` + `stock-evaluator` + `business-analyst` + `advanced-evaluation` | Build explicit rubric and cite hard data. |
 | 谁股票弹性最大、短线弹性、交易弹性 | `industry-research-router` + `allstock-data` + `banana-farmer` + `advanced-evaluation` | Prioritize float market cap, turnover, volatility, 20/60-day trend, catalyst density, crowding risk. |
 | A股公司持续跟踪、watchlist日更、baseline/state/events维护 | `industry-research-router` + `a-share-company-tracking` + `a-share-disclosure-trading-data` + `search-specialist` + `research-summarizer` | At or after 20:00 Beijing time, check both announcement date T and T+1. Keep one company per worker when sub-agent tools are available. |
 | A股公告、CNINFO、交易所披露、龙虎榜、大宗交易核验 | `industry-research-router` + `a-share-disclosure-trading-data` + `search-specialist`; add `allstock-data` for market reaction | Treat trading events as liquidity/elasticity signals, not fundamental proof. |
@@ -77,6 +78,7 @@
 | `competitive-landscape` | Competitive landscape, Porter-style structure, differentiation, true leader vs concept stock. |
 | `competitive-intel` | Competitor tracking, market moves, positioning, battlecards. |
 | `business-analyst` | Business model, KPI logic, operating indicators, strategic analysis. |
+| `stock-fundamental-moat-triad` | Fundamental moat framework for exact value-chain exposure, same-node international peer benchmarking, five-forces competition, and customer-certification evidence before valuation. |
 | `product-manager` / `product-manager-toolkit` | Customer purchase logic, product-market fit, buyer workflow, adoption barriers. |
 
 ## Stock And Financial Data
@@ -84,6 +86,7 @@
 | Skill | Use Case |
 |---|---|
 | `stock-evaluator` | Project-local stock evaluation after route/source collection, separating fundamental quality, earnings elasticity, trading elasticity, valuation, evidence strength, and risks. |
+| `stock-fundamental-moat-triad` | Pre-valuation company moat filter combining value-chain analysis, international peer benchmarking, Porter Five Forces, and customer-certification barriers. |
 | `a-share-company-tracking` | A-share watchlist baseline, daily update, per-company worker isolation, Grok/open-web fallback status, and durable `artifacts/company_tracking` records. |
 | `a-share-disclosure-trading-data` | CNINFO, exchange announcements, IR records, dragon-tiger lists, block trades, and T/T+1 announcement-window evidence. |
 | `allstock-data` | A-share, Hong Kong, US quotes, K-lines, order book, lightweight China market data. |
@@ -146,7 +149,7 @@
 | “非半导体产业链怎么拆？” | `industry-research-router` + `deep-research`; optionally `20-andruia-niche-intelligence` |
 | “这个成长行业真正卡脖子的瓶颈节点在哪？” | `industry-research-router` + `industry-chain-deep-disassembly` + matching adapter when available |
 | “谁是真龙头，谁蹭概念？” | `industry-research-router` + `competitive-landscape` + `competitive-intel` |
-| “这几家公司谁最值得关注？” | `industry-research-router` + `stock-evaluator` + `spreadsheet` + `advanced-evaluation` |
+| “这几家公司谁最值得关注？” | `industry-research-router` + `stock-fundamental-moat-triad` + `stock-evaluator` + `spreadsheet` + `advanced-evaluation` |
 | “谁股票弹性最大？” | `industry-research-router` + `allstock-data` + `banana-farmer` + `advanced-evaluation` |
 | “跑一下A股公司跟踪/更新watchlist公司状态” | `industry-research-router` + `a-share-company-tracking` + `a-share-disclosure-trading-data` |
 | “查这几家公司今晚有没有公告/龙虎榜/大宗交易” | `industry-research-router` + `a-share-disclosure-trading-data` + `search-specialist` |

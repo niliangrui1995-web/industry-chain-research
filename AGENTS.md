@@ -41,7 +41,7 @@
 - AI/半导体产业链本质和 A 股映射：`industry-research-router` + `semiconductor-ai-chain-investment-researcher` + `deep-research`（长研究框架）；如涉及实时消息或爆料，加 `ai-chain-research-orchestrator` 和 `browser-grok-gemini-research`
 - 非半导体产业链本质：`industry-research-router` + `deep-research`（长研究框架），必要时加 `20-andruia-niche-intelligence`
 - 龙头/竞格：`industry-research-router` + `competitive-landscape` + `competitive-intel`
-- 公司基本面：`industry-research-router` + `stock-evaluator` + `business-analyst`
+- 公司基本面：`industry-research-router` + `stock-fundamental-moat-triad` + `stock-evaluator` + `business-analyst`
 - 股票弹性：`industry-research-router` + `allstock-data` + `banana-farmer` + `advanced-evaluation`
 - A 股公司持续跟踪：`industry-research-router` + `a-share-company-tracking` + `a-share-disclosure-trading-data` + `search-specialist` + `research-summarizer`
 - 官方资料/公告/PDF/来源反证：`industry-research-router` + `search-specialist` + `web-scraper` / `firecrawl-scraper` / `tavily-web`；材料较长时加 `research-summarizer`
