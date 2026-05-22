@@ -1,10 +1,10 @@
 {
-  "generated_at_beijing": "2026-05-22 22:34",
+  "generated_at_beijing": "2026-05-22 22:33",
   "status": "ok",
-  "mode": "apply_mechanical",
+  "mode": "dry_run",
   "window": {
-    "now_beijing": "2026-05-22 22:34",
-    "window_end_beijing": "2026-05-25 22:34"
+    "now_beijing": "2026-05-22 22:33",
+    "window_end_beijing": "2026-05-25 22:33"
   },
   "calendar_read": {
     "today_arg": "2026-05-21",
@@ -17,7 +17,7 @@
   "action_counts": {
     "create": 0,
     "update": 0,
-    "pause": 0,
+    "pause": 1,
     "validate_pending": 0,
     "repair_rrule": 0
   },
@@ -51,12 +51,18 @@
   "final_validation": {
     "child_count": 53,
     "bad_rrules": [],
-    "active_with_memory": [],
-    "active_past": [],
+    "active_with_memory": [
+      "ec-6594-t-20260522-6d1846"
+    ],
+    "active_past": [
+      "ec-6594-t-20260522-6d1846"
+    ],
     "bad_static_contract": [],
     "active_missing_template_markers": [],
     "active_missing_source_headers": [],
-    "active_unmatched_future": [],
+    "active_unmatched_future": [
+      "ec-6594-t-20260522-6d1846"
+    ],
     "duplicate_task_keys": {},
     "duplicate_ticker_dates": {}
   },
@@ -686,7 +692,7 @@
     {
       "child_id": "ec-6594-t-20260522-6d1846",
       "name": "财报电话会深挖 6594.T Nidec 2026-05-22",
-      "status": "PAUSED",
+      "status": "ACTIVE",
       "task_key": "6594.T|2026-05-22|",
       "ticker": "6594.T",
       "company": "Nidec",

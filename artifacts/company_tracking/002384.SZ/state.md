@@ -142,3 +142,9 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 重新递交 H 股发行及上市申请公告（CNINFO）：https://static.cninfo.com.cn/finalpage/2026-05-21/1225319216.PDF
 - 香港联交所中文申请资料：https://www1.hkexnews.hk/app/sehk/2026/108550/documents/sehk26051901435_c.pdf
 - 证券时报 H 股递表报道（open-web 观察）：https://www.stcn.com/article/detail/3917027.html
+
+## 2026-05-22 日更
+
+- 公告窗口：北京时间 20:00 后完成公告日期 `2026-05-22` 和 `2026-05-23` 的 T/T+1 硬门。CNINFO 仅新增 2025 年报英文版和 2026 年一季报英文版，判断为已披露中文定期报告的英文翻译版本，不重复入账为经营事件。
+- 新增 IR 证据：深交所互动易回复称 200G EML 已实现量产，1.6T 产品客户端相关工作正按计划推进，3.2T 产品优先以 400G EML 为核心布局；公司具备硅光 CW 激光芯片研发能力，并与外部硅光企业合作、布局自研硅光模块产品。
+- 状态变化：索尔思光芯片/光模块路线证据增强；仍缺客户、订单、收入、毛利率、良率和具体产能量化，不能把英伟达/GB200/GB300 等互动提问或市场映射写成确认事实。
