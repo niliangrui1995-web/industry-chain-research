@@ -237,3 +237,45 @@ df = adata.stock.market.list_market_current(
 3. **Data Delay**: Real-time data may have up to 15-minute delay
 4. **Request Rate**: Avoid high-frequency requests — use batch queries when possible
 5. **Error Handling**: Invalid stock codes return `v_pv_none_match="1"`
+
+## 5. Multi-Source Fallback Policy
+
+For weekly industry-chain research and market snapshots, do not depend on a single quote endpoint. Treat market data as timing, liquidity, valuation, and trading-elasticity context only; it does not prove beneficiary status or a supply-chain bottleneck.
+
+### 5.1 Source Order
+
+Use this default order unless a task has a stricter market-specific source:
+
+| Market | Primary | Fallback 1 | Fallback 2 | Last-resort fallback |
+|---|---|---|---|---|
+| China A-share | Tencent `http://qt.gtimg.cn/q=sh/sz<code>` | adata SDK if installed | Exchange/company official market page if needed | Write `N/A` with failure reason |
+| Hong Kong | Tencent `http://qt.gtimg.cn/q=hk<code>` | Stooq for cross-check | Yahoo Finance native chart | Write `N/A` with failure reason |
+| US | Tencent `http://qt.gtimg.cn/q=us<TICKER>` | Stooq for cross-check | Yahoo Finance native chart | Yahoo-compatible proxy only as last resort |
+| Taiwan listed | TWSE MIS `tse_<code>.tw` | Yahoo Finance native chart `<code>.TW` | Stooq if available | Yahoo-compatible proxy only as last resort |
+| Taiwan OTC | TWSE MIS `otc_<code>.tw` | Yahoo Finance native chart `<code>.TWO` | Stooq if available | Yahoo-compatible proxy only as last resort |
+
+### 5.2 Taiwan Quote Rules
+
+Tencent Finance may return HTTP 200 with `v_pv_none_match="1"` for Taiwan tickers such as `tw2383`, `tw6274`, or `tw6213`. Treat that as a business-level failure, not a valid quote.
+
+Use TWSE MIS for Taiwan tickers before falling back to Yahoo:
+
+```text
+https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_2383.tw|otc_6274.tw|tse_6213.tw&json=1&delay=0
+```
+
+Common AI PCB Taiwan formats:
+
+| Company | Correct quote route |
+|---|---|
+| 台光电 `2383.TW` | TWSE MIS `tse_2383.tw`; Yahoo `2383.TW` |
+| 台燿 `6274.TWO` | TWSE MIS `otc_6274.tw`; Yahoo `6274.TWO` |
+| 联茂 `6213.TW` | TWSE MIS `tse_6213.tw`; Yahoo `6213.TW` |
+
+### 5.3 Failure Handling
+
+- HTTP `404`, `402`, timeout, transport error, empty body, malformed JSON, stale quote, or provider-specific no-match markers are partial-data outcomes, not task failures.
+- Continue to the next provider in the fallback order.
+- Record the source used and timestamp in the report.
+- If every source fails, write `N/A` and include the missing source class, for example `N/A: Tencent no-match; TWSE timeout; Yahoo 404`.
+- Do not use memory-derived prices, market cap, PE/PB, turnover, volume, or daily change.

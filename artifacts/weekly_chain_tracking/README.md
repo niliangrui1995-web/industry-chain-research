@@ -73,6 +73,22 @@
 8. 只有在堵点节点明确后，才映射上市公司。
 9. 更新本期报告和 `state.md`。
 
+## 行情快照规则
+
+涉及最新价格、市值、PE/PB、换手、涨跌幅、成交量或交易弹性时，必须用本地市场数据或联网核对；缺失就写 `N/A`，不要用记忆补数。行情只作为交易弹性和拥挤度上下文，不证明产业受益或堵点成立。
+
+默认 fallback 顺序：
+
+| 市场 | 首选 | 备选 | 失败处理 |
+|---|---|---|---|
+| A 股 | 腾讯 `http://qt.gtimg.cn/q=sh/sz<code>` | adata SDK（如已安装） | 全部失败写 `N/A` 并说明原因 |
+| 港股 | 腾讯 `http://qt.gtimg.cn/q=hk<code>` | Stooq；Yahoo 原生 chart | 全部失败写 `N/A` 并说明原因 |
+| 美股 | 腾讯 `http://qt.gtimg.cn/q=us<TICKER>` | Stooq；Yahoo 原生 chart | Yahoo 兼容代理只作最后兜底 |
+| 台股上市 | TWSE MIS `tse_<code>.tw` | Yahoo 原生 chart `<code>.TW`；Stooq（如可用） | 全部失败写 `N/A` 并说明原因 |
+| 台股上柜 | TWSE MIS `otc_<code>.tw` | Yahoo 原生 chart `<code>.TWO`；Stooq（如可用） | 全部失败写 `N/A` 并说明原因 |
+
+接口失败判定不能只看 HTTP 状态码。HTTP `404`、超时、空响应、陈旧数据、解析失败，以及腾讯返回 `v_pv_none_match="1"`，都视为该源失败并继续 fallback。台股不要把腾讯 `tw<code>` 的 no-match 返回当成有效行情源。
+
 ## 输出文件
 
 每个任务目录至少保留：
