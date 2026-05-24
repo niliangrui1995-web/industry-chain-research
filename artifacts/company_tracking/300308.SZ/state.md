@@ -182,3 +182,22 @@ CNINFO 2026-05-10 至 2026-05-14 无新增公告，龙虎榜为空。新增 1 �
 - 新增硬事件：特定股东苏州益兴福质押 35.00 万股给中信证券、138.00 万股给国泰海通，并解除 70.00 万股质押，净质押增加约 103.00 万股；益兴福及一致行动人累计质押 1,158.40 万股，占其持股 12.12%、总股本 1.04%。
 - 交易事件：2026-05-22 未发现新增龙虎榜或大宗交易。
 - 状态变化：新增股东质押/解押观察，累计质押占总股本比例不高；不改变 800G/1.6T、硅光、客户需求、物料和毛利率主线，后续观察质押比例是否继续上升并与大宗交易或减持联动。
+
+## 2026-05-24 Batch 2 Worker Recheck
+
+- batch_no: 2
+- checked_at_beijing: 2026-05-24 20:04
+- browser_scope: chrome_separate_tab_grok_available
+- grok_status: searched/no_useful_new_signal
+- open_web_fallback_status: searched/observation_only_no_new_hard_signal
+- task_block: 中际旭创 300308.SZ；aliases=中际旭创/Innolight/800G/1.6T/optical module/silicon photonics；tracking_focus=800G/1.6T交付、硅光、客户需求、上游物料和毛利率
+- checklist: baseline_read=done; state_read=done; events_read=done; announcements_checked=done; announcement_window_checked=T_and_T_plus_1; lhb_checked=done; block_trade_checked=done; grok_checked=done; open_web_fallback=done; events_appended=0; state_updated=source_gap_only
+- announcements_checked: CNINFO `hisAnnouncement/query` 按公司名和证券代码检索 `2026-05-24~2026-05-25` 均返回 0 条；东方财富公告镜像按 `300308` 同窗口返回 0 条；公司官网投资者关系页最新公告仍停留在 2026-04-17 一季报、投资者活动页仍停留在历史调研记录，未见 2026-05-24 或 2026-05-25 新公告、IR、订单、产能、客户或毛利率披露。
+- source_gap: 深交所 `annList` 按公告日期 `2026-05-24~2026-05-25` 和 `300308/中际旭创` 参数返回 500，未能直接完成 SZSE 公告页核验；已用 CNINFO、东方财富公告镜像和公司官网投资者关系页交叉替代，下一轮继续抽查深交所恢复情况。
+- latest_trading_day: 腾讯行情快照时间戳为 `20260522161406`，本轮按 `2026-05-22` 作为最近 A 股交易日核对。
+- lhb_checked: 东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=300308`、`TRADE_DATE=2026-05-22` 返回空数据，未发现最近交易日新增龙虎榜。
+- block_trade_checked: 东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按 `SECURITY_CODE=300308`、`TRADE_DATE=2026-05-22` 均返回空数据，未发现最近交易日新增大宗交易；5 月内最近大宗交易仍为已入账的 `2026-05-21` 四笔平价机构换手。
+- grok_observation: 独立 Chrome/Grok 标签页完成单公司最近 24 小时发现层查询；Grok 结果判断最近 24 小时无高价值新线索，提到的 800G/1.6T 市占率、硅光占比、北美客户需求、上游 EML 等瓶颈和扩产/招聘均为既有财报、IR、媒体或社交复述，需官方复核后才可升级。
+- open_web_fallback_observation: 普通网页检索主要返回 2026Q1 点评、2026-05-15 IR 复述、既有公告镜像、研报/论坛/雪球类二级解读和官网旧新闻；未发现可升级为官方或交易硬事件的新 800G/1.6T、硅光、客户、物料、毛利率或异常交易信号。
+- material_changes: 无新增经营类、订单类、财务类、800G/1.6T、硅光、客户需求、上游物料或毛利率硬披露；无新增龙虎榜或大宗交易事件，`events.jsonl` 不追加。
+- miss_risk_notes: T+1 公告日期包含未来日期 `2026-05-25`，晚间披露可能继续刷新；深交所公告接口本轮 500，需下轮继续复核。Grok/X 和 open-web 均未作为确认事实写入事件账本。

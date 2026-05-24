@@ -3,10 +3,20 @@
 company: 胜宏科技  
 ticker: 300476.SZ  
 exchange: SZSE  
-last_updated: 2026-05-16
-browser_scope: fallback_no_browser
-grok_status: unavailable_chrome_plugin_not_exposed
+last_updated: 2026-05-24
+browser_scope: chrome_separate_tab_grok_cloudflare_blocked
+grok_status: failed_cloudflare_blocked
 not_investment_advice: true
+
+## 2026-05-24 batch_no=1 worker 复核
+
+- 独立任务块：`300476.SZ` 胜宏科技，run_time_beijing=2026-05-24 20:04；按 20:00 后规则检查公告日期 `2026-05-24` 和 `2026-05-25`，completion 字段应写 `announcement_window_checked=T_and_T_plus_1`。
+- 浏览器/Grok：Chrome 扩展可连接并单独打开 Grok 标签页，但 `https://grok.com/` 返回 Cloudflare `Sorry, you have been blocked`；未使用 Browser Use 或 Playwright 冒充登录态。记录 `browser_scope=chrome_separate_tab_grok_cloudflare_blocked`、`grok_status=failed_cloudflare_blocked`。
+- 公告硬门：CNINFO `hisAnnouncement/query` 按 `300476,9900024582`、`2026-05-24~2026-05-25` 返回 0 条；深交所 `annList` 按 `listed_notice_disc` 与 `fixed_disc`、`300476`、同窗口均返回 0 条；公司官网信息披露页未见 2026-05-24/25 新 A 股公告，官网首页最新可见新闻仍为 2026-05-15 投保宣传。
+- 最近交易日：腾讯行情快照时间戳为 `20260522161421`，本轮按 2026-05-22 作为最近 A 股交易日核对。
+- 龙虎榜/大宗交易：深交所 `1842_xxpl_after` 竞价交易公开信息按 `300476`、`2026-05-22` 返回 `recordcount=0`；深交所 `1932_dzjyzqjy_after` 权益类证券大宗交易按同日同代码返回 0；东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 与 `RPT_DATA_BLOCKTRADE` 同窗口均为空。
+- open-web fallback：仅作为 `observation_only`。最近公开网页主要返回旧有公司官网/年报资料、2026-05-21 产品市场化定价互动平台二级转述、2026-05-22 不涉及光刻胶业务互动平台二级转述，以及行情/F10页面；未发现可由官方公告或交易数据确认的新订单、客户、产能节点、毛利率或异常交易信号。
+- 本轮状态：无新增硬经营事件、无新增交易事件，`events.jsonl` 不追加；核心主线仍是 AI 服务器 PCB / 高阶 HDI / 高多层板订单兑现、海外客户与产能认证、毛利率能否覆盖扩产费用和高估值。
 
 ## 2026-05-20 batch_no=1 worker 复核
 

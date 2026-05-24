@@ -1,10 +1,10 @@
 # 603738.SH 泰晶科技 跟踪状态
 
 baseline_status: done  
-last_checked: 2026-05-23 Asia/Shanghai  
-browser_scope: fallback_no_browser  
-grok_status: unavailable_no_chrome_grok_tool_exposed  
-open_web_fallback_status: searched_observation_only  
+last_checked: 2026-05-24 Asia/Shanghai  
+browser_scope: chrome_separate_grok_tab  
+grok_status: completed_no_new_hard_signal_last_24h  
+open_web_fallback_status: searched_observation_only_no_new_hard_signal_controller_fallback  
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -19,6 +19,14 @@ not_investment_advice: true
 - 2026-05-20：新浪公告镜像披露《2026年5月19日投资者关系活动记录表》。公司称 312.5MHz 处于市场拓展与客户验证导入中；625MHz 是下一代对应单波 400G 的技术方案，典型相位抖动低至 15fs；光模块高频差分晶振处于市场推广期、收入占比较小；BAW 振荡器研发有序推进，预计 Q4 可小批量并提供样品。
 - 2026-04-30：2026Q1 营业收入 2.492 亿元，同比 +24.31%；归母净利润 2,304.45 万元，同比 +165.22%；扣非归母净利润 1,529.01 万元，同比大幅修复；经营活动现金流净额 6,284.87 万元，同比 +125.41%。
 - 2026-04-23：2025 年报披露收入 9.437 亿元，同比 +14.94%；归母净利润 5,222.44 万元，同比 -40.37%；主营业务毛利率 18.30%，同比下降 4.99 个百分点；公司称市场环境趋紧导致产品价格下行、股权激励费用增加压制利润。
+
+## 2026-05-24 日更
+
+- 公告窗口：北京时间 20:00 后复核公告日期 `2026-05-24` 和 `2026-05-25`，CNINFO 与上交所公告窗口未发现新增公司公告；公司网站未发现新的有日期公告或投资者关系记录。
+- 龙虎榜：二级交易数据未发现 `2026-05-22` 新增龙虎榜记录，最近可见上榜仍为 `2026-05-08`。
+- 大宗交易：总控补查东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA`，`2026-05-22` 返回空数据，未发现新增大宗交易。
+- Grok/open-web：Chrome/Grok 独立公司检索未发现过去 24 小时新增硬信号；总控 open-web fallback 只发现行情、官网和既有 312.5MHz/625MHz 叙事延续，不作为确认事实。
+- 状态判断：本轮没有新增 official_announcement、investor_relations、trading_event_lhb 或 trading_event_block_trade；核心基线不变，继续等待客户、订单、收入占比、产能、价格和毛利率量化。
 
 ## Source gaps
 

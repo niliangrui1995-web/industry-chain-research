@@ -1,9 +1,9 @@
 # 德福科技 301511.SZ 滚动状态
 
-更新日期：2026-05-20
-browser_scope: fallback_no_browser
-grok_status: unavailable_chrome_plugin_not_exposed
-open_web_fallback_status: searched_no_new_hard_signal
+更新日期：2026-05-24
+browser_scope: chrome_separate_tab_or_window
+grok_status: searched_no_new_hard_signal
+open_web_fallback_status: searched_observation_only_no_new_hard_signal
 用途：公司跟踪状态，不构成买卖建议。
 
 ## 当前跟踪结论
@@ -47,6 +47,7 @@ open_web_fallback_status: searched_no_new_hard_signal
 
 | 日期 | 来源类型 | 证据 | 当前解读 |
 |---|---|---|---|
+| 2026-05-24 | 日更核对 | 公告硬门覆盖 2026-05-24 至 2026-05-25：CNINFO `hisAnnouncement/query` 按 `301511 / 德福科技` 返回 0；东方财富公告列表最新仍为 2026-05-20 权益分派实施公告；SZSE 上市公司公告公开页/搜索未见新公告但 `annList` 接口直连 500；公司官网新闻最新为 2026-05-08，IR 入口未识别新增可归档材料；2026-05-22 龙虎榜和大宗交易均返回 0；Chrome/Grok 24h 发现层与 open-web fallback 均未发现 HVLP/RTF 客户认证、批量交付、收入占比或正式订单新硬证据。 | 本轮无新增材料事件，不追加事件账本；继续跟踪 2026-05-26 除息交易影响、2026-06-04 后减持实施，以及 HVLP4/5 从认证/小批到收入确认的证据。 |
 | 2026-05-20 | 日更核对 | 2026-05-20 至 2026-05-21 公告硬门仅返回已入账的 2026-05-20 权益分派实施公告；2026-05-20 龙虎榜和大宗交易均未发现新增；open web fallback 未发现 HVLP/RTF 新硬证据；Grok/X 不可用。 | 本轮 T/T+1 窗口无新增硬公告；权益分派已在上一轮入账，继续跟踪 2026-05-26 除息和 2026-06-04 后减持实施。 |
 | 2026-05-16 | 日更核对 | 2026-05-16 至 2026-05-17 公告硬门未发现新增公告；2026-05-15 龙虎榜和大宗交易均未发现新增；open web fallback 未发现 HVLP/RTF 新硬证据；Grok/X 不可用。 | 本轮 T/T+1 窗口无新增硬公告，继续跟踪减持实施和高端电子电路铜箔兑现。 |
 | 2026-05-13 | 官方公告 | 持股 5%以上股东拓阵基金及一致行动人瑞潇芃泰拟 2026-06-04 至 2026-09-03 减持不超过 18,909,660 股，占总股本 3%。 | 增加阶段性交易供给和情绪压力；不构成 HVLP/RTF 铜箔订单、客户导入或收入兑现证据。 |
@@ -79,6 +80,9 @@ open_web_fallback_status: searched_no_new_hard_signal
 - 2026 年头部 CCL 意向书最低采购数量和金额：N/A。
 - HVLP5 正式批量交付客户和收入确认：N/A。
 - 慧儒科技收购正式价格、交割和并表时间：N/A。
+- 2026-05-24 至 2026-05-25 新增官方公告 / IR：CNINFO 与东方财富公告列表未发现新增；SZSE `annList` 接口直连 500，仅能通过公开页/搜索交叉复核，未见新公告。
+- 2026-05-22 龙虎榜 / 大宗交易：东方财富数据中心均返回 0，未发现新增。
+- 2026-05-24 新增 HVLP / RTF 客户认证、批量交付、收入占比硬证据：Grok/Chrome 与 open-web fallback 均未发现。
 - 2026-05-20 至 2026-05-21 新增官方公告 / IR：仅发现已入账的 2026-05-20 权益分派实施公告；未发现 2026-05-21 新公告或新增 IR 记录。
 - 2026-05-20 龙虎榜 / 大宗交易：未发现新增。
 - 2026-05-20 新增 HVLP / RTF 客户认证、批量交付、收入占比硬证据：未发现。
@@ -155,3 +159,15 @@ open_web_fallback_status: searched_no_new_hard_signal
 - Grok/X：本轮未暴露 Chrome/Grok/@chrome 工具面，按用户指令记录为 `unavailable_chrome_plugin_not_exposed`；未使用 Browser Use 或 Playwright 冒充 Chrome/Grok。
 - open web fallback：普通公开网页搜索作为 observation_only，未发现新的 HVLP/RTF 客户认证、批量交付、正式订单、收入占比或毛利率量化披露；检索结果主要为旧研报/媒体叙事、行业铜箔观点和概念标签，未达到事件入账标准。
 - 本次状态变化：仅补齐 2026-05-20 T/T+1 来源缺口；未追加 `events.jsonl`，继续跟踪 2026-05-26 除息交易影响与 2026-06-04 后减持实施。
+
+## 2026-05-24 日更
+
+核查窗口：公告硬门覆盖 2026-05-24 与 2026-05-25；龙虎榜和大宗交易检查最近交易日 2026-05-22。北京时间 20:00 后运行，announcement_window_checked 为 `T_and_T_plus_1`。
+
+- 公告 / CNINFO / 交易所披露：CNINFO `hisAnnouncement/query` 按 `301511 / 德福科技` 检索 `2026-05-24~2026-05-25` 返回 0；东方财富公告列表最新仍为 2026-05-20 `关于2025年度权益分派实施公告`；SZSE 上市公司公告公开页和搜索未见 2026-05-24 或 2026-05-25 新公告，但 `annList` 接口直连持续 500，作为来源缺口记录。
+- 公司 IR：公司官网新闻页最新可见公司动态为 2026-05-08 `书香德福 悦读新境——德福科技读书月活动圆满举办`，未发现 2026-05-24 至 2026-05-25 新增可归档 IR、调研纪要或能量化 HVLP/RTF 收入占比的披露；IR 入口可访问但动态接口未提取到本轮新增材料。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 对 2026-05-22 返回空；本轮未发现最新交易日新龙虎榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 对 2026-05-22 返回空；本轮未发现最新交易日新大宗交易记录。
+- Grok/X：本轮通过 Chrome 独立 Grok 标签页完成最近 24 小时发现层检索，Grok 结论为无新硬信号；仅有媒体/社交对 AI PCB、HVLP 铜箔概念和行情波动的泛化提及，未出现新的官方订单、客户认证、批量交付或收入占比证据。
+- open web fallback：因 Grok 无有用硬信号，按规则补做普通联网搜索，状态为 `searched_observation_only_no_new_hard_signal`；结果主要为 2026-05-22 行情、泛板块龙虎榜文章、5月13日减持旧事项和旧 HVLP/RTF 披露引用，未达到事件入账标准。
+- 本次状态变化：仅更新 2026-05-24 T/T+1 来源缺口和 Chrome/Grok 可用口径；未追加 `events.jsonl`，继续跟踪 2026-05-26 除息交易影响、2026-06-04 后减持实施，以及 HVLP4/5 进入批量收入确认的官方证据。

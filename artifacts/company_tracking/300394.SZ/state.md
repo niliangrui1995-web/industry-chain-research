@@ -1,9 +1,9 @@
 # 300394.SZ 天孚通信 跟踪状态
 
 baseline_status: done  
-last_checked: 2026-05-20 Asia/Shanghai
-browser_scope: fallback_no_browser  
-grok_status: unavailable_chrome_plugin_not_exposed
+last_checked: 2026-05-24 Asia/Shanghai
+browser_scope: chrome_separate_tab_or_window  
+grok_status: available_no_material_signal
 open_web_fallback_status: searched_no_material_signal
 not_investment_advice: true
 
@@ -71,3 +71,11 @@ not_investment_advice: true
 - 新增硬事件：华泰联合证券因原保荐代表人沈树亮工作变动，委派朱辉接替其履行 2020 年定增项目持续督导职责；更换后持续督导保荐代表人为钱亚明、朱辉。
 - 交易事件：2026-05-22 未发现新增龙虎榜或大宗交易，最近大宗交易仍为 2026-05-20 小额平价记录。
 - 状态变化：合规类人员变更入账，不改变 CPO/1.6T 光引擎、FAU/ELS、泰国产能、客户集中或 H 股发行主线。
+
+## 2026-05-24 batch_no=2 例行复核
+
+- 公告窗口：北京时间 20:00 后检查公告日期 `2026-05-24` 和 `2026-05-25`，CNINFO/SZSE 未发现新增官方公告、深交所披露或公司 IR 硬事件；HKEX 仅见既有 H 股申请材料线索，未见本窗口新增进展。
+- 交易事件：最近 A 股交易日按 `2026-05-22` 处理；深交所竞价交易公开信息未检出天孚通信龙虎榜记录，深交所权益类证券大宗交易未检出 `2026-05-22` 新增记录，最近公开大宗交易仍为 `2026-05-20` 小额平价记录。
+- Grok/X：Chrome/Grok 单独标签页查询显示过去 24 小时无新增高价值公司级信号；返回内容主要为 CPO/1.6T/FAU/ELS、泰国产能、H 股申请和物料供应的旧信息重复或市场讨论，不写成确认事实。
+- open-web fallback：普通网页补充搜索未发现可写入事件账本的新增硬事件；观察到 `2026-05-25` 有约 301.10 万股限售解禁日历项，来源指向 2025 年 11 月询价转让锁定期安排，暂列交易供给观察，不作为新增公司基本面事件。
+- 状态变化：核心判断不变；继续跟踪 CPO 配套交付量化、1.6T 光引擎收入/毛利率、泰国产能爬坡、物料供应、H 股发行审批和小比例解禁后的交易供给影响。
