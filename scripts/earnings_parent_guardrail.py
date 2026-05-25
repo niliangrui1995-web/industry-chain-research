@@ -171,19 +171,11 @@ def _safe_url(value: str) -> str | None:
 
 
 def _model_policy_for_event(event: PlannedEvent) -> tuple[str, str]:
-    priority = str(event.priority or "").strip().lower()
-    if event.schedule_basis == "official_call_plus_3h" or priority == "strategic_giant":
-        return "gpt-5.5", "xhigh"
-    return "gpt-5.4", "high"
+    return "gpt-5.5", "xhigh"
 
 
 def _model_policy_for_child(child: ChildRecord) -> tuple[str, str]:
-    prompt = str(child.data.get("prompt", "") or "")
-    if child.schedule_basis == "official_call_plus_3h":
-        return "gpt-5.5", "xhigh"
-    if _prompt_field(prompt, "Source confidence") == "official_confirmed":
-        return "gpt-5.5", "xhigh"
-    return "gpt-5.4", "high"
+    return "gpt-5.5", "xhigh"
 
 
 def _dump_toml(data: dict[str, Any]) -> str:
