@@ -1,12 +1,12 @@
 # 源杰科技（688498.SH）滚动跟踪状态
 
-updated_at: 2026-05-20T20:02:00+08:00
+updated_at: 2026-05-25T20:54:21+08:00
 company: 源杰科技  
 ticker: 688498.SH  
 exchange: SSE STAR  
 coverage_type: daily_update_after_first_baseline  
-grok_status: unavailable_chrome_plugin_not_exposed
-open_web_fallback_status: searched_no_new_hard_signal_2026-05-20
+grok_status: searched_x_chrome_no_company_level_hard_signal_2026-05-25
+open_web_fallback_status: searched_observation_only_no_new_hard_signal_2026-05-25
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -161,3 +161,21 @@ Batch 2 结论：本轮无新增官方公告、无龙虎榜、无大宗交易、
 - IR 回补：全景路演/P5W 已出现 `2026年陕西辖区上市公司投资者集体接待日暨2025年度业绩说明会` 正式问答，补齐上一轮 source gap。问答确认 AI 板块产品收入占比提升对毛利率有正向影响、公司继续投入数据中心领域、美国子公司尚处建设中、销售模式以直销为主、副总涉案事项相关工作已交接且业务正常开展。
 - 龙虎榜/大宗交易：2026-05-21 未发现新增龙虎榜或大宗交易记录。
 - 本轮状态：source gap 从“等待业绩说明会问答”改为“问答已出但未披露 200G EML 量产/订单”。主线仍是 CW 光源收入已兑现、200G PAM4 EML 待从客户验证走向批量收入证据；继续跟踪副总涉案事项是否影响销售条线、客户沟通和回款。
+
+## 2026-05-25 Batch 2 日更
+
+独立任务块：
+- company: 源杰科技；ticker: 688498.SH；aliases: 源杰科技、Yuanjie Semiconductor、EML、DFB、laser chip、InP；tracking_focus: 高速激光芯片、200G EML、AI客户验证、量产和收入占比。
+- browser_scope: chrome_separate_tab_or_window；已通过 Chrome 插件新开独立 X 搜索标签页；未使用 Browser Use 或 Playwright 顶替登录态 Chrome。
+- grok_status: searched_x_chrome_no_company_level_hard_signal；open_web_fallback_status: searched_observation_only_no_new_hard_signal。
+- checklist: baseline_read=done；state_read=done；events_read=done；announcements_checked=done；cninfo_checked=done；sse_star_checked=done；company_ir_checked=done；lhb_checked=done；block_trade_checked=done；state_updated=source_gap_and_observation_note；events_appended=0。
+
+核对窗口：公告日期 `2026-05-25` 和 `2026-05-26`，最近交易日 `2026-05-25`。
+- 公告/交易所/CNINFO：上交所 `queryCompanyBulletin.do` 按 `productId=688498`、`beginDate=2026-05-25`、`endDate=2026-05-26` 返回 `total=0`；CNINFO 按股票代码和公司名分别查询同窗口均返回 `totalAnnouncement=0`；东方财富公告镜像同窗口返回 `total_hits=0`。本轮记录 `announcement_window_checked=T_and_T_plus_1`。
+- 公司 IR：公司官网投资者关系页最新可见仍为 2026-05-06 `2026年一季度财报` 和 2026-03-27 `2025年年度财报`，未发现 2026-05-25 新增投资者关系活动记录或经营类公告。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=688498`、`TRADE_DATE=2026-05-25` 返回空数据，未发现当日龙虎榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按 `SECURITY_CODE=688498`、`TRADE_DATE=2026-05-25` 返回空数据，未发现当日大宗交易记录。
+- Chrome/X 观察层：独立 X 搜索 `源杰科技 OR 688498` 可见近 24 小时市场讨论，内容主要是 Sivers/ELS/EML 产业链映射、A 股源杰科技对标和光芯片上游卡位叙事；未看到可作为确认事实的公司订单、客户验证、200G EML 批量收入、CW 分功率段收入或产能量化披露。
+- open-web fallback：普通联网搜索 `源杰科技/688498/EML/DFB/laser chip/InP/200G EML/CW光源` 结果主要为旧年报、旧一季报解读、历史龙虎榜/行情页和第三方观点，未发现新增可确认经营硬事件。
+
+Batch 2 结论：本轮无新增官方公告、无龙虎榜、无大宗交易、无可确认经营硬事件；不追加 `events.jsonl`。核心主线维持为数据中心 CW 光源收入已兑现、200G PAM4 EML 仍待从客户验证走向批量收入证据。继续跟踪 200G EML 订单/客户/收入口径、CW 分功率段收入、客户集中度、销售条线交接后的客户沟通和 H 股申请进度。

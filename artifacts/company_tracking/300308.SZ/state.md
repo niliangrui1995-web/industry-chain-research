@@ -4,7 +4,7 @@ metadata:
 - company: 中际旭创股份有限公司
 - ticker: 300308.SZ
 - exchange: SZSE
-- updated_at: 2026-05-20
+- updated_at: 2026-05-25
 - state_type: company_tracking
 - grok_status: unavailable_chrome_plugin_not_exposed
 - open_web_fallback_status: searched/observation_only_no_new_hard_signal
@@ -201,3 +201,20 @@ CNINFO 2026-05-10 至 2026-05-14 无新增公告，龙虎榜为空。新增 1 �
 - open_web_fallback_observation: 普通网页检索主要返回 2026Q1 点评、2026-05-15 IR 复述、既有公告镜像、研报/论坛/雪球类二级解读和官网旧新闻；未发现可升级为官方或交易硬事件的新 800G/1.6T、硅光、客户、物料、毛利率或异常交易信号。
 - material_changes: 无新增经营类、订单类、财务类、800G/1.6T、硅光、客户需求、上游物料或毛利率硬披露；无新增龙虎榜或大宗交易事件，`events.jsonl` 不追加。
 - miss_risk_notes: T+1 公告日期包含未来日期 `2026-05-25`，晚间披露可能继续刷新；深交所公告接口本轮 500，需下轮继续复核。Grok/X 和 open-web 均未作为确认事实写入事件账本。
+
+## 2026-05-25 Batch 2 Worker Recheck
+
+- batch_no: 2
+- checked_at_beijing: 2026-05-25 20:47
+- browser_scope: fallback_no_browser
+- grok_status: unavailable_chrome_plugin_tool_not_exposed
+- open_web_fallback_status: searched/observation_only_no_new_operating_signal
+- task_block: 中际旭创 300308.SZ；aliases=中际旭创/Innolight/800G/1.6T/optical module/silicon photonics；tracking_focus=800G/1.6T交付、硅光、客户需求、上游物料和毛利率
+- checklist: baseline_read=done; state_read=done; events_read=done; announcements_checked=done; announcement_window_checked=T_and_T_plus_1; lhb_checked=done; block_trade_checked=done; grok_checked=unavailable; open_web_fallback=done; events_appended=1; state_updated=done
+- announcements_checked: CNINFO `hisAnnouncement/query` 按证券代码和公司名检索 `2026-05-25~2026-05-26` 均返回 0 条；东方财富公告镜像按 `300308.SZ` 同窗口返回 0 条；公司官网投资者关系页最新公告仍显示 2026-04-17 一季报，财务报告页最新为 2026-04-20 一季报/年报入口，未见 2026-05-25 或 2026-05-26 新公告、IR、订单、产能、客户或毛利率披露。
+- source_gap: 深交所 `annList` 按 `listed_notice_disc`、`listedNotice_disc`、`fixed_disc` 查询 `2026-05-25~2026-05-26` 均返回 50x 维护页；深交所龙虎榜/大宗交易直连接口也返回 50x，未能直接完成 SZSE 页面核验。已用 CNINFO、东方财富公告镜像、公司官网投资者关系页和东方财富交易数据接口交叉替代，下一轮继续抽查深交所恢复情况。
+- lhb_checked: 东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=300308`、`TRADE_DATE=2026-05-25` 返回 `code=9201/返回数据为空`，未发现当日新增龙虎榜。
+- block_trade_checked: 东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 显示 2026-05-25 有 1 笔大宗交易，成交价 1093.00 元，成交 0.93 万股，成交金额 1016.49 万元，折溢价率 0%；买方为国信证券股份有限公司深圳后海分公司，卖方为机构专用；已追加 `events.jsonl`。
+- open_web_fallback_observation: 普通网页检索主要返回 2026Q1 点评、2026-05-15 IR 复述、既有公告镜像、行情/资金流和论坛/研报类二级解读；未发现可升级为官方经营事件的新 800G/1.6T、硅光、客户、物料或毛利率量化信号。
+- material_changes: 新增项为交易层小额平价大宗交易；不构成经营类、订单类、财务类、800G/1.6T、硅光、客户需求、上游物料或毛利率的新硬披露，核心跟踪假设维持不变。
+- miss_risk_notes: 当前工具面未暴露可调用 Chrome/Grok 插件工具，未执行登录态 Grok/X，也未使用 Browser Use 或 Playwright 替代；open-web fallback 仅作观察池。T+1 公告日期 `2026-05-26` 仍可能在更晚时间继续刷新；深交所接口 50x 需下轮复核。

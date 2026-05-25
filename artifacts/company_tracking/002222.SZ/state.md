@@ -1,6 +1,6 @@
 # 福晶科技（002222.SZ）滚动状态
 
-> 更新日期：2026-05-20
+> 更新日期：2026-05-25
 > 档案状态：baseline_created  
 > grok_status: unavailable_chrome_tool_not_exposed
 
@@ -180,3 +180,16 @@
 - open_web_fallback_status：`searched_observation_only_no_new_hard_signal`。普通公开网页主要回指 `2026-05-22` 已记录大宗交易、既有行情和社交平台法拉第旋光片/光隔离器叙事；未找到新增官方订单、客户验证、WSS 量产、扩产、法拉第旋光片产量/价格或收入拆分硬披露。
 - state_change：无新增基本面硬事件；状态维持“高交易热度、高预期，基本面等待订单、客户、收入拆分、毛利率和回款验证”。
 - miss_risk_notes：深交所 annList 本轮 50x，已由 CNINFO、东方财富公告页、公司官网 Investor/News、Grok/X 与 open-web 检索交叉补位；open-web 社交叙事未作为确认事实写入 events。
+
+## 2026-05-25 worker batch 1 复核
+
+- worker_scope：仅复核 `002222.SZ` 福晶科技；未改动 watchlist、日报、run_status、Excel、baseline 或 git。
+- browser_scope：`chrome_separate_tab_or_window`；通过 Chrome/X Grok 单独打开本公司查询范围，查询过去 24 小时 `福晶科技 / 002222 / CASTECH / LBO / BBO crystal / 非线性光学晶体 / 激光 / 光通信 / 订单 / 客户 / 扩产` 线索，`grok_status=searched_no_new_hard_signal`。
+- announcement_window_checked：`T_and_T_plus_1`，覆盖公告日期 `2026-05-25` 与 `2026-05-26`。
+- 官方公告/IR：CNINFO `hisAnnouncement/query` 按 `stock=002222`、`2026-05-25~2026-05-26` 返回 0 条；东方财富公告镜像按 `0.002222`、同窗口返回空；深交所 `annList` 的 `listed_notice_disc` 与 `fixed_disc` 本轮均返回 HTTP 500；公司官网 Investor 页可访问但未见同窗口新增公告、订单、扩产或正式 IR 信息，新闻页本机直连返回 403。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `002222`、`2026-05-25` 返回空数据；扩展复核 `2026-05-22~2026-05-25` 亦无新增龙虎榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按 `002222`、`2026-05-25` 返回空数据；扩展复核 `2026-05-22~2026-05-25` 仅返回已入账的 `2026-05-22` 平价大宗交易，本轮不重复追加 events。
+- Grok/X 观察：Grok 认为过去 24 小时无新增官方公告、订单披露、客户签约或扩产硬信号；可见内容主要是股价/板块交易热度、TFLN/光通信/法拉第旋光片概念讨论和旧资料回顾，不构成确认事实。
+- open_web_fallback_status：`searched_observation_only_no_new_hard_signal`。普通公开网页检索发现新浪、雪球、东方财富财富号等继续传播法拉第旋光片、TFLN、LBO/BBO 和光通信上游概念叙事，其中部分声称产能、客户或认证细节，但未给出公司公告、CNINFO、深交所、公司 IR 或可核验订单文件支撑，按观察层处理，不写入 events。
+- state_change：无新增基本面硬事件；主判断维持“交易热度和概念映射强，基本面仍需 WSS/ROADM、法拉第旋光片、复杂光胶组件、客户订单、收入拆分、毛利率和回款验证”。
+- miss_risk_notes：深交所 annList HTTP 500、公司新闻页 403；已用 CNINFO、东方财富公告镜像、公司 Investor 页、Chrome/Grok 与 open-web 检索交叉补位。Grok/X 与 open-web 只作为观察池，未作为官方确认来源。

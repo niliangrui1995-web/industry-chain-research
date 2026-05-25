@@ -1,10 +1,10 @@
 # 603738.SH 泰晶科技 跟踪状态
 
-baseline_status: done  
-last_checked: 2026-05-24 Asia/Shanghai  
-browser_scope: chrome_separate_grok_tab  
-grok_status: completed_no_new_hard_signal_last_24h  
-open_web_fallback_status: searched_observation_only_no_new_hard_signal_controller_fallback  
+baseline_status: done
+last_checked: 2026-05-25 Asia/Shanghai
+browser_scope: chrome_separate_grok_x_tab
+grok_status: grok_com_blocked_cloudflare; chrome_x_search_no_company_result
+open_web_fallback_status: searched_observation_only_found_secondary_block_trade_no_new_business_signal
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -28,6 +28,14 @@ not_investment_advice: true
 - Grok/open-web：Chrome/Grok 独立公司检索未发现过去 24 小时新增硬信号；总控 open-web fallback 只发现行情、官网和既有 312.5MHz/625MHz 叙事延续，不作为确认事实。
 - 状态判断：本轮没有新增 official_announcement、investor_relations、trading_event_lhb 或 trading_event_block_trade；核心基线不变，继续等待客户、订单、收入占比、产能、价格和毛利率量化。
 
+## 2026-05-25 日更
+
+- 公告窗口：北京时间 20:00 后执行，覆盖 `2026-05-25` 和 `2026-05-26`；上交所公告接口未返回新增公司公告。CNINFO 定向查询窗口未见新增 603738 记录，但因后续校验被中断，保留 `source_gap`，不把 CNINFO 完整性写成最终确认。
+- 龙虎榜：东方财富龙虎榜明细接口最近记录仍为 `2026-05-08`，未发现 `2026-05-25` 新增龙虎榜。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 均确认 `2026-05-25` 新增 1 笔大宗交易，成交价 48.20 元，成交量 202,500 股，成交金额 976.05 万元，较收盘价 49.19 元折价约 2.01%；买方为广发证券广州中山三路中华广场营业部，卖方为西南证券浏阳环府路营业部。
+- Grok/X：Chrome 插件可连接；Grok.com 打开后触发 Cloudflare blocked 页面；X 独立标签以 `"泰晶科技" OR "603738" since:2026-05-24 until:2026-05-26` 检索未返回公司相关结果。该层未形成新增硬信号。
+- 状态判断：新增交易结构事件，金额约 976 万元、占流通股比例约 0.052%，偏小；不改变基本面主线，但需要观察是否连续出现折价大宗交易、减持压力或机构承接。
+
 ## Source gaps
 
 - 312.5MHz/625MHz 缺实际出货量、客户、订单、收入占比、产能和毛利率量化。
@@ -35,6 +43,7 @@ not_investment_advice: true
 - 6 亿元扩产仅有问答和备案/传闻层信息，缺正式项目公告与订单匹配证据。
 - BAW 振荡器为 Q4 小批量样品预期，尚未验证客户和商业化节奏。
 - 日本高端晶振管制相关信息未在本轮得到官方法律/监管原文确认。
+- CNINFO `2026-05-25`/`2026-05-26` 完整性校验被本轮 bounded closeout 中断，后续 controller 可复查。
 
 ## 后续跟踪问题
 

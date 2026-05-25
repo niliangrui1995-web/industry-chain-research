@@ -3,10 +3,20 @@
 company: 胜宏科技  
 ticker: 300476.SZ  
 exchange: SZSE  
-last_updated: 2026-05-24
-browser_scope: chrome_separate_tab_grok_cloudflare_blocked
-grok_status: failed_cloudflare_blocked
+last_updated: 2026-05-25
+browser_scope: chrome_separate_tab_or_window
+grok_status: x_chrome_searched_observation_only_no_new_hard_signal
 not_investment_advice: true
+
+## 2026-05-25 batch_no=1 worker 复核
+
+- 独立任务块：`300476.SZ` 胜宏科技，run_time_beijing=2026-05-25 20:00 后；按 20:00 后规则检查公告日期 `2026-05-25` 和 `2026-05-26`，completion 字段应写 `announcement_window_checked=T_and_T_plus_1`。
+- 浏览器/Grok：Chrome 扩展可连接，已为本公司单独打开 X/Grok 标签页 `https://x.com/i/grok?conversation=2058891761733488828` 查询 `胜宏科技 / 300476.SZ / Victory Giant Technology / AI PCB / HDI`。Grok 观察结论为过去 24 小时无官方新公告、无新龙虎榜/大宗交易、无可信媒体确认的新订单、海外客户、产能或毛利率硬信号；主要是股价成交活跃和 AI PCB 板块情绪，按 `observation_only` 处理，不写入事件账本。
+- 公告硬门：CNINFO `hisAnnouncement/query` 按 `300476,9900024582`、证券简称全文检索、`2026-05-25~2026-05-26` 均返回 0 条；公司官网业绩报告页最新仍为 2026-04-29 一季报，官网首页最新可见新闻仍为 2026-05-15 投保宣传；公司官网“公告及通函”页本轮未解析到 2026-05-25/26 新公告。深交所 `annList` 按 `listed_notice_disc`、`listedNotice_disc`、`fixed_disc` 同窗口返回 50x 维护页，作为来源缺口记录。
+- 最近交易日：腾讯行情快照时间戳为 `20260525161451`，本轮按 2026-05-25 作为最近 A 股交易日核对；收盘 383.50 元，涨 2.13%，成交额约 275.43 亿元，换手率 8.34%，高低点 391.01/372.18。该高成交仅作交易热度观察，不构成经营硬事件。
+- 龙虎榜/大宗交易：深交所 `1842_xxpl_after` 竞价交易公开信息与 `1932_dzjyzqjy_after` 权益类证券大宗交易按 `300476`、`2026-05-25` 直连均返回 50x 维护页；东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 与 `RPT_DATA_BLOCKTRADE` 按同日同代码返回 `code=9201/返回数据为空`；公开搜索仅见历史大宗交易最新仍为 2026-05-11 或更早，未发现 2026-05-25 新龙虎榜或大宗交易记录。
+- open-web cross-check：本轮 open-web 仅用于公告/交易缺口交叉和 Grok 观察校验，不作为 Grok/X 替代层；公开网页主要返回 2026-05-15 IR、既有研报/F10、股吧或行情叙事，未发现可由官方披露或交易数据确认的新订单、客户、产能、毛利率或异常交易信号。
+- 本轮状态：无新增硬经营事件、无新增交易事件，`events.jsonl` 不追加；核心主线仍是 AI 服务器 PCB / 高阶 HDI / 高多层板订单兑现、海外客户与产能认证、毛利率能否覆盖扩产费用和高估值。下一轮需在深交所接口恢复后抽查 2026-05-25/26 公告与交易事件窗口。
 
 ## 2026-05-24 batch_no=1 worker 复核
 

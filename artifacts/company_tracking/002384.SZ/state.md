@@ -157,3 +157,12 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - Grok/X 观察：已通过已登录 Chrome 的独立 Grok 会话按公司关键词做最近 24 小时发现层扫描。Grok 结论为“无高价值新增线索”；其引用的财富号/媒体内容主要延续 H 股递表、边缘 AI PCB、mSAP、GB300、224Gbps 等叙事，未给出公司公告、客户官方、交易所文件或可核验订单资料。
 - open-web 观察：普通联网搜索同样主要返回 H 股重新递表后的媒体解读、招股书摘要和财富号/海外媒体延伸报道；未发现 2026-05-24 至 2026-05-25 新的官方公告、IR 正文、客户/订单硬证据或交易事件。
 - 状态变化：无新增 material event，不追加 `events.jsonl`。本轮仅强化来源缺口：市场叙事继续围绕 AI PCB、mSAP、GB300 和边缘 AI PCB 份额扩散，但客户、订单、收入、毛利率、良率、量产爬坡和具体产能量化仍缺官方确认。
+
+## 2026-05-25 晚间 T/T+1 复扫
+
+- 独立任务块：`ticker=002384.SZ`，`name=东山精密`，`batch_no=2`，`browser_scope=fallback_no_browser`，`grok_status=unavailable_chrome_plugin_tool_not_exposed`，`open_web_fallback_status=searched_observation_only_no_new_material_event`。本轮未使用 Browser Use、Playwright、Grok、X 或已登录 Chrome 结果。
+- 公告窗口：北京时间 20:00 后复核公告日期 `2026-05-25` 和 `2026-05-26`。CNINFO `hisAnnouncement/query` 按 `stock=002384,9900011647` 与公司名检索均返回 0 条；东方财富公告镜像同窗口返回 0 条；深交所 `annList` 本轮返回维护/50x 页面；公司官网投资者入口公开检索未见同窗口新增正式公告。`announcement_window_checked=T_and_T_plus_1`。
+- 公司 IR/互动：证券时报行情页同步的互动问答显示，2026-05-25 公司对 H100/H200、GB200/GB300 高多层 PCB/背板独家供应等传闻回复“基于商业保密原则，具体信息不便披露”；对索尔思大陆子公司 100G EML/CW 芯片能力、1.6T LPO 是否完全无需 oDSP 等问题回复“详情请参考公司披露的定期报告及相关公告”。这属于新增问答线索，但未确认客户、订单、收入、毛利率、良率、产能或技术路线量化，不追加 `events.jsonl`。
+- 龙虎榜/大宗交易：腾讯行情确认最近交易日为 `2026-05-25`，收盘价 `226.24` 元、涨跌幅 `+2.58%`。东方财富龙虎榜 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `002384`、`2026-05-25` 返回空；大宗交易 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 同日查询均返回空，未发现本轮新增龙虎榜或大宗交易。
+- open-web 观察：普通联网搜索主要返回已披露的英文定期报告、H 股递表、5 月 19 日互动易、5 月 7 日旧龙虎榜和二级研究/媒体解读；未发现 2026-05-25 至 2026-05-26 新的官方公告、交易硬事件或可升级为确认事实的客户/订单证据。
+- 状态变化：无新增 material event；本轮仅更新 source gap。下一轮继续跟踪公司是否在正式公告、投资者关系记录或定期报告中补充 AI PCB/GB200/GB300 客户关系、索尔思 EML/CW 芯片量产范围、1.6T LPO 送样/量产、单独收入、毛利率、良率和产能爬坡。

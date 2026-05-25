@@ -149,3 +149,11 @@ grok_status: unavailable_chrome_tool_not_exposed
 - Grok/X：Chrome 插件可连接并已为本公司单独打开 Grok 标签页，但 grok.com 触发 Cloudflare 拦截，未取得可用 Grok 结果；未用 Browser Use 或 Playwright 替代登录态 Grok。
 - open-web fallback：已按公司名称、ticker、YOFC、optical fiber、datacenter fiber 等词做开放网页检索，仅发现行情页、二级研究/行业讨论及已记录的业绩说明会预告/互动要点延续；未发现新的官方披露、交易事件或可升级为正式事实的观察。
 - 状态判断：本轮无新增硬事件写入 `events.jsonl`，核心跟踪假设不变；source gap 更新为 Grok 页面可连接到 Chrome 但被 Cloudflare 拦截，后续仍需在可用登录态 Grok/X 环境补查海外实时讨论与社交热度。
+
+## 2026-05-25 worker batch_no=1 复核
+
+- 公告窗口：北京时间 20:39 后检查公告日期 `2026-05-25` 和 `2026-05-26`，CNINFO `hisAnnouncement/query` 按 `601869,gssh0601869` 及 `长飞光纤` 查询均返回 0；上交所 `queryCompanyBulletinNew.do` 按 `601869` 同窗口返回 0。HKEX `06869.HK` 标题检索最新可见记录仍在本窗口之前，未见 2026-05-25/26 新 H 股公告。
+- 交易事件：腾讯行情确认最近 A 股交易日为 `2026-05-25`，收盘价 386.03 元、涨跌幅 -0.68%。东方财富龙虎榜 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `601869`、`2026-05-25` 查询返回空；大宗交易 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 同日查询均返回空，未发现本轮新增龙虎榜或大宗交易。
+- Grok/X：本会话未暴露可调用的 Chrome/Grok 工具命名空间，无法打开独立 Grok/X 标签页；未使用 Browser Use 或 Playwright 替代登录态 Chrome。记录 `grok_status=unavailable_no_callable_chrome_tool_exposed`、`browser_scope=not_available`。
+- open-web fallback：已按 `长飞光纤`、`601869`、`YOFC`、`optical fiber`、`datacenter fiber`、`龙虎榜`、`大宗交易` 等词做开放网页检索；仅发现官网/行情页、已记录 IR 信息延续、行业光纤价格/数据中心需求讨论及二级研究观点，未发现新的官方披露、交易硬事件或可升级为确认事实的观察。
+- 状态判断：本轮无新增硬事件写入 `events.jsonl`，核心跟踪假设不变；主要 source gap 为当前 worker 无法使用登录态 Chrome/Grok，需要后续在可用 Chrome/Grok 环境补查海外实时讨论、X 线索和数据中心光纤需求的社交热度。

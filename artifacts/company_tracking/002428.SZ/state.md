@@ -176,3 +176,11 @@ CNINFO 2026-05-14 未见新公告，最新硬公告仍为 2026-05-13 股票交�
 - Grok/X：本轮通过 Chrome 进入 X/Grok 独立标签页完成 002428 单公司查询；`grok.com` 入口被 Cloudflare 拦截，但 `x.com/i/grok` 可用。Grok 返回最近 24 小时未见云南锗业官方公告、公司 IR、交易所信息、可信媒体或 X 上的新实质线索。
 - open_web_fallback：因 Grok 无新增有效线索，补做普通联网检索作为 observation-only；结果主要为旧公告、行情页、旧媒体/研报摘要和弱社交材料，未发现高于官方公告或交易数据等级的新客户、订单、良率、6 英寸 InP 量产、出口许可或产能进展证据。
 - 本轮状态：未追加事件账本，基本面、业绩弹性和交易弹性判断不变；继续等待 InP/GaAs 客户认证、订单、良率量化、6 英寸量产、出口许可和利润兑现的官方增量。
+
+## 2026-05-25 晚间 T/T+1 复扫
+
+- 公告窗口：北京时间 20:00 后核查公告日期 `2026-05-25` 和 `2026-05-26`，CNINFO `hisAnnouncement/query` 按证券代码和证券简称检索均返回 0 条；公司官网公告页最新仍为 2026-05-16 股东会决议公告/法律意见书，投资者关系活动页最新仍为 2026-05-13 业绩说明会记录，未发现 T/T+1 新公告或新 IR 记录；深交所 `annList` 按 `002428` 同窗口返回 HTTP 500，继续作为来源缺口处理。
+- 龙虎榜/大宗交易：最近 A 股交易日按 `2026-05-25` 处理；东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW`、`RPT_DATA_BLOCKTRADE` 和 `RPT_BLOCKTRADE_STA` 按 `002428`、`2026-05-25` 查询均返回空，未发现当日新增龙虎榜或大宗交易记录。
+- Grok/X：本轮通过 Chrome 独立标签页尝试单公司 Grok/X 查询；`x.com/i/grok` 返回 “Something went wrong... Some privacy related extensions may cause issues on x.com”，`grok.com` 返回 Cloudflare security verification，因此未取得可用 Grok 结果。
+- open_web_fallback：按 `云南锗业/002428/Yunnan Germanium/germanium/InP/龙虎榜/大宗交易/公告` 做普通联网 observation-only 检索，结果主要为 2026-05-12 龙虎榜、2026-05-13 异常波动公告、2026-05-16 股东会公告和行情页，未发现高于官方公告或交易数据等级的新客户、订单、良率、6 英寸 InP 量产、出口许可或产能进展证据。
+- 本轮状态：未追加事件账本，基本面、业绩弹性和交易弹性判断不变；继续等待 InP/GaAs 客户认证、订单、良率量化、6 英寸量产、出口许可和利润兑现的官方增量。
