@@ -1,18 +1,18 @@
 {
-  "generated_at_beijing": "2026-05-25 22:36",
+  "generated_at_beijing": "2026-05-26 22:38",
   "status": "ok",
   "mode": "apply_mechanical",
   "window": {
-    "now_beijing": "2026-05-25 22:36",
-    "window_end_beijing": "2026-05-28 22:36"
+    "now_beijing": "2026-05-26 22:38",
+    "window_end_beijing": "2026-05-29 22:38"
   },
   "calendar_read": {
-    "today_arg": "2026-05-24",
+    "today_arg": "2026-05-25",
     "lookahead_days": 5,
     "allow_network": false,
-    "event_count": 5,
+    "event_count": 4,
     "future_candidate_count": 4,
-    "past_event_count": 1
+    "past_event_count": 0
   },
   "action_counts": {
     "create": 0,
@@ -21,24 +21,7 @@
     "validate_pending": 4,
     "repair_rrule": 0
   },
-  "review_items": [
-    {
-      "ticker": "SOI.PA",
-      "company": "Soitec",
-      "report_date": "2026-05-27",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
-      "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "IR financial calendar",
-        "IR-linked webcast platform such as Airtime",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    }
-  ],
+  "review_items": [],
   "soft_probe_candidates": [],
   "soft_warnings": {
     "legacy_name": [],
@@ -155,23 +138,23 @@
       "child_id": "ec-soi-pa-20260527-f07926",
       "name": "财报电话会深挖 SOI.PA Soitec 2026-05-27",
       "status": "ACTIVE",
-      "task_key": "SOI.PA|2026-05-27|",
+      "task_key": "SOI.PA|2026-05-27|FY2026",
       "ticker": "SOI.PA",
       "company": "Soitec",
       "report_date": "2026-05-27",
-      "fiscal_period": "",
-      "planned_child_start_beijing": "2026-05-28 02:30",
-      "schedule_basis": "default_proxy_not_call_time",
-      "rrule": "DTSTART:20260528T023000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=2;BYMINUTE=30;COUNT=1",
+      "fiscal_period": "FY2026",
+      "planned_child_start_beijing": "2026-05-28 23:00",
+      "schedule_basis": "official_call_plus_3h",
+      "rrule": "DTSTART:20260528T230000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=23;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
       "model": "gpt-5.5",
       "reasoning_effort": "xhigh",
       "has_memory": false,
-      "calendar_source": "Yahoo Finance",
-      "event_status": "estimated_unverified",
-      "source_confidence": "non_official_estimate",
-      "official_source_url": "N/A",
-      "prompt_sha1": "1d5429a0b42f9119c359d7879f17661086c0d997"
+      "calendar_source": "confirmed",
+      "event_status": "confirmed",
+      "source_confidence": "official_confirmed",
+      "official_source_url": "https://www.soitec.com/home/investors/full-year-results-of-fiscal-year-2025---2026",
+      "prompt_sha1": "56f4db19450ffbc7478b65069dc7d0fc55be9b6b"
     },
     {
       "child_id": "fn-fabrinet-2026-05-04",
