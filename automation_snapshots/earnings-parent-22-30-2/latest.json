@@ -1,44 +1,27 @@
 {
-  "generated_at_beijing": "2026-05-27 22:36",
+  "generated_at_beijing": "2026-05-28 22:33",
   "status": "ok",
   "mode": "apply_mechanical",
   "window": {
-    "now_beijing": "2026-05-27 22:36",
-    "window_end_beijing": "2026-05-30 22:36"
+    "now_beijing": "2026-05-28 22:33",
+    "window_end_beijing": "2026-05-31 22:33"
   },
   "calendar_read": {
-    "today_arg": "2026-05-26",
+    "today_arg": "2026-05-27",
     "lookahead_days": 5,
     "allow_network": false,
     "event_count": 5,
-    "future_candidate_count": 4,
-    "past_event_count": 1
+    "future_candidate_count": 1,
+    "past_event_count": 4
   },
   "action_counts": {
     "create": 0,
     "update": 0,
     "pause": 0,
-    "validate_pending": 4,
+    "validate_pending": 1,
     "repair_rrule": 0
   },
-  "review_items": [
-    {
-      "ticker": "6594.T",
-      "company": "Nidec",
-      "report_date": "2026-05-28",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
-      "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "TDnet disclosure",
-        "JPX listing/company calendar",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    }
-  ],
+  "review_items": [],
   "soft_probe_candidates": [],
   "soft_warnings": {
     "legacy_name": [],
@@ -88,7 +71,7 @@
     {
       "child_id": "ec-6594-t-20260528-092541",
       "name": "财报电话会深挖 6594.T Nidec 2026-05-28",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "6594.T|2026-05-28|",
       "ticker": "6594.T",
       "company": "Nidec",
@@ -100,7 +83,7 @@
       "rrule_ok": true,
       "model": "gpt-5.5",
       "reasoning_effort": "xhigh",
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
@@ -110,7 +93,7 @@
     {
       "child_id": "ec-mrvl-20260527-bd2195",
       "name": "财报电话会深挖 MRVL Marvell 2026-05-27",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "MRVL|2026-05-27|Apr/2026",
       "ticker": "MRVL",
       "company": "Marvell",
@@ -122,12 +105,12 @@
       "rrule_ok": true,
       "model": "gpt-5.5",
       "reasoning_effort": "xhigh",
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",
       "official_source_url": "https://investor.marvell.com/news-events/ir-calendar",
-      "prompt_sha1": "a488e5cda351e0efe4f6e4085d8a5850a35227c5"
+      "prompt_sha1": "219da8e04bd3403c97f40733a97e628f9db80fb1"
     },
     {
       "child_id": "ec-smtc-20260526-6dfdb8",
@@ -154,7 +137,7 @@
     {
       "child_id": "ec-snps-20260527-979e06",
       "name": "财报电话会深挖 SNPS Synopsys 2026-05-27",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "SNPS|2026-05-27|Apr/2026",
       "ticker": "SNPS",
       "company": "Synopsys",
