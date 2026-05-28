@@ -1,8 +1,8 @@
 # 长飞光纤（601869.SH）滚动跟踪状态
 
-更新日期：2026-05-09  
-跟踪性质：公司首次深研后的滚动状态，不构成买卖建议。  
-grok_status: unavailable_chrome_tool_not_exposed
+更新日期：2026-05-28
+跟踪性质：公司首次深研后的滚动状态，不构成买卖建议。
+grok_status: unavailable_no_callable_chrome_tool_exposed
 
 ## 当前跟踪结论
 
@@ -157,3 +157,14 @@ grok_status: unavailable_chrome_tool_not_exposed
 - Grok/X：本会话未暴露可调用的 Chrome/Grok 工具命名空间，无法打开独立 Grok/X 标签页；未使用 Browser Use 或 Playwright 替代登录态 Chrome。记录 `grok_status=unavailable_no_callable_chrome_tool_exposed`、`browser_scope=not_available`。
 - open-web fallback：已按 `长飞光纤`、`601869`、`YOFC`、`optical fiber`、`datacenter fiber`、`龙虎榜`、`大宗交易` 等词做开放网页检索；仅发现官网/行情页、已记录 IR 信息延续、行业光纤价格/数据中心需求讨论及二级研究观点，未发现新的官方披露、交易硬事件或可升级为确认事实的观察。
 - 状态判断：本轮无新增硬事件写入 `events.jsonl`，核心跟踪假设不变；主要 source gap 为当前 worker 无法使用登录态 Chrome/Grok，需要后续在可用 Chrome/Grok 环境补查海外实时讨论、X 线索和数据中心光纤需求的社交热度。
+
+## 2026-05-28 worker batch_no=1 复核
+
+- worker_scope：仅复核 `601869.SH`；未改动 watchlist、日报、`run_status.md` 或 git；`events.jsonl` 未追加。
+- run_time：北京时间 `2026-05-28 13:40`，20:00 前；`announcement_window_checked=pending_evening_rescan`，仍需晚间/T+1 补扫 `2026-05-28` 与 `2026-05-29` 公告日期。
+- 官方公告：CNINFO `hisAnnouncement/query` 按 `601869,gssh0601869`、公告日期 `2026-05-26~2026-05-28` 返回 0；上交所 `queryCompanyBulletinNew.do` 按 `601869`、`长飞光纤`、`YOFC` 同窗口返回 0；HKEX `06869` 中英文标题检索同窗口返回 0；公司英文 IR 首页最新可见仍为 2026-05-06 月报、2026-04-29 一季报/ESG 相关材料，未见本窗口新增。
+- 交易事件：上交所每日交易公开信息 `queryAllTradeOpenDate` 与 `showTradePublicFile` 按已完成交易日 `2026-05-26`、`2026-05-27` 过滤 `601869/长飞` 均无命中；东方财富龙虎榜与大宗交易明细/统计同窗口返回空。`2026-05-28` 仍在盘中，未纳入最终龙虎榜/大宗交易判断。
+- Grok/X：本会话无可调用 Chrome/Grok 工具，记录 `grok_status=unavailable_no_callable_chrome_tool_exposed`、`browser_scope=not_available`；已执行普通 open-web fallback，结果仅作 `observation_only`。
+- open-web fallback：按 `长飞光纤`、`601869`、`YOFC`、`optical fiber`、`datacenter fiber`、`光纤价格`、`海外扩张`、`特种光纤` 检索，未发现可升级为 601869 正式事实的新公告、订单、价格或客户披露。观察项：长江日报 2026-05-28 报道长进光子 2026-05-27 登陆科创板，并称长飞资本参与战略配售（https://cjrb.cjn.cn/html/2026-05/28/content_151731_3478000.htm）；该项只说明特种光纤生态投资线索，不等同于长飞光纤新增经营披露或业绩贡献确认。
+- 状态判断：核心假设不变；光纤价格、数据中心需求、海外扩张和空芯/多芯/特种光纤仍需以后续公司公告、IR 问答、运营商集采价格与财报毛利率验证为准。
+- miss_risk：20:00 前运行存在晚间公告漏扫风险；Chrome/Grok 不可用导致海外实时讨论和 X 线索缺口；open-web 中关于涨价、数据中心需求和特种光纤生态的二级材料只能进入观察池，不能替代 CNINFO/SSE/HKEX/公司 IR。

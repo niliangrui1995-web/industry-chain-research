@@ -1,10 +1,11 @@
 # 688668.SH 鼎通科技 跟踪状态
 
-baseline_status: done  
-last_checked: 2026-05-14 Asia/Shanghai  
-browser_scope: fallback_no_browser  
-grok_status: unavailable; reason=chrome_plugin_not_exposed_in_active_tools  
-open_web_fallback_status: completed  
+baseline_status: done
+last_checked: 2026-05-28 13:40 Asia/Shanghai; pre_20:00_run
+announcement_window_checked: pending_evening_rescan
+browser_scope: fallback_no_chrome_grok_tool
+grok_status: unavailable; reason=no_chrome_grok_callable_tool_in_active_tools
+open_web_fallback_status: completed_observation_only
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -62,3 +63,11 @@ open-web fallback 仅发现交易和媒体观察，未发现可升级为官方�
 - 投资含义：这是正式日程事件，不构成新增高速通讯连接器、液冷、AI 服务器客户订单、收入占比、毛利率或产能兑现证据；但提供追问 112G/224G、液冷新增产线、客户认证、可转债注册、越南项目进展和汽车 BMS 毛利率的窗口。
 - 交易事件：东方财富龙虎榜接口按 `2026-05-25` 查询 `688668` 返回空数据，未发现新增龙虎榜；大宗交易检查在有界收口时未完成，需下轮复扫 `2026-05-25` 上交所/东方财富大宗交易。
 - Grok/X：Chrome 插件可连接并能列出用户 Chrome 标签，但本轮未继续长浏览 Grok/X；按有界收口记录为 `failed_with_reason=bounded_closeout_before_grok_query`。open-web fallback 未继续执行，状态为 `not_run_bounded_closeout`。
+
+## 2026-05-28 13:40 盘中 worker 复核
+
+- 公告窗口：已复核 CNINFO 全文、上交所科创板公告接口、公司/IR 公开线索，覆盖公告日期 `2026-05-26` 至 `2026-05-28`；由于本轮在北京时间 20:00 前完成，completion 应记录 `announcement_window_checked=pending_evening_rescan`，晚间仍需补扫 `2026-05-28` / `2026-05-29` 公告日期。
+- 新增硬事件：`2026-05-27` 发布《2025年年度报告信息披露监管问询函的回复公告》及天健专项说明。公司披露 2025 年前五大客户为莫仕、安费诺、中航光电、比亚迪、立讯精密，合计销售 14.04 亿元、占营收 88.43%；`2026-04-30` 在手订单 5.285 亿元，在手订单覆盖率 117.06%。
+- 投资含义：问询回复增强了“核心连接器客户 + 订单覆盖 + AI 数据中心高速互连需求传导”的可核验度，但也把客户集中度、CAGE 电镀/二次电镀、贵金属成本、外协电镀产能与质量管控列为更明确的风险变量。仍不能升级为具体终端客户、1.6T/GB200/NVIDIA 订单或收入份额证据。
+- 交易事件：上交所科创板交易公开信息按 `2026-05-26`、`2026-05-27` 查询，未发现 `688668` 龙虎榜记录；东方财富大宗交易接口显示最新记录仍为 `2025-05-16`，未发现 `2026-05-26` / `2026-05-27` 大宗交易。`2026-05-28` 交易日尚未收盘，最终龙虎榜/大宗交易数据未形成。
+- Grok/X 与 open-web：无 Chrome/Grok callable tool，本轮标记 `grok_status=unavailable`；open-web fallback 仅见 5/27 媒体对问询回复和客户集中风险的复述，以及铜缆/800G/1.6T 概念观察，均保持 `observation_only`，不写入硬事件。

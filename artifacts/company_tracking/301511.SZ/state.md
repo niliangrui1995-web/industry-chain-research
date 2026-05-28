@@ -1,14 +1,16 @@
 # 德福科技 301511.SZ 滚动状态
 
-更新日期：2026-05-25
-browser_scope: not_available_no_callable_chrome_tool
-grok_status: unavailable_no_callable_chrome_tool_surface
-open_web_fallback_status: searched_observation_only_no_new_hard_signal
+更新日期：2026-05-28
+browser_scope: not_available_no_callable_chrome_grok_tool
+grok_status: unavailable_no_callable_chrome_grok_tool_surface
+open_web_fallback_status: searched_observation_only_project_news_confirmed_official_no_new_customer_revenue_signal
 用途：公司跟踪状态，不构成买卖建议。
 
 ## 当前跟踪结论
 
 德福科技当前最重要的跟踪主线不是“铜箔总产能大”，而是“PCB 级 RTF / HVLP / 载体铜箔是否从认证和小批导入进入有收入、有毛利、有客户规模的兑现阶段”。截至首次建档，硬证据支持公司在高端电子电路铜箔上具备产品进度和客户导入，但财务报表尚未披露 HVLP 单独收入或利润贡献。
+
+2026-05-28 新增硬事件是公司拟投资约 31 亿元建设年产 5 万吨高端 AI 电子电路铜箔项目，属于高端 PCB 级铜箔产能扩张和资本开支信号；该公告仍不披露 HVLP/RTF 新客户名称、认证结果、批量订单、收入占比或毛利率。它把后续跟踪重点从“是否有高端铜箔方向”进一步推到“股东会/备案/环评能否落地、资金压力如何消化、5 万吨新增产能是否有订单和毛利支撑”。
 
 2025 年和 2026Q1 利润修复已经出现，但主要解释变量是铜箔销量、产能利用率、单位成本下降和产品结构优化。锂电铜箔仍是收入主体，不能把 Q1 利润高增直接归因于 AI PCB。
 
@@ -47,6 +49,8 @@ open_web_fallback_status: searched_observation_only_no_new_hard_signal
 
 | 日期 | 来源类型 | 证据 | 当前解读 |
 |---|---|---|---|
+| 2026-05-28 | 官方公告 | 公司拟与九江经济技术开发区管理委员会签订《招商项目合同书》，计划投资约 31 亿元，其中固定资产投资约 21 亿元、后期运营流动资金支持约 10 亿元，在全资子公司九江琥珀新材料有限公司内建设年产 5 万吨高端 AI 电子电路铜箔项目；项目分两期建设，各 2.5 万吨；事项尚需股东会审议，并需办理项目备案、环评等审批手续。 | 高端 AI PCB 铜箔产能扩张硬事件，增强中长期供给弹性，但也带来资金压力、审批、产能消化和技术迭代风险；不等同于 HVLP/RTF 客户认证、正式订单、收入占比或毛利率兑现。 |
+| 2026-05-27 | 官方公告 | 公司与兴业银行签订最高额保证合同，为全资子公司九江琥珀新材料有限公司提供最高本金余额 20,000 万元的连带责任保证；该担保在 2026 年度已审批对子公司担保额度 1,323,600 万元内。 | 与琥珀新材生产经营资金和后续扩产载体相关，强化融资/杠杆跟踪；不构成 HVLP/RTF 经营兑现证据。 |
 | 2026-05-25 | 日更核对 | 公告硬门覆盖 2026-05-25 至 2026-05-26：CNINFO `hisAnnouncement/query` 按 `301511 / 德福科技` 返回 0，东方财富公告接口同窗口返回 0；SZSE `annList` 接口直连仍为 500；公司官网新闻页最新可见公司动态仍为 2026-05-08；2026-05-25 龙虎榜、东方财富大宗交易明细与统计接口均返回 0；当前工具面未暴露可调用 Chrome/Grok，未使用 Browser Use 或 Playwright 替代；open-web fallback 仅发现行情/旧披露/媒体转述，未发现 HVLP/RTF 客户认证、批量交付、正式订单、收入占比或毛利率量化新硬证据。 | 本轮无新增材料事件，不追加事件账本；继续跟踪 2026-05-26 除息交易影响、2026-06-04 后减持实施，以及 HVLP4/5 从认证/小批到收入确认的官方证据。 |
 | 2026-05-24 | 日更核对 | 公告硬门覆盖 2026-05-24 至 2026-05-25：CNINFO `hisAnnouncement/query` 按 `301511 / 德福科技` 返回 0；东方财富公告列表最新仍为 2026-05-20 权益分派实施公告；SZSE 上市公司公告公开页/搜索未见新公告但 `annList` 接口直连 500；公司官网新闻最新为 2026-05-08，IR 入口未识别新增可归档材料；2026-05-22 龙虎榜和大宗交易均返回 0；Chrome/Grok 24h 发现层与 open-web fallback 均未发现 HVLP/RTF 客户认证、批量交付、收入占比或正式订单新硬证据。 | 本轮无新增材料事件，不追加事件账本；继续跟踪 2026-05-26 除息交易影响、2026-06-04 后减持实施，以及 HVLP4/5 从认证/小批到收入确认的证据。 |
 | 2026-05-20 | 日更核对 | 2026-05-20 至 2026-05-21 公告硬门仅返回已入账的 2026-05-20 权益分派实施公告；2026-05-20 龙虎榜和大宗交易均未发现新增；open web fallback 未发现 HVLP/RTF 新硬证据；Grok/X 不可用。 | 本轮 T/T+1 窗口无新增硬公告；权益分派已在上一轮入账，继续跟踪 2026-05-26 除息和 2026-06-04 后减持实施。 |
@@ -75,6 +79,13 @@ open_web_fallback_status: searched_observation_only_no_new_hard_signal
 
 ## Source Gaps
 
+- 2026-05-26 至 2026-05-28 官方公告 / IR：CNINFO 按公司名和 SZSE `annList` 的 `listedNotice_disc` 通道确认 4 条新公告，已入账 2026-05-27 担保进展和 2026-05-28 对外投资暨项目合同书；同日董事会决议和 2026-06-12 临时股东会通知作为项目审批链配套，不单独入账。CNINFO 按证券代码与东方财富公告镜像本轮漏返回上述公告，后续需继续使用公司名 + SZSE 通道交叉。
+- 2026-05-28 13:40 仍早于 20:00 晚间公告硬门，`announcement_window_checked=pending_evening_rescan`，需要晚间/T+1 再扫 2026-05-28 和 2026-05-29 公告日。
+- 2026-05-26 至 2026-05-27 龙虎榜 / 大宗交易：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW`、`RPT_DATA_BLOCKTRADE`、`RPT_BLOCKTRADE_STA` 均返回空；未发现已完成交易日新增龙虎榜或大宗交易记录。
+- 2026-05-28 龙虎榜 / 大宗交易：当前为盘中/收盘前窗口，最终交易公开信息尚不可确认；本轮不把盘中空结果当成最终无记录。
+- 2026-05-26 至 2026-05-28 公司 IR：IR 入口 `https://301511.ir-online.cn/` 可访问并嵌入 ValueOnline 动态页面，但动态 API 直连返回错误；普通网页检索未发现新增调研纪要、客户认证、批量交付、订单、收入占比或毛利率量化披露。
+- 2026-05-28 Grok/X 观察层：当前工具面没有可调用 Chrome/Grok/@chrome；记录为 `unavailable_no_callable_chrome_grok_tool_surface`，未使用 Browser Use 或 Playwright 冒充登录态。
+- 2026-05-28 open-web fallback：普通联网搜索发现 31 亿元项目公告的媒体转述，并已回到 CNINFO/SZSE 官方公告核实；除该项目外，未发现可入账的新 HVLP/RTF 客户认证、批量订单、正式交付、收入占比或毛利率硬证据。
 - HVLP / RTF / C-IC2 单独收入：N/A。
 - HVLP / RTF / C-IC2 单独毛利率：N/A。
 - 2026 年头部 CCL 意向书客户名称：N/A。
@@ -188,3 +199,18 @@ open_web_fallback_status: searched_observation_only_no_new_hard_signal
 - Grok/X：当前工具面未暴露可调用 Chrome/Grok 工具，无法打开独立 Chrome/Grok 标签页；记录为 `unavailable_no_callable_chrome_tool_surface`。未使用 Browser Use 或 Playwright 冒充登录态 Chrome/Grok。
 - open web fallback：按规则补做普通联网搜索，状态为 `searched_observation_only_no_new_hard_signal`；结果主要为 2026-05-25 行情/资金流、旧公告、旧互动易或媒体转述和泛 AI PCB/HVLP 叙事，未发现可入账的新官方硬事件。
 - 本次状态变化：仅更新 2026-05-25 T/T+1 来源缺口和 Chrome/Grok 不可用口径；未追加 `events.jsonl`，继续跟踪 2026-05-26 除息交易影响、2026-06-04 后减持实施，以及 HVLP4/5 进入批量收入确认的官方证据。
+
+## 2026-05-28 日更
+
+核查窗口：公告硬门覆盖 2026-05-26 至 2026-05-28；当前北京时间 13:40，早于 20:00，`announcement_window_checked=pending_evening_rescan`。龙虎榜和大宗交易仅确认已完成交易日 2026-05-26 与 2026-05-27；2026-05-28 最终交易公开信息需收盘后再查。
+
+- 公告 / CNINFO / 交易所披露：CNINFO `hisAnnouncement/query` 按公司名 `德福科技` 检索 `2026-05-26~2026-05-28` 返回 4 条公告；SZSE `annList` 的 `listedNotice_disc` 通道同窗口返回 4 条并与 CNINFO 对应。新增硬事件为 2026-05-27《关于为子公司提供担保的进展公告》和 2026-05-28《关于公司对外投资暨签订项目合同书的公告》；同日董事会决议和临时股东会通知作为项目审批链配套记录。
+- 新增项目事件：公司拟投资约 31 亿元建设年产 5 万吨高端 AI 电子电路铜箔项目，分两期各 2.5 万吨，在琥珀新材内实施；项目尚需股东会审议、备案、环评等手续，存在资金压力、审批、产能消化、技术迭代和管理风险。
+- 新增担保事件：公司为琥珀新材提供最高本金余额 20,000 万元连带责任保证，用于子公司生产经营资金需要；属于融资/杠杆和产能载体观察项。
+- 证据边界：本轮新增公告证明高端 AI 电子电路铜箔扩产意向和融资支持，不证明 HVLP/RTF 新客户认证、正式订单、批量交付、收入占比或毛利率已经兑现。
+- 公司 IR / 官网：IR 入口可访问但为动态 ValueOnline 页面，直连接口返回错误；公开网页检索未发现 2026-05-26 至 2026-05-28 新增可归档调研纪要或收入量化披露。公司官网直连 TLS 握手失败，未作为确认来源。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 对 2026-05-26 至 2026-05-27 返回空；未发现已完成交易日新增龙虎榜记录。2026-05-28 当前未到最终数据窗口，不作最终结论。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 对 2026-05-26 至 2026-05-27 返回空；未发现已完成交易日新增大宗交易记录。2026-05-28 当前未到最终数据窗口，不作最终结论。
+- Grok/X：当前工具面没有可调用 Chrome/Grok/@chrome，记录为 `unavailable_no_callable_chrome_grok_tool_surface`；未使用 Browser Use 或 Playwright 冒充登录态 Chrome/Grok。
+- open web fallback：普通联网搜索仅作为 observation_only，发现项目公告媒体转述并已回到 CNINFO/SZSE 官方公告核实；除项目公告外，未发现新的 HVLP/RTF 客户认证、批量交付、正式订单、收入占比或毛利率量化硬信号。
+- 本次状态变化：追加 2 条官方事件到账本，更新最新证据、来源缺口和下一步问题；不更新 watchlist、日报、run_status 或 git。

@@ -4,10 +4,10 @@ metadata:
 - company: 中际旭创股份有限公司
 - ticker: 300308.SZ
 - exchange: SZSE
-- updated_at: 2026-05-25
+- updated_at: 2026-05-28
 - state_type: company_tracking
 - grok_status: unavailable_chrome_plugin_not_exposed
-- open_web_fallback_status: searched/observation_only_no_new_hard_signal
+- open_web_fallback_status: searched/observation_only_no_new_operating_signal
 - advice_status: 不是买卖建议
 
 ## 当前跟踪结论
@@ -218,3 +218,17 @@ CNINFO 2026-05-10 至 2026-05-14 无新增公告，龙虎榜为空。新增 1 �
 - open_web_fallback_observation: 普通网页检索主要返回 2026Q1 点评、2026-05-15 IR 复述、既有公告镜像、行情/资金流和论坛/研报类二级解读；未发现可升级为官方经营事件的新 800G/1.6T、硅光、客户、物料或毛利率量化信号。
 - material_changes: 新增项为交易层小额平价大宗交易；不构成经营类、订单类、财务类、800G/1.6T、硅光、客户需求、上游物料或毛利率的新硬披露，核心跟踪假设维持不变。
 - miss_risk_notes: 当前工具面未暴露可调用 Chrome/Grok 插件工具，未执行登录态 Grok/X，也未使用 Browser Use 或 Playwright 替代；open-web fallback 仅作观察池。T+1 公告日期 `2026-05-26` 仍可能在更晚时间继续刷新；深交所接口 50x 需下轮复核。
+
+## 2026-05-28 Company Worker Recheck
+
+- checked_at_beijing: 2026-05-28 13:40 前后；当前早于 20:00，公告窗口记录 `announcement_window_checked=pending_evening_rescan`。
+- browser_scope: fallback_no_browser；grok_status: unavailable_no_callable_chrome_grok_tool；open_web_fallback_status: searched/observation_only_no_new_operating_signal。
+- task_block: 中际旭创 300308.SZ；aliases=中际旭创/Innolight/800G/1.6T/optical module/silicon photonics；tracking_focus=800G/1.6T交付、硅光、客户需求、上游物料和毛利率。
+- checklist: baseline_read=done; state_read=done; events_read=done; announcements_checked=done; announcement_window_checked=pending_evening_rescan; lhb_checked=done; block_trade_checked=done; grok_checked=unavailable; open_web_fallback=done; events_appended=2_block_trade_plus_1_governance_announcement; state_updated=done。
+- announcements_checked: CNINFO `hisAnnouncement/query` 按 `中际旭创/300308` 检索 `2026-05-26~2026-05-28` 返回 10 条 2026-05-28 公告，核心为第五届董事会第三十三次会议决议、2026 年第二次临时股东会通知，以及独立董事候选人/提名人声明与承诺；未见订单、产能、财务、800G/1.6T、硅光、客户、物料或毛利率新增硬披露。
+- source_gap: 深交所直连公告/交易接口本轮仍未形成稳定可复核结果；公司官网 IR/投资者关系入口未见高于 CNINFO 的新增经营记录。本轮以 CNINFO 官方公告、东方财富交易数据和公开网页交叉观察完成收口，晚间仍需复扫 2026-05-28 及可能的 T+1 披露。
+- lhb_checked: 东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=300308`、`TRADE_DATE=2026-05-26~2026-05-28` 返回 `code=9201/返回数据为空`；未发现 2026-05-26、2026-05-27 已完成交易日新增龙虎榜。2026-05-28 因仍在盘中，不写日终结论。
+- block_trade_checked: 东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 显示 2026-05-26 有 1 笔大宗交易，成交价 1103.00 元、成交 0.22 万股、成交金额 242.66 万元；2026-05-27 有 2 笔大宗交易，成交价均为 1111.37 元、合计 0.75 万股、成交金额 833.53 万元；买卖双方均为机构专用、折溢价率约 0%。公开网页对这两日大宗交易有同向记录，已追加 `events.jsonl`。
+- open_web_fallback_observation: 普通网页检索主要返回 5 月 28 日治理公告、5 月 26/27 大宗交易页面、既有 2026Q1/5 月 15 日 IR 复述，以及论坛/研报类对 800G、1.6T、硅光和上游物料的二级解读；未发现可升级为官方或交易硬事件的新经营信号。
+- material_changes: 新增正式公告为董事会换届/股东会安排，偏治理；新增两日小额平价大宗交易，偏交易结构。均不构成 800G/1.6T 交付、硅光、客户需求、上游物料或毛利率的新经营确认，核心跟踪假设维持不变。
+- miss_risk_notes: 当前无可调用 Chrome/Grok 工具，未执行登录态 Grok/X；open-web fallback 仅作 observation_only。由于本轮早于 20:00，需晚间/T+1 对 CNINFO、SZSE 和公司 IR 再扫一次，避免漏掉 2026-05-28 晚间披露。

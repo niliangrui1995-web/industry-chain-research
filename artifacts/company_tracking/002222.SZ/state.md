@@ -193,3 +193,16 @@
 - open_web_fallback_status：`searched_observation_only_no_new_hard_signal`。普通公开网页检索发现新浪、雪球、东方财富财富号等继续传播法拉第旋光片、TFLN、LBO/BBO 和光通信上游概念叙事，其中部分声称产能、客户或认证细节，但未给出公司公告、CNINFO、深交所、公司 IR 或可核验订单文件支撑，按观察层处理，不写入 events。
 - state_change：无新增基本面硬事件；主判断维持“交易热度和概念映射强，基本面仍需 WSS/ROADM、法拉第旋光片、复杂光胶组件、客户订单、收入拆分、毛利率和回款验证”。
 - miss_risk_notes：深交所 annList HTTP 500、公司新闻页 403；已用 CNINFO、东方财富公告镜像、公司 Investor 页、Chrome/Grok 与 open-web 检索交叉补位。Grok/X 与 open-web 只作为观察池，未作为官方确认来源。
+
+## 2026-05-28 company worker catch-up 复核
+
+- worker_scope：仅复核 `002222.SZ` 福晶科技；未改动 watchlist、日报、run_status、Excel、baseline 或 git。
+- current_time：北京时间 `2026-05-28 13:40`，早于 20:00；`announcement_window_checked=pending_evening_rescan`，本轮只完成 2026-05-26 至 2026-05-28 午间前的公告/IR catch-up，仍需晚间/T+1 复扫。
+- 官方公告/IR：CNINFO `hisAnnouncement/query` 按 `stock=002222`、`2026-05-26~2026-05-28` 返回 0 条；深交所 `annList` 同窗口返回 `announceCount=0`；东方财富公告镜像/全景公告列表最新正式公告仍为 `2026-05-21` 股东会决议及法律意见；全景机构调研列表最新正式 IR 记录仍为 `2026-04-30` 业绩说明会；公司官网 Investor 页未见同窗口新增公告、订单、扩产或正式 IR 文章。
+- 投资者互动：全景路演/深交所互动易 `2026-05-26` 新增回复显示，公司称钒酸钇晶体目前以生产掺杂钒酸钇为主，同时配套部分客户生产纯钒酸钇晶体；对法拉第旋转片竞争力、产销、产能及订单详细情况，公司答复以定期报告或临时公告披露信息为准。该项已作为 `investor_relations` source-gap 事件写入 `events.jsonl`。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `002222`、`2026-05-26~2026-05-27` 返回空数据；`2026-05-28` 因当前未收盘且最终龙虎榜数据不可用，未作为完成交易日入账。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按 `002222`、`2026-05-26~2026-05-27` 返回空数据；`2026-05-28` 因当前未收盘且最终大宗交易数据不可用，未作为完成交易日入账。
+- grok_status：`unavailable_no_callable_chrome_tool`；本轮没有可调用 `@chrome`/Grok 工具，未把普通网页搜索称作 Grok/X。
+- open_web_fallback_status：`searched_observation_only`。普通公开网页检索看到新浪、东方财富财富号、雪球/股吧类页面继续传播法拉第旋光片、LBO/BBO、YVO4/OCS 和光通信上游叙事，其中部分声称产能、客户、认证或订单，但缺少公司公告、CNINFO、深交所、公司 IR 或可核验订单文件支撑，未作为确认事实写入 events。
+- state_change：新增一条官方互动层 source-gap/产品结构事件；仍未发现 2026-05-26 至 2026-05-28 午间新增正式公告、订单、客户、WSS 量产、扩产、法拉第旋光片产销或收入拆分硬披露。主判断维持“交易热度和概念映射强，基本面仍需 WSS/ROADM、法拉第旋光片、复杂光胶组件、客户订单、收入拆分、毛利率和回款验证”。
+- miss_risk_notes：本轮早于 20:00，今日晚间公告窗口未完成；Grok/Chrome 原生线索未覆盖；2026-05-28 交易类最终数据未到收盘/盘后确认；open-web 只作观察池，不替代官方披露。

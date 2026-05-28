@@ -1,10 +1,11 @@
 # 300394.SZ 天孚通信 跟踪状态
 
-baseline_status: done  
-last_checked: 2026-05-24 Asia/Shanghai
-browser_scope: chrome_separate_tab_or_window  
-grok_status: available_no_material_signal
-open_web_fallback_status: searched_no_material_signal
+baseline_status: done
+last_checked: 2026-05-28 13:40 Asia/Shanghai
+browser_scope: no_chrome_grok_callable_tool
+grok_status: unavailable_no_chrome_grok_callable_tool
+open_web_fallback_status: observation_only_no_material_signal
+announcement_window_checked: pending_evening_rescan
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -79,3 +80,10 @@ not_investment_advice: true
 - Grok/X：Chrome/Grok 单独标签页查询显示过去 24 小时无新增高价值公司级信号；返回内容主要为 CPO/1.6T/FAU/ELS、泰国产能、H 股申请和物料供应的旧信息重复或市场讨论，不写成确认事实。
 - open-web fallback：普通网页补充搜索未发现可写入事件账本的新增硬事件；观察到 `2026-05-25` 有约 301.10 万股限售解禁日历项，来源指向 2025 年 11 月询价转让锁定期安排，暂列交易供给观察，不作为新增公司基本面事件。
 - 状态变化：核心判断不变；继续跟踪 CPO 配套交付量化、1.6T 光引擎收入/毛利率、泰国产能爬坡、物料供应、H 股发行审批和小比例解禁后的交易供给影响。
+
+## 2026-05-28 盘中 worker 复核
+
+- 公告窗口：北京时间 `2026-05-28 13:40`、20:00 前检查 `2026-05-26` 至 `2026-05-28`，CNINFO 与 SZSE 上市公司公告口径均未检出新增官方公告、交易所披露或投资者关系活动记录；公司 IR/官网与 HKEX 公开线索未见本窗口新增 H 股发行进展，completion 记录 `announcement_window_checked=pending_evening_rescan`。
+- 交易事件：深交所竞价交易公开信息按 `300394` 检索 `2026-05-26` 至 `2026-05-27`，未检出龙虎榜记录；深交所权益类证券大宗交易按同一窗口检索，未检出协议交易或盘后定价大宗交易。`2026-05-28` 尚未收盘，最终交易公开信息和大宗交易数据需晚间或次日复扫。
+- Grok/X：当前工具环境没有 Chrome/Grok 可调用入口，记录为 `grok_status=unavailable_no_chrome_grok_callable_tool`；已运行 open-web fallback，结果主要为行情、板块和既有 CPO/1.6T/H 股申请叙事重复，全部仅作 `observation_only`，未发现可写入事件账本的公司确认订单、H 股审批或物料供应新硬证据。
+- 状态变化：不追加 `events.jsonl`，核心判断不变；继续跟踪 CPO 配套 FAU/ELS 交付量化、1.6T 光引擎收入与毛利率、泰国产能爬坡、关键物料供应、客户集中度和 H 股发行审批节点。

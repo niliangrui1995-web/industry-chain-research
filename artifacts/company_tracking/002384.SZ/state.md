@@ -1,8 +1,8 @@
 # 东山精密（002384.SZ）滚动状态
 
-更新日期：2026-05-09  
-状态文件用途：记录当前跟踪结论、关键假设、最新证据、观察池、source gaps 和后续问题。  
-Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`  
+更新日期：2026-05-28
+状态文件用途：记录当前跟踪结论、关键假设、最新证据、观察池、source gaps 和后续问题。
+Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`
 Open web fallback：`open_web_fallback_status: searched`
 Browser scope：`browser_scope: not_available`
 Batch 2 Grok status：`grok_status: unavailable: chrome plugin tool not exposed`
@@ -166,3 +166,15 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 龙虎榜/大宗交易：腾讯行情确认最近交易日为 `2026-05-25`，收盘价 `226.24` 元、涨跌幅 `+2.58%`。东方财富龙虎榜 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `002384`、`2026-05-25` 返回空；大宗交易 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 同日查询均返回空，未发现本轮新增龙虎榜或大宗交易。
 - open-web 观察：普通联网搜索主要返回已披露的英文定期报告、H 股递表、5 月 19 日互动易、5 月 7 日旧龙虎榜和二级研究/媒体解读；未发现 2026-05-25 至 2026-05-26 新的官方公告、交易硬事件或可升级为确认事实的客户/订单证据。
 - 状态变化：无新增 material event；本轮仅更新 source gap。下一轮继续跟踪公司是否在正式公告、投资者关系记录或定期报告中补充 AI PCB/GB200/GB300 客户关系、索尔思 EML/CW 芯片量产范围、1.6T LPO 送样/量产、单独收入、毛利率、良率和产能爬坡。
+
+## 2026-05-28 company worker catch-up 复核
+
+- 独立任务块：`ticker=002384.SZ`，`name=东山精密`，run_time_beijing=`2026-05-28 13:40`，早于 20:00；本轮只复核 `2026-05-26~2026-05-28` 午间前窗口，completion 字段应写 `announcement_window_checked=pending_evening_rescan`，晚间/T+1 仍需补扫。
+- 浏览器/Grok：当前工具面未暴露可调用 Chrome/Grok；未使用 Browser Use、Playwright、Grok、X 或已登录 Chrome 结果。记录 `grok_status=unavailable_no_callable_chrome_or_grok_tool`；`open_web_fallback_status=searched_observation_only`。
+- 官方公告/IR：CNINFO `hisAnnouncement/query` 按 `stock=002384,9900011647`、公司名、`DSBJ`、`AI server PCB` 检索 `2026-05-26~2026-05-28` 均返回 `totalAnnouncement=0`；深交所 `annList` 直连返回 50x 维护页；东方财富公告镜像同窗口 `total_hits=0`；公司官网“最新公告/投资者问答”页仍停留在 2023 年旧列表，未提供本窗口新增正式公告。
+- 投资者互动：深交所互动易官方详情页确认 `2026-05-28` 回复 4 条相关问答：索尔思 800G/1.6T 光模块所需高速光模块 PCB 是自产还是外购、AI 服务器与高速光模块在手订单能见度、海外工厂关税/交付/成本优势、200G/400G 光芯片来源。公司对 PCB 来源、订单能见度、光芯片来源均以商业保密为由未披露，海外工厂优势要求参考定期报告及公告。该组回复强化 source gap，但没有新增客户、订单、收入、毛利率、良率、产能或技术路线量化，不追加 `events.jsonl`。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `002384`、`2026-05-26~2026-05-27` 返回 `code=9201/返回数据为空`，未发现已完成交易日新增龙虎榜；深交所 `1842_xxpl_after` 直连返回 50x，作为来源缺口记录。`2026-05-28` 当前仍为盘中，最终龙虎榜数据不可用，本轮不作日终结论。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按 `002384`、`2026-05-26~2026-05-27` 均返回 `code=9201/返回数据为空`，未发现新增大宗交易；深交所 `1932_dzjyzqjy_after` 直连返回 50x，作为来源缺口记录。`2026-05-28` 当前仍为盘中，最终大宗交易数据不可用。
+- open-web fallback：普通公开网页主要返回证券之星互动问答镜像、H 股递表/光模块/AI PCB 既有媒体解读、卖方研报、财富号/股吧类叙事；其中关于 Meta、微软、亚马逊、GB200/GB300、800G/1.6T 出货、订单排期或利润测算的内容未获本窗口公司公告、CNINFO、深交所、互动易正文或客户官方文件确认，继续留在观察层。
+- 本轮状态：无新增 material event，`events.jsonl` 不追加；主线维持“电子电路是收入基本盘，索尔思光模块和 Multek AI PCB 是业绩弹性来源，但客户、订单、单独收入、毛利率、良率、产能爬坡和现金流仍需正式披露验证”。
+- miss_risk_notes：本轮早于 20:00，今日晚间公告/T+1 窗口未完成；深交所公告、龙虎榜和大宗交易官方接口本轮返回 50x；Grok/Chrome 原生线索未覆盖；2026-05-28 交易类最终数据未到收盘/盘后确认；open-web 只作观察池，不替代官方披露。
