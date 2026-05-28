@@ -232,3 +232,15 @@ CNINFO 2026-05-10 至 2026-05-14 无新增公告，龙虎榜为空。新增 1 �
 - open_web_fallback_observation: 普通网页检索主要返回 5 月 28 日治理公告、5 月 26/27 大宗交易页面、既有 2026Q1/5 月 15 日 IR 复述，以及论坛/研报类对 800G、1.6T、硅光和上游物料的二级解读；未发现可升级为官方或交易硬事件的新经营信号。
 - material_changes: 新增正式公告为董事会换届/股东会安排，偏治理；新增两日小额平价大宗交易，偏交易结构。均不构成 800G/1.6T 交付、硅光、客户需求、上游物料或毛利率的新经营确认，核心跟踪假设维持不变。
 - miss_risk_notes: 当前无可调用 Chrome/Grok 工具，未执行登录态 Grok/X；open-web fallback 仅作 observation_only。由于本轮早于 20:00，需晚间/T+1 对 CNINFO、SZSE 和公司 IR 再扫一次，避免漏掉 2026-05-28 晚间披露。
+## 2026-05-28 晚间 T/T+1 复扫
+
+- checked_at_beijing: 2026-05-28 20:32 后复扫。
+- browser_scope: not_available_no_callable_chrome_tool；grok_status: `unavailable_no_callable_chrome_tool`；open_web_fallback_status: `searched/observation_only_no_new_operating_signal`。
+- announcements_checked: CNINFO `hisAnnouncement/query` 按 `stock=300308,9900022016` 和公司名检索 `2026-05-28~2026-05-29`，确认早盘已记录的 2026-05-28 董事会/临时股东会/独董候选人公告组，并新增 2026-05-29《第四期限制性股票激励计划首次授予部分第一个归属期归属结果暨股份上市公告》。公告披露本次归属日/上市流通日为 2026-06-01，归属股票数量 1,309,657 股，占当前总股本 0.12%，归属人数 734 人，归属后总股本增至 1,114,910,191 股；募集资金用于补充流动资金。
+- announcement_window_checked: `T_and_T_plus_1`。新增 2026-05-29 公告已追加 `events.jsonl`；早盘已记录的 2026-05-28 治理公告组不重复追加。
+- SZSE/公司 IR: 深交所 `annList` 直连仍返回 50x 维护页，记录为 `szse_annlist_50x_source_gap`；公司官网投资者关系页最新公告/财报入口仍停留在 2026-04-17/2026-04-20 一季报和年报入口，未见高于 CNINFO 的新增经营类 IR。
+- lhb_checked: 东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `SECURITY_CODE=300308`、`TRADE_DATE=2026-05-28` 与 `2026-05-29` 均返回 `code=9201/返回数据为空`，未发现 2026-05-28 晚间新增龙虎榜记录；2026-05-29 在本轮运行时尚非已完成交易日，只作空结果记录。
+- block_trade_checked: 东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按 `SECURITY_CODE=300308`、`TRADE_DATE=2026-05-28` 与 `2026-05-29` 均返回 `code=9201/返回数据为空`，未发现 2026-05-28 晚间新增大宗交易记录。
+- open_web_fallback_observation: 普通联网检索主要返回 2026Q1/5 月 15 日 IR 复述、既有 800G/1.6T/硅光研报解读、公司官网产品页和 5 月 28 日治理公告镜像；未发现可升级为官方或交易硬事件的新 800G/1.6T、硅光、客户、物料或毛利率信号。
+- material_changes: 新增事项为股权激励归属结果暨股份上市公告，偏治理/员工激励和轻微股本摊薄；不改变 800G/1.6T 交付、硅光、客户需求、上游物料和毛利率主线判断。
+- miss_risk_notes: Chrome/Grok 工具面不可用，未覆盖登录态 Grok/X 原生线索；深交所直连接口 50x，已用 CNINFO 官方公告、公司官网投资者页、东方财富交易数据和 open-web 观察交叉补位；普通联网搜索仅作 observation_only。

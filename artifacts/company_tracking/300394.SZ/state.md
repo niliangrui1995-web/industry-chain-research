@@ -1,11 +1,11 @@
 # 300394.SZ 天孚通信 跟踪状态
 
 baseline_status: done
-last_checked: 2026-05-28 13:40 Asia/Shanghai
+last_checked: 2026-05-28 20:32 Asia/Shanghai
 browser_scope: no_chrome_grok_callable_tool
-grok_status: unavailable_no_chrome_grok_callable_tool
-open_web_fallback_status: observation_only_no_material_signal
-announcement_window_checked: pending_evening_rescan
+grok_status: unavailable_no_callable_chrome_tool
+open_web_fallback_status: searched_observation_only_market_move_no_material_event
+announcement_window_checked: T_and_T_plus_1
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -87,3 +87,10 @@ not_investment_advice: true
 - 交易事件：深交所竞价交易公开信息按 `300394` 检索 `2026-05-26` 至 `2026-05-27`，未检出龙虎榜记录；深交所权益类证券大宗交易按同一窗口检索，未检出协议交易或盘后定价大宗交易。`2026-05-28` 尚未收盘，最终交易公开信息和大宗交易数据需晚间或次日复扫。
 - Grok/X：当前工具环境没有 Chrome/Grok 可调用入口，记录为 `grok_status=unavailable_no_chrome_grok_callable_tool`；已运行 open-web fallback，结果主要为行情、板块和既有 CPO/1.6T/H 股申请叙事重复，全部仅作 `observation_only`，未发现可写入事件账本的公司确认订单、H 股审批或物料供应新硬证据。
 - 状态变化：不追加 `events.jsonl`，核心判断不变；继续跟踪 CPO 配套 FAU/ELS 交付量化、1.6T 光引擎收入与毛利率、泰国产能爬坡、关键物料供应、客户集中度和 H 股发行审批节点。
+
+## 2026-05-28 晚间公告窗口复扫
+
+- 公告窗口：北京时间 `2026-05-28 20:32` 后按公告日期 `2026-05-28` 与 `2026-05-29` 复扫，CNINFO 公司精确查询 `300394,9900023911` 未检出新增公告；CNINFO 当日全量深市公告筛选未见天孚通信；SZSE/公司 IR/官网与 HKEX 公开线索未见本窗口新增 H 股发行进展。
+- 交易事件：深交所竞价交易公开信息按 `300394` 精确检索 `2026-05-28` 与 `2026-05-29`，未检出龙虎榜记录；深交所权益类证券大宗交易按同一窗口检索，未检出新增大宗交易记录。
+- open-web fallback：因无可调用 Chrome/Grok 工具，记录 `grok_status=unavailable_no_callable_chrome_tool`；普通联网搜索仅发现光模块板块与“易中天”股价创新高、既有 1.6T/物料供应/IR 内容重复等市场观察，不作为公司确认订单、H 股审批或基本面硬事件。
+- 状态变化：仅将晚间复扫状态从 `pending_evening_rescan` 补齐为 `T_and_T_plus_1`；未追加 `events.jsonl`，核心判断不变。

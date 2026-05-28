@@ -206,3 +206,15 @@
 - open_web_fallback_status：`searched_observation_only`。普通公开网页检索看到新浪、东方财富财富号、雪球/股吧类页面继续传播法拉第旋光片、LBO/BBO、YVO4/OCS 和光通信上游叙事，其中部分声称产能、客户、认证或订单，但缺少公司公告、CNINFO、深交所、公司 IR 或可核验订单文件支撑，未作为确认事实写入 events。
 - state_change：新增一条官方互动层 source-gap/产品结构事件；仍未发现 2026-05-26 至 2026-05-28 午间新增正式公告、订单、客户、WSS 量产、扩产、法拉第旋光片产销或收入拆分硬披露。主判断维持“交易热度和概念映射强，基本面仍需 WSS/ROADM、法拉第旋光片、复杂光胶组件、客户订单、收入拆分、毛利率和回款验证”。
 - miss_risk_notes：本轮早于 20:00，今日晚间公告窗口未完成；Grok/Chrome 原生线索未覆盖；2026-05-28 交易类最终数据未到收盘/盘后确认；open-web 只作观察池，不替代官方披露。
+
+## 2026-05-28 晚间/T+1 worker 复扫
+
+- worker_scope：仅复核 `002222.SZ` 福晶科技；未改动 watchlist、日报、run_status、Excel、baseline 或 git。
+- current_time：北京时间 `2026-05-28 20:32`；`announcement_window_checked=T_and_T_plus_1`，覆盖公告日期 `2026-05-28` 与 `2026-05-29`。
+- 官方公告/IR：CNINFO `hisAnnouncement/query` 按 `stock=002222` 与 `searchkey=福晶科技` 检索 `2026-05-28~2026-05-29` 均返回 0 条；东方财富公告镜像同窗口 `total_hits=0`；深交所 `annList` 本轮仍返回 HTTP 500；全景/互动易公司公告列表最新仍为 `2026-05-21` 股东会决议及法律意见，机构调研列表最新仍为 `2026-04-30` 投资者关系记录，互动问答最新仍为已入账的 `2026-05-26` YVO4/法拉第旋转片信息披露边界回复；公司官网/公开检索未发现同窗口新增公告、订单、扩产或正式 IR。
+- 龙虎榜：东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `002222`、`2026-05-28~2026-05-29` 返回空数据；未发现 2026-05-28 晚间新增龙虎榜记录。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 与 `RPT_BLOCKTRADE_STA` 按 `002222`、`2026-05-28~2026-05-29` 均返回空数据；未发现 2026-05-28 晚间新增大宗交易记录。
+- grok_status：`unavailable_no_callable_chrome_tool`；本轮没有可调用 `@chrome`/Grok 工具，未把普通网页搜索称作 Grok/X。
+- open_web_fallback_status：`searched_observation_only_no_new_hard_signal`。普通公开网页检索主要回指 2026-05-08 龙虎榜、2026-05-22 大宗交易、公司官网 2026-05-22 技术文章，以及法拉第旋光片/OCS/YVO4 概念帖和研报摘录；未找到新增官方订单、客户验证、WSS 量产、扩产、法拉第旋光片产销或收入拆分硬披露。
+- state_change：完成午间遗留的晚间/T+1 公告窗口复扫；未发现新增、未记录、实质材料，`events.jsonl` 不追加。主判断维持“交易热度和概念映射强，基本面仍需 WSS/ROADM、法拉第旋光片、复杂光胶组件、客户订单、收入拆分、毛利率和回款验证”。
+- miss_risk_notes：深交所 annList HTTP 500，已用 CNINFO、东方财富公告镜像、全景/互动易、公司官网/公开检索交叉补位；Grok/Chrome 原生线索未覆盖；若 2026-05-28 20:32 后继续披露公告，仍需下一轮按 `2026-05-29` 复查。

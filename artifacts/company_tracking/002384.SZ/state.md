@@ -178,3 +178,14 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - open-web fallback：普通公开网页主要返回证券之星互动问答镜像、H 股递表/光模块/AI PCB 既有媒体解读、卖方研报、财富号/股吧类叙事；其中关于 Meta、微软、亚马逊、GB200/GB300、800G/1.6T 出货、订单排期或利润测算的内容未获本窗口公司公告、CNINFO、深交所、互动易正文或客户官方文件确认，继续留在观察层。
 - 本轮状态：无新增 material event，`events.jsonl` 不追加；主线维持“电子电路是收入基本盘，索尔思光模块和 Multek AI PCB 是业绩弹性来源，但客户、订单、单独收入、毛利率、良率、产能爬坡和现金流仍需正式披露验证”。
 - miss_risk_notes：本轮早于 20:00，今日晚间公告/T+1 窗口未完成；深交所公告、龙虎榜和大宗交易官方接口本轮返回 50x；Grok/Chrome 原生线索未覆盖；2026-05-28 交易类最终数据未到收盘/盘后确认；open-web 只作观察池，不替代官方披露。
+
+## 2026-05-28 晚间 T/T+1 复扫
+
+- 独立任务块：`ticker=002384.SZ`，`name=东山精密`，run_time_beijing=`2026-05-28 20:32`，`browser_scope=not_available_no_callable_chrome_tool`，`grok_status=unavailable_no_callable_chrome_tool`，`open_web_fallback_status=searched_observation_only_no_new_hard_signal`。本轮未使用 Browser Use、Playwright、Grok、X 或已登录 Chrome 结果。
+- 公告窗口：按公告日期 `2026-05-28` 和 `2026-05-29` 完成晚间 T/T+1 复扫。CNINFO `hisAnnouncement/query` 按 `stock=002384,9900011647`、公司名 `东山精密`、`DSBJ` 检索均返回 0 条；东方财富公告镜像同窗口返回 0 条；深交所 `annList` 按代码/关键词直连仍返回 50x 维护页，作为 source gap 记录。`announcement_window_checked=T_and_T_plus_1`。
+- 投资者互动：深交所互动易 `company/question` 显示 `2026-05-28 15:00` 回复一条已答问答，问题为“请问公司 1.6T 光模块出货了吗？公司有没有生产 mSAP PCB？”，公司回复为“公司业务及产品等信息请参考公司定期报告及相关公告”。该回复未披露 1.6T 出货、mSAP PCB、客户、订单、收入、毛利率、良率或产能量化，不追加 `events.jsonl`；`2026-05-28 16:42` 关于苏州易缆微合作的问题仍为未答问答，不作为公司确认事实。
+- 龙虎榜：深交所 `1842_xxpl_after` 竞价交易公开信息按 `002384`、`2026-05-28` 返回 `recordcount=0`；东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 同日返回 `code=9201/返回数据为空`，未发现新增龙虎榜。
+- 大宗交易：深交所 `1932_dzjyzqjy_after` 权益类证券大宗交易按 `002384`、`2026-05-28` 三个 tab 均返回空；东方财富 `RPT_DATA_BLOCKTRADE` 同日返回 `code=9201/返回数据为空`，未发现新增大宗交易。
+- open-web fallback：普通公开网页主要返回 AASTOCKS 行情/旧新闻、证券之星互动问答镜像、搜狐/九方旧龙虎榜、H 股递表和 AI PCB/光模块媒体解读、雪球/财富号叙事及卖方研报摘要；未发现 2026-05-28 晚间至本次运行时点可升级为官方确认的新客户、订单、出货、收入、毛利率、良率、产能或交易硬事件。
+- 本轮状态：无新增 material event，`events.jsonl` 不追加；仅将午间 `pending_evening_rescan` 补扫闭环为 `T_and_T_plus_1`，并记录一条不改变结论的互动易 source gap。主线仍是索尔思光模块/光芯片与 Multek AI PCB 的客户、订单、单独收入、毛利率、良率、产能爬坡和现金流验证。
+- miss_risk_notes：深交所公告 `annList` 仍 50x；普通联网搜索只作 observation-only；当前没有可调用 @chrome/Grok 工具，X/Grok 原生发现层缺口仍在；`2026-05-29` 公告日期已按运行时点复扫，但若更晚发布次日公告仍需下一轮继续检查。
