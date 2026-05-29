@@ -214,3 +214,14 @@ open_web_fallback_status: searched_observation_only_project_news_confirmed_offic
 - Grok/X：当前工具面没有可调用 Chrome/Grok/@chrome，记录为 `unavailable_no_callable_chrome_grok_tool_surface`；未使用 Browser Use 或 Playwright 冒充登录态 Chrome/Grok。
 - open web fallback：普通联网搜索仅作为 observation_only，发现项目公告媒体转述并已回到 CNINFO/SZSE 官方公告核实；除项目公告外，未发现新的 HVLP/RTF 客户认证、批量交付、正式订单、收入占比或毛利率量化硬信号。
 - 本次状态变化：追加 2 条官方事件到账本，更新最新证据、来源缺口和下一步问题；不更新 watchlist、日报、run_status 或 git。
+
+## 2026-05-29 日更
+
+核查窗口：北京时间 20:00 后运行，公告硬门覆盖公告日期 `2026-05-29` 与 `2026-05-30`，`announcement_window_checked=T_and_T_plus_1`。
+
+- 公告 / CNINFO / 交易所披露：CNINFO 代码查询未返回新增，但公司名查询和 SZSE 股票查询均返回 8 份 2026-05-29 公告。核心新增事件为《2026年限制性股票激励计划（草案）》及摘要、考核管理办法、法律意见书、薪酬与考核委员会核查意见、董事会决议和临时股东会补充通知。
+- 新增硬事件：公司拟一次性授予第二类限制性股票 176.8 万股，占总股本 0.28%，授予价 56.56 元/股，激励对象 56 人；归属考核年度为 2026-2028 年，目标铜箔销量分别为 16/18/20 万吨，目标净利润分别为 6/10/15 亿元；相关议案新增至 2026-06-12 第一次临时股东会审议。
+- 龙虎榜 / 大宗交易：东方财富 2026-05-29 龙虎榜和大宗交易均未发现德福科技记录。
+- Grok/X：当前工具面没有可调用 Chrome/Grok/@chrome，记录为 `unavailable_no_callable_chrome_tool`；未使用 Browser Use 或 Playwright 冒充登录态 Chrome/Grok。
+- open-web fallback：普通公开网页主要为 31 亿元高端 AI 电子电路铜箔项目媒体转述，未提供超出官方公告的新客户、订单、收入或毛利率证据。
+- 本次状态变化：追加股权激励官方事件到账本。该事件提供中期销量/净利润考核锚和团队激励绑定，但仍不证明 HVLP/RTF 客户认证、批量订单、收入占比或毛利率兑现。下一步重点跟踪 2026-06-12 股东会是否通过、60 日内是否完成授予，以及 2026 年 16 万吨销量和 6 亿元净利润目标能否由 H1/Q2 数据支撑。
