@@ -1,13 +1,17 @@
 ---
 name: stock-fundamental-moat-triad
-description: Use for future-oriented individual-stock or peer-company fundamental research when the user wants to judge whether a company has future business highlights, inflection points, earnings upside, product/customer breakthroughs, value-chain migration, international peer catch-up potential, and customer-certification milestones. Trigger on 个股基本面, 未来亮点, 未来空间, 拐点, 成长性, 业绩弹性, 价值链分析, 国际同行, 同行对标, 波特五力, 客户认证壁垒, 客户导入, AVL/BOM, 产业链位置, true beneficiary, moat, competitive structure, supplier status, or company comparison. This skill puts the future thesis first; value-chain, peer, Porter, and certification checks are supporting tools for judging whether the future can be monetized.
+description: Use for future-oriented individual-stock or peer-company fundamental research when the user wants to judge whether a company has future business highlights, inflection points, earnings upside, product/customer breakthroughs, downstream demand transmission, value-chain migration, international peer catch-up potential, and customer-certification milestones. Trigger on 个股基本面, 未来亮点, 未来空间, 拐点, 成长性, 业绩弹性, 下游需求, 上下游, 需求传导, 价值链分析, 国际同行, 同行对标, 波特五力, 客户认证壁垒, 客户导入, AVL/BOM, 产业链位置, true beneficiary, moat, competitive structure, supplier status, or company comparison. This skill puts the future thesis first; downstream demand, value-chain, peer, Porter, and certification checks are supporting tools for judging whether the future can be monetized.
 ---
 
 # Stock Fundamental Moat Triad
 
 ## Purpose
 
-Use this skill as a future-oriented company research framework inside `产业链投研`: first answer what could become materially different in the next 6-24 months, then use value-chain position, international peers, competitive structure, and customer certification only as tools to judge whether that future can be monetized.
+Use this skill as a future-oriented company research framework inside `产业链投研`: first answer what could become materially different in the next 6-24 months, then use downstream demand transmission, value-chain position, international peers, competitive structure, and customer certification only as tools to judge whether that future can be monetized.
+
+For individual-stock research, never analyze the company in isolation. Before the integrated verdict, build the path:
+
+`upstream inputs/equipment -> company product/node -> downstream product/system -> end customer -> terminal demand driver -> revenue/margin pass-through`
 
 This skill does not replace source collection, financial data, valuation, or trading analysis. It feeds `stock-evaluator`, `advanced-evaluation`, and market-data skills after the core business exposure is clear.
 
@@ -53,13 +57,14 @@ A company with weak current proof can still be an `early optionality` case. Do n
 For the future highlight layer, explicitly test:
 
 - demand inflection: new downstream demand, product generation change, AI/server/auto/robot/energy transition, policy localization, or capacity-cycle shift;
+- downstream demand pass-through: whether end-customer capex, traffic, deployment, replacement, or policy demand actually converts into volume, ASP, margin, or share gain for the company's exact product node;
 - product upgrade: higher ASP, harder specs, route migration, package/material/process change, or move from commodity to qualified node;
 - customer-entry trajectory: sample -> validation -> reliability test -> AVL/BOM -> pilot -> mass production;
 - margin translation: product mix, yield, capacity utilization, depreciation absorption, price discipline, or operating leverage;
 - bottleneck/profit-pool migration: whether the value node may move toward or away from the company product;
 - catalyst timeline: what must be seen in the next 1-2 reports, investor records, product pages, orders, or peer disclosures.
 
-When the user asks about the future, spend most of the answer on future variables, probability, milestones, and earnings translation. Keep current and past facts concise and use them only to explain why the future thesis is credible, early, or weak.
+When the user asks about the future, spend most of the answer on future variables, downstream demand, probability, milestones, and earnings translation. Keep current and past facts concise and use them only to explain why the future thesis is credible, early, or weak.
 
 ## Workflow
 
@@ -100,15 +105,23 @@ Map from end demand back to the company product:
 
 `terminal demand -> downstream product -> subsystem/BOM node -> component/process/material -> company product -> customer/channel`
 
+For every company report, include a downstream demand table before judging whether the company is good:
+
+```text
+| downstream application | end customer/buyer | demand driver | current evidence | pass-through to company | timing | risk |
+```
+
 For each node, answer:
 
 - What exact role does the company product play?
 - Is it a core value node, bottleneck node, qualified-supply node, or low-value commodity node?
 - Which downstream product creates revenue pull?
+- Which downstream buyer or capex cycle creates that pull?
+- How does the pull convert into company volume, ASP, mix, margin, or share gain?
 - What is the likely value capture: high, medium, low, or N/A?
 - Which evidence proves the mapping?
 
-Do not stop at an industry label. A company can be in the right theme but the wrong node, or in the right node with too little value share to move earnings.
+Do not stop at an industry label or a company profile. A company can be in the right theme but the wrong node, or in the right node with too little downstream demand pass-through to move earnings.
 
 ### 4. International Peer Benchmarking
 

@@ -2,6 +2,7 @@
 
 ## 核心入口
 
+- `user-investment-framework`：本项目所有投资研究任务的主入口技能。先用它统一判断产业链、个股、行情、公告、证据、输出文件等任务类型，再选择最小必要 companion skills。
 - `industry-research-router`：产业链、公司研究、股票弹性、估值、国产替代、龙头识别和排序问题的入口路由技能。
 - `ai-chain-research-orchestrator`：AI 产业链实时消息、Grok/X 线索、Gemini 辅助证据、Codex 复核、证据分级和股票映射协调技能。
 - `browser-grok-gemini-research`：网页 Grok/Gemini 采集辅助技能。只负责浏览器采集、提示词边界和采集结果交接，不负责最终投资判断。

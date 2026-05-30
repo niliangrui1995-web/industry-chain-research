@@ -2,6 +2,8 @@
 
 Last verified: 2026-05-16
 
+Current primary entrypoint: use `skills/user-investment-framework` first for any investment research task, then let it choose the smallest necessary companion skills.
+
 这是一个面向产业链研究、公司研究、全球龙头梳理、技术壁垒分析、国产替代研究、股票基本面比较和交易弹性判断的 Codex 本地工作区。它的核心目标不是生成日报或自动化流水线，而是把“证据收集 -> 产业链拆解 -> 公司映射 -> 基本面/业绩/交易弹性分层判断”固定成可复用的投研流程。
 
 ## 项目定位

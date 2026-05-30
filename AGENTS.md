@@ -1,3 +1,8 @@
+# Current primary investment-research entrypoint
+
+- For any investment research task in this repository, start with `skills/user-investment-framework` first.
+- Treat `skills/industry-research-router` and all other project skills as companion skills selected by `user-investment-framework`, not as competing first entrypoints.
+
 # 产业链投研项目说明
 
 本项目专门用于产业链研究、公司研究、全球龙头梳理、技术壁垒分析、国产替代研究、股票基本面比较和交易弹性判断。
