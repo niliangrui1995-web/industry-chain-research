@@ -99,6 +99,47 @@ Minimum downstream demand table for company research:
 | timing | current quarter, 6 months, 12 months, 24 months, or `N/A` |
 | key risk | Inventory pull-forward, capex delay, customer concentration, substitution, price pressure, or overcapacity |
 
+### 3A. Run The Core Product Demand And Price Trend Check
+
+Use this check for every company or stock research task where the earnings thesis depends on a core product, core service, business line, SKU, product mix, price, ASP, ARPU, take rate, fee rate, spread, unit economics, or capacity utilization.
+
+This is industry-neutral. For non-product businesses, translate "price" into the relevant monetization metric: ARPU, subscription price, take rate, fee rate, commission rate, interest spread, occupancy rate, utilization rate, yield, renewal price, or unit revenue.
+
+Do not stop at company financials, valuation, or a concept label. Rebuild the thesis through two main lines:
+
+1. Downstream demand transmission:
+   `terminal demand -> downstream application/customer -> core product/service demand -> company offering mix -> volume/ASP/ARPU/take rate/margin`
+2. Core product price and unit-economics trend:
+   `market price/rate -> company realized ASP/ARPU/take rate/fee/spread -> input/delivery/funding cost -> unit spread/gross margin -> sustainability`
+
+Minimum downstream-demand bridge:
+
+| Field | Required Answer |
+|---|---|
+| core product/service | Exact product, service, SKU, business line, grade, or specification that drives the thesis |
+| downstream application/customer | Concrete product, system, user group, channel, or customer that consumes or pays for it |
+| end buyer / demand driver | Capex, shipment, usage, traffic, replacement cycle, policy, income, price, credit cycle, utilization, or other driver |
+| same-chain validation | Downstream customer/peer revenue, order, backlog, capex, utilization, traffic, shipment, lead time, inventory, monthly revenue, or renewal evidence |
+| company proof | Segment revenue, volume, ARPU, take rate, order, backlog, certification, utilization, customer lock-in, or named/credible customer evidence |
+| pass-through path | How demand becomes company volume, ASP, ARPU, take rate, mix, margin, utilization, or share gain |
+| timing | Current quarter, 6 months, 12 months, 24 months, or `N/A` |
+| reversal risk | Pull-forward, capex delay, demand slowdown, customer churn, dual-source, substitution, price pressure, competition, or new capacity |
+
+Minimum core-product price and unit-economics bridge:
+
+| Field | Required Answer |
+|---|---|
+| reported price/unit metric and volume | Company realized ASP, ARPU, take rate, fee rate, spread, utilization, shipment, users, orders, revenue, and whether the metric is mix-distorted |
+| external price/rate signal | Spot, contract, channel, peer, platform, regulator, customer, or market price/rate trend if available |
+| input/delivery/funding cost | Key raw material, labor, bandwidth, compute, logistics, depreciation, funding, traffic-acquisition, or service-delivery cost |
+| mix effect | Separate low-end/common offerings from premium/high-value offerings and one-time mix effects from durable mix upgrades |
+| unit spread / margin | Whether realized price or unit revenue rose faster than unit cost, and whether gross margin, contribution margin, or spread confirms it |
+| supply-demand or competition reason | Qualified capacity, yield, certification, lead time, allocation, scarce inventory, customer demand, utilization, competition, regulation, or pricing discipline |
+| sustainability verdict | `structural_mix_upgrade`, `qualified_supply_shortage`, `demand_led_pricing`, `commodity_cycle`, `cost_push`, `utilization_or_operating_leverage`, `inventory_pull_forward`, `competitive_price_pressure`, or `unclear` |
+| reversal indicator | Price decline, ARPU/take-rate/spread compression, margin compression, lower utilization, inventory build, churn, customer destocking, competition, or capacity release |
+
+If a core offering's price, ASP, ARPU, take rate, fee rate, spread, or utilization drove the earnings inflection, the final answer must explicitly state: whether the change is real, what caused it, how it reaches the company's margin, how long it may last, and what would prove it is reversing. A company-reported ASP or ARPU alone is not enough; separate external price/rate signal, company realized metric, mix effect, and unit cost.
+
 ### 4. Identify Real Bottlenecks
 
 Treat a bottleneck as a demand-vs-qualified-supply gap, not a popularity label.
@@ -244,6 +285,8 @@ For quick answers, keep the same structure but compress tables into ranked bulle
 - Do not start from hot stock names.
 - Do not answer an individual-stock question by describing only the company, financials, valuation, and stock price; always map upstream, downstream, and downstream demand first.
 - Do not treat downstream demand as a slogan. Name the application, buyer, demand driver, evidence, pass-through path, timing, and risk.
+- Do not accept a reported ASP, ARPU, fee-rate, take-rate, spread, or utilization increase as proof of durable pricing power. Separate external price/rate signal, company realized metric, unit cost, mix effect, unit spread, and reversal indicators.
+- Do not mix common/low-end offerings with premium/high-value offerings when judging demand, pricing, margin, or supply-demand tightness.
 - Do not equate theme heat with real beneficiary status.
 - Do not equate a good company with highest trading elasticity.
 - Do not promote C-grade chatter to a main conclusion.

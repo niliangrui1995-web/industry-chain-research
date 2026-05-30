@@ -123,6 +123,38 @@ For each node, answer:
 
 Do not stop at an industry label or a company profile. A company can be in the right theme but the wrong node, or in the right node with too little downstream demand pass-through to move earnings.
 
+### 3A. Core Product/Service Demand And Price Trend Mainline
+
+When the target company's earnings depend on a core product, core service, business line, SKU, product mix, price, ASP, ARPU, take rate, fee rate, spread, unit economics, or capacity utilization, add a two-line verification before the integrated verdict:
+
+1. Downstream demand mainline:
+   `terminal demand -> downstream product/system/customer -> core product/service demand -> company offering -> volume/ASP/ARPU/mix/margin`
+2. Core product price and unit-economics mainline:
+   `market price/rate -> company realized ASP/ARPU/take rate/fee/spread -> input/delivery/funding cost -> unit spread/gross margin -> sustainability`
+
+This is mandatory whenever price, ASP, ARPU, fee rate, take rate, spread, utilization, product mix, or service mix is central to the thesis. For non-product businesses, translate "price" into the relevant monetization metric: ARPU, subscription price, take rate, fee rate, commission rate, interest spread, occupancy rate, utilization rate, yield, renewal price, or unit revenue.
+
+Minimum output:
+
+```text
+| core product/service | downstream application/customer | end buyer/demand driver | same-chain validation | company proof | pass-through | timing | reversal risk |
+| reported price/unit metric and volume | external price/rate signal | input/delivery/funding cost | mix effect | unit spread/margin | supply-demand or competition reason | sustainability verdict | reversal indicator |
+```
+
+Use these verdict labels for the price, mix, or unit-economics thesis:
+
+- `structural_mix_upgrade`: high-end or special products are becoming a larger revenue/profit share.
+- `qualified_supply_shortage`: demand exceeds qualified supply, yield, certification, or usable capacity.
+- `demand_led_pricing`: real demand allows higher price, ARPU, take rate, fee rate, spread, or utilization.
+- `commodity_cycle`: broad product prices are recovering, but durability depends on capacity and inventory.
+- `cost_push`: realized price mainly follows input-cost inflation; margin durability is weaker.
+- `utilization_or_operating_leverage`: earnings improve mainly because fixed costs are spread over higher volume or usage.
+- `inventory_pull_forward`: downstream stocking or allocation behavior may reverse.
+- `competitive_price_pressure`: competition, customer bargaining power, or regulation is compressing price or unit economics.
+- `unclear`: evidence is insufficient; keep the stock as watch or event-only.
+
+Do not treat company-reported ASP, ARPU, take rate, fee rate, spread, or utilization alone as proof. Separate common versus premium offerings, external market price/rate versus realized company metric, input-cost inflation versus true spread expansion, and end demand versus pull-forward.
+
 ### 4. International Peer Benchmarking
 
 Complete this step before Porter Five Forces and before any integrated verdict.
@@ -267,6 +299,9 @@ For peer comparison, use the scorecard in `references/scorecard-template.md` whe
 
 ## Common Mistakes
 
+- Skipping downstream demand and price/unit-economics bridges when the thesis depends on a core product, service, ASP, ARPU, take rate, fee rate, spread, utilization, or mix.
+- Treating a company-reported ASP, ARPU, take-rate, fee-rate, spread, or utilization increase as durable pricing power without checking external price/rate signals, unit costs, mix effect, and unit spread.
+- Mixing common/low-end offerings with premium/high-value offerings when judging demand, price, or margin durability.
 - Do not infer BOM entry from a product launch alone.
 - Do not let current proof alone answer the whole question; always separate current evidence from future highlight potential.
 - Do not make the report mainly about past and present when the user asks about the future; past and current evidence should support the future thesis, not replace it.
