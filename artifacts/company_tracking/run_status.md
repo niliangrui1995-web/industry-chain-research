@@ -1,77 +1,49 @@
-# Company Tracking Run Status
+# A股公司持续跟踪 run_status
 
-metadata:
-
-- run_date: 2026-05-29
-- run_start_time_beijing: 2026-05-29 20:33:29 +08:00
-- run_closeout_time_beijing: 2026-05-29 21:09 +08:00
-- run_type: multi_agent_daily_update_evening_T_T_plus_1_closeout
-- status: completed_T_and_T_plus_1_no_missing_enabled_company
-- watchlist_updated: true
-- company_count: 12
-- baseline_created_count: 0
-- daily_updated_count: 12
-- logical_batches: 2
+## latest_run
+- run_date: 2026-05-30
+- run_finished_at_beijing: 2026-05-30 20:58:05 +08:00
+- automation_id: a-grok
+- enabled_company_count: 12
+- completed_company_count: 12
+- baseline_created_or_refreshed_count: 0
 - multi_agent_status: completed
-- multi_agent_workers_spawned: 12
-- multi_agent_workers_successful: 12
-- worker_model_policy: gpt-5.5 / reasoning_effort=xhigh, explicitly passed at spawn
-- chrome_grok_status: unavailable_no_callable_chrome_or_grok_tool_namespace
-- open_web_fallback_status: completed_or_recorded_observation_only_by_company
-- announcement_window_policy: post_20_00_all_companies_T_and_T_plus_1_checked
+- worker_model_policy: model=gpt-5.5; reasoning_effort=xhigh; explicitly passed for each successful company worker
+- logical_company_worker_limit: 6
+- actual_company_workers_spawned: 12
+- actual_company_workers_completed: 12
+- grok_chrome_status: unavailable_no_callable_chrome_tool
+- browser_substitution_policy: Browser/Playwright not used as Grok/X substitute
+- open_web_fallback_status: searched_per_company_observation_only
+- announcement_window_policy: T_and_T_plus_1 because run is after 20:00 Beijing time
 
-## Material changes
+## worker_batches
+- batch_1: 002428.SZ, 002222.SZ, 300476.SZ, 603256.SH, 601869.SH, 301511.SZ
+- batch_2: 002384.SZ, 300308.SZ, 688498.SH, 688668.SH, 300394.SZ, 603738.SH
 
-- `301511.SZ` 德福科技：新增 2026 年限制性股票激励计划草案，授予 176.8 万股、授予价 56.56 元/股、激励对象 56 人，并披露 2026-2028 年铜箔销量 16/18/20 万吨、净利润 6/10/15 亿元的公司层面考核目标。该事件新增销量/利润考核锚，不构成 HVLP/RTF 客户认证、订单、收入占比或毛利率兑现。
-- `002384.SZ` 东山精密：新增控股股东部分股份质押、解除质押及质押展期公告；公司称系置换前期质押、不涉及新增融资、不存在平仓风险、不导致控制权变更。新增互动易对苏州易缆微合作的商业保密回复，强化 source gap。
-- `603256.SH` 宏和科技：新增 SSE/CSI 官方指数调整事件，宏和科技调入上证380，2026-06-12 收市后生效。属于交易结构/被动资金观察，不是经营基本面披露。
-- `603738.SH` 泰晶科技：新增 2026-05-29 龙虎榜，因日价格振幅达到15%上榜，前五净卖出约 1,604.45 万元。属于交易拥挤度和资金分歧事件，不改变 AI 光模块晶振商业化证据边界。
-- `002222.SZ` 福晶科技：新增 1 笔小额平价大宗交易，成交额 201.12 万元。open-web 发现法拉第旋光片收入占比/产能爬坡的二级媒体线索，但未找到官方原文，暂为 observation-only。
-- `300308.SZ` 中际旭创：新增 3 笔小额平价大宗交易，合计 1,288.89 万元。2026-05-29 股权激励归属结果公告已由上一轮 T+1 入账，本轮确认不重复追加。
+## source_notes
+- CNINFO live API returned no 2026-05-30~2026-05-31 formal announcements for all enabled companies except already-recorded 002384.SZ 2026-05-30 pledge-related event found in the local event ledger.
+- Eastmoney latest-trading-day trading checks confirmed existing 2026-05-29 observations: 603738.SH LHB, 002222.SZ one block trade, 300308.SZ three block trades.
+- New appended events: 002222.SZ:投资者关系活动信息：法拉第旋光片已通过部分客户认证并实现供货，2025年营收占比不足1%, 601869.SH:2026-05-22投资者关系记录取得CNINFO官方PDF源, 301511.SZ:关于收购安徽慧儒科技有限公司部分股权并增资的进展暨完成工商变更登记的公告, 301511.SZ:高负债扩张，德福科技乘风31亿押注高端AI铜箔, 688498.SH:源杰科技调入科创50指数样本，2026年6月12日收市后生效
 
-## Announcement And Trading Highlights
-
-- Announcement window: all 12 enabled companies were checked after 20:00 Beijing time for announcement dates `2026-05-29` and `2026-05-30`; every completion row records `announcement_window_checked=T_and_T_plus_1`.
-- Dragon-tiger list: `603738.SH` 泰晶科技 had a new 2026-05-29 LHB record. No other enabled company had a new 2026-05-29 record in completed checks.
-- Block trades: `002222.SZ` had one 2026-05-29 flat block trade; `300308.SZ` had three 2026-05-29 flat block trades. No other enabled company had a 2026-05-29 block-trade addition in completed checks.
-- Baseline: no baseline was created or refreshed.
-
-## Grok/X And Fallback Status
-
-- Multi-agent tools were available and used. Twelve company workers were spawned with explicit `model="gpt-5.5"` and `reasoning_effort="xhigh"`, with maximum logical concurrency of 6.
-- Chrome/Grok callable tools were not exposed in this run, so no logged-in Chrome/Grok or X-native result was collected.
-- No Browser Use or Playwright substitute was used as a Grok/X replacement.
-- Open-web fallback was used or recorded per company as observation-only. No social/open-web item was promoted to confirmed fact without official disclosure, exchange data, company IR, or reputable source confirmation.
-
-## Baseline Changes And Source Gaps
-
-- Baseline updates: none.
-- Primary timing gate closed for this run: all enabled companies were scanned for `2026-05-29` plus T+1 `2026-05-30` announcement dates. Later overnight disclosures after closeout remain next-run scope.
-- SZSE source gaps: several SZSE announcement or trading endpoints returned 50x/maintenance responses. Company workers used CNINFO, company pages, SSE, Eastmoney trading APIs, P5W/互动易, HKEX, official index pages, and open-web observation as cross-checks.
-- `301511.SZ`: CNINFO ticker query missed the new incentive announcements, while company-name query and SZSE stock query found them. Future scans should retain company-name + ticker/SZSE dual path.
-- `002222.SZ`: e公司法拉第旋光片线索 is observation-only until an official IR, CNINFO, SZSE, or company source is found.
-
-## Per-company completion table
-
+## completion_table
 | ticker | name | batch_no | queue_status | browser_scope | announcements_checked | announcement_window_checked | lhb_checked | block_trade_checked | grok_status | open_web_fallback_status | state_change | miss_risk_notes |
-|---|---|---:|---|---|---|---|---|---|---|---|---|---|
-| 002428.SZ | 云南锗业 | 1 | completed_no_material_change | fallback_no_browser | checked_2026-05-29_to_2026-05-30_no_new | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_observation_only_turnover_lead | no_formal_state_change | 高成交观察不构成客户/订单/良率/利润证据 |
-| 002222.SZ | 福晶科技 | 1 | completed_with_block_trade | fallback_no_browser | checked_no_new_formal_notice | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_found_2m_flat_block_trade | unavailable_no_callable_chrome_tool | searched_observation_only_secondary_lead | updated_events_and_state | e公司法拉第线索缺官方原文；SZSE annList 50x |
-| 300476.SZ | 胜宏科技 | 1 | completed_no_material_change | fallback_no_browser | checked_no_new_cninfo_company_site | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_no_new_verified_operating_signal | no_change | SZSE接口50x；高成交不等于订单/毛利率证据 |
-| 603256.SH | 宏和科技 | 1 | completed_with_index_event | fallback_no_browser | checked_no_new_company_announcement | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_found_official_index_event | updated_events_and_state | 上证380调入为交易结构事件，不是经营披露 |
-| 601869.SH | 长飞光纤 | 1 | completed_no_formal_change | fallback_no_browser | checked_no_new_a_h_notice | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_useful_observation_only | no_formal_state_change | MSCI/行情为观察层，不并入公司事实 |
-| 301511.SZ | 德福科技 | 1 | completed_with_material_official_event | fallback_no_browser | checked_found_8_official_2026-05-29 | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_no_new_hard_signal_beyond_official | updated_events_and_state | CNINFO代码查询漏报，需保留公司名+SZSE双路径 |
-| 002384.SZ | 东山精密 | 2 | completed_with_governance_event | not_available_no_callable_chrome_tool | checked_found_2026-05-30_pledge_notice | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_no_unverified_material_signal | updated_events_and_state | 互动易仍是商业保密边界；AI主线待硬证据 |
-| 300308.SZ | 中际旭创 | 2 | completed_with_block_trade | fallback_no_browser | checked_prior_2026-05-29_incentive_notice_no_2026-05-30_new | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_found_3_flat_block_trades | unavailable_no_callable_chrome_tool | searched_no_new_operating_signal | updated_block_trade_only | 股权激励公告已入账，不重复追加 |
-| 688498.SH | 源杰科技 | 2 | completed_no_material_change | fallback_no_browser | checked_no_new_records | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_no_new_hard_signal | no_change | 200G EML客户/定点/收入占比仍未披露 |
-| 688668.SH | 鼎通科技 | 2 | completed_no_material_change | fallback_no_browser | checked_no_new_after_5_27_inquiry_reply | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_no_new_24h_material_signal | no_change | 6月2日业绩说明会为下一观察点 |
-| 300394.SZ | 天孚通信 | 2 | completed_no_material_change | fallback_no_browser | checked_no_new_cninfo_szse_ir_hkex | T_and_T_plus_1 | checked_2026-05-29_no_record | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_market_observation_only | no_change | 公开媒体仅为行情/资金流观察 |
-| 603738.SH | 泰晶科技 | 2 | completed_with_lhb_event | fallback_no_browser | checked_no_new_formal_notice | T_and_T_plus_1 | checked_2026-05-29_found_lhb | checked_2026-05-29_no_record | unavailable_no_callable_chrome_tool | searched_no_new_hard_signal | updated_events_and_state | 龙虎榜为交易结构，不证明客户/订单/收入 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 002428.SZ | 云南锗业 | 1 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_no_signal | no_change | 可能遗漏非公告论坛热度；官方与交易数据未见新增。 |
+| 002222.SZ | 福晶科技 | 1 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | hit_1_trade_201.12万_already_recorded | unavailable_no_callable_chrome_tool | searched_signal_found | secondary_ir_observation_appended | 官方IR原文/PDF未定位，法拉第旋光片线索仍为二级转述观察。 |
+| 300476.SZ | 胜宏科技 | 1 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_no_signal | no_change | 未见订单/客户/毛利率新增披露。 |
+| 603256.SH | 宏和科技 | 1 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_no_signal | no_change | 上证380调入为既有交易结构事件；无新客户认证硬证据。 |
+| 601869.SH | 长飞光纤 | 1 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_source_upgrade | official_ir_source_upgrade_appended | 来源升级不等同新增经营变化；订单排期仍未披露。 |
+| 301511.SZ | 德福科技 | 1 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero; backfill_2026-04-28 official found | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_signal_found | official_backfill_and_media_observation_appended | 5月30日媒体观察需官方确认；资本开支与负债压力上升。 |
+| 002384.SZ | 东山精密 | 2 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30 hit_existing_1225338102_deduped; 2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_no_new_operating_signal | no_change_existing_pledge_event | 质押事项已记录；不代表AI PCB经营变化。 |
+| 300308.SZ | 中际旭创 | 2 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | hit_3_trades_1288.89万_already_recorded | unavailable_no_callable_chrome_tool | searched_no_signal | no_change_existing_block_trades | 大宗交易为既有平价交易；未见800G/1.6T新硬证据。 |
+| 688498.SH | 源杰科技 | 2 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_signal_found | official_index_event_appended | 指数调入提升交易弹性，不构成200G EML订单或收入证明。 |
+| 688668.SH | 鼎通科技 | 2 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_no_signal | no_change | 6月2日业绩说明会前无新增硬证据。 |
+| 300394.SZ | 天孚通信 | 2 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | Eastmoney latest trading day 2026-05-29 no_hit | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_no_signal | no_change | H股发行和1.6T/CPO订单仍无新披露。 |
+| 603738.SH | 泰晶科技 | 2 | completed | chrome_grok_unavailable_no_callable_tool | CNINFO 2026-05-30~2026-05-31 zero | T_and_T_plus_1 | hit_2026-05-29_already_recorded | Eastmoney latest trading day 2026-05-29 no_hit | unavailable_no_callable_chrome_tool | searched_no_signal | no_change_existing_lhb | 龙虎榜已记录；未见高频晶体订单/客户硬证据。 |
 
-## Reconciliation
-
-Enabled watchlist tickers: `002428.SZ`, `002222.SZ`, `300476.SZ`, `603256.SH`, `601869.SH`, `301511.SZ`, `002384.SZ`, `300308.SZ`, `688498.SH`, `688668.SH`, `300394.SZ`, `603738.SH`.
-
-Completion table tickers: `002428.SZ`, `002222.SZ`, `300476.SZ`, `603256.SH`, `601869.SH`, `301511.SZ`, `002384.SZ`, `300308.SZ`, `688498.SH`, `688668.SH`, `300394.SZ`, `603738.SH`.
-
-Reconciliation result: matched_12_of_12_no_missing_enabled_company.
+## reconciliation
+- enabled_watchlist_count: 12
+- completion_table_count: 12
+- missing_enabled_tickers: none
+- baseline_pending_or_refresh_needed: none

@@ -200,3 +200,8 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - Grok/X：当前工具面没有可调用 Chrome/Grok/@chrome，记录为 `unavailable_no_callable_chrome_tool`；未使用 Browser Use 或 Playwright 冒充登录态 Chrome/Grok。
 - open-web fallback：普通公开网页主要为公告镜像、互动问答镜像、H 股递表和 AI PCB/光模块旧叙事；未发现可升级为官方确认的新客户、订单、出货、收入、毛利率、良率或产能硬证据。
 - 本次状态变化：追加控股股东质押/解押/展期公告和一条互动易 source-gap 事件。核心基线不变，继续跟踪控股股东质押比例、AI PCB 扩产节点、苏州易缆微合作是否有双方官方确认、索尔思 H1 收入/毛利/净利拆分。
+
+## 2026-05-30 日更状态
+- 检查窗口：公告 T/T+1（2026-05-30 至 2026-05-31）、最近交易日龙虎榜/大宗交易（2026-05-29）。
+- 结论：5月30日控股股东质押、解除质押及质押展期公告已在事件表中存在，本次不重复写入；该事项属于治理/质押跟踪，不补强AI PCB经营证据。
+- 来源分层：官方披露/交易数据优先；Grok/X不可调用时使用 open-web fallback，相关线索仅作观察池。

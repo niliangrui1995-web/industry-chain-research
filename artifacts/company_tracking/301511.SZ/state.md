@@ -225,3 +225,8 @@ open_web_fallback_status: searched_observation_only_project_news_confirmed_offic
 - Grok/X：当前工具面没有可调用 Chrome/Grok/@chrome，记录为 `unavailable_no_callable_chrome_tool`；未使用 Browser Use 或 Playwright 冒充登录态 Chrome/Grok。
 - open-web fallback：普通公开网页主要为 31 亿元高端 AI 电子电路铜箔项目媒体转述，未提供超出官方公告的新客户、订单、收入或毛利率证据。
 - 本次状态变化：追加股权激励官方事件到账本。该事件提供中期销量/净利润考核锚和团队激励绑定，但仍不证明 HVLP/RTF 客户认证、批量订单、收入占比或毛利率兑现。下一步重点跟踪 2026-06-12 股东会是否通过、60 日内是否完成授予，以及 2026 年 16 万吨销量和 6 亿元净利润目标能否由 H1/Q2 数据支撑。
+
+## 2026-05-30 日更状态
+- 检查窗口：公告 T/T+1（2026-05-30 至 2026-05-31）、最近交易日龙虎榜/大宗交易（2026-05-29）。
+- 结论：补写4月28日安徽慧儒工商变更完成的官方公告，并追加5月30日界面新闻关于满产、5万吨项目、客户送样及负债压力的观察线索。
+- 来源分层：官方披露/交易数据优先；Grok/X不可调用时使用 open-web fallback，相关线索仅作观察池。
