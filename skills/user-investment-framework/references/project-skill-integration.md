@@ -37,6 +37,8 @@ Rule: start with `user-investment-framework`; load the smallest useful supportin
 | `ai-chain-research-orchestrator` | Current AI-chain evidence, Grok/X discovery, Gemini source gaps, rumor discipline. | Evidence coordinator, not final stock selector. |
 | `browser-grok-gemini-research` | Logged-in Chrome collection for Grok/X or Gemini webpages. | Collector only; Codex verifies and concludes. |
 
+Before loading companion skills for AI data-center or semiconductor-chain bottleneck and stock-mapping tasks, consult `references/ai-chain-node-taxonomy.md` when the task needs exact node selection. It is a local node map for Level 3 / Level 4 P0 granularity and P5 search hints; it is not evidence for demand, supply gaps, pricing, or listed-company exposure.
+
 ## Industry Chain, Bottlenecks, And Competition
 
 | Skill | Use When | Boundary |

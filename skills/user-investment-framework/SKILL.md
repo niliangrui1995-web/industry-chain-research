@@ -40,6 +40,31 @@ Default companion layers:
 
 Do not load every companion skill. Start here, classify the request, then load the smallest useful combination.
 
+## AI Chain Node Taxonomy Reference
+
+For AI data-center, AI hardware, semiconductor-chain, and AI产业链 tasks, use `references/ai-chain-node-taxonomy.md` as the local node map before selecting bottlenecks, comparing nodes, or mapping listed companies.
+
+This taxonomy points to the cleaned Level 1-5 AI chain mind map in `docs/ai_chain_disassembly/`:
+
+- use Level 1 and Level 2 for chain-family orientation;
+- use Level 3 and Level 4 P0 as the normal research, bottleneck, value-share, and company-mapping granularity;
+- use P5 summaries only as material, equipment, component, process, or search-keyword hints;
+- never treat the taxonomy itself as evidence for demand, orders, pricing, supply gaps, customer validation, or stock exposure.
+
+After the taxonomy identifies the exact node, still run the evidence workflow below: downstream demand bridge, current evidence check when needed, bottleneck proof, global-leader calibration, listed-company hard-evidence mapping, and three-layer ranking.
+
+## Unknown Stock Node Discovery Gate
+
+For individual-stock or company prompts, do not assume the AI-chain node from the stock name. If the company's exact product, service, or value-chain exposure is not already known, run a short identity and exposure discovery step before using the AI chain taxonomy:
+
+1. identify the listed entity, ticker, market, main business lines, and latest segment/product disclosure;
+2. extract the specific products, services, materials, equipment, components, processes, or customer applications that may connect to AI data-center or semiconductor demand;
+3. grade each exposure as `confirmed`, `partial clue`, `rumor only`, or `not found` using official filings, announcements, IR records, product pages, or credible primary-adjacent sources;
+4. map only the confirmed or partial-clue product terms to candidate Level 3 / Level 4 P0 taxonomy paths;
+5. if no direct or partial AI-chain exposure is found, say the company is outside the current AI taxonomy scope or keep it as `theme_adjacent` / `watch`, not a main AI-chain candidate.
+
+Use `search-specialist`, `a-share-disclosure-trading-data`, `stock-fundamental-moat-triad`, and source-digestion skills when the identity or exposure is unclear. The taxonomy is used after this discovery step, not before it.
+
 ## Workflow
 
 ### 1. Classify The Real Task
@@ -47,6 +72,7 @@ Do not load every companion skill. Start here, classify the request, then load t
 Before answering, classify the request as one or more of:
 
 - industry-chain learning or node disassembly;
+- AI data-center or semiconductor-chain node lookup against the local AI chain taxonomy;
 - upstream/downstream chain mapping and downstream demand transmission;
 - current or future bottleneck diagnosis;
 - technology moat, domestic substitution, or global leader comparison;
@@ -76,6 +102,8 @@ Do not start from hot A-share names and reverse-map a story.
 For any individual-stock or company question, do not start with "this company is good/bad." First prove the chain context:
 
 `upstream inputs/equipment -> company product/node -> downstream product/system -> end customer -> terminal demand driver`
+
+If the company product/node is unknown, first run the Unknown Stock Node Discovery Gate above. Only after the product or exposure is identified should you select candidate AI taxonomy paths.
 
 First define:
 
@@ -144,6 +172,8 @@ If a core offering's price, ASP, ARPU, take rate, fee rate, spread, or utilizati
 
 Treat a bottleneck as a demand-vs-qualified-supply gap, not a popularity label.
 
+For AI data-center and semiconductor-chain questions, first locate the candidate path in `references/ai-chain-node-taxonomy.md`, normally at Level 3 or Level 4 P0. Use that path to define the exact node before judging bottleneck status. P5 summaries can guide evidence searches for materials, equipment, components, and processes, but they do not by themselves prove a bottleneck.
+
 A real bottleneck needs demand-side evidence and supply-side constraint evidence, such as:
 
 - qualified capacity shortage;
@@ -190,6 +220,8 @@ Do not claim parity from one headline parameter. Compare specs, reliability, cus
 ### 7. Map Listed Companies Only After Node Selection
 
 Do not map or rate a company before the upstream/downstream map and downstream demand table are present. A company profile, financial summary, valuation, or stock chart is incomplete if it does not explain who downstream buys, why demand grows, and how that demand reaches the company's exact node.
+
+For AI-chain mapping, record the exact taxonomy path when available, such as `AI 数据中心 / 智算中心 > ... > Level 3 node > Level 4 P0 node`. Use the path to reject theme-adjacent companies that do not expose the same node.
 
 For each candidate, verify:
 
