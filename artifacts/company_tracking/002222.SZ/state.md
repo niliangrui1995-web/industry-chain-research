@@ -1,6 +1,6 @@
 # 福晶科技（002222.SZ）滚动状态
 
-> 更新日期：2026-05-25
+> 更新日期：2026-05-31
 > 档案状态：baseline_created  
 > grok_status: unavailable_chrome_tool_not_exposed
 
@@ -234,3 +234,15 @@
 - 检查窗口：公告 T/T+1（2026-05-30 至 2026-05-31）、最近交易日龙虎榜/大宗交易（2026-05-29）。
 - 结论：追加二级转述的5月29日投资者关系观察：法拉第旋光片已认证并供货但2025年收入占比不足1%，二期D楼和产能利用信息需等待官方IR原文/PDF或公告确认。
 - 来源分层：官方披露/交易数据优先；Grok/X不可调用时使用 open-web fallback，相关线索仅作观察池。
+
+## 2026-05-31 worker batch 1 复核
+
+- worker_scope：仅复核 `002222.SZ` 福晶科技；未改动 watchlist、日报、run_status、Excel、baseline 或 git。
+- current_time：北京时间 `2026-05-31 20:37`；`announcement_window_checked=T_and_T_plus_1`，覆盖公告日期 `2026-05-31` 与 `2026-06-01`。
+- 官方公告/CNINFO/IR：CNINFO `hisAnnouncement/query` 按 `002222,gssz000222`、`2026-05-31~2026-06-01` 返回 0 条；东方财富公告镜像同窗口 `total_hits=0`；深交所 `annList` 本轮返回 50x 维护页，作为 source gap 记录。全景/互动易公告列表最新正式公告仍为 `2026-05-21` 股东会决议；公司官网投资者页未见 `2026-05-31` 或 `2026-06-01` 新增公告、订单、扩产或正式 IR。全景/互动易调研列表已返回 `2026-05-29`《福晶科技投资者关系管理信息20260529》官方 PDF，因此将前轮二级转述的法拉第旋光片、WSS 衍射光栅和产能利用信息升级为官方 IR 确认。
+- 龙虎榜：最近交易日为 `2026-05-29`；东方财富 `RPT_DAILYBILLBOARD_DETAILSNEW` 按 `002222`、`2026-05-29` 返回空数据，未发现新增龙虎榜。
+- 大宗交易：东方财富 `RPT_DATA_BLOCKTRADE` 确认 `2026-05-29` 已入账的 1 笔平价大宗交易（成交价 100.56 元、2.00 万股、201.12 万元），该事件已在前轮写入，本轮不重复追加。
+- grok_status：`unavailable_no_callable_chrome_tool`；本轮没有可调用 `@chrome`/Grok 工具，未使用 Browser Use 或 Playwright 冒充登录态 Chrome/Grok。
+- open_web_fallback_status：`searched_observation_only`。普通联网搜索最近 24 小时主要返回证券时报/第一财经等对 2026-05-29 官方 IR 的转述，以及行情、旧年报和概念讨论；未发现 `2026-05-31` 至本次运行时新增的订单、客户签约、WSS 量产、扩产、法拉第旋光片收入拆分或价格/产量硬披露。
+- state_change：追加 1 条官方 IR source-upgrade 事件；基本面主判断不变。法拉第旋光片已从二级线索升级为官方确认的“小规模供货/认证、收入占比不足 1%、产能爬坡”观察项，但仍不能视为大额订单或利润兑现；继续跟踪 WSS/ROADM、复杂光胶组件、客户订单、收入拆分、毛利率和回款验证。
+- miss_risk_notes：深交所 annList 50x，已用 CNINFO、东方财富公告镜像、全景/互动易、公司官网和 open-web 检索交叉补位；`2026-06-01` 是 T+1 公告日，若本次运行后继续披露仍需下一轮复查；Grok/Chrome 原生线索未覆盖。

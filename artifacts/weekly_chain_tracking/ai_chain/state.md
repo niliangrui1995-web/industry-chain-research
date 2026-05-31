@@ -1,9 +1,9 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
-更新时间：2026-05-24
-最新报告：`artifacts/weekly_chain_tracking/ai_chain/2026-05-24.md`
-覆盖窗口：2026-05-18 至 2026-05-24，北京时间
-当前阶段：第四期全链雷达，已吸收光模块专项 2026-05-17 状态与 AI PCB 专项 2026-05-24 状态。
+更新时间：2026-05-31  
+最新报告：`artifacts/weekly_chain_tracking/ai_chain/2026-05-31.md`  
+覆盖窗口：2026-05-24 至 2026-05-31，北京时间  
+当前阶段：第五期全链雷达，已吸收光模块专项 2026-05-31 状态与 AI PCB 专项 2026-05-31 状态。
 
 ## 任务边界
 
@@ -25,91 +25,83 @@
 
 ## 本期全链结论
 
-1. `HBM / 高端 DRAM / enterprise SSD`：维持全链最硬约束，`hard_bottleneck`。NVIDIA FY2027 Q1 Data Center 收入 752 亿美元、同比 +92%，TrendForce 指向 AI server 出货继续上修，叠加 Micron/Samsung/TrendForce 既有供需和涨价证据，支持需求超过合格 HBM/DRAM/NAND/eSSD 供给。预计持续 `2026H2-2027H1`，若 HBM4E、packaging 或 eSSD ramp 慢可延至 `2027H2`。
-2. `CoWoS / EFB / advanced packaging`：从 `strategic_watch` 上调为 `soft_bottleneck/watch+`。AMD 宣布超过 100 亿美元台湾生态投资并扩大先进封装能力，Lam 建 Panel-Level Packaging CoE，B 级来源称 CoWoS 扩产仍未完全解决 AI 芯片需求下的供应瓶颈。缺 TSMC/OSAT 官方交期和 allocation，暂不升 hard。预计 `2026H2-2027H1` 偏紧，2027 后边际缓解。
-3. `高端 EML / InP / CW laser / pump laser`：继续吸收光模块专项，维持 `hard_bottleneck`。Lumentum 10-Q 的 demand outpacing supply/allocation 口径和 Coherent 6 英寸 InP ramp 支撑。预计 `2026H2-2027H1`，CPO/OCS 上修可延至 `2027H2`。
-4. `M7/M8/M9 CCL / prepreg`：吸收 AI PCB 专项 2026-05-24 报告，维持并强化为 `soft_bottleneck`。NVIDIA/Cisco/TTM 需求、Panasonic 涨价、Vexos lead time 和 TrendForce/DigiTimes 价格/预购共同支持。预计 `2026Q2-2026H2` 偏紧，`2027H1` 仍需观察。
-5. `高端电子布 / Low CTE / T-glass / Low Dk/Df`：吸收 AI PCB 专项，维持 `soft_bottleneck+`。Nittobo 上调 FY2027 目标和 Special Glass capex，支持供给刚性；仍缺官方交期、配额、断供证据。预计 `2026H2-2027H1`，Q 布/石英布偏 `2027H2-2028`。
-6. `数据中心电力 / 并网 / transformer / switchgear / UPS / rack power / 液冷`：从 `soft_bottleneck/watch` 升级为 `soft_bottleneck`。DOE 对 PJM 的 5/18 和 5/21 应急授权证明区域电力和可调度电源存在运营性硬约束；Siemens Energy、Eaton、GE Vernova、nVent、CoreWeave 等 A 级证据支撑订单和 backlog 强。全链不升 hard，因为缺逐项单品 lead time 和 allocation。预计 `6-24 个月`，输电侧更长。
-7. `HVLP/VLP/RTF PCB 铜箔`：吸收 AI PCB 专项，从 watch 强化为 `soft_bottleneck/watch+`。德福科技年报证明 PCB 级 HVLP 导入进展，但 HVLP5 批量收入和多客户证据不足。预计 `2026H2-2027`，精确月度 `N/A`。
-8. `AI networking / retimer / NIC / DPU / Ethernet switch`：需求强、结构重要，但仍缺 allocation、交期、缺料证据，维持 `strategic_watch`。
+1. `HBM / 高端 DRAM / enterprise SSD / AI server parts supply`：维持并强化为全链最硬 `hard_bottleneck`。Dell Q1 FY27 官方财报和业绩会同时给出 AI orders 244 亿美元、AI server revenue 161 亿美元、AI backlog 513 亿美元，并明确 demand outpacing supply、parts supply/memory 是主约束；TrendForce 指 Agentic AI 推动 HBM/DRAM/KV cache/高性能 SSD 需求且供给缺口短期难补。预计 `2026H2-2027H1`，若 HBM4E/eSSD/CPU/packaging ramp 慢可延至 `2027H2`。
+2. `高端 EML / InP / CW / pump / 1.6T 光互连组件`：吸收光模块专项，维持 `hard_bottleneck`；1.6T driver/TIA/GaN/LPO-LRO/NPO-CPO 由 Semtech/Marvell/NVIDIA 证据强化为 `soft_bottleneck/watch+`。预计 EML/InP `2026H2-2027H1`，CW/pump/ELS/CPO 与 1.6T 组件可到 `2027H2-2028H1`，Semtech 分项仍需二供验证。
+3. `M7/M8/M9 CCL / prepreg + 高端电子布 / HVLP`：吸收 AI PCB 专项，维持 `soft_bottleneck` 到 `soft_bottleneck+`。AI PCB 专项把 CCL 和电子布偏紧进一步增强；HVLP 仍为 `soft_bottleneck/watch+`。预计 CCL `2026H2` 偏紧、`2027H1` 仍观察；电子布 `2026H2-2027H1`；Q 布/石英布偏 `2027H2-2028`。
+4. `数据中心电力 / 并网 / 800VDC / rack power / 液冷`：维持全链 `soft_bottleneck`，PJM/Ohio/PA 区域按 `regional hard operational bottleneck`。DOE/OCC/Ohio 证据强化大负载接入与电网运行约束；Schneider/Microchip/Infineon 证明 800VDC/SST/rack power 产品化。区域并网预计 `2026H2-2030`，全球电力/液冷单品预计 `6-24 个月` 但精确交期 `N/A`。
+5. `CoWoS / EFB / SoIC / advanced packaging / substrate`：维持 `soft_bottleneck/watch+`，不升 hard。本周 Marvell、NVIDIA、AMD 证据证明 demand 和 ecosystem，但缺 TSMC/OSAT 官方交期、allocation、良率或客户排产延期。预计 `2026H2-2027H1` 偏紧，2027 后边际缓解。
+6. `AI networking switch ASIC / NIC / DPU / retimer / custom XPU`：维持 `strategic_watch`，未来可能升 `watch_to_soft`。Marvell/NVIDIA 需求和生态强，但未见 networking silicon 供应短缺、lead time 或 allocation。
 
 ## 专项吸收状态
 
 | 专项任务 | 最新状态文件 | 本期吸收结论 | 对全链排序的影响 |
 |---|---|---|---|
-| 光模块及上游 | `artifacts/weekly_chain_tracking/optical_module/state.md` | 高端 EML/InP/CW/pump laser 为硬堵点；模块整机装配 soft 已缓解；FAU/MT/光连接/主动对准/热管理为未来迁移 watch | 光源链排当前核心卡点第 3；光连接和无源精密件进入未来卡点池 |
-| AI PCB 及上游 | `artifacts/weekly_chain_tracking/ai_pcb/state.md` | M7/M8/M9 CCL/prepreg 为 soft；高端电子布为 soft+；HVLP 为 watch+；板厂良率/测试仍 watch | PCB 材料链排当前核心卡点第 4；Q 布/HVLP/板厂测试进入未来迁移池 |
+| 光模块及上游 | `artifacts/weekly_chain_tracking/optical_module/state.md` | 高端 EML/InP/CW/pump/ELS 为 hard；模块整机软堵点缓解；FAU/MT/主动对准/测试和热管理为未来迁移观察 | 光源链排当前核心卡点第 2；1.6T 光互连组件列未来潜在卡点 |
+| AI PCB 及上游 | `artifacts/weekly_chain_tracking/ai_pcb/state.md` | M7/M8/M9 CCL/prepreg soft worsened；高端电子布 soft+ worsened；HVLP watch+；板厂良率/测试仍 watch | PCB 材料链排当前核心卡点第 3；M9/M10/Q 布/HVLP/板厂测试列未来迁移池 |
 
 ## 当前全链堵点账本
 
 | 节点 | 所属赛道 | 状态 | 严重程度 | 造成堵点的机制 | 本期变化 | 关键证据 | 预计持续时间 | 反转指标 | 下次动作 |
 |---|---|---|---|---|---|---|---|---|---|
-| HBM / HBM4 / 高端 DRAM / enterprise SSD | 存储 | 当前主堵点 | hard_bottleneck | AI server、GPU/ASIC、KV cache/eSSD 需求超过合格 HBM/DRAM/NAND/eSSD 供给；晶圆分配、堆叠、封装、客户认证和 LTA 锁量共同约束 | unchanged/strengthened | NVIDIA FY2027 Q1、TrendForce AI server、Micron/Samsung/TrendForce 既有证据 | 2026H2-2027H1；可延至 2027H2 | 价格涨幅收敛、库存回升、客户不锁量、HBM4E 多供方认证 | 跟 HBM4E 认证、capex、库存天数、价格 |
-| CoWoS / EFB / advanced packaging | 先进封装 | 当前软堵点/观察增强 | soft_bottleneck/watch+ | GPU/ASIC 多 die 与 HBM4E 抬高 2.5D 封装、基板、键合、测试、热管理和设备负荷 | upgraded | AMD 台湾生态投资、Lam PLP CoE、ASML/Reuters、Taipei Times | 2026H2-2027H1 偏紧；精确交期 N/A | TSMC/OSAT 交期恢复、客户不共投封装、替代封装顺利 | 跟 TSMC/ASE/Amkor/基板/设备交期 |
-| 高端 EML / InP / CW laser / pump laser | 光模块上游 | 当前主堵点 | hard_bottleneck | 800G/1.6T/CPO/OCS 需求超过合格光源和 InP 产能，良率、客户锁定和封装测试约束 | unchanged | Lumentum 10-Q/Q3、Coherent Q3、光模块专项 | 2026H2-2027H1；CPO/OCS 上修可至 2027H2 | allocation 解除、交期恢复、6 英寸 InP 合格产能兑现 | 交给光模块专项追 transcript/单品缺口 |
-| M7/M8/M9 CCL / prepreg | AI PCB/CCL | 当前软堵点 | soft_bottleneck | 低损耗配方、电子布、HVLP 铜箔、树脂、层压良率和客户认证共同约束 | worsened | AI PCB 专项、NVIDIA/Cisco/TTM、Panasonic、Vexos | 2026Q2-2026H2；2027H1 观察 | 报价停涨、交期回 4-8 周、二供进 AVL | 交给 PCB 专项跟台系 5/6 月营收和成交价 |
-| 高端电子布 / Low CTE / T-glass / Low Dk/Df | PCB 上游材料 | 当前软堵点 | soft_bottleneck+ | 窑炉、成纤、织布、良率和客户 AVL 限制短期合格供给 | unchanged_to_worsened | Nittobo、TrendForce/DigiTimes、PCB 专项 | 2026H2-2027H1；Q 布/石英布 2027H2-2028 | 高端布库存恢复、价格回落、交期缩短 | 跟分产品交期、配额、AVL |
-| 数据中心电力 / 并网 / transformer / switchgear | 数据中心基础设施 | 当前软堵点 | soft_bottleneck；PJM 区域 hard operational | AI factory 从芯片订单转向 GW 级建设，firm power、并网和电力设备可能限制投产 | upgraded | DOE/PJM、CoreWeave、Siemens Energy、Eaton、GEV、WoodMac | 6-24 个月；输电侧更长 | DOE/PJM 应急不再复现、队列缩短、backlog 回落、交期正常化 | 跟单品 lead time 与项目延期 |
-| UPS / busway / rack PDU / CDU / 冷板 / 液冷 | 数据中心电力/热管理 | 当前软堵点观察 | soft_bottleneck/watch | 机柜功率密度提升，rack power 和液冷系统认证、集成、可靠性约束 | upgraded_watch | nVent、Vertiv、Eaton、Schneider | 6-18 个月；精确交期 N/A | PDU/CDU/冷板交期缩短，液冷项目不延期 | 跟官方订单、交期和 A 股订单纯度 |
-| HVLP/VLP/RTF PCB 铜箔 | PCB 上游材料 | 候选卡点 | soft_bottleneck/watch+ | 低粗糙度表面处理、一致性、添加剂和客户认证约束 | strengthened | 德福科技年报、DigiTimes、PCB 专项 | 2026H2-2027；精确月度 N/A | PCB 级 HVLP4/5 多客户批量供货、加工费回落 | 跟德福/嘉元/诺德/铜冠披露 |
-| 光连接 / MT ferrule / FAU / 主动对准测试 | 光互连迁移 | 未来迁移 | watch | CPO/OCS/ELS 和 AI factory 光密度提升可能迁移瓶颈 | watch_enhanced | Corning/NVIDIA、光模块专项 | N/A | Corning 扩产按期释放，无源件无涨价/交期 | 跟 Corning 会议和 A/台股传导 |
-| AI networking / retimer / Ethernet | 高速互连 | 战略观察 | strategic_watch | 网络需求强，但未见电互连/交换机/retimer 短缺证据 | unchanged | NVIDIA/Cisco/Arista/Astera/Marvell/Broadcom | N/A | 出现 allocation/交期则升级 | 跟订单、交期和客户导入 |
+| HBM / HBM4E / server DRAM / NAND / enterprise SSD | 存储 | 当前主堵点 | hard_bottleneck | AI server 与 agentic AI/KV cache 需求超过合格 memory/storage 供给，晶圆分配、HBM 堆叠、客户认证和 LTA 锁量共同约束 | worsened/strengthened | Dell Q1 FY27、Dell transcript、TrendForce、Samsung HBM4E 送样 | 2026H2-2027H1；可延至 2027H2 | DRAM/NAND/HBM 价格涨幅收敛、库存回升、多供方 HBM4E 认证 | 跟 Micron/Samsung/SK hynix、Dell/HPE/SMCI |
+| AI server BOM / parts supply | 服务器/ODM | 当前软堵点 | soft_bottleneck+ | ODM 有制造能力但受 memory、microprocessors、NAND/DRAM/HDD/PCB 等 parts supply 同步约束 | new/upgraded | Dell transcript | 2-4 个季度；若 memory/CPU 释放可降级 | ODM 交付不再受 parts 约束，backlog/shipments 比例回落 | 找 HPE/SMCI/ODM 二次验证 |
+| 高端 EML / InP / CW / pump / ELS | 光互连 | 当前主堵点 | hard_bottleneck | 1.6T/3.2T、CPO/NPO/ELS 对高速光源和 InP 合格产能需求超过供给 | unchanged/worsened | 光模块专项、Coherent 6 英寸 InP、Lumentum 既有 allocation | EML/InP 2026H2-2027H1；CW/pump/ELS/CPO 可到 2027H2-2028H1 | allocation 解除、交期恢复、6 英寸 InP 合格产能兑现 | 交给光模块专项追单品和客户认证 |
+| 1.6T/3.2T optical driver/TIA/GaN/LPO-LRO/NPO-CPO | 高速互连 | 候选软堵点 | soft_bottleneck/watch+ | 1.6T/3.2T 对高速模拟、GaN、功耗、测试和认证要求上升 | new | Semtech Q1 FY27、Semtech transcript、Marvell/NVIDIA | 2026H2-2027；精确持续 N/A，需二供验证 | 同业不再提产能缺口，交期/价格正常化 | 找 Credo/Marvell/Coherent/Lumentum/Corning/Fujikura 验证 |
+| M7/M8/M9 CCL / prepreg | AI PCB/材料 | 当前软堵点 | soft_bottleneck | 低损耗配方、电子布、HVLP、树脂、层压良率和客户 AVL 共同约束 | worsened | AI PCB 专项：沪电、建滔、联茂、Evertiq/NCAB | 2026H2 偏紧，2027H1 观察 | 报价停涨/回落，lead time 回常态，二供进入 AVL | 交给 PCB 专项跟台系营收和报价 |
+| 高端电子布 / Low CTE / T-glass / Low Dk/Df | PCB 上游材料 | 当前软堵点 | soft_bottleneck+ | 窑炉、拉丝、织布、后处理、良率和客户认证约束 | worsened | 中材科技、沪电 IR、Evertiq | 2026H2-2027H1；Q cloth/石英布 2027H2-2028 | 高端布库存恢复、报价回落、交期缩短 | 跟分产品交期、配额和 AVL |
+| HVLP/VLP/RTF PCB 铜箔 | PCB 上游 | 候选卡点 | soft_bottleneck/watch+ | 低粗糙度一致性、表面处理、添加剂和客户认证约束 | unchanged_to_future_supply_response | 德福高端 AI 电子电路铜箔项目、专项既有认证线索 | 2026H2-2027 watch；精确持续 N/A | HVLP4/5 多客户批量供货、加工费回落 | 跟德福/嘉元/诺德/铜冠 |
+| 数据中心电力 / 并网 / grid operations | 电力基础设施 | 当前软堵点；区域 hard | soft_bottleneck；regional hard operational | 大负载建设速度超过电网、备用容量和并网供给建设速度，动态负载增加运行稳定性压力 | strengthened | DOE、OCC、Ohio/PJM、Schneider/TeraWulf | 区域 2026H2-2030；全球设备链 6-24 个月 | reserve margin 改善，容量拍卖价格回落，备电调用减少 | 跟 RTO/utility、tariff、项目延期 |
+| transformer / switchgear / UPS / busway / rack PDU / CDU / 冷板 | 电力/热管理 | 当前软堵点观察 | soft_bottleneck/watch | 高功率机柜和液冷系统认证、可靠性、集成和现场交付约束，但本周缺单品短缺证据 | unchanged | Schneider/Motivair、Microchip、Infineon、既有 Eaton/nVent/Vertiv | 6-18 个月；精确交期 N/A | CDU/冷板/PDU 交期缩短，ASP/毛利回落 | 跟单品 lead time、订单纯度 |
+| CoWoS / EFB / SoIC / advanced packaging / substrate | 先进封装 | 当前软堵点观察 | soft_bottleneck/watch+ | GPU/ASIC multi-die 和 HBM 需求推高 2.5D/3D 封装、基板、键合、测试和设备负荷 | unchanged | Marvell、NVIDIA NVLink Fusion、AMD advanced packaging 生态 | 2026H2-2027H1 偏紧，2027 后边际缓解 | TSMC/OSAT 交期恢复，客户不再锁封装产能 | 跟 TSMC/ASE/Amkor/基板/设备 |
+| AI networking switch ASIC / NIC / DPU / retimer / custom XPU | 高速互连 | 战略观察 | strategic_watch | 需求强，但缺 silicon allocation、lead time 或出货受限证据 | unchanged/attention_up | Marvell Q1 FY27、NVIDIA NVLink Fusion | N/A | 出现 allocation/交期则升级 | 跟 Marvell/Broadcom/NVIDIA/Arista |
 
 ## 本期深挖方向
 
-- 主深挖 1：`HBM / 高端 DRAM / enterprise SSD + CoWoS / 2.5D advanced packaging`。重点跟踪 HBM4/HBM4E 客户认证、DRAM/NAND 晶圆分配、enterprise SSD/KV cache offload、TSMC/OSAT 封装排产、EFB/EMIB/FOPLP 替代路径和先进封装设备交期。
-- 主深挖 2：`数据中心电力 / 并网 / 变压器 / switchgear / UPS / rack power / 液冷`。重点把 DOE/PJM 区域约束、CoreWeave active power、Siemens/Eaton/GEV/nVent/Vertiv backlog 拆成单品 lead time、项目延期和 A 股订单纯度。
+- 主深挖 1：`HBM/DRAM/NAND/eSSD + AI server parts supply`。重点跟踪 Dell 证据是否被 HPE/SMCI/ODM/云厂验证，约束是否仍集中在 memory，还是扩散到 CPU、microprocessors、PCB、HDD/eSSD。
+- 主深挖 2：`数据中心电力/并网 + 800VDC/SST/rack power/液冷`。重点把区域 hard operational 约束和全球设备/液冷单品 soft/watch 分开，跟踪 RTO/utility、备电调用、tariff、项目延期、transformer/switchgear/CDU/PDU 单品 lead time。
 
 ## 三类排名快照
 
 | 类型 | 排名 | 对象 | 理由 | 证据等级 | 风险 |
 |---|---:|---|---|---|---|
-| 结构重要性 | 1 | GPU/ASIC + TSMC/advanced packaging | AI 算力核心入口，决定全链需求传导 | A | 不等于 GPU 成品短缺 |
-| 结构重要性 | 2 | HBM / 高端 DRAM / enterprise SSD | 合格内存与存储供给直接限制 AI accelerator 和推理扩张 | A/B | 2027 供给释放 |
-| 结构重要性 | 3 | 数据中心电力/并网/液冷/rack power | AI factory 建设进入 GW 级 power 与 thermal 约束 | A/B | 单品交期仍待补 |
-| 结构重要性 | 4 | 高端 EML / InP / CW / pump laser | 光互连瓶颈支撑 1.6T/CPO/OCS | A/B | 扩产兑现 |
-| 结构重要性 | 5 | AI PCB/CCL/电子布/HVLP | 高速高层材料规格升级 | A/B/C2 | 高端收入和交期证据不足 |
-| 基本面质量 | 1 | NVIDIA / TSMC / SK hynix / Samsung / Micron | 控制算力、先进制造和 HBM 利润池 | A/B | 估值与地缘 |
-| 基本面质量 | 2 | Lumentum / Coherent | 控制高速光源和 InP/CW 核心节点 | A | 扩产和年降 |
-| 基本面质量 | 3 | Vertiv / Eaton / Schneider / Siemens Energy / GE Vernova | 数据中心电力和 thermal 全球龙头 | A/B | 项目周期 |
-| 基本面质量 | 4 | Panasonic / 台光电 / 生益科技 / Nittobo | CCL/电子布材料卡点映射最硬 | A/B | 涨价传导与客户认证 |
-| 基本面质量 | 5 | 中际旭创 / 新易盛 / 天孚通信 / 沪电股份 / TTM | 光模块与板厂交付能力强 | A/B | 拥挤与毛利年降 |
-| 业绩弹性 | 1 | HBM/AI memory/eSSD 供应商 | ASP、LTA、产品结构和 capex 向高价值内存倾斜 | A/B | 供给释放 |
-| 业绩弹性 | 2 | Lumentum / Coherent | EML/CW/pump/InP 产能爬坡与客户锁单 | A | 单品扩产后价格回落 |
-| 业绩弹性 | 3 | 数据中心电力/液冷龙头 | backlog 转收入、液冷 attach rate、系统交付 | A/B | 项目延期 |
-| 业绩弹性 | 4 | CCL/电子布/HVLP | 涨价和材料代际升级 | A/B/C2 | 认证和成交价不确定 |
-| 业绩弹性 | 5 | advanced packaging/设备链 | 客户共投、合格产能爬坡和设备需求 | A/B | A 股映射弱 |
-| 交易弹性 | 1 | PCB 上游高弹性组 | 本周涨幅和成交放大，材料卡点和设备迁移预期强 | A/B/C | 高端收入证据不足 |
-| 交易弹性 | 2 | A 股光模块/CPO 弹性组 | 光源 hard 与 NVIDIA 光学合作继续催化 | A/B/C | 拥挤和估值 |
-| 交易弹性 | 3 | 数据中心电力/液冷 A 股组 | 电力从 watch 升 soft，订单纯度若验证有预期差 | A/B 待补 | 订单纯度不足 |
-| 交易弹性 | 4 | 美股光源/光连接组 | LITE/COHR/GLW 官方证据强 | A | 扩产兑现压制 ASP |
-| 交易弹性 | 5 | 美股互连/电力/先进设备 | ALAB/ANET/VRT/ETN/AMAT 流动性好、成长明确 | A/B | 预期高 |
+| 结构重要性 | 1 | HBM / DRAM / NAND / eSSD | AI server 与 agentic AI 的直接容量/带宽/存储约束，本周有 Dell + TrendForce 强证据 | A/B | HBM4E 认证和供给释放 |
+| 结构重要性 | 2 | CoWoS / EFB / advanced packaging / substrate | GPU/ASIC/HBM 组合的核心工艺与交付节点 | A/B | 本周缺官方交期，不能升 hard |
+| 结构重要性 | 3 | 高端 EML / InP / 1.6T 光互连 | AI scale-out 和 CPO/NPO 的下一轮瓶颈迁移核心 | A/B | 扩产兑现后 ASP 回落 |
+| 结构重要性 | 4 | 数据中心电力 / 并网 / rack power / 液冷 | AI factory 从芯片订单转向投产，电力决定可用算力 | A/B | 区域 hard 与全球设备 hard 混同 |
+| 结构重要性 | 5 | AI PCB / CCL / 电子布 / HVLP | 高速材料升级和板级交付的重要中游 | A/B/C | 高端分产品证据不足 |
+| 业绩弹性 | 1 | HBM/DRAM/NAND/eSSD 供应商 | ASP、LTA、结构升级、紧供给同时出现 | A/B | 2027 供给释放 |
+| 业绩弹性 | 2 | 光源/InP/1.6T 光互连组件 | hard 瓶颈 + 1.6T 迁移，单品 margin/收入弹性大 | A/B | 单公司 Semtech 缺口需验证 |
+| 业绩弹性 | 3 | CCL/高端电子布/HVLP | 涨价、认证、材料代际升级共同驱动 | A/B/C | A 股高端收入占比和 AVL 缺口 |
+| 业绩弹性 | 4 | 数据中心电力/液冷/rack power | backlog 转收入、项目交付、液冷 attach rate | A/B | 单品交期不清，项目延期 |
+| 业绩弹性 | 5 | Advanced packaging/设备/OSAT | 客户共投和合格产能爬坡，但 A 股映射弱 | A/B | 交期证据不足 |
+| 交易弹性 | 1 | A 股 PCB 上游材料/设备组 | 专项证据连续强化，低市值/高换手弹性强；行情未刷新写 N/A | A/B/C | 高端收入和交易拥挤 |
+| 交易弹性 | 2 | A 股光模块/光器件/CPO 组 | 光源 hard 与 1.6T 迁移共同催化；行情未刷新写 N/A | A/B/C | 估值和年降 |
+| 交易弹性 | 3 | A 股电力/液冷/800VDC 组 | 区域电力 hard + 800VDC/SST 迁移有预期差；行情未刷新写 N/A | A/B | 订单纯度不足 |
+| 交易弹性 | 4 | 美/台 networking silicon 与 ASIC 组 | Marvell/NVLink Fusion 改变关注度，但缺 shortage 证据 | A | 预期高、非当前硬堵点 |
+| 交易弹性 | 5 | 美/韩/台 memory/packaging leaders | 基本面强但大市值，交易弹性相对低 | A/B | 供给周期和估值 |
 
 ## 下期默认跟踪问题
 
-1. HBM/HBM4E：Micron、Samsung、SK hynix 是否披露客户 allocation、HBM4E 认证、LTA、库存天数、2027 capex 与封装瓶颈？
-2. CoWoS/advanced packaging：TSMC、ASE/SPIL/PTI、Amkor、基板厂、AMAT/Lam/ASML 是否披露新增交期、排产延迟、设备/基板 allocation？
-3. 数据中心电力：DOE/PJM 应急是否复现，CoreWeave/云厂是否点名并网、电力设备或液冷导致项目延期，Eaton/Siemens/GEV/nVent/Vertiv 是否披露单品 lead time？
-4. 光模块专项：Lumentum/Coherent/Corning 是否补出 EML/CW/pump、InP、光连接、FAU/MT/主动对准和热管理的单品缺口？
-5. AI PCB 专项：台系 5 月营收、CCL/prepreg 成交价、高端电子布分产品交期/AVL、HVLP4/5 批量收入和板厂良率/测试瓶颈是否被 A/B 级证据验证？
+1. Dell 的 parts supply 约束是否被 HPE/SMCI/ODM 或云厂再次验证，是否从 memory 扩散到 CPU、PCB、HDD/eSSD 或 microprocessors？
+2. HBM/HBM4E：Samsung 送样是否进入客户认证/量产时间表，Micron/SK hynix 是否补出 HBM4E、LTA、库存天数和 2027 capex？
+3. 光互连：Semtech 的 HIFU/GaN 产能缺口是否能被 Credo、Marvell、Coherent、Lumentum、Corning、Fujikura 等第二来源验证？
+4. 电力/并网：PJM/Ohio/PA 是否有官方 transcript、tariff 落地、备用电调用或大负载项目延期；transformer/switchgear/UPS/CDU 是否出现 lead time/allocation？
+5. AI PCB：台系 5 月营收、M8/M9/M10 交期、电子布分产品报价/配额、HVLP4/5 收入和板厂良率/测试是否补 A/B 证据？
 
 ## 最近证据源
 
-- NVIDIA FY2027 Q1 results: https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2027/default.aspx
-- TrendForce AI server forecast: https://www.trendforce.com/presscenter/news/20260520-13053.html
-- AMD Taiwan ecosystem investment: https://ir.amd.com/news-events/press-releases/detail/1286/amd-announces-more-than-10-billion-in-taiwan-ecosystem-investments-to-accelerate-ai-infrastructure
-- Lam Panel-Level Packaging CoE: https://newsroom.lamresearch.com/Lam-Research-Establishes-Panel-Level-Packaging-CoE
-- DOE PJM emergency order 2026-05-18: https://www.energy.gov/articles/energy-secretary-issues-emergency-order-deploy-backup-generation-mid-atlantic-amid
-- DOE Mid-Atlantic grid reliability 2026-05-21: https://www.energy.gov/articles/energy-secretary-strengthens-mid-atlantic-grid-reliability
-- Wood Mackenzie AI data center power race: https://www.globenewswire.com/news-release/2026/05/21/3299471/0/en/breaking-the-speed-limit-wood-mackenzie-warns-ai-data-centre-power-race-threatens-projects-and-consumers.html
-- Siemens Energy Q2 FY2026 shareholder letter: https://assets.siemens-energy.com/dam/352bf02e-bbc1-4061-b00d-b45200cd6b3b/2026-05-22-Shareholder-Letter-Q2-FY2026_EN-pdf_Original%20file.pdf
-- nVent Q1 2026 release: https://s22.q4cdn.com/268397047/files/doc_financials/2026/q1/Q1-2026-NVT-Press-Release.pdf
-- CoreWeave Q1 2026 results: https://investors.coreweave.com/news/news-details/2026/CoreWeave-Reports-Strong-First-Quarter-2026-Results/default.aspx
-- Micron FY2Q26 results and prepared remarks: https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-results-second-quarter-fiscal-2026
-- TrendForce 2Q26 memory pricing survey: https://www.trendforce.com/presscenter/news/20260331-12995.html
-- Samsung Electronics 1Q26 presentation: https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2026_1Q_conference_eng.pdf
-- Lumentum FY3Q26 10-Q: https://www.sec.gov/Archives/edgar/data/1633978/000162828026030777/lite-20260328.htm
-- Coherent Q3 FY26 results: https://www.coherent.com/news/press-releases/third-quarter-fiscal-year-2026-results
-- Corning/NVIDIA partnership: https://investor.corning.com/news-and-events/news/news-details/2026/NVIDIA-and-Corning-Announce-Long-Term-Partnership-To-Strengthen-U-S--Manufacturing-for-AI-Infrastructure/default.aspx
-- AI PCB weekly report: `artifacts/weekly_chain_tracking/ai_pcb/2026-05-24.md`
+- Dell Q1 FY27 8-K exhibit: https://www.sec.gov/Archives/edgar/data/1571996/000157199626000021/exhibit991earnings8kq1fy27.htm
+- Dell Q1 FY27 transcript: https://investors.delltechnologies.com/static-files/b63ffff9-b729-403b-a231-c6af05667759
+- TrendForce memory/Agentic AI: https://www.trendforce.cn/presscenter/news/20260529-13066.html
+- Samsung HBM4E samples: https://news.samsung.com/global/samsung-electronics-begins-shipment-of-industry-first-hbm4e-samples
+- Marvell Q1 FY27 results: https://investor.marvell.com/news-events/press-releases/detail/1023/marvell-technology-inc-reports-first-quarter-of-fiscal-year-2027-financial-results
+- Marvell 10-Q: https://investor.marvell.com/sec-filings/all-sec-filings/content/0001835632-26-000019/mrvl-20260502.htm
+- NVIDIA NVLink Fusion: https://nvidianews.nvidia.com/_gallery/download_pdf/682aab363d633270c96f8bae/
+- Semtech Q1 FY27 8-K exhibit: https://www.sec.gov/Archives/edgar/data/88941/000008894126000009/smtc-04262026x8k991.htm
+- Schneider/TeraWulf/Motivair: https://www.prnewswire.com/news-releases/schneider-electric-progresses-phased-delivery-of-over-290m-in-ai-infrastructure-solutions-including-motivair-technologies-at-terawulfs-google-backed-lake-mariner-campus-302781489.html
+- Microchip 3.3kV SiC/SST: https://ir.microchip.com/news-events/press-releases/detail/1390/microchip-launches-3-3-kv-hvd3-msic-power-modules-to-enable-solid-state-transformers-for-ai-data-centers
+- Infineon / NVIDIA MGX 800VDC: https://www.prnewswire.com/news-releases/infineon-joins-nvidias-mgx-ai-factory-ecosystem-to-transform-power-delivery-architecture-for-next-generation-ai-server-racks-302785037.html
+- DOE large data center oscillations: https://www.energy.gov/oe/articles/monitoring-oscillations-large-data-centers
+- OCC data center testimony: https://www.occ.ohio.gov/testimony/committee-meeting/2026-05-27
+- Optical module weekly report: `artifacts/weekly_chain_tracking/optical_module/2026-05-31.md`
+- AI PCB weekly report: `artifacts/weekly_chain_tracking/ai_pcb/2026-05-31.md`
