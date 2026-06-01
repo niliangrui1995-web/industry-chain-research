@@ -10,6 +10,7 @@ Rule: start with `user-investment-framework`; load the smallest useful supportin
 - AI Chain And Semiconductor
 - Industry Chain, Bottlenecks, And Competition
 - Company And Stock Research
+- Event-Driven Alpha And Financial Translation
 - A-Share Tracking And Disclosure
 - Market Data And Trading Context
 - HTSC Plugin Tools
@@ -57,6 +58,14 @@ Before loading companion skills for AI data-center or semiconductor-chain bottle
 | `stock-evaluator` | Company-level fundamental quality, earnings elasticity, trading elasticity, valuation, risks. | Requires verified chain position, downstream demand pass-through, and current data when needed. |
 | `business-analyst` | Business model, KPI logic, unit economics, strategy, operating indicators. | Supplements company research; must connect operating indicators to downstream demand. |
 | `earnings-call-investment-analyst` | Earnings release, guidance, conference call, expectation gap, post-earnings reaction. | Use original sources or transcripts where possible. |
+
+## Event-Driven Alpha And Financial Translation
+
+| Skill | Use When | Boundary |
+|---|---|---|
+| `serenity-alpha` | Market-moving news, product launches, technology breakthroughs, procurement/order signals, supply-chain changes, price changes, earnings-call clues, or "news to financial statement" questions where the user wants small-cap elasticity, market misclassification, validation metrics, and conditional posture. | Hypothesis translation only. It does not verify demand, prove beneficiary status, fetch current prices/market caps, replace filings or official evidence, or make final recommendations. Use source and market-data skills before naming securities or ranking. |
+
+Preferred sequence: collect and grade evidence -> use `serenity-alpha` to translate observable demand into financial lines and validation checkpoints -> use `stock-evaluator` / `advanced-evaluation` / market-data skills for final ranking and risk.
 
 ## A-Share Tracking And Disclosure
 
@@ -166,6 +175,7 @@ Tested behavior to remember:
 | Learn an industry chain | `user-investment-framework` | `industry-chain-deep-disassembly`, `deep-research`, adapter/source skills |
 | AI/semiconductor stock mapping | `user-investment-framework` | `semiconductor-ai-chain-investment-researcher`, current-evidence skills, market-data skills |
 | Single stock evaluation | `user-investment-framework` | `stock-fundamental-moat-triad`, `industry-chain-deep-disassembly` for upstream/downstream demand, `stock-evaluator`, market-data/source skills |
+| News-driven alpha / small-cap elasticity | `user-investment-framework` | `search-specialist` or current-evidence skills first, then `serenity-alpha`, `allstock-data`, `advanced-evaluation` |
 | "Who has most elasticity?" | `user-investment-framework` | `allstock-data`, `banana-farmer`, `advanced-evaluation` |
 | Official evidence search | `user-investment-framework` | `search-specialist`, scraper/extract skills, `research-summarizer` |
 | A-share watchlist update | `user-investment-framework` | `a-share-company-tracking`, `a-share-disclosure-trading-data` |

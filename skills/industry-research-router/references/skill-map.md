@@ -26,6 +26,7 @@
 | `ai-chain-research-orchestrator` | AI-chain evidence coordination, Grok/X rumor discipline, Gemini source-gap discipline | Collector/coordinator only; not the final stock selector |
 | `browser-grok-gemini-research` | Webpage operation and collector prompt discipline for Grok/X and Gemini | Does not verify or conclude; hands objective items back to Codex |
 | `semiconductor-ai-chain-investment-researcher` | Main top-down AI/semiconductor investment skill: segment priority, technology bottleneck, overseas oligarchs, A-share mapping, within-segment comparison | Must start from segment universe, not from hot stock names |
+| `serenity-alpha` | News/event to observable demand, financial-statement transmission, small-cap elasticity, market-misclassification, and validation-checkpoint hypotheses | Hypothesis layer only; does not replace source discovery, official evidence, market data, beneficiary proof, or final ranking |
 | `advanced-evaluation` | Three-layer score consistency, rank sanity checks, and bias control | Does not replace domain judgment or source verification |
 | `stock-fundamental-moat-triad` | Company-level future-highlight test: what can change, how it becomes earnings, and whether value-chain, peers, competition, and customer milestones support it | Does not replace source collection, financial data, valuation, or trading-elasticity analysis |
 | `stock-evaluator` + `business-analyst` | Company fundamentals, valuation, financial quality, and hard-evidence checks after segment selection | Does not decide segment priority alone |
@@ -39,6 +40,7 @@
 
 | User Intent / Trigger | First Skill Mix | Notes |
 |---|---|---|
+| News/rumor/order/product launch/price hike/supply-chain change -> small-cap alpha or financial-statement transmission | `industry-research-router` + `search-specialist` / `ai-chain-research-orchestrator` + `serenity-alpha` + `allstock-data` + `advanced-evaluation` | First prove observable demand and source quality, then translate to financial lines and validation conditions. |
 | AI/半导体产业链怎么拆、行业本质、价值量、壁垒 | `industry-research-router` + `semiconductor-ai-chain-investment-researcher` + `deep-research` | If current news or rumors matter, add `ai-chain-research-orchestrator`. |
 | 最近24/48/72小时 AI 产业链消息、爆料、涨价、短缺、停产 | `industry-research-router` + `ai-chain-research-orchestrator` + `browser-grok-gemini-research` + `semiconductor-ai-chain-investment-researcher` + `allstock-data` | Grok/X first for X-native discovery. Gemini is used when requested or useful for source gaps/counter-evidence/Gemini web Deep Research. Codex verifies and concludes. |
 | 非半导体产业链怎么拆、行业本质、价值量、壁垒 | `industry-research-router` + `deep-research`; optionally `20-andruia-niche-intelligence` | Output chain map, value distribution, moat, verification cycle, substitution difficulty. |
@@ -95,6 +97,7 @@
 |---|---|
 | `stock-evaluator` | Project-local stock evaluation after route/source collection, separating fundamental quality, earnings elasticity, trading elasticity, valuation, evidence strength, and risks. |
 | `stock-fundamental-moat-triad` | Pre-valuation future-highlight filter that starts with future drivers and earnings path, then tests value-chain position, international peers, Porter Five Forces, and customer-certification barriers. |
+| `serenity-alpha` | Event-driven alpha hypothesis translation: news -> observable demand -> revenue/profit transmission -> small-cap elasticity -> market-misclassification and validation path. |
 | `a-share-company-tracking` | A-share watchlist baseline, daily update, per-company worker isolation, Grok/open-web fallback status, and durable `artifacts/company_tracking` records. |
 | `a-share-disclosure-trading-data` | CNINFO, exchange announcements, IR records, dragon-tiger lists, block trades, and T/T+1 announcement-window evidence. |
 | `allstock-data` | A-share, Hong Kong, US quotes, K-lines, order book, lightweight China market data. |
@@ -157,6 +160,7 @@
 
 | User Question | Recommended Combination |
 |---|---|
+| "Which company has the most alpha from this news?" | `industry-research-router` + `search-specialist` / `ai-chain-research-orchestrator` + `serenity-alpha` + `allstock-data` + `advanced-evaluation` |
 | “AI/半导体产业链怎么拆？” | `industry-research-router` + `semiconductor-ai-chain-investment-researcher` + `deep-research` |
 | “AI产业链最近48小时消息/爆料并映射股票？” | `industry-research-router` + `ai-chain-research-orchestrator` + `browser-grok-gemini-research` + `semiconductor-ai-chain-investment-researcher` + `allstock-data` |
 | “非半导体产业链怎么拆？” | `industry-research-router` + `deep-research`; optionally `20-andruia-niche-intelligence` |

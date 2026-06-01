@@ -2,6 +2,7 @@
 
 - For any investment research task in this repository, start with `skills/user-investment-framework` first.
 - Treat `skills/industry-research-router` and all other project skills as companion skills selected by `user-investment-framework`, not as competing first entrypoints.
+- For news-driven alpha, small-cap elasticity, market misclassification, or news-to-financial-statement translation, use `skills/serenity-alpha` only after source/evidence collection, then validate with market data and the framework's final ranking layer.
 
 # 产业链投研项目说明
 

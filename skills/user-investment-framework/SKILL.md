@@ -30,6 +30,7 @@ Default companion layers:
 | Company fundamentals and downstream demand | `stock-fundamental-moat-triad`, `stock-evaluator`, `business-analyst`, `industry-chain-deep-disassembly` |
 | Competitive landscape | `competitive-landscape`, `competitive-intel`, `apify-competitor-intelligence` |
 | Source discovery and digestion | `search-specialist`, `research-summarizer`, `web-scraper`, `firecrawl-scraper`, `tavily-web` |
+| News-to-alpha financial translation | `serenity-alpha`, `search-specialist`, `research-summarizer`, `allstock-data`, `advanced-evaluation` |
 | A-share tracking and disclosures | `a-share-company-tracking`, `a-share-disclosure-trading-data` |
 | Earnings and guidance | `earnings-call-investment-analyst` |
 | Market data and trading context | `allstock-data`, `finance`, `stocks`, `yfinance-mcp-server`, `alpha-vantage`, `banana-farmer`, `stock-data-skill`, `stock-copilot-pro` |

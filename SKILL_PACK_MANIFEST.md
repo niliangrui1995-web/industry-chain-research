@@ -29,6 +29,7 @@
 ## 股票与财务数据
 
 - `stock-evaluator`
+- `serenity-alpha`: event/news-to-alpha financial translation; use for observable demand changes, revenue/profit transmission, small-cap elasticity, market misclassification, and 1-4 quarter validation paths. It produces testable hypotheses only and does not replace filings, official evidence, market data, or final ranking.
 - `a-share-disclosure-trading-data`
 - `allstock-data`
 - `banana-farmer`
