@@ -1,24 +1,24 @@
 {
-  "generated_at_beijing": "2026-05-31 22:35",
+  "generated_at_beijing": "2026-06-01 22:37",
   "status": "ok",
   "mode": "apply_mechanical",
   "window": {
-    "now_beijing": "2026-05-31 22:35",
-    "window_end_beijing": "2026-06-03 22:35"
+    "now_beijing": "2026-06-01 22:37",
+    "window_end_beijing": "2026-06-04 22:37"
   },
   "calendar_read": {
-    "today_arg": "2026-05-30",
+    "today_arg": "2026-05-31",
     "lookahead_days": 5,
     "allow_network": false,
     "event_count": 4,
-    "future_candidate_count": 2,
+    "future_candidate_count": 3,
     "past_event_count": 0
   },
   "action_counts": {
     "create": 0,
     "update": 0,
     "pause": 0,
-    "validate_pending": 2,
+    "validate_pending": 3,
     "repair_rrule": 0
   },
   "review_items": [
@@ -45,7 +45,7 @@
     "source_header": []
   },
   "final_validation": {
-    "child_count": 9,
+    "child_count": 10,
     "bad_rrules": [],
     "active_with_memory": [],
     "active_past": [],
@@ -128,6 +128,28 @@
       "source_confidence": "non_official_estimate",
       "official_source_url": "N/A",
       "prompt_sha1": "38d0285769810f01f28ead6b2e0e943d71fc5f78"
+    },
+    {
+      "child_id": "ec-avgo-20260603-6db64b",
+      "name": "财报电话会深挖 AVGO Broadcom 2026-06-03",
+      "status": "ACTIVE",
+      "task_key": "AVGO|2026-06-03|Apr/2026",
+      "ticker": "AVGO",
+      "company": "Broadcom",
+      "report_date": "2026-06-03",
+      "fiscal_period": "Apr/2026",
+      "planned_child_start_beijing": "2026-06-04 08:00",
+      "schedule_basis": "official_call_plus_3h",
+      "rrule": "DTSTART:20260604T080000\nRRULE:FREQ=WEEKLY;BYDAY=TH;BYHOUR=8;BYMINUTE=0;COUNT=1",
+      "rrule_ok": true,
+      "model": "gpt-5.5",
+      "reasoning_effort": "xhigh",
+      "has_memory": false,
+      "calendar_source": "confirmed",
+      "event_status": "confirmed",
+      "source_confidence": "official_confirmed",
+      "official_source_url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announce-second-quarter-fiscal-year-2026-financial",
+      "prompt_sha1": "f81dee569fe5ec13d03dae6b8db0ea4f148f187f"
     },
     {
       "child_id": "ec-crdo-20260601-412eff",
