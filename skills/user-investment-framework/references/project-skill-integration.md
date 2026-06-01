@@ -12,6 +12,7 @@ Rule: start with `user-investment-framework`; load the smallest useful supportin
 - Company And Stock Research
 - A-Share Tracking And Disclosure
 - Market Data And Trading Context
+- HTSC Plugin Tools
 - Source Discovery And Evidence Digest
 - Style, Factors, And Data Products
 - Technical Moat And Product Logic
@@ -76,6 +77,29 @@ Before loading companion skills for AI data-center or semiconductor-chain bottle
 | `banana-farmer` | Momentum, RSI, volatility, technical risk, trading scans. | Trading-elasticity supplement only after exposure is established. |
 | `stock-data-skill` | Simplywall.st supplemental stock data. | Supplemental only after official and project data sources. |
 | `stock-copilot-pro` | Optional QVeris/OpenClaw quotes, fundamentals, technicals, news radar, sentiment. | Do not import scheduled briefs or default recommendations. |
+
+## HTSC Plugin Tools
+
+Use the HTSC skills as data, candidate-generation, external-watchlist, or simulated-trading tools inside the master framework. They do not replace source verification, industry-chain mapping, downstream demand transmission, true-beneficiary checks, or the final three-layer ranking.
+
+For individual-stock research, HTSC output is supplemental only. Do not use it to skip the upstream/downstream map, downstream demand bridge, core-product demand and price/unit-economics check, official filings, customer/supplier evidence, or structured historical market-data checks. The tested HTSC plugin paths do not provide a stable structured historical OHLCV series, so they are not the primary source for deep historical行情, VCP pattern analysis, factor research, or backtesting.
+
+Tested behavior to remember:
+
+- `query-indicator` returns natural-language or Markdown `answer` content, not a stable structured time-series API. It can answer latest/recent indicators and short historical point/table questions, but row completeness and schema are not guaranteed.
+- `a-share-paper-trading.getQuote` is structured but sparse. Off-market tests returned fields such as `stockName`, `currentPrice`, `prevClose`, `limitUp`, `limitDown`, `change`, and `isSuspended`; first bid/ask may appear in some sessions, but open/high/low/volume/amount/time and full order book are not guaranteed.
+- `select-stock` can rewrite or relax impossible screening conditions. Treat output as discovery, not a strict executable screen.
+- `financial-analysis` can produce useful market or stock context, but may include investment-style conclusions. Keep it as external context and verify facts.
+- `financial-analysis.investCalendar` timed out in tests, so do not make it a default route.
+- `watchlist-management` and `a-share-paper-trading` can change external HTSC state or simulated account state. Use write actions only after explicit user instruction.
+
+| Skill | Appropriate use | Unsuitable use | Output handling |
+|---|---|---|---|
+| `query-indicator` | A-share latest/recent price action, PE/PB, turnover, volume, transaction amount, financial indicators, short historical point checks, and multi-stock indicator comparison. | Primary historical OHLCV warehouse, factor research, VCP pattern analysis, backtesting, or official company-fact proof. | Timestamp the answer, quote only as supplemental market/indicator data, and verify hard claims elsewhere. |
+| `select-stock` | Natural-language screening for an initial stock/ETF/fund candidate pool, including industry, valuation, financial, technical, fund-flow, performance, or combined conditions. | Final recommendations, strict auditable screen results, true-beneficiary proof, or replacing project ranking. | Re-run project research and `advanced-evaluation` before ranking or acting on candidates. |
+| `financial-analysis` | Quick market, sector, individual-stock, fund, ETF, news, sentiment, or diagnosis context; use `marketInsight`, `diagnosisStock`, and news-style analysis as supplementary views. | Final thesis, causal explanation, ranking, buy/sell language, or replacement for official filings and demand-chain evidence. | Label as external HTSC context and independently verify important claims. |
+| `watchlist-management` | Query or explicitly add stocks to the HTSC external watchlist service when the user asks for HTSC/self-selected stocks. | Repository `watchlists/*.xlsx`, durable `a-share-company-tracking` state, or automatic watchlist synchronization. | Keep HTSC watchlist state separate from project records; never write without explicit instruction. |
+| `a-share-paper-trading` | Explicit simulated A-share operations: search stocks, sparse quote, account balance, positions, pending orders, trade history, simulated orders, and cancellations. | Live trading, primary real-time quote provider, primary historical data source, or unrequested order/cancel actions. | Treat quotes as sparse supplemental data; place/cancel simulated orders only when requested. |
 
 ## Source Discovery And Evidence Digest
 

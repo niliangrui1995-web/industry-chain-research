@@ -30,6 +30,7 @@
 | `stock-fundamental-moat-triad` | Company-level future-highlight test: what can change, how it becomes earnings, and whether value-chain, peers, competition, and customer milestones support it | Does not replace source collection, financial data, valuation, or trading-elasticity analysis |
 | `stock-evaluator` + `business-analyst` | Company fundamentals, valuation, financial quality, and hard-evidence checks after segment selection | Does not decide segment priority alone |
 | `allstock-data` + `banana-farmer` | Quotes, K-lines, liquidity, trend, timing, and risk context | Cannot prove beneficiary status |
+| HTSC plugin tools: `query-indicator`, `select-stock`, `financial-analysis`, `watchlist-management`, `a-share-paper-trading` | A-share indicator lookup, candidate screening, quick external diagnosis, HTSC watchlist service, and simulated trading | Data/candidate/service/execution layer only; not a primary individual-stock research, primary real-time quote, historical行情, VCP, factor, backtesting, or final-conclusion source |
 | `search-specialist` + `research-summarizer` | Source discovery, source-quality ranking, contradiction tracking, long-source digestion, and citation extraction | Does not make final investment conclusions |
 | `dividend-premium-tracker` | Dividend/low-volatility style backdrop and stock-bond yield spread interpretation | Does not prove individual-stock payout durability or trading elasticity |
 | `20-andruia-niche-intelligence` | Optional background framing for non-semiconductor niche work | Not the primary AI/semiconductor investment skill |
@@ -44,12 +45,17 @@
 | 成长行业瓶颈、BOM、交货时滞、当前堵点/卡点、未来卡点迁移、HHI、定价权、利润池迁移、用户提供 CSV/JSON/XLSX 研究数据 | `industry-research-router` + `industry-chain-deep-disassembly`; load its matching adapter for PCB/CCL, 液冷, 光模块, or 数据中心电力; use its data-interface normalizer for raw files; add `search-specialist` when hard-source discovery is needed; add `stock-evaluator` / market-data skills only when the user asks for listed-company mapping after node selection | Here 堵点/卡点 means an obvious supply gap: demand exceeds qualified supply in the stated window. Start from terminal demand, chain topology, current supply-gap ledger, and future supply-gap scenarios. Avoid starting from hot stock names. |
 | 谁是真龙头、谁蹭概念、竞争格局、海外寡头 | `industry-research-router` + `competitive-landscape` + `competitive-intel` | Separate market share, customer validation, profitability, and narrative heat. |
 | AI/半导体国产替代、卡脖子、进口替代难度 | `industry-research-router` + `semiconductor-ai-chain-investment-researcher` + `competitive-landscape` | Focus on exact segment exposure, customer certification, yield, process know-how, reliability, switching cost, and A-share hard evidence. |
-| 单只股票能买吗、估值、买卖点、仓位 | `industry-research-router` + `stock-evaluator` + market data skill | Never fabricate numbers. Use current data or mark unavailable values as `N/A`. |
+| 单只股票能买吗、估值、买卖点、仓位 | `industry-research-router` + `stock-evaluator` + market data skill | Never fabricate numbers. Do not substitute HTSC quick diagnosis for the upstream/downstream, demand pass-through, core-product price/unit-economics, and official-evidence checks. |
 | 多家公司谁更好、基本面排序 | `industry-research-router` + `stock-fundamental-moat-triad` + `stock-evaluator` + `business-analyst` + `advanced-evaluation` | Build explicit rubric and cite hard data. |
 | 谁股票弹性最大、短线弹性、交易弹性 | `industry-research-router` + `allstock-data` + `banana-farmer` + `advanced-evaluation` | Prioritize float market cap, turnover, volatility, 20/60-day trend, catalyst density, crowding risk. |
 | A股公司持续跟踪、watchlist日更、baseline/state/events维护 | `industry-research-router` + `a-share-company-tracking` + `a-share-disclosure-trading-data` + `search-specialist` + `research-summarizer` | At or after 20:00 Beijing time, check both announcement date T and T+1. Keep one company per worker when sub-agent tools are available. |
 | A股公告、CNINFO、交易所披露、龙虎榜、大宗交易核验 | `industry-research-router` + `a-share-disclosure-trading-data` + `search-specialist`; add `allstock-data` for market reaction | Treat trading events as liquidity/elasticity signals, not fundamental proof. |
 | A股/港股/美股实时行情、K线、盘口 | `allstock-data` for CN/HK/US quick checks; `yfinance-mcp-server` / `stocks` for global; `alpha-vantage` for indicators | Tencent API returns GBK text and may delay up to 15 minutes. Always normalize exchange/ticker suffix. |
+| A股最新价、PE/PB、成交额、换手率、多股指标对比 | `query-indicator`; fall back to `allstock-data` / other market-data skills if unavailable | Fast indicator lookup only. Record date/time and do not use market data to prove beneficiary status. |
+| 按自然语言条件筛股票/ETF/基金候选池 | `select-stock` + `advanced-evaluation`; add project research skills before final ranking | Screening output is a candidate list, not a recommendation or real-beneficiary proof. |
+| 大盘、板块、个股快速诊断或资讯利好利空整理 | `financial-analysis`; add source and project research skills for final conclusion | Use as external context. Verify important claims and do not copy its investment conclusion blindly. |
+| 查询或添加华泰自选股 | `watchlist-management` | HTSC external watchlist only; keep separate from repository watchlists and company-tracking state. |
+| A股模拟盘查资金、持仓、挂单、成交，或明确模拟下单/撤单 | `a-share-paper-trading` | Simulated trading only; never execute order/cancel actions without explicit user instruction. |
 | 海外公司、ETF、期权、股息、财报历史 | `yfinance-mcp-server` + `stocks` + `alpha-vantage` | Use official filings and reputable data sources for financial claims. |
 | 官方资料、公告、年报、官网、PDF、客户/供应商证据检索 | `industry-research-router` + `search-specialist` + `web-scraper` / `firecrawl-scraper` / `tavily-web` | Design queries and source priority first, then extract. Cite official or primary-adjacent sources whenever possible. |
 | 研报、白皮书、公告、会议纪要、多来源材料消化 | `industry-research-router` + `research-summarizer` + `advanced-evaluation` | Extract claim-evidence-limitations before final industry or stock synthesis. |
@@ -64,6 +70,8 @@
 
 - Latest price, market cap, PE/PB, turnover, volume, K-line, financial reports, orders, policy, regulation, and news require web or local market-data verification.
 - Preferred evidence order: official announcements, exchange filings, annual/interim/quarterly reports, prospectuses, company investor relations, then reputable financial data vendors.
+- HTSC plugin outputs are supplemental for indicators, screening, quick diagnosis, external watchlist, and simulated trading. Do not treat them as the primary real-time quote source, primary historical OHLCV source, VCP/factor/backtest data source, or sufficient evidence for individual-stock conclusions.
+- HTSC write-capable actions, including external watchlist changes and simulated order/cancel operations, require explicit user instruction. Read-only indicator, diagnosis, screening, and account-status checks still need source labeling when used in research output.
 - For A-share, Hong Kong, US, Japan, Korea, and Taiwan listings, explicitly identify exchange and ticker suffix before comparing companies.
 - When data is missing, write `N/A` or explain the missing source. Do not infer exact numeric values from memory.
 
@@ -90,6 +98,11 @@
 | `a-share-company-tracking` | A-share watchlist baseline, daily update, per-company worker isolation, Grok/open-web fallback status, and durable `artifacts/company_tracking` records. |
 | `a-share-disclosure-trading-data` | CNINFO, exchange announcements, IR records, dragon-tiger lists, block trades, and T/T+1 announcement-window evidence. |
 | `allstock-data` | A-share, Hong Kong, US quotes, K-lines, order book, lightweight China market data. |
+| `query-indicator` | HTSC A-share indicator lookup: latest/recent price,涨跌幅,成交额,换手率, PE/PB,财务指标, short historical point checks, and multi-stock comparison. Suitable for quick supplemental checks; unsuitable as a structured historical OHLCV warehouse. |
+| `select-stock` | HTSC natural-language screening for stock/ETF/fund candidate pools. Suitable for discovery; unsuitable as final recommendation, strict audit screen, or true-beneficiary proof. |
+| `financial-analysis` | HTSC quick market insight, individual-stock diagnosis, and news context. Suitable as external context; unsuitable as final thesis or replacement for official evidence. Avoid defaulting to slow investment-calendar requests. |
+| `watchlist-management` | HTSC external watchlist query/add operations. Suitable only for explicit HTSC watchlist work; keep separate from repo `watchlists/*.xlsx` and company-tracking state. |
+| `a-share-paper-trading` | HTSC simulated A-share account, position, order, cancellation, sparse quote, and trade-history operations. Suitable for explicit paper-trading work; unsuitable for live trading, unrequested simulated orders, or primary quote/history storage. |
 | `banana-farmer` | Momentum, RSI, position risk, volatility, and trading-oriented scans. |
 | `stock-data-skill` | Supplemental stock data utilities when available. |
 | `finance` | Broad quotes, time series, FX, and market snapshots. |

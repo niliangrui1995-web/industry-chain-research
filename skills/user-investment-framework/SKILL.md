@@ -33,12 +33,29 @@ Default companion layers:
 | A-share tracking and disclosures | `a-share-company-tracking`, `a-share-disclosure-trading-data` |
 | Earnings and guidance | `earnings-call-investment-analyst` |
 | Market data and trading context | `allstock-data`, `finance`, `stocks`, `yfinance-mcp-server`, `alpha-vantage`, `banana-farmer`, `stock-data-skill`, `stock-copilot-pro` |
+| HTSC market/service tools | `query-indicator`, `select-stock`, `financial-analysis`, `watchlist-management`, `a-share-paper-trading` |
 | Scoring, factors, tables, workbooks | `advanced-evaluation`, `multi-factor-strategy`, `spreadsheet`, `xlsx`, `xlsx-official`, `data-scientist`, `senior-data-scientist` |
 | Documents and deliverables | `docx`, `pdf`, `pptx` |
 | Technical moat and product logic | `ai-engineer`, `ai-ml`, `ai-product`, `tech-stack-evaluator`, `cto-advisor`, `senior-architect`, `arm-cortex-expert`, `product-manager`, `product-manager-toolkit` |
 | Dividend/defensive style | `dividend-premium-tracker` |
 
 Do not load every companion skill. Start here, classify the request, then load the smallest useful combination.
+
+## HTSC Plugin Use Boundaries
+
+HTSC plugin skills are optional tool sources inside this framework, not a shortcut around company or industry research.
+
+Default rule: use HTSC for fast A-share indicators, candidate discovery, quick external context, HTSC watchlist service, and simulated trading only. Do not let HTSC replace the upstream/downstream map, downstream demand bridge, core-product demand and price/unit-economics check, official disclosures, customer/supplier evidence, or the final three-layer ranking.
+
+| HTSC skill | Appropriate use | Do not use for |
+|---|---|---|
+| `query-indicator` | Fast latest/recent A-share indicators, PE/PB, turnover, transaction amount, short historical point checks, and multi-stock indicator comparison. | Primary structured K-line or OHLCV history, factor research, VCP pattern work, backtesting, or hard company-fact proof. |
+| `select-stock` | First-pass candidate pools from natural-language screening conditions. | Final recommendations, true-beneficiary proof, or strict auditable screening without re-verification. |
+| `financial-analysis` | Quick market, sector, news, sentiment, or individual-stock diagnosis as external context. | Final thesis, causal explanation, ranking, buy/sell language, or replacement for project evidence checks. |
+| `watchlist-management` | Explicit HTSC external watchlist query/add operations. | Repository watchlist state, durable `a-share-company-tracking` records, or automatic watchlist changes. |
+| `a-share-paper-trading` | Explicit simulated A-share search, sparse quote, balance, position, order, cancellation, and trade-history operations. | Live trading, unrequested simulated orders/cancellations, primary real-time quote feeds, or historical market-data storage. |
+
+For individual-stock or company research, label any HTSC output as supplemental market/indicator/service data. Verify hard claims with official filings, exchange disclosures, company IR, project-local market-data sources, or other structured data sources. The tested HTSC plugin paths do not expose a stable structured historical OHLCV series suitable for deep research, VCP pattern work, factor research, or backtesting.
 
 ## AI Chain Node Taxonomy Reference
 
