@@ -32,6 +32,7 @@
 | `stock-evaluator` + `business-analyst` | Company fundamentals, valuation, financial quality, and hard-evidence checks after segment selection | Does not decide segment priority alone |
 | `allstock-data` + `banana-farmer` | Quotes, K-lines, liquidity, trend, timing, and risk context | Cannot prove beneficiary status |
 | HTSC plugin tools: `query-indicator`, `select-stock`, `financial-analysis`, `watchlist-management`, `a-share-paper-trading` | A-share indicator lookup, candidate screening, quick external diagnosis, HTSC watchlist service, and simulated trading | Data/candidate/service/execution layer only; not a primary individual-stock research, primary real-time quote, historical行情, VCP, factor, backtesting, or final-conclusion source |
+| Public Equity Investing plugin workflows | Thesis tracker, catalyst calendar, dated event underwriting, earnings preview/deep-dive, scenario sensitivity, position risk, public-equity model update/audit, and formal memo/pitch/tearsheet packaging after issuer/security context is established | Companion PM workflow layer only; not a master route, not chain/source verification, not true-beneficiary proof, not final ranking, and not default report generation |
 | `search-specialist` + `research-summarizer` | Source discovery, source-quality ranking, contradiction tracking, long-source digestion, and citation extraction | Does not make final investment conclusions |
 | `dividend-premium-tracker` | Dividend/low-volatility style backdrop and stock-bond yield spread interpretation | Does not prove individual-stock payout durability or trading elasticity |
 | `20-andruia-niche-intelligence` | Optional background framing for non-semiconductor niche work | Not the primary AI/semiconductor investment skill |
@@ -41,6 +42,12 @@
 | User Intent / Trigger | First Skill Mix | Notes |
 |---|---|---|
 | News/rumor/order/product launch/price hike/supply-chain change -> small-cap alpha or financial-statement transmission | `industry-research-router` + `search-specialist` / `ai-chain-research-orchestrator` + `serenity-alpha` + `allstock-data` + `advanced-evaluation` | First prove observable demand and source quality, then translate to financial lines and validation conditions. |
+| Dated event -> probability / payoff / expected return / event path | `industry-research-router` + source skills + `Public Equity Investing:event-driven-analyzer` | Use only after the event, security, timing, and source hierarchy are identified. For broad news-driven alpha, use `serenity-alpha` before event underwriting. |
+| Thesis tracker / kill criteria / KPI threshold / action trigger | `industry-research-router` + `a-share-company-tracking` + source/market-data skills + `Public Equity Investing:thesis-tracker` | Preserve project watchlist state separately; use the plugin for falsifiable thesis pillars, evidence ledger, and action thresholds. |
+| Catalyst calendar / next proof points | `industry-research-router` + source skills + `Public Equity Investing:catalyst-calendar` | Calendar and monitoring layer only; use `event-driven-analyzer` if probability/payoff underwriting is needed. |
+| Pre-earnings expectation bar / post-earnings what changed | `industry-research-router` + `earnings-call-investment-analyst` + `Public Equity Investing:earnings-preview` or `Public Equity Investing:earnings-deep-dive` | Keep original company releases, filings, transcripts, and official-vs-third-party status labels. |
+| Scenario skew / sensitivity / breakpoints / PM action thresholds | `industry-research-router` + `stock-evaluator` + `advanced-evaluation` + `Public Equity Investing:scenario-sensitivity-generator` | Use after assumptions are grounded; do not invent precise scenario math from weak evidence. |
+| Position sizing / hedge / liquidity exit / add-trim-exit rules | `industry-research-router` + verified thesis + current market data + `Public Equity Investing:portfolio-risk-management` | Risk layer only. It does not build the thesis, execute trades, or give personal investment advice. |
 | AI/半导体产业链怎么拆、行业本质、价值量、壁垒 | `industry-research-router` + `semiconductor-ai-chain-investment-researcher` + `deep-research` | If current news or rumors matter, add `ai-chain-research-orchestrator`. |
 | 最近24/48/72小时 AI 产业链消息、爆料、涨价、短缺、停产 | `industry-research-router` + `ai-chain-research-orchestrator` + `browser-grok-gemini-research` + `semiconductor-ai-chain-investment-researcher` + `allstock-data` | Grok/X first for X-native discovery. Gemini is used when requested or useful for source gaps/counter-evidence/Gemini web Deep Research. Codex verifies and concludes. |
 | 非半导体产业链怎么拆、行业本质、价值量、壁垒 | `industry-research-router` + `deep-research`; optionally `20-andruia-niche-intelligence` | Output chain map, value distribution, moat, verification cycle, substitution difficulty. |
@@ -67,6 +74,8 @@
 | AI、软件、芯片、技术栈壁垒 | `ai-engineer` / `ai-ml` + `tech-stack-evaluator` + `cto-advisor` / `senior-architect` | Judge whether moat comes from architecture, ecosystem, data, deployment, or switching cost. |
 | ARM、MCU、边缘计算、嵌入式芯片 | `arm-cortex-expert` + `senior-architect` | Focus on firmware, instruction set, peripherals, reliability, and supply-chain constraints. |
 | 产品商业化、PMF、用户购买逻辑 | `product-manager` + `product-manager-toolkit` + `business-analyst` | Useful when research needs adoption barrier and buyer workflow analysis. |
+| Public-company financial normalization / model update / model audit | `industry-research-router` + `spreadsheet` + `xlsx-official` + `Public Equity Investing:financials-normalizer` / `Public Equity Investing:equity-model-update` / `Public Equity Investing:model-audit-tieout` | Use for public-equity source-to-model and workbook integrity work only; not for first-pass thesis formation. |
+| Formal public-equity memo / pitch / tearsheet / deck-report QC | `industry-research-router` + completed evidence/ranking work + `Public Equity Investing:memo-builder` / `Public Equity Investing:long-short-pitch` / `Public Equity Investing:company-tearsheet` / `Public Equity Investing:deck-report-qc` | Packaging layer only; do not use it to make unsupported conclusions look final. |
 
 ## Data Discipline
 
@@ -74,6 +83,7 @@
 - Preferred evidence order: official announcements, exchange filings, annual/interim/quarterly reports, prospectuses, company investor relations, then reputable financial data vendors.
 - HTSC plugin outputs are supplemental for indicators, screening, quick diagnosis, external watchlist, and simulated trading. Do not treat them as the primary real-time quote source, primary historical OHLCV source, VCP/factor/backtest data source, or sufficient evidence for individual-stock conclusions.
 - HTSC write-capable actions, including external watchlist changes and simulated order/cancel operations, require explicit user instruction. Read-only indicator, diagnosis, screening, and account-status checks still need source labeling when used in research output.
+- Public Equity Investing plugin outputs are supplemental PM workflow artifacts. Do not treat them as source verification, industry-chain proof, beneficiary proof, or final ranking. Do not create full HTML/XLSX/memo artifacts for quick answers unless the user asks for that output.
 - For A-share, Hong Kong, US, Japan, Korea, and Taiwan listings, explicitly identify exchange and ticker suffix before comparing companies.
 - When data is missing, write `N/A` or explain the missing source. Do not infer exact numeric values from memory.
 
@@ -98,6 +108,12 @@
 | `stock-evaluator` | Project-local stock evaluation after route/source collection, separating fundamental quality, earnings elasticity, trading elasticity, valuation, evidence strength, and risks. |
 | `stock-fundamental-moat-triad` | Pre-valuation future-highlight filter that starts with future drivers and earnings path, then tests value-chain position, international peers, Porter Five Forces, and customer-certification barriers. |
 | `serenity-alpha` | Event-driven alpha hypothesis translation: news -> observable demand -> revenue/profit transmission -> small-cap elasticity -> market-misclassification and validation path. |
+| `Public Equity Investing:thesis-tracker` | Optional PM tracker layer for thesis pillars, KPI thresholds, catalyst/kill criteria, evidence ledger, and action thresholds after the project thesis exists. |
+| `Public Equity Investing:catalyst-calendar` | Optional catalyst calendar and next-proof-point layer; not full event underwriting. |
+| `Public Equity Investing:event-driven-analyzer` | Optional dated event underwriting for public-equity probability, payoff, expected return, path risk, and red-team checks. |
+| `Public Equity Investing:earnings-preview` / `Public Equity Investing:earnings-deep-dive` | Optional pre-earnings expectation and post-earnings change-analysis workflows after `earnings-call-investment-analyst` source discipline is applied. |
+| `Public Equity Investing:scenario-sensitivity-generator` | Optional scenario skew, sensitivity, breakpoint, and PM action-threshold workflow after assumptions are grounded. |
+| `Public Equity Investing:portfolio-risk-management` | Optional position sizing, hedge comparison, retained-exposure, liquidity/exit, and add/trim/exit rule workflow after the thesis and current market context are verified. |
 | `a-share-company-tracking` | A-share watchlist baseline, daily update, per-company worker isolation, Grok/open-web fallback status, and durable `artifacts/company_tracking` records. |
 | `a-share-disclosure-trading-data` | CNINFO, exchange announcements, IR records, dragon-tiger lists, block trades, and T/T+1 announcement-window evidence. |
 | `allstock-data` | A-share, Hong Kong, US quotes, K-lines, order book, lightweight China market data. |
@@ -132,6 +148,10 @@
 | `data-scientist` | Data analysis, predictive modeling, business intelligence. |
 | `senior-data-scientist` | Statistical rigor, causality, robustness checks. |
 | `multi-factor-strategy` | Factor-based stock selection rules and strategy configuration. |
+| `Public Equity Investing:financials-normalizer` | Normalize public-company financials from source materials before analysis or model updates. |
+| `Public Equity Investing:equity-model-update` | Update public-company Excel model copies from source-to-model maps after source data is verified. |
+| `Public Equity Investing:model-audit-tieout` | Audit existing public-equity models or spreadsheets for formula/source/tie-out integrity. |
+| `Public Equity Investing:comps-valuation` | Optional comparable-company valuation, multiple analysis, implied price, or comps workbook QA after the thesis is grounded. |
 
 ## Information Collection
 
@@ -161,6 +181,13 @@
 | User Question | Recommended Combination |
 |---|---|
 | "Which company has the most alpha from this news?" | `industry-research-router` + `search-specialist` / `ai-chain-research-orchestrator` + `serenity-alpha` + `allstock-data` + `advanced-evaluation` |
+| "Build/update the thesis tracker or kill criteria" | `industry-research-router` + `a-share-company-tracking` + source/market-data skills + `Public Equity Investing:thesis-tracker` |
+| "Build a catalyst calendar or next proof-point list" | `industry-research-router` + source skills + `Public Equity Investing:catalyst-calendar` |
+| "Underwrite this dated event or special situation" | `industry-research-router` + source/market-data skills + `Public Equity Investing:event-driven-analyzer` |
+| "Pre-earnings preview / post-earnings deep dive" | `industry-research-router` + `earnings-call-investment-analyst` + `Public Equity Investing:earnings-preview` or `Public Equity Investing:earnings-deep-dive` |
+| "Scenario sensitivity / breakpoint / action thresholds" | `industry-research-router` + `stock-evaluator` + `advanced-evaluation` + `Public Equity Investing:scenario-sensitivity-generator` |
+| "Position size / hedge / risk plan" | `industry-research-router` + verified thesis + current market data + `Public Equity Investing:portfolio-risk-management` |
+| "Model update / model audit / normalize financials" | `industry-research-router` + `spreadsheet` + `xlsx-official` + `Public Equity Investing:financials-normalizer` / `Public Equity Investing:equity-model-update` / `Public Equity Investing:model-audit-tieout` |
 | “AI/半导体产业链怎么拆？” | `industry-research-router` + `semiconductor-ai-chain-investment-researcher` + `deep-research` |
 | “AI产业链最近48小时消息/爆料并映射股票？” | `industry-research-router` + `ai-chain-research-orchestrator` + `browser-grok-gemini-research` + `semiconductor-ai-chain-investment-researcher` + `allstock-data` |
 | “非半导体产业链怎么拆？” | `industry-research-router` + `deep-research`; optionally `20-andruia-niche-intelligence` |

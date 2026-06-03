@@ -30,6 +30,12 @@
 
 - `stock-evaluator`
 - `serenity-alpha`: event/news-to-alpha financial translation; use for observable demand changes, revenue/profit transmission, small-cap elasticity, market misclassification, and 1-4 quarter validation paths. It produces testable hypotheses only and does not replace filings, official evidence, market data, or final ranking.
+- `Public Equity Investing:thesis-tracker`: optional PM tracker layer for thesis pillars, KPI thresholds, catalyst/kill criteria, evidence ledger, and action thresholds after the project thesis exists.
+- `Public Equity Investing:catalyst-calendar`: optional catalyst calendar and next-proof-point layer; not full event underwriting.
+- `Public Equity Investing:event-driven-analyzer`: optional dated public-equity event underwriting for probability, payoff, expected return, path risk, and red-team checks.
+- `Public Equity Investing:earnings-preview` / `Public Equity Investing:earnings-deep-dive`: optional pre-earnings expectation and post-earnings change-analysis workflows after project earnings source discipline is applied.
+- `Public Equity Investing:scenario-sensitivity-generator`: optional scenario skew, sensitivity, breakpoint, and PM action-threshold workflow after assumptions are grounded.
+- `Public Equity Investing:portfolio-risk-management`: optional position sizing, hedge comparison, retained-exposure, liquidity/exit, and add/trim/exit rule workflow after the thesis and current market context are verified.
 - `a-share-disclosure-trading-data`
 - `allstock-data`
 - `banana-farmer`
@@ -50,6 +56,11 @@
 - `data-scientist`
 - `senior-data-scientist`
 - `multi-factor-strategy`
+- `Public Equity Investing:financials-normalizer`: normalize public-company financials from source materials before analysis or model updates.
+- `Public Equity Investing:equity-model-update`: update public-company Excel model copies from source-to-model maps after source data is verified.
+- `Public Equity Investing:model-audit-tieout`: audit existing public-equity models or spreadsheets for formula/source/tie-out integrity.
+- `Public Equity Investing:comps-valuation`: optional comparable-company valuation, multiple analysis, implied price, or comps workbook QA after the thesis is grounded.
+- Public Equity Investing packaging skills (`memo-builder`, `long-short-pitch`, `company-tearsheet`, `deck-report-qc`): formal memo/pitch/tearsheet/QC packaging only after evidence and ranking work are complete.
 
 ## 信息抓取
 

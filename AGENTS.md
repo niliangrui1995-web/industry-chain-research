@@ -3,6 +3,8 @@
 - For any investment research task in this repository, start with `skills/user-investment-framework` first.
 - Treat `skills/industry-research-router` and all other project skills as companion skills selected by `user-investment-framework`, not as competing first entrypoints.
 - For news-driven alpha, small-cap elasticity, market misclassification, or news-to-financial-statement translation, use `skills/serenity-alpha` only after source/evidence collection, then validate with market data and the framework's final ranking layer.
+- Treat Public Equity Investing plugin skills as companion PM workflow layers only. Use them for thesis trackers, catalyst calendars, dated event underwriting, earnings preview/deep-dive, scenario sensitivity, position risk, model update/audit, and formal memo/pitch/tearsheet packaging after the project framework has established source evidence, chain position, downstream demand, and issuer/security context.
+- Do not route generic industry-chain, company, valuation, or share-price questions directly into the Public Equity Investing plugin router. It does not replace upstream/downstream mapping, official evidence, beneficiary proof, core-product unit-economics checks, or the final fundamental-quality / earnings-elasticity / trading-elasticity ranking.
 
 # 产业链投研项目说明
 

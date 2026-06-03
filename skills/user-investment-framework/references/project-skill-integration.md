@@ -11,6 +11,7 @@ Rule: start with `user-investment-framework`; load the smallest useful supportin
 - Industry Chain, Bottlenecks, And Competition
 - Company And Stock Research
 - Event-Driven Alpha And Financial Translation
+- Public Equity Investing Plugin Workflows
 - A-Share Tracking And Disclosure
 - Market Data And Trading Context
 - HTSC Plugin Tools
@@ -66,6 +67,40 @@ Before loading companion skills for AI data-center or semiconductor-chain bottle
 | `serenity-alpha` | Market-moving news, product launches, technology breakthroughs, procurement/order signals, supply-chain changes, price changes, earnings-call clues, or "news to financial statement" questions where the user wants small-cap elasticity, market misclassification, validation metrics, and conditional posture. | Hypothesis translation only. It does not verify demand, prove beneficiary status, fetch current prices/market caps, replace filings or official evidence, or make final recommendations. Use source and market-data skills before naming securities or ranking. |
 
 Preferred sequence: collect and grade evidence -> use `serenity-alpha` to translate observable demand into financial lines and validation checkpoints -> use `stock-evaluator` / `advanced-evaluation` / market-data skills for final ranking and risk.
+
+## Public Equity Investing Plugin Workflows
+
+Use Public Equity Investing plugin skills only as companion PM workflow layers. The project still owns source verification, industry-chain mapping, downstream-demand transmission, core-product price/unit-economics checks, true-beneficiary proof, and the final fundamental-quality / earnings-elasticity / trading-elasticity ranking.
+
+Do not route generic company research, share-price questions, or industry-chain learning directly into the plugin router. Start with `user-investment-framework`; add the smallest Public Equity Investing skill only when the task has a clear listed-equity PM workflow.
+
+| Plugin skill | Use when | Boundary |
+|---|---|---|
+| `Public Equity Investing:thesis-tracker` | The user wants to maintain a thesis over time, update a watch/holding thesis after new evidence, define KPI thresholds, kill criteria, action thresholds, or an append-only evidence ledger. | Not first-pass research, not a news summary, not a replacement for `a-share-company-tracking` durable state. |
+| `Public Equity Investing:catalyst-calendar` | The user wants upcoming or historical catalysts organized by date, next proof point, source status, and monitoring action. | Calendar only; use `event-driven-analyzer` for full probability/payoff underwriting. |
+| `Public Equity Investing:event-driven-analyzer` | A dated event controls the public-equity setup: merger, spin, split-off, activism, regulatory/litigation decision, tender, index event, lockup, rights offering, or other special situation. | Not generic `news -> financial statement` work; use `serenity-alpha` first for broad news-driven alpha translation. |
+| `Public Equity Investing:earnings-preview` | Before results, the user wants expectation bar, KPI focus, guidance credibility, scenario setup, or call questions. | Not post-results analysis; keep official/company sources first. |
+| `Public Equity Investing:earnings-deep-dive` | After results, guidance, transcript, or call commentary, the user wants what changed, estimate/model impact, scenario change, and action gates. | Does not replace `earnings-call-investment-analyst` source hierarchy, status fields, or official-vs-third-party transcript labeling. |
+| `Public Equity Investing:scenario-sensitivity-generator` | A base case, model, thesis, catalyst, or event needs scenario skew, sensitivities, breakpoints, and PM action thresholds. | Not first-pass model building and not a license for false precision when assumptions are unsupported. |
+| `Public Equity Investing:portfolio-risk-management` | After a thesis exists, the user wants position sizing, hedge alternatives, retained exposure, size-down/no-hedge comparison, liquidity/exit posture, or add/trim/exit rules. | Not thesis construction, not trade execution, not personal investment advice, and not credit-instrument hedge work. |
+| `Public Equity Investing:financials-normalizer` | Public-company financials need normalization from source materials before analysis or model updates. | Not private data-room cleanup and not non-financial data cleanup. |
+| `Public Equity Investing:equity-model-update` | A public-company Excel model copy needs source-to-model updates with logs and support files. | Not pure earnings notes and not broad workbook audits. |
+| `Public Equity Investing:model-audit-tieout` | Existing public-equity models or spreadsheets need formula/source/tie-out audit. | Not new model building from scratch. |
+| `Public Equity Investing:comps-valuation` | Peer selection, multiple analysis, implied price, refreshable comps table, or comps workbook QA is needed after the investment thesis is already grounded. | Not DCF-only work and not generic market commentary. |
+| `Public Equity Investing:dcf-model-builder`, `Public Equity Investing:three-statement-model-builder` | The user explicitly asks for DCF or three-statement operating model workbooks for a public company. | Not a substitute for upstream/downstream demand proof or current source collection. |
+| `Public Equity Investing:memo-builder`, `Public Equity Investing:long-short-pitch`, `Public Equity Investing:company-tearsheet`, `Public Equity Investing:deck-report-qc` | The user asks to package or review an already-supported idea as a memo, long/short pitch, tearsheet, or report/deck QC pass. | Output packaging only; do not use to create conviction before evidence and ranking work. |
+
+Preferred sequences:
+
+- Thesis maintenance: `user-investment-framework` -> source/market-data skills -> `stock-fundamental-moat-triad` / `stock-evaluator` -> `Public Equity Investing:thesis-tracker`.
+- Catalyst monitoring: `user-investment-framework` -> source skills -> `Public Equity Investing:catalyst-calendar`; if payoff math matters, add `Public Equity Investing:event-driven-analyzer`.
+- Earnings work: `user-investment-framework` -> `earnings-call-investment-analyst` -> `Public Equity Investing:earnings-preview` before results or `Public Equity Investing:earnings-deep-dive` after results.
+- Scenario and sensitivity: `user-investment-framework` -> `stock-evaluator` / `advanced-evaluation` -> `Public Equity Investing:scenario-sensitivity-generator`.
+- Position and risk: `user-investment-framework` -> verified thesis and current market data -> `Public Equity Investing:portfolio-risk-management`.
+- Model and workbook: `user-investment-framework` -> source skills -> `spreadsheet` / `xlsx-official` -> `Public Equity Investing:financials-normalizer` / `equity-model-update` / `model-audit-tieout`.
+- Formal packaging: `user-investment-framework` -> evidence/ranking complete -> `Public Equity Investing:memo-builder` / `long-short-pitch` / `company-tearsheet` / `deck-report-qc`.
+
+Do not let plugin artifact defaults force a full HTML report, workbook, or deck for quick project answers unless the user asks for that output. When the user explicitly requests a model, tracker, memo, pitch, tearsheet, or report, follow the owning plugin skill's artifact rules after the route is selected.
 
 ## A-Share Tracking And Disclosure
 
@@ -176,8 +211,15 @@ Tested behavior to remember:
 | AI/semiconductor stock mapping | `user-investment-framework` | `semiconductor-ai-chain-investment-researcher`, current-evidence skills, market-data skills |
 | Single stock evaluation | `user-investment-framework` | `stock-fundamental-moat-triad`, `industry-chain-deep-disassembly` for upstream/downstream demand, `stock-evaluator`, market-data/source skills |
 | News-driven alpha / small-cap elasticity | `user-investment-framework` | `search-specialist` or current-evidence skills first, then `serenity-alpha`, `allstock-data`, `advanced-evaluation` |
+| Dated event with probability/payoff | `user-investment-framework` | source skills, `serenity-alpha` if event came from news, then `Public Equity Investing:event-driven-analyzer` |
+| Thesis tracker or kill criteria | `user-investment-framework` | `a-share-company-tracking`, source/market-data skills, then `Public Equity Investing:thesis-tracker` |
+| Catalyst calendar | `user-investment-framework` | source skills, `a-share-company-tracking`, then `Public Equity Investing:catalyst-calendar` |
+| Pre/post earnings PM workflow | `user-investment-framework` | `earnings-call-investment-analyst`, then `Public Equity Investing:earnings-preview` or `Public Equity Investing:earnings-deep-dive` |
+| Scenario sensitivity or action thresholds | `user-investment-framework` | `stock-evaluator`, `advanced-evaluation`, then `Public Equity Investing:scenario-sensitivity-generator` |
+| Position sizing or hedge plan | `user-investment-framework` | verified thesis, current market data, then `Public Equity Investing:portfolio-risk-management` |
 | "Who has most elasticity?" | `user-investment-framework` | `allstock-data`, `banana-farmer`, `advanced-evaluation` |
 | Official evidence search | `user-investment-framework` | `search-specialist`, scraper/extract skills, `research-summarizer` |
 | A-share watchlist update | `user-investment-framework` | `a-share-company-tracking`, `a-share-disclosure-trading-data` |
 | Earnings-call analysis | `user-investment-framework` | `earnings-call-investment-analyst`, market-data/source skills |
-| Report or workbook output | `user-investment-framework` | `spreadsheet`/`xlsx`/`docx`/`pptx`/`pdf` according to artifact |
+| Model audit, model update, or normalized financials | `user-investment-framework` | `spreadsheet`/`xlsx-official`, then `Public Equity Investing:financials-normalizer`, `Public Equity Investing:equity-model-update`, or `Public Equity Investing:model-audit-tieout` |
+| Report or workbook output | `user-investment-framework` | `spreadsheet`/`xlsx`/`docx`/`pptx`/`pdf` according to artifact; add Public Equity Investing packaging skills only for formal memo/pitch/tearsheet/QC requests |

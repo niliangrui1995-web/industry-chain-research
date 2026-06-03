@@ -33,10 +33,11 @@ Default companion layers:
 | News-to-alpha financial translation | `serenity-alpha`, `search-specialist`, `research-summarizer`, `allstock-data`, `advanced-evaluation` |
 | A-share tracking and disclosures | `a-share-company-tracking`, `a-share-disclosure-trading-data` |
 | Earnings and guidance | `earnings-call-investment-analyst` |
+| Public equity PM workflows | `Public Equity Investing:thesis-tracker`, `Public Equity Investing:catalyst-calendar`, `Public Equity Investing:event-driven-analyzer`, `Public Equity Investing:earnings-preview`, `Public Equity Investing:earnings-deep-dive`, `Public Equity Investing:scenario-sensitivity-generator`, `Public Equity Investing:portfolio-risk-management` |
 | Market data and trading context | `allstock-data`, `finance`, `stocks`, `yfinance-mcp-server`, `alpha-vantage`, `banana-farmer`, `stock-data-skill`, `stock-copilot-pro` |
 | HTSC market/service tools | `query-indicator`, `select-stock`, `financial-analysis`, `watchlist-management`, `a-share-paper-trading` |
-| Scoring, factors, tables, workbooks | `advanced-evaluation`, `multi-factor-strategy`, `spreadsheet`, `xlsx`, `xlsx-official`, `data-scientist`, `senior-data-scientist` |
-| Documents and deliverables | `docx`, `pdf`, `pptx` |
+| Scoring, factors, tables, workbooks | `advanced-evaluation`, `multi-factor-strategy`, `spreadsheet`, `xlsx`, `xlsx-official`, `data-scientist`, `senior-data-scientist`, `Public Equity Investing:financials-normalizer`, `Public Equity Investing:equity-model-update`, `Public Equity Investing:model-audit-tieout` |
+| Documents and deliverables | `docx`, `pdf`, `pptx`, `Public Equity Investing:memo-builder`, `Public Equity Investing:long-short-pitch`, `Public Equity Investing:company-tearsheet`, `Public Equity Investing:deck-report-qc` |
 | Technical moat and product logic | `ai-engineer`, `ai-ml`, `ai-product`, `tech-stack-evaluator`, `cto-advisor`, `senior-architect`, `arm-cortex-expert`, `product-manager`, `product-manager-toolkit` |
 | Dividend/defensive style | `dividend-premium-tracker` |
 
@@ -57,6 +58,31 @@ Default rule: use HTSC for fast A-share indicators, candidate discovery, quick e
 | `a-share-paper-trading` | Explicit simulated A-share search, sparse quote, balance, position, order, cancellation, and trade-history operations. | Live trading, unrequested simulated orders/cancellations, primary real-time quote feeds, or historical market-data storage. |
 
 For individual-stock or company research, label any HTSC output as supplemental market/indicator/service data. Verify hard claims with official filings, exchange disclosures, company IR, project-local market-data sources, or other structured data sources. The tested HTSC plugin paths do not expose a stable structured historical OHLCV series suitable for deep research, VCP pattern work, factor research, or backtesting.
+
+## Public Equity Investing Plugin Use Boundaries
+
+Public Equity Investing plugin skills are optional PM workflow layers inside this framework. They do not replace the chain-first research path, official-evidence hierarchy, downstream-demand bridge, core-product demand and price/unit-economics check, or the final three-layer ranking.
+
+Default sequence:
+
+`project evidence and chain map -> company and earnings thesis -> scenario / catalyst / event / tracker / risk plugin workflow -> final project ranking or action posture`
+
+Do not start a project research task from the plugin router. Start from `user-investment-framework`; use the plugin only when the user's task is clearly a listed-equity PM workflow or when the project framework has already established the issuer/security context.
+
+| Public Equity Investing skill | Appropriate use | Do not use for |
+|---|---|---|
+| `Public Equity Investing:thesis-tracker` | Build or update falsifiable thesis pillars, KPI thresholds, catalysts, kill criteria, evidence ledger, and action thresholds after an initial company thesis exists. | First-pass company research, generic news summaries, proof of beneficiary status, or replacing `a-share-company-tracking` state. |
+| `Public Equity Investing:catalyst-calendar` | Maintain upcoming earnings, product, policy, regulatory, index, order, or validation events and next proof points. | Full event underwriting, final alpha ranking, or automatic recurring jobs. |
+| `Public Equity Investing:event-driven-analyzer` | Analyze dated public-equity events with conditions, timing, scenarios, probabilities, payoffs, expected return, and red-team risks. | Generic news-to-alpha translation, source verification, portfolio sizing, or credit/security restructuring analysis. |
+| `Public Equity Investing:earnings-preview` | Prepare pre-earnings expectation bar, likely KPI focus, scenario setup, guidance credibility, and call questions. | Post-results analysis or short earnings summaries. |
+| `Public Equity Investing:earnings-deep-dive` | Analyze results, guidance, transcript/call commentary, estimate changes, and what changed after earnings. | Replacing `earnings-call-investment-analyst` source discipline or using third-party transcripts as official originals. |
+| `Public Equity Investing:scenario-sensitivity-generator` | Turn a base case, thesis, event, or catalyst into scenario skew, sensitivities, breakpoints, and PM action thresholds. | First-pass model building, unsupported precision, or generic planning. |
+| `Public Equity Investing:portfolio-risk-management` | Size positions, compare size-down/no-hedge/hedged packages, identify retained exposure, basis risk, liquidity, exit, add/trim/exit rules. | Thesis construction, trade execution, personal investment advice, or credit-instrument hedges. |
+| `Public Equity Investing:financials-normalizer`, `Public Equity Investing:equity-model-update`, `Public Equity Investing:model-audit-tieout` | Normalize public-company financials, update model copies, and audit model/spreadsheet tie-outs when workbook/model integrity matters. | Pure narrative notes, original source proof, or building investment conclusions before evidence is verified. |
+| `Public Equity Investing:comps-valuation`, `Public Equity Investing:dcf-model-builder`, `Public Equity Investing:three-statement-model-builder` | Optional valuation/modeling after chain position, earnings path, and current market context are verified. | Replacing industry-chain diagnosis, official evidence, or the three-layer ranking. |
+| `Public Equity Investing:memo-builder`, `Public Equity Investing:long-short-pitch`, `Public Equity Investing:company-tearsheet`, `Public Equity Investing:deck-report-qc` | Package an already-supported idea into a memo, pitch, tearsheet, or report/deck QC pass. | Default answers, source discovery, live trade construction, or making unsupported recommendations look finished. |
+
+For simple questions, do not let a plugin's formal artifact defaults turn the task into a full report or workbook unless the user asks for that output. For model, tracker, memo, or report requests, follow the owning plugin skill's artifact rules after the project framework has chosen it.
 
 ## AI Chain Node Taxonomy Reference
 
