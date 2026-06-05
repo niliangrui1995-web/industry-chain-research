@@ -1,44 +1,27 @@
 {
-  "generated_at_beijing": "2026-06-04 22:34",
+  "generated_at_beijing": "2026-06-05 22:33",
   "status": "ok",
   "mode": "apply_mechanical",
   "window": {
-    "now_beijing": "2026-06-04 22:34",
-    "window_end_beijing": "2026-06-07 22:34"
+    "now_beijing": "2026-06-05 22:33",
+    "window_end_beijing": "2026-06-08 22:33"
   },
   "calendar_read": {
-    "today_arg": "2026-06-03",
+    "today_arg": "2026-06-04",
     "lookahead_days": 5,
     "allow_network": false,
     "event_count": 3,
-    "future_candidate_count": 2,
-    "past_event_count": 1
+    "future_candidate_count": 0,
+    "past_event_count": 3
   },
   "action_counts": {
     "create": 0,
     "update": 0,
     "pause": 0,
-    "validate_pending": 2,
+    "validate_pending": 0,
     "repair_rrule": 0
   },
-  "review_items": [
-    {
-      "ticker": "6594.T",
-      "company": "Nidec",
-      "report_date": "2026-06-05",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
-      "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "TDnet disclosure",
-        "JPX listing/company calendar",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    }
-  ],
+  "review_items": [],
   "soft_probe_candidates": [],
   "soft_warnings": {
     "legacy_name": [],
@@ -132,7 +115,7 @@
     {
       "child_id": "ec-6594-t-20260605-3e6dde",
       "name": "财报电话会深挖 6594.T Nidec 2026-06-05",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "6594.T|2026-06-05|",
       "ticker": "6594.T",
       "company": "Nidec",
@@ -144,7 +127,7 @@
       "rrule_ok": true,
       "model": "gpt-5.5",
       "reasoning_effort": "xhigh",
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
@@ -176,7 +159,7 @@
     {
       "child_id": "ec-cien-20260604-e259a7",
       "name": "财报电话会深挖 CIEN Ciena 2026-06-04",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "CIEN|2026-06-04|Apr/2026",
       "ticker": "CIEN",
       "company": "Ciena",
@@ -188,7 +171,7 @@
       "rrule_ok": true,
       "model": "gpt-5.5",
       "reasoning_effort": "xhigh",
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "confirmed",
       "event_status": "confirmed",
       "source_confidence": "official_confirmed",

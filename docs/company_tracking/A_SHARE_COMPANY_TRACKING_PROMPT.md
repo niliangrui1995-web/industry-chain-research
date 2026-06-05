@@ -13,8 +13,8 @@
 6. 不要把 Grok/X、社交平台、模型摘要或 open-web fallback 搜索结果直接写成确认事实；只能放入观察池，除非另有官方或可信来源确认。
 7. 调用 Grok/X 或 Gemini 网页时，默认使用 `@chrome` / Chrome 插件里的已登录会员账号；不要默认使用内置浏览器。只有用户明确要求、Chrome 不可用且用户接受 fallback，或做诊断测试时，才使用 `@browser` / Browser Use 或 Playwright。
 8. 每家公司必须作为独立工作单元处理。浏览器能力可用时，为每家公司单独打开或切换一个 Chrome/Grok 标签页或窗口，按公司独立查询、独立摘录、独立关闭/保留；浏览器不可用时，也必须保留独立公司任务块和完成清单，不能把多家公司混在一次泛查询里。
-9. 必须显式调用多智能体/子智能体来执行公司级跟踪研究：每家公司分配一个独立 worker/sub-agent 作为研究单元，最多同时运行 6 个公司 worker。默认模型策略改为主任务和公司 worker 统一使用 `gpt-5.5` + `reasoning_effort=xhigh`；创建每个公司 worker/sub-agent 时必须显式传入 `model="gpt-5.5"` 和 `reasoning_effort="xhigh"`，不要只依赖继承默认值；如后续需要临时降档，必须有明确成本/时延理由，并在 `run_status.md` 说明。总控智能体只负责队列调度、全局汇总、Excel/日报/run_status 写入和最终核对；不得只用一个主智能体批量脚本查询来替代公司级 worker。若当前运行环境没有可调用的子智能体工具，必须在 `run_status.md` 和 completion table 中标记 `multi_agent_status=unavailable` 并说明降级原因。
-10. 并行上限按 6 个公司 worker 处理：如果启用公司超过 6 家，先启动第一批最多 6 个 worker；任一公司 worker 完成后，从待处理队列补入下一家公司，直到全部 enabled 公司完成。不要因为并行上限遗漏后续公司。
+9. 不调用多智能体/子智能体/worker 执行公司级跟踪研究。为降低时延，本任务由总控在同一上下文中按公司逐项处理；不得 spawn sub-agent、multi-agent worker 或其他代理线程。
+10. 仍保留公司级隔离：如果启用公司较多，按 watchlist 顺序逐家公司建立独立任务块并完成后再进入下一家公司，直到全部 enabled 公司完成。不要因为取消子代理而把多家公司混在一个泛查询里，也不要遗漏第一批之后的排队公司。
 11. 每次结束时，除了写文件，还必须在对话窗口给出简短摘要，方便用户不打开文件也能看懂重点。
 12. 20:00 后公告硬门：若本轮运行开始时间为北京时间 20:00 或之后，每家 enabled 公司必须检查公告日期 `T` 和 `T+1`，覆盖晚间公告披露但公告日期滚到次日的情况；completion table 必须记录 `announcement_window_checked=T_and_T_plus_1` 或失败原因。若运行早于 20:00，必须记录 `pending_evening_rescan`。
 
@@ -23,7 +23,7 @@
 默认使用：
 
 - `industry-research-router`：入口和证据纪律。
-- `a-share-company-tracking`：A 股 watchlist 日更、baseline/state/events、公司级 worker、run_status 和最终核对。
+- `a-share-company-tracking`：A 股 watchlist 日更、baseline/state/events、公司级独立任务块、run_status 和最终核对。
 - `a-share-disclosure-trading-data`：CNINFO、交易所公告、IR 记录、龙虎榜、大宗交易和 T/T+1 公告窗口硬门。
 - `search-specialist`：官方公告、交易所、CNINFO、公司 IR、龙虎榜、大宗交易的检索策略。
 - `research-summarizer`：消化公告、年报、季报、投资者关系记录等长材料。
@@ -90,12 +90,12 @@ For every enabled company:
 Batching rule:
 
 - Build a queue from all `enabled=Y` companies.
-- Spawn one dedicated worker/sub-agent per company task whenever sub-agent tools are available; the worker owns only that company's `artifacts/company_tracking/<ticker>/` files.
-- Run at most 6 per-company workers in parallel.
-- When one worker finishes, immediately start the next queued company worker.
+- Do not spawn worker/sub-agent tasks. The controller processes company tasks directly in the current context.
+- Process companies sequentially or with non-agent scripts only when safe; keep each company as a separate task block.
+- After one company block finishes, immediately start the next queued company.
 - The run is not complete until every enabled company has either `completed`, `completed_with_grok_failed`, or `failed_with_reason` status in the per-company completion table.
-- If browser windows/tabs cannot truly run in parallel, keep the same 6-slot logical batching but process browser interactions sequentially inside each slot; do not merge company queries.
-- If sub-agent tools are unavailable, keep the per-company task-block contract, record `multi_agent_status=unavailable`, and do not present the run as a successful multi-agent execution.
+- If browser windows/tabs cannot truly run in parallel, process browser interactions sequentially; do not merge company queries.
+- Record `multi_agent_status=not_used_by_policy` in `run_status.md` and the completion table.
 
 0. Create an isolated per-company task block before collection:
    - company name, ticker, aliases, tracking_focus, grok_query_terms;

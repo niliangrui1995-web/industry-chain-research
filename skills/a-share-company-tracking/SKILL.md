@@ -1,6 +1,6 @@
 ---
 name: a-share-company-tracking
-description: Project-local A-share company tracking workflow for watchlist-driven daily updates, per-company baselines, official disclosures, CNINFO evening/T+1 announcement rescans, dragon-tiger list and block-trade checks, Grok/X observation fallback discipline, multi-agent batching, and durable company state files in the 产业链投研 project.
+description: Project-local A-share company tracking workflow for watchlist-driven daily updates, per-company baselines, official disclosures, CNINFO evening/T+1 announcement rescans, dragon-tiger list and block-trade checks, Grok/X observation fallback discipline, controller-run per-company task blocks, and durable company state files in the 产业链投研 project.
 ---
 
 # A-Share Company Tracking
@@ -27,8 +27,8 @@ Only process rows where `enabled=Y`.
 
 1. Read `AGENTS.md` and route through `skills/industry-research-router`.
 2. Treat each enabled company as an isolated work unit. Do not merge many companies into one broad query before per-company checks are complete.
-3. Use one dedicated worker/sub-agent per company whenever sub-agent tools are available. Maximum parallelism is 6 company workers.
-4. If sub-agent tools are unavailable or workers time out, the controller may complete a documented fallback, but must write `multi_agent_status` and per-company fallback notes in `run_status.md`.
+3. Do not spawn worker/sub-agent tasks for company tracking. The controller processes each enabled company directly in the current context to reduce run latency.
+4. Keep one isolated task block per company and record `multi_agent_status=not_used_by_policy` in `run_status.md` and the completion table.
 5. Grok/X is discovery only. If Chrome/Grok is unavailable, use open-web search as `open_web_fallback`; do not call that Grok or X-native evidence.
 6. A/C evidence separation is mandatory: official disclosure and exchange data can update the formal state; Grok/X, social, forum, and model summaries stay in an observation pool unless independently verified.
 7. Before finishing, reconcile the enabled watchlist against the completion table. No enabled company may be missing.
@@ -42,7 +42,7 @@ For runs at or after 20:00 Beijing time, check both announcement dates:
 
 This is a hard gate for A-share company tracking. If the run starts before 20:00, check `T` and explicitly state whether a later evening/T+1 rescan is still needed.
 
-For every enabled company, the controller or company worker must record the announcement-window result in the completion table:
+For every enabled company, the controller must record the announcement-window result in the completion table:
 
 `announcement_window_checked = T_only | T_and_T_plus_1 | pending_evening_rescan | failed_with_reason`
 
