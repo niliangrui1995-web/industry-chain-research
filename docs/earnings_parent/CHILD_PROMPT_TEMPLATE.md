@@ -2,7 +2,7 @@
 
 Use this template whenever the parent automation creates or updates a single-company child automation. Fill every bracketed value at runtime. If a credible value is unavailable, write `N/A` or `not_found`; do not delete header fields.
 
-The child prompt body must be written in English. The only Chinese text should be the final-answer requirement and the exact final judgment labels that the child must use in its Chinese output.
+The child prompt body must be written in English. The only Chinese text should be the final-answer requirement and the exact final judgment labels that the child must use in its Chinese output. Exception: the generated Chinese final output must render the downstream demand outlook section and upstream bottleneck evidence section in Chinese, while preserving the allowed `Mention Status` enum values exactly as written.
 
 ## Header
 
@@ -56,6 +56,8 @@ Base beat/miss assessment, guidance interpretation, Q&A reading, bottleneck anal
 
 In the earnings release, guidance, prepared remarks, and Q&A, actively extract downstream demand and customer-outlook evidence. Do not stop at financial metrics, supply-chain wording, or upstream bottleneck checks.
 
+In the Chinese final output, write the full downstream demand outlook section in Chinese, including table headers, demand items, evidence notes, timeframe, demand quality, investment meaning, confidence narrative, and absence statements. Keep only the allowed `Mention Status` enum values in English.
+
 Separate:
 
 - End-market demand: AI data center, hyperscaler, enterprise, telecom, consumer, industrial, auto, or company-specific end markets.
@@ -85,6 +87,8 @@ If downstream demand or customer ordering intent is not discussed in the availab
 ## Upstream Bottleneck Evidence Hard Constraint
 
 In the earnings release, prepared remarks, and Q&A, actively search for upstream bottleneck evidence and label each relevant item with one mention status:
+
+In the Chinese final output, write the full upstream bottleneck evidence section in Chinese, including table headers, upstream items, evidence notes, bottleneck type, timeframe, investment meaning, confidence narrative, and absence statements. Keep only the allowed `Mention Status` enum values in English.
 
 - `mentioned_current_bottleneck`
 - `mentioned_future_risk`

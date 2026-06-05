@@ -296,6 +296,8 @@ When the prior-quarter call and current-quarter call use different source types,
 
 For every post-earnings call, webcast, results-briefing, or investor-meeting analysis, actively search the earnings release, guidance, prepared remarks, and Q&A for downstream demand and customer-outlook evidence. Do not stop at financial metrics, supply-chain wording, or upstream bottleneck checks.
 
+Language hard rule: In any Chinese final report, the full downstream demand section must be written in Chinese, including the section title, table headers, item names, evidence notes, timeframe, demand-quality assessment, investment meaning, confidence narrative, and absence statements. Preserve only the canonical `Mention Status` enum values in English for machine readability.
+
 Always separate:
 
 - End-market demand: AI data center, hyperscaler, enterprise, telecom, consumer, industrial, auto, or company-specific end markets.
@@ -325,6 +327,8 @@ If downstream demand or customer ordering intent is not discussed in the availab
 ### Upstream Bottleneck Evidence Rule
 
 For every post-earnings call analysis, actively search the earnings release, investor presentation, prepared remarks, and Q&A for upstream bottlenecks. Do not rely only on generic "supply chain" wording. Search for the company's actual upstream terms, including supplier, substrate, wafer, fab, material, component, capacity, equipment, lead time, yield, inventory, allocation, qualification, long-term agreement, prepayment, take-or-pay, shortage, constraint, tightness, bottleneck, and the segment-specific product names.
+
+Language hard rule: In any Chinese final report, the full upstream bottleneck section must be written in Chinese, including the section title, table headers, upstream item names, evidence notes, bottleneck type, timeframe, investment meaning, confidence narrative, and absence statements. Preserve only the canonical `Mention Status` enum values in English for machine readability.
 
 Always separate:
 
