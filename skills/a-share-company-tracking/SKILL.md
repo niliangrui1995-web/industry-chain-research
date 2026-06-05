@@ -1,6 +1,6 @@
 ---
 name: a-share-company-tracking
-description: Project-local A-share company tracking workflow for watchlist-driven daily updates, per-company baselines, official disclosures, CNINFO evening/T+1 announcement rescans, dragon-tiger list and block-trade checks, Grok/X observation fallback discipline, controller-run per-company task blocks, and durable company state files in the 产业链投研 project.
+description: Project-local A-share company tracking workflow for watchlist-driven daily updates, per-company baselines, official disclosures, CNINFO evening/T+1 announcement rescans, dragon-tiger list and block-trade checks, Codex open-web observation discipline, controller-run per-company task blocks, and durable company state files in the 产业链投研 project.
 ---
 
 # A-Share Company Tracking
@@ -19,7 +19,9 @@ This is a project-owned tracking workflow, not a generic market-news brief and n
 
 Required watchlist columns:
 
-`enabled`, `ticker`, `exchange`, `name`, `aliases`, `industry_tags`, `priority`, `baseline_status`, `grok_query_terms`, `tracking_focus`, `official_sources_hint`, `last_baseline_date`, `last_update_date`, `notes`
+`enabled`, `ticker`, `exchange`, `name`, `aliases`, `industry_tags`, `priority`, `baseline_status`, `tracking_focus`, `official_sources_hint`, `last_baseline_date`, `last_update_date`, `notes`
+
+Extra keyword columns in the workbook can be used as ordinary Codex open-web search terms, but this workflow does not use browser or social-model discovery tools.
 
 Only process rows where `enabled=Y`.
 
@@ -29,8 +31,8 @@ Only process rows where `enabled=Y`.
 2. Treat each enabled company as an isolated work unit. Do not merge many companies into one broad query before per-company checks are complete.
 3. Do not spawn worker/sub-agent tasks for company tracking. The controller processes each enabled company directly in the current context to reduce run latency.
 4. Keep one isolated task block per company and record `multi_agent_status=not_used_by_policy` in `run_status.md` and the completion table.
-5. Grok/X is discovery only. If Chrome/Grok is unavailable, use open-web search as `open_web_fallback`; do not call that Grok or X-native evidence.
-6. A/C evidence separation is mandatory: official disclosure and exchange data can update the formal state; Grok/X, social, forum, and model summaries stay in an observation pool unless independently verified.
+5. Do not use external browsers, browser plugins, third-party web model tools, or social-search tools for discovery in this workflow. Use Codex's own internet/web-search capability only.
+6. A/C evidence separation is mandatory: official disclosure and exchange data can update the formal state; open-web search, social, forum, and model summaries stay in an observation pool unless independently verified.
 7. Before finishing, reconcile the enabled watchlist against the completion table. No enabled company may be missing.
 
 ## 20:00 Announcement Hard Gate
@@ -81,8 +83,8 @@ For every enabled company:
 2. Check official announcements, exchange disclosures, CNINFO, company IR, and the configured `official_sources_hint`.
 3. Apply the 20:00 announcement hard gate.
 4. Check dragon-tiger list and block-trade records for the most recent trading day when relevant.
-5. Run Grok/X 24-hour discovery through logged-in Chrome when available, using the company's name, ticker, aliases, `grok_query_terms`, and `tracking_focus`.
-6. If Grok/X is unavailable, run open-web fallback and label it as observation-only.
+5. Run Codex open-web 24-hour discovery for that company only, using the company's name, ticker, aliases, `tracking_focus`, `official_sources_hint`, and notes.
+6. Record `open_web_search_status=searched` / `no_signal` / `failed`; label open-web findings as observation-only unless confirmed by official disclosure, exchange data, or credible media.
 7. Append material events to `events.jsonl` with compact JSON lines:
    - `date`
    - `ticker`
@@ -104,7 +106,7 @@ The daily report must include:
 - run metadata;
 - companies with material changes, with what happened, why it matters, and evidence type;
 - announcement / dragon-tiger / block-trade highlights;
-- Grok/X or open-web observation pool only when it contains useful items;
+- open-web observation pool only when it contains useful items;
 - baseline changes and unresolved source gaps;
 - next 3-5 tracking questions;
 - per-company completion table.
@@ -119,4 +121,3 @@ The final chat summary should be short. Do not list every file path or every que
 - `research-summarizer`: long announcements, annual reports, quarterly reports, and IR records.
 - `stock-evaluator`: project-style company evaluation after material events.
 - `allstock-data` / `finance`: quote, K-line, liquidity, valuation, and timing context.
-- `browser-grok-gemini-research`: Grok/X and Gemini webpage collection boundary.

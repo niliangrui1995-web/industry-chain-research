@@ -8,11 +8,11 @@
 1A. 本任务必须调用并遵循项目 skill：`skills/a-share-company-tracking`；公告、CNINFO、交易所披露、龙虎榜、大宗交易和公告窗口核验必须调用并遵循 `skills/a-share-disclosure-trading-data`。
 2. 读取 `watchlists/a_share_company_watchlist.xlsx` 的 `watchlist` 工作表，只处理 `enabled=Y` 的公司。
 3. 首次或新增公司规则：`baseline_status` 为 `pending`、`refresh_needed` 或空值的公司，必须先做完整公司基线深研；本任务首跑要一次性完成全部待建基线公司。
-4. Grok/X 是发现层，不是阻断项。Grok 失败、不可用、超时、无结果时，继续完成公告、龙虎榜、大宗交易和本地档案更新；如果 `@chrome` / Grok 不可用，必须改用 Codex 自身联网能力对该公司做最近消息搜索，作为 `open_web_fallback` 观察层。
-5. 不需要对每条消息做严格评级，但必须区分来源类型：官方披露、交易数据、可信媒体、Grok/X观察池。
-6. 不要把 Grok/X、社交平台、模型摘要或 open-web fallback 搜索结果直接写成确认事实；只能放入观察池，除非另有官方或可信来源确认。
-7. 调用 Grok/X 或 Gemini 网页时，默认使用 `@chrome` / Chrome 插件里的已登录会员账号；不要默认使用内置浏览器。只有用户明确要求、Chrome 不可用且用户接受 fallback，或做诊断测试时，才使用 `@browser` / Browser Use 或 Playwright。
-8. 每家公司必须作为独立工作单元处理。浏览器能力可用时，为每家公司单独打开或切换一个 Chrome/Grok 标签页或窗口，按公司独立查询、独立摘录、独立关闭/保留；浏览器不可用时，也必须保留独立公司任务块和完成清单，不能把多家公司混在一次泛查询里。
+4. 不调用外部浏览器、浏览器插件、第三方网页模型或社交搜索工具作为发现层。最近 24 小时消息统一使用 Codex 自身联网能力 / open-web search；联网搜索只是观察层，不是阻断项。
+5. 不需要对每条消息做严格评级，但必须区分来源类型：官方披露、交易数据、可信媒体、open-web 观察池。
+6. 不要把社交平台、模型摘要或 open-web 搜索结果直接写成确认事实；只能放入观察池，除非另有官方披露、交易数据或可信媒体确认。
+7. 每家公司必须作为独立工作单元处理。先建立该公司的任务块和完成清单，再做公告、龙虎榜、大宗交易、Codex 自身联网搜索和状态更新；不能把多家公司混在一次泛查询里。
+8. open-web 搜索每家公司最近 24 小时消息时，关键词来自公司名、ticker、aliases、tracking_focus、official_sources_hint、notes 等普通关键词字段。
 9. 不调用多智能体/子智能体/worker 执行公司级跟踪研究。为降低时延，本任务由总控在同一上下文中按公司逐项处理；不得 spawn sub-agent、multi-agent worker 或其他代理线程。
 10. 仍保留公司级隔离：如果启用公司较多，按 watchlist 顺序逐家公司建立独立任务块并完成后再进入下一家公司，直到全部 enabled 公司完成。不要因为取消子代理而把多家公司混在一个泛查询里，也不要遗漏第一批之后的排队公司。
 11. 每次结束时，除了写文件，还必须在对话窗口给出简短摘要，方便用户不打开文件也能看懂重点。
@@ -29,7 +29,7 @@
 - `research-summarizer`：消化公告、年报、季报、投资者关系记录等长材料。
 - `stock-evaluator` + `business-analyst`：公司基本面、业务结构、财务质量和风险。
 - `allstock-data` / `finance`：必要时核对行情、交易状态、估值和流动性。
-- `browser-grok-gemini-research`：用于 Grok/X 和必要的 Gemini 网页发现层；默认走 `@chrome` 里的登录账号，不可用时记录失败并继续。
+- 不使用浏览器采集类 skill、外部浏览器、浏览器插件、第三方网页模型或社交搜索工具；最近消息统一用 Codex 自身联网能力 / open-web search。
 
 ## Input Schema
 
@@ -47,7 +47,6 @@ Required columns:
 - `industry_tags`
 - `priority`
 - `baseline_status`
-- `grok_query_terms`
 - `tracking_focus`
 - `official_sources_hint`
 - `last_baseline_date`
@@ -93,14 +92,14 @@ Batching rule:
 - Do not spawn worker/sub-agent tasks. The controller processes company tasks directly in the current context.
 - Process companies sequentially or with non-agent scripts only when safe; keep each company as a separate task block.
 - After one company block finishes, immediately start the next queued company.
-- The run is not complete until every enabled company has either `completed`, `completed_with_grok_failed`, or `failed_with_reason` status in the per-company completion table.
-- If browser windows/tabs cannot truly run in parallel, process browser interactions sequentially; do not merge company queries.
+- The run is not complete until every enabled company has either `completed`, `completed_with_open_web_gap`, or `failed_with_reason` status in the per-company completion table.
+- Do not use browser windows/tabs for this workflow; do not merge company queries.
 - Record `multi_agent_status=not_used_by_policy` in `run_status.md` and the completion table.
 
 0. Create an isolated per-company task block before collection:
-   - company name, ticker, aliases, tracking_focus, grok_query_terms;
-   - `browser_scope`: `chrome_separate_tab_or_window`, `fallback_no_browser`, or `not_available`;
-   - checklist fields: `baseline_read`, `announcements_checked`, `lhb_checked`, `block_trade_checked`, `grok_checked`, `state_updated`, `events_appended`.
+   - company name, ticker, aliases, tracking_focus, official_sources_hint, notes;
+   - `collection_scope`: `controller_open_web_only`;
+   - checklist fields: `baseline_read`, `announcements_checked`, `lhb_checked`, `block_trade_checked`, `open_web_checked`, `state_updated`, `events_appended`.
 1. Read existing baseline, state, and recent event ledger for this company only.
 2. Check today and the most recent trading day if needed for this company:
    - official announcements;
@@ -110,20 +109,14 @@ Batching rule:
    - dragon-tiger list;
    - block trades.
 2A. If `run_time_beijing >= 20:00`, announcement checks must cover both announcement date `T` and `T+1`; write `announcement_window_checked=T_and_T_plus_1`. If the run is before 20:00, write `announcement_window_checked=pending_evening_rescan` unless a later rescan is completed.
-3. Run Grok/X last-24-hour discovery in that company's own Chrome/Grok tab or window when available, using:
+3. Run Codex open-web last-24-hour discovery for that company only, using:
    - `name`
    - `ticker`
    - `aliases`
-   - `grok_query_terms`
+   - official_sources_hint and notes when useful
    - `tracking_focus`
-   Do not combine multiple tracked companies into one Grok prompt unless the user explicitly asks for a cross-company comparison pass after all per-company checks are complete.
-4. If Grok/X cannot be used:
-   - first record whether the Chrome plugin, Grok page, account session, or Grok result failed;
-   - record `grok_status=failed` or `unavailable` in `run_status.md`;
-   - immediately run Codex's own internet/web-search capability for that company using company name, ticker, aliases, `grok_query_terms`, and `tracking_focus`;
-   - record this as `open_web_fallback_status=searched` / `no_signal` / `failed`, and place any useful items in an `open_web_fallback` observation pool;
-   - continue the rest of the workflow;
-   - do not call open-web fallback results Grok/X results, and do not treat them as logged-in Chrome or X-native evidence.
+   Do not combine multiple tracked companies into one search unless the user explicitly asks for a cross-company comparison pass after all per-company checks are complete.
+4. Record `open_web_search_status=searched` / `no_signal` / `failed`, and place any useful items in an `open_web_observation` pool. Continue official公告、龙虎榜、大宗交易和档案更新 even if open-web search fails.
 5. Append newly found material to `events.jsonl` with compact JSON lines:
    - `date`
    - `ticker`
@@ -139,7 +132,7 @@ Batching rule:
    - thesis strengthened or weakened;
    - new official event;
    - trading-event anomaly;
-   - Grok/X observation worth watching;
+   - open-web observation worth watching;
    - source gap;
    - next tracking question.
 7. Write daily cross-company report:
@@ -156,10 +149,10 @@ The daily report must include:
    - company count;
    - baseline-created count;
    - daily-updated count;
-   - Grok status summary.
+   - open-web search summary.
 2. 有实质变化的公司，并逐家公司写清具体变化内容：发生了什么、为什么重要、证据来源类型是什么；不要只列公司名。
 3. Companies with dragon-tiger list or block-trade events.
-4. Grok/X 24-hour observation pool.
+4. Open-web 24-hour observation pool.
 5. Baseline changes and unresolved source gaps.
 6. Next 3-5 tracking questions.
 7. Per-company completion table:
@@ -167,12 +160,12 @@ The daily report must include:
    - `name`
    - `batch_no`
    - `queue_status`
-   - `browser_scope`
+   - `collection_scope`
    - `announcements_checked`
    - `lhb_checked`
    - `block_trade_checked`
    - `announcement_window_checked`
-   - `grok_status`
+   - `open_web_search_status`
    - `state_change`
    - `miss_risk_notes`
 
@@ -182,18 +175,17 @@ The final chat summary must be short and include:
 - announcement / dragon-tiger list / block-trade highlights;
 - changes versus baseline;
 - next 3-5 questions to watch;
-- 只有当 Grok/X 或 open-web fallback 真的收集到有价值内容时，才单独增加“Grok内容总结”或“联网搜索总结”；如果没有有价值内容就跳过，不要为状态而写状态。
+- 只有当 open-web search 真的收集到有价值内容时，才单独增加“联网搜索总结”；如果没有有价值内容就跳过，不要为状态而写状态。
 
-不要在最终对话摘要中固定列出更新文件路径、Grok/X失败状态、open-web fallback状态、每家公司完成状态、批次/排队状态；这些只写入日报或 `run_status.md`。除非这些状态会影响用户下一步判断，否则不要放进对话摘要。
+不要在最终对话摘要中固定列出更新文件路径、open-web search 状态、每家公司完成状态、批次/排队状态；这些只写入日报或 `run_status.md`。除非这些状态会影响用户下一步判断，否则不要放进对话摘要。
 
 ## Failure Handling
 
 - If one company fails, continue processing the rest and record the failure in `run_status.md`.
 - If the Excel watchlist cannot be opened, stop and report the blocker.
 - If official sites are temporarily unavailable, try one alternate reputable source and label the source limitation.
-- If Chrome, Grok, or Gemini cannot attach, do not retry indefinitely. Record the failure and continue.
-- If Browser Use or Playwright is used as a diagnostic fallback, label it as fallback and do not present it as the default Chrome member-account path.
-- If a per-company browser tab/window cannot be opened, keep processing that company through official disclosures, exchange data, dragon-tiger list, block trades, and local files. Mark only the browser/Grok part failed.
+- Do not use external browsers, browser plugins, third-party web model tools, or social-search tools in this workflow. Use Codex's own internet/web-search capability only.
+- If open-web search fails, keep processing that company through official disclosures, exchange data, dragon-tiger list, block trades, and local files. Mark only `open_web_search_status` failed.
 - Before finishing, audit the enabled watchlist against the per-company completion table. If any enabled company is missing, reopen that company task block before writing the final summary.
 - If more than 6 companies are enabled, verify that queued companies beyond the first batch were actually started and completed.
 - Preserve Chinese text and file encoding. Do not rewrite unrelated project files.
