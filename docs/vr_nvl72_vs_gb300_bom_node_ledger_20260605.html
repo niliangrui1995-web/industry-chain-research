@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VR-NVL72 vs GB300/GB200 BOM 增量节点账本</title>
+  <style>
+    :root {
+      --bg: #f6f3ee;
+      --paper: #fffdf8;
+      --ink: #1d2430;
+      --muted: #687080;
+      --line: #ded7ca;
+      --line-strong: #c7bba8;
+      --accent: #0f7b6c;
+      --accent-2: #173b57;
+      --warn: #af6b16;
+      --risk: #b64a44;
+      --ok: #2c7a45;
+      --soft: #7a5b18;
+      --watch: #5b6382;
+      --chip: #eef7f4;
+      --shadow: 0 16px 42px rgba(40, 31, 19, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(15, 123, 108, 0.10), transparent 26rem),
+        radial-gradient(circle at 92% 0%, rgba(173, 107, 22, 0.09), transparent 24rem),
+        linear-gradient(180deg, #fbf7ef 0%, var(--bg) 32rem);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.62;
+      overflow-wrap: break-word;
+    }
+
+    a {
+      color: var(--accent-2);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(23, 59, 87, 0.25);
+    }
+
+    a:hover { border-bottom-color: var(--accent-2); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+      gap: 28px;
+      width: min(1480px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+
+    aside {
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.82);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(40, 31, 19, 0.06);
+    }
+
+    .nav-title {
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-2);
+      letter-spacing: 0;
+    }
+
+    nav a {
+      display: block;
+      padding: 7px 0;
+      border: 0;
+      color: #394354;
+      font-size: 13px;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    main {
+      min-width: 0;
+    }
+
+    aside,
+    .hero,
+    section {
+      max-width: 100%;
+    }
+
+    .hero {
+      padding: 34px 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(255, 253, 248, 0.97), rgba(240, 247, 244, 0.95));
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 980px;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 980px;
+      margin: 18px 0 0;
+      color: #3a4350;
+      font-size: 17px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 10px;
+      border: 1px solid rgba(15, 123, 108, 0.20);
+      border-radius: 999px;
+      background: var(--chip);
+      color: #1d5f55;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    section {
+      margin-top: 24px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.92);
+      box-shadow: 0 12px 34px rgba(40, 31, 19, 0.06);
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+      line-height: 1.24;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .section-note {
+      margin: -4px 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 120px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1.1;
+      color: var(--accent-2);
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .callout {
+      margin: 18px 0 0;
+      padding: 18px 20px;
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      background: #f0f7f4;
+      color: #233942;
+    }
+
+    .callout.warn {
+      border-left-color: var(--warn);
+      background: #fff5e7;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .memo-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .memo-card h3 {
+      margin: 0 0 10px;
+      color: var(--accent-2);
+      font-size: 15px;
+    }
+
+    .memo-card p {
+      margin: 0;
+      color: #334050;
+      font-size: 14px;
+    }
+
+    .memo-card strong {
+      color: var(--ink);
+    }
+
+    .memo-card ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .memo-card li {
+      margin: 6px 0;
+      color: #3b4656;
+      font-size: 13px;
+    }
+
+    .priority-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .priority {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .priority span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .priority b {
+      display: block;
+      margin-top: 5px;
+      color: #243040;
+      font-size: 14px;
+    }
+
+    .evidence-note {
+      margin-top: 14px;
+      padding: 13px 14px;
+      border-radius: 8px;
+      background: #f7f4ee;
+      color: #5d6573;
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    table {
+      width: 100%;
+      min-width: 820px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f2eee6;
+      color: #243040;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid #ece6dc;
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    tbody tr:hover { background: #fbf8f1; }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tag.main { background: #eaf6f0; color: var(--ok); }
+    .tag.soft { background: #fff2cd; color: var(--soft); }
+    .tag.watch { background: #eef0f8; color: var(--watch); }
+    .tag.reject { background: #fae7e5; color: var(--risk); }
+
+    .node-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .node {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .node-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .node h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .node p {
+      margin: 8px 0 0;
+      color: #48515f;
+      font-size: 13px;
+    }
+
+    .node dl {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 6px 10px;
+      margin: 12px 0 0;
+      font-size: 13px;
+    }
+
+    .node dt {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .node dd {
+      margin: 0;
+      color: #2f3948;
+    }
+
+    details {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 13px 16px;
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    details .table-wrap {
+      border-width: 1px 0 0;
+      border-radius: 0;
+    }
+
+    .rank-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .rank-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .rank-card ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    .rank-card li {
+      margin: 7px 0;
+      font-size: 13px;
+    }
+
+    .source-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .source-list li {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 13px;
+    }
+
+    footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 1040px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .node-grid,
+      .rank-list,
+      .source-list,
+      .decision-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .priority-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      .layout {
+        width: calc(100% - 24px);
+        max-width: calc(100% - 24px);
+        padding-top: 14px;
+      }
+
+      aside,
+      main,
+      .hero,
+      section {
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      nav {
+        max-width: 100%;
+      }
+
+      nav a {
+        overflow-wrap: anywhere;
+      }
+
+      h1 {
+        font-size: 28px;
+        line-height: 1.12;
+      }
+
+      .hero,
+      section {
+        padding: 20px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .priority-strip {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        min-width: 760px;
+      }
+
+      h1,
+      .hero p,
+      .callout,
+      .memo-card,
+      .priority b,
+      .pill {
+        overflow-wrap: anywhere;
+      }
+
+      .pill {
+        white-space: normal;
+      }
+    }
+
+    @media print {
+      body { background: #fff; }
+      aside { display: none; }
+      .layout { display: block; width: 100%; padding: 0; }
+      .hero, section { box-shadow: none; break-inside: avoid; }
+      th { position: static; }
+      a { color: inherit; border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside>
+      <p class="nav-title">报告导航</p>
+      <nav>
+        <a href="#summary">结论</a>
+        <a href="#decision">PM 先读</a>
+        <a href="#metrics">关键增量</a>
+        <a href="#comparison">BOM 对比</a>
+        <a href="#nodes">节点严筛</a>
+        <a href="#stocks">A 股池</a>
+        <a href="#market">行情快照</a>
+        <a href="#ranking">三层排名</a>
+        <a href="#tracking">跟踪指标</a>
+        <a href="#sources">来源</a>
+      </nav>
+    </aside>
+
+    <main>
+      <header class="hero" id="summary">
+        <p class="eyebrow">Vera Rubin NVL72 产业链投研备忘录 · 2026-06-05</p>
+        <h1>VR-NVL72 vs GB300/GB200 BOM 增量节点账本</h1>
+        <p>这份 HTML 按 Public Equity 投研备忘录方式重排：先给研究优先级、决策铰链和否定条件，再展开 BOM 增量、A 股映射、交易弹性和来源账本。核心纪律是只保留能落到具体物料、客户认证、订单、收入或毛利传导的标的。</p>
+        <div class="hero-meta">
+          <span class="pill">第一主线：PCB / CCL / 电子布</span>
+          <span class="pill">强旁线：光通信</span>
+          <span class="pill">条件式观察：铜箔 / 连接器 / 电源 / 液冷</span>
+          <span class="pill">剔除：泛概念、泛 retimer、泛液冷</span>
+        </div>
+        <div class="callout">
+          结论：VR-NVL72 相对 GB300/GB200 不是 GPU/CPU 数量增加，而是 NVLink、NVSwitch、CX9 与板级互联继续升级。A 股最强弹性不在 NVIDIA 互联芯片本身，而在高速互联外溢到 PCB、CCL、电子布、低粗糙度铜箔和连接结构后的价值量、良率和认证门槛。
+        </div>
+      </header>
+
+      <section id="decision">
+        <h2>PM 先读层</h2>
+        <div class="decision-grid">
+          <div class="memo-card">
+            <h3>研究立场</h3>
+            <p><strong>优先级：</strong>PCB/CCL/电子布仍是 VR-NVL72 单柜 BOM 增量最清晰的 A 股主线；连接结构、电源和液冷是二线，必须靠订单和收入拆分升级；光通信景气度强，但应单独建账，不混入 VR 柜内 BOM 主线。</p>
+          </div>
+          <div class="memo-card">
+            <h3>决策铰链</h3>
+            <p><strong>关键不是“新一代 GPU 数量更多”，而是“同样 72 GPU / 36 CPU 下，互联带宽、switch tray、CX9 module 和 midplane 把板级材料复杂度推高”。</strong></p>
+          </div>
+          <div class="memo-card">
+            <h3>必须成立</h3>
+            <ul>
+              <li>PCB 价值量 +233% 能转化为高层板、HDI、midplane、ConnectX PCB 的订单和毛利。</li>
+              <li>M8/M9 CCL、低介电电子布、PCB 级 HVLP/RTF 铜箔出现涨价、交期拉长或客户锁料。</li>
+              <li>连接结构、电源、液冷标的能拿出 AI rack 平台认证、客户、收入或毛利拆分。</li>
+            </ul>
+          </div>
+          <div class="memo-card">
+            <h3>否定条件</h3>
+            <ul>
+              <li>AI PCB 订单递延、毛利率下行、应收和存货失控。</li>
+              <li>高端 CCL / 电子布交期回落，二供 AVL 快速扩容，涨价停止。</li>
+              <li>标的只能讲概念，不能回答“供应哪个物料、用在哪个节点、如何进收入/毛利”。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="priority-strip">
+          <div class="priority"><span>主线池</span><b>胜宏、沪电、生益、深南、生益电子、宏和</b></div>
+          <div class="priority"><span>条件式观察</span><b>德福、鼎通、麦格米特、英维克、飞荣达、工业富联</b></div>
+          <div class="priority"><span>旁线另算</span><b>中际、新易盛、天孚、源杰、光迅</b></div>
+          <div class="priority"><span>严禁混同</span><b>泛 PCB、泛玻纤、锂电铜箔、普通液冷、泛 retimer</b></div>
+        </div>
+
+        <div class="evidence-note">
+          证据姿态：NVIDIA 官方规格和参考架构为 A 级；用户提供的 VR 节点文件按 A-/B+ 待核验使用；本地价值量拆解按 B 级测算使用；2026-06-05 东方财富盘中行情只用于交易弹性，不用于证明供应链受益身份。
+        </div>
+      </section>
+
+      <section id="metrics">
+        <h2>关键增量</h2>
+        <p class="section-note">百分比来自本地 BOM 拆解或公开架构对齐，行情与估值只用于交易弹性判断。</p>
+        <div class="cards">
+          <div class="metric"><strong>+233%</strong><span>PCB 单柜价值量，约 3.51 万美元到 11.67 万美元</span></div>
+          <div class="metric"><strong>+182%</strong><span>MLCC 单柜价值量，百分比高但绝对值较小</span></div>
+          <div class="metric"><strong>+82%</strong><span>ABF 单柜价值量，高壁垒但 A 股硬映射弱</span></div>
+          <div class="metric"><strong>+32%</strong><span>电源价值量，关注 800VDC、power shelf、busbar</span></div>
+          <div class="metric"><strong>+12%</strong><span>液冷价值量，长期方向强但不是最大单柜增量</span></div>
+          <div class="metric"><strong>260TB/s</strong><span>VR-NVL72 官方 NVLink 带宽，GB200 为 130TB/s</span></div>
+        </div>
+        <div class="callout warn">
+          “A 股高速互联弹性最高”的严格含义：不是买 NVIDIA NVSwitch/CX9 芯片，而是买高速互联把板材、层数、良率、测试和客户认证难度推上去的 PCB/CCL/电子布链。
+        </div>
+      </section>
+
+      <section id="comparison">
+        <h2>BOM 增量对比</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>项目</th>
+                <th>GB300/GB200 口径</th>
+                <th>VR-NVL72 口径</th>
+                <th>增量结论</th>
+                <th>投资含义</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>GPU</td><td>72 GPU</td><td>72 Rubin GPU</td><td>数量不变，单颗价值和功耗升级</td><td>不产生 A 股 GPU 数量弹性</td></tr>
+              <tr><td>CPU</td><td>36 Grace CPU</td><td>36 Vera CPU</td><td>数量不变，CPU memory 与 C2C 升级</td><td>A 股映射弱</td></tr>
+              <tr><td>NVLink 带宽</td><td>GB200 130TB/s</td><td>260TB/s</td><td>约翻倍</td><td>推动 switch tray、PCB、ABF、MLCC、供电散热复杂度</td></tr>
+              <tr><td>NVSwitch</td><td>GB300 9 tray × 2 ASIC = 18</td><td>用户文件口径 9 tray × 4 ASIC = 36</td><td>约 +100%</td><td>芯片无 A 股直接映射，落点是 switch PCB 和材料</td></tr>
+              <tr><td>ConnectX / SuperNIC</td><td>GB300 每 tray 4 个 CX8，合计 72</td><td>每 tray 4 个 CX9 module，每 module 2 颗 ASIC，合计 144 ASIC</td><td>芯片数量与速率上升</td><td>拉动 ConnectX PCB、OSFP/CAGE、MLCC、ABF、高速测试</td></tr>
+              <tr><td>BlueField DPU</td><td>每 tray 1 个 BF3，约 18</td><td>每 tray 1 个 BF4，约 18</td><td>数量不变，代际升级</td><td>间接拉动 DPU module PCB、MLCC、ABF</td></tr>
+              <tr><td>PCB</td><td>约 35,100 美元/柜</td><td>约 116,730 美元/柜</td><td>+233%</td><td>A 股最强直接映射</td></tr>
+              <tr><td>MLCC</td><td>约 1,530 美元/柜</td><td>约 4,320 美元/柜</td><td>+182%</td><td>观察紧缺和涨价，但不是第一主线</td></tr>
+              <tr><td>ABF</td><td>约 11,160 美元/柜</td><td>约 20,340 美元/柜</td><td>+82%</td><td>全球高壁垒，A 股直接映射弱</td></tr>
+              <tr><td>Power</td><td>约 57,600 美元/柜</td><td>约 76,000 美元/柜</td><td>+32%</td><td>关注 800VDC、power shelf、busbar、SiC/GaN</td></tr>
+              <tr><td>Cooling</td><td>约 64,610 美元/柜</td><td>约 72,080 美元/柜</td><td>+12%</td><td>方向确定，单柜增量低于 PCB</td></tr>
+              <tr><td>Optical module</td><td>柜外 scale-out 需要</td><td>VR scale-out 继续增强</td><td>不是柜内 BOM 主增量</td><td>单独光通信主线</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="nodes">
+        <h2>节点严筛账本</h2>
+        <p class="section-note">每个节点按“增量是否明确、A 股是否能映射、证据是否足够、哪些公司不能混入”处理。</p>
+        <div class="node-grid">
+          <article class="node">
+            <div class="node-head"><h3>PCB / 高层板 / HDI / midplane</h3><span class="tag main">第一主线</span></div>
+            <p>新增 midplane、BlueField PCB、ConnectX PCB，compute/switch board 层数和复杂度提升，价值量 +233%。</p>
+            <dl><dt>A 股</dt><dd>胜宏、沪电、深南、生益电子</dd><dt>剔除</dt><dd>普通 PCB、低层板、消费电子 PCB</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>CCL / prepreg / M8-M9</h3><span class="tag soft">soft bottleneck</span></div>
+            <p>更高速信号和更高层数需要低损耗材料，涨价、lead time 和 allocation 线索支持偏紧。</p>
+            <dl><dt>A 股</dt><dd>生益科技；南亚新材、华正新材观察</dd><dt>剔除</dt><dd>普通 FR-4、没有材料等级和客户证据的公司</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>高端电子布 / Low CTE / Low Dk-Df</h3><span class="tag soft">soft bottleneck+</span></div>
+            <p>普通玻纤不能替代 AI server 与高速 PCB 所需的低介电、低损耗、低热膨胀布种。</p>
+            <dl><dt>A 股</dt><dd>宏和科技；中材科技、国际复材、菲利华观察</dd><dt>剔除</dt><dd>建筑玻纤、风电玻纤、泛玻纤</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>PCB 级 HVLP / VLP / RTF 铜箔</h3><span class="tag watch">watch+</span></div>
+            <p>224G/1.6T 与 M8/M9 对低粗糙度、一致性和表面处理要求上升。</p>
+            <dl><dt>A 股</dt><dd>德福科技观察</dd><dt>剔除</dt><dd>锂电铜箔产能不能替代 PCB 级铜箔</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>NVSwitch / NVLink switch tray</h3><span class="tag watch">间接受益</span></div>
+            <p>NVLink 带宽翻倍，VR 文件口径下 NVSwitch ASIC 数量约翻倍。</p>
+            <dl><dt>A 股</dt><dd>不买芯片，买 switch PCB、材料、供电和散热</dd><dt>剔除</dt><dd>泛交换机、园区交换机、网通概念</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>ConnectX-9 / CX9 module</h3><span class="tag watch">间接受益</span></div>
+            <p>每 GPU 1600G 带宽推高 OSFP、CAGE、连接器、PCB、MLCC、ABF 和测试要求。</p>
+            <dl><dt>A 股</dt><dd>胜宏、沪电、深南、生益电子；鼎通/立讯需订单证明</dd><dt>剔除</dt><dd>普通连接器、泛 retimer、网通芯片</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>ABF / IC substrate</h3><span class="tag watch">观察</span></div>
+            <p>价值量 +82%，但板级 PCB 和 ABF 不是同一链路。</p>
+            <dl><dt>A 股</dt><dd>兴森、深南观察</dd><dt>剔除</dt><dd>把普通 PCB 直接等同 GPU ABF substrate</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>MLCC</h3><span class="tag watch">观察</span></div>
+            <p>百分比增幅高，但单柜绝对价值小，适合作为供需紧张验证线索。</p>
+            <dl><dt>A 股</dt><dd>三环、风华等观察</dd><dt>剔除</dt><dd>普通 MLCC 周期复苏直接等同 Rubin 受益</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>800VDC / power shelf / busbar</h3><span class="tag watch">第二主线</span></div>
+            <p>机架功率密度上升，NVIDIA 800VDC 生态明确，但 A 股需要订单和收入验证。</p>
+            <dl><dt>A 股</dt><dd>麦格米特、立讯/连接供电结构观察</dd><dt>剔除</dt><dd>泛 UPS、泛电源、泛电网设备</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>液冷 / manifold / QD / 冷板 / CDU</h3><span class="tag watch">第二主线</span></div>
+            <p>GB300 已经液冷，VR 是密度和架构升级；长期方向强，但单柜增量低于 PCB。</p>
+            <dl><dt>A 股</dt><dd>英维克、飞荣达观察</dd><dt>剔除</dt><dd>普通 HVAC、普通机房空调</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>连接器 / CAGE / OSFP / 铜缆</h3><span class="tag watch">条件式观察</span></div>
+            <p>CX9、1.6T/GPU 和高密互连推高连接密度与可靠性要求。</p>
+            <dl><dt>A 股</dt><dd>鼎通、立讯</dd><dt>剔除</dt><dd>普通连接器、汽车连接器、消费电子连接器</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>光模块 / EML / CW / InP / CPO</h3><span class="tag main">强旁线</span></div>
+            <p>AI scale-out 网络真实强景气，但不是 VR 单柜内部 BOM 最大增量。</p>
+            <dl><dt>A 股</dt><dd>中际、新易盛、天孚、源杰、光迅</dd><dt>剔除</dt><dd>把光模块硬塞进 VR 柜内 BOM 主增量</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>Retimer / AEC / BERT / 测试</h3><span class="tag reject">不进主线</span></div>
+            <p>全球技术节点重要，但 A 股缺少 224G Ethernet AEC retimer IC 或 1.6T/224G BERT 核心供应证据。</p>
+            <dl><dt>全球</dt><dd>Credo、Marvell、Broadcom、MaxLinear、Keysight、VIAVI</dd><dt>剔除</dt><dd>澜起 PCIe/CXL retimer、封测/ATE 硬贴 224G</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>BMC / HMC / MCU / ERoT / SSD</h3><span class="tag reject">不进主线</span></div>
+            <p>VR 文件里有 AST2600、CEC1736、MCXN556、E1.S 等细节，但 A 股映射弱。</p>
+            <dl><dt>供应商</dt><dd>Aspeed、Microchip、NXP、Lattice 等</dd><dt>结论</dt><dd>不是 A 股主线</dd></dl>
+          </article>
+
+          <article class="node">
+            <div class="node-head"><h3>ODM / rack assembly</h3><span class="tag watch">确定性高</span></div>
+            <p>系统复杂度提升，ODM 绝对附加值上升，但毛利率与市值会摊薄弹性。</p>
+            <dl><dt>A 股</dt><dd>工业富联</dd><dt>剔除</dt><dd>所有服务器代工都无差别纳入</dd></dl>
+          </article>
+        </div>
+      </section>
+
+      <section id="stocks">
+        <h2>A 股严筛池</h2>
+        <h3>主线池</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>公司</th>
+                <th>节点</th>
+                <th>证据强度</th>
+                <th>基本面质量</th>
+                <th>业绩弹性</th>
+                <th>交易弹性</th>
+                <th>核心风险</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>胜宏科技 300476.SZ</td><td>AI PCB、高层板、高阶 HDI、UBB、交换机板</td><td>高</td><td>高</td><td>很高</td><td>高</td><td>AI PCB 收入/客户未拆，扩产与毛利回落</td></tr>
+              <tr><td>沪电股份 002463.SZ</td><td>高速网络 PCB、AI/HPC PCB、1.6T switch/Riser</td><td>高</td><td>很高</td><td>高</td><td>中高</td><td>估值已反映，订单和毛利持续性</td></tr>
+              <tr><td>生益科技 600183.SH</td><td>高速 CCL、prepreg、封装用基材</td><td>高</td><td>很高</td><td>中高</td><td>中高</td><td>M8/M9 客户和价格传导</td></tr>
+              <tr><td>深南电路 002916.SZ</td><td>高速背板、AI 加速卡、封装基板能力</td><td>高</td><td>很高</td><td>中高</td><td>中</td><td>业务均衡，交易弹性弱于纯 AI PCB</td></tr>
+              <tr><td>生益电子 688183.SH</td><td>高端 PCB</td><td>中高</td><td>高</td><td>高</td><td>中高</td><td>客户、平台、毛利仍需细拆</td></tr>
+              <tr><td>宏和科技 603256.SH</td><td>高端电子布、Low CTE、低介电布</td><td>中高</td><td>中高</td><td>很高</td><td>很高</td><td>估值极高，终端 AI 客户未拆，T-glass 口径需谨慎</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>次线 / 条件式观察</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>公司</th><th>节点</th><th>观察理由</th><th>不能升级主线的原因</th></tr></thead>
+            <tbody>
+              <tr><td>德福科技 301511.SZ</td><td>PCB 级 HVLP/RTF 铜箔</td><td>RTF/HVLP 产品、头部 CCL 意向、扩产</td><td>2025 收入主体仍是锂电铜箔，高端电子电路铜箔收入/毛利未拆</td></tr>
+              <tr><td>鼎通科技 688668.SH</td><td>CAGE、224G、液冷散热结构</td><td>CAGE 收入、224G 批量供货、液冷认证</td><td>不是 retimer，不是终端订单，客户和收入拆分不足</td></tr>
+              <tr><td>麦格米特 002851.SZ</td><td>800VDC / power ecosystem</td><td>NVIDIA 800VDC 生态出现 Megmeet</td><td>A 股主体 AI data center power 收入和订单仍需验证</td></tr>
+              <tr><td>英维克 002837.SZ</td><td>CDU / 液冷系统</td><td>数据中心液冷主线</td><td>VR 单柜增量低于 PCB，需 AI rack 项目证据</td></tr>
+              <tr><td>飞荣达 300602.SZ</td><td>散热/结构</td><td>热管理与结构件弹性</td><td>需平台认证和收入拆分</td></tr>
+              <tr><td>工业富联 601138.SH</td><td>ODM/rack assembly</td><td>AI server/rack 体量确定</td><td>毛利率低，市值大，弹性弱于材料</td></tr>
+              <tr><td>中际/新易盛/天孚/源杰/光迅</td><td>光通信</td><td>AI scale-out 网络强主线</td><td>不属于 VR 单柜 BOM 第一增量</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>明确剔除口径</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>类型</th><th>剔除原因</th></tr></thead>
+            <tbody>
+              <tr><td>泛 PCB</td><td>没有 AI server / switch / UBB / high-layer / HDI 客户或产品证据</td></tr>
+              <tr><td>泛玻纤</td><td>普通建筑/风电玻纤不能替代 Low Dk-Df / Low CTE 电子布</td></tr>
+              <tr><td>泛铜箔</td><td>锂电铜箔不能替代 PCB 级 HVLP/VLP/RTF 铜箔</td></tr>
+              <tr><td>泛液冷</td><td>普通 HVAC、机房空调不能等同 AI rack 冷板/CDU/manifold/QD</td></tr>
+              <tr><td>泛电源</td><td>普通 UPS、电源适配器不能等同 800VDC rack power shelf</td></tr>
+              <tr><td>泛 retimer</td><td>PCIe/CXL retimer、封测、ATE 不能直接映射 224G Ethernet AEC retimer</td></tr>
+              <tr><td>泛光模块</td><td>光通信强，但不能塞进 VR 单柜 BOM 直接增量</td></tr>
+              <tr><td>泛 DPU/网安</td><td>国内 DPU 或网络安全概念不能等同 BF4 供应链</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="market">
+        <h2>2026-06-05 盘中行情快照</h2>
+        <p class="section-note">数据源：东方财富行情接口。只用于交易弹性和拥挤度，不用于证明受益身份。</p>
+        <details open>
+          <summary>展开/收起行情表</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>代码</th>
+                  <th>名称</th>
+                  <th>价格</th>
+                  <th>涨跌幅</th>
+                  <th>成交额亿元</th>
+                  <th>换手率</th>
+                  <th>PE</th>
+                  <th>总市值亿元</th>
+                  <th>交易解读</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>300476</td><td>胜宏科技</td><td>349.45</td><td>-4.71%</td><td>109.32</td><td>3.58%</td><td>66.64</td><td>3434</td><td>高流动性、高预期，仍是 PCB 交易核心</td></tr>
+                <tr><td>002463</td><td>沪电股份</td><td>138.75</td><td>-1.47%</td><td>79.41</td><td>3.00%</td><td>53.74</td><td>2670</td><td>中军属性强，弹性不如胜宏/材料小盘</td></tr>
+                <tr><td>600183</td><td>生益科技</td><td>142.59</td><td>-0.40%</td><td>59.74</td><td>1.78%</td><td>74.77</td><td>3464</td><td>材料中军，估值已高</td></tr>
+                <tr><td>002916</td><td>深南电路</td><td>386.17</td><td>-1.83%</td><td>28.40</td><td>1.11%</td><td>77.35</td><td>2630</td><td>高质量但交易弹性相对低</td></tr>
+                <tr><td>688183</td><td>生益电子</td><td>123.80</td><td>-3.29%</td><td>17.40</td><td>1.70%</td><td>57.89</td><td>1030</td><td>纯 PCB 弹性，但需订单/毛利拆分</td></tr>
+                <tr><td>603256</td><td>宏和科技</td><td>205.53</td><td>+5.39%</td><td>23.83</td><td>1.33%</td><td>331.45</td><td>1859</td><td>电子布弹性强，估值和拥挤度高</td></tr>
+                <tr><td>301511</td><td>德福科技</td><td>124.48</td><td>+1.77%</td><td>27.81</td><td>6.20%</td><td>133.23</td><td>785</td><td>HVLP 期权强，锂电铜箔混同风险大</td></tr>
+                <tr><td>688668</td><td>鼎通科技</td><td>408.00</td><td>+12.58%</td><td>27.45</td><td>4.83%</td><td>176.85</td><td>568</td><td>连接结构高弹性，需防概念过热</td></tr>
+                <tr><td>688519</td><td>南亚新材</td><td>251.00</td><td>+1.62%</td><td>8.49</td><td>1.48%</td><td>98.30</td><td>590</td><td>CCL 弹性观察</td></tr>
+                <tr><td>301526</td><td>国际复材</td><td>22.80</td><td>+0.48%</td><td>26.80</td><td>8.30%</td><td>79.55</td><td>860</td><td>玻纤/电子布交易弹性强，需高端产品证据</td></tr>
+                <tr><td>002851</td><td>麦格米特</td><td>151.37</td><td>-1.78%</td><td>42.58</td><td>6.03%</td><td>191.91</td><td>880</td><td>800VDC 观察，订单证据不足前不升主线</td></tr>
+                <tr><td>002837</td><td>英维克</td><td>67.33</td><td>-2.73%</td><td>17.70</td><td>2.33%</td><td>2477.65</td><td>858</td><td>液冷方向强，估值极高</td></tr>
+                <tr><td>300602</td><td>飞荣达</td><td>42.11</td><td>-0.35%</td><td>7.82</td><td>4.80%</td><td>79.19</td><td>245</td><td>热管理/结构观察</td></tr>
+                <tr><td>601138</td><td>工业富联</td><td>76.04</td><td>-3.20%</td><td>105.38</td><td>0.69%</td><td>37.12</td><td>15089</td><td>确定性高但市值大、弹性被摊薄</td></tr>
+                <tr><td>300308</td><td>中际旭创</td><td>1240.79</td><td>-3.06%</td><td>265.87</td><td>1.89%</td><td>60.31</td><td>13834</td><td>光模块中军，不属于 VR 单柜主增量</td></tr>
+                <tr><td>300502</td><td>新易盛</td><td>780.47</td><td>+0.58%</td><td>181.45</td><td>2.55%</td><td>69.89</td><td>7773</td><td>光模块高弹性，需 Q2/Q3 验证</td></tr>
+                <tr><td>300394</td><td>天孚通信</td><td>477.18</td><td>-0.68%</td><td>135.92</td><td>3.59%</td><td>188.84</td><td>3718</td><td>光器件/CPO 配套，估值高</td></tr>
+                <tr><td>688498</td><td>源杰科技</td><td>1388.97</td><td>+1.10%</td><td>56.74</td><td>3.27%</td><td>240.92</td><td>1729</td><td>CW/EML 期权强，客户集中和估值风险高</td></tr>
+                <tr><td>002281</td><td>光迅科技</td><td>235.42</td><td>+6.74%</td><td>113.29</td><td>6.28%</td><td>197.88</td><td>1899</td><td>光模块交易弹性高，需订单/收入拆分</td></tr>
+                <tr><td>002475</td><td>立讯精密</td><td>72.30</td><td>-3.07%</td><td>96.60</td><td>1.86%</td><td>35.99</td><td>5268</td><td>连接/整机能力强，但 AI rack 细分订单需验证</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section id="ranking">
+        <h2>三层排名</h2>
+        <div class="rank-list">
+          <div class="rank-card">
+            <h3>基本面质量</h3>
+            <ol>
+              <li>沪电 / 生益 / 深南：证据质量、客户验证和财务韧性更强。</li>
+              <li>胜宏：成长和兑现最强，但资本开支和客户不透明度高。</li>
+              <li>中际 / 新易盛：光模块旁线质量强，不归入 VR 单柜主线。</li>
+              <li>生益电子：PCB 纯度高，体量和披露仍需验证。</li>
+              <li>宏和 / 鼎通 / 德福：节点弹性高，证据边界和估值风险更大。</li>
+            </ol>
+          </div>
+          <div class="rank-card">
+            <h3>业绩弹性</h3>
+            <ol>
+              <li>胜宏：PCB 价值量 +233% 的直接映射，已有高端 HDI/高层板兑现。</li>
+              <li>宏和：高端电子布收入与毛利弹性高，但估值和周期反转风险极高。</li>
+              <li>德福：HVLP4/5 与头部 CCL 合作转正式订单后弹性大。</li>
+              <li>鼎通：224G/CAGE/液冷结构件兑现会有弹性，但不是芯片主线。</li>
+              <li>沪电 / 生益电子 / 深南 / 生益：更稳，但预期更充分。</li>
+            </ol>
+          </div>
+          <div class="rank-card">
+            <h3>交易弹性</h3>
+            <ol>
+              <li>鼎通 / 德福 / 国际复材：小市值、高换手、高主题弹性，但证据更脆弱。</li>
+              <li>宏和：电子布最强题材之一，但 PE 与涨幅已经很危险。</li>
+              <li>胜宏：高成交、高关注、高兑现，仍是主线交易核心。</li>
+              <li>光迅 / 源杰 / 天孚：光通信旁线弹性强，不是 VR 柜内主增量。</li>
+              <li>沪电 / 生益 / 深南 / 中际 / 工业富联：中军属性更强，弹性被市值摊薄。</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section id="tracking">
+        <h2>后续跟踪指标</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>节点</th><th>关键指标</th><th>反转信号</th></tr></thead>
+            <tbody>
+              <tr><td>PCB</td><td>midplane、ConnectX PCB、switch PCB、UBB、AI 加速卡订单；高层数、HDI 阶数、良率、海外产能</td><td>订单递延、毛利率下行、应收/存货失控、客户二供充分</td></tr>
+              <tr><td>CCL/prepreg</td><td>M8/M9/M10 认证、涨价、lead time、客户提前锁料、安全库存</td><td>报价停涨、交期回落到常态、二供 AVL 扩容</td></tr>
+              <tr><td>电子布</td><td>Low CTE / Low Dk-Df / 超低损耗布收入、毛利、客户认证、产能</td><td>普通布价格回落、高端布不再涨价、客户认证转单不及预期</td></tr>
+              <tr><td>PCB 铜箔</td><td>HVLP4/5 多客户批量、加工费、电子电路铜箔收入和毛利</td><td>高端铜箔收入不增、锂电铜箔占比继续主导、现金流恶化</td></tr>
+              <tr><td>连接结构</td><td>224G/CAGE/OSFP/液冷散热器收入、客户、产线</td><td>客户认证不转订单、年降压缩毛利</td></tr>
+              <tr><td>Power</td><td>800VDC、power shelf、busbar、SiC/GaN、Megmeet/Delta 等订单</td><td>2027 Kyber/VR 节奏推迟、项目只停留展示</td></tr>
+              <tr><td>Liquid cooling</td><td>CDU、冷板、manifold、QD 平台认证和收入</td><td>估值先行但订单/毛利不兑现</td></tr>
+              <tr><td>Optical</td><td>1.6T/3.2T、EML/CW/InP、CPO/ELS、FAU、模块 ASP 和预付款</td><td>关键料供给缓解、价格年降扩大、CPO 延后</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="sources">
+        <h2>主要来源</h2>
+        <ul class="source-list">
+          <li><a href="https://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/">NVIDIA Vera Rubin NVL72 官方规格页</a><br>72 Rubin GPU、36 Vera CPU、ConnectX-9、BlueField-4、NVLink 6、20.7TB HBM4、260TB/s。</li>
+          <li><a href="https://docs.nvidia.com/enterprise-reference-architectures/nvl72-ai-factory/latest/components.html">NVIDIA GB300 NVL72 Enterprise Reference Architecture</a><br>GB300 compute tray、ConnectX-8、BlueField-3、NVLink switch tray。</li>
+          <li><a href="https://developer.nvidia.com/blog/upgrading-multi-gpu-interconnectivity-with-the-third-generation-nvidia-nvswitch/">NVIDIA GB200 NVL72 技术博客</a><br>18 compute nodes、9 switch trays、130TB/s、copper cable cartridge、liquid cooling。</li>
+          <li><a href="https://developer.nvidia.com/blog/?p=113993">NVIDIA Vera Rubin POD 技术博客</a><br>18 compute trays、9 switch trays、PCB midplane、cable-free / hose-free / fanless 设计。</li>
+          <li><a href="https://developer.nvidia.com/blog/building-the-800-vdc-ecosystem-for-efficient-scalable-ai-factories/">NVIDIA 800VDC 技术博客</a><br>800VDC、1MW rack、power ecosystem、Megmeet、Delta、Vertiv 等生态。</li>
+          <li><a href="vr_nvl72_vs_gb300_bom_node_ledger_20260605.md">原始 Markdown 节点账本</a><br>本 HTML 的完整文字底稿。</li>
+          <li><a href="rubin_价值量拆解_逐页梳理_20260522.md">Rubin 价值量拆解逐页梳理</a><br>PCB、MLCC、ABF、电源、液冷价值量拆分。</li>
+        </ul>
+      </section>
+
+      <footer>
+        静态 HTML 报告 · 可直接用浏览器打开 · 不构成买卖建议
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
