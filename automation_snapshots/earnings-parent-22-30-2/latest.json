@@ -1,34 +1,51 @@
 {
-  "generated_at_beijing": "2026-06-05 22:33",
+  "generated_at_beijing": "2026-06-06 22:37",
   "status": "ok",
   "mode": "apply_mechanical",
   "window": {
-    "now_beijing": "2026-06-05 22:33",
-    "window_end_beijing": "2026-06-08 22:33"
+    "now_beijing": "2026-06-06 22:37",
+    "window_end_beijing": "2026-06-09 22:37"
   },
   "calendar_read": {
-    "today_arg": "2026-06-04",
+    "today_arg": "2026-06-05",
     "lookahead_days": 5,
     "allow_network": false,
-    "event_count": 3,
-    "future_candidate_count": 0,
-    "past_event_count": 3
+    "event_count": 1,
+    "future_candidate_count": 1,
+    "past_event_count": 0
   },
   "action_counts": {
     "create": 0,
     "update": 0,
     "pause": 0,
-    "validate_pending": 0,
+    "validate_pending": 1,
     "repair_rrule": 0
   },
-  "review_items": [],
+  "review_items": [
+    {
+      "ticker": "6594.T",
+      "company": "Nidec",
+      "report_date": "2026-06-08",
+      "status": "needs_agent_review",
+      "reason": "third_party_estimate_no_official_call_time",
+      "calendar_source": "Yahoo Finance",
+      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
+      "suggested_official_checks": [
+        "Company IR",
+        "TDnet disclosure",
+        "JPX listing/company calendar",
+        "third-party calendars as leads only"
+      ],
+      "hard_stop": false
+    }
+  ],
   "soft_probe_candidates": [],
   "soft_warnings": {
     "legacy_name": [],
     "source_header": []
   },
   "final_validation": {
-    "child_count": 12,
+    "child_count": 13,
     "bad_rrules": [],
     "active_with_memory": [],
     "active_past": [],
@@ -133,6 +150,28 @@
       "source_confidence": "non_official_estimate",
       "official_source_url": "N/A",
       "prompt_sha1": "953d967375fef2360e328ad78fd2e02d1124ac71"
+    },
+    {
+      "child_id": "ec-6594-t-20260608-363561",
+      "name": "财报电话会深挖 6594.T Nidec 2026-06-08",
+      "status": "ACTIVE",
+      "task_key": "6594.T|2026-06-08|",
+      "ticker": "6594.T",
+      "company": "Nidec",
+      "report_date": "2026-06-08",
+      "fiscal_period": "",
+      "planned_child_start_beijing": "2026-06-08 20:00",
+      "schedule_basis": "default_proxy_not_call_time",
+      "rrule": "DTSTART:20260608T200000\nRRULE:FREQ=WEEKLY;BYDAY=MO;BYHOUR=20;BYMINUTE=0;COUNT=1",
+      "rrule_ok": true,
+      "model": "gpt-5.5",
+      "reasoning_effort": "xhigh",
+      "has_memory": false,
+      "calendar_source": "Yahoo Finance",
+      "event_status": "estimated_unverified",
+      "source_confidence": "non_official_estimate",
+      "official_source_url": "N/A",
+      "prompt_sha1": "9957c6e2d4d30a3e92056b006fdf1c03773afb0e"
     },
     {
       "child_id": "ec-avgo-20260603-6db64b",
