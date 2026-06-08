@@ -2,63 +2,61 @@
 
 ## latest_run
 
-- run_date: 2026-06-05
-- run_started_at_beijing: 2026-06-05 20:37:23 +08:00
-- run_finished_at_beijing: 2026-06-05 21:54:43 +08:00
+- run_date: 2026-06-08
+- run_started_at_beijing: 2026-06-08 20:32:15 +08:00
+- run_finished_at_beijing: 2026-06-08 21:09:00 +08:00
 - automation_id: a-grok
-- enabled_company_count: 12
-- completed_company_count: 12
-- baseline_created_or_refreshed_count: 0
-- current_run_multi_agent_status: completed_with_workers_before_prompt_policy_change
-- next_run_multi_agent_policy: not_used_by_policy
-- prompt_policy_change: 2026-06-05 user requested cancel sub-agent permission because workers are too slow; docs/company_tracking/A_SHARE_COMPANY_TRACKING_PROMPT.md and skills/a-share-company-tracking/SKILL.md updated
-- worker_model_policy_current_run: model=gpt-5.5; reasoning_effort=xhigh; explicitly passed for each company worker before policy change
-- logical_company_worker_limit_current_run: 6
-- actual_company_workers_spawned_current_run: 12
-- actual_company_workers_completed_current_run: 12
-- controller_fallback_companies: none
-- grok_chrome_status: unavailable_native_host_registry_missing
-- chrome_diagnostic_status: chrome_running_yes; extension_installed_enabled_yes; native_host_manifest_missing_registry_key; browser_client_extension_unavailable
-- browser_substitution_policy: Browser/Playwright not used as Grok/X substitute
-- open_web_fallback_status: searched_per_company_observation_only
+- enabled_company_count: 10
+- completed_company_count: 10
+- baseline_created_or_refreshed_count: 1
+- current_run_multi_agent_status: not_used_by_policy
+- collection_scope: controller_open_web_only
 - announcement_window_policy: T_and_T_plus_1 because run is after 20:00 Beijing time
+- open_web_search_policy: Codex own open-web search only; observation layer, non-blocking
+- browser_or_external_model_status: not_used_by_policy
 
-## worker_batches_current_run
+## company_order_current_run
 
-- batch_1: 002428.SZ, 002222.SZ, 300476.SZ, 603256.SH, 601869.SH, 301511.SZ
-- batch_2: 002384.SZ, 300308.SZ, 688498.SH, 688668.SH, 300394.SZ, 603738.SH
-- next_run_batching_policy: no sub-agents; controller processes isolated company task blocks directly in watchlist order
+1. 002428.SZ 云南锗业
+2. 603256.SH 宏和科技
+3. 601869.SH 长飞光纤
+4. 301511.SZ 德福科技
+5. 002384.SZ 东山精密
+6. 300308.SZ 中际旭创
+7. 688498.SH 源杰科技
+8. 688668.SH 鼎通科技
+9. 300394.SZ 天孚通信
+10. 002851.SZ 麦格米特
 
 ## source_notes
 
-- New events appended: 301511.SZ 2026-06-05 block trade; 300394.SZ 2025 annual rights distribution implementation.
-- Observation-only item not appended as hard event: 300308.SZ 2026-06-05 open-web observation of record turnover / sharp decline, treated as trading-crowding watch only.
-- Existing events not duplicated: 601869.SH abnormal volatility; 002384.SZ abnormal volatility / pledge release; 688668.SH convertible bond registration and abnormal volatility.
-- No new baselines were required.
-- Chrome/Grok lane unavailable because Chrome extension communication failed and native host registry key is missing. Open-web fallback stayed observation-only.
-- Some official/market data endpoints returned timeout, SSL, 50x, or dynamic-page source gaps; per-company notes record the affected source.
+- New baseline created: 002851.SZ 麦格米特.
+- New events appended: 301511.SZ 2026-06-08 incentive committee notice; 301511.SZ 2026-06-08 block trade; 300308.SZ 2026-06-09 cash-management progress; 002851.SZ baseline event ledger.
+- T/T+1 name-query correction: 301511.SZ and 300308.SZ had official CNINFO hits by company-name query that the code-only query missed.
+- Trading event: 301511.SZ had one 2026-06-08 block trade, 50.00万股, 121.85元, 6,092.50万元, buyer 机构专用, seller 中信证券股份有限公司北京分公司.
+- Routine official announcement: 300308.SZ 2026-06-09 cash-management progress, 1,000万元银河证券收益凭证, 2026-06-09 to 2026-06-29, expected annualized yield 1.40%.
+- No sub-agents, company workers, external browsers, browser plugins, Grok, Gemini, X, or social search tools were used.
 
 ## completion_table
 
-| ticker | name | batch_no | queue_status | browser_scope | announcements_checked | announcement_window_checked | lhb_checked | block_trade_checked | grok_status | open_web_fallback_status | state_change | miss_risk_notes | multi_agent_status |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 002428.SZ | 云南锗业 | 1 | completed_no_material_change | fallback_no_browser | CNINFO/name/Eastmoney/company IR no_hit; SZSE annList source_gap | T_and_T_plus_1 | 2026-06-05 no_hit | 2026-06-05 no_hit | unavailable_native_host_registry_missing | searched_observation_only_no_new_hard_signal | no_change | 无InP/GaAs客户、订单、良率、6英寸量产、出口许可或利润兑现新增证据 | completed_worker |
-| 002222.SZ | 福晶科技 | 1 | completed_no_material_change | fallback_no_browser | CNINFO/SZSE/Eastmoney/company IR no_hit | T_and_T_plus_1 | 2026-06-05 no_hit | 2026-06-05 no_hit | unavailable_native_host_registry_missing | searched_observation_only_no_new_hard_signal | no_change | 无WSS、法拉第旋光片、晶体订单、扩产或收入拆分新增证据 | completed_worker |
-| 300476.SZ | 胜宏科技 | 1 | completed_with_source_gap_no_material_change | fallback_no_browser | company IR/Eastmoney no_hit; CNINFO/SZSE source_gap | T_and_T_plus_1 | Eastmoney no_hit; SZSE source_gap | Eastmoney no_hit; SZSE source_gap | unavailable_native_host_registry_missing | searched_observation_only_no_verified_material_delta | no_change | 官方接口有超时/50x；无AI服务器PCB客户、订单、产能或毛利率新增硬信号 | completed_worker |
-| 603256.SH | 宏和科技 | 1 | completed_no_material_change | fallback_no_browser | CNINFO/SSE no_hit; company IR timeout | T_and_T_plus_1 | 2026-06-05 no_hit | 2026-06-05 no_hit | unavailable_native_host_registry_missing | searched_observation_only_no_material_new_hit | no_change | 无Low CTE/T-glass客户认证、订单、涨价或参数新增证据 | completed_worker |
-| 601869.SH | 长飞光纤 | 1 | completed_no_new_material_change | fallback_no_browser | CNINFO hit 6/5 items already recorded or routine; 6/6 no_hit | T_and_T_plus_1 | 2026-06-05 no_hit; latest 6/4 already recorded | 2026-06-05 no_hit secondary; API timeout risk | unavailable_native_host_registry_missing | searched_observation_only_no_new_material_verified_event | no_change | 异常波动已入账；股东会材料属治理流程；无订单/价格/特种光纤新增硬证据 | completed_worker |
-| 301511.SZ | 德福科技 | 1 | completed_with_block_trade | fallback_no_browser | CNINFO/Eastmoney no_hit; SZSE annList source_gap; company IR no_new | T_and_T_plus_1 | 2026-06-05 no_hit | 2026-06-05 hit_1_block_trade_5897.50w | unavailable_native_host_registry_missing | searched_observation_only_hit_block_trade_media_no_new_hvlp_rtf_signal | block_trade_appended | 6/5大宗交易归属待后续官方减持进展确认 | completed_worker |
-| 002384.SZ | 东山精密 | 2 | completed_no_new_material_delta | fallback_no_browser | 2026-06-05 hit existing 3; 2026-06-06 no_hit | T_and_T_plus_1 | 2026-06-05 no_hit with API timeout gap | 2026-06-05 no_hit with API timeout gap | unavailable_native_host_registry_missing | searched_observation_only_no_new_material_event | no_change | 6/5异动公告和解押已入账；无AI PCB/FPC订单、客户、毛利率新披露 | completed_worker |
-| 300308.SZ | 中际旭创 | 2 | completed_with_source_gap | fallback_no_browser | 2026-06-05 hit known incentive vesting; 2026-06-06 no_hit | T_and_T_plus_1 | checked no_hit with official API timeout gap | checked no_hit with official API timeout gap | unavailable_native_host_registry_missing | searched_observation_only_record_turnover_no_operating_signal | trading_risk_watch_only | 放量下跌仅观察层；无800G/1.6T、硅光、客户、物料或毛利率新硬披露 | completed_worker |
-| 688498.SH | 源杰科技 | 2 | completed_no_material_change | fallback_no_browser | SSE/CNINFO/Eastmoney/company IR no_hit | T_and_T_plus_1 | 2026-06-05 no_hit | 2026-06-05 no_hit | unavailable_native_host_registry_missing | searched_observation_only_no_new_company_hard_signal | no_change | 无200G EML客户定点、批量订单或收入占比新增证据 | completed_worker |
-| 688668.SH | 鼎通科技 | 2 | completed_no_new_material_change | fallback_no_browser | CNINFO hit existing 2; 2026-06-06 no_hit | T_and_T_plus_1 | 2026-06-05 no_hit | 2026-06-05 no_hit | unavailable_native_host_registry_missing | completed_observation_only_no_new_material | no_change | 6/5可转债批复和异常波动已入账；无新增订单/液冷长期合同证据 | completed_worker |
-| 300394.SZ | 天孚通信 | 2 | completed_with_rights_distribution | fallback_no_browser | CNINFO hit rights distribution; T+1 no extra | T_and_T_plus_1 | checked no_hit secondary; SZSE source_gap | checked no_hit secondary; SZSE source_gap | unavailable_native_host_registry_missing | searched_observation_only_hit_rights_distribution_no_operating_evidence | rights_distribution_appended | 权益分派影响股本和交易口径，不改变1.6T/CPO/H股主线 | completed_worker |
-| 603738.SH | 泰晶科技 | 2 | completed_no_material_change | fallback_no_browser | CNINFO/SSE no_hit; company site hit nonmaterial article | T_and_T_plus_1 | 2026-06-05 no_hit | 2026-06-05 no_hit | unavailable_native_host_registry_missing | searched_observation_only_no_new_hard_signal | no_change | 官网科普文章非IR/公告；无312.5MHz/625MHz订单、价格或毛利率新增证据 | completed_worker |
+| ticker | name | batch_no | queue_status | collection_scope | announcements_checked | announcement_window_checked | lhb_checked | block_trade_checked | open_web_search_status | state_change | miss_risk_notes | multi_agent_status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 002428.SZ | 云南锗业 | 1 | completed_no_material_change | controller_open_web_only | CNINFO code/name no_hit | T_and_T_plus_1 | 2026-06-08 no_hit | 2026-06-08 no_hit | searched_no_material_signal | no_change | 无 InP/GaAs 客户、订单、良率、6英寸量产、出口许可或利润兑现新增证据 | not_used_by_policy |
+| 603256.SH | 宏和科技 | 2 | completed_no_material_change | controller_open_web_only | CNINFO code/name no_hit | T_and_T_plus_1 | 2026-06-08 no_hit | 2026-06-08 no_hit | searched_no_material_signal | no_change | 无 Low CTE/T-glass 客户认证、订单、涨价或参数新增证据 | not_used_by_policy |
+| 601869.SH | 长飞光纤 | 3 | completed_no_material_change | controller_open_web_only | CNINFO code/name no_hit | T_and_T_plus_1 | 2026-06-08 no_hit | 2026-06-08 no_hit | searched_no_material_signal | no_change | 无光纤价格、数据中心需求、海外扩张或特种光纤新增硬证据 | not_used_by_policy |
+| 301511.SZ | 德福科技 | 4 | completed_with_official_and_block_trade | controller_open_web_only | CNINFO name hit incentive committee notice; code query no_hit | T_and_T_plus_1 | 2026-06-08 no_hit | 2026-06-08 hit_1_block_trade_6092.50w | searched_hit_block_trade_mirror_no_new_operating_signal | official_event_and_block_trade_appended | 6月8日大宗交易归属待后续官方减持进展确认 | not_used_by_policy |
+| 002384.SZ | 东山精密 | 5 | completed_no_new_material_delta | controller_open_web_only | CNINFO code/name no_hit | T_and_T_plus_1 | 2026-06-08 no_hit | 2026-06-08 no_hit | searched_old_lhb_block_only_no_new_material | no_change | open-web 命中 6月4日旧龙虎榜/大宗交易，已在本地事件账本存在，不重复入账 | not_used_by_policy |
+| 300308.SZ | 中际旭创 | 6 | completed_with_routine_announcement | controller_open_web_only | CNINFO name hit 2026-06-09 cash-management notice; code query no_hit | T_and_T_plus_1 | 2026-06-08 no_hit | 2026-06-08 no_hit | searched_no_new_operating_signal | routine_official_event_appended | 现金管理为资金效率事项，不改变 800G/1.6T、硅光、客户或毛利率主线 | not_used_by_policy |
+| 688498.SH | 源杰科技 | 7 | completed_no_material_change | controller_open_web_only | CNINFO code/name no_hit | T_and_T_plus_1 | 2026-06-08 no_hit | 2026-06-08 no_hit | searched_no_material_signal | no_change | 无 200G EML 客户定点、批量订单或收入占比新增证据 | not_used_by_policy |
+| 688668.SH | 鼎通科技 | 8 | completed_no_material_change | controller_open_web_only | CNINFO code/name no_hit | T_and_T_plus_1 | 2026-06-08 no_hit | 2026-06-08 no_hit | searched_no_material_signal | no_change | 无高速连接器、铜缆连接、液冷长期订单或客户新增硬证据 | not_used_by_policy |
+| 300394.SZ | 天孚通信 | 9 | completed_no_material_change | controller_open_web_only | CNINFO code/name no_hit | T_and_T_plus_1 | 2026-06-08 no_hit | 2026-06-08 no_hit | searched_no_material_signal | no_change | 无 1.6T/CPO/H股发行进展、客户或泰国产能新增硬证据 | not_used_by_policy |
+| 002851.SZ | 麦格米特 | 10 | completed_with_baseline_created | controller_open_web_only | T/T+1 no_hit; baseline historical CNINFO name query hit annual/Q1/6月公告 | T_and_T_plus_1 | 2026-06-08 no_hit; baseline_backfill_2026-06-02_and_06-03_lhb | 2026-06-08 no_hit | searched_baseline_context_no_new_t_event | baseline_created | 新增公司基线已建立；AI数据中心电源客户、订单、收入占比和毛利率仍为 N/A | not_used_by_policy |
 
 ## reconciliation
 
-- enabled_watchlist_count: 12
-- completion_table_count: 12
+- enabled_watchlist_count: 10
+- completion_table_count: 10
 - missing_enabled_tickers: none
 - baseline_pending_or_refresh_needed: none
-- watchlist_last_update_date: 2026-06-05 for all enabled rows
+- watchlist_last_update_date: 2026-06-08 for all enabled rows
+- disabled_or_not_enabled_in_workbook: 002222.SZ, 300476.SZ

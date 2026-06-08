@@ -1,6 +1,6 @@
 # 德福科技 301511.SZ 滚动状态
 
-更新日期：2026-05-28
+更新日期：2026-06-08
 browser_scope: not_available_no_callable_chrome_grok_tool
 grok_status: unavailable_no_callable_chrome_grok_tool_surface
 open_web_fallback_status: searched_observation_only_project_news_confirmed_official_no_new_customer_revenue_signal
@@ -260,3 +260,10 @@ open_web_fallback_status: searched_observation_only_project_news_confirmed_offic
 - 龙虎榜 / 大宗交易：2026-06-05 未发现龙虎榜；SZSE 大宗交易与东方财富 `RPT_DATA_BLOCKTRADE` / `RPT_BLOCKTRADE_STA` 确认新增 1 笔大宗交易，成交 50.00 万股、成交价 117.95 元、成交金额 5,897.50 万元，买方机构专用，卖方中信证券股份有限公司北京分公司，较当日收盘价折价约 1.30%。
 - Grok / open-web：Chrome/Grok 因 native host registry key missing 不可用，未使用 Browser/Playwright 替代；open-web fallback 仅作 `observation_only`，命中 6/5 大宗交易媒体转述和 6/4 减持旧公告转述，未发现 HVLP/RTF 铜箔客户认证、批量交付、正式订单、收入占比或毛利率新增硬信号。
 - 状态变化：新增交易结构事件；减持实施期内连续出现同规格大宗交易，筹码供给压力延续，但 6/5 是否由拓阵基金/瑞潇芃泰继续减持尚待后续官方权益变动或减持进展公告确认。HVLP/RTF 商业化状态不变。
+
+## 2026-06-08 日更
+
+- 公告窗口：北京时间 20:00 后完成 `2026-06-08` 与 `2026-06-09` 的 T/T+1 检查；CNINFO 公司名查询确认新增《董事会薪酬与考核委员会关于公司2026年限制性股票激励计划激励对象名单的公示情况说明及核查意见》，代码查询未命中，已记录公司名查询优先级。
+- 新增官方事件：股权激励对象公示期为 2026-05-29 至 2026-06-08，截至公示期满未收到异议，薪酬与考核委员会认为激励对象主体资格合法有效。该事项是股权激励程序推进，不是 HVLP/RTF 经营兑现。
+- 龙虎榜 / 大宗交易：2026-06-08 未发现新增龙虎榜；东方财富 `RPT_DATA_BLOCKTRADE` 确认新增 1 笔大宗交易，成交 50.00 万股、成交价 121.85 元、成交金额 6,092.50 万元，买方机构专用，卖方中信证券股份有限公司北京分公司，较当日收盘价 123.08 元折价约 1.00%。
+- 状态变化：减持实施期内连续出现同规格大宗交易且卖方席位与 6月4日、6月5日一致，筹码供给压力延续；6月8日是否归属拓阵基金 / 瑞潇芃泰继续减持仍待后续官方权益变动或减持进展公告确认。HVLP/RTF 客户认证、正式订单、收入占比和毛利率仍无新增硬证据。
