@@ -1,11 +1,11 @@
 # 688668.SH 鼎通科技 跟踪状态
 
 baseline_status: done
-last_checked: 2026-05-28 13:40 Asia/Shanghai; pre_20:00_run
-announcement_window_checked: pending_evening_rescan
-browser_scope: fallback_no_chrome_grok_tool
-grok_status: unavailable; reason=no_chrome_grok_callable_tool_in_active_tools
-open_web_fallback_status: completed_observation_only
+last_checked: 2026-06-10 20:33 Asia/Shanghai
+announcement_window_checked: T_and_T_plus_1
+browser_scope: not_used_by_policy
+grok_status: not_used_by_policy
+open_web_fallback_status: searched_observation_only_no_new_customer_revenue_signal
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -84,3 +84,11 @@ open-web fallback 仅发现交易和媒体观察，未发现可升级为官方�
 - 液冷叙事降温：异常波动公告确认公司 6 月 2 日至 6 月 4 日三日涨幅偏离累计超 30%，但明确提示液冷产品目前仅少量、阶段性交付，暂无大额长期锁定订单，意向性沟通不等于正式订单，短期内无法对业绩形成实质性贡献。
 - 龙虎榜/大宗交易：2026-06-04 出现单日涨幅达到 15% 和连续三日涨幅偏离累计达到 30% 两条龙虎榜记录；未发现大宗交易。
 - 状态变化：融资进展正向，但液冷订单确定性被官方下调，基本面证据不能上调；交易拥挤度、估值和回撤风险上调。
+
+## 2026-06-10 日更
+
+- 公告窗口：北京时间 20:00 后完成 `2026-06-10` 与 `2026-06-11` 的 T/T+1 检查；CNINFO 公司名查询确认 2026-06-11 公告日新增《第三届董事会第二十三次会议决议公告》。
+- 新增官方事件：董事会审议通过设立募集资金专户并授权签署募集资金监管协议，拟在中国银行东莞长安支行、东莞银行虎门支行、建设银行长沙金霞支行、中信银行东莞松山湖支行开立募集资金专户，用于 2026 年度向不特定对象发行可转换公司债券募集资金的存放和使用管理。
+- 龙虎榜 / 大宗交易：2026-06-10 未发现新增龙虎榜或大宗交易。
+- open-web：普通联网搜索主要为可转债、液冷、连接器概念和旧公告转述，未发现 1.6T/800G 高速连接器、铜缆连接、液冷大额长期订单、客户或收入占比新增硬证据。
+- 状态变化：可转债注册批复后的发行执行准备继续推进，融资落地路径更清晰；但 6月5日异常波动公告中“液冷暂无大额长期锁定订单、短期难形成实质性业绩贡献”的证据边界不变。
