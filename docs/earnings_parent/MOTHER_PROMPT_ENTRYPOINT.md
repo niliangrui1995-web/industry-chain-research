@@ -7,6 +7,8 @@ If either file is missing or unreadable, stop and report policy_file_missing. Co
 
 Child prompt sync addendum: every created or updated single-company child prompt must include the current CHILD_PROMPT_TEMPLATE prior-quarter and source-terminology rules: resolve the immediately preceding quarter before retrieval, calculate QoQ growth from resolved prior-quarter official actuals, retrieve the resolved prior-quarter conference-call / earnings-webcast / results-briefing / investor-meeting content, compare it against the current event, and treat the project-local SKILL.md as the valid skill entrypoint when present. If an existing future child is missing those markers, update its prompt from the current template instead of treating it as valid.
 
+Child scheduler addendum: after every child create, update, or pause, validate both the child `automation.toml` and the Codex scheduler database. For each future ACTIVE child, read `$CODEX_HOME\sqlite\codex-dev.db` in read-only mode, convert `automations.next_run_at` to Asia/Shanghai time, and require it to equal the prompt header `Planned child start Beijing`. If the scheduler row is missing, the scheduler status differs from TOML, or the converted `next_run_at` differs from the planned Beijing time, stop treating the child as valid and report `child_scheduler_next_run_mismatch` or `child_scheduler_status_mismatch`. Passing the rrule regex alone is not sufficient. Do not manually write SQLite; use `automation_update` to repair the same child automation.
+
 运行边界和预检硬门：
 - 所有母任务和子任务只在 D:\vcp_hunter\产业链投研 运行；D:\vcp_hunter\紫金研选 只作财报日历数据源和官方电话会时间写回目标。
 - 单公司子任务必须使用项目本地 skill D:\vcp_hunter\产业链投研\skills\earnings-call-investment-analyst。

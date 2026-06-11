@@ -72,6 +72,12 @@
 
 ## Guardrail helper
 
+新增硬门：子任务创建、更新或暂停后，必须同时验证两层时间：
+
+- `automation.toml` 中的 rrule 必须仍然通过一次性 weekly `COUNT=1` 正则校验。
+- Codex 调度库 `$CODEX_HOME\sqlite\codex-dev.db` 的 `automations.next_run_at` 必须能换算成同一个 `Planned child start Beijing`。未来 ACTIVE 子任务如果实际 `next_run_at` 缺失、无法读取、状态与 TOML 不一致，或换算后的北京时间与计划开始时间不一致，必须报告 `child_scheduler_next_run_mismatch` 或 `child_scheduler_status_mismatch`，并停止把该子任务视为有效。只看 rrule 文本通过不再足够。
+- 调度库只允许只读校验；不得手工写 SQLite。若需要修复调度状态，优先使用 `automation_update` 更新同一个子任务，而不是直接改数据库。
+
 若 `D:\vcp_hunter\产业链投研\scripts\earnings_parent_guardrail.py` 存在，子任务 create/update/pause 前必须先 dry-run：
 
 ```powershell

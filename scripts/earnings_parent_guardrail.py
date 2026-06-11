@@ -26,6 +26,7 @@ import json
 import os
 import re
 import shutil
+import sqlite3
 import sys
 import tomllib
 import urllib.error
@@ -95,6 +96,7 @@ SOURCE_HEADER_FIELDS = (
     "Official source URL",
     "Calendar caveat",
 )
+SCHEDULER_TOLERANCE_SECONDS = 90
 AIRTIME_EVENT_PATTERN = re.compile(
     r"https?://(?:www\.)?appairtime\.com/event/([0-9a-fA-F-]{36})"
 )
@@ -151,6 +153,11 @@ class ChildRecord:
     planned_dt: dt.datetime | None
     has_memory: bool
     rrule_ok: bool
+    scheduler_next_run_beijing: str
+    scheduler_last_run_beijing: str
+    scheduler_next_run_matches_planned: bool
+    scheduler_next_run_delta_seconds: int | None
+    scheduler_status: str
 
 
 def _json_string(value: Any) -> str:
@@ -264,6 +271,20 @@ def _format_beijing_time(value: dt.datetime) -> str:
     return value.astimezone(BEIJING_TZ).strftime("%Y-%m-%d %H:%M")
 
 
+def _datetime_from_epoch_ms(value: Any) -> dt.datetime | None:
+    if value in (None, ""):
+        return None
+    try:
+        return dt.datetime.fromtimestamp(int(value) / 1000, dt.timezone.utc).astimezone(BEIJING_TZ)
+    except (TypeError, ValueError, OSError):
+        return None
+
+
+def _format_epoch_ms_beijing(value: Any) -> str:
+    parsed = _datetime_from_epoch_ms(value)
+    return _format_beijing_time(parsed) if parsed else ""
+
+
 def _make_one_shot_rrule(start: dt.datetime) -> str:
     local = start.astimezone(BEIJING_TZ)
     return (
@@ -280,6 +301,26 @@ def _slug_ticker(ticker: str) -> str:
 def _child_id_for(event: PlannedEvent) -> str:
     digest = hashlib.sha1(event.task_key.encode("utf-8")).hexdigest()[:6]
     return f"ec-{_slug_ticker(event.ticker)}-{event.report_date.replace('-', '')}-{digest}"
+
+
+def _load_scheduler_rows(codex_home: Path) -> tuple[dict[str, dict[str, Any]], list[dict[str, Any]]]:
+    db_path = codex_home / "sqlite" / "codex-dev.db"
+    if not db_path.exists():
+        return {}, [{"problem": "scheduler_db_missing", "path": str(db_path)}]
+    try:
+        connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True, timeout=2)
+    except sqlite3.Error as exc:
+        return {}, [{"problem": "scheduler_db_open_failed", "path": str(db_path), "detail": str(exc)}]
+    try:
+        connection.row_factory = sqlite3.Row
+        rows = connection.execute(
+            "select id, status, next_run_at, last_run_at from automations"
+        ).fetchall()
+    except sqlite3.Error as exc:
+        return {}, [{"problem": "scheduler_db_read_failed", "path": str(db_path), "detail": str(exc)}]
+    finally:
+        connection.close()
+    return {str(row["id"]): dict(row) for row in rows}, []
 
 
 def _load_service(zijin_root: Path):
@@ -411,7 +452,10 @@ def _plan_event(event: Any, market_from_ticker) -> PlannedEvent:
     )
 
 
-def _scan_children(automations_root: Path) -> tuple[list[ChildRecord], list[dict[str, Any]]]:
+def _scan_children(
+    automations_root: Path,
+    scheduler_rows: dict[str, dict[str, Any]],
+) -> tuple[list[ChildRecord], list[dict[str, Any]]]:
     children: list[ChildRecord] = []
     problems: list[dict[str, Any]] = []
     for path in sorted(automations_root.glob("*/automation.toml")):
@@ -424,6 +468,19 @@ def _scan_children(automations_root: Path) -> tuple[list[ChildRecord], list[dict
         if not (prompt.startswith("TASK_KEY:") and "CHILD TASK SKILL HARD GATE" in prompt):
             continue
         planned_text = _prompt_field(prompt, "Planned child start Beijing")
+        child_id = str(data.get("id", "") or path.parent.name)
+        planned_dt = _parse_beijing_time(planned_text)
+        scheduler_row = scheduler_rows.get(child_id, {})
+        scheduler_next_dt = _datetime_from_epoch_ms(scheduler_row.get("next_run_at"))
+        scheduler_delta = (
+            int((scheduler_next_dt - planned_dt).total_seconds())
+            if scheduler_next_dt and planned_dt
+            else None
+        )
+        scheduler_matches = (
+            scheduler_delta is not None
+            and abs(scheduler_delta) <= SCHEDULER_TOLERANCE_SECONDS
+        )
         record = ChildRecord(
             path=path,
             data=data,
@@ -434,9 +491,14 @@ def _scan_children(automations_root: Path) -> tuple[list[ChildRecord], list[dict
             fiscal_period=_normalize_period(_prompt_field(prompt, "Fiscal period")),
             planned_child_start_beijing=planned_text,
             schedule_basis=_prompt_field(prompt, "Schedule basis"),
-            planned_dt=_parse_beijing_time(planned_text),
+            planned_dt=planned_dt,
             has_memory=(path.parent / "memory.md").exists(),
             rrule_ok=bool(RRULE_PATTERN.match(str(data.get("rrule", "")))),
+            scheduler_next_run_beijing=_format_epoch_ms_beijing(scheduler_row.get("next_run_at")),
+            scheduler_last_run_beijing=_format_epoch_ms_beijing(scheduler_row.get("last_run_at")),
+            scheduler_next_run_matches_planned=scheduler_matches,
+            scheduler_next_run_delta_seconds=scheduler_delta,
+            scheduler_status=str(scheduler_row.get("status", "")),
         )
         children.append(record)
     return children, problems
@@ -643,6 +705,7 @@ def _child_matches_event(child: ChildRecord, event: PlannedEvent) -> tuple[bool,
         "source_header": source_ok,
         "prompt_template_body": template_markers_ok,
         "rrule": str(child.data.get("rrule", "")) == expected_rrule,
+        "scheduler_next_run": child.scheduler_next_run_matches_planned,
         "model": child.data.get("model") == expected_model,
         "reasoning_effort": child.data.get("reasoning_effort") == expected_reasoning,
         "execution_environment": child.data.get("execution_environment") == "local",
@@ -1170,6 +1233,11 @@ def _snapshot_child(child: ChildRecord) -> dict[str, Any]:
         "schedule_basis": child.schedule_basis,
         "rrule": child.data.get("rrule"),
         "rrule_ok": child.rrule_ok,
+        "scheduler_status": child.scheduler_status,
+        "scheduler_next_run_beijing": child.scheduler_next_run_beijing,
+        "scheduler_last_run_beijing": child.scheduler_last_run_beijing,
+        "scheduler_next_run_matches_planned": child.scheduler_next_run_matches_planned,
+        "scheduler_next_run_delta_seconds": child.scheduler_next_run_delta_seconds,
         "model": child.data.get("model"),
         "reasoning_effort": child.data.get("reasoning_effort"),
         "has_memory": child.has_memory,
@@ -1207,6 +1275,7 @@ def _write_snapshot(
         "review_items": report.get("review_items", []),
         "soft_probe_candidates": report.get("soft_probe_candidates", []),
         "soft_warnings": report.get("soft_warnings", {}),
+        "scheduler_scan_problems": report.get("scheduler_scan_problems", []),
         "final_validation": report.get("final_validation"),
         "touch_contract": report.get("touch_contract"),
         "children": [_snapshot_child(child) for child in children],
@@ -1311,7 +1380,8 @@ def main() -> int:
 
     universe = build_oligarch_universe()
     mapping_errors = _validate_candidate_mapping(future_events, universe, market_from_ticker)
-    children, child_scan_problems = _scan_children(automations_root)
+    scheduler_rows, scheduler_scan_problems = _load_scheduler_rows(args.codex_home)
+    children, child_scan_problems = _scan_children(automations_root, scheduler_rows)
     actions, blockers = _build_action_plan(future_events, children, now)
     review_items = _review_items(future_events)
     soft_probe_candidates: list[dict[str, Any]] = []
@@ -1322,15 +1392,16 @@ def main() -> int:
     status = "ok"
     if mapping_errors:
         status = "candidate_mapping_failed"
-    elif child_scan_problems or blockers:
+    elif child_scan_problems or scheduler_scan_problems or blockers:
         status = "mechanical_guardrail_blocked"
 
     apply_result: dict[str, Any] = {"applied": False}
     if args.apply_mechanical and status == "ok":
         apply_result = _apply_actions(actions, future_events, children, automations_root, project_root, run_ms, backup_tag)
-        children, child_scan_problems = _scan_children(automations_root)
+        scheduler_rows, scheduler_scan_problems = _load_scheduler_rows(args.codex_home)
+        children, child_scan_problems = _scan_children(automations_root, scheduler_rows)
         actions, blockers = _build_action_plan(future_events, children, now)
-        if child_scan_problems or blockers:
+        if child_scan_problems or scheduler_scan_problems or blockers:
             status = "post_apply_validation_failed"
 
     duplicate_task_keys: dict[str, list[str]] = {}
@@ -1344,22 +1415,42 @@ def main() -> int:
     active_missing_template_markers: list[dict[str, Any]] = []
     active_missing_source_headers: list[dict[str, Any]] = []
     active_unmatched_future: list[str] = []
+    scheduler_status_mismatch: list[dict[str, Any]] = []
+    scheduler_next_run_mismatch: list[dict[str, Any]] = []
     future_task_keys = {event.task_key for event in future_events}
     future_ticker_dates = {(event.ticker, event.report_date) for event in future_events}
     for child in children:
         child_id = str(child.data.get("id"))
+        toml_status = str(child.data.get("status"))
         key_index.setdefault(child.task_key, []).append(child_id)
         ticker_date_index.setdefault(f"{child.ticker}|{child.report_date}", []).append(child_id)
+        if not child.scheduler_status or child.scheduler_status != toml_status:
+            scheduler_status_mismatch.append(
+                {
+                    "child_id": child_id,
+                    "toml_status": toml_status,
+                    "scheduler_status": child.scheduler_status or "missing",
+                }
+            )
         static_failures = _static_contract_failures(child, project_root)
         if static_failures:
             bad_static_contract.append({"child_id": child_id, "failures": static_failures})
-        if str(child.data.get("status")) == "ACTIVE" and child.has_memory:
+        if toml_status == "ACTIVE" and child.has_memory:
             active_with_memory.append(child_id)
-        if str(child.data.get("status")) == "ACTIVE" and child.planned_dt and child.planned_dt < now:
+        if toml_status == "ACTIVE" and child.planned_dt and child.planned_dt < now:
             active_past.append(child_id)
         if not child.rrule_ok:
             bad_rrules.append(child_id)
-        if str(child.data.get("status")) == "ACTIVE":
+        if toml_status == "ACTIVE" and child.planned_dt and child.planned_dt >= now and not child.scheduler_next_run_matches_planned:
+            scheduler_next_run_mismatch.append(
+                {
+                    "child_id": child_id,
+                    "planned_child_start_beijing": child.planned_child_start_beijing,
+                    "scheduler_next_run_beijing": child.scheduler_next_run_beijing or "missing",
+                    "delta_seconds": child.scheduler_next_run_delta_seconds,
+                }
+            )
+        if toml_status == "ACTIVE":
             marker_failures = _missing_prompt_markers(child)
             if marker_failures:
                 active_missing_template_markers.append({"child_id": child_id, "missing": marker_failures})
@@ -1378,11 +1469,28 @@ def main() -> int:
         "active_missing_template_markers": active_missing_template_markers,
         "active_missing_source_headers": active_missing_source_headers,
         "active_unmatched_future": active_unmatched_future,
+        "scheduler_status_mismatch": scheduler_status_mismatch,
+        "scheduler_next_run_mismatch": scheduler_next_run_mismatch,
         "duplicate_task_keys": duplicate_task_keys,
         "duplicate_ticker_dates": duplicate_ticker_dates,
     }
-    if args.apply_mechanical and status == "ok" and any(final_validation_issues.values()):
-        status = "post_apply_validation_failed"
+    blocking_final_issues = {
+        key: final_validation_issues[key]
+        for key in [
+            "bad_rrules",
+            "active_with_memory",
+            "active_past",
+            "bad_static_contract",
+            "active_missing_template_markers",
+            "active_missing_source_headers",
+            "scheduler_status_mismatch",
+            "scheduler_next_run_mismatch",
+            "duplicate_task_keys",
+            "duplicate_ticker_dates",
+        ]
+    }
+    if status == "ok" and any(blocking_final_issues.values()):
+        status = "post_apply_validation_failed" if args.apply_mechanical else "mechanical_guardrail_blocked"
     soft_warnings = {
         "legacy_name": _legacy_name_warnings(children),
         "source_header": _source_header_warnings(future_events, children),
@@ -1408,6 +1516,7 @@ def main() -> int:
         "soft_warnings": soft_warnings,
         "mapping_errors": mapping_errors,
         "child_scan_problems": child_scan_problems,
+        "scheduler_scan_problems": scheduler_scan_problems,
         "blockers": blockers,
         "actions": actions,
         "apply_result": apply_result,
