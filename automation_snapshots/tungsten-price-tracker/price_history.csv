@@ -12,14 +12,22 @@ date,indicator,name,low,high,mid,unit,currency,source_name,source_url,source_gra
 2026-03-12,black_tungsten_concentrate_65,65%黑钨精矿,,,105.0,万元/标吨,CNY,prior_chart_seed,artifacts/tungsten_price_trend/tungsten_price_points_2025_06_to_2026_06.csv,B,历史种子点；后续自动化以日频追加为准
 2026-05-20,black_tungsten_concentrate_65,65%黑钨精矿,,,43.0,万元/标吨,CNY,CTIA via STCN,https://www.stcn.com/article/detail/3917568.html,B,中钨在线5月20日行情；高位回落后低点区间
 2026-06-10,black_tungsten_concentrate_65,65%黑钨精矿,,,52.5,万元/标吨,CNY,CTIA,https://www.ctia.com.cn/news/130876.html,B,中钨在线6月10日行情
-2026-06-11,black_tungsten_concentrate_65,65%黑钨精矿,52.7,52.8,52.75,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
 2026-06-11,black_tungsten_concentrate_55,55%黑钨精矿,52.2,52.3,52.25,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
-2026-06-11,white_tungsten_concentrate_65,65%白钨精矿,52.6,52.7,52.65,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
-2026-06-11,white_tungsten_concentrate_55,55%白钨精矿,52.1,52.2,52.15,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
+2026-06-11,black_tungsten_concentrate_65,65%黑钨精矿,52.7,52.8,52.75,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
 2026-06-11,domestic_apt,仲钨酸铵（APT）,,,80.0,万元/吨,CNY,CTIA,https://www.ctia.com.cn/news/130898.html,B,CTIA 6月11日行情文章
-2026-06-11,europe_apt,欧洲APT,2900,3180,3040,美元/吨度,USD,CTIA,https://www.ctia.com.cn/news/130898.html,B,CTIA 6月11日行情文章
-2026-06-11,domestic_tungsten_powder,国产钨粉,1240,1320,1280,元/公斤,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情
 2026-06-11,domestic_tungsten_carbide_powder,国产碳化钨粉,1170,1250,1210,元/公斤,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情
+2026-06-11,domestic_tungsten_powder,国产钨粉,1240,1320,1280,元/公斤,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情
+2026-06-11,europe_apt,欧洲APT,2900,3180,3040,美元/吨度,USD,CTIA,https://www.ctia.com.cn/news/130898.html,B,CTIA 6月11日行情文章
 2026-06-11,recycled_tungsten_carbide_powder,再生碳化钨粉,1000,1030,1015,元/公斤,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情
 2026-06-11,scrap_tungsten_bar,废钨棒材,,,810,元/公斤,CNY,CTIA,https://www.ctia.com.cn/news/130898.html,B,CTIA 6月11日行情文章
 2026-06-11,scrap_tungsten_drill,废钨钻头,,,760,元/公斤,CNY,CTIA,https://www.ctia.com.cn/news/130898.html,B,CTIA 6月11日行情文章
+2026-06-11,white_tungsten_concentrate_55,55%白钨精矿,52.1,52.2,52.15,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
+2026-06-11,white_tungsten_concentrate_65,65%白钨精矿,52.6,52.7,52.65,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
+2026-06-12,black_tungsten_concentrate_55,55%黑钨精矿,52.2,52.3,52.25,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
+2026-06-12,black_tungsten_concentrate_65,65%黑钨精矿,52.7,52.8,52.75,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
+2026-06-12,domestic_tungsten_carbide_powder,国产碳化钨粉,1170,1250,1210,元/公斤,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情
+2026-06-12,domestic_tungsten_powder,国产钨粉,1240,1320,1280,元/公斤,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情
+2026-06-12,recycled_tungsten_carbide_powder,再生碳化钨粉,1000,1030,1015,元/公斤,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情
+2026-06-12,white_tungsten_concentrate_30_40,30-40%白钨精矿,50.7,51.7,51.2,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
+2026-06-12,white_tungsten_concentrate_55,55%白钨精矿,52.1,52.2,52.15,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
+2026-06-12,white_tungsten_concentrate_65,65%白钨精矿,52.6,52.7,52.65,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price,B,SMM公开行情；低高价由元/标吨换算为万元/标吨
