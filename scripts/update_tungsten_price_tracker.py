@@ -32,6 +32,36 @@ FIELDNAMES = [
     "notes",
 ]
 
+DISPLAY_NAMES = {
+    "black_tungsten_concentrate_55": "55%\u9ed1\u94a8\u7cbe\u77ff",
+    "black_tungsten_concentrate_65": "65%\u9ed1\u94a8\u7cbe\u77ff",
+    "white_tungsten_concentrate_30_40": "30-40%\u767d\u94a8\u7cbe\u77ff",
+    "white_tungsten_concentrate_55": "55%\u767d\u94a8\u7cbe\u77ff",
+    "white_tungsten_concentrate_65": "65%\u767d\u94a8\u7cbe\u77ff",
+    "domestic_apt": "\u4ef2\u94a8\u9178\u94f5\uff08APT\uff09",
+    "europe_apt": "\u6b27\u6d32APT",
+    "domestic_tungsten_powder": "\u56fd\u4ea7\u94a8\u7c89",
+    "domestic_tungsten_carbide_powder": "\u56fd\u4ea7\u78b3\u5316\u94a8\u7c89",
+    "recycled_tungsten_carbide_powder": "\u518d\u751f\u78b3\u5316\u94a8\u7c89",
+    "scrap_tungsten_bar": "\u5e9f\u94a8\u68d2\u6750",
+    "scrap_tungsten_drill": "\u5e9f\u94a8\u94bb\u5934",
+}
+
+DISPLAY_UNITS = {
+    "black_tungsten_concentrate_55": "\u4e07\u5143/\u6807\u5428",
+    "black_tungsten_concentrate_65": "\u4e07\u5143/\u6807\u5428",
+    "white_tungsten_concentrate_30_40": "\u4e07\u5143/\u6807\u5428",
+    "white_tungsten_concentrate_55": "\u4e07\u5143/\u6807\u5428",
+    "white_tungsten_concentrate_65": "\u4e07\u5143/\u6807\u5428",
+    "domestic_apt": "\u4e07\u5143/\u5428",
+    "europe_apt": "\u7f8e\u5143/\u5428\u5ea6",
+    "domestic_tungsten_powder": "\u5143/\u5343\u514b",
+    "domestic_tungsten_carbide_powder": "\u5143/\u5343\u514b",
+    "recycled_tungsten_carbide_powder": "\u5143/\u5343\u514b",
+    "scrap_tungsten_bar": "\u5143/\u5343\u514b",
+    "scrap_tungsten_drill": "\u5143/\u5343\u514b",
+}
+
 
 @dataclass(frozen=True)
 class PriceRow:
@@ -51,7 +81,7 @@ def parse_date(value: str) -> date:
 
 def parse_float(value: str) -> float | None:
     value = str(value or "").strip()
-    if not value:
+    if not value or value.upper() == "N/A":
         return None
     return float(value)
 
@@ -59,6 +89,14 @@ def parse_float(value: str) -> float | None:
 def fmt_num(value: float) -> str:
     text = f"{value:.4f}".rstrip("0").rstrip(".")
     return text if text else "0"
+
+
+def display_name(indicator: str, fallback: str) -> str:
+    return DISPLAY_NAMES.get(indicator, fallback)
+
+
+def display_unit(indicator: str, fallback: str) -> str:
+    return DISPLAY_UNITS.get(indicator, fallback)
 
 
 def load_rows(path: Path) -> list[dict[str, str]]:
@@ -147,17 +185,26 @@ def change_text(current: PriceRow, previous: PriceRow | None) -> str:
     diff = current.mid - previous.mid
     pct = diff / previous.mid * 100 if previous.mid else 0
     sign = "+" if diff > 0 else ""
-    return f"{sign}{fmt_num(diff)} {current.unit} / {sign}{pct:.2f}% vs {previous.date.isoformat()}"
+    unit = display_unit(current.indicator, current.unit)
+    return f"{sign}{fmt_num(diff)} {unit} / {sign}{pct:.2f}% vs {previous.date.isoformat()}"
 
 
 def generate_report(history_path: Path, report_dir: Path, target_date: date) -> Path:
-    rows = as_price_rows(load_rows(history_path))
+    raw_rows = load_rows(history_path)
+    rows = as_price_rows(raw_rows)
     grouped: dict[str, list[PriceRow]] = defaultdict(list)
     for row in sorted(rows, key=lambda r: (r.indicator, r.date, r.source_name)):
         grouped[row.indicator].append(row)
 
     today_rows = [r for r in rows if r.date == target_date]
     today_rows.sort(key=lambda r: (r.indicator, r.source_name))
+    today_unavailable_rows = [
+        r
+        for r in raw_rows
+        if r.get("date") == target_date.isoformat()
+        and str(r.get("mid", "")).strip().upper() == "N/A"
+    ]
+    today_unavailable_rows.sort(key=lambda r: (r.get("indicator", ""), r.get("source_name", "")))
 
     core_rows = grouped.get("black_tungsten_concentrate_65", [])
     latest_core = [r for r in core_rows if r.date <= target_date]
@@ -168,48 +215,60 @@ def generate_report(history_path: Path, report_dir: Path, target_date: date) -> 
         low_after_peak_candidates = [r for r in core_rows if r.date >= peak.date]
         trough = min(low_after_peak_candidates, key=lambda r: r.mid) if low_after_peak_candidates else None
         prev = previous_for(current, grouped)
-        parts = [f"65%黑钨精矿最新 {fmt_num(current.mid)} {current.unit}"]
+        unit = display_unit(current.indicator, current.unit)
+        parts = [f"65%\u9ed1\u94a8\u7cbe\u77ff\u53ef\u7528\u6700\u65b0\u6570\u503c\uff08{current.date.isoformat()}\uff09 {fmt_num(current.mid)} {unit}"]
+        if current.date < target_date:
+            parts.append(f"{target_date.isoformat()} \u5f53\u65e5\u516c\u5f00\u65b0\u4ef7 N/A")
         if prev:
-            parts.append(f"较上一观测点 {change_text(current, prev)}")
-        parts.append(f"较历史种子峰值 {fmt_num(peak.mid)} {peak.unit} 回落 {(current.mid / peak.mid - 1) * 100:.2f}%")
+            parts.append(f"\u8f83\u4e0a\u4e00\u89c2\u5bdf\u70b9 {change_text(current, prev)}")
+        parts.append(f"\u8f83\u5386\u53f2\u79cd\u5b50\u5cf0\u503c {fmt_num(peak.mid)} {unit} \u56de\u843d {(current.mid / peak.mid - 1) * 100:.2f}%")
         if trough and current.date > trough.date:
-            parts.append(f"较阶段低点 {fmt_num(trough.mid)} {trough.unit} 反弹 {(current.mid / trough.mid - 1) * 100:.2f}%")
-        core_verdict = "；".join(parts)
+            parts.append(f"\u8f83\u9636\u6bb5\u4f4e\u70b9 {fmt_num(trough.mid)} {unit} \u53cd\u5f39 {(current.mid / trough.mid - 1) * 100:.2f}%")
+        core_verdict = "\uff1b".join(parts)
 
     lines = [
-        f"# 钨价跟踪日报 - {target_date.isoformat()}",
+        f"# \u94a8\u4ef7\u8ddf\u8e2a\u65e5\u62a5 - {target_date.isoformat()}",
         "",
-        "## 结论",
+        "## \u7ed3\u8bba",
         "",
         f"- {core_verdict}",
-        "- 重点判断：先看65%黑钨精矿是否继续上行，再看APT和钨粉是否同步跟进；若废钨先行回落，说明情绪和流动性转弱。",
+        "- \u91cd\u70b9\u5224\u65ad\uff1a\u5148\u770b 65%\u9ed1\u94a8\u7cbe\u77ff\u662f\u5426\u7ee7\u7eed\u4e0a\u884c\uff0c\u518d\u770b APT \u548c\u94a8\u7c89\u662f\u5426\u540c\u6b65\u8ddf\u8fdb\uff1b\u82e5\u5e9f\u94a8\u5148\u884c\u56de\u843d\uff0c\u8bf4\u660e\u60c5\u7eea\u548c\u6d41\u52a8\u6027\u8f6c\u5f31\u3002",
         "",
-        "## 当日价格",
+        "## \u5f53\u65e5\u4ef7\u683c",
         "",
-        "| 品种 | 均价 | 单位 | 较上一观测 | 来源 |",
+        "| \u54c1\u79cd | \u5747\u4ef7 | \u5355\u4f4d | \u8f83\u4e0a\u4e00\u89c2\u5bdf | \u6765\u6e90 |",
         "|---|---:|---|---|---|",
     ]
 
-    if today_rows:
+    if today_rows or today_unavailable_rows:
         for row in today_rows:
             prev = previous_for(row, grouped)
             source = row.source_name
             if row.source_url:
                 source = f"[{row.source_name}]({row.source_url})"
             lines.append(
-                f"| {row.name} | {fmt_num(row.mid)} | {row.unit} | {change_text(row, prev)} | {source} |"
+                f"| {display_name(row.indicator, row.name)} | {fmt_num(row.mid)} | {display_unit(row.indicator, row.unit)} | {change_text(row, prev)} | {source} |"
+            )
+        for row in today_unavailable_rows:
+            source_name = row.get("source_name", "N/A")
+            source_url = row.get("source_url", "")
+            source = source_name
+            if source_url:
+                source = f"[{source_name}]({source_url})"
+            lines.append(
+                f"| {display_name(row.get('indicator', ''), row.get('name', 'N/A'))} | N/A | {display_unit(row.get('indicator', ''), row.get('unit', 'N/A'))} | N/A | {source} |"
             )
     else:
-        lines.append("| N/A | N/A | N/A | 当日未采集到新价格 | N/A |")
+        lines.append("| N/A | N/A | N/A | \u5f53\u65e5\u672a\u91c7\u96c6\u5230\u65b0\u4ef7\u683c | N/A |")
 
     lines.extend(
         [
             "",
-            "## 跟踪口径",
+            "## \u8ddf\u8e2a\u53e3\u5f84",
             "",
-            "- 历史库：`automation_snapshots/tungsten-price-tracker/price_history.csv`",
-            "- 若当天公开价格缺失，写 N/A，不用旧价冒充新价。",
-            "- 只把有公开来源链接或明确来源名称的数据写入历史库。",
+            "- \u5386\u53f2\u5e93\uff1a`automation_snapshots/tungsten-price-tracker/price_history.csv`",
+            "- \u82e5\u5f53\u5929\u516c\u5f00\u4ef7\u683c\u7f3a\u5931\uff0c\u5199 N/A\uff0c\u4e0d\u7528\u65e7\u4ef7\u5192\u5145\u65b0\u4ef7\u3002",
+            "- \u53ea\u628a\u6709\u516c\u5f00\u6765\u6e90\u94fe\u63a5\u6216\u660e\u786e\u6765\u6e90\u540d\u79f0\u7684\u6570\u636e\u5199\u5165\u5386\u53f2\u5e93\u3002",
             "",
         ]
     )
