@@ -38,3 +38,15 @@ date,indicator,name,low,high,mid,unit,currency,source_name,source_url,source_gra
 2026-06-14,recycled_tungsten_carbide_powder,再生碳化钨粉,,,N/A,元/千克,CNY,SMM same-day check,https://hq.smm.cn/h5/tungsten-powder-price,B,2026-06-14 checked; no 2026-06-14 public quote found. Latest visible SMM quote date was 2026-06-12.
 2026-06-14,scrap_tungsten_bar,废钨棒材,,,N/A,元/千克,CNY,CTIA same-day check,https://www.ctia.com.cn/news/130913.html,B,2026-06-14 checked; no 2026-06-14 public quote found. Latest visible CTIA market article was 2026-06-12.
 2026-06-14,scrap_tungsten_drill,废钨钻头,,,N/A,元/千克,CNY,CTIA same-day check,https://www.ctia.com.cn/news/130913.html,B,2026-06-14 checked; no 2026-06-14 public quote found. Latest visible CTIA market article was 2026-06-12.
+2026-06-15,black_tungsten_concentrate_55,55%黑钨精矿,52.2,52.3,52.25,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price-chart,B,SMM公开行情，2026-06-15；低高价由元/标吨换算为万元/标吨，涨跌为0
+2026-06-15,black_tungsten_concentrate_65,65%黑钨精矿,52.7,52.8,52.75,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price-chart,B,SMM公开行情，2026-06-15；低高价由元/标吨换算为万元/标吨，涨跌为0
+2026-06-15,domestic_apt,仲钨酸铵（APT）,,,80,万元/吨,CNY,CTIA,https://www.ctia.com.cn/news/130960.html,B,CTIA/中钨在线2026-06-15行情文章：APT暂稳运行
+2026-06-15,domestic_tungsten_carbide_powder,国产碳化钨粉,1170,1250,1210,元/千克,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情，2026-06-15；涨跌为0
+2026-06-15,domestic_tungsten_powder,国产钨粉,1240,1320,1280,元/千克,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情，2026-06-15；涨跌为0
+2026-06-15,europe_apt,欧洲APT,2900,3180,3040,美元/吨度,USD,CTIA,https://www.ctia.com.cn/news/130960.html,B,CTIA/中钨在线2026-06-15行情文章
+2026-06-15,recycled_tungsten_carbide_powder,再生碳化钨粉,1000,1030,1015,元/千克,CNY,SMM,https://hq.smm.cn/h5/tungsten-powder-price,B,SMM公开行情，2026-06-15；涨跌为0
+2026-06-15,scrap_tungsten_bar,废钨棒材,,,780,元/千克,CNY,CTIA,https://www.ctia.com.cn/news/130960.html,B,CTIA/中钨在线2026-06-15行情文章：废钨市场情绪反复，流动性受抑
+2026-06-15,scrap_tungsten_drill,废钨钻头,,,730,元/千克,CNY,CTIA,https://www.ctia.com.cn/news/130960.html,B,CTIA/中钨在线2026-06-15行情文章：废钨市场情绪反复，流动性受抑
+2026-06-15,white_tungsten_concentrate_30_40,30-40%白钨精矿,50.7,51.7,51.2,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price-chart,B,SMM公开行情，2026-06-15；低高价由元/标吨换算为万元/标吨，涨跌为0
+2026-06-15,white_tungsten_concentrate_55,55%白钨精矿,52.1,52.2,52.15,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price-chart,B,SMM公开行情，2026-06-15；低高价由元/标吨换算为万元/标吨，涨跌为0
+2026-06-15,white_tungsten_concentrate_65,65%白钨精矿,52.6,52.7,52.65,万元/标吨,CNY,SMM,https://hq.smm.cn/h5/tungsten-concentrate-price-chart,B,SMM公开行情，2026-06-15；低高价由元/标吨换算为万元/标吨，涨跌为0
