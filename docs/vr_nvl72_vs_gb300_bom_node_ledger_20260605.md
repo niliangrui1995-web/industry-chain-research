@@ -17,7 +17,7 @@
 | 第一主线上游 | 高端电子布 / Low CTE / 低介电布 / 超低损耗布 | AI server 与高速 PCB 拉动，普通玻纤不能替代 | 中高 | soft bottleneck+ |
 | 第一主线延伸 | PCB 级 HVLP/VLP/RTF 铜箔 | 224G/1.6T 与 M8/M9 对低粗糙度铜箔要求上升 | 中 | watch+，不得混同锂电铜箔 |
 | 第二主线 | NVSwitch / CX9 / BF4 拉动的板级、ABF、MLCC、连接器 | 芯片数量和速率提升明确，但芯片本身由 NVIDIA 控制 | A 股间接映射 | 看 PCB/连接结构，不看泛芯片概念 |
-| 第二主线 | 800VDC / HVDC / power shelf / busbar | 机架功耗密度提升，NVIDIA 800VDC 生态明确 | 中 | 需订单和收入验证 |
+| 第二主线 | 800VDC / HVDC / power shelf / busbar | 机架功耗密度提升，NVIDIA 800VDC 生态明确 | 中 | watch+，Q3 小批量仍需官方/一级来源和订单收入验证 |
 | 第二主线 | 液冷 / manifold / QD / 冷板 / CDU | GB300 已液冷，VR 是密度与架构升级，不是从 0 到 1 | 中 | 长期强，单柜增量不是最高 |
 | 旁线强机会 | 800G/1.6T 光模块、EML/CW/InP、CPO/ELS | AI cluster scale-out 真实高景气，但不属于 VR 柜内 BOM 主增量 | 高 | 单独光通信主线，不混进 VR 单柜 BOM |
 | 剔除/观察 | Retimer/AEC、BMC/MCU/ERoT、SSD、泛设备耗材 | 技术重要，但 A 股硬证据不足或价值量不清 | 低 | 不作为主线 |
@@ -33,6 +33,9 @@
 | NVIDIA GB200 NVL72 技术博客：https://developer.nvidia.com/blog/upgrading-multi-gpu-interconnectivity-with-the-third-generation-nvidia-nvswitch/ | GB200 18 compute nodes、9 NVLink switch trays、130 TB/s、copper cable cartridge、liquid cooling | A |
 | NVIDIA Vera Rubin POD 技术博客：https://developer.nvidia.com/blog/?p=113993 | VR 18 compute trays、9 switch trays、PCB midplane、cable-free/hose-free/fanless 设计 | A |
 | NVIDIA 800VDC 技术博客：https://developer.nvidia.com/blog/building-the-800-vdc-ecosystem-for-efficient-scalable-ai-factories/ | 800VDC 生态、1MW+ rack 方向、Delta/Flex/LiteOn/Megmeet/Vertiv/Eaton 等 | A |
+| NVIDIA 800VDC 架构博客：https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/ | 800VDC data center power infrastructure starting in 2027；Megmeet 位于 Power system components 生态 | A |
+| 麦格米特 2025 年报摘要：https://static.cninfo.com.cn/finalpage/2026-04-29/1225238055.PDF | 公司披露 800VDC/SST/Sidecar/Power Shelf 产品体系、NVIDIA 推荐提供商、送测/试产和部分北美项目线索 | A |
+| TrendForce/商业时报 800VDC 报道：https://www.trendforce.com/news/2026/06/15/news-nvidia-google-may-be-first-to-adopt-800v-hvdc-initial-3q26-shipments-may-boost-delta-and-infrastructure-suppliers/ | NVIDIA/Google 可能 Q3 2026 小批量出货的供应链口径 | B/C，非官方确认 |
 | 本地用户文件 `vr-nvl72.md` | VR compute tray / switch tray / CX9 module / BMC-HMC-BF4 等细分 BOM | 用户给定资料，按待核验 A-/B+ 使用 |
 | `docs/rubin_价值量拆解_逐页梳理_20260522.md` | Rubin rack BOM 价值量拆分，尤其 PCB/MLCC/ABF/电源/液冷增幅 | B，卖方测算/本地整理 |
 | `artifacts/weekly_chain_tracking/ai_pcb/2026-05-31.md` | PCB/CCL/电子布/HVLP 铜箔当前堵点账本 | A/B 混合，本地已整理 |
@@ -167,7 +170,9 @@
 | 需求传导 | 机架功率密度上升 -> power shelf、busbar、保护器件、SiC/GaN、AC/DC、DC/DC、rack power sidecar、facility power 升级。 |
 | 全球生态 | Delta、Flex、LiteOn、Megmeet、Vertiv、Eaton、Schneider、ABB 等。 |
 | A 股观察 | 麦格米特、立讯/连接供电结构、部分电力设备公司。 |
-| 证据缺口 | A 股公司是否有 NVIDIA 800VDC / Kyber / VR rack power shelf 订单、收入和毛利。 |
+| 2026-06-16 复核 | NVIDIA 官方能确认 800VDC 架构、starting in 2027、Megmeet 位于 Power system components；Google/OCP 硬资料更偏 +/-400VDC/Diablo 400 或 +/-400/800V 规范；NVIDIA/Google Q3 2026 小批量 800V HVDC 出货仍未见官方或一级来源。 |
+| 麦格米特边界 | 可确认的是 NVIDIA 官方生态/推荐提供商、产品体系、送测/试产和部分北美项目线索；不能由此推出 NVIDIA 或 Google 直接订单。 |
+| 证据缺口 | A 股公司是否有 NVIDIA 800VDC / Kyber / VR rack power shelf 直采或下游订单、收入占比、毛利率和交付节奏。 |
 | 剔除项 | 泛电源、泛 UPS、泛电网设备。Facility transformer/switchgear 与 rack power shelf 是不同层。 |
 
 ### 3.12 液冷 / manifold / QD / 冷板 / CDU
@@ -245,7 +250,7 @@
 |---|---|---|---|
 | 德福科技 301511.SZ | PCB 级 HVLP/RTF 铜箔 | RTF/HVLP 产品、头部 CCL 意向、扩产 | 2025 收入主体仍是锂电铜箔，高端电子电路铜箔收入/毛利未拆 |
 | 鼎通科技 688668.SH | CAGE、224G、液冷散热结构 | CAGE 收入、224G 批量供货、液冷认证 | 不是 retimer，不是终端订单，客户和收入拆分不足 |
-| 麦格米特 002851.SZ | 800VDC / power ecosystem | NVIDIA 800VDC 生态有 Megmeet | A 股主体 AI data center power 收入和订单需验证 |
+| 麦格米特 002851.SZ | 800VDC / SST / Sidecar / Power Shelf | NVIDIA 官方生态列入 Power system components；公司年报/IR 披露推荐提供商、产品矩阵、小批量送测/试产和北美项目线索 | 不能证明 NVIDIA/Google 直采；收入占比、订单金额、毛利率仍需验证，watch+ 不升主线 |
 | 英维克 002837.SZ | CDU / 液冷系统 | 数据中心液冷主线 | VR 单柜增量低于 PCB，需 AI rack 项目证据 |
 | 飞荣达 300602.SZ | 散热/结构 | 热管理与结构件弹性 | 需平台认证和收入拆分 |
 | 工业富联 601138.SH | ODM/rack assembly | AI server/rack 体量确定 | 毛利率低，市值大，弹性弱于材料 |
@@ -280,7 +285,7 @@
 | 688668 | 鼎通科技 | 408.00 | +12.58% | 27.45 | 4.83% | 176.85 | 568 | 连接结构高弹性，需防概念过热 |
 | 688519 | 南亚新材 | 251.00 | +1.62% | 8.49 | 1.48% | 98.30 | 590 | CCL 弹性观察 |
 | 301526 | 国际复材 | 22.80 | +0.48% | 26.80 | 8.30% | 79.55 | 860 | 玻纤/电子布交易弹性强，需高端产品证据 |
-| 002851 | 麦格米特 | 151.37 | -1.78% | 42.58 | 6.03% | 191.91 | 880 | 800VDC 观察，订单证据不足前不升主线 |
+| 002851 | 麦格米特 | 151.37 | -1.78% | 42.58 | 6.03% | 191.91 | 880 | 800VDC watch+，交易弹性升温但直采/订单/利润证据不足前不升主线 |
 | 002837 | 英维克 | 67.33 | -2.73% | 17.70 | 2.33% | 2477.65 | 858 | 液冷方向强，估值极高 |
 | 300602 | 飞荣达 | 42.11 | -0.35% | 7.82 | 4.80% | 79.19 | 245 | 热管理/结构观察 |
 | 601138 | 工业富联 | 76.04 | -3.20% | 105.38 | 0.69% | 37.12 | 15089 | 确定性高但市值大、弹性被摊薄 |
@@ -326,7 +331,7 @@
 | 电子布 | Low CTE / Low Dk-Df / 超低损耗布收入、毛利、客户认证、产能 | 普通布价格回落、高端布不再涨价、客户认证转单不及预期 |
 | PCB 铜箔 | HVLP4/5 多客户批量、加工费、电子电路铜箔收入和毛利 | 高端铜箔收入不增、锂电铜箔占比继续主导、现金流恶化 |
 | 连接结构 | 224G/CAGE/OSFP/液冷散热器收入、客户、产线 | 客户认证不转订单、年降压缩毛利 |
-| Power | 800VDC、power shelf、busbar、SiC/GaN、Megmeet/Delta 等订单 | 2027 Kyber/VR 节奏推迟、项目只停留展示 |
+| Power | 800VDC、power shelf、busbar、SiC/GaN、Megmeet/Delta 等官方订单、收入占比和毛利率 | NVIDIA/Google 官方不确认 Q3 小批量出货、2027 Kyber/VR 节奏推迟、项目只停留展示或送测 |
 | Liquid cooling | CDU、冷板、manifold、QD 平台认证和收入 | 估值先行但订单/毛利不兑现 |
 | Optical | 1.6T/3.2T、EML/CW/InP、CPO/ELS、FAU、模块 ASP 和预付款 | 关键料供给缓解、价格年降扩大、CPO 延后 |
 
