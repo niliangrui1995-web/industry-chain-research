@@ -96,3 +96,23 @@
 - 风华高科 2026-05-12 业绩说明会活动记录表：https://pdf.dfcfw.com/pdf/H2_AN202605121822221005_1.pdf
 - 风华高科 2025-08-25 投资者关系活动记录表：https://static.cninfo.com.cn/finalpage/2025-08-26/1224574201.PDF
 - iFinD A股股票摘要与日频行情：2026-06-16 采集。
+
+## 2026-06-16 晚间补充：J.P. Morgan Asia Components 中文整理版
+
+来源文件：`D:/Downloads/JP_Morgan_Asia_Components_Chinese_Report.pdf`。源头口径为 J.P. Morgan Asia Pacific Equity Research, June 2026 的中文整理版，证据等级按 B 级处理：可用于节点优先级、卖方估算和后续验证问题，不能直接作为 A 股公司订单、客户、涨价或量产证明。
+
+### 对本备忘录的更新
+
+| 节点 | 报告新增信息 | 本地处理 |
+|---|---|---|
+| AI server 高端 MLCC | 报告估算 AI server MLCC TAM 150%+ CAGR，Blackwell 到 Rubin 平台升级抬升单计算托盘 MLCC 用量；高端 MLCC 产能消耗会挤压低阶/中阶供给。 | 将 MLCC 维持并上调为 `secondary_track_up`。三环集团仍是基本面主受益候选，风华高科仍是高交易弹性观察；但 YAGEO 的低阶 MLCC 价格弹性不能直接外推成 A 股 ASP 已兑现。 |
+| ABF / IC package substrate | 报告估算载板行业 UTR 在 2027e 超过 100%，AI server & switch 需求面积从 2024 年 2,448 bn mm2 升至 2028e 21,522 bn mm2，占比从 26% 升至 75%；stepper、T-glass 和 LTA/capacity reservation 是核心约束。 | 将 ABF/IC 载板从相邻观察强化为独立 `watch_to_soft_separate`，仍不得混同板级 PCB。兴森科技、深南电路仍需大客户订单、良率、收入和毛利验证后才能升级。 |
+| CCL / PCB | 报告提示 HPC CCL TAM 可用 2.5-3 倍近似外推 PCB TAM，M9 升级、HDI 良率和 AI switch 层数提升共同推高复杂度。 | 支持既有 M7/M8/M9/M10 CCL / prepreg `soft_bottleneck+` 判断，但不足以升为 `hard_bottleneck`。生益科技、南亚新材、沪电、胜宏、生益电子继续看订单、lead time、涨价和良率。 |
+| AI 系统级测试设备 | 报告把 GPU FT/SLT 测试时间延长、TDP 提升、CPO/光引擎测试、数据中心电源测试串成 Chroma 的三条 100%+ CAGR 方向。 | 新增 `ai_system_test_equipment` 观察线。A 股需拆成半导体测试、光通信测试、电源测试三类，不把通用测试仪器或普通分选机直接写成 Chroma 同级受益。 |
+
+### 新增跟踪问题
+
+1. 三环集团、风华高科是否披露 AI server 高端 MLCC 的规格、客户认证、ASP、收入占比和毛利率，而不是只验证普通 MLCC 周期复苏。
+2. Unimicron、Ibiden、Nan Ya PCB、兴森科技、深南电路是否披露 AI server/switch substrate 的 UTR、advance payment、capacity reservation、FC-BGA 量产节奏和毛利改善。
+3. Nittobo、台玻、宏和科技、中材科技是否披露 T-glass / Q glass / Low CTE 电子布的 allocation、交期、价格和客户 AVL。
+4. Chroma 以及 A 股长川科技、华峰测控、华兴源创、伟测科技、精智达等是否披露 SLT、CPO/光通信、rack power/HVDC 测试设备订单或收入拆分。

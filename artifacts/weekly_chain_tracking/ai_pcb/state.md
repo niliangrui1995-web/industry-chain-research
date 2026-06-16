@@ -78,3 +78,14 @@
 | HVLP4/HVLP5 PCB 铜箔 | 224G/1.6T/M9/M10 对低粗糙度和表面处理一致性要求提升，进口高端供应集中 | Mitsui 官方确认需求增长和扩产；DIGITIMES/市场人士给出 1500/2500 吨缺口口径；金居媒体采访支持缺口扩大和扩产；诺德 IR 显示 HVLP4 仍测试、HVLP5 开发中 | 2026H2-2027 watch_to_soft | HVLP4/5 多客户批量收入、客户认证、加工费上调、毛利贡献；NVIDIA/供应商正式锁产证据 | 多供应商稳定供货，加工费回落，国产良率确认 |
 | 成品 AI PCB 高层板良率/测试 | 材料缓解后瓶颈可能迁移到高层压合、背钻、电镀、阻抗/可靠性测试和客户审厂 | 胜宏/深南 IR 证明需求，但交期/良率硬证据不足 | 2026H2-2027 watch_to_soft | 两家以上板厂披露交期拉长、良率瓶颈、测试产能不足、订单延期或客户转单 | 扩产达产，订单延期减少，交期正常 |
 | 钻针/测试设备/湿化学/PCB 光刻胶 | HDI/mSAP/N+M、高层高速板提升设备精度、耗材寿命、药水稳定性和认证要求 | 尖点扩产证明需求，缺 A/B 级 backlog/短缺/认证排队 | 2027-2028 watch | 设备 backlog 或交期显著拉长，耗材/药水客户认证排队，高端收入放量且供应不足 | 设备交付恢复，价格稳定，客户认证不排队 |
+
+## 2026-06-16 晚间 PDF 补充状态
+
+补充来源：`D:/Downloads/JP_Morgan_Asia_Components_Chinese_Report.pdf`，J.P. Morgan Asia Pacific Equity Research, June 2026 中文整理版。按 B 级卖方估算和结构判断处理，不作为 A 股订单、客户、涨价或量产的 A 级证据。
+
+| 节点 | 状态调整 | 原因 | 下一步验证 |
+|---|---|---|---|
+| AI server 高端 MLCC | `secondary_track_up` | 报告估算 AI server MLCC TAM 150%+ CAGR，高端 MLCC 产能消耗会挤压低阶/中阶供给。 | 三环集团、风华高科的 AI server 高端 MLCC 客户、规格、ASP、收入占比和毛利率。 |
+| ABF / IC package substrate | `watch_to_soft_separate` | 报告估算载板 UTR 2027e 超过 100%，AI server & switch 面积需求 2028e 占比 75%，stepper、T-glass 与 LTA 是供给约束。 | Unimicron、Ibiden、南电、兴森、深南的 capacity reservation、advance payment、FC-BGA 量产、良率、收入和毛利。 |
+| M8/M9 HPC CCL / prepreg | `soft_bottleneck+` 维持 | 报告强化 HPC CCL/PCB TAM、M9 升级、HDI 良率和 switch 层数提升，但仍是卖方估算。 | M8/M9/M10 分产品 lead time、报价有效期、客户锁料和二供 AVL。 |
+| AI 系统级测试设备 | `new_watch` | 报告新增 SLT、光通信/CPO、数据中心电源测试三条 100%+ CAGR 方向，海外锚为 Chroma。 | A 股测试设备公司需拆分验证 SLT、光通信测试、rack power/HVDC 测试订单和收入，不能泛化为普通半导体测试设备。 |
