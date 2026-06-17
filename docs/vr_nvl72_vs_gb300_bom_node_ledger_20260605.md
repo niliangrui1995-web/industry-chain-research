@@ -36,6 +36,7 @@
 | NVIDIA 800VDC 架构博客：https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/ | 800VDC data center power infrastructure starting in 2027；Megmeet 位于 Power system components 生态 | A |
 | 麦格米特 2025 年报摘要：https://static.cninfo.com.cn/finalpage/2026-04-29/1225238055.PDF | 公司披露 800VDC/SST/Sidecar/Power Shelf 产品体系、NVIDIA 推荐提供商、送测/试产和部分北美项目线索 | A |
 | TrendForce/商业时报 800VDC 报道：https://www.trendforce.com/news/2026/06/15/news-nvidia-google-may-be-first-to-adopt-800v-hvdc-initial-3q26-shipments-may-boost-delta-and-infrastructure-suppliers/ | NVIDIA/Google 可能 Q3 2026 小批量出货的供应链口径 | B/C，非官方确认 |
+| 2026-06-16 08:48 邮箱《AI产业链战报》；英诺赛科官网 2026-06-12；ip fray 2026-06-16；Infineon/ITC 2026-05 | Infineon 部分 GaN 产品在华禁售、Infineon 程序/范围反向口径、GaN/800VDC 生态边界和国产替代事件催化 | 事件 A-/B；战报股票映射 C |
 | 本地用户文件 `vr-nvl72.md` | VR compute tray / switch tray / CX9 module / BMC-HMC-BF4 等细分 BOM | 用户给定资料，按待核验 A-/B+ 使用 |
 | `docs/rubin_价值量拆解_逐页梳理_20260522.md` | Rubin rack BOM 价值量拆分，尤其 PCB/MLCC/ABF/电源/液冷增幅 | B，卖方测算/本地整理 |
 | `artifacts/weekly_chain_tracking/ai_pcb/2026-05-31.md` | PCB/CCL/电子布/HVLP 铜箔当前堵点账本 | A/B 混合，本地已整理 |
@@ -171,6 +172,9 @@
 | 全球生态 | Delta、Flex、LiteOn、Megmeet、Vertiv、Eaton、Schneider、ABB 等。 |
 | A 股观察 | 麦格米特、立讯/连接供电结构、部分电力设备公司。 |
 | 2026-06-16 复核 | NVIDIA 官方能确认 800VDC 架构、starting in 2027、Megmeet 位于 Power system components；Google/OCP 硬资料更偏 +/-400VDC/Diablo 400 或 +/-400/800V 规范；NVIDIA/Google Q3 2026 小批量 800V HVDC 出货仍未见官方或一级来源。 |
+| 2026-06-16 Infineon GaN 禁售补丁 | 英诺赛科官网称中国最高法维持对 Infineon 部分 GaN 产品在华销售/进口禁令；ip fray 转述 Infineon 口径为临时禁令/主案仍在审、影响产品范围有限。结论：这更接近第三代半导体国产替代/IP 事件催化，不是 AI 数据中心 800V 主线的订单或需求证明。 |
+| GaN/SiC 与 800V 边界 | GaN/SiC 是 800VDC 从高压配电到低压/核心供电的关键使能器件之一；但禁售事件只改变中国市场特定 Infineon GaN 产品可售性和国产替代预期，不能证明 NVIDIA/Google 小批量、客户直采、power shelf 订单或 A 股收入兑现。 |
+| 国产替代观察层 | 英诺赛科 02577.HK 可列 GaN/IP/800V 生态观察；三安光电 600703.SH、斯达半导 603290.SH 只能列第三代半导体国产替代事件观察。三者在未出现 AI 数据中心 power shelf / 800VDC design win 转量产、订单金额、收入占比、毛利率证据前，不因该禁售事件上调为 800V 主线。 |
 | 麦格米特边界 | 可确认的是 NVIDIA 官方生态/推荐提供商、产品体系、送测/试产和部分北美项目线索；不能由此推出 NVIDIA 或 Google 直接订单。 |
 | 证据缺口 | A 股公司是否有 NVIDIA 800VDC / Kyber / VR rack power shelf 直采或下游订单、收入占比、毛利率和交付节奏。 |
 | 剔除项 | 泛电源、泛 UPS、泛电网设备。Facility transformer/switchgear 与 rack power shelf 是不同层。 |
@@ -251,6 +255,9 @@
 | 德福科技 301511.SZ | PCB 级 HVLP/RTF 铜箔 | RTF/HVLP 产品、头部 CCL 意向、扩产 | 2025 收入主体仍是锂电铜箔，高端电子电路铜箔收入/毛利未拆 |
 | 鼎通科技 688668.SH | CAGE、224G、液冷散热结构 | CAGE 收入、224G 批量供货、液冷认证 | 不是 retimer，不是终端订单，客户和收入拆分不足 |
 | 麦格米特 002851.SZ | 800VDC / SST / Sidecar / Power Shelf | NVIDIA 官方生态列入 Power system components；公司年报/IR 披露推荐提供商、产品矩阵、小批量送测/试产和北美项目线索 | 不能证明 NVIDIA/Google 直采；收入占比、订单金额、毛利率仍需验证，watch+ 不升主线 |
+| 英诺赛科 02577.HK | GaN / 800VDC AI power silicon | 公司官网披露 NVIDIA MGX/800VDC 相关 All-GaN 技术路径；Infineon 部分 GaN 产品在华禁售强化其 IP 和国产替代事件催化 | 可进 GaN/IP/800V 生态观察层；仍需 design win 转量产、客户订单、收入占比和毛利率，不能替代 power system components 订单证据 |
+| 三安光电 600703.SH | 第三代半导体 / GaN/SiC 材料与器件 | Infineon GaN 禁售带来国产替代情绪映射，公司具备化合物半导体平台属性 | 只能事件观察；未见 AI 数据中心 800VDC power shelf、NVIDIA MGX 或客户订单硬证据，不因禁售上调主线 |
+| 斯达半导 603290.SH | SiC 功率器件 / 第三代半导体 | 800VDC 长期逻辑可能需要 SiC/GaN 保护、热插拔和转换器件，禁售触发国产替代交易 | 只能事件观察；未见 NVIDIA/Google/Megmeet/Delta 供应链订单、AI 电源收入拆分或毛利证据，不升 800V 主线 |
 | 英维克 002837.SZ | CDU / 液冷系统 | 数据中心液冷主线 | VR 单柜增量低于 PCB，需 AI rack 项目证据 |
 | 飞荣达 300602.SZ | 散热/结构 | 热管理与结构件弹性 | 需平台认证和收入拆分 |
 | 工业富联 601138.SH | ODM/rack assembly | AI server/rack 体量确定 | 毛利率低，市值大，弹性弱于材料 |
@@ -331,7 +338,7 @@
 | 电子布 | Low CTE / Low Dk-Df / 超低损耗布收入、毛利、客户认证、产能 | 普通布价格回落、高端布不再涨价、客户认证转单不及预期 |
 | PCB 铜箔 | HVLP4/5 多客户批量、加工费、电子电路铜箔收入和毛利 | 高端铜箔收入不增、锂电铜箔占比继续主导、现金流恶化 |
 | 连接结构 | 224G/CAGE/OSFP/液冷散热器收入、客户、产线 | 客户认证不转订单、年降压缩毛利 |
-| Power | 800VDC、power shelf、busbar、SiC/GaN、Megmeet/Delta 等官方订单、收入占比和毛利率 | NVIDIA/Google 官方不确认 Q3 小批量出货、2027 Kyber/VR 节奏推迟、项目只停留展示或送测 |
+| Power | 800VDC、power shelf、busbar、SiC/GaN、Megmeet/Delta 等官方订单、收入占比和毛利率；GaN/SiC 只在 design win 转量产、交期或 ASP/毛利兑现后升级 | NVIDIA/Google 官方不确认 Q3 小批量出货、2027 Kyber/VR 节奏推迟、项目只停留展示或送测；Infineon 禁售仅停留在国产替代事件催化 |
 | Liquid cooling | CDU、冷板、manifold、QD 平台认证和收入 | 估值先行但订单/毛利不兑现 |
 | Optical | 1.6T/3.2T、EML/CW/InP、CPO/ELS、FAU、模块 ASP 和预付款 | 关键料供给缓解、价格年降扩大、CPO 延后 |
 

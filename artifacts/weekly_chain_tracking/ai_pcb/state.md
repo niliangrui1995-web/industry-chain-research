@@ -1,9 +1,9 @@
 # 周度跟踪：AI PCB 及上游材料设备 - 滚动状态
 
-更新时间：2026-06-16
-最近报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-16.md`
+更新时间：2026-06-17
+最近报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_hvlp_tglass_nvidia_capacity_evidence_layering.md`
 
-当前阶段：完成 2026-06-15 08:48《AI产业链战报》上游 PCB 材料三条激进说法核对。本期不升级任何节点为 `hard_bottleneck`；`高端电子玻纤布 / Low Dk / Low CTE / T-glass / NER-glass / Q cloth` 与 `M7/M8/M9/M10 CCL / prepreg` 仍为 `soft_bottleneck+`。`T-glass 缺口 >40%`、`HVLP4 缺口 1500/2500 吨`、`NVIDIA 直接锁定上游` 均未找到官方/一级来源闭环，只能作为 B/C 级线索；`HVLP4/HVLP5 PCB 铜箔` 观察优先级提高到 `watch_to_soft`，但不得写成硬证据。
+当前阶段：完成 2026-06-16 08:48《AI产业链战报》`HVLP4 铜箔 / T-glass 玻纤布被 NVIDIA 直签寄售锁产能` 单线证据分层。本期不升级任何节点为 `hard_bottleneck`；`高端电子玻纤布 / Low Dk / Low CTE / T-glass / NER-glass / Q cloth` 与 `M7/M8/M9/M10 CCL / prepreg` 仍为 `soft_bottleneck+`。`NVIDIA 直签`、`寄售合约`、`提前一年锁产能` 均未找到官方/一级来源闭环，只能作为 B/C 级供应链线索；`HVLP4/HVLP5 PCB 铜箔` 从纯 `watch` 提高到 `watch_to_soft / 高优先级验证`，但不得写成硬证据。公司分层同步为：生益科技 `基本面主受益/质量锚`，宏和科技 `交易弹性/高优先观察`，德福科技 `交易弹性/条件式 HVLP 期权`，中英科技 `仅观察/PTFE-M10 相邻线索`。
 
 ## 任务边界
 
@@ -33,6 +33,7 @@
 | Nittobo、台玻、宏和、中材、国际复材、菲利华是否披露 Low Dk/Low CTE/T-glass/Q cloth 分布种交期、配额、价格和客户认证 | 强化为本周最强 `soft_bottleneck+` | 台玻管理层称高端玻纤布供不应求预计至 2027 年底，并有高阶产能翻倍和 2027 扩产路径；仍缺官方分产品交期、配额和客户 AVL 排队数量。 |
 | 德福、诺德、嘉元、铜冠是否出现 PCB 级 HVLP4/HVLP5 批量供货、客户认证、收入或毛利贡献 | 未证实，维持观察 | 诺德 IR 显示 HVLP1/2/3 有订单，但 HVLP4 仍在客户测试、HVLP5 开发中；对 HVLP4/5 当前硬短缺叙事构成约束。 |
 | 2026-06-15 08:48 邮件称 T-glass 缺口 >40%、HVLP4 铜箔缺口 2027 扩至 2500 吨、NVIDIA 直接锁上游 | 三条均未形成 A 级闭环 | T-glass 偏紧和高端 HVLP 需求增长有 A/B 级支撑；精确缺口数和 NVIDIA 直接锁产主要来自 DIGITIMES/市场人士、华尔街见闻转述和 X/Grok 线索，未见 NVIDIA 或供应商正式公告。 |
+| 2026-06-16 08:48 邮件称 NVIDIA 对 HVLP4/T-glass 采用直签寄售、提前一年锁产能 | 未形成 A 级闭环；提升验证优先级 | DIGITIMES/Co-Tech 与 Mitsui 官方资料支持 HVLP 需求升级和产能压力；TrendForce/Nittobo 支持高端玻纤布偏紧；但直签、寄售、锁产能仍缺 NVIDIA 或供应商正式公告、LTA、capacity reservation 或 consignment 合同。 |
 | 沪电、生益电子、深南、胜宏、TTM、Sanmina、金像电、臻鼎、尖点、大族数控、鼎泰高科是否披露交期拉长、良率/测试瓶颈、设备 backlog 或耗材认证排队 | 需求证实，瓶颈仍 watch | 胜宏、深南、尖点等证据证明需求与扩产，但仍无两家以上板厂或设备耗材厂披露交期失控、良率瓶颈、测试产能不足或客户排队。 |
 
 ## 当前堵点账本
@@ -45,6 +46,7 @@
 | 成品 AI PCB 高层板良率 / 测试 / 交付 | 次级跟踪 | `watch` | 高层压合、背钻、钻孔、电镀、阻抗测试和客户审厂可能成为材料之后的制程瓶颈 | `unchanged` | 胜宏/深南 IR 证明需求和高端产品放量；仍缺交期/良率/测试硬证据 | 2026H2-2027 watch | 板厂扩产达产、客户二供补足 | 交期恢复、订单延期减少、未出现良率/测试瓶颈 | 查沪电、生益电子、深南、胜宏、TTM、Sanmina、金像电、臻鼎 backlog、交期、良率、测试产能 |
 | 钻针/测试设备/湿化学/油墨/PCB 光刻胶 | 观察 | `watch` | 板厂 capex 和高端工艺升级带动设备、耗材和工艺材料需求 | `unchanged` | 尖点扩产说明需求与供给响应；缺 A/B 级 backlog、短缺或客户认证排队 | 2026H2-2028 watch；中低置信 | 国产设备/耗材供应与客户验证顺利 | 设备交付恢复，价格稳定，客户认证不排队 | 跟踪 backlog、交期、认证排队 |
 | ABF/BT 封装载板 | 单独观察 | `watch_separate` | 封装载板链路，和板级 AI PCB 不同 | `separate_only` | 只能作为相邻链路背景 | 6-24 个月单独跟踪 | 单独载板扩产和良率改善 | 与板级 PCB 混同即无效 | 如有载板证据单独开表 |
+| 载板 T-glass / Q glass 与板级 CCL Low Dk-Low CTE 电子布 | 强制拆分 | `taxonomy_guardrail` | 载板属于 ABF/BT/FC-BGA/IC substrate，板级电子布属于 CCL/prepreg 增强材料；两者可能共享供应商但客户、用途和证据锚不同 | `new_guardrail` | 2026-06-17 单线复核后新增 | 长期执行 | 后续所有记录增加 `end_use`：IC substrate、board-level CCL、finished PCB、PCB copper foil | 任何跨用途自动升级均无效 | 表格和报告同步分列 |
 
 ## 候选观察池
 
@@ -65,6 +67,7 @@
 4. 德福、诺德、嘉元、铜冠是否出现 PCB 级 HVLP4/HVLP5 多客户批量供货、客户认证、收入、良率或毛利贡献。
 5. 沪电、生益电子、深南、胜宏、TTM、Sanmina、金像电、臻鼎、尖点、大族数控、鼎泰高科是否披露交期拉长、良率/测试瓶颈、设备 backlog 或耗材认证排队。
 6. NVIDIA、AWS、Google、Meta、Nittobo、Mitsui、Co-Tech 是否出现 LTA、consignment、prepayment、allocation 或 capacity reservation 官方表述，以验证“直接锁定上游”是否成立。
+7. 后续所有 T-glass/Low CTE/Q glass 记录必须标注 `end_use`，严格区分 ABF/IC 载板与板级 PCB/CCL；同一供应商同一材料词不自动跨用途升级。
 
 ## 对话窗口摘要
 
