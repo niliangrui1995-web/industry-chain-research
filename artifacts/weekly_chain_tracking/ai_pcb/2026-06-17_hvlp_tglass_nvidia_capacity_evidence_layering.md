@@ -59,3 +59,14 @@
 | DIGITIMES, `HVLP4 copper foil battle heats up as Nvidia courts Co-Tech` | B | 提供 NVIDIA 接洽 Co-Tech 讨论 HVLP4 长期产能规划的媒体线索 | 付费媒体摘要，不是正式合同或公告 |
 | 诺德股份 IR PDF / 东方财富公告 | A | 约束 A 股 HVLP4/5 批量叙事：HVLP4 测试、HVLP5 开发 | 只覆盖诺德，不代表全球龙头 |
 | 邮箱《AI产业链战报》2026-06-16 08:48 | C | 触发核对，记录 Grok/X 多源与市场反应 | 邮件标注“Grok 未审计”，不能作为硬证据 |
+
+## 2026-06-17 官方证据追杀补充
+
+补充报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_hvlp_tglass_nvidia_official_lock_capacity_chase.md`
+
+本轮只看 NVIDIA、Nittobo、Mitsui、Co-Tech 官方/IR/年报/SEC 文件和 DIGITIMES 一级媒体原文后，`NVIDIA 直签寄售锁 HVLP4 铜箔 / T-glass 玻纤布产能` 总判定维持 `仍未闭环`：
+
+- `直签 / direct approach`：DIGITIMES 可作为 B 级线索，表述是 NVIDIA 接洽 Co-Tech 讨论长期产能规划，不是已签合同。
+- `寄售 / consignment`：未找到相关可用证据；Nittobo PDF 中 `consignment` 为诊断试剂业务无关命中。
+- `capacity reservation / LTA / prepayment`：NVIDIA 10-Q 有公司层面的通用供应链预付和产能协议披露，但未指向 Nittobo、Mitsui、Co-Tech、T-glass、HVLP 或 PCB 铜箔。
+- Co-Tech 年报、Mitsui 法说和 Nittobo 年报均强化了 HVLP4/T-glass 供需偏紧、扩产慢、客户催产能，但不支持把这条线写成 NVIDIA 已锁产。
