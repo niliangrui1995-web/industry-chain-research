@@ -3,8 +3,11 @@
 更新时间：2026-06-17
 最近报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_hvlp_tglass_nvidia_capacity_evidence_layering.md`
 官方证据追杀补充：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_hvlp_tglass_nvidia_official_lock_capacity_chase.md`
+A股供给压力卡：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_defu_block_trade_supply_pressure_card.md`
 
 当前阶段：完成 2026-06-16 08:48《AI产业链战报》`HVLP4 铜箔 / T-glass 玻纤布被 NVIDIA 直签寄售锁产能` 单线证据分层，并在 2026-06-17 对 NVIDIA、Nittobo、Mitsui、Co-Tech 官方/IR/年报/SEC 文件和 DIGITIMES 一级媒体原文做窄口径追杀。本期不升级任何节点为 `hard_bottleneck`；`高端电子玻纤布 / Low Dk / Low CTE / T-glass / NER-glass / Q cloth` 与 `M7/M8/M9/M10 CCL / prepreg` 仍为 `soft_bottleneck+`。`锁产能` 总判定为 `仍未闭环`：DIGITIMES 可支持 NVIDIA 接洽 Co-Tech 讨论长期产能规划的 B 级线索；`寄售/consignment`、`LTA`、`capacity reservation`、`prepayment` 均未在相关官方材料中形成 A 级闭环。`HVLP4/HVLP5 PCB 铜箔` 维持 `watch_to_soft / 高优先级验证`，但不得写成硬证据。公司分层同步为：生益科技 `基本面主受益/质量锚`，宏和科技 `交易弹性/高优先观察`，德福科技 `交易弹性/条件式 HVLP 期权`，中英科技 `仅观察/PTFE-M10 相邻线索`。
+
+晚间 A 股映射补充：德福科技 2026-06-04 至 2026-06-17 连续 10 个交易日出现 50.00 万股同规格大宗交易，累计 500.00 万股、69,382.00 万元；该线索只下修交易弹性质量、上调筹码供给和减持风险权重，不上调 HVLP4/5 基本面或业绩弹性。HVLP4/5 升级仍只看客户认证、正式订单、收入占比、加工费和毛利率兑现。
 
 ## 任务边界
 
