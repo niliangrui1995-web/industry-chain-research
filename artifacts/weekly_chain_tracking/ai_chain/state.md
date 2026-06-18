@@ -69,9 +69,25 @@
 | 精测电子 300567.SZ | `node_mapping_watch+ / event_trade_watch+`，不进 `main_candidate` | 与 HBM 良率检测/测试设备叙事最贴近，节点关注度上调 | 缺公司公告/IR 披露 HBM test/probe/Cube Prober 同节点产品、客户、订单、收入或毛利；不能用 Techwing/MJC 订单直接映射 |
 | 通富微电 002156.SZ | `event_trade_watch` 不上调 | HBM/advanced packaging 景气可作背景，但测试/探针卡/Cube Prober 不等同 OSAT 封测订单 | 需 HBM 相关封装/测试客户、订单、收入、产线或 CPO/NPO 官方证明 |
 
+## 2026-06-18 雅克科技窄口径 HBM 材料证据卡
+
+| 字段 | 当前判断 |
+|---|---|
+| taxonomy path | `AI 数据中心 / 智算中心 > GPU/ASIC 加速计算链 > HBM / 高带宽近端内存 > HBM DRAM/stack process materials（前驱体/SOD 为材料 P5 线索，不是独立 hard bottleneck）` |
+| 需求传导 | AI 训练/推理算力 -> HBM4E/HBM4 与 DRAM fab 产能提升 -> ALD/CVD 前驱体、SOD 等工艺材料用量增加 -> UP Chemical / 江苏先科供货 -> 雅克科技电子材料收入、产品结构和毛利。 |
+| A 级可确认 | 2025 年报确认公司半导体前驱体包括 high-k、硅基、金属材料等，应用于 3D NAND、NOR Flash、DRAM 和逻辑芯片先进制程，并开发人工智能先进封装复杂芯片组所需前驱体；2025 年前驱体材料销售收入继续增长、利润水平相应提高，前驱体设计产能 601.92 吨/年、产能利用率 59.31%。2026-05-19 业绩说明会确认 HBM 前驱体一直有供应，高端前驱体因技术壁垒和客户粘性价格稳定，并称在客户 HBM 已有稳定供应产品。2017 年证监会反馈意见可回溯确认 UP Chemical 历史上对 SK Hynix 销售占比较高、SOD 与 SK Hynix 有真实业务关系。 |
+| B 级可确认 | SK hynix 2026-06-17/18 披露 12-high HBM4E 样品交付主要客户；The Elec 披露 Techwing 获 SK hynix HBM Cube Prober 首单但未披露合同金额；Goldman 相关报道显示 HBM/DRAM/NAND 供需延续偏紧。这些只证明 HBM 主链景气和测试链加速，不直接证明雅克新增订单。 |
+| 邮件线索 | 2026-06-18 08:54《AI产业链战报》把雅克科技写入 HBM4E -> 前驱体/SOD 传导路径，并提示 WF6 线索已被证伪；该邮件含 Grok/Gemini/行情混合输入，只作 C 级触发线索，不作正式证据。 |
+| 为什么只停在 `event_trade_watch` | A 级证据能确认产品、客户关系、HBM 前驱体稳定供应和前驱体出货增长，但缺“本轮 HBM4E/HBM4 扩产对应的 UP Chemical/SK hynix 料号、订单金额、ASP 调价、毛利率、收入占比、交付节奏”。B 级 HBM 景气证据是行业需求，不是公司兑现。 |
+| 不纳入 WF6 | 公司 2026-06-12 异动公告明确含氟特气主要为 CF4/SF6，目前没有 WF6 相关业务；2025 年含氟特气收入占总体收入 5.79%。雅克的 HBM 材料线只保留前驱体/SOD，不与 WF6 混写。 |
+| 分层 | `event_trade_watch / baseline_worthy`。可建最小公司跟踪 baseline，用于保存证据缺口；不升 `main_candidate`，也不改 HBM 主 hard_bottleneck 排序。 |
+| 升级触发 | 客户或公司披露 HBM/HBM4E/HBM4 前驱体料号、订单、长协、ASP/价格稳定或涨价、毛利率、收入占比、产能利用率提升且与 HBM 需求绑定；或 SK hynix/Samsung/Micron 官方材料供应链指向 UP Chemical。 |
+| 降级触发 | HBM 客户未扩产或认证推迟、公司前驱体出货/利用率/毛利走弱、价格竞争扩散到高端品、公司公告否认相关订单或无应披露事项、市场继续把 WF6 与雅克混同。 |
+
 ## 本期深挖方向
 
 - 主深挖 1：`HBM/DRAM/LPDRAM/NAND/eSSD + AI server parts supply`。重点跟踪 HPE 10-Q、TrendForce eSSD/LPDRAM 能否被内存厂官方财报验证、HBM4/HBM4E 认证与 LTA、eSSD/NAND 价格库存、约束是否从 memory 扩散到 CPU、PCB、power/cooling。
+- 新增最小公司跟踪：`雅克科技 002409.SZ / UP Chemical / 前驱体 / SOD` 建立 `event_trade_watch` baseline。重点跟踪订单、ASP、毛利、收入占比、客户认证和高端前驱体价格；不得把 HBM4E 样品出货或测试链订单直接写成雅克订单。
 - 新增窄口径观察：`NOR Flash / SLC NAND / reliable small-capacity memory` 只作为 AI memory hierarchy 的侧翼观察层。重点跟踪小容量成熟节点供给退出、价格续涨、兆易创新/东芯股份/普冉半导体毛利率和净利率能否在 H1/H2 延续；不得与 HBM/LPDRAM/eSSD 主堵点混写。
 - 主深挖 2：`AI cloud capex -> 数据中心电力/并网 + 800VDC/SST/rack power/液冷`。重点把区域 hard operational 约束和全球设备/液冷单品 soft/watch 分开，并把液冷拆成新建 AI factory 与存量风冷机房改造两条观察线；跟踪 Oracle/Meta/Google/Microsoft/Amazon CapEx、FERC/PJM/ERCOT、JLL/CBRE、Google Brazos/OCP 规格、transformer/switchgear/UPS/CDU/PDU lead time、800VDC design win 转收入。
 
