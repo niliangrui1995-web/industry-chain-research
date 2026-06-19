@@ -1,9 +1,9 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
-更新时间：2026-06-18
+更新时间：2026-06-19
 最新报告：`artifacts/weekly_chain_tracking/ai_chain/2026-06-14.md`
 覆盖窗口：2026-06-08 至 2026-06-14，北京时间
-当前阶段：第八期全链雷达，已吸收光模块专项 2026-06-14 状态与 AI PCB 专项 2026-06-14 状态；2026-06-17 补入韩国预拌混凝土运输罢工的 HBM 施工扰动观察；2026-06-18 窄口径补入 Google Brazos 与 KAIST 室温水冷线索，将“存量风冷机房改造”纳入液冷观察层；同日补入 NOR Flash / SLC NAND 涨价与国产小容量存储盈利兑现复核；同日追加 HBM test / probe card / Cube Prober 复核，将其从 future watch 上调为 watch_to_soft 观察。
+当前阶段：第八期全链雷达，已吸收光模块专项 2026-06-14 状态与 AI PCB 专项 2026-06-14 状态；2026-06-17 补入韩国预拌混凝土运输罢工的 HBM 施工扰动观察；2026-06-18 窄口径补入 Google Brazos 与 KAIST 室温水冷线索，将“存量风冷机房改造”纳入液冷观察层；同日补入 NOR Flash / SLC NAND 涨价与国产小容量存储盈利兑现复核；同日追加 HBM test / probe card / Cube Prober 复核，将其从 future watch 上调为 watch_to_soft 观察；2026-06-19 基于 SemiAnalysis 复核美国数据中心取消叙事，将早期 announcement noise、真实项目延期、设备订单/预付款锁产能和 Chinese OEM/prefab 缓解路径分开。
 
 ## 任务边界
 
@@ -30,7 +30,7 @@
    - 2026-06-18 HBM test / probe card / Cube Prober 复核：SK 海力士 HBM4E 12 层样品提前、Micron 2026 HBM 产能售罄口径、Techwing 获 SK hynix Cube Prober 首单，以及 6871.T transcript 中 memory probe card 高需求、产能扩张和交期压力，足以把该链条从 `future watch` 上调为 `watch_to_soft / soft_bottleneck_candidate`；但仍缺内存厂官方点名“测试/探针卡/Cube Prober 限制 HBM 出货”和 Techwing 合同规模/交期/追加订单，因此暂不列为独立 `hard_bottleneck`。
 2. `InP substrate / 6 英寸合格 InP 产能 / EML / CW-DFB / UHP pump / ELS`：吸收光模块专项，维持 `hard_bottleneck`。AXT SEC 文件、TrendForce EML/CW-DFB、Ciena Q2 FY26 与专项状态继续支持。预计 EML/InP `2026H2-2027H1`，CW/ELS/UHP/InP 尾部可到 `2027H2-2028H1`。
 3. `高端电子玻纤布 + M7/M8/M9/M10 CCL / prepreg`：吸收 AI PCB 专项，维持 `soft_bottleneck+`。台玻称高端玻纤布缺货预计至 2027 年底，Vexos 指向玻纤布/铜箔/树脂同步挤压 CCL。预计玻纤布 `2026H2-2027年底`，CCL `2026H2-2027H1`；HVLP4/5 继续 `watch`。
-4. `数据中心电力 / 并网 / transformer / switchgear / UPS / busway / rack power / CDU / 冷板 / 800VDC`：维持 `soft_bottleneck`，区域并网按 `regional hard operational bottleneck`。Oracle Q4 FY26 的 $638B RPO、AI cloud buildout 融资和 $55.7B FY26 CapEx 强化需求侧；Google Brazos 官方线索足以把“液冷只在新建 AI 数据中心兑现”的表述下调为“存量风冷数据中心逐机架升级到 60kW/机架也开始成立”的观察层，但仍不足以升级为全球液冷设备 hard bottleneck。区域并网预计 `2026H2-2030`；全球设备/液冷/rack power 预计 `6-24 个月`，单品精确交期 `N/A`。
+4. `数据中心电力 / 并网 / transformer / switchgear / UPS / busway / rack power / CDU / 冷板 / 800VDC`：维持 `soft_bottleneck`，区域并网按 `regional hard operational bottleneck`。Oracle Q4 FY26 的 $638B RPO、AI cloud buildout 融资和 $55.7B FY26 CapEx 强化需求侧；SemiAnalysis 2026-06-18 反证“2026 美国数据中心一半取消/延期”叙事，指出出清主要集中在 announcement / pre-construction 层，不等于真实 2026 交付塌陷，也不等于已经预付锁队列的 transformer、MV/LV switchgear、UPS、rack power 等设备订单塌陷；Google Brazos 官方线索足以把“液冷只在新建 AI 数据中心兑现”的表述下调为“存量风冷数据中心逐机架升级到 60kW/机架也开始成立”的观察层，但仍不足以升级为全球液冷设备 hard bottleneck。区域并网预计 `2026H2-2030`；全球设备/液冷/rack power 预计 `6-24 个月`，单品精确交期 `N/A`。
 5. `CoWoS / EFB / SoIC / advanced packaging / substrate`：维持 `soft_bottleneck/watch+`；`AI networking switch ASIC / NIC / DPU / retimer / custom XPU` 维持 `strategic_watch/watch_to_soft`。Broadcom、Marvell 与 Oracle 证明需求强，但直接交期/allocation 证据仍不足。
 
 ## 专项吸收状态
@@ -55,12 +55,22 @@
 | 高端电子玻纤布 / Low Dk / Low CTE / T-glass / NER-glass / Q cloth | PCB upstream | 当前软堵点 | soft_bottleneck+ | 窑炉、拉丝、电子级纱、织布、后处理、良率、专利、客户 AVL 限制 qualified output | worsened/confirmed | PCB 专项、台玻股东会媒体、TrendForce/Vexos 交叉 | 2026H2-2027年底中高置信；Q cloth/NER 2027H2-2028 watch | 高端布报价回落、交期缩短、库存恢复，多供应商进入核心 AVL | 交给 PCB 专项跟台玻/Nittobo/高端布分产品 |
 | M7/M8/M9/M10 CCL / prepreg | AI PCB/CCL | 当前软堵点 | soft_bottleneck+ | 低损耗配方、高端玻纤布、树脂、HVLP 铜箔、新线 qualified output 和客户认证共同约束 | unchanged_to_worsened | PCB 专项、Vexos、台系涨价/营收线索 | 2026H2 中高置信；2027H1 中等偏高 | 报价停涨或回落，lead time 常态化，客户不再提前锁料，二供进入 AVL | 跟台系/大陆 CCL 6 月营收、M8/M9/M10 lead time |
 | HVLP/VLP/RTF PCB 铜箔 | PCB upstream | 候选卡点 | watch | 低粗糙度一致性、表面处理、添加剂和客户认证约束；HVLP4/5 批量证据不足 | unchanged | PCB 专项：诺德 HVLP1/2/3、HVLP4 测试、HVLP5 开发 | 2026H2-2027 watch；精确持续 N/A | HVLP4/5 多客户批量供货、加工费回落、国产良率确认 | 跟德福/诺德/嘉元/铜冠 |
-| 数据中心并网 / grid operations | Power infrastructure | 当前软堵点；区域 hard | soft_bottleneck；regional hard operational | firm power、并网、输配电建设、备用容量、动态负载稳定性、成本分摊规则 | strengthened | Oracle、FERC、JLL、NVIDIA DSX/MGX | 区域 2026H2-2030；中高置信 | reserve margin 改善，容量/电价压力回落，大负载项目延期减少 | 跟 FERC/PJM/ERCOT/utility |
-| transformer / switchgear / UPS / busway / rack PDU / CDU / 冷板 | Power/thermal equipment | 当前软堵点观察 | soft_bottleneck/watch | 高功率 rack、新建 AI factory 与存量风冷机房逐机架改造共同拉动液冷系统认证、可靠性、现场集成、交付和服务网络；Brazos 指向液-空侧车/机架歧管路径，KAIST 指向芯片内室温水冷的长期效率方向 | strengthened_to_legacy_retrofit_watch | JLL、NVIDIA DSX/MGX、Oracle CapEx、Google Brazos、KAIST 室温水冷论文/发布 | 6-24 个月；单品精确交期 N/A；中置信。Brazos 为 A 级存量改造可行性线索，KAIST 为技术观察，不等于商业订单 | transformer/switchgear/CDU/PDU 交期正常化，项目不再因设备延期；Brazos/OCP 规格未转供应商量产或存量改造项目；KAIST 技术停留在实验室 | 跟单品 lead time、OCP Brazos 规格、存量机房改造项目、订单纯度和 A 股收入拆分 |
+| 数据中心并网 / grid operations | Power infrastructure | 当前软堵点；区域 hard | soft_bottleneck；regional hard operational | firm power、并网、输配电建设、备用容量、动态负载稳定性、成本分摊规则；早期 large-load queue / moratorium / NIMBY / speculative announcement 需从可交付项目中剔除 | strengthened_with_noise_filter | Oracle、FERC、JLL、NVIDIA DSX/MGX、SemiAnalysis 2026-06-18 | 区域 2026H2-2030；中高置信 | reserve margin 改善，容量/电价压力回落，真实项目延期减少；若已具备 site control / 电力方案 / 许可 / 施工 / 设备订单的项目系统性取消才降级 | 跟 FERC/PJM/ERCOT/utility；按项目核对 site control、interconnection、permit、vertical construction、equipment order/prepayment |
+| transformer / switchgear / UPS / busway / rack PDU / CDU / 冷板 | Power/thermal equipment | 当前软堵点观察 | soft_bottleneck/watch | 高功率 rack、新建 AI factory 与存量风冷机房逐机架改造共同拉动液冷系统认证、可靠性、现场集成、交付和服务网络；真实项目倾向在 scoping 阶段提前锁 transformers、MV/LV switchgear 等长交期设备，预付款锁队列强化订单韧性；Chinese OEM 与 prefab/modular build 是缓解路径，不是需求消失；Brazos 指向液-空侧车/机架歧管路径，KAIST 指向芯片内室温水冷的长期效率方向 | strengthened_with_order_resilience_filter | JLL、NVIDIA DSX/MGX、Oracle CapEx、Google Brazos、KAIST 室温水冷论文/发布、SemiAnalysis 2026-06-18 | 6-24 个月；单品精确交期 N/A；中置信。SemiAnalysis 指向 critical SKUs 多数仍超 1 年、主设备线可排到 3-4 年、部分变压器子部件 3-5 年，但具体到 A 股公司仍缺订单/收入拆分；Brazos 为 A 级存量改造可行性线索，KAIST 为技术观察，不等于商业订单 | transformer/switchgear/CDU/PDU 交期正常化，项目不再因设备延期；真实项目预付款取消且 slot 无法再分配；Brazos/OCP 规格未转供应商量产或存量改造项目；KAIST 技术停留在实验室 | 跟单品 lead time、预付款/排产锁定、Chinese OEM 与 prefab 渠道、OCP Brazos 规格、存量机房改造项目、订单纯度和 A 股收入拆分；未披露客户/项目/收入前不得写成 A 股订单 |
 | 800VDC / SST / SiC / GaN power conversion | Rack power / power semis | 未来迁移观察 | watch_to_soft | 高功率 rack 推动 medium-voltage-to-rack、GaN/SiC、hot-swap/protection 和系统认证 | upgraded_watch | NVIDIA DSX/MGX、Infineon/EPC/Microchip/TI 过往路线证据 | 2026H2-2028；精确持续 N/A | 800VDC 推迟，传统架构继续满足；design win 无法转收入 | 跟 design win 转量产 |
 | Infineon 部分 GaN 产品在华禁售 | Power semis / GaN IP | 事件催化观察 | event_watch | 中国市场特定 Infineon GaN 产品禁售可能强化国产 GaN/SiC 替代预期，但不证明 AI 电源订单 | new_patch | 2026-06-16 邮箱战报；英诺赛科公告；Infineon/IP 媒体程序和范围反向口径 | 2026H2-2028 观察；持续性 N/A | 主案/禁令范围变化、Infineon 替代产品或和解、国产厂无 design win 转收入 | 跟英诺赛科、三安、斯达的订单/收入/毛利和 NVIDIA MGX/800V design win |
 | CoWoS / EFB / SoIC / advanced packaging / substrate | Advanced packaging | 当前软堵点观察 | soft_bottleneck/watch+ | GPU/ASIC multi-die 和 HBM 需求推高 2.5D/3D 封装、基板、键合、测试和设备负荷 | unchanged | Broadcom、NVIDIA、Oracle、TrendForce HBM | 2026H2-2027H1 偏紧，2027 后边际缓解 | TSMC/OSAT 交期恢复，客户不再锁封装产能 | 跟 TSMC/ASE/Amkor/基板/设备 |
 | AI networking switch ASIC / NIC / DPU / retimer / custom XPU | AI networking | 战略观察 | strategic_watch/watch_to_soft | 需求强，但缺 silicon allocation、lead time 或出货受限证据 | attention_up | Broadcom Q2 FY26、Marvell Q1 FY27、NVIDIA/Oracle | N/A；出现 allocation 后升级 | 出货顺畅，客户部署不推迟 | 跟 Broadcom/Marvell/NVIDIA/Arista |
+
+## 2026-06-19 SemiAnalysis 数据中心取消叙事复核
+
+| 分层 | 当前判断 | 对电力/液冷结论的影响 | A 股映射边界 |
+|---|---|---|---|
+| `announcement noise` | 大量“取消/延期”来自 press release、real-estate filing、non-binding LOI、moratorium、NIMBY 或 speculative interconnection queue，缺 site control、融资、interconnection、permits、vertical construction 或 long-lead equipment order；这类 MW 本不应算入 2026 可交付分母 | 不能据此下修 2026 真实交付或设备订单；只说明早期项目供给过剩、立项质量分化 | 无法映射 A 股订单，也不能用“海外项目取消”反推国内设备链需求塌陷 |
+| 真实项目延期 | Oracle/STACK New Mexico 属于 gas pipeline、onsite power、permit 和地方反对导致的 real delay；Nebius/DataOne、Core Scientific 等案例体现 supplier delivery、MEP/commissioning、weather、permitting 和设备问题 | 支持“区域并网/能源/施工执行是 hard operational bottleneck”，但不是全行业交付塌陷；真实延期会改变项目 timing，不必然取消设备需求 | 需项目级客户、设备、订单、交付和收入拆分；不能从一个美国项目延期直接映射到 A 股公司 |
+| 有效设备信号 | 真实 2026 项目通常更依赖 long-lead procurement：transformer、MV/LV switchgear、UPS、rack power 等提前下单，behind-the-meter 设备常见预付款锁队列；长交期 SKU 和 3-4 年主设备 backlog 使订单更有韧性 | 强化 power / transformer / switchgear / UPS / rack power 的 `soft_bottleneck/watch`，并解释“取消早期公告不等于设备订单塌陷” | 只可作为全球设备链 B 级观察；A 股必须有公司公告、客户/项目、订单金额、排产或收入毛利证据 |
+| 缓解路径 | Chinese OEM、经纪商撮合/直采、powered land、behind-the-meter、prefab/modular build 正在缓解电力设备和现场施工压力；SemiAnalysis 对 xAI/Sieyuan 仅为线索性表述 | 缓解路径降低“硬断供”风险，但同时证明约束真实存在；prefab 可能压缩现场劳动力和设备集成 bottleneck | Chinese OEM/prefab 不能自动写成思源电气或其他 A 股订单；需官方客户、出口/认证、项目交付、收入占比和毛利 |
+| legacy 风冷改造/液冷 | Google Brazos 仍是 A 级官方存量风冷机房逐机架改造线索；SemiAnalysis 提到冷却设备可能成为下一瓶颈但未在邮件公开具体品类 | 维持液冷 `observation/watch`：新建 AI factory 是主线，legacy retrofit 扩大需求池；未升级为全球液冷 hard bottleneck | 英维克、飞荣达等只能按 CDU/机架液冷系统、冷板/热管理部件、客户项目和收入拆分逐项验证，不得写成 Google/Brazos 供应链确认 |
 
 ## 2026-06-18 HBM test / probe card / Cube Prober 复核
 
@@ -92,7 +102,7 @@
 - 新增最小公司跟踪：`雅克科技 002409.SZ / UP Chemical / 前驱体 / SOD` 建立 `event_trade_watch` baseline。重点跟踪订单、ASP、毛利、收入占比、客户认证和高端前驱体价格；不得把 HBM4E 样品出货或测试链订单直接写成雅克订单。
 - 新增最小公司跟踪：`长光华芯 688048.SH / 高功率半导体激光平台 / 光通信 EML-DFB-CW DFB 产品矩阵` 建立 `watch_to_soft/evidence_gap_card`，详见 `artifacts/company_tracking/688048.SH/state.md`。重点把它和源杰科技区分：缺 AI 光互连客户、功率段、收入占比、量产订单和良率毛利硬证据前，不得把 AMD/NVIDIA 锁 CW 产能线索直接写成长光华芯确认受益。
 - 新增窄口径观察：`NOR Flash / SLC NAND / reliable small-capacity memory` 只作为 AI memory hierarchy 的侧翼观察层。重点跟踪小容量成熟节点供给退出、价格续涨、兆易创新/东芯股份/普冉半导体毛利率和净利率能否在 H1/H2 延续；不得与 HBM/LPDRAM/eSSD 主堵点混写。
-- 主深挖 2：`AI cloud capex -> 数据中心电力/并网 + 800VDC/SST/rack power/液冷`。重点把区域 hard operational 约束和全球设备/液冷单品 soft/watch 分开，并把液冷拆成新建 AI factory 与存量风冷机房改造两条观察线；跟踪 Oracle/Meta/Google/Microsoft/Amazon CapEx、FERC/PJM/ERCOT、JLL/CBRE、Google Brazos/OCP 规格、transformer/switchgear/UPS/CDU/PDU lead time、800VDC design win 转收入。
+- 主深挖 2：`AI cloud capex -> 数据中心电力/并网 + 800VDC/SST/rack power/液冷`。重点把区域 hard operational 约束和全球设备/液冷单品 soft/watch 分开，并把 announcement noise 与真实项目交付/设备订单分开；液冷拆成新建 AI factory 与存量风冷机房改造两条观察线；跟踪 Oracle/Meta/Google/Microsoft/Amazon CapEx、FERC/PJM/ERCOT、JLL/CBRE、SemiAnalysis 项目级取消/延期反证、Google Brazos/OCP 规格、transformer/switchgear/UPS/CDU/PDU lead time、预付款锁产能、Chinese OEM/prefab、800VDC design win 转收入。
 
 ## 未来 6-24 个月卡点迁移
 
@@ -104,7 +114,7 @@
 | 韩国 fab 施工物流 / cleanroom handover / tool move-in | watch | construction_delay_monitor | HBM4E/HBM4 扩产需要三星平泽 P4/P5、SK 海力士龙仁等新线按期推进 | 土建浇筑、cleanroom、设备搬入和公用工程必须顺序衔接，劳务/运输扰动可能造成局部工期滑移 | 2026H2-2027H1 | 三星/SK 或承包商披露工期顺延，cleanroom open、tool move-in 或量产 ramp 推迟；罢工/运价争议复燃 | 官方工期、设备进场、wafer-start 和材料订单证据 | 运输正常化、施工赶工、官方维持投产节奏 |
 | 1.6T/3.2T optical driver/TIA/DSP/GaN/FAU/test/thermal | watch_to_soft | likely_future_bottleneck | 1.6T/3.2T、CPO/NPO/ELS | 高速 analog、精密耦合、测试节拍、热稳定 | 2026H2-2028 | 多供应商 lead time/allocation、客户预付、良率拖累 | 单品交期/良率 | 扩产兑现、二供认证 |
 | M9/M10/Q cloth/NER/HVLP4/5 | soft+/watch | likely_future_bottleneck | Rubin、AI switch、224G+ high-speed board | 新材料认证、AVL、良率和二供慢 | 2026H2-2028 | 官方 allocation、报价上涨、订单延期、客户提前锁料 | 分产品、客户、交期 | 多家供应商稳定量产，报价回落 |
-| 800VDC/SST/GaN/SiC + transformer/switchgear/CDU/存量风冷机房液冷改造 | soft/watch | likely_future_bottleneck | 高功率 rack、AI factory 投产，以及 Brazos 类逐机架改造把部分存量风冷机房拉入液冷需求池 | system certification、设备 lead time、现场集成、OCP/客户规格统一、存量机房电力和风道余量 | 2026H2-2028 | design win 转量产、交期拉长、项目因设备延期；Brazos/OCP 规格发布后出现多供应商量产或云厂商存量改造项目 | 单品 allocation、存量改造项目清单、A 股订单/收入拆分 | 800VDC 推迟、传统架构满足、设备交期正常；存量机房因电力/风道限制无法规模部署 |
+| 800VDC/SST/GaN/SiC + transformer/switchgear/CDU/存量风冷机房液冷改造 | soft/watch | likely_future_bottleneck | 高功率 rack、AI factory 投产，以及 Brazos 类逐机架改造把部分存量风冷机房拉入液冷需求池；早期公告出清不改变真实项目长交期设备需求 | system certification、设备 lead time、现场集成、OCP/客户规格统一、预付款锁队列、Chinese OEM/prefab 缓解路径、存量机房电力和风道余量 | 2026H2-2028 | design win 转量产、交期拉长、项目因设备延期；Brazos/OCP 规格发布后出现多供应商量产或云厂商存量改造项目；真实项目披露设备预付款、排产或供应商 backlog | 单品 allocation、存量改造项目清单、预付款/排产、A 股订单/收入拆分 | 800VDC 推迟、传统架构满足、设备交期正常；已锁队列订单取消且 slot 无法再分配；存量机房因电力/风道限制无法规模部署 |
 | AI networking silicon / retimer / substrate | strategic_watch | watch_to_soft | 102.4T switch、NVLink Fusion、custom XPU | SerDes/IP、advanced process、substrate/package | 2026H2-2027 | silicon/substrate/package 被点名限制出货 | 直接交期证据 | 交付顺畅，客户不延期 |
 
 ## 三类排名快照
@@ -128,7 +138,7 @@
 | 业绩弹性 | 5 | Custom ASIC/networking silicon/advanced packaging | 需求强，但多为大市值和客户集中，且 A 股映射弱 | A/B | 交期证据不足，预期高 |
 | 交易弹性 | 1 | A/台股 PCB 上游材料组 | 本周证据增量最大，低基期和小中市值标的较多；行情 N/A | A/B/C | 高端收入占比和交易拥挤 |
 | 交易弹性 | 2 | A 股光模块/光器件/CPO 组 | 光源 hard 与 1.6T/ELS/FAU/主动对准迁移催化密集；行情 N/A | A/B/C | 估值拥挤、年降 |
-| 交易弹性 | 3 | A 股电力/液冷/800VDC 组 | Oracle CapEx + FERC/JLL + Google Brazos 形成预期差，存量改造观察层开始成立；A 股映射多但纯度分化，英维克/飞荣达等需分别验证 CDU/机架液冷系统、冷板/热管理部件、客户项目、收入占比与毛利，而不能按“Google/Brazos 受益”直接推断；行情 N/A | A/B | 订单纯度不足、客户认证和收入拆分不足、主题拥挤 |
+| 交易弹性 | 3 | A 股电力/液冷/800VDC 组 | Oracle CapEx + FERC/JLL + SemiAnalysis 取消叙事反证 + Google Brazos 形成预期差：早期公告出清不等于真实交付和设备订单塌陷，存量改造观察层开始成立；A 股映射多但纯度分化，英维克/飞荣达等需分别验证 CDU/机架液冷系统、冷板/热管理部件、客户项目、收入占比与毛利，电力设备链需验证 transformer/switchgear/UPS/rack power 订单和预付款，不能按“Google/Brazos/Chinese OEM 受益”直接推断；行情 N/A | A/B | 订单纯度不足、客户认证和收入拆分不足、主题拥挤 |
 | 交易弹性 | 4 | 美/台 networking silicon 与 custom ASIC 组 | Broadcom/Marvell/NVIDIA 需求强，但多为大市值且非当前 hard | A | 预期定价充分 |
 | 交易弹性 | 5 | 美/韩 memory/packaging leaders | 基本面和业绩弹性强，但市值大、全球定价，短线弹性相对低；行情 N/A | A/B | 供应周期与估值 |
 
@@ -143,6 +153,7 @@
 7. 专项吸收：光模块继续跟 AXT/Coherent/Lumentum/Ciena 的 InP/EML/CW-DFB/ELS 单品证据；PCB 继续跟台玻/Nittobo/台系 CCL/HVLP4/5/板厂良率和测试。
 8. 韩国预拌混凝土运输扰动是否复燃，是否出现三星平泽 P4/P5、SK 海力士龙仁 fab 1 的官方工期顺延、cleanroom handover、tool move-in、wafer-start 或材料订单/ASP/毛利变化；未出现这些指标前，只保留 `watch`，不得写成雅克科技/有研新材直接订单利好。
 9. Google Brazos 是否在 OCP 正式发布规格并出现多供应商量产、现有风冷机房改造项目、60kW/机架部署案例或订单证据；英维克、飞荣达等 A 股公司未披露客户/项目/收入拆分前，只能列为液冷存量改造观察，不得写成 Google 供应链确认。
+10. SemiAnalysis 反证中的“真实项目”是否继续具备 site control、interconnection/onsite power、permit/vertical construction、long-lead equipment order 和预付款；transformer/switchgear/UPS/rack power 是否仍有 1 年以上交期或 3-4 年 backlog；Chinese OEM/prefab 是否有官方项目、客户、认证和收入证据。未出现公司级证据前，不把该线索直接映射为 A 股订单。
 
 ## 最近证据源
 
@@ -174,6 +185,7 @@
 - FERC large-load docket: https://www.ferc.gov/news-events/news/ferc-act-large-load-interconnection-docket-june-2026
 - JLL 2026 data center outlook: https://www.jll.com/en-us/insights/market-outlook/data-center-outlook
 - Google Brazos liquid cooling system for air-cooled data centers: https://cloud.google.com/blog/topics/systems/brazos-liquid-cooling-system-for-air-cooled-data-centers
+- SemiAnalysis 2026-06-18 newsletter: Stop Saying Half of 2026 US Datacenter Capacity Is Canceled: https://newsletter.semianalysis.com/p/stop-saying-half-of-2026-us-datacenter
 - KAIST room-temperature water liquid cooling release: https://www.eurekalert.org/news-releases/1132133
 - Optical module weekly report/state: `artifacts/weekly_chain_tracking/optical_module/2026-06-14.md`
 - AI PCB weekly report/state: `artifacts/weekly_chain_tracking/ai_pcb/2026-06-14.md`
