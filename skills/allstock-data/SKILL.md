@@ -223,6 +223,8 @@ df = adata.stock.market.list_market_current(
 | Quick single stock price check | Tencent Finance API |
 | K-line historical data | Tencent Finance API |
 | Batch quote queries | Tencent Finance API |
+| A-share valuation snapshot, technical indicators, sector/index/concept screens,涨停/跌停,封单,连板,板型,涨停原因 | TDX Finance Data MCP (`mcp__tdx.tdx_wenda_quotes`) |
+| ETF/fund snapshot and TDX sector/index code quote | TDX Finance Data MCP with `range=JJ` or `range=ZS` |
 | Capital flow data | adata SDK |
 | Full financial statements | adata SDK |
 | Concept/sector analysis | adata SDK |
@@ -254,7 +256,23 @@ Use this default order unless a task has a stricter market-specific source:
 | Taiwan listed | TWSE MIS `tse_<code>.tw` | Yahoo Finance native chart `<code>.TW` | Stooq if available | Yahoo-compatible proxy only as last resort |
 | Taiwan OTC | TWSE MIS `otc_<code>.tw` | Yahoo Finance native chart `<code>.TWO` | Stooq if available | Yahoo-compatible proxy only as last resort |
 
-### 5.2 Taiwan Quote Rules
+### 5.2 TDX Finance Data MCP Companion
+
+Use `TDX Finance Data:tdx-finance-data` or native `mcp__tdx.tdx_wenda_quotes` as a companion source, not a replacement for deterministic quote/K-line endpoints.
+
+Use TDX when the task asks for:
+
+- A-share valuation fields such as dynamic PE, TTM PE, PB, circulating/free-float market cap;
+- technical indicators such as MACD, KDJ, RSI,量比,5/20-day averages;
+- industry/concept constituent screens and ranked screens;
+- TDX sector/index code quotes with `range=ZS`;
+-涨停/跌停 lists,封单,连板,板型,涨停原因,原因揭秘;
+- ETF/fund snapshots with `range=JJ`;
+- quick Hong Kong quote checks with `range=HK-GP`.
+
+Do not use TDX as a stable资金流/北向 source, official disclosure source, broker research source, or historical OHLCV warehouse for factor/VCP/backtesting tasks. If a TDX query returns `meta.total=0`, rewrite the question more narrowly before marking the data unavailable.
+
+### 5.3 Taiwan Quote Rules
 
 Tencent Finance may return HTTP 200 with `v_pv_none_match="1"` for Taiwan tickers such as `tw2383`, `tw6274`, or `tw6213`. Treat that as a business-level failure, not a valid quote.
 
@@ -272,7 +290,7 @@ Common AI PCB Taiwan formats:
 | 台燿 `6274.TWO` | TWSE MIS `otc_6274.tw`; Yahoo `6274.TWO` |
 | 联茂 `6213.TW` | TWSE MIS `tse_6213.tw`; Yahoo `6213.TW` |
 
-### 5.3 Failure Handling
+### 5.4 Failure Handling
 
 - HTTP `404`, `402`, timeout, transport error, empty body, malformed JSON, stale quote, or provider-specific no-match markers are partial-data outcomes, not task failures.
 - Continue to the next provider in the fallback order.

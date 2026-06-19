@@ -34,7 +34,7 @@ Required source hierarchy:
 1. Official filings, exchange disclosures, annual/interim/quarterly reports, prospectuses, company IR, official announcements.
 2. Official customer/supplier evidence and industry association or regulator sources.
 3. Reputable financial data vendors and credible media.
-4. Market-data tools for price, turnover, market cap, valuation, K-line, and liquidity.
+4. Market-data tools for price, turnover, market cap, valuation, K-line, technical indicators, limit-board behavior, concept heat, and liquidity. Use TDX Finance Data for A-share quote/valuation/technical/涨停跌停 context when available.
 5. Grok/X, social posts, forums, model summaries, and concept-board labels only as leads.
 
 Use `N/A` for unavailable values. Do not substitute zero for missing data.
@@ -195,5 +195,6 @@ For multiple companies:
 - `a-share-company-tracking`: watchlist baseline and daily state workflow.
 - `search-specialist`: official source discovery and contradiction tracking.
 - `research-summarizer`: filings, announcements, reports, PDFs, and transcripts.
+- `TDX Finance Data:tdx-finance-data`: A-share quote, valuation, technical indicators, sector/concept screens,涨停/跌停,封单,连板,板型, and market-reaction context only.
 - `allstock-data` / `finance` / `yfinance-mcp-server` / `stocks` / `alpha-vantage`: market and financial data.
 - `advanced-evaluation`: score consistency, bias control, and three-layer ranking.

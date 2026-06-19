@@ -14,6 +14,7 @@ Rule: start with `user-investment-framework`; load the smallest useful supportin
 - Public Equity Investing Plugin Workflows
 - A-Share Tracking And Disclosure
 - Market Data And Trading Context
+- TDX Finance Data MCP
 - HTSC Plugin Tools
 - Source Discovery And Evidence Digest
 - Style, Factors, And Data Products
@@ -113,6 +114,7 @@ Do not let plugin artifact defaults force a full HTML report, workbook, or deck 
 
 | Skill | Use When | Boundary |
 |---|---|---|
+| `TDX Finance Data:tdx-finance-data` / `tdx-finance-data` | A-share latest quote, valuation snapshot, liquidity, recent price action, technical indicators, index/sector quotes, concept/industry screens,涨停/跌停 lists,封单,连板,板型,涨停原因, ETF/fund snapshots, and quick HK quote checks through the TDX MCP. | Market-data-vendor and secondary trading context only; not official disclosure, broker research, hard beneficiary proof, stable资金流 source, multi-stock comparison in one call, or historical database/backtesting source. |
 | `allstock-data` | China A-share, HK, and US quick quotes, K-lines, order book, China market data. | Market context; cannot prove beneficiary status. |
 | `finance` | Broad stocks, ETFs, indices, FX, crypto where available, US company facts with provider fallbacks. | Supplemental data source. |
 | `stocks` | Yahoo Finance prices, fundamentals, earnings, dividends, options, news. | Overseas market-data support. |
@@ -121,6 +123,39 @@ Do not let plugin artifact defaults force a full HTML report, workbook, or deck 
 | `banana-farmer` | Momentum, RSI, volatility, technical risk, trading scans. | Trading-elasticity supplement only after exposure is established. |
 | `stock-data-skill` | Simplywall.st supplemental stock data. | Supplemental only after official and project data sources. |
 | `stock-copilot-pro` | Optional QVeris/OpenClaw quotes, fundamentals, technicals, news radar, sentiment. | Do not import scheduled briefs or default recommendations. |
+
+## TDX Finance Data MCP
+
+Use the tested TDX MCP boundary reference at `references/tdx-finance-data-boundary.md` before relying on TDX for a new task category.
+
+Default TDX routing:
+
+- Use native `mcp__tdx.tdx_wenda_quotes` when available.
+- Keep each query to one subject, one sector/concept, one index, or one screen.
+- Use `range=AG` for A-shares, `HK-GP` for Hong Kong, `JJ` for funds/ETFs, and `ZS` for indexes or TDX sector/index codes.
+- Split comparisons into separate calls.
+
+Strong uses:
+
+- quote/valuation/liquidity/trend checks;
+- technical indicators such as MACD, KDJ, RSI,量比,均线;
+- index, sector, concept, and constituent screens;
+-涨停/跌停,封单,连板,板型,涨停原因/原因揭秘;
+- ETF/fund snapshot fields and HK quick quote fields.
+
+Do not use TDX as:
+
+- official announcement, CNINFO, exchange disclosure, IR, annual/quarterly report, or customer/supplier evidence;
+- research-report text retrieval;
+- durable资金流/北向 source unless a specific query is verified live;
+- exact market-wide breadth totals when the response is a stock list;
+- primary historical OHLCV warehouse for factors, VCP, or backtesting.
+
+Evidence labels:
+
+- price, valuation, volume, turnover, technical, index, sector, fund, ETF: `market_data_vendor`;
+- limit-board reasons, concept labels,板型,连板,封单: `secondary_trading_context`;
+- never `confirmed_official`.
 
 ## HTSC Plugin Tools
 
@@ -217,9 +252,10 @@ Tested behavior to remember:
 | Pre/post earnings PM workflow | `user-investment-framework` | `earnings-call-investment-analyst`, then `Public Equity Investing:earnings-preview` or `Public Equity Investing:earnings-deep-dive` |
 | Scenario sensitivity or action thresholds | `user-investment-framework` | `stock-evaluator`, `advanced-evaluation`, then `Public Equity Investing:scenario-sensitivity-generator` |
 | Position sizing or hedge plan | `user-investment-framework` | verified thesis, current market data, then `Public Equity Investing:portfolio-risk-management` |
-| "Who has most elasticity?" | `user-investment-framework` | `allstock-data`, `banana-farmer`, `advanced-evaluation` |
+| "Who has most elasticity?" | `user-investment-framework` | `TDX Finance Data:tdx-finance-data`, `allstock-data`, `banana-farmer`, `advanced-evaluation` |
+| A-share涨停/跌停, concept heat, or limit-board reason scan | `user-investment-framework` | `TDX Finance Data:tdx-finance-data`, then source/industry skills for proof |
 | Official evidence search | `user-investment-framework` | `search-specialist`, scraper/extract skills, `research-summarizer` |
-| A-share watchlist update | `user-investment-framework` | `a-share-company-tracking`, `a-share-disclosure-trading-data` |
+| A-share watchlist update | `user-investment-framework` | `a-share-company-tracking`, `a-share-disclosure-trading-data`, optional `TDX Finance Data:tdx-finance-data` for market reaction |
 | Earnings-call analysis | `user-investment-framework` | `earnings-call-investment-analyst`, market-data/source skills |
 | Model audit, model update, or normalized financials | `user-investment-framework` | `spreadsheet`/`xlsx-official`, then `Public Equity Investing:financials-normalizer`, `Public Equity Investing:equity-model-update`, or `Public Equity Investing:model-audit-tieout` |
 | Report or workbook output | `user-investment-framework` | `spreadsheet`/`xlsx`/`docx`/`pptx`/`pdf` according to artifact; add Public Equity Investing packaging skills only for formal memo/pitch/tearsheet/QC requests |

@@ -23,7 +23,7 @@ Choose the smallest useful combination:
 - Earnings releases, management guidance, and conference-call analysis: `earnings-call-investment-analyst`.
 - A-share watchlist tracking, company baseline/state/events maintenance, and daily run reconciliation: `a-share-company-tracking`; add `a-share-disclosure-trading-data` whenever CNINFO, exchange announcements, investor-relations records, dragon-tiger lists, block trades, or T/T+1 evening announcement windows matter.
 - Company fundamentals and valuation after segment selection: `stock-fundamental-moat-triad` for future highlights, inflection points, earnings path, value-chain migration, international peer catch-up risk, and customer-certification milestones; then `stock-evaluator`, `business-analyst`, plus market-data skills according to listing market.
-- A-share/HK/US live data and K-line checks: `allstock-data`, `banana-farmer`, `stock-data-skill`, or `finance`; market data cannot prove beneficiary status.
+- A-share/HK/US live data and K-line checks: `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, `allstock-data`, `banana-farmer`, `stock-data-skill`, or `finance`; use TDX especially for A-share quotes, valuation snapshots, technical indicators, sector/index/concept screens,涨停/跌停,封单,连板,板型, and ETF/fund snapshots. Market data cannot prove beneficiary status.
 - Overseas oligarch data: `finance` with Financial Datasets when `FINANCIAL_DATASETS_API_KEY` is configured, plus `yfinance-mcp-server`, `stocks`, `alpha-vantage`; if Financial Datasets has no credits, no coverage, or missing fields, continue with official filings, web search, and other market-data sources.
 - Structured comparison, score consistency, bias control, or watchlist tables: `spreadsheet`, `xlsx-official`, `advanced-evaluation`; scoring helpers do not replace domain judgment.
 - Web/news/filings collection: `web-scraper`, `firecrawl-scraper`, `tavily-web`; use browser Grok/Gemini only when it adds a distinct discovery or source-gap value.
@@ -41,7 +41,8 @@ Choose the smallest useful combination:
 - `stock-fundamental-moat-triad` is used after segment/source selection to answer the future first: what could change, how it could become earnings, what must be verified, and what would invalidate it. Value-chain, same-node international peers, competitive structure, and customer-entry evidence are supporting checks before valuation or trading-elasticity work.
 - `stock-evaluator` and `business-analyst` are used after segment selection for company-level financial quality, valuation, and broader fundamentals.
 - `a-share-company-tracking` owns watchlist-driven A-share daily tracking and durable company files; `a-share-disclosure-trading-data` owns official announcement and trading-event evidence discipline.
-- `allstock-data` and local market data provide timing, liquidity, valuation, and risk context only.
+- `TDX Finance Data`, `allstock-data`, and local market data provide timing, liquidity, valuation, technical, market-attention, and risk context only.
+- TDX涨停原因/原因揭秘 and concept labels are secondary trading context; they can guide source checks but cannot replace official filings, CNINFO, exchange disclosures, company IR, or customer/supplier evidence.
 - `search-specialist` and `research-summarizer` improve evidence quality and source digestion; they do not replace industry judgment or stock ranking skills.
 - `dividend-premium-tracker` is a macro/style lens for dividend assets; it cannot prove payout sustainability or stock elasticity.
 - `finance-news` and `stock-copilot-pro` can be useful, but their briefing/cron workflows are not default behavior in this project.

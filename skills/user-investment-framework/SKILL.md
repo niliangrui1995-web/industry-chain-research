@@ -34,7 +34,7 @@ Default companion layers:
 | A-share tracking and disclosures | `a-share-company-tracking`, `a-share-disclosure-trading-data` |
 | Earnings and guidance | `earnings-call-investment-analyst` |
 | Public equity PM workflows | `Public Equity Investing:thesis-tracker`, `Public Equity Investing:catalyst-calendar`, `Public Equity Investing:event-driven-analyzer`, `Public Equity Investing:earnings-preview`, `Public Equity Investing:earnings-deep-dive`, `Public Equity Investing:scenario-sensitivity-generator`, `Public Equity Investing:portfolio-risk-management` |
-| Market data and trading context | `allstock-data`, `finance`, `stocks`, `yfinance-mcp-server`, `alpha-vantage`, `banana-farmer`, `stock-data-skill`, `stock-copilot-pro` |
+| Market data and trading context | `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, `allstock-data`, `finance`, `stocks`, `yfinance-mcp-server`, `alpha-vantage`, `banana-farmer`, `stock-data-skill`, `stock-copilot-pro` |
 | HTSC market/service tools | `query-indicator`, `select-stock`, `financial-analysis`, `watchlist-management`, `a-share-paper-trading` |
 | Scoring, factors, tables, workbooks | `advanced-evaluation`, `multi-factor-strategy`, `spreadsheet`, `xlsx`, `xlsx-official`, `data-scientist`, `senior-data-scientist`, `Public Equity Investing:financials-normalizer`, `Public Equity Investing:equity-model-update`, `Public Equity Investing:model-audit-tieout` |
 | Documents and deliverables | `docx`, `pdf`, `pptx`, `Public Equity Investing:memo-builder`, `Public Equity Investing:long-short-pitch`, `Public Equity Investing:company-tearsheet`, `Public Equity Investing:deck-report-qc` |
@@ -42,6 +42,16 @@ Default companion layers:
 | Dividend/defensive style | `dividend-premium-tracker` |
 
 Do not load every companion skill. Start here, classify the request, then load the smallest useful combination.
+
+## TDX Finance Data MCP Use Boundaries
+
+TDX Finance Data is the preferred A-share trading-context tool when the task asks for latest quote, valuation snapshot, turnover/liquidity, K-line-style recent price action, technical indicators, ETF/fund snapshot, index/sector quote, concept/industry constituent screen,涨停/跌停列表,封单,连板,板型, or涨停原因/原因揭秘.
+
+Use the native `mcp__tdx.tdx_wenda_quotes` tool when available. It is a natural-language table-returning MCP, not a strict multi-endpoint database. Keep each call to one subject, one sector/concept, one index, or one screen; split multi-stock comparisons into separate calls.
+
+Never use TDX output as official company evidence. It cannot replace CNINFO, exchange announcements, company IR, annual/quarterly reports, customer/supplier proof, or original research reports. Treat TDX concept labels,涨停原因, and原因揭秘 as market-data-vendor/secondary trading context that can guide follow-up source checks.
+
+For detailed tested boundaries and query patterns, read `references/tdx-finance-data-boundary.md`.
 
 ## HTSC Plugin Use Boundaries
 

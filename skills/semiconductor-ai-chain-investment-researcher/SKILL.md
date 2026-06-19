@@ -25,7 +25,7 @@ Use the strongest available verified inputs:
 - Evidence ledgers from `ai-chain-research-orchestrator`.
 - Objective collection rows from Grok/X, Gemini, user-provided links, official pages, or filings.
 - Official announcements, exchange disclosures, filings, annual/interim/quarterly reports, company IR, reputable media, and direct source pages.
-- `allstock-data` and other market-data skills only for quote, K-line, turnover, valuation, and technical timing checks.
+- `TDX Finance Data:tdx-finance-data`, `allstock-data`, and other market-data skills only for quote, K-line, turnover, valuation, technical timing, concept heat, and涨停/跌停 market-reaction checks.
 
 If evidence is missing, state the source gap and keep the conclusion at observation level.
 
@@ -169,7 +169,7 @@ Use the smallest useful combination:
 - Competitive landscape and true leaders: `competitive-landscape`, `competitive-intel`.
 - A-share company fundamentals: `stock-evaluator`, `business-analyst`.
 - Ranking rubric and bias control: `advanced-evaluation`.
-- Market data and timing: `allstock-data`, `banana-farmer`, `finance`, `yfinance-mcp-server`, `stocks`, `alpha-vantage`.
+- Market data and timing: `TDX Finance Data:tdx-finance-data`, `allstock-data`, `banana-farmer`, `finance`, `yfinance-mcp-server`, `stocks`, `alpha-vantage`.
 
 `20-andruia-niche-intelligence` is optional background domain framing for non-semiconductor niche analysis. It is not the main semiconductor/AI-chain investment skill.
 

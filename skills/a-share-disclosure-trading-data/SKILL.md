@@ -16,7 +16,7 @@ Use sources in this order:
 1. Company announcements on CNINFO, SSE, SZSE, BSE, STAR Market, ChiNext, or company IR pages.
 2. Exchange trading-event pages: dragon-tiger list, block trades, abnormal trading notices, supervision letters.
 3. Official investor-relations records and meeting minutes.
-4. Reputable financial data vendors or media only as secondary confirmation.
+4. Reputable financial data vendors or media only as secondary confirmation. Use TDX Finance Data only for market-reaction context such as涨停/跌停,封单,连板,板型, or vendor-provided原因揭秘.
 5. Grok/X, forums, social posts, and model summaries only as leads.
 
 Never treat social or model output as official disclosure.
@@ -73,6 +73,20 @@ Extract:
 
 Do not overinterpret small or flat-price block trades without supporting evidence.
 
+## TDX Limit-Board And Theme Context
+
+Use `TDX Finance Data:tdx-finance-data` or `mcp__tdx.tdx_wenda_quotes` when the task needs a quick limit-board or theme context check:
+
+-涨停/跌停列表;
+- first/last limit time;
+- limit open count;
+- sealed amount and封成比;
+-连续涨停/跌停天数,几天几板,板型;
+-涨停原因/原因揭秘;
+-所属通达信行业/概念.
+
+Treat these fields as `secondary_trading_context`, not official disclosure. They can explain market reaction or guide official-source follow-up, but cannot confirm orders, customers, product exposure, earnings impact, or true-beneficiary status.
+
 ## Output Contract
 
 Return a compact evidence table:
@@ -87,5 +101,6 @@ For company tracking, append material rows into `events.jsonl` and summarize onl
 - `a-share-company-tracking`: daily watchlist workflow and durable company files.
 - `search-specialist`: query design and source conflict handling.
 - `research-summarizer`: long announcement and IR-record digestion.
+- `TDX Finance Data:tdx-finance-data`:涨停/跌停,封单,连板,板型, concept/industry heat, and market reaction context only.
 - `allstock-data`: quote, K-line, and market reaction context.
 - `stock-evaluator`: company-level investment interpretation after verified facts are collected.

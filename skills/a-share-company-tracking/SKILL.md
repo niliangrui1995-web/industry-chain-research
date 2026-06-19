@@ -83,9 +83,10 @@ For every enabled company:
 2. Check official announcements, exchange disclosures, CNINFO, company IR, and the configured `official_sources_hint`.
 3. Apply the 20:00 announcement hard gate.
 4. Check dragon-tiger list and block-trade records for the most recent trading day when relevant.
-5. Run Codex open-web 24-hour discovery for that company only, using the company's name, ticker, aliases, `tracking_focus`, `official_sources_hint`, and notes.
-6. Record `open_web_search_status=searched` / `no_signal` / `failed`; label open-web findings as observation-only unless confirmed by official disclosure, exchange data, or credible media.
-7. Append material events to `events.jsonl` with compact JSON lines:
+5. Use `TDX Finance Data:tdx-finance-data` only when market reaction matters: latest quote, valuation, turnover, technical position,涨停/跌停,封单,连板,板型,涨停原因/原因揭秘, or concept/industry heat. Label TDX rows as `market_data_vendor` or `secondary_trading_context`; do not use them as official disclosure.
+6. Run Codex open-web 24-hour discovery for that company only, using the company's name, ticker, aliases, `tracking_focus`, `official_sources_hint`, and notes.
+7. Record `open_web_search_status=searched` / `no_signal` / `failed`; label open-web findings as observation-only unless confirmed by official disclosure, exchange data, or credible media.
+8. Append material events to `events.jsonl` with compact JSON lines:
    - `date`
    - `ticker`
    - `name`
@@ -96,8 +97,8 @@ For every enabled company:
    - `summary`
    - `impact_hint`
    - `verification_status`
-8. Update `state.md` only for real changes, unresolved gaps, or next tracking questions.
-9. Write the daily report and `run_status.md`.
+9. Update `state.md` only for real changes, unresolved gaps, or next tracking questions.
+10. Write the daily report and `run_status.md`.
 
 ## Output Requirements
 
@@ -120,4 +121,5 @@ The final chat summary should be short. Do not list every file path or every que
 - `search-specialist`: source discovery and contradiction tracking.
 - `research-summarizer`: long announcements, annual reports, quarterly reports, and IR records.
 - `stock-evaluator`: project-style company evaluation after material events.
+- `TDX Finance Data:tdx-finance-data`: A-share quote, valuation, liquidity, technical position,涨停/跌停,封单,连板,板型, and market-reaction context.
 - `allstock-data` / `finance`: quote, K-line, liquidity, valuation, and timing context.
