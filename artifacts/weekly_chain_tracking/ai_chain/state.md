@@ -40,6 +40,8 @@
 | 光模块及上游 | `artifacts/weekly_chain_tracking/optical_module/state.md` | InP substrate/6 英寸合格 InP/EML/CW-DFB/UHP pump/ELS 为 hard；整机装配 soft/eased；FAU/主动对准/WLBI/ELSFP thermal 为 future watch | 光源链排当前核心卡点第 2；1.6T/3.2T driver/TIA/DSP/GaN/FAU/热管理列未来迁移 |
 | AI PCB 及上游 | `artifacts/weekly_chain_tracking/ai_pcb/state.md` | 高端电子玻纤布与 M7/M8/M9/M10 CCL/prepreg 并列 soft+；HVLP4/5、板厂良率/测试、设备耗材为 watch | PCB 材料链排当前核心卡点第 3；M9/M10/Q cloth/HVLP/板厂测试列未来迁移 |
 
+2026-06-19 补充：AI server 高端 MLCC 次主线补入 [风华高科 000636.SZ 最小跟踪卡](../../company_tracking/000636.SZ/state.md)。当前仅按 `secondary_track_up / high_trading_elasticity_watch` 跟踪，不能确认 NVIDIA / AMD 直供、AI server 客户、ASP、收入占比或毛利率拆分。
+
 ## 当前全链堵点账本
 
 | 节点 | 所属赛道 | 状态 | 严重程度 | 造成堵点的机制 | 本期变化 | 关键证据 | 预计持续时间 | 反转指标 | 下次动作 |
