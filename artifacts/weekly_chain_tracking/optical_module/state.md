@@ -114,6 +114,7 @@
 | 光迅科技 | 002281.SZ | A 股 | 光模块、光器件、硅光/CPO/NPO、海外产能 | 高交易弹性观察，需订单/收入验证 |
 | 东山精密 | 002384.SZ | A 股 | 索尔思光芯片/光模块、EML 与硅光并行、AI PCB 协同 | A 股垂直一体化强观察；业绩弹性高、交易弹性很高但拥挤，需订单/客户/毛利率/良率和扩产审批量化 |
 | 源杰科技 | 688498.SH | A 股 | CW laser、EML/DFB 光芯片 | 需 200G EML/AI 客户硬证据 |
+| 长光华芯 | 688048.SH | A 股 | 高功率半导体激光平台、光通信 EML/DFB/VCSEL/CW DFB 观察 | `watch_to_soft/evidence_gap_card`；详见 `artifacts/company_tracking/688048.SH/state.md`；缺 AI 光互连客户、功率段、收入占比和量产订单硬证据，不能等同 InP/CW 主堵点 |
 | 光库科技 | 300620.SZ | A 股 | 隔离器、铌酸锂、无源器件 | 观察 |
 | 罗博特科 | 300757.SZ | A 股 | ficonTEC 光子封装/测试设备 | ficonTEC 全资体系内资产；NVIDIA 合作进展增强观察，但仍需 CPO-specific 订单、交付和收入证据 |
 | 太辰光 | 300570.SZ | A 股 | MT ferrule、连接器/精密连接件、FAU 观察 | 光连接高波动观察池 |

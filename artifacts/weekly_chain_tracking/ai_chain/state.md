@@ -66,7 +66,7 @@
 |---|---|---|---|
 | HBM test / memory probe card / Cube Prober | `watch_to_soft / soft_bottleneck_candidate` | SK hynix HBM4E 12 层样品提前、Techwing 获 SK hynix Cube Prober 首单、Micronics Japan memory probe card 创新高/交期压力、Micron/Goldman 供需紧张形成同向证据 | 缺内存厂官方确认测试/探针卡/Cube Prober 限制 HBM 出货；缺 Techwing 合同规模、交期、追加订单；缺多家 probe/ATE/handler 供应商 allocation |
 | 雅克科技 002409.SZ | `event_trade_watch` 不上调 | HBM4E 加速支持 HBM 材料大方向，但本次是测试/探针卡链，不证明 UP Chemical 前驱体订单 | 需 UP Chemical/SK hynix 料号、订单、ASP、毛利或收入占比 A/B 证据 |
-| 精测电子 300567.SZ | `node_mapping_watch+ / event_trade_watch+`，不进 `main_candidate` | 与 HBM 良率检测/测试设备叙事最贴近，节点关注度上调 | 缺公司公告/IR 披露 HBM test/probe/Cube Prober 同节点产品、客户、订单、收入或毛利；不能用 Techwing/MJC 订单直接映射 |
+| [精测电子 300567.SZ](../../company_tracking/300567.SZ/state.md) | `node_mapping_watch+ / event_trade_watch+`，不进 `main_candidate` | 与 HBM 良率检测/测试设备叙事最贴近，节点关注度上调 | 缺公司公告/IR 披露 HBM test/probe/Cube Prober 同节点产品、客户、订单、收入或毛利；不能用 Techwing/MJC 订单直接映射 |
 | 通富微电 002156.SZ | `event_trade_watch` 不上调 | HBM/advanced packaging 景气可作背景，但测试/探针卡/Cube Prober 不等同 OSAT 封测订单 | 需 HBM 相关封装/测试客户、订单、收入、产线或 CPO/NPO 官方证明 |
 
 ## 2026-06-18 雅克科技窄口径 HBM 材料证据卡
@@ -88,6 +88,7 @@
 
 - 主深挖 1：`HBM/DRAM/LPDRAM/NAND/eSSD + AI server parts supply`。重点跟踪 HPE 10-Q、TrendForce eSSD/LPDRAM 能否被内存厂官方财报验证、HBM4/HBM4E 认证与 LTA、eSSD/NAND 价格库存、约束是否从 memory 扩散到 CPU、PCB、power/cooling。
 - 新增最小公司跟踪：`雅克科技 002409.SZ / UP Chemical / 前驱体 / SOD` 建立 `event_trade_watch` baseline。重点跟踪订单、ASP、毛利、收入占比、客户认证和高端前驱体价格；不得把 HBM4E 样品出货或测试链订单直接写成雅克订单。
+- 新增最小公司跟踪：`长光华芯 688048.SH / 高功率半导体激光平台 / 光通信 EML-DFB-CW DFB 产品矩阵` 建立 `watch_to_soft/evidence_gap_card`，详见 `artifacts/company_tracking/688048.SH/state.md`。重点把它和源杰科技区分：缺 AI 光互连客户、功率段、收入占比、量产订单和良率毛利硬证据前，不得把 AMD/NVIDIA 锁 CW 产能线索直接写成长光华芯确认受益。
 - 新增窄口径观察：`NOR Flash / SLC NAND / reliable small-capacity memory` 只作为 AI memory hierarchy 的侧翼观察层。重点跟踪小容量成熟节点供给退出、价格续涨、兆易创新/东芯股份/普冉半导体毛利率和净利率能否在 H1/H2 延续；不得与 HBM/LPDRAM/eSSD 主堵点混写。
 - 主深挖 2：`AI cloud capex -> 数据中心电力/并网 + 800VDC/SST/rack power/液冷`。重点把区域 hard operational 约束和全球设备/液冷单品 soft/watch 分开，并把液冷拆成新建 AI factory 与存量风冷机房改造两条观察线；跟踪 Oracle/Meta/Google/Microsoft/Amazon CapEx、FERC/PJM/ERCOT、JLL/CBRE、Google Brazos/OCP 规格、transformer/switchgear/UPS/CDU/PDU lead time、800VDC design win 转收入。
 
