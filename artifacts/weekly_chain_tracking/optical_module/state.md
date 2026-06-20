@@ -1,6 +1,6 @@
 # 周度跟踪：光模块及上游细分环节 - 滚动状态
 
-更新时间：2026-06-17
+更新时间：2026-06-20（回写 2026-06-17 08:53 邮件线索）
 最新报告：`artifacts/weekly_chain_tracking/optical_module/2026-06-17.md`
 覆盖窗口：2026-06-14 至 2026-06-17
 
@@ -38,16 +38,18 @@
 - 大立光 FA 自动化试产线和潜在 FAU 客户验证线索使 `FAU / fiber array / 高密连接` 的证据质量上升，但仍是试产/认证阶段，不是当前短缺、涨价、交期或良率瓶颈证据。
 - 天孚“CPO 光引擎市占 >60%、订单排至 2028 年”未取得官方硬证据；罗博特科 ficonTEC 约 6 亿元订单为 A 级真订单，但指向可插拔硅光量产化耦合设备，不等同 CPO 当前设备瓶颈。
 - 2026-06-16 ficonTEC 官网确认与 NVIDIA 围绕下一代 CPO 和 AI 光互连制造、对准、晶圆级/芯片级测试方案持续推进合作；该信息强化罗博特科 `300757.SZ` 的 A 股直接映射和设备迁移观察，但未披露 NVIDIA 采购金额、订单或验收收入，不能替代 CPO-specific 当前设备短缺证据。
+- 2026-06-17 08:53《AI产业链战报》把“NVIDIA CPO H2 2026 量产确认、罗博特科 ficonTEC 亚微米级对准验证、设备链弹性提升”列为新增线索；本次只把它作为邮件战报/混合情报触发项，与 ficonTEC 官网 A 级合作进展共同强化设备迁移观察，不写成 CPO-specific 订单、交付、验收收入或客户采购路径已落地。
 - 新易盛 2026-06-15 互动问答支持 Q2 起供应链逐步缓解、下半年交付能力稳定，继续支撑光模块整机装配 `soft_bottleneck/eased`。
 - 2026-06-17 东山精密 IR 确认索尔思收购事项已基本完成并并表，12 亿美元主要用于光芯片和光模块产能扩建，后续技术方案坚持 EML 与硅光并行；MOCVD 外延设备目前主要依赖进口，DSP 芯片和 InP 衬底已锁定未来一段时间核心物料储备。该证据把东山精密上调为 A 股光芯片/光模块垂直一体化强观察，但不改变 `InP/EML` 当前主硬堵点，也不把 `DSP` 升级为当前硬堵点。
 
-## 2026-06-15 邮件线索短更新状态
+## 2026-06-15 / 2026-06-17 邮件线索短更新状态
 
 | watch 项 | 本次处理 | 原因 | 下次升级触发 |
 |---|---|---|---|
 | NVIDIA CPO/NPO/ELS 进度 | 未来观察增强，不升级为当前硬堵点 | 官方路线仍指向 2026 商业化，ficonTEC 官网 2026-06 确认与 NVIDIA 在 CPO/AI 光互连制造测试方案上持续推进合作；但未披露 NVIDIA 设备采购金额、订单、交期或验收收入。 | NVIDIA 或交换机/光源供应商披露 CPO-specific 量产、交期、allocation、客户锁产能、设备订单或财务兑现。 |
+| NVIDIA CPO H2 2026 量产与设备链弹性 | 未来观察增强，不升级为当前硬堵点 | 2026-06-17 08:53《AI产业链战报》称 NVIDIA CPO 无延误、H2 2026 量产确认，并称罗博特科/ficonTEC CPO 组装系统亚微米级对准通过头部半导体企业验证；但该战报是邮件战报/混合情报线索，缺 NVIDIA、客户或罗博特科公开披露的采购金额、订单、交付、验收收入和采购路径。 | NVIDIA/SVP transcript、产品更新、客户部署，或罗博特科披露 CPO-specific 设备订单、设备交期排队、验收收入、客户采购路径。 |
 | FAU / fiber array / MT ferrule / 微透镜 / 高密连接 | 维持 `watch_to_soft`，证据质量上升 | 大立光 9 月前 FA 自动化试产线和潜在客户验证说明产业准备提速，但仍未进入短缺和量产瓶颈证据层。 | 客户定点、量产订单、交期拉长、价格上行、良率或返修压力。 |
-| 主动对准 / 耦合 / WLBI / 光电联合测试 | 维持 `watch_to_soft`，证据质量上升 | 罗博特科 ficonTEC 6 亿元订单真实但公告口径是可插拔硅光量产化耦合设备及服务；2026-06 ficonTEC/NVIDIA 官网合作进展强化 CPO 制造测试路线，但仍不是 CPO-specific 当前短缺。 | 新增 CPO/NPO 光引擎设备订单、设备交期排队、测试节拍瓶颈、良率爬坡证据或验收收入。 |
+| 主动对准 / 耦合 / WLBI / 光电联合测试 | 维持 `watch_to_soft`，证据质量上升 | 罗博特科 ficonTEC 6 亿元订单真实但公告口径是可插拔硅光量产化耦合设备及服务；2026-06 ficonTEC/NVIDIA 官网合作进展强化 CPO 制造测试路线，2026-06-17 邮件战报进一步把亚微米级对准验证列为设备链弹性线索，但仍不是 CPO-specific 当前短缺。 | 新增 CPO/NPO 光引擎设备订单、设备交期排队、测试节拍瓶颈、良率爬坡证据或验收收入。 |
 | 天孚光引擎个别物料 | 维持公司级 `soft_bottleneck/watch` | 公司硬证据仅确认 FAU/ELS 稳定交付和个别物料阶段性缺货；市占 >60%、订单到 2028 未核实。 | 公司点名具体缺料、缺口比例、客户影响，或披露订单/收入/产能锁定。 |
 | 源杰 200G EML / 高端激光器 | 维持 watch | 未找到 2026-06-15 新客户定点、批量订单、收入拆分或毛利兑现证据。 | 200G PAM4 EML 客户设计定点、批量出货、订单或收入拆分。 |
 | 光模块整机装配与关键原材料同步 | 维持 `soft_bottleneck/eased` | 新易盛 2026-06-15 互动问答称 Q2 起供应链逐步缓解、下半年交付能力稳定；昨晚 A 股跟踪未发现中际/天孚/源杰新增经营硬证据。 | 模块厂重新点名关键料、测试、封装或客户认证短缺并影响交付。 |
@@ -72,7 +74,7 @@
 | 天孚光引擎个别物料 | 公司级软堵点/观察 | soft_bottleneck/watch | 公司级阶段性缺货仍未拆清；FAU/ELS 已被公司称为稳定交付，不能升级为行业硬堵点 | unchanged | 2026-05-14 CNINFO 投关确认 FAU/ELS 稳定交付和个别物料阶段性缺货；2026-06-15 日更无新增拆分 | N/A；缺具体物料、缺口比例、交期和客户影响；置信度低 | 公司披露缺料解除或拆清物料；若点名 FAU/透镜/隔离器/磁光材料短缺并影响产量，则升级 | 继续追问物料类别和是否影响 1.6T 光引擎 |
 | 高密度数据中心光纤/光缆/连接组件 | 边界内观察增强 | soft_bottleneck/watch | AI cluster 光密度提升，客户长协和专用产能可能使合格 fiber/cable/connectivity 紧张 | upgraded_watch | Amazon-Corning 多年协议；Corning/Meta/NVIDIA 长协；Wiwynn CPO ecosystem | 当前 N/A；未来 0-12 个月可能升温；置信度中 | Corning/Fujikura 新产能释放、价格回落、交期正常化、连接件二供通过 | 跟 Corning transcript、Fujikura/Corning 产能、MT/FAU/PM fiber/fiber array 传导 |
 | FAU / fiber array / MT ferrule / 高密度连接件 / 微透镜阵列 | 未来迁移观察增强 | watch_to_soft | CPO/ELS 通道数和 fiber attach 密度上升，可拆卸维护和低损耗耦合提高精密连接门槛 | upgraded_watch/evidence_quality_up | Corning FAU page；Wiwynn ecosystem；Coherent CPO stack；大立光 9 月前 FA 自动化试产线和潜在客户验证线索 | 2026H2-2028；置信度中低 | 稳定交付、二供认证通过、CPO 延后 | 跟认证是否转量产、交期/涨价/良率 |
-| 主动对准 / 耦合 / WLBI / 光电联合测试 | 未来迁移观察 | watch_to_soft | 1.6T/3.2T、CPO/NPO 和 SiPh 光 I/O 提高耦合精度、测试节拍和 known-good optical engine 要求 | evidence_quality_up | Coherent CPO stack、Wiwynn/Ayar rack demo、罗博特科 ficonTEC 可插拔硅光耦合设备约 6 亿元订单、ficonTEC/NVIDIA 2026-06 官网合作进展 | 2026H2-2027 可能升温；置信度中 | 自动化设备交付增加、测试节拍下降、良率爬升 | 跟 CPO-specific 设备订单、设备交期、耦合 CT、WLBI/OWAT 成本、良率和验收收入 |
+| 主动对准 / 耦合 / WLBI / 光电联合测试 | 未来迁移观察 | watch_to_soft | 1.6T/3.2T、CPO/NPO 和 SiPh 光 I/O 提高耦合精度、测试节拍和 known-good optical engine 要求 | evidence_quality_up | Coherent CPO stack、Wiwynn/Ayar rack demo、罗博特科 ficonTEC 可插拔硅光耦合设备约 6 亿元订单、ficonTEC/NVIDIA 2026-06 官网合作进展、2026-06-17 邮件战报亚微米级对准验证线索 | 2026H2-2027 可能升温；置信度中 | 自动化设备交付增加、测试节拍下降、良率爬升 | 跟 CPO-specific 设备订单、设备交期、耦合 CT、WLBI/OWAT 成本、良率和验收收入 |
 | 光模块/光引擎热管理与 ELSFP 液冷兼容 | 未来迁移观察 | watch_to_soft | 高功率 ELS、CPO 和光引擎对激光稳定性、IHS/cage/TIM/冷板接口和热可靠性提出新要求 | upgraded_watch | Lumentum ELSFP product page；Wiwynn ELSFP liquid cooling；Ayar rack demo | watch，2026H2-2028；置信度低中 | 接口标准化、风冷/液冷方案稳定，多供应商稳定交付 | 等模块厂/交换机厂点名热可靠性或液冷兼容 |
 | DSP / driver / TIA / CDR | 战略节点，不是当前堵点 | watch/rejected as bottleneck | Broadcom/Marvell A 级财报证明 AI networking/electro-optics/CPO/NPO demand 强，但未见交期、allocation 或模块厂点名短缺 | unchanged_watch | Broadcom/Marvell 上期 official/transcript | N/A；未来 2027-2028 观察；置信度低中 | 出现明确客户 allocation、交期拉长、模块厂点名电芯片短缺；多源稳定供给则维持 strategic node | 等 3.2T/LPO/LRO/CPO 芯片交期证据 |
 
@@ -85,7 +87,7 @@
 | CW-DFB / UHP pump / ELS | 主堵点组成和未来迁移核心 | CPO/SiPh/scale-up/scale-across 是否形成独立短缺 | TrendForce/Ciena/Wiwynn 证据增强，但订单、交期、收入单列仍不完整 |
 | 光模块整机与测试 | 软堵点缓解观察 | 中际/新易盛 Q2 交付、预付款、存货、毛利是否验证缓解 | 本周无新增整机缺料证据 |
 | FAU / fiber array / MT ferrule / 微透镜 / 隔离器 | 观察增强 | CPO/ELS 是否拉长交期或导致良率瓶颈 | 产品页、展示、送样和大立光试产线证明路线准备，不证明当前短缺 |
-| 主动对准 / 封装测试设备 / WLBI | 观察增强 | 光引擎/CPO 量产后设备、测试节拍和良率是否拖累爬坡 | 罗博特科 ficonTEC 订单证明可插拔硅光耦合设备需求，不证明 CPO-specific 设备短缺或排队 |
+| 主动对准 / 封装测试设备 / WLBI | 观察增强 | 光引擎/CPO 量产后设备、测试节拍和良率是否拖累爬坡 | 罗博特科 ficonTEC 订单证明可插拔硅光耦合设备需求；2026-06-17 邮件战报强化亚微米级对准验证线索，但仍不证明 CPO-specific 设备短缺、排队、交付或验收收入 |
 | 光连接/光纤/连接器 | 未来迁移增强 | Amazon/Corning、Meta/Corning、NVIDIA/Corning 是否传导到 MT/FAU/连接器、PM fiber、光纤阵列和 A/台股公司 | 普通光纤扩产不等于模块上游单品短缺，必须看到高密度数据中心/CPO/ELS 场景证据 |
 | 光模块/光引擎热管理与液冷兼容 | 观察增强 | 是否把卡点迁移到 IHS/cage/TIM/cold plate interface、ELSFP 稳定光源、浸没兼容、热可靠性和返修 | 机柜级液冷热度不能直接证明模块级卡点；需模块或 ELSFP 场景证据 |
 | SiPh / TFLN | SiPh 路线期权增强，TFLN 仍 watch/rejected | 是否从路线验证进入客户定点与批量出货 | 当前更多是平台/路线证据，不是供需缺口 |
@@ -116,7 +118,7 @@
 | 源杰科技 | 688498.SH | A 股 | CW laser、EML/DFB 光芯片 | 需 200G EML/AI 客户硬证据 |
 | 长光华芯 | 688048.SH | A 股 | 高功率半导体激光平台、光通信 EML/DFB/VCSEL/CW DFB 观察 | `watch_to_soft/evidence_gap_card`；详见 `artifacts/company_tracking/688048.SH/state.md`；缺 AI 光互连客户、功率段、收入占比和量产订单硬证据，不能等同 InP/CW 主堵点 |
 | 光库科技 | 300620.SZ | A 股 | 隔离器、铌酸锂、无源器件 | 观察 |
-| 罗博特科 | 300757.SZ | A 股 | ficonTEC 光子封装/测试设备 | ficonTEC 全资体系内资产；NVIDIA 合作进展增强观察，但仍需 CPO-specific 订单、交付和收入证据 |
+| 罗博特科 | 300757.SZ | A 股 | ficonTEC 光子封装/测试设备 | ficonTEC 全资体系内资产；NVIDIA 合作进展与 2026-06-17 邮件战报共同强化设备迁移观察；详见 `artifacts/company_tracking/300757.SZ/state.md`，仍需 CPO-specific 订单、交付、验收收入和客户采购路径证据 |
 | 太辰光 | 300570.SZ | A 股 | MT ferrule、连接器/精密连接件、FAU 观察 | 光连接高波动观察池 |
 | 光圣科技 | 6442.TW | 台股 | datacenter optics、合圣 FAU/ELS/CPO 零组件 | 台股重点观察，仍为认证/试产阶段 |
 | 上诠 | 3363.TWO | 台股 | FAU/无源精密件、PIC 封装 | 台股观察 |
