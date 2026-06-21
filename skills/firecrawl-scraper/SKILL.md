@@ -1,14 +1,15 @@
 ---
 name: firecrawl-scraper
-version: 1.0.1
-author: BenedictKing
 description: "Web scraping skill using Firecrawl API for deep content extraction, format conversion, and page interaction. Use when you need to scrape web pages, extract structured data, take screenshots, parse PDFs, or crawl entire websites. Triggers: firecrawl, scrape, extract content, screenshot, parse pdf, crawl website, 抓取网页, 提取内容, 网页截图"
 allowed-tools:
   - Task
   - Bash
   - Read
   - Write
-user-invocable: true
+metadata:
+  version: 1.0.1
+  author: BenedictKing
+  user-invocable: true
 ---
 
 # Firecrawl Scraper Skill

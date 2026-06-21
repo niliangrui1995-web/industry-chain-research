@@ -25,7 +25,6 @@ from typing import Any, Dict, Optional, Tuple
 import requests
 
 CACHE_DIR = os.path.join(".cache", "market-tracker")
-os.makedirs(CACHE_DIR, exist_ok=True)
 
 # Conservative defaults to reduce rate-limit pain.
 DEFAULT_TTL_SECONDS_STOCKS = 60
@@ -63,6 +62,7 @@ def _cache_get(key: str, ttl: int) -> Optional[Dict[str, Any]]:
 
 
 def _cache_set(key: str, payload: Dict[str, Any]) -> None:
+    os.makedirs(CACHE_DIR, exist_ok=True)
     payload["_cached_at"] = int(time.time())
     with open(_cache_path(key), "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)

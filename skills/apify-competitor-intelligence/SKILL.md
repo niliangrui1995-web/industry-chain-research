@@ -1,10 +1,10 @@
 ---
 name: apify-competitor-intelligence
 description: Analyze competitor strategies, content, pricing, ads, and market positioning across Google Maps, Booking.com, Facebook, Instagram, YouTube, and TikTok.
-version: 1.0.1
-source: https://github.com/apify/agent-skills
-homepage: https://apify.com
 metadata:
+  version: 1.0.1
+  source: https://github.com/apify/agent-skills
+  homepage: https://apify.com
   openclaw:
     requires:
       env:

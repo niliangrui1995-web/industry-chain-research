@@ -1,9 +1,17 @@
 ---
-name: Spreadsheet
-slug: spreadsheet
-version: 1.0.0
+name: spreadsheet
 description: Read, write, and analyze tabular data with schema memory, format preservation, and multi-platform support.
-metadata: {"clawdbot":{"emoji":"📊","requires":{"bins":[]},"os":["linux","darwin","win32"]}}
+metadata:
+  slug: spreadsheet
+  version: 1.0.0
+  clawdbot:
+    emoji: "📊"
+    requires:
+      bins: []
+    os:
+      - linux
+      - darwin
+      - win32
 ---
 
 ## When to Use

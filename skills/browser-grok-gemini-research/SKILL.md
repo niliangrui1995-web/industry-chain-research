@@ -1,6 +1,6 @@
 ---
 name: browser-grok-gemini-research
-description: Use the Chrome plugin by default for logged-in Grok/X and Gemini webpage evidence collection in the 产业链投研 project. Use when the user explicitly asks for web Grok/Gemini, current AI supply-chain rumors, X/Twitter discovery, Gemini Deep Research, source-gap collection, or counter-evidence. Collector only: Codex verifies and concludes.
+description: "Use the Chrome plugin by default for logged-in Grok/X and Gemini webpage evidence collection in the 产业链投研 project. Use when the user explicitly asks for web Grok/Gemini, current AI supply-chain rumors, X/Twitter discovery, Gemini Deep Research, source-gap collection, or counter-evidence. Collector only: Codex verifies and concludes."
 ---
 
 # Browser Grok Gemini Research

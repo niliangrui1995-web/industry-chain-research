@@ -97,7 +97,7 @@ Canonical tables:
 
 Connector boundary:
 
-- Global market and financial data: use official filings/IR first, then `yfinance-mcp-server`, `stocks`, `alpha-vantage`, or equivalent market-data tools.
+- Global market and financial data: use official filings/IR first, then `finance`, `alpha-vantage`, iFinD global stock MCP, or equivalent market-data tools.
 - China market and financial data: use official filings, exchange disclosures, company IR, `allstock-data`, `finance`, and `stock-evaluator`.
 - Live news, rumors, orders, policy, or recent price moves require the project evidence route before conclusions.
 

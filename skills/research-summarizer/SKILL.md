@@ -17,7 +17,7 @@ Not a generic "summarize this" — a repeatable framework that extracts what mat
 
 In `产业链投研`, use this as a source-digestion layer, not as the final stock selector.
 
-- Use it after `search-specialist`, `web-scraper`, `firecrawl-scraper`, `tavily-web`, or browser collection has gathered filings, PDFs, articles, transcripts, or whitepapers.
+- Use it after `search-specialist`, `firecrawl-scraper`, `tavily-web`, global `web-scraper`, or browser collection has gathered filings, PDFs, articles, transcripts, or whitepapers.
 - For industry research, extract: core claim, evidence, value-chain implication, bottleneck, limitation, and contradiction.
 - For company research, extract: revenue exposure, customer evidence, margin/expense signal, order or capacity signal, management guidance, and risk disclosure.
 - For stock ranking, hand the summarized evidence back to `industry-research-router`, `stock-evaluator`, `business-analyst`, or `advanced-evaluation`; do not convert a summary directly into a buy/sell conclusion.

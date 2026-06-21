@@ -1,6 +1,6 @@
 # AI Chain Node Taxonomy
 
-Use this reference when `user-investment-framework` handles AI data-center, AI hardware, semiconductor-chain, AI产业链, bottleneck, node comparison, or listed-company mapping tasks.
+Use this reference when `user-investment-framework` handles AI data-center, AI hardware, semiconductor-chain, AI 产业链, bottleneck, node comparison, or listed-company mapping tasks.
 
 This is a local node map, not an evidence source. It helps choose the exact industry-chain node before collecting demand, supply, pricing, customer, filing, or market evidence.
 
@@ -19,7 +19,7 @@ The original full tree remains in `docs/ai_chain_disassembly/nodes_mindmap_level
 |---|---|
 | `统计说明` | Check provenance, counts, and usage notes. |
 | `思维导图树` | Read the full tree in display order with indentation and complete path. |
-| `节点清单` | Filter by `主链名称`, `层级`, `优先级/状态`, `节点类型`, and `完整路径`. This is the primary structured lookup sheet. |
+| `节点清单` | Filter by `主链名称`, `层级`, `优先级状态`, `节点类型`, and `完整路径`. This is the primary structured lookup sheet. |
 | `P5摘要` | Search material, equipment, component, and process hints under Level 4 nodes. Use as search-keyword support only. |
 
 Known cleaned workbook shape as of 2026-05-31:
@@ -52,8 +52,7 @@ When the task is AI-chain related:
 2. Search candidate product, material, equipment, component, process, or application terms in `节点清单`.
 3. Keep multiple candidate paths when the exposure is ambiguous. Mark each as `confirmed`, `partial clue`, `rumor only`, or `not found` according to the company evidence.
 4. Record the path at the narrowest useful level, usually Level 3 or Level 4 P0.
-5. Translate the path into the core demand bridge:
-   `terminal demand -> downstream application/customer -> selected node -> company product/service -> revenue/ASP/margin path`.
+5. Translate the path into the core demand bridge: `terminal demand -> downstream application/customer -> selected node -> company product/service -> revenue/ASP/margin path`.
 6. Use `P5摘要` only to expand source-search keywords for materials, equipment, processes, or components.
 7. Collect A/B evidence for demand, supply gap, pricing, customer validation, and company exposure.
 8. Map listed companies only after the exact node and pass-through path are explicit.

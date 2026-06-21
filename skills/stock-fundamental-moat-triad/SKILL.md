@@ -321,4 +321,4 @@ For peer comparison, use the scorecard in `references/scorecard-template.md` whe
 - `industry-chain-deep-disassembly`: BOM/value-node and bottleneck decomposition.
 - `stock-evaluator`: valuation, financial quality, earnings elasticity, and final stock evaluation.
 - `advanced-evaluation`: scoring consistency and peer-ranking bias control.
-- `allstock-data` / `finance` / `stocks`: current market and valuation data.
+- `allstock-data` / `finance` / `alpha-vantage` / iFinD MCPs: current market and valuation data.

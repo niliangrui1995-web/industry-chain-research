@@ -1,93 +1,77 @@
 ---
 name: industry-research-router
-description: Route industry-chain, company research, competitive landscape, fundamental stock research, valuation, trading elasticity, domestic substitution, technology moat, oligopoly, leader-vs-concept, and sector ranking questions to the right project skill mix. Use for 产业链研究、公司研究、行业本质、技术壁垒、国产替代、全球龙头、寡头、谁最有弹性、股票弹性、交易弹性、估值、PE、业绩弹性、公司排序、赛道拆解、谁是真龙头、谁是蹭概念.
+description: >-
+  Compatibility router for project-local industry-chain, company research, competitive landscape, fundamental stock research, valuation, trading elasticity, domestic substitution, technology moat, oligopoly, leader-vs-concept, and sector ranking questions. Use after user-investment-framework when a task needs the older project route matrix or when the user explicitly asks which project skills should be combined. Trigger on 产业链研究, 公司研究, 行业本质, 技术壁垒, 国产替代, 全球龙头, 寡头, 谁最有弹性, 股票弹性, 交易弹性, 估值, PE, 业绩弹性, 公司排序, 赛道拆解, 谁是真龙头, 谁是伪概念.
 ---
 
 # Industry Research Router
 
 ## Purpose
 
-Use this as the first-stop router for investment-oriented industry and company research. It selects the smallest useful skill combination and enforces the project output discipline.
+Use this as a compatibility router inside the `产业链投研` project. The master entrypoint is `user-investment-framework`; this router refines the task category and selects the smallest useful companion skill mix.
 
-This router is for the `产业链投研` project. It is not a daily-report automation router and should not create cron jobs, heartbeat tasks, email reports, or batch browser pipelines unless the user explicitly asks for automation.
+This project is not a daily-report automation router. Do not create cron jobs, heartbeat tasks, email reports, or batch browser pipelines unless the user explicitly asks for automation.
+
+For a larger route table, read `references/skill-map.md`.
 
 ## Skill Selection
 
 Choose the smallest useful combination:
 
 - Semiconductor/AI-chain structure and A-share mapping: `semiconductor-ai-chain-investment-researcher`; add `ai-chain-research-orchestrator` when current evidence, rumors, Grok/X, Gemini, or live web verification matters.
-- Growth-industry bottleneck disassembly across supply-chain topology, BOM/value nodes, current堵点/卡点 defined as obvious supply gaps, lead times, qualified-capacity constraints, HHI as a support test, profit-pool migration, and future supply-gap migration: `industry-chain-deep-disassembly`; it has adapters for PCB/CCL, liquid cooling, optical modules, and data-center power, plus data-interface contracts for global leaders, chain nodes, bottleneck ledgers, future-bottleneck scenarios, optional China candidates, financial validation, and market snapshots.
-- Browser Grok/Gemini collection: `browser-grok-gemini-research` only when the user asks for webpage Grok/Gemini, when X/Grok discovery is needed, or when Gemini can materially help with source discovery, counter-evidence, or Gemini web Deep Research.
-- General industry essence and technology moat: `deep-research` as a long-research framework, not a local API executor; use `20-andruia-niche-intelligence` only as optional background framing for non-semiconductor niche work.
+- Growth-industry bottleneck disassembly: `industry-chain-deep-disassembly`; use it for terminal demand, chain topology, BOM/value nodes, current supply-gap bottlenecks, future bottleneck migration, lead-time, qualified-capacity constraints, and adapter-guided node mapping.
+- Browser Grok/Gemini collection: `browser-grok-gemini-research` only when the user asks for webpage Grok/Gemini, X/Grok discovery, Gemini Deep Research, source-gap collection, or counter-evidence.
+- General industry essence and technology moat: `deep-research` and `industry-chain-deep-disassembly` for bottleneck/value-chain work.
 - Competitive landscape and true leaders: `competitive-landscape`, `competitive-intel`.
 - Earnings releases, management guidance, and conference-call analysis: `earnings-call-investment-analyst`.
-- A-share watchlist tracking, company baseline/state/events maintenance, and daily run reconciliation: `a-share-company-tracking`; add `a-share-disclosure-trading-data` whenever CNINFO, exchange announcements, investor-relations records, dragon-tiger lists, block trades, or T/T+1 evening announcement windows matter.
-- Company fundamentals and valuation after segment selection: `stock-fundamental-moat-triad` for future highlights, inflection points, earnings path, value-chain migration, international peer catch-up risk, and customer-certification milestones; then `stock-evaluator`, `business-analyst`, plus market-data skills according to listing market.
-- A-share/HK/US live data and K-line checks: `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, `allstock-data`, `banana-farmer`, `stock-data-skill`, or `finance`; use TDX especially for A-share quotes, valuation snapshots, technical indicators, sector/index/concept screens,涨停/跌停,封单,连板,板型, and ETF/fund snapshots. Market data cannot prove beneficiary status.
-- Overseas oligarch data: `finance` with Financial Datasets when `FINANCIAL_DATASETS_API_KEY` is configured, plus `yfinance-mcp-server`, `stocks`, `alpha-vantage`; if Financial Datasets has no credits, no coverage, or missing fields, continue with official filings, web search, and other market-data sources.
-- Structured comparison, score consistency, bias control, or watchlist tables: `spreadsheet`, `xlsx-official`, `advanced-evaluation`; scoring helpers do not replace domain judgment.
-- Web/news/filings collection: `web-scraper`, `firecrawl-scraper`, `tavily-web`; use browser Grok/Gemini only when it adds a distinct discovery or source-gap value.
-- Source discovery and dense-source digestion: use `search-specialist` for official-source search strategy, source priority, and contradiction tracking; use `research-summarizer` to digest long reports, filings, whitepapers, transcripts, PDFs, and multi-source evidence sets.
-- Dividend/low-volatility style backdrop: use `dividend-premium-tracker` for CSI Dividend Low Volatility dividend premium, bond-yield comparison, and high-dividend style context. It is not a default individual-stock selector.
+- A-share watchlist tracking and daily state maintenance: `a-share-company-tracking`; add `a-share-disclosure-trading-data` whenever CNINFO, exchange announcements, investor-relations records, dragon-tiger lists, block trades, or T/T+1 evening announcement windows matter.
+- Company fundamentals after segment/source selection: `stock-fundamental-moat-triad`, then `stock-evaluator`, `business-analyst`, plus market-data skills according to listing market.
+- A-share/HK/US live data and K-line checks: `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, iFinD MCPs, `allstock-data`, `banana-farmer`, or `finance`. Market data cannot prove beneficiary status.
+- Overseas oligarch data: `finance`, `alpha-vantage`, iFinD global stock MCP, and official filings/IR; still use official filings and company sources for hard claims.
+- Structured comparison, score consistency, and watchlist tables: `spreadsheet`, `xlsx-official`, `advanced-evaluation`.
+- Web/news/filings collection: `search-specialist`, then `firecrawl-scraper`, `tavily-web`, or global `web-scraper`; use `research-summarizer` for long sources.
+- Dividend/low-volatility style backdrop: `dividend-premium-tracker`, not a default individual-stock selector.
 
 ## Boundary Rules
 
-- `industry-research-router` classifies the request and picks the route; it does not score the full segment universe or pick final stocks by itself.
+- `industry-research-router` classifies and routes; it does not make final stock picks alone.
 - `ai-chain-research-orchestrator` coordinates evidence collection and rumor discipline; it does not make final A-share recommendations.
 - `browser-grok-gemini-research` operates webpages and collector prompts only; it is not a final analyst.
-- `semiconductor-ai-chain-investment-researcher` is the main top-down AI/semiconductor investment skill: segment priority, bottleneck, overseas oligarchs, A-share mapping, and within-segment comparison.
-- `industry-chain-deep-disassembly` is the cross-industry bottleneck skill: terminal-demand transmission, chain topology, BOM/value-node table, current堵点/卡点 ledger with explicit supply-gap evidence, constraint-mechanism diagnosis, future supply-gap migration, lead-time and qualified-supply scoring, HHI as a supporting test, supported industry adapter loading, and normalization of user-provided CSV/JSON/JSONL/XLSX research inputs. Listed-company mapping is optional after node diagnosis.
+- `semiconductor-ai-chain-investment-researcher` is the main top-down AI/semiconductor investment skill.
+- `industry-chain-deep-disassembly` is the cross-industry bottleneck skill; listed-company mapping is optional after node diagnosis.
 - `advanced-evaluation` checks score consistency and bias; it does not replace source verification or domain judgment.
-- `stock-fundamental-moat-triad` is used after segment/source selection to answer the future first: what could change, how it could become earnings, what must be verified, and what would invalidate it. Value-chain, same-node international peers, competitive structure, and customer-entry evidence are supporting checks before valuation or trading-elasticity work.
-- `stock-evaluator` and `business-analyst` are used after segment selection for company-level financial quality, valuation, and broader fundamentals.
-- `a-share-company-tracking` owns watchlist-driven A-share daily tracking and durable company files; `a-share-disclosure-trading-data` owns official announcement and trading-event evidence discipline.
-- `TDX Finance Data`, `allstock-data`, and local market data provide timing, liquidity, valuation, technical, market-attention, and risk context only.
-- TDX涨停原因/原因揭秘 and concept labels are secondary trading context; they can guide source checks but cannot replace official filings, CNINFO, exchange disclosures, company IR, or customer/supplier evidence.
+- `stock-fundamental-moat-triad` answers the future first: what could change, how it could become earnings, and what must be verified.
+- `stock-evaluator` and `business-analyst` handle company-level financial quality, valuation, and operating logic after segment selection.
+- `a-share-company-tracking` owns watchlist-driven A-share tracking and durable company files.
+- `a-share-disclosure-trading-data` owns official announcement and trading-event evidence discipline.
+- TDX, `allstock-data`, `finance`, Yahoo-style tools, QVeris, Banana Farmer, and other market-data helpers provide timing, liquidity, valuation, technical, market-attention, and risk context only.
+- TDX涨停原因,原因揭秘, and concept labels are secondary trading context; they can guide source checks but cannot replace official filings, CNINFO, exchange disclosures, company IR, or customer/supplier evidence.
 - `search-specialist` and `research-summarizer` improve evidence quality and source digestion; they do not replace industry judgment or stock ranking skills.
-- `dividend-premium-tracker` is a macro/style lens for dividend assets; it cannot prove payout sustainability or stock elasticity.
 - `finance-news` and `stock-copilot-pro` can be useful, but their briefing/cron workflows are not default behavior in this project.
 
-If a named companion skill is unavailable in the current session, continue with the same analytical framework and say briefly which companion skill was unavailable only if it materially affects the answer.
+If a named companion skill is unavailable in the current session, continue with the same analytical framework and state the gap only when it changes confidence.
 
 ## Workflow
 
-1. Classify the task before answering:
-   - Industry-chain map
-   - Company comparison
-   - Earnings release, guidance, conference call, or expectation-gap analysis
-   - Technology moat
-   - Supply-chain bottleneck, BOM, lead-time, HHI, or pricing-power disassembly
-   - Domestic substitution
-   - Fundamental investment ranking
-   - Trading elasticity ranking
-   - A-share company tracking, baseline refresh, daily update, or watchlist maintenance
-   - A-share announcement, CNINFO, IR record, dragon-tiger list, or block-trade verification
-   - Data table, normalized evidence pack, or watchlist construction
-   - Latest news, rumor, or source-gap verification
-   - Official-source search or long-source summarization
-   - Dividend, low-volatility, or bond-yield comparison
-
-2. Decide whether live collection is actually needed:
-   - Use Grok/X first for real-time news, X/Twitter chatter, supply-chain leaks, rumors, and 爆料.
-   - Use Gemini when the user asks for it, when source gaps or conflicts matter, when Gemini web Deep Research is useful, or when official/media/PDF source discovery can improve verification.
-   - Do not call browser Grok/Gemini for evergreen industry education unless the user asks or the answer depends on current facts.
-
-3. Use current data when facts may have changed:
-   - Prices, PE/PB, market cap, turnover, volume, 5/20/60-day performance, earnings reports, guidance, order news, regulations, and policy must be verified with tools or web sources.
-   - Prefer official filings, exchange disclosures, company reports, investor relations pages, and reputable financial data sources for hard claims.
-   - Treat X/Twitter, Grok, Gemini, and similar assistant/search products as evidence collection only; Codex must do the final synthesis, evidence weighting, risk judgment, stock mapping, and conclusion.
-
-4. Separate three rankings:
-   - Fundamental quality ranking: business quality, moat, customer quality, margin structure, long-term competitiveness.
-   - Earnings elasticity ranking: revenue growth, gross margin leverage, capacity utilization, operating leverage, order conversion.
-   - Trading elasticity ranking: market cap, float market cap, turnover, volatility, technical position, catalyst density, expectation gap, crowding risk.
-
-5. Avoid common errors:
-   - Do not equate “good company” with “highest stock elasticity.”
-   - Do not equate “hot theme” with “real beneficiary.”
-   - Do not rank only by PE; include market cap, float, growth, volatility, and expectation gap.
-   - Do not treat one-time low-base growth as durable growth without checking order quality and customer verification.
-   - Do not mix mainland China, Taiwan, Hong Kong, US, Japan, and Korea listings without normalizing ticker suffixes and market rules.
+1. Classify the task:
+   - industry-chain map;
+   - company comparison;
+   - earnings release, guidance, conference call, or expectation-gap analysis;
+   - technology moat;
+   - supply-chain bottleneck, BOM, lead-time, HHI, or pricing-power disassembly;
+   - domestic substitution;
+   - fundamental investment ranking;
+   - trading elasticity ranking;
+   - A-share company tracking or watchlist maintenance;
+   - A-share announcement, CNINFO, IR record, dragon-tiger list, or block-trade verification;
+   - data table, normalized evidence pack, or watchlist construction;
+   - latest news, rumor, or source-gap verification;
+   - official-source search or long-source summarization;
+   - dividend, low-volatility, or bond-yield comparison.
+2. Decide whether live collection is needed. Prices, PE/PB, market cap, turnover, volume, financial reports, orders, policies, regulations, and news must be verified with current tools or web sources.
+3. Separate three rankings: fundamental quality, earnings elasticity, trading elasticity.
+4. Preserve source hierarchy: official disclosure first, credible secondary sources second, market data as context, social/model output as leads only.
+5. Avoid turning a quick route selection into a full report unless the user asks for that artifact.
 
 ## Output Pattern
 
@@ -95,10 +79,10 @@ Start with the answer, then explain:
 
 ```text
 结论先行：
-最大交易弹性：X
-最大业绩弹性：Y
-最稳趋势中军：Z
-最大风险：W
+- 最大交易弹性：
+- 最大业绩弹性：
+- 最稳趋势中军：
+- 最大风险：
 
 排序：
 1. 公司A：核心理由
@@ -106,17 +90,17 @@ Start with the answer, then explain:
 3. 公司C：核心理由
 
 关键观察指标：
-- 公司A：订单/客户认证/毛利率/换手率/20日涨幅
-- 公司B：价格/产能/库存/估值/催化剂
+- 公司A：订单 / 客户认证 / 毛利率 / 换手率 / 20日涨幅
+- 公司B：价格 / 产能 / 库存 / 估值 / 催化剂
 ```
 
-For industry-chain education, use:
+For industry-chain education:
 
 ```text
 产业链拆解：
-1. 上游材料/设备/耗材
-2. 中游制造/封装/检测
-3. 下游应用/客户
+1. 上游材料 / 设备 / 耗材
+2. 中游制造 / 封装 / 检测
+3. 下游应用 / 客户
 
 真正壁垒：
 - 良率
@@ -126,6 +110,10 @@ For industry-chain education, use:
 - 供应链认证
 ```
 
-## Reference
+## Anti-Patterns
 
-Read `references/skill-map.md` when the user asks which skills should be used, when the routing choice is ambiguous, or when you need to verify the project-local skill names.
+- Do not equate "good company" with "highest stock elasticity".
+- Do not equate "hot theme" with "real beneficiary".
+- Do not rank only by PE.
+- Do not treat one-time low-base growth as durable growth without checking order quality and customer verification.
+- Do not mix mainland China, Taiwan, Hong Kong, US, Japan, and Korea listings without normalizing ticker suffixes and market rules.

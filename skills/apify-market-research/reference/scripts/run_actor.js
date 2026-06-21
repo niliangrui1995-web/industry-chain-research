@@ -4,19 +4,61 @@
  *
  * Usage:
  *   # Quick answer (display in chat, no file saved)
- *   node --env-file=.env scripts/run_actor.js --actor ACTOR_ID --input '{}'
+ *   node scripts/run_actor.js --actor ACTOR_ID --input '{}'
  *
  *   # Export to file
- *   node --env-file=.env scripts/run_actor.js --actor ACTOR_ID --input '{}' --output leads.csv --format csv
+ *   node scripts/run_actor.js --actor ACTOR_ID --input '{}' --output leads.csv --format csv
  */
 
 import { parseArgs } from 'node:util';
-import { writeFileSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, statSync } from 'node:fs';
+import { isAbsolute, relative, resolve } from 'node:path';
 
-// User-Agent for tracking skill usage in Apify analytics
 const USER_AGENT = 'apify-agent-skills/apify-market-research-1.0.0';
 
-// Parse command-line arguments
+function validateActorId(actorId) {
+    const TECHNICAL_NAME = /^[a-zA-Z0-9][a-zA-Z0-9._-]*\/[a-zA-Z0-9][a-zA-Z0-9._-]*$/;
+    const RAW_ID = /^[a-zA-Z0-9]{17}$/;
+    if (!TECHNICAL_NAME.test(actorId) && !RAW_ID.test(actorId)) {
+        console.error(`Error: Invalid Actor ID format: ${actorId}`);
+        console.error('Expected "owner/actor-name" (e.g., compass/crawler-google-places) or a 17-character alphanumeric ID.');
+        process.exit(1);
+    }
+}
+
+function validateJsonInput(inputStr) {
+    let parsed;
+    try {
+        parsed = JSON.parse(inputStr);
+    } catch (e) {
+        console.error(`Error: Invalid JSON input: ${e.message}`);
+        process.exit(1);
+    }
+    if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+        console.error('Error: JSON input must be a plain object (e.g., {"key": "value"}).');
+        process.exit(1);
+    }
+    return parsed;
+}
+
+function validateFormat(format) {
+    const ALLOWED_FORMATS = ['csv', 'json'];
+    if (!ALLOWED_FORMATS.includes(format)) {
+        console.error(`Error: Invalid format '${format}'. Allowed: ${ALLOWED_FORMATS.join(', ')}`);
+        process.exit(1);
+    }
+}
+
+function validateOutputPath(outputPath) {
+    const resolved = resolve(outputPath);
+    const cwd = process.cwd();
+    const relativePath = relative(cwd, resolved);
+    if (relativePath.startsWith('..') || isAbsolute(relativePath)) {
+        console.error(`Error: Output path must be within the current directory. Got: ${outputPath}`);
+        process.exit(1);
+    }
+}
+
 function parseCliArgs() {
     const options = {
         actor: { type: 'string', short: 'a' },
@@ -47,11 +89,20 @@ function parseCliArgs() {
         process.exit(1);
     }
 
+    validateActorId(values.actor);
+    const parsedInput = validateJsonInput(values.input);
+    const format = values.format || 'csv';
+    validateFormat(format);
+
+    if (values.output) {
+        validateOutputPath(values.output);
+    }
+
     return {
         actor: values.actor,
-        input: values.input,
+        parsedInput,
         output: values.output,
-        format: values.format || 'csv',
+        format,
         timeout: parseInt(values.timeout, 10),
         pollInterval: parseInt(values['poll-interval'], 10),
     };
@@ -62,7 +113,7 @@ function printHelp() {
 Apify Actor Runner - Run Apify actors and export results
 
 Usage:
-  node --env-file=.env scripts/run_actor.js --actor ACTOR_ID --input '{}'
+  node scripts/run_actor.js --actor ACTOR_ID --input '{}'
 
 Options:
   --actor, -a       Actor ID (e.g., compass/crawler-google-places) [required]
@@ -80,39 +131,30 @@ Output Formats:
 
 Examples:
   # Quick answer - display top 5 in chat
-  node --env-file=.env scripts/run_actor.js \\
+  node scripts/run_actor.js \\
     --actor "compass/crawler-google-places" \\
     --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA"}'
 
   # Export all data to CSV
-  node --env-file=.env scripts/run_actor.js \\
+  node scripts/run_actor.js \\
     --actor "compass/crawler-google-places" \\
     --input '{"searchStringsArray": ["coffee shops"], "locationQuery": "Seattle, USA"}' \\
     --output leads.csv --format csv
 `);
 }
 
-// Start an actor run and return { runId, datasetId }
-async function startActor(token, actorId, inputJson) {
-    // Convert "author/actor" format to "author~actor" for API compatibility
+async function startActor(token, actorId, parsedInput) {
     const apiActorId = actorId.replace('/', '~');
-    const url = `https://api.apify.com/v2/acts/${apiActorId}/runs?token=${encodeURIComponent(token)}`;
-
-    let data;
-    try {
-        data = JSON.parse(inputJson);
-    } catch (e) {
-        console.error(`Error: Invalid JSON input: ${e.message}`);
-        process.exit(1);
-    }
+    const url = `https://api.apify.com/v2/acts/${apiActorId}/runs`;
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
             'User-Agent': `${USER_AGENT}/start_actor`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(parsedInput),
     });
 
     if (response.status === 404) {
@@ -133,14 +175,15 @@ async function startActor(token, actorId, inputJson) {
     };
 }
 
-// Poll run status until complete or timeout
 async function pollUntilComplete(token, runId, timeout, interval) {
-    const url = `https://api.apify.com/v2/actor-runs/${runId}?token=${encodeURIComponent(token)}`;
+    const url = `https://api.apify.com/v2/actor-runs/${runId}`;
     const startTime = Date.now();
     let lastStatus = null;
 
     while (true) {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: { 'Authorization': `Bearer ${token}` },
+        });
         if (!response.ok) {
             const text = await response.text();
             console.error(`Error: Failed to get run status: ${text}`);
@@ -150,7 +193,6 @@ async function pollUntilComplete(token, runId, timeout, interval) {
         const result = await response.json();
         const status = result.data.status;
 
-        // Only print when status changes
         if (status !== lastStatus) {
             console.log(`Status: ${status}`);
             lastStatus = status;
@@ -170,12 +212,12 @@ async function pollUntilComplete(token, runId, timeout, interval) {
     }
 }
 
-// Download dataset items
 async function downloadResults(token, datasetId, outputPath, format) {
-    const url = `https://api.apify.com/v2/datasets/${datasetId}/items?token=${encodeURIComponent(token)}&format=json`;
+    const url = `https://api.apify.com/v2/datasets/${datasetId}/items?format=json`;
 
     const response = await fetch(url, {
         headers: {
+            'Authorization': `Bearer ${token}`,
             'User-Agent': `${USER_AGENT}/download_${format}`,
         },
     });
@@ -188,53 +230,55 @@ async function downloadResults(token, datasetId, outputPath, format) {
 
     const data = await response.json();
 
-    if (format === 'json') {
-        writeFileSync(outputPath, JSON.stringify(data, null, 2));
-    } else {
-        // CSV output
-        if (data.length > 0) {
-            const fieldnames = Object.keys(data[0]);
-            const csvLines = [fieldnames.join(',')];
-
-            for (const row of data) {
-                const values = fieldnames.map((key) => {
-                    let value = row[key];
-
-                    // Truncate long text fields
-                    if (typeof value === 'string' && value.length > 200) {
-                        value = value.slice(0, 200) + '...';
-                    } else if (Array.isArray(value) || (typeof value === 'object' && value !== null)) {
-                        value = JSON.stringify(value) || '';
-                    }
-
-                    // CSV escape: wrap in quotes if contains comma, quote, or newline
-                    if (value === null || value === undefined) {
-                        return '';
-                    }
-                    const strValue = String(value);
-                    if (strValue.includes(',') || strValue.includes('"') || strValue.includes('\n')) {
-                        return `"${strValue.replace(/"/g, '""')}"`;
-                    }
-                    return strValue;
-                });
-                csvLines.push(values.join(','));
-            }
-
-            writeFileSync(outputPath, csvLines.join('\n'));
+    try {
+        if (format === 'json') {
+            writeFileSync(outputPath, JSON.stringify(data, null, 2));
         } else {
-            writeFileSync(outputPath, '');
+            if (data.length > 0) {
+                const fieldnames = Object.keys(data[0]);
+                const csvLines = [fieldnames.join(',')];
+
+                for (const row of data) {
+                    const values = fieldnames.map((key) => {
+                        let value = row[key];
+
+                        if (typeof value === 'string' && value.length > 200) {
+                            value = value.slice(0, 200) + '...';
+                        } else if (Array.isArray(value) || (typeof value === 'object' && value !== null)) {
+                            value = JSON.stringify(value) || '';
+                        }
+
+                        if (value === null || value === undefined) {
+                            return '';
+                        }
+                        const strValue = String(value);
+                        if (strValue.includes(',') || strValue.includes('"') || strValue.includes('\n')) {
+                            return `"${strValue.replace(/"/g, '""')}"`;
+                        }
+                        return strValue;
+                    });
+                    csvLines.push(values.join(','));
+                }
+
+                writeFileSync(outputPath, csvLines.join('\n'));
+            } else {
+                writeFileSync(outputPath, '');
+            }
         }
+    } catch (err) {
+        console.error(`Error: Failed to write output file '${outputPath}': ${err.message}`);
+        process.exit(1);
     }
 
     console.log(`Saved to: ${outputPath}`);
 }
 
-// Display top 5 results in chat format
 async function displayQuickAnswer(token, datasetId) {
-    const url = `https://api.apify.com/v2/datasets/${datasetId}/items?token=${encodeURIComponent(token)}&format=json`;
+    const url = `https://api.apify.com/v2/datasets/${datasetId}/items?format=json`;
 
     const response = await fetch(url, {
         headers: {
+            'Authorization': `Bearer ${token}`,
             'User-Agent': `${USER_AGENT}/quick_answer`,
         },
     });
@@ -253,7 +297,6 @@ async function displayQuickAnswer(token, datasetId) {
         return;
     }
 
-    // Display top 5
     console.log(`\n${'='.repeat(60)}`);
     console.log(`TOP 5 RESULTS (of ${total} total)`);
     console.log('='.repeat(60));
@@ -265,7 +308,6 @@ async function displayQuickAnswer(token, datasetId) {
         for (const [key, value] of Object.entries(item)) {
             let displayValue = value;
 
-            // Truncate long values
             if (typeof value === 'string' && value.length > 100) {
                 displayValue = value.slice(0, 100) + '...';
             } else if (Array.isArray(value) || (typeof value === 'object' && value !== null)) {
@@ -285,19 +327,17 @@ async function displayQuickAnswer(token, datasetId) {
     console.log('='.repeat(60));
 }
 
-// Report summary of downloaded data
 function reportSummary(outputPath, format) {
     const stats = statSync(outputPath);
     const size = stats.size;
 
     let count;
     try {
-        const content = require('fs').readFileSync(outputPath, 'utf-8');
+        const content = readFileSync(outputPath, 'utf-8');
         if (format === 'json') {
             const data = JSON.parse(content);
             count = Array.isArray(data) ? data.length : 1;
         } else {
-            // CSV - count lines minus header
             const lines = content.split('\n').filter((line) => line.trim());
             count = Math.max(0, lines.length - 1);
         }
@@ -309,35 +349,27 @@ function reportSummary(outputPath, format) {
     console.log(`Size: ${size.toLocaleString()} bytes`);
 }
 
-// Helper: sleep for ms
 function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Main function
 async function main() {
-    // Parse args first so --help works without token
     const args = parseCliArgs();
 
-    // Check for APIFY_TOKEN
     const token = process.env.APIFY_TOKEN;
     if (!token) {
-        console.error('Error: APIFY_TOKEN not found in .env file');
+        console.error('Error: APIFY_TOKEN environment variable not found');
         console.error('');
-        console.error('Add your token to .env file:');
-        console.error('  APIFY_TOKEN=your_token_here');
-        console.error('');
+        console.error('Configure APIFY_TOKEN in the environment or managed plugin settings.');
         console.error('Get your token: https://console.apify.com/account/integrations');
         process.exit(1);
     }
 
-    // Start the actor run
     console.log(`Starting actor: ${args.actor}`);
-    const { runId, datasetId } = await startActor(token, args.actor, args.input);
+    const { runId, datasetId } = await startActor(token, args.actor, args.parsedInput);
     console.log(`Run ID: ${runId}`);
     console.log(`Dataset ID: ${datasetId}`);
 
-    // Poll for completion
     const status = await pollUntilComplete(token, runId, args.timeout, args.pollInterval);
 
     if (status !== 'SUCCEEDED') {
@@ -346,13 +378,10 @@ async function main() {
         process.exit(1);
     }
 
-    // Determine output mode
     if (args.output) {
-        // File output mode
         await downloadResults(token, datasetId, args.output, args.format);
         reportSummary(args.output, args.format);
     } else {
-        // Quick answer mode - display in chat
         await displayQuickAnswer(token, datasetId);
     }
 }

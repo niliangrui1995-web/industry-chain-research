@@ -1,4 +1,4 @@
 interface:
   display_name: "User Investment Framework"
   short_description: "Master entrypoint for industry-chain and stock research"
-  default_prompt: "Start from the user investment framework, then choose the smallest necessary companion skills for the requested investment research task."
+  default_prompt: "Use $user-investment-framework to route this investment research task, select the smallest necessary companion skills, and separate evidence, fundamentals, earnings elasticity, and trading elasticity."

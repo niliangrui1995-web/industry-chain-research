@@ -31,13 +31,13 @@ Use TDX first for A-share trading context and market reaction:
 
 - single-stock latest quote: current price, change, open/high/low/close, amplitude, volume, turnover, amount;
 - valuation snapshot: dynamic PE, TTM PE when requested, PB, circulating/free-float market cap;
-- recent price action: recent daily close columns, interval change, interval volume, daily volume and turnover;
+- recent price action: daily close columns, interval change, interval volume, daily volume and turnover;
 - technical indicators: MACD/DIF/DEA, KDJ, RSI, volume ratio, 5/20-day averages;
-- financial snapshot: revenue, cost, revenue/profit growth, parent net profit, gross margin, net margin, ROE, debt ratio when the natural-language query maps cleanly;
+- financial snapshot when the natural-language query maps cleanly: revenue, cost, revenue/profit growth, parent net profit, gross margin, net margin, ROE, debt ratio;
 - index and sector quote: use `range=ZS`, especially for known TDX codes such as `881319`;
-- industry/concept constituent screens: industry or concept name plus ranking condition, such as positive TTM PE lowest,涨幅前10,成交额前10;
--涨停/跌停 lists: first/last limit time, open count, sealed amount, consecutive days,几天几板,板型,涨停/跌停原因,原因揭秘, industry;
-- fund/ETF snapshot: latest NAV/date, cumulative NAV, near-period returns,申赎状态, listed ETF trading fields;
+- industry/concept constituent screens: industry or concept name plus ranking condition, such as positive TTM PE lowest,涨幅前 10,成交额前 10;
+- 涨停/跌停 lists: first/last limit time, open count, sealed amount, consecutive days,几天几板,板型,涨停/跌停原因,原因揭秘, industry;
+- fund/ETF snapshot: latest NAV/date, cumulative NAV, near-period returns,申购状态, listed ETF trading fields;
 - Hong Kong quick quote: price, change, and some valuation fields when `range=HK-GP`.
 
 ## Weak Or Unsuitable Uses
@@ -46,9 +46,9 @@ Do not rely on TDX for:
 
 - official announcements, CNINFO, exchange filings, annual/interim/quarterly reports, IR records, or official customer/supplier evidence;
 - research-report text, analyst thesis, or full broker-note retrieval;
-- stable资金流/北向/主力净流入 fields; tested queries returned empty;
-- one-call multi-stock comparison; tested comparison returned only one subject, so split calls;
-- market-wide aggregated breadth such as exact上涨/下跌家数; tested broad query returned a stock list rather than totals;
+- stable资金流/北向/主力净流入 fields unless a specific query is verified live;
+- one-call multi-stock comparison; split calls when row completeness matters;
+- market-wide aggregated breadth such as exact上涨/下跌家数 when the response is a stock list rather than totals;
 - durable historical OHLCV warehouse, factor backtesting, VCP pattern research, or auditable quantitative datasets.
 
 ## Evidence Treatment
@@ -59,12 +59,12 @@ Classify TDX output as:
 - `secondary_trading_context` for涨停/跌停原因,原因揭秘,板型,连板,封单 and concept labels;
 - never `official_announcement` or `confirmed_official`.
 
-In stock research, TDX can support trading elasticity, timing, liquidity, valuation context, market attention, and follow-up source prioritization. It cannot prove true beneficiary status, order/customer evidence, supply-chain exposure, or durable earnings inflection.
+TDX can support trading elasticity, timing, liquidity, valuation context, market attention, and follow-up source prioritization. It cannot prove true beneficiary status, order/customer evidence, supply-chain exposure, or durable earnings inflection.
 
 ## Query Discipline
 
 - Query one stock, one fund, one index, one sector/concept, or one screen per call.
-- Include ticker and name when possible: `贵州茅台600519最新行情`.
+- Include ticker and name when possible: `贵州茅台 600519 最新行情`.
 - Use `range=ZS` for sector/index codes and `range=JJ` for funds/ETFs.
 - For comparisons, call each security separately, then synthesize.
 - If a query returns `meta.total=0`, rewrite shorter with fewer mixed dimensions before declaring data unavailable.

@@ -21,7 +21,6 @@ import sys
 from typing import List
 
 WATCHLIST_PATH = os.path.join(".cache", "market-tracker", "watchlist.json")
-os.makedirs(os.path.dirname(WATCHLIST_PATH), exist_ok=True)
 
 
 def load_watchlist() -> List[str]:
@@ -42,6 +41,7 @@ def load_watchlist() -> List[str]:
 
 
 def save_watchlist(items: List[str]) -> None:
+    os.makedirs(os.path.dirname(WATCHLIST_PATH), exist_ok=True)
     with open(WATCHLIST_PATH, "w", encoding="utf-8") as f:
         json.dump({"items": items}, f, ensure_ascii=False, indent=2)
 

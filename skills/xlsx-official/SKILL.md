@@ -1,9 +1,10 @@
 ---
 name: xlsx-official
 description: "Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Claude needs to work with spreadsheets (.xlsx, .xlsm, .csv, ...."
-risk: unknown
-source: community
-date_added: "2026-02-27"
+metadata:
+  risk: unknown
+  source: community
+  date_added: "2026-02-27"
 ---
 
 # Requirements for Outputs

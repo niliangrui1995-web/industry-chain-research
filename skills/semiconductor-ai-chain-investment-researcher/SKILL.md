@@ -169,9 +169,9 @@ Use the smallest useful combination:
 - Competitive landscape and true leaders: `competitive-landscape`, `competitive-intel`.
 - A-share company fundamentals: `stock-evaluator`, `business-analyst`.
 - Ranking rubric and bias control: `advanced-evaluation`.
-- Market data and timing: `TDX Finance Data:tdx-finance-data`, `allstock-data`, `banana-farmer`, `finance`, `yfinance-mcp-server`, `stocks`, `alpha-vantage`.
+- Market data and timing: `TDX Finance Data:tdx-finance-data`, iFinD MCPs, `allstock-data`, `banana-farmer`, `finance`, `alpha-vantage`.
 
-`20-andruia-niche-intelligence` is optional background domain framing for non-semiconductor niche analysis. It is not the main semiconductor/AI-chain investment skill.
+Non-semiconductor niche analysis should stay in `user-investment-framework` + `industry-chain-deep-disassembly` + `deep-research` unless the user explicitly requests another installed framework.
 
 ## Output Pattern
 

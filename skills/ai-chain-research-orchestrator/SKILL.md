@@ -138,7 +138,7 @@ Cap confidence by evidence grade: C-level items can support "watch" or "verify n
 
 6. **Verify stock execution data**
    - Use `allstock-data` for A-share, HK, and quick US quote/K-line checks when available.
-   - Use `yfinance-mcp-server`, `stocks`, or `alpha-vantage` for overseas quotes, financials, and history.
+   - Use `finance`, `alpha-vantage`, iFinD global stock MCP, and official filings/IR for overseas quotes, financials, and history.
    - For A-share trading elasticity, check price position, turnover, 20/60-day trend, market cap or float market cap when available, and catalyst density.
 
 7. **Rank separately**

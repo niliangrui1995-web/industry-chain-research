@@ -23,18 +23,7 @@ function loadApiKey() {
     return process.env.FIRECRAWL_API_KEY;
   }
 
-  const envPath = path.join(__dirname, '.env');
-  if (!fs.existsSync(envPath)) {
-    return null;
-  }
-
-  const envContent = fs.readFileSync(envPath, 'utf8');
-  const match = envContent.match(/FIRECRAWL_API_KEY\s*=\s*(.+)/);
-  if (!match) {
-    return null;
-  }
-
-  return match[1].trim().replace(/^[\"']|[\"']$/g, '');
+  return null;
 }
 
 function usage() {
@@ -51,9 +40,10 @@ function usage() {
       'Options:',
       '  --wait  Wait for crawl job completion (crawl / crawl-status only)',
       '  --id    Crawl job id (crawl-status only)',
+      '  --max-wait-seconds  Max wait time when --wait is used (default: 300)',
       '',
       'Env:',
-      '  FIRECRAWL_API_KEY (env var) or .env file next to this script',
+      '  FIRECRAWL_API_KEY',
     ].join('\n'),
   );
 }
@@ -222,11 +212,16 @@ async function getCrawlStatus(apiKey, crawlId) {
   return requestJson('GET', `/v2/crawl/${safeId}`, apiKey);
 }
 
-async function waitForCrawlCompletion(apiKey, crawlId) {
+async function waitForCrawlCompletion(apiKey, crawlId, maxWaitSeconds) {
   const pollIntervalMs = 3_000;
+  const startedAt = Date.now();
 
-  // Poll forever by default; caller can abort with Ctrl+C.
   for (;;) {
+    const elapsedSeconds = (Date.now() - startedAt) / 1000;
+    if (elapsedSeconds > maxWaitSeconds) {
+      throw new Error(`Timed out waiting for crawl job ${crawlId} after ${maxWaitSeconds}s`);
+    }
+
     const statusResult = await getCrawlStatus(apiKey, crawlId);
     const status = extractCrawlStatus(statusResult);
 
@@ -264,12 +259,17 @@ const ENDPOINT_BY_COMMAND = {
 
   const apiKey = loadApiKey();
   if (!apiKey) {
-    console.error('Missing Firecrawl API key: set FIRECRAWL_API_KEY or create .env next to firecrawl-api.js');
+    console.error('Missing Firecrawl API key: set FIRECRAWL_API_KEY');
     process.exit(1);
   }
 
   try {
     const wait = takeFlag(args, '--wait');
+    const maxWaitSecondsValue = takeFlagValue(args, '--max-wait-seconds');
+    const maxWaitSeconds = maxWaitSecondsValue === null ? 300 : Number(maxWaitSecondsValue);
+    if (!Number.isFinite(maxWaitSeconds) || maxWaitSeconds <= 0) {
+      throw new Error('--max-wait-seconds must be a positive number');
+    }
 
     if (command === 'crawl-status') {
       const explicitId = takeFlagValue(args, '--id');
@@ -297,7 +297,7 @@ const ENDPOINT_BY_COMMAND = {
       }
 
       const result = wait
-        ? await waitForCrawlCompletion(apiKey, crawlId)
+        ? await waitForCrawlCompletion(apiKey, crawlId, maxWaitSeconds)
         : await getCrawlStatus(apiKey, crawlId);
       console.log(JSON.stringify(result, null, 2));
       return;
@@ -322,7 +322,7 @@ const ENDPOINT_BY_COMMAND = {
         throw new Error('Missing crawl job id in response (expected id/jobId)');
       }
 
-      const finalResult = await waitForCrawlCompletion(apiKey, crawlId);
+      const finalResult = await waitForCrawlCompletion(apiKey, crawlId, maxWaitSeconds);
       console.log(JSON.stringify(finalResult, null, 2));
       return;
     }

@@ -37,7 +37,7 @@ This skill is not an executable Gemini Deep Research wrapper. There is no local 
    - Stock mapping, if relevant
 3. Build a source plan:
    - Use `search-specialist` for query design and official-source priority.
-   - Use `web-scraper`, `firecrawl-scraper`, or `tavily-web` for extraction when needed.
+   - Use `firecrawl-scraper`, `tavily-web`, or global `web-scraper` for extraction when needed.
    - Use `research-summarizer` for long reports, whitepapers, transcripts, PDFs, or multi-source briefs.
 4. Grade evidence:
    - A: official filings, exchange disclosures, company announcements, prospectuses, annual or quarterly reports.

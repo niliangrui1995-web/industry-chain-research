@@ -1,32 +1,43 @@
 ---
 name: stock-copilot-pro
 description: Optional QVeris/OpenClaw stock analysis helper for US/HK/CN quotes, fundamentals, technicals, news radar, and sentiment. In 产业链投研, use only as a supplemental data/news tool when explicitly useful; do not auto-route default investment conclusions, morning/evening briefs, or actionable calls here.
-env:
-  - QVERIS_API_KEY
-requirements:
-  env_vars:
+metadata:
+  env:
     - QVERIS_API_KEY
-credentials:
-  required:
-    - QVERIS_API_KEY
-  primary: QVERIS_API_KEY
-  scope: read-only
-  endpoint: https://qveris.ai/api/v1
-runtime: { language: nodejs, node: ">=18" }
-install: { mechanism: local-skill-execution, external_installer: false, package_manager_required: false }
-persistence: { writes_within_skill_dir: [config/watchlist.json, .evolution/tool-evolution.json], writes_outside_skill_dir: false }
-security: { full_content_file_url: { enabled: true, allowed_hosts: [qveris.ai], protocol: https } }
-network:
-  outbound_hosts:
-    - qveris.ai
-metadata: {"openclaw":{"requires":{"env":["QVERIS_API_KEY"]},"primaryEnv":"QVERIS_API_KEY","homepage":"https://qveris.ai"}}
-auto_invoke: false
-source: https://qveris.ai
-examples:
-  - "Analyze AAPL with a comprehensive report"
-  - "Technical analysis for 0700.HK"
-  - "Compare AAPL, MSFT, NVDA"
-  - "Give me fundamentals and sentiment for 600519.SS"
+  requirements:
+    env_vars:
+      - QVERIS_API_KEY
+  credentials:
+    required:
+      - QVERIS_API_KEY
+    primary: QVERIS_API_KEY
+    scope: read-only
+    endpoint: https://qveris.ai/api/v1
+  runtime: { language: nodejs, node: ">=18" }
+  install: { mechanism: local-skill-execution, external_installer: false, package_manager_required: false }
+  persistence:
+    writes_within_skill_dir:
+      - config/watchlist.json
+      - .evolution/tool-evolution.json
+    writes_outside_skill_dir: false
+    evolution_enabled_by_default: false
+  security: { full_content_file_url: { enabled: true, allowed_hosts: [qveris.ai], protocol: https } }
+  network:
+    outbound_hosts:
+      - qveris.ai
+  openclaw:
+    requires:
+      env:
+        - QVERIS_API_KEY
+    primaryEnv: QVERIS_API_KEY
+    homepage: https://qveris.ai
+  auto_invoke: false
+  source: https://qveris.ai
+  examples:
+    - "Analyze AAPL with a comprehensive report"
+    - "Technical analysis for 0700.HK"
+    - "Compare AAPL, MSFT, NVDA"
+    - "Give me fundamentals and sentiment for 600519.SS"
 ---
 
 # Stock Copilot Pro

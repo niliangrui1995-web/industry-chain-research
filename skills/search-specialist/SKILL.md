@@ -14,7 +14,7 @@ Use this skill as the evidence-discovery layer for `产业链投研`. It improve
 - Source quality ranking and contradiction tracking.
 - Chinese and English query expansion for global supply-chain research.
 - Historical versus current-fact separation.
-- Handoff to `research-summarizer`, `web-scraper`, `firecrawl-scraper`, `tavily-web`, or browser Grok/Gemini collection when deeper extraction is needed.
+- Handoff to `research-summarizer`, `firecrawl-scraper`, `tavily-web`, global `web-scraper`, or browser Grok/Gemini collection when deeper extraction is needed.
 
 ## Source Priority
 

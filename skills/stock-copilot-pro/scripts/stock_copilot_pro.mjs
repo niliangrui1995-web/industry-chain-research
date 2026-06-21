@@ -2124,7 +2124,7 @@ function parseArgs(argv) {
     maxAttemptsPerPhase: 3,
     includeSourceUrls: false,
     evidenceMode: false,
-    evolutionEnabled: true,
+    evolutionEnabled: false,
     actionable: false,
     skipQuestionnaire: false,
     summaryOnly: false,
@@ -2153,6 +2153,7 @@ function parseArgs(argv) {
     else if (key === "--timeout" && i + 1 < args.length) parsed.timeoutMs = (Number(args[++i]) || 25) * 1000;
     else if (key === "--include-source-urls") parsed.includeSourceUrls = true;
     else if (key === "--evidence") parsed.evidenceMode = true;
+    else if (key === "--evolution") parsed.evolutionEnabled = true;
     else if (key === "--no-evolution") parsed.evolutionEnabled = false;
     else if (key === "--actionable") parsed.actionable = true;
     else if (key === "--skip-questionnaire") parsed.skipQuestionnaire = true;
@@ -2263,7 +2264,8 @@ Options:
                              event radar universe scope
   --event-view timeline|theme
                              event output style
-  --no-evolution             disable reading/writing .evolution state
+  --evolution                enable reading/writing .evolution state
+  --no-evolution             keep .evolution disabled (default)
   --help                     show this message
 `);
 }
@@ -2401,4 +2403,3 @@ export {
   isDirectExecution,
   formatMarkdown,
 };
-

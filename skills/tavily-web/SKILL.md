@@ -1,12 +1,12 @@
 ---
 name: tavily-web
 description: Optional Tavily Search/Extract/Research API helper for source discovery, date/topic/domain filtering, citations, and web extraction. In 产业链投研, use after search-specialist when Tavily adds source coverage; do not use as the default route when built-in web, official sources, or project data tools are sufficient.
-version: 1.0.0
-compatibility: Requires env var TAVILY_API_KEY
-requires_env: [TAVILY_API_KEY]
-primary_credential: TAVILY_API_KEY
-outbound_hosts: ["api.tavily.com"]
 metadata:
+  version: 1.0.0
+  compatibility: Requires env var TAVILY_API_KEY
+  requires_env: [TAVILY_API_KEY]
+  primary_credential: TAVILY_API_KEY
+  outbound_hosts: ["api.tavily.com"]
   hermes:
     tags: [Web, Search, Tavily, Research, API, Citations]
     requires_env: [TAVILY_API_KEY]

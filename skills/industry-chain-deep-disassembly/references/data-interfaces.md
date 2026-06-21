@@ -97,7 +97,7 @@ Recommended fields:
 | evidence_grade | A/B/C/N/A |
 | source | source note |
 
-Preferred data path: official filings and IR first; `yfinance-mcp-server`, `stocks`, `alpha-vantage`, or other global market-data tools for market snapshot.
+Preferred data path: official filings and IR first; `finance`, `alpha-vantage`, iFinD global stock MCP, or other global market-data tools for market snapshot.
 
 ### supply_chain_nodes
 
@@ -262,7 +262,7 @@ Recommended fields: `claim_type`, `entity`, `url_or_file`, `date`, `evidence_gra
 
 ## Connector Boundary
 
-- Global leader market data: use `yfinance-mcp-server`, `stocks`, `alpha-vantage`, official filings, and company IR.
+- Global leader market data: use `finance`, `alpha-vantage`, iFinD global stock MCP, official filings, and company IR.
 - China market data: use `allstock-data`, `finance`, `stock-evaluator`, exchange filings, and company IR.
 - Live news or rumor discovery: use the project route through `ai-chain-research-orchestrator`, Grok/X, Gemini only when needed, then verify.
 - The data-interface script does not fetch from the internet. It normalizes verified or user-provided inputs.

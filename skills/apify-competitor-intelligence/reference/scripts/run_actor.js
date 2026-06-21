@@ -11,8 +11,8 @@
  */
 
 import { parseArgs } from 'node:util';
-import { writeFileSync, statSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { readFileSync, writeFileSync, statSync } from 'node:fs';
+import { isAbsolute, relative, resolve } from 'node:path';
 
 // User-Agent for tracking skill usage in Apify analytics
 const USER_AGENT = 'apify-agent-skills/apify-competitor-intelligence-1.0.1';
@@ -57,7 +57,8 @@ function validateFormat(format) {
 function validateOutputPath(outputPath) {
     const resolved = resolve(outputPath);
     const cwd = process.cwd();
-    if (!resolved.startsWith(cwd + '/') && resolved !== cwd) {
+    const relativePath = relative(cwd, resolved);
+    if (relativePath.startsWith('..') || isAbsolute(relativePath)) {
         console.error(`Error: Output path must be within the current directory. Got: ${outputPath}`);
         process.exit(1);
     }
@@ -350,7 +351,7 @@ function reportSummary(outputPath, format) {
 
     let count;
     try {
-        const content = require('fs').readFileSync(outputPath, 'utf-8');
+        const content = readFileSync(outputPath, 'utf-8');
         if (format === 'json') {
             const data = JSON.parse(content);
             count = Array.isArray(data) ? data.length : 1;
