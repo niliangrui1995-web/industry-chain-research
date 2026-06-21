@@ -1,10 +1,10 @@
 {
-  "generated_at_beijing": "2026-06-22 00:40",
-  "status": "ok",
+  "generated_at_beijing": "2026-06-22 00:30",
+  "status": "mechanical_guardrail_blocked",
   "mode": "dry_run",
   "window": {
-    "now_beijing": "2026-06-22 00:40",
-    "window_end_beijing": "2026-06-25 00:40"
+    "now_beijing": "2026-06-22 00:30",
+    "window_end_beijing": "2026-06-25 00:30"
   },
   "calendar_read": {
     "today_arg": "2026-06-21",
@@ -16,9 +16,9 @@
   },
   "action_counts": {
     "create": 0,
-    "update": 0,
+    "update": 1,
     "pause": 0,
-    "validate_pending": 1,
+    "validate_pending": 0,
     "repair_rrule": 0
   },
   "review_items": [
@@ -55,7 +55,14 @@
     "active_missing_source_headers": [],
     "active_unmatched_future": [],
     "scheduler_status_mismatch": [],
-    "scheduler_next_run_mismatch": [],
+    "scheduler_next_run_mismatch": [
+      {
+        "child_id": "6594-t-nidec-2026-06-24",
+        "planned_child_start_beijing": "2026-06-24 20:00",
+        "scheduler_next_run_beijing": "2026-06-25 04:00",
+        "delta_seconds": 28800
+      }
+    ],
     "duplicate_task_keys": {},
     "duplicate_ticker_dates": {}
   },
@@ -77,13 +84,13 @@
       "fiscal_period": "",
       "planned_child_start_beijing": "2026-06-24 20:00",
       "schedule_basis": "default_proxy_not_call_time",
-      "rrule": "RRULE:FREQ=WEEKLY;BYDAY=WE;BYHOUR=12;BYMINUTE=0;COUNT=1",
+      "rrule": "DTSTART:20260624T200000\nRRULE:FREQ=WEEKLY;BYDAY=WE;BYHOUR=20;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
       "scheduler_status": "ACTIVE",
-      "scheduler_next_run_beijing": "2026-06-24 20:00",
+      "scheduler_next_run_beijing": "2026-06-25 04:00",
       "scheduler_last_run_beijing": "",
-      "scheduler_next_run_matches_planned": true,
-      "scheduler_next_run_delta_seconds": 0,
+      "scheduler_next_run_matches_planned": false,
+      "scheduler_next_run_delta_seconds": 28800,
       "model": "gpt-5.5",
       "reasoning_effort": "xhigh",
       "has_memory": false,
@@ -91,7 +98,7 @@
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
       "official_source_url": "N/A",
-      "prompt_sha1": "336e41b46fbc98bca96677792fe11d9a3a1610c1"
+      "prompt_sha1": "74673b5cf8fd5e2e36fb5644a610003492e1edc8"
     },
     {
       "child_id": "ec-6594-t-20260525-f606f2",

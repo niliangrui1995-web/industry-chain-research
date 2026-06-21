@@ -20,7 +20,7 @@
 - 候选事件出现 ticker/company 不一致、ticker 后缀和 market 不一致、同 ticker 多公司、同 company 冲突 ticker、相邻串位或反向错配信号，且联网核验后仍无法解释，报告 `candidate_mapping_failed`。
 - 台湾 PCB 回归硬门失败：Wus 必须是 `2316.TW`，Compeq 必须是 `2313.TW`，Tripod 必须是 `3044.TW`。若本轮涉及台湾 PCB 且发现错配、重复、缺失或无法确认，报告 `ticker_company_mapping_failed`。
 - 同一 `TASK_KEY` 或兜底同 ticker + report_date 命中多场明显冲突财报，报告 `duplicate_key_ambiguous`。
-- 子任务 rrule 无法保持 `DTSTART + RRULE:FREQ=WEEKLY;...;COUNT=1`，报告 `child_rrule_update_failed`。
+- 子任务 rrule 无法保持 Codex 调度器可执行的一次性 `RRULE:FREQ=WEEKLY;...;COUNT=1`，报告 `child_rrule_update_failed`。
 - 官方电话会、webcast、results briefing 或 investor meeting 时间已经核验，但无法在 child header 保留官方时间、URL、时区和 `call_time_source_type`，报告 `writeback_verify_failed`，不得创建或更新受影响子任务。
 - 任何操作需要手工写 `confirmed_events.json`、手工执行 SQLite SQL、写 `kv_store.trade_dates`、调用 `MarketCalendar.load_trade_dates()`、`MarketCalendar._schedule_trade_dates_refresh()` 或其他交易日历刷新路径时，停止并报告 unsafe write path。
 
@@ -105,19 +105,19 @@ D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe D:\vcp_hunter\产业链投�
 
 - 每家公司必须创建独立 cron 子任务，命名：`财报电话会深挖 {ticker} {company} {report_date}`。
 - 子任务工作区仅 `D:\vcp_hunter\产业链投研`，`executionEnvironment=local`。所有母任务和子任务均统一写入 `model="gpt-5.5"`、`reasoning_effort="xhigh"`；不得再因 `default_proxy_not_call_time`、日期-only、非核心观察项或其他排期依据降档。UI/提示词标签必须与 TOML 字段一致。
-- 子任务 rrule 必须使用一次性周规则：
+- 子任务 rrule 必须使用 Codex 调度器可执行的一次性周规则。`Planned child start Beijing` 仍是业务真相；rrule 的 `BYDAY/BYHOUR/BYMINUTE` 必须使用该北京时间换算后的 UTC 等价值，让调度库 `next_run_at` 换算回北京时间后等于 header 计划时间：
 
 ```text
-DTSTART:YYYYMMDDTHHMMSS
 RRULE:FREQ=WEEKLY;BYDAY=<weekday>;BYHOUR=<hour>;BYMINUTE=<minute>;COUNT=1
 ```
 
-- DTSTART、BYDAY、BYHOUR、BYMINUTE 必须全部来自同一个最终计划开始北京时间；不加 Z，不换算 UTC。
+- `BYDAY/BYHOUR/BYMINUTE` 必须全部来自同一个最终计划开始北京时间的 UTC 等价值；例如北京时间 `2026-06-24 20:00` 应写成 UTC 周三 `BYHOUR=12;BYMINUTE=0`。
+- 不再新生成 `DTSTART`。历史 child 如已带 `DTSTART` 且调度库 `next_run_at` 与 header 北京时间一致，可兼容校验；未来新建/更新 child 统一使用无 `DTSTART` 的 native RRULE。
 - 禁止裸 DTSTART，禁止 `RRULE:FREQ=DAILY;COUNT=1`、`FREQ=DAILY`、`FREQ=HOURLY` 或任何没有 `COUNT=1` 的重复规则。
 - 创建或更新后必须读取 child `automation.toml`，用正则校验：
 
 ```text
-^DTSTART:\d{8}T\d{6}\nRRULE:FREQ=WEEKLY;BYDAY=(SU|MO|TU|WE|TH|FR|SA);BYHOUR=\d{1,2};BYMINUTE=\d{1,2};COUNT=1$
+^(?:DTSTART:\d{8}T\d{6}\n)?RRULE:FREQ=WEEKLY;BYDAY=(SU|MO|TU|WE|TH|FR|SA);BYHOUR=\d{1,2};BYMINUTE=\d{1,2};COUNT=1$
 ```
 
 - 子任务 prompt 必须按 `CHILD_PROMPT_TEMPLATE.md` 生成，并保留其中的 literal hard gate、project-local skill resolution、baseline、downstream demand outlook、upstream bottleneck evidence、source-quality、prior-quarter period resolution、QoQ growth、prior-quarter conference-call / earnings-webcast / results-briefing / investor-meeting comparison 和最终中文输出要求。子任务 prompt 正文必须使用英文；除本地路径和最终中文输出标签外，不要混用中文说明。

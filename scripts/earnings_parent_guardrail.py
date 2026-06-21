@@ -40,7 +40,7 @@ from zoneinfo import ZoneInfo
 BEIJING_TZ = ZoneInfo("Asia/Shanghai")
 WEEKDAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
 RRULE_PATTERN = re.compile(
-    r"^DTSTART:\d{8}T\d{6}\n"
+    r"^(?:DTSTART:\d{8}T\d{6}\n)?"
     r"RRULE:FREQ=WEEKLY;BYDAY=(SU|MO|TU|WE|TH|FR|SA);"
     r"BYHOUR=\d{1,2};BYMINUTE=\d{1,2};COUNT=1$"
 )
@@ -286,11 +286,10 @@ def _format_epoch_ms_beijing(value: Any) -> str:
 
 
 def _make_one_shot_rrule(start: dt.datetime) -> str:
-    local = start.astimezone(BEIJING_TZ)
+    scheduler_time = start.astimezone(dt.UTC)
     return (
-        f"DTSTART:{local.strftime('%Y%m%dT%H%M%S')}\n"
-        f"RRULE:FREQ=WEEKLY;BYDAY={WEEKDAYS[local.weekday()]};"
-        f"BYHOUR={local.hour};BYMINUTE={local.minute};COUNT=1"
+        f"RRULE:FREQ=WEEKLY;BYDAY={WEEKDAYS[scheduler_time.weekday()]};"
+        f"BYHOUR={scheduler_time.hour};BYMINUTE={scheduler_time.minute};COUNT=1"
     )
 
 

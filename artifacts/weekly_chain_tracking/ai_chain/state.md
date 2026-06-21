@@ -1,6 +1,6 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
-更新时间：2026-06-21
+更新时间：2026-06-22
 最新报告：`artifacts/weekly_chain_tracking/ai_chain/2026-06-21.md`
 覆盖窗口：2026-06-15 至 2026-06-21，北京时间
 当前阶段：第九期全链雷达。已吸收光模块专项最新状态和 AI PCB 专项 2026-06-21 状态；本期主深挖为 `memory/storage/server parts + HBM test/probe` 与 `数据中心电力/并网/液冷/800VDC`。
@@ -56,6 +56,10 @@
 ## 2026-06-21 芯碁微装先进封装设备最小跟踪卡
 
 新增：[芯碁微装 688630.SH 最小跟踪卡](../../company_tracking/688630.SH/state.md)。定位为 `advanced_packaging_equipment_watch / evidence_gap_card`。可确认的是 WLP/PLP/IC 载板直写光刻设备、WLP 2000 重复订单/出货与多个头部客户验收量产、WLP 在手订单突破 1 亿元的 B 级公司官微转述；不能把 SK 海力士清州 HBM4 封装备产、Amkor-TSMC 美国先进封装协议或类 CoWoS-L 量产线索直接写成芯碁微装 HBM4/CoWoS 客户、订单、收入占比或交付节奏。
+
+## 2026-06-22 三环集团高端 MLCC 最小跟踪卡
+
+新增：[三环集团 300408.SZ 最小跟踪卡](../../company_tracking/300408.SZ/state.md)。定位为 `secondary_track_up / fundamental_main_beneficiary_candidate / evidence_gap_card`。可确认的是 AI server 高端 MLCC/X6S 与 AI power passives 需求上行已进入 `future_watch/watch_to_soft`，且既有 MLCC 次主线材料把三环集团列为更偏基本面主受益候选；不能把行业侧高端 MLCC 交期、TAM、涨价或 Rubin 价值量线索直接写成三环集团 AI server 客户、料号、订单、收入拆分或毛利兑现。
 
 ## 本期深挖方向
 
