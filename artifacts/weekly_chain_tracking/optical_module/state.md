@@ -1,8 +1,8 @@
 # 周度跟踪：光模块及上游细分环节 - 滚动状态
 
-更新时间：2026-06-20（回写 2026-06-17 08:53 与 2026-06-18 08:54 邮件线索）
-最新报告：`artifacts/weekly_chain_tracking/optical_module/2026-06-17.md`
-覆盖窗口：2026-06-14 至 2026-06-17
+更新时间：2026-06-21
+最新报告：`artifacts/weekly_chain_tracking/optical_module/2026-06-21.md`
+覆盖窗口：2026-06-17 至 2026-06-21
 
 ## 任务边界
 
@@ -28,113 +28,126 @@
 
 ## 当前主结论
 
-- 当前主硬堵点维持在高端光源链，但本期从 `EML / InP / CW-DFB / pump / ELS` 进一步精确为 `InP 衬底出口许可 + 6 英寸合格 InP 产能 + EML/CW-DFB/UHP/ELS 客户认证和锁产能`。
-- AXT 10-Q 把 InP 出口许可从传闻/产业链叙述升级为 A 级官方约束。Reuters 6 月 11 日产业链报道与 Lumentum、Coherent、TrendForce、Ciena 官方材料交叉验证，说明该约束会传导到 AI 数据中心光互连。
-- EML/InP 偏紧预计持续至 2026H2-2027H1，置信度中高；InP 衬底、CW-DFB、UHP pump、ELS 若随 CPO/NPO/scale-up 光互连放量，尾部可能延至 2027H2-2028H1，置信度中。
-- 光模块整机装配与关键原材料同步维持 `soft_bottleneck/eased`，预计 2026Q2-Q3 继续缓解；本周未发现 A/B 级证据证明整机装配重新成为硬堵点。
-- Ciena optical systems / coherent modules / pluggables 的供需紧张已被 A 级官方 transcript 确认，但仍是系统级读数，不能直接拆为 EML、pump、modem 或模块光源单品缺口。
-- FAU/fiber array/MT ferrule/高密连接、PM fiber、主动对准/WLBI/光电测试、ELSFP 热管理与液冷兼容进入未来 6-24 个月迁移观察；本周证据仍不足以升级为当前硬堵点。
-- 2026-06-15 邮件短更新：未找到 A/B 级来源证明“`NVIDIA CFO 已确认 CPO 按计划推进`”原文；官方可确认的是 NVIDIA 2026 CPO 路线以及 Lumentum、Coherent capacity rights / purchase commitment，不足以单独升级 watch 项。
-- 大立光 FA 自动化试产线和潜在 FAU 客户验证线索使 `FAU / fiber array / 高密连接` 的证据质量上升，但仍是试产/认证阶段，不是当前短缺、涨价、交期或良率瓶颈证据。
-- 天孚“CPO 光引擎市占 >60%、订单排至 2028 年”未取得官方硬证据；罗博特科 ficonTEC 约 6 亿元订单为 A 级真订单，但指向可插拔硅光量产化耦合设备，不等同 CPO 当前设备瓶颈。
-- 2026-06-16 ficonTEC 官网确认与 NVIDIA 围绕下一代 CPO 和 AI 光互连制造、对准、晶圆级/芯片级测试方案持续推进合作；该信息强化罗博特科 `300757.SZ` 的 A 股直接映射和设备迁移观察，但未披露 NVIDIA 采购金额、订单或验收收入，不能替代 CPO-specific 当前设备短缺证据。
-- 2026-06-17 08:53《AI产业链战报》把“NVIDIA CPO H2 2026 量产确认、罗博特科 ficonTEC 亚微米级对准验证、设备链弹性提升”列为新增线索；本次只把它作为邮件战报/混合情报触发项，与 ficonTEC 官网 A 级合作进展共同强化设备迁移观察，不写成 CPO-specific 订单、交付、验收收入或客户采购路径已落地。
-- 2026-06-18 08:54《AI产业链战报》继续把 AMD 抢锁高功率 CW 激光器、NVIDIA 通过 Lumentum/Coherent 多年长约锁产能、`InP 基板 + CW 激光器` 双瓶颈列为新增线索；本次仅作为 `CW/EML/InP 上游卡脖子观察` 的 C 级触发项，不写成源杰科技或其他 A 股公司的客户、订单、收入、毛利率或交付硬证据。源杰窄口径回写见 `artifacts/company_tracking/688498.SH/state.md`。
-- 新易盛 2026-06-15 互动问答支持 Q2 起供应链逐步缓解、下半年交付能力稳定，继续支撑光模块整机装配 `soft_bottleneck/eased`。
-- 2026-06-17 东山精密 IR 确认索尔思收购事项已基本完成并并表，12 亿美元主要用于光芯片和光模块产能扩建，后续技术方案坚持 EML 与硅光并行；MOCVD 外延设备目前主要依赖进口，DSP 芯片和 InP 衬底已锁定未来一段时间核心物料储备。该证据把东山精密上调为 A 股光芯片/光模块垂直一体化强观察，但不改变 `InP/EML` 当前主硬堵点，也不把 `DSP` 升级为当前硬堵点。
+- 当前主硬堵点仍为 `InP 衬底 / 外延片 / 6 英寸合格 InP 平台 / EML / CW-DFB / UHP pump / ELS`。堵点定义是短期需求超过合格供给、可用产能、良率、老化测试和客户认证能力；高壁垒、高毛利或高热度本身不构成堵点。
+- 2026-06-21 本轮增量主要是供给侧集中扩产和锁供：Coherent 与美国商务部 CHIPS LOI、JX Advanced Metals 上调 InP 衬底扩产、IQE/Tower 多年 InP 外延片供应协议、Nokia 光子芯片先进测试封装扩产。结论是：主堵点仍硬，但缓解路径更可见。
+- EML/InP 偏紧预计持续至 `2026H2-2027H1`，置信度中高；CW-DFB/UHP/ELS 若随 2027-2028 CPO/NPO/scale-up 光互连放量，尾部可能延至 `2027H2-2028H1`，置信度中；长期 InP 衬底若 JX/Coherent/Lumentum/非中国供给扩产并通过客户认证，`2028-2030` 起缓解概率上升。
+- 光模块整机装配与关键原材料同步维持 `soft_bottleneck/eased`，预计 `2026Q2-Q3` 继续缓解。本窗口 CNINFO 未发现核心 A 股重新披露整机交付受限、关键料短缺、客户认证失败或订单延期。
+- 罗博特科/ficonTEC 与 NVIDIA 合作从官网线索升级为 CNINFO A 级公告确认，但同一公告明确相关业务早期、暂无在手订单和销售收入，因此 `主动对准 / CPO 制造测试设备` 只升级为未来迁移观察核心，不能升级为当前 hard_bottleneck。
+- 东山精密/索尔思 12 亿美元光芯片和光模块扩建强化 A 股垂直一体化映射，但项目审批、客户、订单、单独毛利、良率和产能爬坡仍缺量化；不改变 InP/EML 当前主硬堵点。
+- 数据中心 optical fiber / cable / connectivity 因 Amazon-Corning 与 NVIDIA-Corning 官方合作维持边界内 `soft_bottleneck/watch`；目前仍不能外推为 FAU/MT ferrule/PM fiber/fiber array 当前短缺。
 
-## 2026-06-15 / 2026-06-17 / 2026-06-18 邮件线索短更新状态
+## 本期主深挖与次级跟踪
 
-| watch 项 | 本次处理 | 原因 | 下次升级触发 |
-|---|---|---|---|
-| NVIDIA CPO/NPO/ELS 进度 | 未来观察增强，不升级为当前硬堵点 | 官方路线仍指向 2026 商业化，ficonTEC 官网 2026-06 确认与 NVIDIA 在 CPO/AI 光互连制造测试方案上持续推进合作；但未披露 NVIDIA 设备采购金额、订单、交期或验收收入。 | NVIDIA 或交换机/光源供应商披露 CPO-specific 量产、交期、allocation、客户锁产能、设备订单或财务兑现。 |
-| NVIDIA CPO H2 2026 量产与设备链弹性 | 未来观察增强，不升级为当前硬堵点 | 2026-06-17 08:53《AI产业链战报》称 NVIDIA CPO 无延误、H2 2026 量产确认，并称罗博特科/ficonTEC CPO 组装系统亚微米级对准通过头部半导体企业验证；但该战报是邮件战报/混合情报线索，缺 NVIDIA、客户或罗博特科公开披露的采购金额、订单、交付、验收收入和采购路径。 | NVIDIA/SVP transcript、产品更新、客户部署，或罗博特科披露 CPO-specific 设备订单、设备交期排队、验收收入、客户采购路径。 |
-| FAU / fiber array / MT ferrule / 微透镜 / 高密连接 | 维持 `watch_to_soft`，证据质量上升 | 大立光 9 月前 FA 自动化试产线和潜在客户验证说明产业准备提速，但仍未进入短缺和量产瓶颈证据层。 | 客户定点、量产订单、交期拉长、价格上行、良率或返修压力。 |
-| 主动对准 / 耦合 / WLBI / 光电联合测试 | 维持 `watch_to_soft`，证据质量上升 | 罗博特科 ficonTEC 6 亿元订单真实但公告口径是可插拔硅光量产化耦合设备及服务；2026-06 ficonTEC/NVIDIA 官网合作进展强化 CPO 制造测试路线，2026-06-17 邮件战报进一步把亚微米级对准验证列为设备链弹性线索，但仍不是 CPO-specific 当前短缺。 | 新增 CPO/NPO 光引擎设备订单、设备交期排队、测试节拍瓶颈、良率爬坡证据或验收收入。 |
-| 天孚光引擎个别物料 | 维持公司级 `soft_bottleneck/watch` | 公司硬证据仅确认 FAU/ELS 稳定交付和个别物料阶段性缺货；市占 >60%、订单到 2028 未核实。 | 公司点名具体缺料、缺口比例、客户影响，或披露订单/收入/产能锁定。 |
-| 源杰 200G EML / 高端激光器 | 维持 watch | 未找到 2026-06-15 新客户定点、批量订单、收入拆分或毛利兑现证据。 | 200G PAM4 EML 客户设计定点、批量出货、订单或收入拆分。 |
-| AMD/NVIDIA CW 激光器锁产能与 InP/CW 双瓶颈 | 强化 `CW/EML/InP` 观察，不升级公司硬证据 | 2026-06-17 与 2026-06-18 邮件战报均把 AMD 抢锁 CW、NVIDIA/Lumentum/Coherent 长约和 InP/CW 供需缺口作为混合情报线索；但邮件本身仍含 Grok/P2/P5/P7 分层，缺少源杰公司、客户或交易所的直接披露。 | Lumentum/Coherent/AXT/Source Photonics/源杰等披露同口径交期、allocation、客户锁产能、CW 分功率段订单/收入、200G EML 量产收入或毛利率。 |
-| 光模块整机装配与关键原材料同步 | 维持 `soft_bottleneck/eased` | 新易盛 2026-06-15 互动问答称 Q2 起供应链逐步缓解、下半年交付能力稳定；昨晚 A 股跟踪未发现中际/天孚/源杰新增经营硬证据。 | 模块厂重新点名关键料、测试、封装或客户认证短缺并影响交付。 |
+- 主深挖：InP 衬底 / 外延片 / 6 英寸合格 InP 平台及其对 EML、CW-DFB、UHP pump、ELS 的约束。
+- 次级跟踪 1：CPO/NPO 光引擎制造、主动对准、WLBI/OWAT、光电联合测试和先进封装测试。
+- 次级跟踪 2：数据中心高密度 optical fiber / cable / connectivity 与 FAU/fiber array/MT ferrule 的边界内传导。
+- 次级跟踪 3：光模块整机装配和 A 股核心公司披露窗口。
 
 ## 上期问题回访状态
 
 | 上期问题 | 本期结果 | 状态 |
 |---|---|---|
-| Lumentum Mizuho 2026-06-09 或后续官方 transcript 是否披露 EML/CW-DFB/pump/ELS 交期、allocation、订单可见度和 6 英寸 InP ramp？ | 找到第三方 transcript 页面和 TIKR 摘要，未找到 Lumentum 官网逐字稿。第三方摘要只能按 B/C 级使用。 | 部分证实，未转 A；继续跟踪 |
-| Coherent 后续 10-Q/IR 是否把 6 英寸 InP 良率、产量目标转化为合格产能、客户认证、毛利和库存周转改善？ | Reuters 和 Coherent OFC deck 强化 6 英寸 InP、CW-DFB、CPO/ELS 缓解路径，但仍缺良率、客户认证和财务兑现。 | 缓解路径强化；兑现待跟踪 |
-| 新易盛 Q2 物料缓解是否在财报或投关记录中拆明具体物料，天孚个别物料是否有类别、缺口比例和客户影响？ | CNINFO 2026-06-07 至 2026-06-14 查询中，300502、300394 及 A 股核心 8 家 total=0。 | 仍待跟踪 |
-| Ciena 官方 replay/transcript 或后续 10-Q 是否确认 pump laser / modem / line-system 约束，并能否区分 EDFA/Raman pump、coherent modem 与数据中心模块光源？ | Ciena 官方 transcript 已确认 backlog 77 亿美元、400G/800G pluggables 强、supply not keeping pace with demand。仍未拆单品。 | broad optical supply tightness 已确认；细分仍待跟踪 |
-| FAU/fiber array、ELSFP liquid cooling、主动对准/测试设备是否从 Computex 展示转入客户认证、交期拉长、良率/返修或批量订单证据？ | Amazon-Corning、Wiwynn/Ayar、Corning FAU、Coherent CPO stack 强化 future watch，但无当前交期/价格/良率/订单排队证据。 | 未来观察增强，未升级硬堵点 |
+| AXT、Coherent、Lumentum 是否披露 InP 出口许可、6 英寸 InP 良率、客户认证、库存和毛利变化？ | Coherent/JX/IQE/Tower 给出强扩产和锁供证据；AXT/Lumentum 本窗口未见新增官方 transcript 或许可细节。 | 缓解路径强化；主堵点未解除 |
+| Lumentum 是否发布 Mizuho 2026-06-09 官网 transcript/replay 或后续 10-Q？ | 未找到 Lumentum 官网逐字稿或 IR 原文；第三方 transcript/摘要仍不升 A。 | 仍待跟踪 |
+| Ciena 是否把 supply not keeping pace 拆成 pump、modem、coherent module、line system 或 pluggable 单品？ | 本窗口无新增单品拆分。Ciena broad optical tightness 仍是系统级 read-through。 | broad 确认，细分待跟踪 |
+| 新易盛、天孚、中际、源杰等 A 股公司是否披露物料、客户、预付款、存货、毛利和交付？ | CNINFO 6 月 17-21 日：中际、新易盛、天孚、源杰、长光华芯、光库、太辰光、长飞无新增相关公告；东山和罗博特科新增公告。 | 多数仍待跟踪；东山/罗博特科已补证 |
+| FAU/fiber array、MT ferrule、PM fiber、ELSFP thermal、主动对准/WLBI/测试设备是否出现交期、涨价、订单排队、良率或返修证据？ | ficonTEC/NVIDIA 与 Nokia 先进测试封装强化 future watch；罗博特科公告明确无订单/收入，未见交期/涨价/良率瓶颈。 | 未来观察增强，未升级当前堵点 |
+| NVIDIA 是否发布可核验的 CFO/SVP transcript、CPO product update 或 customer deployment 信息？ | 未找到 CFO 原文；NVIDIA 官方产品页仍支持 2026 photonics 路线，ficonTEC 合作强化路线推进。 | 路线增强，CFO 表述仍 N/A |
+| 大立光 FA 自动化试产线是否如期建成并转客户定点？ | 本窗口未见新 A/B 证据。 | 仍待跟踪 |
+| 天孚 CPO 光引擎市占、订单期限、FAU/ELS 产能和个别物料缺口是否被证实？ | 本窗口未见公司公告或投关拆分；市占 >60%、订单至 2028 仍不入事实层。 | 仍待跟踪 |
+| 罗博特科 ficonTEC 是否出现新的 CPO-specific 设备订单、NVIDIA/客户采购路径、交期排队、产能瓶颈或验收收入证据？ | CNINFO 确认合作开发，但同时确认暂无相关在手订单和销售收入。 | 合作证实；商业化证伪/降级 |
+| 新易盛 Q2 起供应链缓解是否在 Q2/Q3 财报中兑现？ | 本窗口未到 Q2 财报，未见新增财务兑现。 | 仍待跟踪 |
 
 ## 当前堵点账本
 
 | 节点 | 状态 | 严重程度 | 造成堵点的机制 | 本期变化 | 关键证据 | 预计持续时间 | 反转指标 | 下次动作 |
 |---|---|---|---|---|---|---|---|---|
-| InP substrate / 6 英寸合格 InP 产能 / EML / CW-DFB / UHP pump / ELS | 当前主堵点 | hard_bottleneck | 出口许可、InP 衬底集中、6 英寸良率、器件老化测试、客户认证、capacity rights、ELS 热稳定共同约束可交付供给 | worsened/refined | AXT 10-Q；Reuters 6/11；Lumentum/Coherent OFC；TrendForce 6/3；Ciena official transcript | EML/InP：2026H2-2027H1；CW/ELS/UHP/InP 尾部：2027H2-2028H1 可能偏紧；置信度中高/中 | 许可正常化、6 英寸良率兑现、二供认证、交期/allocation/价格回落、客户不再锁产能 | 跟 AXT/Coherent/Lumentum 10-Q、IR、许可、良率和客户认证 |
-| Ciena scale-across optical systems / coherent modules / 400G-800G pluggables | 系统级供需紧张 | soft_bottleneck/read-through | AI optical networking backlog 高，系统供给未跟上需求，但单品拆分不足 | confirmed | Ciena Q2 FY2026 official transcript 和 10-Q | 2026H2-2027 watch；置信度中 | backlog 回落、Q3/Q4 交付兑现、无追加 supply-security 投入 | 跟 pump/modem/line-system 拆分 |
-| 光模块整机装配与关键原材料同步 | 当前软堵点 | soft_bottleneck | 模块产线需光芯片、电芯片、无源件、PCB、测试资源和客户认证同步；备货、二供、保障协议和扩产仍在缓解 | eased/confirmed | CNINFO 2026-06-07~06-14 核心 8 家 total=0；2026-06-15 新易盛互动问答称 Q2 起供应链逐步缓解、下半年交付能力稳定 | 2026Q2-Q3 继续缓解；置信度中 | Q2/Q3 交付兑现、预付款和存货周转改善、毛利正常化；若模块厂重提关键料/测试短缺则反转 | 跟 Q2 财报、预付款、存货、毛利和订单 |
-| 天孚光引擎个别物料 | 公司级软堵点/观察 | soft_bottleneck/watch | 公司级阶段性缺货仍未拆清；FAU/ELS 已被公司称为稳定交付，不能升级为行业硬堵点 | unchanged | 2026-05-14 CNINFO 投关确认 FAU/ELS 稳定交付和个别物料阶段性缺货；2026-06-15 日更无新增拆分 | N/A；缺具体物料、缺口比例、交期和客户影响；置信度低 | 公司披露缺料解除或拆清物料；若点名 FAU/透镜/隔离器/磁光材料短缺并影响产量，则升级 | 继续追问物料类别和是否影响 1.6T 光引擎 |
-| 高密度数据中心光纤/光缆/连接组件 | 边界内观察增强 | soft_bottleneck/watch | AI cluster 光密度提升，客户长协和专用产能可能使合格 fiber/cable/connectivity 紧张 | upgraded_watch | Amazon-Corning 多年协议；Corning/Meta/NVIDIA 长协；Wiwynn CPO ecosystem | 当前 N/A；未来 0-12 个月可能升温；置信度中 | Corning/Fujikura 新产能释放、价格回落、交期正常化、连接件二供通过 | 跟 Corning transcript、Fujikura/Corning 产能、MT/FAU/PM fiber/fiber array 传导 |
-| FAU / fiber array / MT ferrule / 高密度连接件 / 微透镜阵列 | 未来迁移观察增强 | watch_to_soft | CPO/ELS 通道数和 fiber attach 密度上升，可拆卸维护和低损耗耦合提高精密连接门槛 | upgraded_watch/evidence_quality_up | Corning FAU page；Wiwynn ecosystem；Coherent CPO stack；大立光 9 月前 FA 自动化试产线和潜在客户验证线索 | 2026H2-2028；置信度中低 | 稳定交付、二供认证通过、CPO 延后 | 跟认证是否转量产、交期/涨价/良率 |
-| 主动对准 / 耦合 / WLBI / 光电联合测试 | 未来迁移观察 | watch_to_soft | 1.6T/3.2T、CPO/NPO 和 SiPh 光 I/O 提高耦合精度、测试节拍和 known-good optical engine 要求 | evidence_quality_up | Coherent CPO stack、Wiwynn/Ayar rack demo、罗博特科 ficonTEC 可插拔硅光耦合设备约 6 亿元订单、ficonTEC/NVIDIA 2026-06 官网合作进展、2026-06-17 邮件战报亚微米级对准验证线索 | 2026H2-2027 可能升温；置信度中 | 自动化设备交付增加、测试节拍下降、良率爬升 | 跟 CPO-specific 设备订单、设备交期、耦合 CT、WLBI/OWAT 成本、良率和验收收入 |
-| 光模块/光引擎热管理与 ELSFP 液冷兼容 | 未来迁移观察 | watch_to_soft | 高功率 ELS、CPO 和光引擎对激光稳定性、IHS/cage/TIM/冷板接口和热可靠性提出新要求 | upgraded_watch | Lumentum ELSFP product page；Wiwynn ELSFP liquid cooling；Ayar rack demo | watch，2026H2-2028；置信度低中 | 接口标准化、风冷/液冷方案稳定，多供应商稳定交付 | 等模块厂/交换机厂点名热可靠性或液冷兼容 |
-| DSP / driver / TIA / CDR | 战略节点，不是当前堵点 | watch/rejected as bottleneck | Broadcom/Marvell A 级财报证明 AI networking/electro-optics/CPO/NPO demand 强，但未见交期、allocation 或模块厂点名短缺 | unchanged_watch | Broadcom/Marvell 上期 official/transcript | N/A；未来 2027-2028 观察；置信度低中 | 出现明确客户 allocation、交期拉长、模块厂点名电芯片短缺；多源稳定供给则维持 strategic node | 等 3.2T/LPO/LRO/CPO 芯片交期证据 |
+| InP substrate / epiwafer / 6 英寸合格 InP / EML / CW-DFB / UHP pump / ELS | 当前主堵点 | hard_bottleneck | 衬底/外延/6 英寸良率、老化测试、客户认证、出口许可、锁产能共同约束高端光源可交付供给 | unchanged/refined/easing_path_clearer | Coherent CHIPS LOI；JX 7-10x 产能计划；IQE/Tower 多年外延片协议；Lumentum mid-2028 工厂；AXT/TrendForce/Reuters 既有偏紧证据 | EML/InP：2026H2-2027H1；CW/ELS/UHP 尾部：2027H2-2028H1；长期缓解看 2028-2030；置信度中高/中 | 许可正常化、6 英寸良率/认证兑现、交期/allocation/价格回落、客户停止锁产能 | 跟 Coherent/JX/IQE/Lumentum/AXT 产能、良率、认证、许可和客户锁产能 |
+| 光模块整机装配与关键原材料同步 | 当前软堵点 | soft_bottleneck | 模块产线需光芯片、电芯片、无源件、PCB、测试资源和客户认证同步；上游主堵点仍可传导 | eased/unchanged | 新易盛既有 Q2 供应链缓解；CNINFO 6/17-21 核心公司无新增整机短缺公告 | 2026Q2-Q3 继续缓解；置信度中 | Q2/Q3 交付兑现、毛利和存货周转改善；若模块厂重提关键料/测试短缺则反转 | 跟中际/新易盛/东山 Q2 财报和投关 |
+| Ciena scale-across optical systems / coherent modules / 400G-800G pluggables | 系统级供需紧张 | soft_bottleneck/read-through | 系统级 optical networking backlog 和 pluggables 强，但单品拆分不足 | unchanged | Ciena Q2 FY2026 official transcript/10-Q 既有 | 2026H2-2027 watch；置信度中 | backlog 回落、交付兑现、供应约束拆分消失 | 跟 pump/modem/line-system/pluggable 拆分 |
+| 天孚光引擎个别物料 | 公司级软堵点/观察 | soft_bottleneck/watch | 个别物料阶段性缺货仍未拆清；FAU/ELS 稳定交付口径未被新证据推翻 | unchanged | 2026-05-14 CNINFO 投关；本窗口无新增 | N/A；缺具体物料、缺口比例、交期和客户影响；置信度低 | 公司披露缺料解除或点名物料影响交付 | 继续追问物料类别和是否影响 1.6T 光引擎 |
+| 主动对准 / CPO 制造测试设备 | 未来迁移观察核心 | watch_to_soft | CPO/硅光光引擎需要更高精度对准、晶圆级/芯片级测试和验收；但商业化订单未落地 | evidence_up_but_not_current_bottleneck | ficonTEC/NVIDIA 官网合作；罗博特科 CNINFO 明确暂无订单/收入；Nokia ATP 扩产 | 当前 N/A；2026H2-2027 可能升温；置信度中低 | CPO-specific 订单、设备排队、验收收入、良率瓶颈；若无订单或 CPO 延后则降级 | 跟罗博特科订单、验收收入和客户采购路径 |
+| 高密度数据中心光纤/光缆/连接组件 | 边界内观察增强 | soft_bottleneck/watch | AI cluster 光密度提升，客户长协和专用产能可能使合格 fiber/cable/connectivity 紧张 | upgraded_watch | Amazon-Corning、NVIDIA-Corning 官方合作 | 当前 N/A；0-12 个月可能升温；置信度中 | 交期/涨价/长协 minimum capacity、FAU/MT/PM fiber/fiber array 单品短缺；若扩产充分释放则反转 | 跟 Corning/Fujikura/Sumitomo 产能、交期、合同细节和单品传导 |
+| FAU / fiber array / MT ferrule / 高密度连接件 / 微透镜阵列 | 未来迁移观察 | watch_to_soft | CPO/ELS 通道数和 fiber attach 密度上升，提高精密连接和低损耗耦合门槛 | unchanged_watch | Corning/FAU、台股试产/送样、Wiwynn/Ayar/Coherent 既有线索 | 2026H2-2028；置信度中低 | 稳定交付、二供认证通过、CPO 延后 | 跟认证转量产、交期/涨价/良率 |
+| 光模块/光引擎热管理与 ELSFP 液冷兼容 | 未来迁移观察 | watch_to_soft | 高功率 ELS、CPO 和光引擎对 IHS/cage/TIM/cold plate interface 和热可靠性提出要求 | unchanged_watch | Lumentum ELSFP、Wiwynn/Ayar 既有线索 | watch，2026H2-2028；置信度低中 | 接口标准化、风冷/液冷方案稳定，多供应商稳定交付 | 等模块厂/交换机厂点名热可靠性或液冷兼容 |
+| DSP / driver / TIA / CDR | 战略节点，不是当前堵点 | watch/rejected as current bottleneck | 需求和代际升级明确，但无交期、allocation 或模块厂点名短缺 | unchanged_watch | Broadcom/Marvell 既有；东山称锁定 DSP 储备 | N/A；未来 2027-2028 观察；置信度低中 | 出现明确客户 allocation、交期拉长、模块厂点名电芯片短缺；多源稳定供给则维持 strategic node | 等 3.2T/LPO/LRO/CPO 芯片交期证据 |
 
 ## 候选观察池
 
 | 候选节点 | 当前判断 | 需要验证的堵点问题 | 不可直接下结论的原因 |
 |---|---|---|---|
-| InP 衬底 / 外延 / 6 英寸平台 | 主堵点组成，本期主深挖 | 出口许可获批节奏、6 英寸良率、非中国产能、客户二供认证 | 出口许可和扩产路径均明确，但缺实时缺口比例和客户名单 |
-| EML / 高速激光芯片 | 主堵点 | 100/200G/400G lane EML 缺口比例、交期、老化测试和扩产兑现 | A/B 证据支持供给偏紧，但单品比例仍缺官方量化 |
-| CW-DFB / UHP pump / ELS | 主堵点组成和未来迁移核心 | CPO/SiPh/scale-up/scale-across 是否形成独立短缺 | TrendForce/Ciena/Wiwynn 证据增强，但订单、交期、收入单列仍不完整 |
-| 光模块整机与测试 | 软堵点缓解观察 | 中际/新易盛 Q2 交付、预付款、存货、毛利是否验证缓解 | 本周无新增整机缺料证据 |
-| FAU / fiber array / MT ferrule / 微透镜 / 隔离器 | 观察增强 | CPO/ELS 是否拉长交期或导致良率瓶颈 | 产品页、展示、送样和大立光试产线证明路线准备，不证明当前短缺 |
-| 主动对准 / 封装测试设备 / WLBI | 观察增强 | 光引擎/CPO 量产后设备、测试节拍和良率是否拖累爬坡 | 罗博特科 ficonTEC 订单证明可插拔硅光耦合设备需求；2026-06-17 邮件战报强化亚微米级对准验证线索，但仍不证明 CPO-specific 设备短缺、排队、交付或验收收入 |
-| 光连接/光纤/连接器 | 未来迁移增强 | Amazon/Corning、Meta/Corning、NVIDIA/Corning 是否传导到 MT/FAU/连接器、PM fiber、光纤阵列和 A/台股公司 | 普通光纤扩产不等于模块上游单品短缺，必须看到高密度数据中心/CPO/ELS 场景证据 |
-| 光模块/光引擎热管理与液冷兼容 | 观察增强 | 是否把卡点迁移到 IHS/cage/TIM/cold plate interface、ELSFP 稳定光源、浸没兼容、热可靠性和返修 | 机柜级液冷热度不能直接证明模块级卡点；需模块或 ELSFP 场景证据 |
+| InP 衬底 / 外延 / 6 英寸平台 | 主堵点组成，本期主深挖 | 出口许可、6 英寸良率、非中国产能、客户二供认证、交期和价格 | 扩产路径增强，但短期缺口比例和客户认证节奏仍缺 |
+| EML / 高速激光芯片 | 主堵点 | 200G/400G per lane EML 缺口比例、交期、老化测试和扩产兑现 | A/B 支持偏紧，但单品比例仍缺官方量化 |
+| CW-DFB / UHP pump / ELS | 主堵点组成和未来迁移核心 | CPO/SiPh/scale-up/scale-across 是否形成独立短缺 | 长协/扩产支持供需紧，但订单、交期、收入单列不完整 |
+| 主动对准 / 封装测试设备 / WLBI | 未来迁移观察增强 | CPO/光引擎量产后设备、测试节拍和良率是否拖累爬坡 | 合作证实但罗博特科公告明确暂无订单/收入；缺设备排队和验收收入 |
+| FAU / fiber array / MT ferrule / 微透镜 / 隔离器 | 观察增强 | CPO/ELS 是否拉长交期或导致良率瓶颈 | 产品页、展示、试产/送样证明路线准备，不证明当前短缺 |
+| 光连接/光纤/连接器 | 未来迁移增强 | Corning/Amazon/NVIDIA 长协是否传导到 MT/FAU/连接器、PM fiber、光纤阵列 | 普通光纤扩产不等于模块上游单品短缺 |
+| 光模块/光引擎热管理与液冷兼容 | 观察增强 | 是否迁移到 IHS/cage/TIM/cold plate interface、ELSFP 稳定光源、浸没兼容、热可靠性和返修 | 机柜级液冷热度不能直接证明模块级卡点 |
 | SiPh / TFLN | SiPh 路线期权增强，TFLN 仍 watch/rejected | 是否从路线验证进入客户定点与批量出货 | 当前更多是平台/路线证据，不是供需缺口 |
-
-## 本期主深挖与次级跟踪
-
-- 主深挖：InP 衬底/6 英寸合格 InP 产能及其对 EML、CW-DFB、UHP pump、ELS 的约束。
-- 次级跟踪 1：Ciena optical networking、coherent modules、400G/800G pluggables 和 pump/modem 供需读数。
-- 次级跟踪 2：CPO/NPO、ELSFP 热稳定、光引擎封装、FAU/fiber array 和高密连接。
-- 次级跟踪 3：高密度数据中心 fiber/cable/connectivity 与模块/光引擎边界内传导。
 
 ## 公司映射基线
 
 | 公司 | ticker | 市场 | 当前角色 | 状态 |
 |---|---|---|---|
+| Coherent | COHR.US | 美股 | 6 英寸 InP、EML、CW laser、photodiode、CPO/OCS、PM fiber/FAU | 全球主候选，也是主堵点缓解方 |
 | Lumentum | LITE.US | 美股 | EML、InP、UHP pump、CW/ELS、OCS/CPO | 全球主候选，第三方 Mizuho 信息待官方升级 |
-| Coherent | COHR.US | 美股 | InP 6 英寸、EML、CW laser、photodiode、CPO/OCS、FAU/PM fiber | 全球主候选，也是缓解路径 |
-| AXT | AXTI.US | 美股 | InP substrate、出口许可 | 本期新增纯敞口观察，政策和规模风险高 |
-| Broadcom | AVGO.US | 美股 | AI networking、CPO、1.6T DSP、CW/EML lasers | 全球核心路线公司，不是单一短缺证明 |
-| Ciena | CIEN.US | 美股 | Optical Networking、coherent modules、pluggables、line systems | 系统级 demand read-through，注意和组件供应商分层 |
-| Fabrinet | FN.US | 美股 | 高级光封装、模块装配和测试 | 量受益候选 |
-| Corning | GLW.US | 美股 | 光连接、光纤、AI 数据中心光连接产能、CPO fiber ecosystem、FAU | 未来迁移观察增强 |
-| 中际旭创 | 300308.SZ | A 股 | 800G/1.6T 模块、硅光、规模交付、前端供应链锁定 | A 股基本面核心 |
+| JX Advanced Metals | 5016.T | 日股 | InP substrate | 长期衬底缓解核心，FY2030 7-10x 目标 |
+| IQE | IQE.L | 英股 | InP epiwafer | Tower 多年供应协议强化外延片锁供 |
+| Tower Semiconductor | TSEM.US | 美股 | InP photonic devices / OCS modulator | SiPh/OCS 代工路径观察 |
+| Nokia | NOK.US / NOKIA.HE | 美/芬 | Photonic chip advanced test and packaging | 测试封装缓解方，非模块单品短缺证明 |
+| Corning | GLW.US | 美股 | 光连接、光纤、AI 数据中心 optical connectivity、FAU | 未来迁移观察增强 |
+| 中际旭创 | 300308.SZ | A 股 | 800G/1.6T 模块、硅光、规模交付、前端供应链锁定 | A 股基本面核心；交易弹性被超大市值压制 |
 | 新易盛 | 300502.SZ | A 股 | 800G/1.6T 模块、硅光、海外产能 | A 股业绩弹性核心，等 Q2 验证 |
 | 天孚通信 | 300394.SZ | A 股 | 光器件、1.6T 光引擎、FAU/ELS/CPO 配套 | 次级跟踪核心，个别物料待拆 |
 | 光迅科技 | 002281.SZ | A 股 | 光模块、光器件、硅光/CPO/NPO、海外产能 | 高交易弹性观察，需订单/收入验证 |
-| 东山精密 | 002384.SZ | A 股 | 索尔思光芯片/光模块、EML 与硅光并行、AI PCB 协同 | A 股垂直一体化强观察；业绩弹性高、交易弹性很高但拥挤，需订单/客户/毛利率/良率和扩产审批量化 |
-| 源杰科技 | 688498.SH | A 股 | CW laser、EML/DFB 光芯片 | 需 200G EML/AI 客户硬证据 |
-| 长光华芯 | 688048.SH | A 股 | 高功率半导体激光平台、光通信 EML/DFB/VCSEL/CW DFB 观察 | `watch_to_soft/evidence_gap_card`；详见 `artifacts/company_tracking/688048.SH/state.md`；缺 AI 光互连客户、功率段、收入占比和量产订单硬证据，不能等同 InP/CW 主堵点 |
+| 东山精密 | 002384.SZ | A 股 | 索尔思光芯片/光模块、EML 与硅光并行、AI PCB 协同 | A 股垂直一体化强观察；12 亿美元扩建增强，需订单/客户/毛利/良率量化 |
+| 源杰科技 | 688498.SH | A 股 | CW laser、EML/DFB 光芯片 | 需 200G EML/AI 客户硬证据；估值和证据缺口高 |
+| 长光华芯 | 688048.SH | A 股 | 高功率半导体激光平台、光通信 EML/DFB/VCSEL/CW DFB 观察 | `watch_to_soft/evidence_gap_card`，不能等同 InP/CW 主堵点 |
 | 光库科技 | 300620.SZ | A 股 | 隔离器、铌酸锂、无源器件 | 观察 |
-| 罗博特科 | 300757.SZ | A 股 | ficonTEC 光子封装/测试设备 | ficonTEC 全资体系内资产；NVIDIA 合作进展与 2026-06-17 邮件战报共同强化设备迁移观察；详见 `artifacts/company_tracking/300757.SZ/state.md`，仍需 CPO-specific 订单、交付、验收收入和客户采购路径证据 |
+| 罗博特科 | 300757.SZ | A 股 | ficonTEC 光子封装/测试设备 | 官方合作证实但暂无订单/收入；未来设备迁移观察核心，不是当前主堵点 |
 | 太辰光 | 300570.SZ | A 股 | MT ferrule、连接器/精密连接件、FAU 观察 | 光连接高波动观察池 |
 | 光圣科技 | 6442.TW | 台股 | datacenter optics、合圣 FAU/ELS/CPO 零组件 | 台股重点观察，仍为认证/试产阶段 |
 | 上诠 | 3363.TWO | 台股 | FAU/无源精密件、PIC 封装 | 台股观察 |
 | 波若威 | 3163.TWO | 台股 | 光纤阵列/连接组件 | 台股观察 |
 
+## 本期三类排名快照
+
+- 基本面质量：`Coherent > Lumentum > Corning > 中际旭创 > 新易盛 > 天孚通信`。
+- 业绩弹性：`东山精密/索尔思 > Coherent > Lumentum > 新易盛 > 源杰科技 watch > 罗博特科 option`。
+- 交易弹性：`罗博特科 > 太辰光 > 源杰科技 > 东山精密 > 新易盛 > 中际旭创 > 天孚通信`。本排名使用 TDX 2026-06-18 行情辅助，行情只作交易弹性和拥挤度，不作产业证据。
+
+## 2026-06-21 A 股披露与行情辅助
+
+| 项目 | 结果 | 处理 |
+|---|---|---|
+| CNINFO 2026-06-17~2026-06-21 | 中际旭创、新易盛、天孚通信、源杰科技、长光华芯、光库科技、太辰光、长飞光纤无新增相关公告；东山精密 2 条扩建/董事会公告；罗博特科 1 条合作事项说明公告 | 东山/罗博特科入本期证据；其他维持待跟踪 |
+| 罗博特科公告 | 确认 FSG 与 NVIDIA 合作开发 CPO/光互连制造测试方案；明确暂无相关在手订单、无销售收入、近期不重大影响 | 合作证实，商业化降噪，不升级设备硬堵点 |
+| TDX 最近可用行情 | 2026-06-18；核心 A 股普遍估值和拥挤度高，罗博特科 PE 为负且公司公告提示 60 日涨幅超 80% | 只用于交易弹性和风险提示 |
+
 ## 下期默认跟踪问题
 
-1. AXT、Coherent、Lumentum 是否披露 InP 出口许可、6 英寸 InP 良率、客户认证、库存和毛利变化？
-2. Lumentum 是否发布 Mizuho 2026-06-09 官网 transcript/replay 或后续 10-Q，能否把第三方 EML undershipping 和 substrate tightened 升级为 A 级？
-3. Ciena 10-Q、IR 或供应商信息是否把 supply not keeping pace with demand 拆成 pump、modem、coherent module、line system 或 pluggable 单品？
-4. 新易盛、天孚、中际、源杰等 A 股公司是否在 Q2 财报、互动易、投关中拆出物料、客户、预付款、存货、毛利和交付？
-5. FAU/fiber array、MT ferrule、PM fiber、ELSFP thermal、主动对准/WLBI/测试设备是否出现交期、涨价、订单排队、良率或返修证据？
-6. NVIDIA 是否发布可核验的 CFO/SVP transcript、CPO product update 或 customer deployment 信息，能否确认 2026 路线没有推迟？
-7. 大立光 FA 自动化试产线是否如期建成，潜在 FAU 客户是否从看线/验证进入定点、量产订单和收入贡献？
-8. 天孚 CPO 光引擎市占、订单期限、FAU/ELS 产能和个别物料缺口是否能被公司公告、投关、订单或收入拆分证实？
-9. 罗博特科 ficonTEC 是否出现新的 CPO-specific 设备订单、NVIDIA/客户采购路径、交期排队、产能瓶颈或验收收入证据？
-10. 新易盛 Q2 起供应链缓解是否在 Q2/Q3 财报中兑现为交付、毛利、存货周转和现金流改善？
+1. Coherent/JX/IQE/Tower 扩产是否披露客户认证、产能释放、良率、订单或毛利兑现。
+2. Lumentum 是否发布 Mizuho 或后续官方 transcript/10-Q，能否把 EML/CW/ELS 交期和锁产能从 B/C 升为 A。
+3. AXT 和中国 InP 出口许可是否出现官方进展，DigiTimes 所称首批发货是否被 AXT/JX/客户披露验证。
+4. 罗博特科/ficonTEC 是否出现 CPO-specific 在手订单、客户采购路径、交期排队、验收收入或毛利验证。
+5. 东山精密索尔思扩建是否披露审批、资金、设备、客户、产能、良率和毛利率量化。
+6. 中际、新易盛、天孚、源杰、太辰光是否在 Q2 财报/投关中拆出客户、订单、交付、毛利、缺料或二供认证。
+7. Corning/Amazon/NVIDIA 光连接长协是否披露 minimum capacity、prepayment、交付时间和向 FAU/MT/PM fiber/fiber array 的传导。
+8. FAU/fiber array、MT ferrule、PM fiber、ELSFP thermal、主动对准/WLBI/测试设备是否出现交期、涨价、订单排队、良率或返修证据。
+
+## 对话窗口摘要源表
+
+| 当前核心卡点 | 原因/约束机制 | 关键证据 | 预计持续时间 | 缓解/反转指标 |
+|---|---|---|---|---|
+| InP substrate / epiwafer / 6 英寸合格 InP / EML / CW-DFB / UHP pump / ELS | 合格衬底、外延、6 英寸良率、老化测试、客户认证和出口许可共同限制高端光源供给；低端或未认证产能不能替代 | Coherent CHIPS LOI；JX 7-10x 扩产目标；IQE/Tower 多年外延片供给；AXT/TrendForce/Reuters 既有偏紧证据 | EML/InP：2026H2-2027H1；CW/ELS/UHP 尾部：2027H2-2028H1；长期衬底缓解看 2028-2030 | 许可正常化、6 英寸良率/认证兑现、交期和价格回落、客户停止锁产能 |
+| 光模块整机装配与关键原材料同步 | 模块交付仍依赖光芯片、电芯片、无源件、PCB、测试和客户认证同步，但本窗口未见重新短缺证据 | 新易盛既有 Q2 供应链缓解口径；CNINFO 6/17-21 核心公司无整机短缺公告 | 2026Q2-Q3 继续缓解；置信度中 | Q2/Q3 交付、毛利、存货周转改善；若模块厂重提关键料或测试短缺则反转 |
+| 主动对准 / CPO 制造测试设备 | CPO/硅光光引擎需要更高精度对准、晶圆级/芯片级测试和验收；但商业化订单未落地 | ficonTEC/NVIDIA 合作；罗博特科 CNINFO 明确暂无相关在手订单和销售收入；Nokia ATP 扩产 | 当前 N/A；2026H2-2027 watch_to_soft | CPO-specific 订单、设备排队、验收收入、良率瓶颈；若无订单或 CPO 延后则降级 |
+| 高密度 data-center fiber/cable/connectivity | AI 数据中心光连接密度上升，客户长协和专用产能可能传导到连接组件 | Amazon-Corning、NVIDIA-Corning 官方合作 | 当前 N/A；0-12 个月可能升温 | minimum capacity/prepayment、交期拉长、FAU/MT/PM fiber 传导；若扩产充分释放则反转 |
+
+| 未来潜在卡点环节 | 可能成为卡点的原因 | 当前证据/争议 | 预计成为卡点时间 | 升级触发阈值 | 反转指标 |
+|---|---|---|---|---|---|
+| CPO/NPO 光引擎与 ELS package | 2026-2028 CPO/ELS 放量会提高外置光源、热稳定、可维护连接和光引擎良率要求 | NVIDIA 产品路线和 ficonTEC 合作支持方向；缺量产订单和交付瓶颈 | 2026H2-2028 | NVIDIA/交换机厂/光源厂披露量产、allocation、客户锁产能或交付瓶颈 | CPO 延后、可插拔继续主导、ELS 多供稳定 |
+| FAU / fiber array / MT ferrule / 微透镜 / 隔离器 | 通道数和光连接密度上升，精密耦合和低损耗连接要求提高 | Corning/FAU、台股试产/送样和高密连接线索增强；缺短缺、涨价、良率证据 | 2026H2-2028 | 客户定点、量产订单、交期拉长、涨价、良率/返修压力 | 二供认证、自动化良率提升、CPO 放量推迟 |
+| 主动对准 / WLBI / OWAT / 光电联合测试 | 光子芯片和光引擎量产需要 known-good optical engine 与更长测试节拍 | ficonTEC/NVIDIA、Nokia ATP 扩产；罗博特科无订单/收入是争议核心 | 2026H2-2027 | 设备订单排队、交期拉长、验收收入放量、测试节拍瓶颈 | 设备产能充足、客户验证顺利、CPO 商业化延后 |
+| 光模块/光引擎热管理与液冷兼容 | ELSFP、CPO 和高功率光源对 IHS/cage/TIM/cold plate interface 和热可靠性要求提高 | Wiwynn/Ayar/Lumentum 既有线索，当前缺 A/B 级交付受限证据 | 2026H2-2028 watch | 模块厂或交换机厂点名热可靠性、液冷兼容、返修或认证限制交付 | 标准化完成、多供应商稳定交付、热问题未影响良率 |
+| DSP / driver / TIA / CDR | 1.6T/3.2T 和 LPO/LRO/CPO 会提高电芯片性能要求 | Broadcom/Marvell 证明需求和路线，不证明当前短缺；东山称已锁定 DSP 储备 | 2027-2028 watch | 模块厂点名电芯片短缺、客户 allocation、交期拉长 | 多供应商稳定供给或架构改变 BOM |
