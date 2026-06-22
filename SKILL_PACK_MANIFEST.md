@@ -61,6 +61,7 @@
 | Skill | 使用场景 | 证据标签 |
 |---|---|---|
 | `tdx-finance-data` / `TDX Finance Data:tdx-finance-data` | A 股/HK/基金/指数/板块报价、估值、换手、技术指标、涨跌停、封单、连板、板型、概念热度。 | `market_data_vendor` 或 `secondary_trading_context`，绝不作为官方证据。 |
+| `ht-local-market-data` | 只读检查本地 `D:\HT` 华泰/通达信数据：盘后 `.day` 日线、`vipdoc\cw` 财务包、`T0002\blocknew` 板块池、`hq_cache` 厂商表和更新状态。 | `market_data_vendor` 或 `secondary_trading_context`；不读取账号/密码/委托/日志明细。 |
 | `allstock-data` | A 股、港股、美股快速报价、K 线、盘口式轻量数据。 | 市场上下文。 |
 | `finance` | 股票、ETF、指数、FX、部分 crypto、美国公司数据和 Financial Datasets 兜底。 | 补充数据源。 |
 | `alpha-vantage` | Alpha Vantage 官方 API，全球市场、宏观、基本面和技术指标。 | 外部 API 数据源，注意 key、限速和条款。 |
@@ -111,7 +112,7 @@ Public Equity Investing 插件只作为 PM 工作流 companion layer。它可以
 | 主入口 | `user-investment-framework` |
 | 兼容保留 | `industry-research-router` |
 | 强推荐保留 | `semiconductor-ai-chain-investment-researcher`, `industry-chain-deep-disassembly`, `stock-fundamental-moat-triad`, `stock-evaluator`, `a-share-company-tracking`, `a-share-disclosure-trading-data`, `search-specialist`, `research-summarizer`, `advanced-evaluation` |
-| 可选数据/API 层 | `tdx-finance-data`, `ifind-finance-data`, iFinD MCPs, HTSC/DFCF data skills, `allstock-data`, `finance`, `alpha-vantage`, `banana-farmer`, `stock-copilot-pro`, `finance-news`, `firecrawl-scraper`, `tavily-web`, `apify-*` |
+| 可选数据/API 层 | `tdx-finance-data`, `ht-local-market-data`, `ifind-finance-data`, iFinD MCPs, HTSC/DFCF data skills, `allstock-data`, `finance`, `alpha-vantage`, `banana-farmer`, `stock-copilot-pro`, `finance-news`, `firecrawl-scraper`, `tavily-web`, `apify-*` |
 | 可选技术/产品辅助 | `ai-engineer`, `ai-ml`, `ai-product`, `tech-stack-evaluator`, `cto-advisor`, `senior-architect`, `arm-cortex-expert`, `product-manager`, `product-manager-toolkit` |
 | 文件交付 | `spreadsheet`, `xlsx`, `xlsx-official`, `docx`, `pdf`, `pptx` |
 | 全局 fallback | 全局 `web-scraper`（仅在已安装且需要通用网页抽取时使用） |

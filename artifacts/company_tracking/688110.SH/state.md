@@ -1,6 +1,6 @@
 # 东芯股份 688110.SH 跟踪卡
 
-更新日期：2026-06-18
+更新日期：2026-06-22
 collection_scope: user_email_2026-06-18_0854_and_repo_artifacts
 multi_agent_status: not_used_by_policy
 用途：AI memory hierarchy 侧翼观察层跟踪，不构成买卖建议。
@@ -10,6 +10,12 @@ multi_agent_status: not_used_by_policy
 东芯股份本次从“国产存储观察 / 国产存储芯片-NAND”上调为 `AI memory hierarchy / reliable small-capacity memory formal_observation`，公司层分层为 `formal_observation / weaker_technical_watch`。
 
 对应节点是 `SLC NAND + NOR / 中小容量高可靠存储`。其直接度在 SLC NAND/NOR 侧更清楚，适合跟踪小容量存储结构性紧缺、产品价格上行和盈利拐点；但交易层弱于兆易创新和普冉半导体，仍需要等待更清晰的客户、长单、ASP 和产品结构验证。
+
+## 2026-06-22 Micron 财报前复核
+
+Micron 官方 IR/SEC 已确认 FQ3 高指引、FQ2 NAND ASP 环比高 70% 区间上行，以及 data center SSD / NAND demand significantly in excess of available supply。08:53 邮件把该事件传导到 A 股存储链，但这属于主链 NAND/eSSD 景气和交易催化线索。
+
+对东芯股份的写回边界不变：公司仍按 `SLC NAND + NOR / 中小容量高可靠存储` 侧翼 formal observation 处理；不能把 Micron enterprise SSD、HBM 或 LPDRAM hard-bottleneck 直接写成东芯的客户、LTA、容量认证或 AI server 收入。
 
 ## 为什么不升主线
 

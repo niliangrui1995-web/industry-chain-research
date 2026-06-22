@@ -1,6 +1,6 @@
 # 兆易创新 603986.SH 跟踪卡
 
-更新日期：2026-06-18
+更新日期：2026-06-22
 collection_scope: user_email_2026-06-18_0854_and_repo_artifacts
 multi_agent_status: not_used_by_policy
 用途：AI memory hierarchy 侧翼观察层跟踪，不构成买卖建议。
@@ -10,6 +10,12 @@ multi_agent_status: not_used_by_policy
 兆易创新本次从泛化“国产存储观察”上调为 `AI memory hierarchy / reliable small-capacity memory formal_observation`，公司层分层为 `formal_observation / quality_anchor`。
 
 对应节点是 `NOR Flash + MCU / 高可靠小容量存储`。本次 durable 化的重点不是把公司升为 HBM、LPDRAM 或 eSSD 主线，而是确认：在 HBM 和高层 3D NAND 抢占产能优先级、小容量成熟制程供给退出、边缘 AI/汽车/工业/高端网络及 server boot/buffer 需求共振的背景下，NOR/SLC 价格和盈利兑现已经足以进入正式观察层。
+
+## 2026-06-22 Micron 财报前复核
+
+Micron 官方 IR/SEC 已确认 FQ3 高指引、calendar 2026 HBM supply 价格/数量锁定、FQ2 DRAM/NAND ASP 环比大幅上行，以及 NAND/eSSD 需求超过可用供给。08:53 邮件把该事件映射到 A 股存储链，但这只能强化存储周期和 AI memory hierarchy 背景。
+
+对兆易创新的写回边界不变：公司仍按 `NOR Flash + MCU / 高可靠小容量存储` 侧翼 formal observation 处理，不能因 Micron DRAM/NAND/HBM 主线就升为 HBM、LPDRAM 或 eSSD 主受益；后续只看 NOR 分产品 ASP、毛利率、客户结构、LTA/长单和 AI server 直接证据是否披露。
 
 ## 为什么不升主线
 

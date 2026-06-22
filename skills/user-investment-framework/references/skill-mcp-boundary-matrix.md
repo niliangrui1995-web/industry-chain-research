@@ -65,6 +65,7 @@ Evidence labels:
 | `cto-advisor` | optional | Architecture and technical strategy. Engineering context, not financial evidence. |
 | `senior-architect` | optional | System architecture, dependencies, scalability. Technical moat support. |
 | `arm-cortex-expert` | optional | ARM/MCU/firmware/edge computing. Use for embedded/chip technical questions. |
+| `ht-local-market-data` | optional | Read-only local `D:\HT` HT/TongdaXin data inspector for post-close A-share `.day` K-lines, stale `.lc1` checks, `vipdoc\cw` financial packages, `T0002\blocknew` pools, and `hq_cache` vendor tables. Labels: `market_data_vendor` and `secondary_trading_context`; never official evidence; do not inspect trading-account/password/order/log details unless explicitly requested. |
 | `allstock-data` | optional | Tencent/adata style CN/HK/US quote/K-line/order-book data. `market_data_vendor`; cannot prove beneficiary status. |
 | `finance` | optional | Yahoo/Financial Datasets/TwelveData/Alpha Vantage style quotes, FX, US company data. `market_data_vendor`; cache/watchlist files are created only on explicit write paths; verify hard claims elsewhere. |
 | `alpha-vantage` | optional | Alpha Vantage official API. Requires `ALPHAVANTAGE_API_KEY`; respect rate limits and terms. |
@@ -127,8 +128,8 @@ Evidence labels:
 
 1. Start with `user-investment-framework`.
 2. Use project-local source skills before external API search when official evidence can be found directly.
-3. Use TDX for fast A-share trading context and iFinD for structured financial data when the task needs current or vendor data.
-4. Use TDX/iFinD/HTSC/DFCF outputs as vendor data or leads unless the tool returns or links to original official documents.
-5. Split official-evidence tasks from market-reaction tasks. The first goes to `search-specialist` / `a-share-disclosure-trading-data`; the second can use TDX/iFinD/HTSC/market-data helpers.
+3. Use TDX for fast A-share trading context, iFinD for structured financial data, and `ht-local-market-data` for the user's refreshed local `D:\HT` daily files or block pools when the task needs current or vendor data.
+4. Use TDX/iFinD/HTSC/DFCF/`ht-local-market-data` outputs as vendor data or leads unless the tool returns or links to original official documents.
+5. Split official-evidence tasks from market-reaction tasks. The first goes to `search-specialist` / `a-share-disclosure-trading-data`; the second can use TDX/iFinD/HTSC/`ht-local-market-data`/market-data helpers.
 6. Write-capable external state needs explicit user instruction, even when the skill itself is installed and enabled.
 7. Do not import scheduled-brief, alert, delivery, cron, watchlist-sync, or simulated-trading workflows into this project by default.

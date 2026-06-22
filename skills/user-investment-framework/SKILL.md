@@ -35,7 +35,7 @@ Default companion layers:
 | News-to-alpha financial translation | `search-specialist` or current-evidence skills, then `serenity-alpha`, `allstock-data` / `tdx-finance-data`, `advanced-evaluation` |
 | A-share tracking and disclosures | `a-share-company-tracking`, `a-share-disclosure-trading-data` |
 | Earnings and guidance | `earnings-call-investment-analyst` |
-| Market data and trading context | `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, `ifind-finance-data`, iFinD MCPs, HTSC data skills, DFCF Miaoxiang skills, `allstock-data`, `finance`, `alpha-vantage`, `banana-farmer`, `stock-copilot-pro` |
+| Market data and trading context | `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, `ht-local-market-data`, `ifind-finance-data`, iFinD MCPs, HTSC data skills, DFCF Miaoxiang skills, `allstock-data`, `finance`, `alpha-vantage`, `banana-farmer`, `stock-copilot-pro` |
 | Scoring, factors, tables, workbooks | `advanced-evaluation`, `multi-factor-strategy`, `spreadsheet`, `xlsx`, `xlsx-official`, `data-scientist`, `senior-data-scientist` |
 | Documents and deliverables | `docx`, `pdf`, `pptx` |
 | Technical moat and product logic | `ai-engineer`, `ai-ml`, `ai-product`, `tech-stack-evaluator`, `cto-advisor`, `senior-architect`, `arm-cortex-expert`, `product-manager`, `product-manager-toolkit` |
@@ -74,6 +74,14 @@ Use native `mcp__tdx.tdx_wenda_quotes` when available. It is a natural-language 
 Never use TDX output as official company evidence. It cannot replace CNINFO, exchange announcements, company IR, annual/quarterly reports, customer/supplier proof, or original research reports. Treat TDX concept labels,涨停原因, and原因揭秘 as market-data-vendor or secondary trading context that can guide follow-up source checks.
 
 For detailed tested boundaries and query patterns, read `references/tdx-finance-data-boundary.md`.
+
+## HT Local Market Data Boundary
+
+Use `ht-local-market-data` when a task explicitly needs the user's local `D:\HT` data or when a post-close local HT/TongdaXin snapshot is enough for A-share daily K-line, block-pool, vendor classification, or financial-package freshness checks.
+
+Treat it as `market_data_vendor` for parsed `.day` daily OHLCV and `secondary_trading_context` for `T0002\blocknew` pools, concept labels, and vendor classifications. It is not live intraday data, not official disclosure, and not proof of beneficiary status. The tested `.lc1` minute files were structurally parseable but stale, so use TDX/iFinD/current web data for current intraday or minute-level tasks.
+
+Do not read HT trading-account, password, order,委托, or log details unless the user explicitly asks for that diagnostic. Never write to `D:\HT` through this project route.
 
 ## Public Equity Investing Plugin Boundary
 

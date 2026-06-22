@@ -5,6 +5,8 @@
 覆盖窗口：2026-06-15 至 2026-06-21，北京时间
 当前阶段：第九期全链雷达。已吸收光模块专项最新状态和 AI PCB 专项 2026-06-21 状态；本期主深挖为 `memory/storage/server parts + HBM test/probe` 与 `数据中心电力/并网/液冷/800VDC`。
 
+2026-06-22 08:53 邮件窄口径复核：建滔 CCL 单张毛利 80 元、铜冠 HVLP4 涨价和 HVLP5 送样、生益科技/南亚新材映射，均不改变全链主排序。邮件本身作为 `mixed-source / lead_only`；和沪电 IR、Mitsui、Co-Tech 证据合并后，只能更收敛地维持 AI PCB 材料链 `soft+ / watch_to_soft`，不能升 hard。全链层最关键 source gap 仍是 A 股公司在 M8/M9/M10 CCL、HVLP4/5、高频高速树脂上的分产品收入、ASP/加工费、毛利率和客户认证闭环。
+
 ## 任务边界
 
 本任务负责 AI 产业链横向雷达、堵点账本、赛道优先级和上市主体映射，不重复展开光模块和 AI PCB 专项细节。每次执行必须读取：
@@ -45,7 +47,7 @@
 | InP substrate / 6 英寸合格 InP / EML / CW-DFB / UHP / ELS | `hard_bottleneck` | 出口许可、InP 衬底集中、6 英寸良率、老化测试、capacity rights、客户认证和 ELS 热稳定共同约束。 | unchanged | EML/InP `2026H2-2027H1`；CW/ELS/UHP 尾部 `2027H2-2028H1`；中高/中置信 | 许可正常化、6 英寸良率兑现、二供认证、交期/allocation/价格回落 | 交给光模块专项追 AXT/Coherent/Lumentum/Ciena/Corning。 |
 | 高端电子玻纤布 / Low Dk / Low CTE / T-glass / NER / Q cloth | `soft_bottleneck+` | 窑炉、拉丝、电子级纱、织布、后处理、良率、专利和客户 AVL 限制 qualified output。 | strengthened | `2026H2-2027年底`；Q cloth/NER `2027H2-2028 watch`；中高置信 | 高端布报价回落、交期缩短、库存恢复，多供应商进入核心 AVL | 交给 PCB 专项跟台玻/Nittobo/高端布分产品。 |
 | M7/M8/M9/M10 CCL / prepreg | `soft_bottleneck+` | 超低损耗树脂、高端玻纤布、HVLP 铜箔、新线 qualified output 和客户认证共同约束。 | strengthened | `2026H2-2027H1`；中高置信 | 报价停涨或回落，lead time 常态化，客户不再提前锁料，二供进入 AVL | 跟沪电、生益、台系 CCL、M8/M9/M10 lead time。 |
-| HVLP4/5 铜箔与高频高速树脂 | `watch_to_soft` | 低粗糙度一致性、表面处理、树脂配方和客户认证约束；批量证据不足。 | unchanged | `2026H2-2027 watch`；精确持续 `N/A` | 多客户批量供货、加工费回落、国产良率确认 | 跟德福、诺德、嘉元、铜冠与树脂供应商。 |
+| HVLP4/5 铜箔与高频高速树脂 | `watch_to_soft` | 低粗糙度一致性、表面处理、树脂配方和客户认证约束；批量证据不足。 | mixed_source_increment_no_upgrade | `2026H2-2027 watch`；精确持续 `N/A` | 多客户批量供货、加工费回落、国产良率确认 | 跟德福、诺德、嘉元、铜冠与树脂供应商；铜冠 2026-06-22 邮件线索需公告/IR/客户侧验证。 |
 | 数据中心并网 / firm power / grid operations | `soft_bottleneck`；区域 `hard operational` | 大负载接入、成本分摊、电源与输配电建设、备用容量、动态负载稳定性约束。 | strengthened | 区域 `2026H2-2030`；中高置信 | reserve margin 改善，容量/电价压力回落，真实项目延期减少 | 跟 FERC/PJM/ERCOT/utility；项目级核对 site control、interconnection、permit、construction、equipment order/prepayment。 |
 | Transformer / switchgear / UPS / busway / rack PDU / CDU / 冷板 | `soft_bottleneck/watch` | 高功率 rack、新建 AI factory 与存量风冷机房逐机架改造共同拉动长交期设备、系统认证和现场集成。 | strengthened | `6-24 个月`；单品精确交期 `N/A`；中置信 | 设备交期正常化，项目不再因设备延期；已锁队列订单取消且 slot 无法再分配 | 跟单品 lead time、预付款/排产锁定、Chinese OEM/prefab、Brazos/OCP 规格、A 股收入拆分。 |
 | 800VDC / SST / SiC / GaN power conversion | `watch_to_soft` | 高功率 rack 推动 medium-voltage-to-rack、GaN/SiC、hot-swap/protection 和系统认证。 | attention_up | `2027-2028`；精确持续 `N/A` | 800VDC 推迟，传统架构继续满足；design win 无法转收入 | 跟 NVIDIA ecosystem、Delta/Lite-On/Megmeet、麦格米特等 design win 转量产。 |
@@ -61,9 +63,24 @@
 
 新增：[三环集团 300408.SZ 最小跟踪卡](../../company_tracking/300408.SZ/state.md)。定位为 `secondary_track_up / fundamental_main_beneficiary_candidate / evidence_gap_card`。可确认的是 AI server 高端 MLCC/X6S 与 AI power passives 需求上行已进入 `future_watch/watch_to_soft`，且既有 MLCC 次主线材料把三环集团列为更偏基本面主受益候选；不能把行业侧高端 MLCC 交期、TAM、涨价或 Rubin 价值量线索直接写成三环集团 AI server 客户、料号、订单、收入拆分或毛利兑现。
 
+## 2026-06-22 联动科技 HBM 测试链线索卡
+
+新增：[联动科技 301369.SZ 最小跟踪卡](../../company_tracking/301369.SZ/state.md)。定位为 `ai_soc_test_equipment_watch / hbm_test_chain_lead_only / event_trade_watch`。可确认的是 HBM test/probe/handler 链条仍处 `watch_to_soft / soft_bottleneck_candidate`，且 2026-06-22 08:53 邮件新增 TSE 下一代 HBM handler 速度提升 2 倍线索；联动科技公司证据目前更偏 AI SoC 测试机 QT-9800/QT-9800EXA、天数智芯战略合作、功率/数模/SoC 测试系统和探针台，不能写成 HBM 客户、HBM handler、memory probe card/探针卡、订单、收入、ASP 或毛利兑现。
+
+## 2026-06-22 Micron 财报前证据分层复核
+
+新增 08:53《AI产业链战报》Micron 财报催化线索已完成窄口径分层：
+
+| 项目 | 官方/可核对证据层 | 邮件线索层 | 写入边界 |
+|---|---|---|---|
+| 6/24 财报事件 | Micron IR 确认 2026-06-24 召开 FQ3 2026 earnings call；FQ3 官方指引为收入 `33.5B USD ± 0.75B`、毛利率约 `81%`、non-GAAP EPS `19.15 USD ± 0.40`。 | 邮件称“6/24盘后财报、指引335亿美元/81%/19.15美元、市场一致预期更高”。 | 官方指引可入 A 级；一致预期仅作 B/market-consensus，不替代公司指引。 |
+| HBM | Micron Q1 FY26 prepared remarks 确认 calendar 2026 HBM supply（含 HBM4）价格与数量协议完成；Q2 remarks 支持 2027 HBM/DRAM 相关 capex 和 HBM advanced packaging supply 扩张。 | 邮件称“2026 全年售罄、客户已下单 2027 配额”。 | `2026 sold-out/price-volume locked` 可入 A 级；“2027 客户已下单配额”当前只留 C/lead，等 6/24 call 或后续 IR。 |
+| eSSD/NAND | Micron Q2 remarks 点名 data center SSD design wins、NAND demand significantly in excess of available supply；SEC 10-Q 确认 FQ2 NAND ASP 环比高 70% 区间上升。 | 邮件称 DRAM/NAND 季度 ASP 涨幅约 65%、A 股存储链催化。 | NAND/eSSD 供需紧张和 ASP 上行可加强主 hard；A 股映射仍需公司级订单、客户、收入证据。 |
+| DRAM/LPDRAM | Micron Q2 remarks 称 DRAM/NAND bit demand in CY2026 constrained by supply and tight beyond CY2026，DRAM cleanroom constraints、HBM trade ratio 等限制供给；SEC 10-Q 确认 FQ2 DRAM ASP 环比中 60% 区间上升。LP/DDR DRAM 目前主要是 AI 架构 portfolio/需求方向，缺 LTA/allocation 量化。 | 邮件把 LPDRAM 与 HBM/eSSD/NAND 放在同一 hard-bottleneck 线索里。 | DRAM 官方证据强；LPDRAM 维持官方方向性证据，等内存厂或客户分产品确认。 |
+
 ## 本期深挖方向
 
-1. `HBM/DRAM/LPDRAM/NAND/eSSD + AI server parts supply + HBM test/probe`：重点跟踪 HPE/Dell/SMCI、Micron/Samsung/SK hynix/Kioxia/SanDisk、TrendForce eSSD/LPDRAM、HBM4/HBM4E 认证与 LTA、Techwing/MJC/ATE/probe card 交期和合同规模。
+1. `HBM/DRAM/LPDRAM/NAND/eSSD + AI server parts supply + HBM test/probe`：Micron 已用官方 IR/SEC 收紧为 FQ3 指引、2026 HBM price/volume lock、DRAM/NAND ASP 与 eSSD/NAND 供需紧张确认；6/24 财报后重点看 FQ4 指引、HBM/eSSD/NAND/LPDRAM 持续性、capex/供给缓解和 sell-the-news 风险。Samsung/SK hynix/Kioxia-SanDisk 仍需各自最新官方财报/业绩会确认 LTA、库存和 capacity allocation；继续跟 TrendForce eSSD/LPDRAM、HBM4/HBM4E 认证、Techwing/MJC/ATE/probe card 交期和合同规模。
 2. `AI cloud capex -> 数据中心电力/并网 + 液冷 + 800VDC`：重点把区域 hard operational 约束和全球设备/液冷单品 soft/watch 分开；跟踪 FERC/PJM/ERCOT、Oracle/Meta/Google/Microsoft/Amazon CapEx、Google Brazos/OCP、NVIDIA 800VDC、transformer/switchgear/UPS/CDU/PDU lead time、A 股订单纯度。
 
 ## 未来 6-24 个月卡点迁移
@@ -112,11 +129,11 @@
 ## 下期默认跟踪问题
 
 1. HPE/Dell/SMCI/ODM 是否继续披露 DRAM/NAND/eSSD/parts supply constraints、purchase commitments、inventory 或 backlog 转收入受限？
-2. Micron、Samsung、SK hynix、Kioxia/SanDisk 是否在最新财报或业绩会确认 eSSD/NAND/LPDRAM/HBM 价格、LTA、库存和 capacity allocation？
+2. Micron：6/24 FQ3 财报后验证 FQ4 指引、HBM/eSSD/NAND/LPDRAM 供需持续性、capex 与 sell-the-news 风险；Samsung、SK hynix、Kioxia/SanDisk：仍需各自最新官方财报/业绩会确认 eSSD/NAND/LPDRAM/HBM 价格、LTA、库存和 capacity allocation。
 3. Techwing、MJC、Advantest、Teradyne、FormFactor、Technoprobe、MPI 或内存厂是否披露 HBM test/probe/Cube Prober lead time、合同规模、追加订单或 allocation？
 4. FERC/PJM/ERCOT/utility 是否给出大负载接入规则变化；Oracle/Meta/Google/Microsoft/Amazon 是否继续上修 AI CapEx 或披露电力/设备/液冷对投产节奏的影响？
 5. Google Brazos 是否进入 OCP 规格、多供应商量产或云厂商存量机房改造项目；A 股液冷/电源公司是否披露真实客户、订单、收入和毛利？
-6. 沪电、台玻、Nittobo、台系 CCL、德福/诺德/嘉元是否继续披露高端玻纤布、M8/M9/M10、HVLP4/5 交期、报价、客户认证和良率？
+6. 沪电、台玻、Nittobo、台系 CCL、建滔、生益、南亚、德福/诺德/嘉元/铜冠是否继续披露高端玻纤布、M8/M9/M10、HVLP4/5 交期、报价、客户认证、分产品收入和毛利？
 7. TrendForce MLCC 线索能否被村田、TDK、三星电机、国巨、风华高科、三环集团等官方订单、料号、ASP 或收入拆分验证？
 
 ## 最近证据源
@@ -125,6 +142,11 @@
 - HPE Q2 FY26 transcript: https://investors.hpe.com/~/media/Files/H/HP-Enterprise-IR/documents/q2-2026/q2-2026-transcript.pdf
 - TrendForce enterprise SSD: https://www.trendforce.com/presscenter/news/20260611-13092.html
 - TrendForce NOR Flash / SLC NAND: https://www.trendforce.com/presscenter/news/20260616-13102.html
+- Micron FQ3 FY26 earnings call date: https://investors.micron.com/news-releases/news-release-details/micron-technology-report-fiscal-third-quarter-results-june-24
+- Micron Q2 FY26 results and FQ3 guidance: https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-results-second-quarter-fiscal-2026
+- Micron Q2 FY26 prepared remarks: https://investors.micron.com/static-files/e089f8c0-065d-47b8-9d02-bfa863cdb357
+- Micron Q2 FY26 10-Q: https://www.sec.gov/Archives/edgar/data/723125/000072312526000006/mu-20260226.htm
+- Micron Q1 FY26 prepared remarks: https://investors.micron.com/static-files/088991c5-a249-4f66-a0a6-258d9b66f3f9
 - The Elec / Techwing Cube Prober: https://www.thelec.net/news/articleView.html?idxno=11441
 - FERC large-load action: https://www.ferc.gov/news-events/news/ferc-launches-aggressive-targeted-action-speed-large-load-integration
 - Google Brazos: https://cloud.google.com/blog/topics/systems/brazos-liquid-cooling-system-for-air-cooled-data-centers

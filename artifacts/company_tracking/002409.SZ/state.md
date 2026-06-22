@@ -1,6 +1,6 @@
 # 雅克科技 002409.SZ 滚动状态
 
-更新日期：2026-06-18
+更新日期：2026-06-22
 coverage_type: minimum_baseline_from_ai_chain_evidence_card
 collection_scope: controller_email_and_open_web_only
 multi_agent_status: not_used_by_policy
@@ -19,6 +19,7 @@ multi_agent_status: not_used_by_policy
 | 2026-06-18 | AI 链证据卡 | 已在 `artifacts/weekly_chain_tracking/ai_chain/state.md` 与 2026-06-14 周报中补入雅克科技窄口径 HBM 材料证据卡 | 建立最小 baseline，后续跟踪订单、ASP、毛利、收入占比和客户认证 |
 | 2026-06-18 | 邮件线索 | 08:54《AI产业链战报》把雅克写入 SK hynix HBM4E -> 前驱体/SOD 传导，并提示 WF6 线被证伪 | 作为触发线索，不作为 A/B 证据 |
 | 2026-06-17/18 | 外部产业链 | SK hynix 披露 12-high HBM4E 样品交付；The Elec 披露 Techwing 获 SK hynix HBM Cube Prober 首单；Goldman 相关报道指向 HBM/DRAM/NAND 供需偏紧 | 支持 HBM 景气，不证明雅克订单 |
+| 2026-06-22 | Micron 官方/SEC + 邮件线索 | Micron 官方确认 FQ3 指引、calendar 2026 HBM supply 价格/数量协议完成，Q2 10-Q 确认 DRAM/NAND ASP 环比大幅上行，Q2 remarks 确认 NAND/eSSD 需求超过可用供给；08:53 邮件把该事件传导到雅克 HBM 前驱体链。 | 强化 HBM/DRAM/NAND 材料需求背景；仍不证明雅克新增订单、ASP、毛利率、收入占比或交付节奏，不升 `main_candidate`。 |
 | 2026-06-12 | 官方公告 | 雅克科技异动公告称目前没有 WF6 相关业务，含氟特气主要为 CF4/SF6，2025 年含氟特气收入占总体收入 5.79%；公司称不存在应披未披事项 | 排除 WF6 热点混写；交易热度不等于经营兑现 |
 | 2026-05-19 | 公司 IR | 公司称 HBM 前驱体一直有供应，高端前驱体因技术壁垒和客户粘性价格稳定，客户 HBM 已有稳定供应产品；今年前驱体出货比去年同期增加 | 这是当前最强 A 级公司口径，但仍缺数量、价格和收入拆分 |
 | 2026-04-28 | 官方定期报告 | 2025 年报与 2026Q1 建立财务和产能基线：2025 年收入 86.11 亿元、归母净利润 10.00 亿元；2026Q1 收入 19.73 亿元、归母净利润 2.67 亿元；前驱体 2025 年设计产能 601.92 吨/年、利用率 59.31% | 平台增长和产能基线成立，但 HBM 贡献仍为 N/A |

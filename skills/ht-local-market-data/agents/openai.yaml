@@ -1,0 +1,4 @@
+interface:
+  display_name: "HT Local Market Data"
+  short_description: "Read-only D:\\HT daily K-line, block, and vendor data checks"
+  default_prompt: "Use $ht-local-market-data to inspect D:\\HT freshness, local daily K-line files, block lists, and evidence boundaries."

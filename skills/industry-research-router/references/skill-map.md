@@ -31,7 +31,7 @@ skills/user-investment-framework/references/skill-mcp-boundary-matrix.md
 | `advanced-evaluation` | Ranking consistency and bias checks | Does not replace domain judgment |
 | `stock-fundamental-moat-triad` | Future-first company thesis and moat checks | Requires source collection and demand bridge |
 | `stock-evaluator` / `business-analyst` | Financial quality, valuation, operating logic | After segment and evidence selection |
-| TDX / iFinD / HTSC / DFCF / Yahoo / Alpha Vantage / QVeris | Market, vendor, screening, context data | Cannot prove beneficiary status or replace official evidence |
+| TDX / iFinD / HTSC / DFCF / `ht-local-market-data` / Yahoo / Alpha Vantage / QVeris | Market, vendor, screening, context data | Cannot prove beneficiary status or replace official evidence |
 | `search-specialist` / `research-summarizer` | Source discovery and source digestion | Do not make final investment conclusions |
 | Public Equity Investing plugin workflows | PM trackers, calendars, events, scenarios, risk, model, memo/pitch packaging | Companion layer only |
 
@@ -47,7 +47,8 @@ skills/user-investment-framework/references/skill-mcp-boundary-matrix.md
 | 谁是真龙头、谁蹭概念、竞争格局 | `user-investment-framework` + `competitive-landscape` + `competitive-intel` | Separate market share, customer validation, profitability, heat. |
 | 单只股票估值、买卖点、仓位 | `user-investment-framework` + `stock-fundamental-moat-triad` + `stock-evaluator` + market-data skills | Do not skip upstream/downstream and evidence checks. |
 | 多家公司谁更好、基本面排序 | `user-investment-framework` + `stock-fundamental-moat-triad` + `stock-evaluator` + `business-analyst` + `advanced-evaluation` | Build explicit rubric and cite hard data. |
-| 谁股票弹性最大、短线弹性、交易弹性 | `user-investment-framework` + TDX/iFinD/`allstock-data` + `banana-farmer` + `advanced-evaluation` | Prioritize float market cap, turnover, volatility, trend, catalyst density, crowding risk. |
+| 谁股票弹性最大、短线弹性、交易弹性 | `user-investment-framework` + TDX/iFinD/`allstock-data` + optional `ht-local-market-data` for local post-close daily K-line/block-pool checks + `banana-farmer` + `advanced-evaluation` | Prioritize float market cap, turnover, volatility, trend, catalyst density, crowding risk. |
+| 本地 `D:\HT` 数据、华泰/通达信本地日线、`vipdoc`、`T0002\blocknew`、本地板块池 | `user-investment-framework` + `ht-local-market-data` | Use as local `market_data_vendor` or `secondary_trading_context`; do not inspect account/password/order/log details by default. |
 | A 股公司持续跟踪、watchlist 日更、baseline/state/events | `user-investment-framework` + `a-share-company-tracking` + `a-share-disclosure-trading-data` + source skills | At/after 20:00 Beijing time, check announcement date T and T+1. |
 | 公告、CNINFO、交易所披露、龙虎榜、大宗交易 | `user-investment-framework` + `a-share-disclosure-trading-data` + `search-specialist`; add market-data skills for reaction | Trading events are liquidity/elasticity signals, not fundamental proof. |
 | A 股涨停/跌停、封单、连板、板型、概念热度 | `user-investment-framework` + TDX; add iFinD/HTSC/DFCF if needed | Label as market or secondary trading context. |
@@ -61,5 +62,5 @@ skills/user-investment-framework/references/skill-mcp-boundary-matrix.md
 - Latest facts require current verification.
 - Official disclosure outranks data vendors.
 - Data vendors outrank social/model chatter for quantitative values, but still do not prove business exposure.
-- TDX and iFinD are useful but should be labeled as vendor data unless original filings are retrieved.
+- TDX, iFinD, and `ht-local-market-data` are useful but should be labeled as vendor data unless original filings are retrieved.
 - Write-capable plugin tools require explicit user instruction.

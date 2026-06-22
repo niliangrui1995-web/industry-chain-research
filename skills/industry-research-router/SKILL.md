@@ -26,7 +26,7 @@ Choose the smallest useful combination:
 - Earnings releases, management guidance, and conference-call analysis: `earnings-call-investment-analyst`.
 - A-share watchlist tracking and daily state maintenance: `a-share-company-tracking`; add `a-share-disclosure-trading-data` whenever CNINFO, exchange announcements, investor-relations records, dragon-tiger lists, block trades, or T/T+1 evening announcement windows matter.
 - Company fundamentals after segment/source selection: `stock-fundamental-moat-triad`, then `stock-evaluator`, `business-analyst`, plus market-data skills according to listing market.
-- A-share/HK/US live data and K-line checks: `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, iFinD MCPs, `allstock-data`, `banana-farmer`, or `finance`. Market data cannot prove beneficiary status.
+- A-share/HK/US live data and K-line checks: `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, iFinD MCPs, `ht-local-market-data` for local `D:\HT` post-close daily files/block pools, `allstock-data`, `banana-farmer`, or `finance`. Market data cannot prove beneficiary status.
 - Overseas oligarch data: `finance`, `alpha-vantage`, iFinD global stock MCP, and official filings/IR; still use official filings and company sources for hard claims.
 - Structured comparison, score consistency, and watchlist tables: `spreadsheet`, `xlsx-official`, `advanced-evaluation`.
 - Web/news/filings collection: `search-specialist`, then `firecrawl-scraper`, `tavily-web`, or global `web-scraper`; use `research-summarizer` for long sources.
@@ -44,8 +44,9 @@ Choose the smallest useful combination:
 - `stock-evaluator` and `business-analyst` handle company-level financial quality, valuation, and operating logic after segment selection.
 - `a-share-company-tracking` owns watchlist-driven A-share tracking and durable company files.
 - `a-share-disclosure-trading-data` owns official announcement and trading-event evidence discipline.
-- TDX, `allstock-data`, `finance`, Yahoo-style tools, QVeris, Banana Farmer, and other market-data helpers provide timing, liquidity, valuation, technical, market-attention, and risk context only.
+- TDX, `ht-local-market-data`, `allstock-data`, `finance`, Yahoo-style tools, QVeris, Banana Farmer, and other market-data helpers provide timing, liquidity, valuation, technical, market-attention, and risk context only.
 - TDX涨停原因,原因揭秘, and concept labels are secondary trading context; they can guide source checks but cannot replace official filings, CNINFO, exchange disclosures, company IR, or customer/supplier evidence.
+- `ht-local-market-data` reads only local HT/TongdaXin files such as `.day`, `.lc1`, `vipdoc\cw`, `T0002\blocknew`, and `hq_cache`; its output stays `market_data_vendor` or `secondary_trading_context`, and account/password/order/log details are out of scope unless explicitly requested.
 - `search-specialist` and `research-summarizer` improve evidence quality and source digestion; they do not replace industry judgment or stock ranking skills.
 - `finance-news` and `stock-copilot-pro` can be useful, but their briefing/cron workflows are not default behavior in this project.
 

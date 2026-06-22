@@ -28,8 +28,8 @@ For the full per-skill and per-MCP boundary table, read `skill-mcp-boundary-matr
 | Pre/post earnings PM workflow | `user-investment-framework` | `earnings-call-investment-analyst`, then Public Equity Investing earnings workflow |
 | Scenario sensitivity or action thresholds | `user-investment-framework` | `stock-evaluator`, `advanced-evaluation`, then Public Equity Investing scenario workflow |
 | Position sizing or hedge plan | `user-investment-framework` | verified thesis, current market data, then Public Equity Investing risk workflow |
-| "Who has most elasticity?" | `user-investment-framework` | TDX/iFinD/`allstock-data`, `banana-farmer`, `advanced-evaluation` |
-| A-share涨停/跌停, concept heat, limit-board reason scan | `user-investment-framework` | TDX first, then iFinD/HTSC/DFCF if needed; official-source skills for proof |
+| "Who has most elasticity?" | `user-investment-framework` | TDX/iFinD/`allstock-data`, `ht-local-market-data` for local post-close daily K-line checks, `banana-farmer`, `advanced-evaluation` |
+| A-share涨停/跌停, concept heat, limit-board reason scan | `user-investment-framework` | TDX first, then iFinD/HTSC/DFCF if needed; `ht-local-market-data` only for local daily/block-pool context; official-source skills for proof |
 | Official evidence search | `user-investment-framework` | `search-specialist`, `a-share-disclosure-trading-data`, scraper/extract skills, `research-summarizer` |
 | A-share watchlist update | `user-investment-framework` | `a-share-company-tracking`, `a-share-disclosure-trading-data`, optional TDX/iFinD for market reaction |
 | Earnings-call analysis | `user-investment-framework` | `earnings-call-investment-analyst`, source and market-data skills |
@@ -40,7 +40,7 @@ For the full per-skill and per-MCP boundary table, read `skill-mcp-boundary-matr
 
 - Latest price, market cap, PE/PB, turnover, volume, K-line, financial reports, orders, policy, regulation, and news require current verification.
 - Preferred hard-evidence order: official announcements, exchange filings, annual/interim/quarterly reports, prospectuses, company IR, official customer/supplier sources.
-- Use TDX for fast A-share trading context and iFinD for structured financial data, but keep them as vendor data unless they surface original official documents.
+- Use TDX for fast A-share trading context, iFinD for structured financial data, and `ht-local-market-data` for the user's refreshed local HT/TongdaXin daily files or block pools, but keep them as vendor data unless they surface original official documents.
 - HTSC, DFCF, QVeris, Banana Farmer, Yahoo, Alpha Vantage, Simplywall.st, Apify, Tavily, Firecrawl, Grok/X, Gemini, and model outputs do not prove beneficiary status by themselves.
 - For A-share, Hong Kong, US, Japan, Korea, and Taiwan listings, explicitly identify exchange and ticker suffix before comparing companies.
 - When data is missing, write `N/A` or explain the missing source. Do not infer exact numeric values from memory.
@@ -55,6 +55,8 @@ Before using a remote API or MCP:
 4. Label the result by evidence tier.
 5. For write-capable tools, get explicit user instruction first.
 6. For broad API changes or flaky external dependencies, use a subagent for read-only deep testing before updating project routing.
+
+Local `D:\HT` file reads through `ht-local-market-data` are not remote API calls, but they still have privacy boundaries: do not inspect trading-account, password, order,委托, or log details unless explicitly requested.
 
 ## Public Equity Investing Boundary
 

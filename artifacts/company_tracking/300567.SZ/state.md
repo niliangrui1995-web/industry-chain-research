@@ -1,5 +1,5 @@
 # 精测电子 300567.SZ 跟踪卡
-更新日期: 2026-06-19
+更新日期: 2026-06-22
 coverage_type: minimum_hbm_test_chain_watch_card
 collection_scope: user_email_2026-06-18_0854_repo_artifacts_and_narrow_official_check
 multi_agent_status: not_used_by_policy
@@ -30,6 +30,7 @@ multi_agent_status: not_used_by_policy
 
 | 日期 | 证据等级 | 来源 | 结论与边界 |
 |---|---|---|---|
+| 2026-06-22 | A/C 分层 | Micron 官方 IR/SEC + Gmail 08:53《AI产业链战报》 | Micron 官方强化 HBM/DRAM/NAND/eSSD 供需紧张与 2027 capex/advanced packaging supply 扩张；但未点名 HBM test/probe/Cube Prober lead time、allocation 或供应商订单。对精测电子只强化测试链 watch 背景，不证明同节点订单、客户或收入拆分。 |
 | 2026-06-18 | C/lead | Gmail 08:54《AI产业链战报》 | 把 SK 海力士 HBM4E 12 层样品、Goldman 存储紧张、Techwing Cube Prober 首单传导到精测电子。作为触发线索，不单独作为正式证据。 |
 | 2026-06-18 | repo synthesis | `../../weekly_chain_tracking/ai_chain/state.md` 与 `../../weekly_chain_tracking/ai_chain/2026-06-14.md` | 仓库已把 HBM test/probe card/Cube Prober 上调为 `watch_to_soft`，并把精测电子列为 `node_mapping_watch+ / event_trade_watch+`，但不进 `main_candidate`。 |
 | 2026-05-29 | A | 公司重大合同公告 | 控股子公司上海精测在 2025-12-12 至 2026-05-29 期间与同一客户签订 5.159 亿元半导体前道量检测设备合同，应用场景为先进存储等相关领域；客户信息豁免披露，产品数量、单价和交付安排只在合同中约定，未公开。 |
