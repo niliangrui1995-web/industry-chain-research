@@ -67,6 +67,10 @@
 
 新增：[联动科技 301369.SZ 最小跟踪卡](../../company_tracking/301369.SZ/state.md)。定位为 `ai_soc_test_equipment_watch / hbm_test_chain_lead_only / event_trade_watch`。可确认的是 HBM test/probe/handler 链条仍处 `watch_to_soft / soft_bottleneck_candidate`，且 2026-06-22 08:53 邮件新增 TSE 下一代 HBM handler 速度提升 2 倍线索；联动科技公司证据目前更偏 AI SoC 测试机 QT-9800/QT-9800EXA、天数智芯战略合作、功率/数模/SoC 测试系统和探针台，不能写成 HBM 客户、HBM handler、memory probe card/探针卡、订单、收入、ASP 或毛利兑现。
 
+## 2026-06-22 盛美上海前道湿法/清洗设备国产替代最小跟踪卡
+
+新增：[盛美上海 688082.SH 最小跟踪卡](../../company_tracking/688082.SH/state.md)。定位为 `front_end_wet_clean_domestic_substitution_watch / advanced_packaging_wet_process_order_watch / ai_hbm_direct_revenue_gap_card`。可确认的是公司具备前道湿法/清洗、电镀、先进封装湿法和面板级设备平台，且 2026-06-22 08:53 邮件新增“中国设备进口 -24%、日本设备商中国销售 -10%、SCREEN/Entegris/KLA 行情强化、盛美上海近 20 日 +77.7%”的国产替代交易线索；不能把这些线索或先进封装湿法/电镀订单直接写成 AI/HBM/CoWoS/CoPoS 客户、订单、收入占比、毛利率或交付节奏兑现。
+
 ## 2026-06-22 Micron 财报前证据分层复核
 
 新增 08:53《AI产业链战报》Micron 财报催化线索已完成窄口径分层：

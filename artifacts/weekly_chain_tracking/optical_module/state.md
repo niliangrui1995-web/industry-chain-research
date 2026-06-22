@@ -1,8 +1,8 @@
 # 周度跟踪：光模块及上游细分环节 - 滚动状态
 
-更新时间：2026-06-21
+更新时间：2026-06-22
 最新报告：`artifacts/weekly_chain_tracking/optical_module/2026-06-21.md`
-覆盖窗口：2026-06-17 至 2026-06-21
+覆盖窗口：2026-06-17 至 2026-06-22（06-22 为邮件线索窄口径复核）
 
 ## 任务边界
 
@@ -35,6 +35,7 @@
 - 罗博特科/ficonTEC 与 NVIDIA 合作从官网线索升级为 CNINFO A 级公告确认，但同一公告明确相关业务早期、暂无在手订单和销售收入，因此 `主动对准 / CPO 制造测试设备` 只升级为未来迁移观察核心，不能升级为当前 hard_bottleneck。
 - 东山精密/索尔思 12 亿美元光芯片和光模块扩建强化 A 股垂直一体化映射，但项目审批、客户、订单、单独毛利、良率和产能爬坡仍缺量化；不改变 InP/EML 当前主硬堵点。
 - 数据中心 optical fiber / cable / connectivity 因 Amazon-Corning 与 NVIDIA-Corning 官方合作维持边界内 `soft_bottleneck/watch`；目前仍不能外推为 FAU/MT ferrule/PM fiber/fiber array 当前短缺。
+- 2026-06-22 邮件《AI产业链战报》新增的光模块散单涨价、新易盛 2027 年 DSP 5100 万颗/Broadcom 主供、中际旭创 4-5 月出口可能破 80 亿、MPO/FAU 保底扩产均先归入 `mixed-source/C-lead`。新易盛 CNINFO 2026-06-01 投关和 Broadcom 官方 DSP 路线只支持需求、锁料和技术路线，不足以把模块涨价、DSP、FAU/MPO 供给升级为 A/B 级硬结论。
 
 ## 本期主深挖与次级跟踪
 
@@ -57,20 +58,21 @@
 | 天孚 CPO 光引擎市占、订单期限、FAU/ELS 产能和个别物料缺口是否被证实？ | 本窗口未见公司公告或投关拆分；市占 >60%、订单至 2028 仍不入事实层。 | 仍待跟踪 |
 | 罗博特科 ficonTEC 是否出现新的 CPO-specific 设备订单、NVIDIA/客户采购路径、交期排队、产能瓶颈或验收收入证据？ | CNINFO 确认合作开发，但同时确认暂无相关在手订单和销售收入。 | 合作证实；商业化证伪/降级 |
 | 新易盛 Q2 起供应链缓解是否在 Q2/Q3 财报中兑现？ | 本窗口未到 Q2 财报，未见新增财务兑现。 | 仍待跟踪 |
+| 2026-06-22 邮件提到的新易盛 2027 年 DSP 5100 万颗/Broadcom 主供、中际 4-5 月出口可能破 80 亿、光模块散单涨价和 MPO/FAU 扩产，是否能升级？ | 邮件原文属于 Grok 未经审计的 mixed-source 线索；新易盛 2026-06-01 CNINFO 投关仅支持锁料、预付、1.6T 订单增幅和供应链整体稳定；Broadcom 官方仅支持 200G/lane DSP 路线和 Eoptolink/Innolight 技术生态合作；海关/南京海关入口存在但本轮直连 504，未闭合到中际/江苏细项。 | 收紧为 C/lead；不升 A/B 硬证据 |
 
 ## 当前堵点账本
 
 | 节点 | 状态 | 严重程度 | 造成堵点的机制 | 本期变化 | 关键证据 | 预计持续时间 | 反转指标 | 下次动作 |
 |---|---|---|---|---|---|---|---|---|
 | InP substrate / epiwafer / 6 英寸合格 InP / EML / CW-DFB / UHP pump / ELS | 当前主堵点 | hard_bottleneck | 衬底/外延/6 英寸良率、老化测试、客户认证、出口许可、锁产能共同约束高端光源可交付供给 | unchanged/refined/easing_path_clearer | Coherent CHIPS LOI；JX 7-10x 产能计划；IQE/Tower 多年外延片协议；Lumentum Q3 FY26 deck/10-Q（支持 ramp/Greensboro，不支持交期锁产能）；AXT/TrendForce/Reuters 既有偏紧证据 | EML/InP：2026H2-2027H1；CW/ELS/UHP 尾部：2027H2-2028H1；长期缓解看 2028-2030；置信度中高/中 | 许可正常化、6 英寸良率/认证兑现、交期/allocation/价格回落、客户停止锁产能 | 跟 Coherent/JX/IQE/Lumentum/AXT 产能、良率、认证、许可和客户锁产能 |
-| 光模块整机装配与关键原材料同步 | 当前软堵点 | soft_bottleneck | 模块产线需光芯片、电芯片、无源件、PCB、测试资源和客户认证同步；上游主堵点仍可传导 | eased/unchanged | 新易盛既有 Q2 供应链缓解；CNINFO 6/17-21 核心公司无新增整机短缺公告 | 2026Q2-Q3 继续缓解；置信度中 | Q2/Q3 交付兑现、毛利和存货周转改善；若模块厂重提关键料/测试短缺则反转 | 跟中际/新易盛/东山 Q2 财报和投关 |
+| 光模块整机装配与关键原材料同步 | 当前软堵点 | soft_bottleneck | 模块产线需光芯片、电芯片、无源件、PCB、测试资源和客户认证同步；上游主堵点仍可传导 | eased/unchanged；06-22 涨价/出口 mixed-source 线索待核 | 新易盛既有 Q2 供应链缓解；新易盛 2026-06-01 CNINFO 投关支持锁料/预付保障 2027/2028 物料、1.6T 订单大增和供应链整体稳定；CNINFO 6/17-21 核心公司无新增整机短缺公告；无散单涨价/ASP 硬证据 | 2026Q2-Q3 继续缓解；置信度中 | Q2/Q3 交付兑现、毛利和存货周转改善；若模块厂重提关键料/测试短缺或 ASP/散单价有 A/B 证据则反转 | 跟中际/新易盛/东山 Q2 财报、投关、ASP/毛利/存货和海关可复核表 |
 | Ciena scale-across optical systems / coherent modules / 400G-800G pluggables | 系统级供需紧张 | soft_bottleneck/read-through | 系统级 optical networking backlog 和 pluggables 强，但单品拆分不足 | unchanged | Ciena Q2 FY2026 official transcript/10-Q 既有 | 2026H2-2027 watch；置信度中 | backlog 回落、交付兑现、供应约束拆分消失 | 跟 pump/modem/line-system/pluggable 拆分 |
 | 天孚光引擎个别物料 | 公司级软堵点/观察 | soft_bottleneck/watch | 个别物料阶段性缺货仍未拆清；FAU/ELS 稳定交付口径未被新证据推翻 | unchanged | 2026-05-14 CNINFO 投关；本窗口无新增 | N/A；缺具体物料、缺口比例、交期和客户影响；置信度低 | 公司披露缺料解除或点名物料影响交付 | 继续追问物料类别和是否影响 1.6T 光引擎 |
 | 主动对准 / CPO 制造测试设备 | 未来迁移观察核心 | watch_to_soft | CPO/硅光光引擎需要更高精度对准、晶圆级/芯片级测试和验收；但商业化订单未落地 | evidence_up_but_not_current_bottleneck | ficonTEC/NVIDIA 官网合作；罗博特科 CNINFO 明确暂无订单/收入；Nokia ATP 扩产 | 当前 N/A；2026H2-2027 可能升温；置信度中低 | CPO-specific 订单、设备排队、验收收入、良率瓶颈；若无订单或 CPO 延后则降级 | 跟罗博特科订单、验收收入和客户采购路径 |
 | 高密度数据中心光纤/光缆/连接组件 | 边界内观察增强 | soft_bottleneck/watch | AI cluster 光密度提升，客户长协和专用产能可能使合格 fiber/cable/connectivity 紧张 | upgraded_watch | Amazon-Corning、NVIDIA-Corning 官方合作 | 当前 N/A；0-12 个月可能升温；置信度中 | 交期/涨价/长协 minimum capacity、FAU/MT/PM fiber/fiber array 单品短缺；若扩产充分释放则反转 | 跟 Corning/Fujikura/Sumitomo 产能、交期、合同细节和单品传导 |
-| FAU / fiber array / MT ferrule / 高密度连接件 / 微透镜阵列 | 未来迁移观察 | watch_to_soft | CPO/ELS 通道数和 fiber attach 密度上升，提高精密连接和低损耗耦合门槛 | unchanged_watch | Corning/FAU、台股试产/送样、Wiwynn/Ayar/Coherent 既有线索 | 2026H2-2028；置信度中低 | 稳定交付、二供认证通过、CPO 延后 | 跟认证转量产、交期/涨价/良率 |
+| FAU / fiber array / MT ferrule / 高密度连接件 / 微透镜阵列 | 未来迁移观察 | watch_to_soft | CPO/ELS 通道数和 fiber attach 密度上升，提高精密连接和低损耗耦合门槛 | unchanged_watch；06-22 MPO/FAU 扩产线索仅 C/lead | Corning/FAU、台股试产/送样、Wiwynn/Ayar/Coherent 既有线索；06-22 邮件线索未见 A/B 级订单、保底、交期、涨价或良率证据 | 2026H2-2028；置信度中低 | 稳定交付、二供认证通过、CPO 延后 | 跟认证转量产、MPO/FAU 订单/保底、交期/涨价/良率和二供认证 |
 | 光模块/光引擎热管理与 ELSFP 液冷兼容 | 未来迁移观察 | watch_to_soft | 高功率 ELS、CPO 和光引擎对 IHS/cage/TIM/cold plate interface 和热可靠性提出要求 | unchanged_watch | Lumentum ELSFP、Wiwynn/Ayar 既有线索 | watch，2026H2-2028；置信度低中 | 接口标准化、风冷/液冷方案稳定，多供应商稳定交付 | 等模块厂/交换机厂点名热可靠性或液冷兼容 |
-| DSP / driver / TIA / CDR | 战略节点，不是当前堵点 | watch/rejected as current bottleneck | 需求和代际升级明确，但无交期、allocation 或模块厂点名短缺 | unchanged_watch | Broadcom/Marvell 既有；东山称锁定 DSP 储备 | N/A；未来 2027-2028 观察；置信度低中 | 出现明确客户 allocation、交期拉长、模块厂点名电芯片短缺；多源稳定供给则维持 strategic node | 等 3.2T/LPO/LRO/CPO 芯片交期证据 |
+| DSP / driver / TIA / CDR | 战略节点，不是当前堵点 | watch/rejected as current bottleneck | 需求和代际升级明确，但无交期、allocation 或模块厂点名短缺 | unchanged_watch；06-22 新易盛 2027 年 DSP 5100 万颗/Broadcom 主供仍为 C/lead | Broadcom 官方 Sian2/Sian3 支持 800G/1.6T 200G/lane DSP 路线和 Eoptolink/Innolight 生态合作；未披露 5100 万颗订单；东山称锁定 DSP 储备 | N/A；未来 2027-2028 观察；置信度低中 | 出现明确采购订单/供应商分配、客户 allocation、交期拉长、模块厂点名电芯片短缺；多源稳定供给则维持 strategic node | 核验 2027 DSP 订单数量、Broadcom/Marvell/其他供应商分配、交期/allocation 和模块厂点名短缺 |
 
 ## 候选观察池
 
@@ -97,7 +99,7 @@
 | Nokia | NOK.US / NOKIA.HE | 美/芬 | Photonic chip advanced test and packaging | 测试封装缓解方，非模块单品短缺证明 |
 | Corning | GLW.US | 美股 | 光连接、光纤、AI 数据中心 optical connectivity、FAU | 未来迁移观察增强 |
 | 中际旭创 | 300308.SZ | A 股 | 800G/1.6T 模块、硅光、规模交付、前端供应链锁定 | A 股基本面核心；交易弹性被超大市值压制 |
-| 新易盛 | 300502.SZ | A 股 | 800G/1.6T 模块、硅光、海外产能 | A 股业绩弹性核心，等 Q2 验证 |
+| 新易盛 | 300502.SZ | A 股 | 800G/1.6T 模块、硅光、海外产能 | A 股业绩弹性核心；已补最小跟踪卡，硬证据限 CNINFO 2026-06-01 投关的锁料/1.6T/硅光/OCS 口径，DSP 5100 万颗仍为 C/lead |
 | 天孚通信 | 300394.SZ | A 股 | 光器件、1.6T 光引擎、FAU/ELS/CPO 配套 | 次级跟踪核心，个别物料待拆 |
 | 光迅科技 | 002281.SZ | A 股 | 光模块、光器件、硅光/CPO/NPO、海外产能 | 高交易弹性观察，需订单/收入验证 |
 | 东山精密 | 002384.SZ | A 股 | 索尔思光芯片/光模块、EML 与硅光并行、AI PCB 协同 | A 股垂直一体化强观察；12 亿美元扩建增强，需订单/客户/毛利/良率量化 |
@@ -134,6 +136,7 @@
 6. 中际、新易盛、天孚、源杰、太辰光是否在 Q2 财报/投关中拆出客户、订单、交付、毛利、缺料或二供认证。
 7. Corning/Amazon/NVIDIA 光连接长协是否披露 minimum capacity、prepayment、交付时间和向 FAU/MT/PM fiber/fiber array 的传导。
 8. FAU/fiber array、MT ferrule、PM fiber、ELSFP thermal、主动对准/WLBI/测试设备是否出现交期、涨价、订单排队、良率或返修证据。
+9. 复核 2026-06-22 邮件中的四条 C/lead：光模块散单涨价、新易盛 2027 年 DSP 5100 万颗/Broadcom 主供、中际 4-5 月海关出口可能破 80 亿、MPO/FAU 保底翻倍扩产；只有公司公告/IR、海关可复核表、客户/供应商披露或可信 B 级来源交叉后才升级。
 
 ## 对话窗口摘要源表
 
@@ -147,7 +150,7 @@
 | 未来潜在卡点环节 | 可能成为卡点的原因 | 当前证据/争议 | 预计成为卡点时间 | 升级触发阈值 | 反转指标 |
 |---|---|---|---|---|---|
 | CPO/NPO 光引擎与 ELS package | 2026-2028 CPO/ELS 放量会提高外置光源、热稳定、可维护连接和光引擎良率要求 | NVIDIA 产品路线和 ficonTEC 合作支持方向；缺量产订单和交付瓶颈 | 2026H2-2028 | NVIDIA/交换机厂/光源厂披露量产、allocation、客户锁产能或交付瓶颈 | CPO 延后、可插拔继续主导、ELS 多供稳定 |
-| FAU / fiber array / MT ferrule / 微透镜 / 隔离器 | 通道数和光连接密度上升，精密耦合和低损耗连接要求提高 | Corning/FAU、台股试产/送样和高密连接线索增强；缺短缺、涨价、良率证据 | 2026H2-2028 | 客户定点、量产订单、交期拉长、涨价、良率/返修压力 | 二供认证、自动化良率提升、CPO 放量推迟 |
+| FAU / fiber array / MT ferrule / 微透镜 / 隔离器 | 通道数和光连接密度上升，精密耦合和低损耗连接要求提高 | Corning/FAU、台股试产/送样和高密连接线索增强；06-22 MPO/FAU 翻倍扩产仍为 C/lead；缺短缺、涨价、良率证据 | 2026H2-2028 | 客户定点、量产订单、交期拉长、涨价、良率/返修压力 | 二供认证、自动化良率提升、CPO 放量推迟 |
 | 主动对准 / WLBI / OWAT / 光电联合测试 | 光子芯片和光引擎量产需要 known-good optical engine 与更长测试节拍 | ficonTEC/NVIDIA、Nokia ATP 扩产；罗博特科无订单/收入是争议核心 | 2026H2-2027 | 设备订单排队、交期拉长、验收收入放量、测试节拍瓶颈 | 设备产能充足、客户验证顺利、CPO 商业化延后 |
 | 光模块/光引擎热管理与液冷兼容 | ELSFP、CPO 和高功率光源对 IHS/cage/TIM/cold plate interface 和热可靠性要求提高 | Wiwynn/Ayar/Lumentum 既有线索，当前缺 A/B 级交付受限证据 | 2026H2-2028 watch | 模块厂或交换机厂点名热可靠性、液冷兼容、返修或认证限制交付 | 标准化完成、多供应商稳定交付、热问题未影响良率 |
-| DSP / driver / TIA / CDR | 1.6T/3.2T 和 LPO/LRO/CPO 会提高电芯片性能要求 | Broadcom/Marvell 证明需求和路线，不证明当前短缺；东山称已锁定 DSP 储备 | 2027-2028 watch | 模块厂点名电芯片短缺、客户 allocation、交期拉长 | 多供应商稳定供给或架构改变 BOM |
+| DSP / driver / TIA / CDR | 1.6T/3.2T 和 LPO/LRO/CPO 会提高电芯片性能要求 | Broadcom/Marvell 证明需求和路线，不证明当前短缺；东山称已锁定 DSP 储备；06-22 新易盛 5100 万颗说法仍为 C/lead | 2027-2028 watch | 模块厂点名电芯片短缺、客户 allocation、交期拉长 | 多供应商稳定供给或架构改变 BOM |
