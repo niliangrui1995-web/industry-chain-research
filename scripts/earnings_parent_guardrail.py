@@ -736,11 +736,34 @@ def _missing_source_headers(child: ChildRecord) -> list[str]:
     return [field for field in SOURCE_HEADER_FIELDS if not _prompt_field(prompt, field)]
 
 
-def _review_items(events: list[PlannedEvent]) -> list[dict[str, Any]]:
+def _review_items(events: list[PlannedEvent], children: list[ChildRecord]) -> list[dict[str, Any]]:
     items: list[dict[str, Any]] = []
     for event in events:
         if event.schedule_basis == "official_call_plus_3h":
             continue
+        child, _ = _match_child(event, children)
+        if child:
+            prompt = str(child.data.get("prompt", "") or "")
+            existing_confidence = _prompt_field(prompt, "Source confidence")
+            existing_rank = SOURCE_CONFIDENCE_RANK.get(existing_confidence, 0)
+            event_rank = SOURCE_CONFIDENCE_RANK.get(event.source_confidence, 0)
+            if existing_rank > event_rank:
+                items.append(
+                    {
+                        "ticker": event.ticker,
+                        "company": event.company,
+                        "report_date": event.report_date,
+                        "status": "reviewed_no_official_call_time",
+                        "reason": "agent_reviewed_official_sources_no_call_announced",
+                        "calendar_source": _prompt_field(prompt, "Calendar source") or event.calendar_source,
+                        "calendar_caveat": _prompt_field(prompt, "Calendar caveat") or event.calendar_caveat,
+                        "official_source_url": _prompt_field(prompt, "Official source URL") or "N/A",
+                        "reviewed_source_confidence": existing_confidence,
+                        "child_id": child.data.get("id"),
+                        "hard_stop": False,
+                    }
+                )
+                continue
         status = "needs_agent_review"
         if event.source_confidence == "non_official_estimate":
             reason = "third_party_estimate_no_official_call_time"
@@ -1382,7 +1405,7 @@ def main() -> int:
     scheduler_rows, scheduler_scan_problems = _load_scheduler_rows(args.codex_home)
     children, child_scan_problems = _scan_children(automations_root, scheduler_rows)
     actions, blockers = _build_action_plan(future_events, children, now)
-    review_items = _review_items(future_events)
+    review_items = _review_items(future_events, children)
     soft_probe_candidates: list[dict[str, Any]] = []
     soft_probe_errors: list[dict[str, Any]] = []
     if args.probe_official_sources:

@@ -47,8 +47,8 @@
 
 | 上期问题 | 本期结果 | 状态 |
 |---|---|---|
-| AXT、Coherent、Lumentum 是否披露 InP 出口许可、6 英寸 InP 良率、客户认证、库存和毛利变化？ | Coherent/JX/IQE/Tower 给出强扩产和锁供证据；AXT/Lumentum 本窗口未见新增官方 transcript 或许可细节。 | 缓解路径强化；主堵点未解除 |
-| Lumentum 是否发布 Mizuho 2026-06-09 官网 transcript/replay 或后续 10-Q？ | 未找到 Lumentum 官网逐字稿或 IR 原文；第三方 transcript/摘要仍不升 A。 | 仍待跟踪 |
+| AXT、Coherent、Lumentum 是否披露 InP 出口许可、6 英寸 InP 良率、客户认证、库存和毛利变化？ | Coherent/JX/IQE/Tower 给出强扩产和锁供证据；Lumentum 仅有 Q3 FY26 官方材料和 Mizuho replay 入口，未见 6/9 后 SEC 业务披露或许可细节；AXT 未见新增官方许可细节。 | 缓解路径强化；主堵点未解除 |
+| Lumentum 是否发布 Mizuho 2026-06-09 官网 transcript/replay 或后续 10-Q？ | 2026-06-22 复核：Lumentum IR archive 已列 Mizuho webcast link（KnowledgeVision registration/replay），但无 Lumentum 官网逐字稿、PDF/附件或 6/9 后 10-Q/8-K 业务更新；Q3 FY26 官网材料只支持 EML/CW/UHP ramp，不支持交期/allocation/锁产能。 | open_loop 收敛：replay 存在但不升 A；交期/锁产能仍限 B/C |
 | Ciena 是否把 supply not keeping pace 拆成 pump、modem、coherent module、line system 或 pluggable 单品？ | 本窗口无新增单品拆分。Ciena broad optical tightness 仍是系统级 read-through。 | broad 确认，细分待跟踪 |
 | 新易盛、天孚、中际、源杰等 A 股公司是否披露物料、客户、预付款、存货、毛利和交付？ | CNINFO 6 月 17-21 日：中际、新易盛、天孚、源杰、长光华芯、光库、太辰光、长飞无新增相关公告；东山和罗博特科新增公告。 | 多数仍待跟踪；东山/罗博特科已补证 |
 | FAU/fiber array、MT ferrule、PM fiber、ELSFP thermal、主动对准/WLBI/测试设备是否出现交期、涨价、订单排队、良率或返修证据？ | ficonTEC/NVIDIA 与 Nokia 先进测试封装强化 future watch；罗博特科公告明确无订单/收入，未见交期/涨价/良率瓶颈。 | 未来观察增强，未升级当前堵点 |
@@ -62,7 +62,7 @@
 
 | 节点 | 状态 | 严重程度 | 造成堵点的机制 | 本期变化 | 关键证据 | 预计持续时间 | 反转指标 | 下次动作 |
 |---|---|---|---|---|---|---|---|---|
-| InP substrate / epiwafer / 6 英寸合格 InP / EML / CW-DFB / UHP pump / ELS | 当前主堵点 | hard_bottleneck | 衬底/外延/6 英寸良率、老化测试、客户认证、出口许可、锁产能共同约束高端光源可交付供给 | unchanged/refined/easing_path_clearer | Coherent CHIPS LOI；JX 7-10x 产能计划；IQE/Tower 多年外延片协议；Lumentum mid-2028 工厂；AXT/TrendForce/Reuters 既有偏紧证据 | EML/InP：2026H2-2027H1；CW/ELS/UHP 尾部：2027H2-2028H1；长期缓解看 2028-2030；置信度中高/中 | 许可正常化、6 英寸良率/认证兑现、交期/allocation/价格回落、客户停止锁产能 | 跟 Coherent/JX/IQE/Lumentum/AXT 产能、良率、认证、许可和客户锁产能 |
+| InP substrate / epiwafer / 6 英寸合格 InP / EML / CW-DFB / UHP pump / ELS | 当前主堵点 | hard_bottleneck | 衬底/外延/6 英寸良率、老化测试、客户认证、出口许可、锁产能共同约束高端光源可交付供给 | unchanged/refined/easing_path_clearer | Coherent CHIPS LOI；JX 7-10x 产能计划；IQE/Tower 多年外延片协议；Lumentum Q3 FY26 deck/10-Q（支持 ramp/Greensboro，不支持交期锁产能）；AXT/TrendForce/Reuters 既有偏紧证据 | EML/InP：2026H2-2027H1；CW/ELS/UHP 尾部：2027H2-2028H1；长期缓解看 2028-2030；置信度中高/中 | 许可正常化、6 英寸良率/认证兑现、交期/allocation/价格回落、客户停止锁产能 | 跟 Coherent/JX/IQE/Lumentum/AXT 产能、良率、认证、许可和客户锁产能 |
 | 光模块整机装配与关键原材料同步 | 当前软堵点 | soft_bottleneck | 模块产线需光芯片、电芯片、无源件、PCB、测试资源和客户认证同步；上游主堵点仍可传导 | eased/unchanged | 新易盛既有 Q2 供应链缓解；CNINFO 6/17-21 核心公司无新增整机短缺公告 | 2026Q2-Q3 继续缓解；置信度中 | Q2/Q3 交付兑现、毛利和存货周转改善；若模块厂重提关键料/测试短缺则反转 | 跟中际/新易盛/东山 Q2 财报和投关 |
 | Ciena scale-across optical systems / coherent modules / 400G-800G pluggables | 系统级供需紧张 | soft_bottleneck/read-through | 系统级 optical networking backlog 和 pluggables 强，但单品拆分不足 | unchanged | Ciena Q2 FY2026 official transcript/10-Q 既有 | 2026H2-2027 watch；置信度中 | backlog 回落、交付兑现、供应约束拆分消失 | 跟 pump/modem/line-system/pluggable 拆分 |
 | 天孚光引擎个别物料 | 公司级软堵点/观察 | soft_bottleneck/watch | 个别物料阶段性缺货仍未拆清；FAU/ELS 稳定交付口径未被新证据推翻 | unchanged | 2026-05-14 CNINFO 投关；本窗口无新增 | N/A；缺具体物料、缺口比例、交期和客户影响；置信度低 | 公司披露缺料解除或点名物料影响交付 | 继续追问物料类别和是否影响 1.6T 光引擎 |
@@ -90,7 +90,7 @@
 | 公司 | ticker | 市场 | 当前角色 | 状态 |
 |---|---|---|---|
 | Coherent | COHR.US | 美股 | 6 英寸 InP、EML、CW laser、photodiode、CPO/OCS、PM fiber/FAU | 全球主候选，也是主堵点缓解方 |
-| Lumentum | LITE.US | 美股 | EML、InP、UHP pump、CW/ELS、OCS/CPO | 全球主候选，第三方 Mizuho 信息待官方升级 |
+| Lumentum | LITE.US | 美股 | EML、InP、UHP pump、CW/ELS、OCS/CPO | 全球主候选；Mizuho replay 已出现，但交期/锁产能仍待官方逐字稿、PDF 或 SEC 披露升级 |
 | JX Advanced Metals | 5016.T | 日股 | InP substrate | 长期衬底缓解核心，FY2030 7-10x 目标 |
 | IQE | IQE.L | 英股 | InP epiwafer | Tower 多年供应协议强化外延片锁供 |
 | Tower Semiconductor | TSEM.US | 美股 | InP photonic devices / OCS modulator | SiPh/OCS 代工路径观察 |
@@ -127,7 +127,7 @@
 ## 下期默认跟踪问题
 
 1. Coherent/JX/IQE/Tower 扩产是否披露客户认证、产能释放、良率、订单或毛利兑现。
-2. Lumentum 是否发布 Mizuho 或后续官方 transcript/10-Q，能否把 EML/CW/ELS 交期和锁产能从 B/C 升为 A。
+2. Lumentum 是否发布可引用的 Mizuho 官方逐字稿/PDF 或后续 SEC 业务披露；未出现前，EML/CW/ELS 交期和锁产能仍不得从 B/C 升为 A。
 3. AXT 和中国 InP 出口许可是否出现官方进展，DigiTimes 所称首批发货是否被 AXT/JX/客户披露验证。
 4. 罗博特科/ficonTEC 是否出现 CPO-specific 在手订单、客户采购路径、交期排队、验收收入或毛利验证。
 5. 东山精密索尔思扩建是否披露审批、资金、设备、客户、产能、良率和毛利率量化。

@@ -1,7 +1,7 @@
 # 麦格米特 002851.SZ 滚动状态
 
-更新日期：2026-06-19
-collection_scope: controller_open_web_only
+更新日期：2026-06-22
+collection_scope: official_source_narrow_review
 multi_agent_status: not_used_by_policy
 用途：公司跟踪状态，不构成买卖建议。
 
@@ -9,14 +9,15 @@ multi_agent_status: not_used_by_policy
 
 麦格米特的可跟踪主线是“AI 数据中心供电系统 + 电力电子平台能力”，不是单纯的短线电源概念。公司已经在年报摘要中披露 800VDC、SST、Sidecar、Power Shelf、BBU 等产品体系，且 2026Q1 电源产品事业群收入同比高增 66.52%。
 
-但当前仍缺最关键的投资证据：AI 数据中心电源客户、订单金额、收入占比、毛利率、交付节奏和认证进度。2025 年归母净利润大幅下滑，2026Q1 扣非净利润和经营现金流走弱，说明财务质量还不能只看收入增长。
+2026-06-22 窄口径复核后，官方口径从“产品矩阵 + 事业群增长”补强为“多个小批量送测/试产订单、部分北美项目制需求批量交付、国内部分头部云厂突破和大多数服务器厂准入”的阶段性进展。但当前仍缺最关键的投资证据：AI 数据中心电源客户名称、订单金额、收入占比、毛利率、明确交付节奏和认证进度。2025 年归母净利润大幅下滑，2026Q1 扣非净利润和经营现金流走弱，说明财务质量还不能只看收入增长。
 
-2026-06-19 AI-chain / Rubin 价值量联动复核后，结论层维持 `watch+ / catalyst_watch`，但不升 `main_candidate`。NVIDIA 官方生态、公司年报/IR 产品矩阵和 H 股平台线索能证明链条位置与融资/产能跟踪价值；SemiAnalysis 对美国数据中心取消叙事的反证只能支持 800VDC / rack power / Chinese OEM / prefab 仍属全球设备链观察层，不能证明麦格米特已获得 NVIDIA、Google 或美国数据中心项目订单。
+2026-06-19 AI-chain / Rubin 价值量联动复核后，结论层维持 `watch+ / catalyst_watch`，但不升 `main_candidate`。NVIDIA 官方生态、公司年报/IR 产品矩阵、部分不具名项目进展和 H 股平台线索能证明链条位置与融资/产能跟踪价值；SemiAnalysis 对美国数据中心取消叙事的反证只能支持 800VDC / rack power / Chinese OEM / prefab 仍属全球设备链观察层，不能证明麦格米特已获得 NVIDIA、Google 或美国数据中心项目的具名订单、明确订单金额或收入确认。
 
 ## 最新证据
 
 | 日期 | 来源类型 | 证据 | 当前解读 |
 |---|---|---|---|
+| 2026-06-22 | 官方来源窄口径复核 | 2025 年报摘要披露：2025 年报告期内 AI 数据中心电源多数客户需求仍处于量产前研发与调试阶段，收获多个小批量送测与试产订单，2025 年底起陆续有项目转入批量交付，且部分北美大客户项目制需求已批量交付；2026-05-20 IR 记录复述上述口径并对二季度订单、Rubin 进展和具体数量继续要求以后续公告/半年报为准；巨潮 2026-06-19 至 2026-06-22 未见发行人新增公告 | 比“纯产品矩阵”更硬，但仍不够主结论：客户名称、订单金额、收入占比、毛利率、平台归属和交付节奏拆分未披露，维持 watch+ / catalyst_watch |
 | 2026-06-19 | AI-chain / Rubin 价值量联动复核 | 周度 AI 链状态将数据中心电力、rack power、800VDC 和 Chinese OEM/prefab 维持在 `soft_bottleneck/watch` 或 `watch_to_soft`；Rubin 逐页梳理将麦格米特列为 NVIDIA 800VDC 生态和产品矩阵线索，但明确缺客户、订单、收入占比、毛利率和交付节奏 | 观察层增强、证据边界不变：仍是 watch+ / catalyst_watch，不升 main_candidate |
 | 2026-06-08 | 本轮基线建立 | 已建立 `baseline.md`，并补入 2025 年报摘要、2026Q1、6月初异常波动和交易事件基线 | 新增 watchlist 公司进入正式跟踪 |
 | 2026-06-16 | power-chain 结论复核 | NVIDIA/Google Q3 2026 小批量 800V HVDC 出货未见官方或一级来源；NVIDIA 官方确认 Megmeet 位于 800VDC Power system components 生态，公司年报/IR确认产品体系和送测/试产线索 | 从普通 watch 调整为 watch+ / catalyst_watch，但不升 main_candidate |
@@ -35,9 +36,9 @@ multi_agent_status: not_used_by_policy
 
 ## Source gaps
 
-- AI 数据中心电源客户名称、订单金额、交付节奏：N/A。
+- AI 数据中心电源客户名称、订单金额、具体平台/项目和收入确认节奏：N/A；官方只披露不具名小批量送测/试产、部分北美项目制需求批量交付和国内客户准入/预计首个项目批量交付。
 - 800VDC / Power Shelf / BBU 等产品收入占比和毛利率：N/A。
-- NVIDIA 生态 / Power system components 线索是否转为 design win、量产订单或收入确认：N/A。
+- NVIDIA 生态 / Power system components 线索是否转为具名 design win、量产订单或收入确认：N/A。
 - rack power / Chinese OEM / prefab 是否对应麦格米特客户、项目、出口认证、交付或收入：N/A。
 - Q1 电源产品高增长是否来自 AI 数据中心：未单独披露。
 - 汇率损益是否继续影响扣非利润：需 Q2/Q3 验证。
@@ -93,3 +94,9 @@ multi_agent_status: not_used_by_policy
 本轮仅对齐 `artifacts/weekly_chain_tracking/ai_chain/state.md` 和 `docs/rubin_价值量拆解_逐页梳理_20260522.md` 的 2026-06-19 结论，不新增公司公告事件。美国数据中心取消叙事的反证把早期 announcement noise 与真实项目延期、设备预付款锁队列分开，支持 transformer / switchgear / UPS / rack power、800VDC/HVDC 和 Chinese OEM/prefab 继续留在观察层，但这不是麦格米特订单证据。
 
 对麦格米特的状态影响：NVIDIA 800VDC Power system components 生态、800VDC/SST/Sidecar/Power Shelf/BBU 产品矩阵、北美项目和 H 股平台线索与 power-chain 主线一致，因此维持 `watch+ / catalyst_watch`；但在未披露 AI 数据中心客户、订单金额、收入占比、毛利率、认证/交付节奏前，不写成 NVIDIA/Google 直采订单，也不写成 Chinese OEM/prefab 受益确认。
+
+## 2026-06-22 窄口径复核
+
+本轮只复核麦格米特 AI 数据中心电源、800VDC、Sidecar、Power Shelf、BBU 和 Power system components 相关官方/原始口径。2025 年报摘要和 2026-05-20 投资者关系活动记录表确认了阶段性进展：多个小批量送测/试产订单、部分北美大客户项目制需求批量交付、国内部分头部云厂突破和大多数服务器厂准入。但公司对二季度订单、Rubin 出货进展、具体数量和大订单问题仍统一要求以后续公告或半年报为准，且巨潮 2026-06-19 至 2026-06-22 未见发行人新增公告。
+
+结论：阶段性官方进展可以修正“订单/交付全空白”的表述，但仍不足以把麦格米特从主题观察推进为 `main_candidate` 或更实的 company_tracking 主结论。继续维持 `watch+ / catalyst_watch`，等待客户名称、订单金额、收入占比、毛利率、平台归属和可核验交付节奏。

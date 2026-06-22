@@ -26,23 +26,30 @@
       "ticker": "6594.T",
       "company": "Nidec",
       "report_date": "2026-06-24",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
+      "status": "reviewed_no_official_call_time",
+      "reason": "agent_reviewed_official_sources_no_call_announced",
       "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "TDnet disclosure",
-        "JPX listing/company calendar",
-        "third-party calendars as leads only"
-      ],
+      "calendar_caveat": "agent_reviewed_no_official_call_time 2026-06-22: Nidec IR calendar/briefings/webcast and TDnet checked; no 2026-06-24 earnings call/webcast/results briefing found; FY2026 results disclosure remains postponed; default proxy retained.",
+      "official_source_url": "https://www.release.tdnet.info/inbs/140120260616572098.pdf",
+      "reviewed_source_confidence": "official_date_mismatch",
+      "child_id": "6594-t-nidec-2026-06-24",
       "hard_stop": false
     }
   ],
   "soft_probe_candidates": [],
   "soft_warnings": {
     "legacy_name": [],
-    "source_header": []
+    "source_header": [
+      {
+        "child_id": "6594-t-nidec-2026-06-24",
+        "ticker": "6594.T",
+        "report_date": "2026-06-24",
+        "problem": "existing_source_header_stronger_than_calendar",
+        "existing_source_confidence": "official_date_mismatch",
+        "calendar_source_confidence": "non_official_estimate",
+        "hard_stop": false
+      }
+    ]
   },
   "scheduler_scan_problems": [],
   "final_validation": {
@@ -89,9 +96,9 @@
       "has_memory": false,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
-      "source_confidence": "non_official_estimate",
-      "official_source_url": "N/A",
-      "prompt_sha1": "336e41b46fbc98bca96677792fe11d9a3a1610c1"
+      "source_confidence": "official_date_mismatch",
+      "official_source_url": "https://www.release.tdnet.info/inbs/140120260616572098.pdf",
+      "prompt_sha1": "0efa740a205c7aa33d70e6b0ca9666bb32ff87e0"
     },
     {
       "child_id": "ec-6594-t-20260525-f606f2",
