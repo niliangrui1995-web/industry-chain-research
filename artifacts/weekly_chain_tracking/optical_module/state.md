@@ -1,8 +1,8 @@
 # 周度跟踪：光模块及上游细分环节 - 滚动状态
 
-更新时间：2026-06-22
+更新时间：2026-06-23
 最新报告：`artifacts/weekly_chain_tracking/optical_module/2026-06-21.md`
-覆盖窗口：2026-06-17 至 2026-06-22（06-22 为邮件线索窄口径复核）
+覆盖窗口：2026-06-17 至 2026-06-23（06-22 为邮件线索窄口径复核；06-23 为公司跟踪边界吸收）
 
 ## 任务边界
 
@@ -34,7 +34,7 @@
 - 光模块整机装配与关键原材料同步维持 `soft_bottleneck/eased`，预计 `2026Q2-Q3` 继续缓解。本窗口 CNINFO 未发现核心 A 股重新披露整机交付受限、关键料短缺、客户认证失败或订单延期。
 - 罗博特科/ficonTEC 与 NVIDIA 合作从官网线索升级为 CNINFO A 级公告确认，但同一公告明确相关业务早期、暂无在手订单和销售收入，因此 `主动对准 / CPO 制造测试设备` 只升级为未来迁移观察核心，不能升级为当前 hard_bottleneck。
 - 东山精密/索尔思 12 亿美元光芯片和光模块扩建强化 A 股垂直一体化映射，但项目审批、客户、订单、单独毛利、良率和产能爬坡仍缺量化；不改变 InP/EML 当前主硬堵点。
-- 数据中心 optical fiber / cable / connectivity 因 Amazon-Corning 与 NVIDIA-Corning 官方合作维持边界内 `soft_bottleneck/watch`；目前仍不能外推为 FAU/MT ferrule/PM fiber/fiber array 当前短缺。
+- 数据中心 optical fiber / cable / connectivity 因 Amazon-Corning 与 NVIDIA-Corning 官方合作维持边界内 `soft_bottleneck/watch`；2026-06-24 长飞光纤异动公告只把 AI 数据中心光纤光缆价格波动列为需结合市场环境、业务结构和毛利率综合判断的边界提醒，目前仍不能外推为公司业绩兑现或 FAU/MT ferrule/PM fiber/fiber array 当前短缺。
 - 2026-06-22 邮件《AI产业链战报》新增的光模块散单涨价、新易盛 2027 年 DSP 5100 万颗/Broadcom 主供、中际旭创 4-5 月出口可能破 80 亿、MPO/FAU 保底扩产均先归入 `mixed-source/C-lead`。新易盛 CNINFO 2026-06-01 投关和 Broadcom 官方 DSP 路线只支持需求、锁料和技术路线，不足以把模块涨价、DSP、FAU/MPO 供给升级为 A/B 级硬结论。
 
 ## 本期主深挖与次级跟踪
@@ -98,6 +98,7 @@
 | Tower Semiconductor | TSEM.US | 美股 | InP photonic devices / OCS modulator | SiPh/OCS 代工路径观察 |
 | Nokia | NOK.US / NOKIA.HE | 美/芬 | Photonic chip advanced test and packaging | 测试封装缓解方，非模块单品短缺证明 |
 | Corning | GLW.US | 美股 | 光连接、光纤、AI 数据中心 optical connectivity、FAU | 未来迁移观察增强 |
+| 长飞光纤 | 601869.SH | A 股 | 数据中心光纤/光缆、空芯/多芯光纤观察 | [2026-06-23 日更](../../company_tracking/601869.SH/state.md)确认异动公告边界：AI 数据中心光纤价格波动仍需业务结构、订单、收入拆分和毛利率验证 |
 | 中际旭创 | 300308.SZ | A 股 | 800G/1.6T 模块、硅光、规模交付、前端供应链锁定 | A 股基本面核心；交易弹性被超大市值压制 |
 | 新易盛 | 300502.SZ | A 股 | 800G/1.6T 模块、硅光、海外产能 | A 股业绩弹性核心；已补最小跟踪卡，硬证据限 CNINFO 2026-06-01 投关的锁料/1.6T/硅光/OCS 口径，DSP 5100 万颗仍为 C/lead |
 | 天孚通信 | 300394.SZ | A 股 | 光器件、1.6T 光引擎、FAU/ELS/CPO 配套 | 次级跟踪核心，个别物料待拆 |
@@ -107,6 +108,7 @@
 | 长光华芯 | 688048.SH | A 股 | 高功率半导体激光平台、光通信 EML/DFB/VCSEL/CW DFB 观察 | `watch_to_soft/evidence_gap_card`，不能等同 InP/CW 主堵点 |
 | 光库科技 | 300620.SZ | A 股 | 隔离器、铌酸锂、无源器件 | 观察 |
 | 罗博特科 | 300757.SZ | A 股 | ficonTEC 光子封装/测试设备 | 官方合作证实但暂无订单/收入；未来设备迁移观察核心，不是当前主堵点 |
+| 鼎通科技 | 688668.SH | A 股 | CAGE/高速通讯连接器结构件、液冷散热器观察 | [2026-06-23 日更](../../company_tracking/688668.SH/state.md)确认可转债进入 2026-06-24 配售/申购执行，但不等于高速连接器或液冷订单兑现 |
 | 太辰光 | 300570.SZ | A 股 | MT ferrule、连接器/精密连接件、FAU 观察 | 光连接高波动观察池 |
 | 光圣科技 | 6442.TW | 台股 | datacenter optics、合圣 FAU/ELS/CPO 零组件 | 台股重点观察，仍为认证/试产阶段 |
 | 上诠 | 3363.TWO | 台股 | FAU/无源精密件、PIC 封装 | 台股观察 |
@@ -126,6 +128,13 @@
 | 罗博特科公告 | 确认 FSG 与 NVIDIA 合作开发 CPO/光互连制造测试方案；明确暂无相关在手订单、无销售收入、近期不重大影响 | 合作证实，商业化降噪，不升级设备硬堵点 |
 | TDX 最近可用行情 | 2026-06-18；核心 A 股普遍估值和拥挤度高，罗博特科 PE 为负且公司公告提示 60 日涨幅超 80% | 只用于交易弹性和风险提示 |
 
+## 2026-06-23 A 股公司跟踪窄口径吸收
+
+| 公司 | 来源 | 写回边界 | 对主状态影响 |
+|---|---|---|---|
+| 长飞光纤（601869.SH） | [公司卡 2026-06-23 日更](../../company_tracking/601869.SH/state.md)、[当日晚报](../../company_tracking/2026-06-23.md) | 2026-06-24 异动公告确认经营正常、无应披未披；AI 数据中心光纤光缆价格波动及业绩影响需结合市场环境、业务结构、订单、收入拆分和毛利率判断。 | 只强化 `数据中心光纤/光缆/connectivity` 的观察边界，不升级为短缺、订单或毛利兑现。 |
+| 鼎通科技（688668.SH） | [公司卡 2026-06-23 日更](../../company_tracking/688668.SH/state.md)、[当日晚报](../../company_tracking/2026-06-23.md) | 9.30 亿元“鼎通转债”进入 2026-06-24 原股东配售和网上申购执行，融资落地节点更清晰。 | 只作为 CAGE/高速通讯连接器结构件和液冷散热器的资金/扩产线索，不等于高速连接器或液冷客户订单、产能消化、收入占比或毛利兑现。 |
+
 ## 下期默认跟踪问题
 
 1. Coherent/JX/IQE/Tower 扩产是否披露客户认证、产能释放、良率、订单或毛利兑现。
@@ -134,7 +143,7 @@
 4. 罗博特科/ficonTEC 是否出现 CPO-specific 在手订单、客户采购路径、交期排队、验收收入或毛利验证。
 5. 东山精密索尔思扩建是否披露审批、资金、设备、客户、产能、良率和毛利率量化。
 6. 中际、新易盛、天孚、源杰、太辰光是否在 Q2 财报/投关中拆出客户、订单、交付、毛利、缺料或二供认证。
-7. Corning/Amazon/NVIDIA 光连接长协是否披露 minimum capacity、prepayment、交付时间和向 FAU/MT/PM fiber/fiber array 的传导。
+7. Corning/Amazon/NVIDIA 光连接长协，以及长飞光纤 AI 数据中心光纤价格线索，是否披露 minimum capacity、prepayment、交付时间、业务结构、订单、收入拆分、毛利率和向 FAU/MT/PM fiber/fiber array 的传导。
 8. FAU/fiber array、MT ferrule、PM fiber、ELSFP thermal、主动对准/WLBI/测试设备是否出现交期、涨价、订单排队、良率或返修证据。
 9. 复核 2026-06-22 邮件中的四条 C/lead：光模块散单涨价、新易盛 2027 年 DSP 5100 万颗/Broadcom 主供、中际 4-5 月海关出口可能破 80 亿、MPO/FAU 保底翻倍扩产；只有公司公告/IR、海关可复核表、客户/供应商披露或可信 B 级来源交叉后才升级。
 

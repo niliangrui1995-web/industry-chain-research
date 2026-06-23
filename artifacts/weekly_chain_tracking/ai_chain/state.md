@@ -1,11 +1,13 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
-更新时间：2026-06-22
+更新时间：2026-06-23
 最新报告：`artifacts/weekly_chain_tracking/ai_chain/2026-06-21.md`
-覆盖窗口：2026-06-15 至 2026-06-21，北京时间
+覆盖窗口：2026-06-15 至 2026-06-23，北京时间（06-23 为公司跟踪窄口径吸收）
 当前阶段：第九期全链雷达。已吸收光模块专项最新状态和 AI PCB 专项 2026-06-21 状态；本期主深挖为 `memory/storage/server parts + HBM test/probe` 与 `数据中心电力/并网/液冷/800VDC`。
 
 2026-06-22 08:53 邮件窄口径复核：建滔 CCL 单张毛利 80 元、铜冠 HVLP4 涨价和 HVLP5 送样、生益科技/南亚新材映射，均不改变全链主排序。邮件本身作为 `mixed-source / lead_only`；和沪电 IR、Mitsui、Co-Tech 证据合并后，只能更收敛地维持 AI PCB 材料链 `soft+ / watch_to_soft`，不能升 hard。全链层最关键 source gap 仍是 A 股公司在 M8/M9/M10 CCL、HVLP4/5、高频高速树脂上的分产品收入、ASP/加工费、毛利率和客户认证闭环。
+
+2026-06-23 公司跟踪窄口径吸收：[长飞光纤 601869.SH](../../company_tracking/601869.SH/state.md) 异动公告只确认 AI 数据中心光纤光缆价格波动需结合市场环境、业务结构、订单、收入拆分和毛利率判断，不升级为光纤短缺或业绩兑现；[鼎通科技 688668.SH](../../company_tracking/688668.SH/state.md) 可转债进入 2026-06-24 配售/申购执行，只作为融资和扩产执行节点，不等于高速通讯连接器或液冷客户订单、产能消化、收入占比、毛利率兑现。对应日更汇总见 [2026-06-23 公司跟踪报告](../../company_tracking/2026-06-23.md)。本次不改变全链主排序。
 
 ## 任务边界
 
@@ -34,7 +36,7 @@
 
 | 专项任务 | 最新状态 | 本期吸收结论 | 对全链排序影响 |
 |---|---|---|---|
-| 光模块及上游 | `artifacts/weekly_chain_tracking/optical_module/state.md` | InP/6 英寸合格 InP/EML/CW-DFB/UHP/ELS 为 hard；整机装配 soft/eased；FAU/主动对准/WLBI/ELSFP thermal 为 future watch。 | 光源链排当前核心卡点第 2；1.6T/3.2T driver/TIA/DSP/GaN/FAU/热管理列未来迁移。 |
+| 光模块及上游 | `artifacts/weekly_chain_tracking/optical_module/state.md` | InP/6 英寸合格 InP/EML/CW-DFB/UHP/ELS 为 hard；整机装配 soft/eased；FAU/主动对准/WLBI/ELSFP thermal 为 future watch；长飞光纤 2026-06-24 异动公告只补充 AI 数据中心光纤价格与毛利验证边界。 | 光源链排当前核心卡点第 2；1.6T/3.2T driver/TIA/DSP/GaN/FAU/热管理列未来迁移；长飞不改变排序。 |
 | AI PCB 及上游 | `artifacts/weekly_chain_tracking/ai_pcb/state.md` | 高端电子玻纤布与 M7-M10 CCL/prepreg 并列 soft+；HVLP4/5、高频高速树脂、板厂良率/测试为 watch_to_soft。 | PCB 材料链排当前核心卡点第 3；M9/M10/Q cloth/HVLP/板厂测试列未来迁移。 |
 
 ## 当前全链堵点账本
@@ -136,7 +138,7 @@
 2. Micron：6/24 FQ3 财报后验证 FQ4 指引、HBM/eSSD/NAND/LPDRAM 供需持续性、capex 与 sell-the-news 风险；Samsung、SK hynix、Kioxia/SanDisk：仍需各自最新官方财报/业绩会确认 eSSD/NAND/LPDRAM/HBM 价格、LTA、库存和 capacity allocation。
 3. Techwing、MJC、Advantest、Teradyne、FormFactor、Technoprobe、MPI 或内存厂是否披露 HBM test/probe/Cube Prober lead time、合同规模、追加订单或 allocation？
 4. FERC/PJM/ERCOT/utility 是否给出大负载接入规则变化；Oracle/Meta/Google/Microsoft/Amazon 是否继续上修 AI CapEx 或披露电力/设备/液冷对投产节奏的影响？
-5. Google Brazos 是否进入 OCP 规格、多供应商量产或云厂商存量机房改造项目；A 股液冷/电源公司是否披露真实客户、订单、收入和毛利？
+5. Google Brazos 是否进入 OCP 规格、多供应商量产或云厂商存量机房改造项目；A 股液冷/电源/高速连接器公司是否披露真实客户、订单、收入和毛利；鼎通科技可转债发行结果、包销比例和募投执行不能替代订单验证。
 6. 沪电、台玻、Nittobo、台系 CCL、建滔、生益、南亚、德福/诺德/嘉元/铜冠是否继续披露高端玻纤布、M8/M9/M10、HVLP4/5 交期、报价、客户认证、分产品收入和毛利？
 7. TrendForce MLCC 线索能否被村田、TDK、三星电机、国巨、风华高科、三环集团等官方订单、料号、ASP 或收入拆分验证？
 
