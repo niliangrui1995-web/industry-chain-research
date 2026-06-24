@@ -1,7 +1,7 @@
 # 精测电子 300567.SZ 跟踪卡
-更新日期: 2026-06-22
-coverage_type: minimum_hbm_test_chain_watch_card
-collection_scope: user_email_2026-06-18_0854_repo_artifacts_and_narrow_official_check
+更新日期: 2026-06-25
+coverage_type: minimum_hbm_test_chain_post_micron_watch_card
+collection_scope: micron_2026_06_24_official_repo_artifacts_and_email_boundary_check
 multi_agent_status: not_used_by_policy
 用途: HBM 测试链观察卡，不构成买卖建议。
 
@@ -11,9 +11,11 @@ multi_agent_status: not_used_by_policy
 
 链条层面，`HBM test / memory probe card / Cube Prober` 已从 `future watch` 上调为 `watch_to_soft / soft_bottleneck_candidate`：SK 海力士 HBM4E 12 层样品、Techwing 获 SK hynix HBM Cube Prober 首单、Micronics Japan memory probe card 高需求和交期压力，说明 HBM 测试/探针/后段全检负荷开始显性化。
 
+Micron 2026-06-24 盘后官方财报/业绩会进一步确认 HBM4 ramp、DRAM/NAND tight beyond CY2027、data center SSD 放量、SCA 长协/押金和 2027H1 新加坡 HBM advanced packaging capacity 路径；这强化“先进存储/HBM 复杂度上升会带来测试链观察价值”。但 Micron 官方没有点名 HBM test/probe/Cube Prober lead time、allocation、测试设备供应商订单或中国测试设备公司，因此只能强化链条 watch 背景，不能把精测电子升为 Micron/HBM test 同节点硬受益。
+
 公司层面，精测电子有 HBM/先进存储相邻的 A 级证据：公司 2026Q1 报告披露先进存储 BI/CP/FT 测试方案及 JH5520 HBM BI 测试系统；2026-05-29 公告披露上海精测与同一客户签订 5.159 亿元半导体前道量检测设备合同，应用场景为先进存储等领域。但这些仍不能直接证明公司受益于 Techwing Cube Prober、probe card 或 HBM final/package test 同节点订单。
 
-因此，核心写法是：`HBM 测试 / probe card / Cube Prober` 链条已经从 future watch 上调到 watch_to_soft，但精测电子的硬受益仍缺同节点订单、客户、收入占比、毛利率和交付节奏证据。不能把 Techwing/MJC 的海外订单和交期压力直接映射成精测电子订单。
+因此，核心写法是：`HBM 测试 / probe card / Cube Prober` 链条已经从 future watch 上调到 watch_to_soft，但精测电子的硬受益仍缺同节点订单、客户、收入占比、毛利率和交付节奏证据。不能把 Micron HBM4 ramp、新加坡 HBM packaging capacity、Techwing/MJC 的海外订单和交期压力直接映射成精测电子订单。
 
 ## 产业链位置
 
@@ -30,7 +32,7 @@ multi_agent_status: not_used_by_policy
 
 | 日期 | 证据等级 | 来源 | 结论与边界 |
 |---|---|---|---|
-| 2026-06-22 | A/C 分层 | Micron 官方 IR/SEC + Gmail 08:53《AI产业链战报》 | Micron 官方强化 HBM/DRAM/NAND/eSSD 供需紧张与 2027 capex/advanced packaging supply 扩张；但未点名 HBM test/probe/Cube Prober lead time、allocation 或供应商订单。对精测电子只强化测试链 watch 背景，不证明同节点订单、客户或收入拆分。 |
+| 2026-06-25 | A/C 分层 | Micron 官方财报/业绩会 + Gmail 06-24《AI产业链战报》 | Micron 官方确认 FQ4 高指引、DRAM/NAND tight beyond CY2027、HBM4 revenue > `1B USD`、data center SSD revenue > `5B USD`、16 份 SCA/RPO/押金，以及 Singapore advanced packaging 预计 2027H1 贡献 HBM packaging capacity；但未点名 HBM test/probe/Cube Prober lead time、allocation 或供应商订单。6/24 战报对精测电子/北方华创等 A 股传导仍是 `Grok未经审计 / lead_only`。对精测电子只强化测试链 watch 背景，不证明同节点订单、客户或收入拆分。 |
 | 2026-06-18 | C/lead | Gmail 08:54《AI产业链战报》 | 把 SK 海力士 HBM4E 12 层样品、Goldman 存储紧张、Techwing Cube Prober 首单传导到精测电子。作为触发线索，不单独作为正式证据。 |
 | 2026-06-18 | repo synthesis | `../../weekly_chain_tracking/ai_chain/state.md` 与 `../../weekly_chain_tracking/ai_chain/2026-06-14.md` | 仓库已把 HBM test/probe card/Cube Prober 上调为 `watch_to_soft`，并把精测电子列为 `node_mapping_watch+ / event_trade_watch+`，但不进 `main_candidate`。 |
 | 2026-05-29 | A | 公司重大合同公告 | 控股子公司上海精测在 2025-12-12 至 2026-05-29 期间与同一客户签订 5.159 亿元半导体前道量检测设备合同，应用场景为先进存储等相关领域；客户信息豁免披露，产品数量、单价和交付安排只在合同中约定，未公开。 |
@@ -49,7 +51,7 @@ multi_agent_status: not_used_by_policy
 
 最大风险是把“HBM 测试链升级”误写成“精测电子已经拿到 HBM test/probe/Cube Prober 订单”。当前官方证据更多落在半导体前道量检测、先进存储应用场景和 HBM BI 测试系统，不等同于 probe card 或 Cube Prober，也不等同于 SK hynix/Techwing/MJC 订单映射。
 
-次要风险包括：客户名称和产品明细保密导致收入确认节奏不可见；先进存储合同能否顺利履行仍受行业周期和客户 capex 影响；半导体设备高研发投入和存货、应收、交付验收节奏可能压制现金流；若市场把相邻证据当成硬订单，估值和交易拥挤风险会放大。
+次要风险包括：客户名称和产品明细保密导致收入确认节奏不可见；先进存储合同能否顺利履行仍受行业周期和客户 capex 影响；Micron/Samsung/SK hynix 的 HBM packaging 扩产也可能先表现为内部产能和海外供应链订单，而不是 A 股测试设备订单；半导体设备高研发投入和存货、应收、交付验收节奏可能压制现金流；若市场把相邻证据当成硬订单，估值和交易拥挤风险会放大。
 
 ## 后续跟踪指标
 
