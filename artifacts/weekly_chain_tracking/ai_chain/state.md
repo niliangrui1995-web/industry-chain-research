@@ -11,6 +11,10 @@
 
 2026-06-25 Micron 财报后最小吸收：Micron 官方 FQ3 2026 财报和 earnings call prepared remarks 确认 FQ4 指引大幅高于财报前基线，并把 DRAM/NAND/HBM/eSSD 紧张从“财报前待验证”收紧为 `confirmed_official` 主链证据；但官方未点名 HBM test/probe/Cube Prober、雅克科技、精测电子或 A 股公司订单。2026-06-24《AI产业链战报》仍为 `Grok未经审计 / mixed-source / lead_only`；SemiAnalysis 2026-06-23 CXMT 公开页只能作为 `credible_secondary / competition_watch`，提示 2028+ 标准 DRAM 竞争和价格天花板风险，不抵消 Micron 对 `2026-2027` 供需紧张的官方表述。
 
+2026-06-25 长飞光纤最小核验卡窄口径吸收：[长飞光纤 601869.SH](../../company_tracking/601869.SH/state.md) 已把 08:49《AI产业链战报》中的 G.657.A2 涨价、Corning-Amazon/NVIDIA/Meta 长单和“中国厂商定价权”拆成 `confirmed_official / credible_secondary / lead_only` 三层。全链层只把高密度数据中心 optical fiber/cable/connectivity 的观察层边界再强化一次：Corning 长单和 G.657.A2 行业涨价可以支持行业景气、锁产能和价格观察，但仍不能写成长飞新增客户订单、数据中心收入拆分、G.657.A2 实现 ASP 或毛利兑现；不改变全链主排序。
+
+2026-06-25 SK hynix / ASML EUV 光学元件线索最小吸收：新增 [茂莱光学 688502.SH 最小跟踪卡](../../company_tracking/688502.SH/state.md)。DART 确认 SK hynix EUV scanner 采购和 DR/ADR 资金用途包含 EUV scanner、Yongin 半导体集群一期 fab、Cheongju P&T7 Advanced Packaging fab，能强化 `晶圆制造与先进制程服务 > EUV lithography scanner / ASML 单一供应商节点` 的 capex 观察；但不能直接写成茂莱光学 ASML/SK hynix 订单、EUV scanner 指定部件收入占比或毛利兑现。福晶科技仅保留为邮件中的长期 EUV 光源晶体材料线索，本次不扩写公司卡、不改变全链主排序。
+
 ## 任务边界
 
 本任务负责 AI 产业链横向雷达、堵点账本、赛道优先级和上市主体映射，不重复展开光模块和 AI PCB 专项细节。每次执行必须读取：
@@ -38,7 +42,7 @@
 
 | 专项任务 | 最新状态 | 本期吸收结论 | 对全链排序影响 |
 |---|---|---|---|
-| 光模块及上游 | `artifacts/weekly_chain_tracking/optical_module/state.md` | InP/6 英寸合格 InP/EML/CW-DFB/UHP/ELS 为 hard；整机装配 soft/eased；FAU/主动对准/WLBI/ELSFP thermal 为 future watch；长飞光纤 2026-06-24 异动公告只补充 AI 数据中心光纤价格与毛利验证边界。 | 光源链排当前核心卡点第 2；1.6T/3.2T driver/TIA/DSP/GaN/FAU/热管理列未来迁移；长飞不改变排序。 |
+| 光模块及上游 | `artifacts/weekly_chain_tracking/optical_module/state.md` | InP/6 英寸合格 InP/EML/CW-DFB/UHP/ELS 为 hard；整机装配 soft/eased；FAU/主动对准/WLBI/ELSFP thermal 为 future watch；长飞光纤 2026-06-24 异动公告和 2026-06-25 最小核验卡只补充 AI 数据中心光纤价格、Corning 锁产能和毛利验证边界。 | 光源链排当前核心卡点第 2；1.6T/3.2T driver/TIA/DSP/GaN/FAU/热管理列未来迁移；长飞不改变排序。 |
 | AI PCB 及上游 | `artifacts/weekly_chain_tracking/ai_pcb/state.md` | 高端电子玻纤布与 M7-M10 CCL/prepreg 并列 soft+；HVLP4/5、高频高速树脂、板厂良率/测试为 watch_to_soft。 | PCB 材料链排当前核心卡点第 3；M9/M10/Q cloth/HVLP/板厂测试列未来迁移。 |
 
 ## 当前全链堵点账本

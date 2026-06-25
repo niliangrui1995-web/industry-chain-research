@@ -1,6 +1,6 @@
 # 长飞光纤（601869.SH）滚动跟踪状态
 
-更新日期：2026-06-22
+更新日期：2026-06-25
 跟踪性质：公司首次深研后的滚动状态，不构成买卖建议。
 grok_status: unavailable_no_callable_chrome_tool_exposed
 
@@ -65,6 +65,8 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 - 客户证据不足：云厂商、海外运营商、光模块客户名称未见官方明确披露。
 - 产能口径不足：光棒、光纤、光缆、空芯光纤名义产能缺官方数字。
 - 价格周期缺官方连续数据：产业媒体价格需用运营商招标和公司毛利率反复验证。
+- G.657.A2 价格缺公司实现口径：需补运营商/云厂商采购价格、长飞分产品 ASP、订单或毛利率拆分；当前 550% 涨幅仍是可信二级行业价格线索。
+- Corning 长单未桥接长飞：Amazon/NVIDIA/Meta 对 Corning 的锁供只能说明北美光连接产能被锁定，不能替代长飞客户、订单、收入或毛利证据。
 - 公司官网 IR 页面本次直连失败：需在可访问官网或 Chrome 登录环境下补查 2026-05-08~2026-05-09 是否有投资者服务/公告通函新增。
 - Grok/X 未运行：当前无 @chrome 工具暴露，缺少社交热度与海外实时讨论层。
 
@@ -73,8 +75,9 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 1. 2026Q2 毛利率能否继续高于 2025 年全年水平？
 2. Q1 利润中有多少来自普通光纤价格修复，多少来自光互联组件和新型光纤？
 3. 公司是否披露 2025 全年海外收入占比及海外利润率？
-4. 空芯光纤下一次可验证的规模化节点是什么：运营商集采、云厂商 DCI、海外试点还是标准推进？
-5. 高估值下，股东减持、H 股折价配售和 A/H 溢价会否成为交易压制因素？
+4. G.657.A2 或其他 bend-insensitive fiber/数据中心光纤是否出现长飞口径的订单、客户、ASP、收入占比或毛利率拆分？
+5. 空芯光纤下一次可验证的规模化节点是什么：运营商集采、云厂商 DCI、海外试点还是标准推进？
+6. 高估值下，股东减持、H 股折价配售和 A/H 溢价会否成为交易压制因素？
 
 ## 常用来源
 
@@ -84,6 +87,11 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 - AI-2030：https://en.yofc.com/view/3398.html
 - IR 2025-12-26：https://dataclouds.cninfo.com.cn/shgonggao/investor/2025/20251226/2b3b93d44dc44df196884c97afa28810.PDF
 - IR 2025-06-27：https://dataclouds.cninfo.com.cn/shgonggao/2025/2025-06-27/b40a18cc533a11f089d0fa163e39923a.pdf
+- 异动公告 2026-06-24：https://paper.cnstock.com/html/2026-06/24/content_2234332.htm
+- Amazon-Corning：https://www.aboutamazon.com/news/company-news/amazon-corning-fiber-optics-1000-jobs-north-carolina
+- NVIDIA-Corning：https://nvidianews.nvidia.com/news/nvidia-and-corning-announce-long-term-partnership-to-strengthen-us-manufacturing-for-ai-infrastructure
+- Meta-Corning：https://about.fb.com/news/2026/01/meta-6-billion-agreement-corning-support-us-manufacturing/
+- G.657.A2 涨价二级来源：https://paper.cnstock.com/html/2026-06/23/content_2234171.htm
 
 ## 2026-05-09 主控补充：open_web_fallback
 
@@ -204,3 +212,13 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 - 大宗交易：2026-06-23 未发现新增大宗交易。
 - open-web：普通联网搜索主要返回龙虎榜、行情、市值和行业景气镜像；未发现比公司公告/交易公开信息更高等级的新增客户、订单、价格或收入拆分证据。
 - 状态变化：交易弹性和拥挤度继续上升，同时官方公告对“AI 数据中心光纤光缆价格上涨直接兑现业绩”的叙事作出边界提醒。基本面仍需等待产品价格、业务结构、订单、收入拆分和毛利率在财报或IR中兑现。
+
+## 2026-06-25 最小核验卡：G.657.A2 光棒涨价与 Corning 长单
+
+- 线索来源：Gmail `2026-06-25 08:49`《AI产业链战报》把“G.657.A2 光棒涨价、Corning 锁定 Amazon/NVIDIA/Meta 长单、中国厂商定价权”作为长飞光纤强化信号；该邮件本身为 `mixed-source / lead_only`，只作检索入口，不作公司事实。
+- `confirmed_official`：Amazon 官方确认与 Corning 达成多年、数十亿美元协议，由 Corning 供应美国数据中心所需 optical fiber、cable、connectivity solutions；NVIDIA/Corning 官方确认多年商业和技术合作，Corning 将美国 optical connectivity 产能提升 10x、美国光纤产能提升 50% 以上；Meta 官方确认与 Corning 达成最高 60 亿美元多年协议，供应数据中心光纤电缆。这些共同强化“北美云厂商锁定 Corning 光连接/光纤产能”的行业背景。
+- `confirmed_official`：长飞 2026Q1 归母净利润 4.95 亿元、同比 +226.40%，扣非归母净利润 4.61 亿元、同比 +966.44%，公司解释为营业收入和毛利率同比增加；2025 年报确认光传输产品收入 83.46 亿元、毛利率 35.90%，光互联组件收入 31.44 亿元、毛利率 39.73%，海外收入 60.92 亿元、占收入 42.74%，海外地区毛利率 35.29%。
+- `credible_secondary`：上海证券报/证券时报 2026-06-23 报道称，G.657.A2 类光棒每等效芯公里报价由 22-30 元涨到 160 元、涨幅近 550%，并称紧缺或延续至 2027 年；这属于行业价格与景气证据，不等同于长飞已披露的实现 ASP、订单价格或分产品毛利。
+- `lead_only / 未闭合`：邮件中的“中国厂商定价权提升”“长飞光棒产能 5600 吨、自给率 90%+”仍需公司公告、年报产销口径、运营商集采、客户合同或可信数据源补证；本轮在 2025 年报/2026Q1/异动公告中未闭合到长飞披露的 G.657.A2 产销量、订单、客户或单品价格。
+- 不能升级为硬事实：Corning 的 Amazon/NVIDIA/Meta 长单是 Corning 自身客户和美国本地产能锁定，不能写成长飞新增 Amazon/NVIDIA/Meta 订单、客户导入或海外收入拆分；G.657.A2 涨价是行业景气和供需背景，不能直接写成长飞新增收入、毛利率兑现或数据中心光纤业务占比提升。
+- 状态变化：外部行业信号从“普通光纤价格修复 + 数据中心光连接需求”进一步强化为“高密度数据中心光纤/光连接锁产能观察层增强”；长飞公司层面仍维持 `watch / evidence_gap_card`，核心验证项不变：Q2/Q3 财报毛利率、光传输产品 ASP/销量、G.657.A2 或数据中心光纤订单、海外业务质量、以及是否披露达到公告标准的客户协议。
