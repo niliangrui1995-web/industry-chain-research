@@ -1,6 +1,6 @@
 # 德福科技 301511.SZ 滚动状态
 
-更新日期：2026-06-22
+更新日期：2026-06-25
 browser_scope: not_available_no_callable_chrome_grok_tool
 grok_status: unavailable_no_callable_chrome_grok_tool_surface
 open_web_fallback_status: searched_observation_only_no_new_customer_revenue_signal
@@ -59,6 +59,13 @@ open_web_fallback_status: searched_observation_only_no_new_customer_revenue_sign
 - Grok/X：父任务未暴露 Chrome/Grok/@chrome 工具面，按用户指令记录为 `unavailable_chrome_plugin_not_exposed`；未使用 Browser Use / Playwright 替代登录态。
 - open web fallback：普通公开网页搜索作为观察池使用，状态为 `searched_no_new_hard_signal`；未发现 HVLP/RTF 铜箔新增客户认证、批量交付、正式订单、收入占比或毛利率量化披露。
 - 本次状态变化：仅更新本轮浏览器范围、Grok/X 不可用口径和 2026-05-13 来源缺口；没有新增硬事件，未追加 `events.jsonl`。
+
+## 2026-06-25 日更
+
+- 公告窗口：北京时间 20:00 后完成 `2026-06-25` 与 `2026-06-26` 的 T/T+1 检查；CNINFO 公司名/代码查询确认新增《关于持股5%以上股东权益变动达到1%整数倍的公告》。
+- 新增官方减持进展：拓阵基金及一致行动人瑞潇芃泰于 2026-06-05 至 2026-06-24 通过大宗交易累计减持 650.00 万股，占总股本 1.03%，合计持股比例由 6.97% 降至 5.94%；减持计划尚未完成。
+- 龙虎榜 / 大宗交易：2026-06-25 未发现新增龙虎榜；同日发生 1 笔大宗交易，成交价 151.02 元、成交 50.00 万股、成交额 7551.00 万元，买方机构专用，卖方中信证券北京分公司。
+- 状态变化：官方公告确认前期连续大宗交易的减持归属和剩余额度问题；6 月 25 日同席位同规格交易继续出现，但归属仍待后续权益变动或减持进展公告确认。HVLP/RTF 客户认证、正式订单、收入占比和毛利率仍无新增硬证据。
 
 ## 关键假设
 
