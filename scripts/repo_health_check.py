@@ -1,0 +1,338 @@
+#!/usr/bin/env python3
+"""Repository health checks for the investment-research workspace."""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import py_compile
+import re
+import subprocess
+import sys
+import tempfile
+from dataclasses import asdict, dataclass, field
+from pathlib import Path
+from typing import Iterable
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SKILL_HEALTH_OVERRIDES = Path.home() / ".codex" / "skill-routing" / "skill-health-overrides.json"
+DEFAULT_DOCS = [
+    ROOT / "README.md",
+    ROOT / "AGENTS.md",
+    ROOT / "SKILL_PACK_MANIFEST.md",
+    ROOT / "skills" / "user-investment-framework" / "references" / "skill-mcp-boundary-matrix.md",
+]
+PYTHON_FILES = [
+    ROOT / "scripts" / "update_tungsten_price_tracker.py",
+    ROOT / "scripts" / "earnings_parent_guardrail.py",
+    ROOT / "scripts" / "create_company_watchlist.py",
+    ROOT / "scripts" / "repo_health_check.py",
+    ROOT / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+]
+SECRET_PATTERNS = [
+    ("openai_key", re.compile(r"\b(?:sk-proj-[A-Za-z0-9_-]{40,}|sk-[A-Za-z0-9]{32,})\b")),
+    ("github_token", re.compile(r"\b(?:ghp|github_pat)_[A-Za-z0-9_]{20,}")),
+    ("aws_access_key", re.compile(r"\bAKIA[0-9A-Z]{16}\b")),
+    ("private_key", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA |)?PRIVATE KEY-----")),
+    (
+        "secret_assignment",
+        re.compile(r"(?i)\b(?:api[_-]?key|secret|token|password)\s*=\s*['\"]?[A-Za-z0-9_./+=-]{24,}"),
+    ),
+]
+ALLOWED_REFERENCE_CONTEXT = (
+    "explicit",
+    "reference",
+    "archived",
+    "optional",
+    "可选",
+    "显式",
+    "参考",
+    "归档",
+    "不进入默认",
+    "不自动",
+    "只有用户明确",
+    "only when",
+    "do not route",
+)
+
+
+@dataclass
+class CheckResult:
+    name: str
+    status: str
+    details: list[str] = field(default_factory=list)
+
+
+def rel(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+
+def result(name: str, ok: bool, details: Iterable[str] = ()) -> CheckResult:
+    return CheckResult(name=name, status="ok" if ok else "fail", details=list(details))
+
+
+def skipped(name: str, why: str) -> CheckResult:
+    return CheckResult(name=name, status="skipped", details=[why])
+
+
+def run_cmd(args: list[str], *, timeout: int = 60) -> tuple[int, str, str]:
+    proc = subprocess.run(
+        args,
+        cwd=ROOT,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        capture_output=True,
+        timeout=timeout,
+    )
+    return proc.returncode, proc.stdout.strip(), proc.stderr.strip()
+
+
+def check_routing_consistency() -> CheckResult:
+    readme = read_text(ROOT / "README.md")
+    agents = read_text(ROOT / "AGENTS.md")
+    manifest = read_text(ROOT / "SKILL_PACK_MANIFEST.md")
+    matrix = read_text(ROOT / "skills" / "user-investment-framework" / "references" / "skill-mcp-boundary-matrix.md")
+
+    problems: list[str] = []
+    required_pairs = [
+        ("README.md", readme, "Current primary entrypoint: use `skills/user-investment-framework` first"),
+        ("README.md", readme, "`skills/industry-research-router/`：兼容层和细分路由表"),
+        ("AGENTS.md", agents, "start with `skills/user-investment-framework`"),
+        ("SKILL_PACK_MANIFEST.md", manifest, "主入口只有一个：`user-investment-framework`"),
+        ("skill-mcp-boundary-matrix.md", matrix, "1. Start with `user-investment-framework`."),
+    ]
+    for path, text, needle in required_pairs:
+        if needle not in text:
+            problems.append(f"{path}: missing `{needle}`")
+
+    forbidden_readme = [
+        "先读 `skills/industry-research-router`",
+        "`industry-research-router` +",
+        "20-andruia-niche-intelligence",
+    ]
+    for needle in forbidden_readme:
+        if needle in readme:
+            problems.append(f"README.md: old active routing text still present: `{needle}`")
+
+    if "`stock-copilot-pro`" in manifest and "显式/参考工具" not in manifest:
+        problems.append("SKILL_PACK_MANIFEST.md: stock-copilot-pro is not isolated under explicit/reference tools")
+
+    return result("routing_consistency", not problems, problems)
+
+
+def load_archived_slugs() -> list[str]:
+    if not SKILL_HEALTH_OVERRIDES.exists():
+        return []
+    data = json.loads(SKILL_HEALTH_OVERRIDES.read_text(encoding="utf-8"))
+    return list(data.get("archived_skill_slugs") or [])
+
+
+def check_archived_default_references() -> CheckResult:
+    archived = set(load_archived_slugs())
+    problems: list[str] = []
+    for path in DEFAULT_DOCS:
+        text = read_text(path)
+        for line_no, line in enumerate(text.splitlines(), start=1):
+            for slug in archived:
+                if slug not in line:
+                    continue
+                lowered = line.lower()
+                if any(token in lowered for token in ALLOWED_REFERENCE_CONTEXT):
+                    continue
+                problems.append(f"{rel(path)}:{line_no}: archived/reference skill `{slug}` appears in active context")
+    return result("archived_reference_default_refs", not problems, problems)
+
+
+def check_py_compile() -> CheckResult:
+    problems: list[str] = []
+    with tempfile.TemporaryDirectory(prefix="repo-health-pycompile-") as tmp:
+        tmp_path = Path(tmp)
+        for index, path in enumerate(PYTHON_FILES):
+            if not path.exists():
+                problems.append(f"{rel(path)}: missing")
+                continue
+            cfile = tmp_path / f"{index}-{path.stem}.pyc"
+            try:
+                py_compile.compile(str(path), cfile=str(cfile), doraise=True)
+            except py_compile.PyCompileError as exc:
+                problems.append(f"{rel(path)}: {exc.msg}")
+    return result("py_compile", not problems, problems)
+
+
+def check_tungsten_report_only() -> CheckResult:
+    with tempfile.TemporaryDirectory(prefix="repo-health-tungsten-") as tmp:
+        tmp_path = Path(tmp)
+        history = tmp_path / "price_history.csv"
+        with history.open("w", encoding="utf-8", newline="") as fh:
+            writer = csv.DictWriter(
+                fh,
+                fieldnames=[
+                    "date",
+                    "indicator",
+                    "name",
+                    "low",
+                    "high",
+                    "mid",
+                    "unit",
+                    "currency",
+                    "source_name",
+                    "source_url",
+                    "source_grade",
+                    "notes",
+                ],
+            )
+            writer.writeheader()
+        report_dir = tmp_path / "reports"
+        code, stdout, stderr = run_cmd(
+            [
+                sys.executable,
+                str(ROOT / "scripts" / "update_tungsten_price_tracker.py"),
+                "--history",
+                str(history),
+                "--report-dir",
+                str(report_dir),
+                "--date",
+                "2026-06-24",
+                "--report-only",
+            ],
+            timeout=60,
+        )
+        report_path = report_dir / "2026-06-24.md"
+        details = [item for item in [stdout, stderr] if item]
+        if code == 0 and not report_path.exists():
+            details.append("temporary report was not generated")
+            code = 1
+        return result("tungsten_report_only", code == 0, details)
+
+
+def check_ht_inspect_help() -> CheckResult:
+    code, stdout, stderr = run_cmd(
+        [sys.executable, str(ROOT / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py"), "--help"],
+        timeout=30,
+    )
+    details = [line for line in [stdout.splitlines()[0] if stdout else "", stderr] if line]
+    return result("ht_inspect_help", code == 0, details)
+
+
+def check_earnings_guardrail() -> CheckResult:
+    code, stdout, stderr = run_cmd(
+        [
+            sys.executable,
+            str(ROOT / "scripts" / "earnings_parent_guardrail.py"),
+            "--project-root",
+            str(ROOT),
+            "--output",
+            "json",
+        ],
+        timeout=120,
+    )
+    details: list[str] = []
+    if stderr:
+        details.append(stderr)
+    json_start = stdout.find("{")
+    json_text = stdout[json_start:] if json_start >= 0 else stdout
+    if json_start > 0:
+        details.append("guardrail emitted log lines before JSON; parsed JSON payload after first `{`")
+    try:
+        payload, _ = json.JSONDecoder().raw_decode(json_text)
+    except json.JSONDecodeError:
+        details.append("guardrail output was not valid JSON")
+        if stdout:
+            details.append(stdout[:500])
+        return result("earnings_guardrail_dry_run", False, details)
+    status = payload.get("status")
+    details.append(f"status={status}")
+    details.append(f"mode={payload.get('mode')}")
+    written = payload.get("snapshot_result", {}).get("written", [])
+    if written:
+        details.append("guardrail wrote snapshots during dry-run")
+    ok = code in (0, 2) and payload.get("mode") == "dry_run" and status != "environment_preflight_failed" and not written
+    return result("earnings_guardrail_dry_run", ok, details)
+
+
+def git_ls_files() -> list[Path]:
+    proc = subprocess.run(
+        ["git", "ls-files", "-z"],
+        cwd=ROOT,
+        capture_output=True,
+        check=True,
+    )
+    names = [name for name in proc.stdout.decode("utf-8", errors="replace").split("\0") if name]
+    return [ROOT / name for name in names]
+
+
+def check_secret_paths() -> CheckResult:
+    problems: list[str] = []
+    for path in git_ls_files():
+        relative = rel(path)
+        name = path.name.lower()
+        if name in {".env", ".env.local", ".env.production"} or "credential" in name or name.endswith(".pem"):
+            problems.append(f"{relative}: tracked_sensitive_filename")
+            continue
+        try:
+            if path.stat().st_size > 2_000_000:
+                continue
+            text = path.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        for rule_name, pattern in SECRET_PATTERNS:
+            if pattern.search(text):
+                problems.append(f"{relative}: {rule_name}")
+                break
+    return result("secret_path_scan", not problems, problems)
+
+
+def check_git_diff_check() -> CheckResult:
+    code, stdout, stderr = run_cmd(["git", "diff", "--check"], timeout=60)
+    details = [item for item in [stdout, stderr] if item]
+    return result("git_diff_check", code == 0, details)
+
+
+def run_checks(skip_slow: bool) -> list[CheckResult]:
+    checks = [
+        check_routing_consistency(),
+        check_archived_default_references(),
+        check_py_compile(),
+        check_tungsten_report_only(),
+        check_ht_inspect_help(),
+        skipped("earnings_guardrail_dry_run", "--skip-slow") if skip_slow else check_earnings_guardrail(),
+        check_secret_paths(),
+        check_git_diff_check(),
+    ]
+    return checks
+
+
+def print_human(checks: list[CheckResult]) -> None:
+    for item in checks:
+        label = {"ok": "OK", "fail": "FAIL", "skipped": "SKIP"}[item.status]
+        print(f"[{label}] {item.name}")
+        for detail in item.details:
+            print(f"  - {detail}")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Run repository health checks.")
+    parser.add_argument("--skip-slow", action="store_true", help="Skip slower environment-dependent checks.")
+    parser.add_argument("--json", action="store_true", help="Emit machine-readable JSON.")
+    args = parser.parse_args()
+
+    checks = run_checks(args.skip_slow)
+    if args.json:
+        print(json.dumps({"status": "ok" if all(c.status != "fail" for c in checks) else "fail", "checks": [asdict(c) for c in checks]}, ensure_ascii=False, indent=2))
+    else:
+        print_human(checks)
+    return 1 if any(item.status == "fail" for item in checks) else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

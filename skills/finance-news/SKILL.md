@@ -7,6 +7,10 @@ description: "Optional market-news briefing skill. In 产业链投研, use only 
 
 AI-powered market news briefings with configurable language output and automated delivery.
 
+## Project Boundary in 产业链投研
+
+In this repository, this skill is explicit-only / reference-only. Use it only when the user explicitly asks for finance-news, market news briefings, morning/evening briefs, alerts, delivery, or scheduling. Do not route ordinary company research, industry-chain research, valuation, ranking, default investment conclusions, push delivery, or cron setup here by default.
+
 ## First-Time Setup
 
 Run the interactive setup wizard to configure your sources, delivery channels, and schedule:
@@ -147,6 +151,8 @@ Location: `skills/finance-news/config/config.json` (legacy fallback: `skills/fin
 
 ## Cron Jobs
 
+Project gate: do not create, suggest, or run cron jobs from this repository unless the user explicitly asks for `finance-news` scheduling or delivery. These examples are reference material, not default project behavior.
+
 ### Setup via OpenClaw
 
 ```bash
@@ -209,6 +215,8 @@ The agent will automatically use this skill when asked about:
 - "News for my portfolio"
 - "Generate morning briefing"
 - "What's happening with AAPL?"
+
+In `D:\vcp_hunter\产业链投研`, this automatic use rule is overridden by the project boundary above: ordinary research stays on `user-investment-framework`, and this skill runs only after an explicit news/briefing/delivery request.
 
 ### With Lobster (Workflow Engine)
 

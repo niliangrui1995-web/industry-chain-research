@@ -1,6 +1,6 @@
 # 产业链投研
 
-Last verified: 2026-05-16
+Last verified: 2026-06-25
 
 Current primary entrypoint: use `skills/user-investment-framework` first for any investment research task, then let it choose the smallest necessary companion skills.
 
@@ -21,8 +21,10 @@ Public Equity Investing plugin skills are companion PM workflow layers only: the
 
 - `AGENTS.md`：本项目的默认规则、浏览器/Grok/Gemini 使用边界、备份流程和输出要求。
 - `SKILL_PACK_MANIFEST.md`：项目内技能清单和每类技能的用途。
-- `skills/industry-research-router/`：所有产业链、公司、估值、排序、龙头识别和交易弹性问题的入口技能。
-- `skills/industry-research-router/references/skill-map.md`：任务类型到技能组合的路由表。
+- `skills/user-investment-framework/`：所有投研任务的主入口，负责证据纪律、产业链框架、公司映射和三层排序。
+- `skills/user-investment-framework/references/skill-mcp-boundary-matrix.md`：项目技能、MCP 和数据源的边界真相表。
+- `skills/industry-research-router/`：兼容层和细分路由表，只在主框架选择后辅助分类。
+- `skills/industry-research-router/references/skill-map.md`：旧任务类型到 companion skill 组合的兼容路由表。
 - `skills/semiconductor-ai-chain-investment-researcher/`：AI/半导体细分环节深研、海外寡头和 A 股硬证据映射主技能。
 - `skills/ai-chain-research-orchestrator/`：AI 产业链实时消息、Grok/X 线索、Gemini 辅助证据和股票映射协调技能。
 - `skills/browser-grok-gemini-research/`：网页 Grok/Gemini 采集辅助技能，只负责浏览器采集和结果交接。
@@ -33,30 +35,30 @@ Public Equity Investing plugin skills are companion PM workflow layers only: the
 - `artifacts/`：研究过程材料、证据包、公司跟踪、周度跟踪和专题输出。
 - `watchlists/`：观察池、跟踪名单和后续维护表。
 - `docs/`：项目说明、父任务或专题研究文档。
+- `docs/evidence_label_policy.md`：后续报告和公司卡片使用的证据标签规范。
+- `docs/skill_vendoring_policy.md`：项目本地技能与插件副本的维护边界。
 - `scripts/`：项目辅助脚本。不要把临时抓取、浏览器缓存或外部自动化默认写进这里。
 
 ## 默认工作流
 
-1. 先读 `skills/industry-research-router`，判断任务属于产业链拆解、公司对比、技术壁垒、国产替代、基本面排序、交易弹性排序、资料检索、长材料消化或表格整理。
-2. 当技能选择不明确时，读 `skills/industry-research-router/references/skill-map.md`，只选最小必要技能组合。
+1. 先读 `skills/user-investment-framework`，判断任务属于产业链拆解、公司对比、技术壁垒、国产替代、基本面排序、交易弹性排序、资料检索、长材料消化或表格整理。
+2. 当技能选择不明确时，先读 `skills/user-investment-framework/references/project-skill-integration.md` 和 `skills/user-investment-framework/references/skill-mcp-boundary-matrix.md`；只有需要兼容旧路由时，再读 `skills/industry-research-router/references/skill-map.md`。
 3. 如果涉及最新价格、市值、PE/PB、换手率、涨跌幅、财报、订单、政策、监管、公司公告或实时新闻，必须联网或使用本地行情工具核对。
 4. 如果只是非实时、非消息驱动的产业链学习或公司对比，不默认打开 Grok/Gemini；先走本地技能框架和必要的公开资料核对。
-5. 输出时先给结论，再说明证据、排序、风险和后续跟踪指标。
+5. 输出时先给结论，再说明证据、排序、风险和后续跟踪指标；新增报告和公司卡片按 `docs/evidence_label_policy.md` 标注证据标签和日期。
 
 ## 常用技能组合
 
-- AI/半导体产业链本质和 A 股映射：`industry-research-router` + `semiconductor-ai-chain-investment-researcher` + `deep-research`。
-- AI 产业链最近 24/48/72 小时消息、爆料、涨价、短缺或停产：`industry-research-router` + `ai-chain-research-orchestrator` + `browser-grok-gemini-research` + `semiconductor-ai-chain-investment-researcher` + `allstock-data`。
-- 非半导体产业链本质：`industry-research-router` + `deep-research`，必要时加 `20-andruia-niche-intelligence`。
-- 成长行业瓶颈、BOM、交货时滞、HHI、定价权和利润池迁移：`industry-research-router` + `industry-chain-deep-disassembly`。
-- 龙头/竞争格局/真假受益：`industry-research-router` + `competitive-landscape` + `competitive-intel`。
-- 公司基本面和估值：`industry-research-router` + `stock-evaluator` + `business-analyst` + 市场数据技能。
-- 股票弹性和短线催化：`industry-research-router` + `allstock-data` + `banana-farmer` + `advanced-evaluation`。
-- A 股公司持续跟踪和日更：`industry-research-router` + `a-share-company-tracking` + `a-share-disclosure-trading-data` + `search-specialist` + `research-summarizer`。
-- 官方资料、公告、PDF、客户/供应商证据和来源反证：`industry-research-router` + `search-specialist` + `web-scraper` / `firecrawl-scraper` / `tavily-web`。
-- 研报、白皮书、会议纪要和多来源材料消化：`industry-research-router` + `research-summarizer` + `advanced-evaluation`。
-- 红利低波、股息率溢价和股债性价比：`industry-research-router` + `dividend-premium-tracker` + `stock-evaluator` + 市场数据技能。
-- 表格、评分卡、watchlist 或 Excel 模型：`industry-research-router` + `spreadsheet` + `xlsx-official` + `advanced-evaluation`。
+- AI/半导体产业链本质和 A 股映射：`user-investment-framework` + `semiconductor-ai-chain-investment-researcher` + `deep-research`；涉及实时消息或爆料时，加 `ai-chain-research-orchestrator` 和 `browser-grok-gemini-research`。
+- 非半导体产业链本质：`user-investment-framework` + `industry-chain-deep-disassembly` + `deep-research`。
+- 龙头/竞争格局/真假受益：`user-investment-framework` + `competitive-landscape` + `competitive-intel`。
+- 公司基本面和估值：`user-investment-framework` + `stock-fundamental-moat-triad` + `stock-evaluator` + `business-analyst`。
+- 股票弹性和短线催化：`user-investment-framework` + `allstock-data` / `tdx-finance-data` + `banana-farmer` + `advanced-evaluation`。
+- A 股公司持续跟踪和日更：`user-investment-framework` + `a-share-company-tracking` + `a-share-disclosure-trading-data` + `search-specialist` + `research-summarizer`。
+- 官方资料、公告、PDF、客户/供应商证据和来源反证：`user-investment-framework` + `search-specialist` + `firecrawl-scraper` / `tavily-web` / 全局 `web-scraper`。
+- 研报、白皮书、会议纪要和多来源材料消化：`user-investment-framework` + `research-summarizer` + `advanced-evaluation`。
+- 红利低波、股息率溢价和股债性价比：`user-investment-framework` + `dividend-premium-tracker` + `stock-evaluator` + 市场数据技能。
+- 表格、评分卡、watchlist 或 Excel 模型：`user-investment-framework` + `spreadsheet` + `xlsx-official` + `advanced-evaluation`。
 
 ## Grok/Gemini 使用边界
 
@@ -84,9 +86,23 @@ Public Equity Investing plugin skills are companion PM workflow layers only: the
 ## 项目边界
 
 - 本项目不是 `每日战报_浏览器自动化`，默认不创建 cron、heartbeat、邮件发送、批量报告守护脚本或自动化流水线产物。
-- `finance-news`、`stock-copilot-pro` 等带简报或定时任务语义的技能，只作为可选数据/新闻工具，不进入默认投研路由。
+- `finance-news`、`stock-copilot-pro` 等带简报、行动建议或定时任务语义的技能，在本项目内只作为 explicit-only / reference-only 工具；不进入默认投研路由，不自动生成行动建议、简报、推送或 cron。
 - 如果用户明确要求自动化、定时报送、日报、邮件或浏览器批量采集，再单独讨论是否接入相应项目或工具。
 - 对代码、脚本和文档做实质修改后，先报告变更并等待确认；确认后再执行提交和推送备份。
+
+## 健康检查
+
+运行仓库级只读体检：
+
+```powershell
+python scripts\repo_health_check.py --skip-slow
+```
+
+完整体检会额外运行 earnings-parent dry-run：
+
+```powershell
+python scripts\repo_health_check.py
+```
 
 ## 示例请求
 

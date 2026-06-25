@@ -114,7 +114,7 @@
 
 - 本项目不是 `每日战报_浏览器自动化`，默认不创建 cron、heartbeat、邮件发送、批量报告守护脚本或自动化流水线产物。
 - 如用户明确要求自动化、定时报送、日报、邮件或浏览器批量采集，再单独讨论是否接入相应项目或工具。
-- `finance-news`、`stock-copilot-pro` 等带简报/定时任务语义的 skill 在本项目中只作为可选数据或新闻工具，不进入默认投研路由。
+- `finance-news`、`stock-copilot-pro` 等带简报、行动建议或定时任务语义的 skill 在本项目中只作为 explicit-only / reference-only 工具，不进入默认投研路由，不自动创建 cron、简报、推送或行动建议。
 
 ## 研究原则
 

@@ -70,8 +70,8 @@ Evidence labels:
 | `finance` | optional | Yahoo/Financial Datasets/TwelveData/Alpha Vantage style quotes, FX, US company data. `market_data_vendor`; cache/watchlist files are created only on explicit write paths; verify hard claims elsewhere. |
 | `alpha-vantage` | optional | Alpha Vantage official API. Requires `ALPHAVANTAGE_API_KEY`; respect rate limits and terms. |
 | `banana-farmer` | optional | Momentum, RSI, volatility, technical-risk scans. Requires `BF_API_KEY`; trading elasticity only. |
-| `stock-copilot-pro` | optional | QVeris/OpenClaw quotes, fundamentals, technicals, news, sentiment. Requires `QVERIS_API_KEY`; local evolution writes are disabled by default; no default actionable conclusions. |
-| `finance-news` | explicit | News briefings, alerts, delivery workflows. Do not route ordinary research here by default. |
+| `stock-copilot-pro` | explicit | QVeris/OpenClaw quotes, fundamentals, technicals, news, sentiment. Requires `QVERIS_API_KEY`; local evolution writes are disabled by default; no default actionable conclusions, briefs, pushes, or cron in this repo. |
+| `finance-news` | explicit | News briefings, alerts, delivery workflows. Do not route ordinary research here by default; use only when the user explicitly asks for briefings, alerts, or delivery. |
 | `dividend-premium-tracker` | companion | Dividend/low-volatility style and stock-bond yield context. Does not prove stock payout durability. |
 
 ## Removed From Project-Local Routing

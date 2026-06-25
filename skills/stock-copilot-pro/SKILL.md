@@ -44,6 +44,10 @@ metadata:
 
 Global Multi-Source Stock Analysis with QVeris.
 
+## Project Boundary in 产业链投研
+
+In this repository, this skill is explicit-only / reference-only. Use it only when the user explicitly asks for QVeris/OpenClaw data, stock-copilot output, a brief, a radar, or a scheduled workflow. Do not route ordinary industry-chain research, company research, valuation, ranking, default investment conclusions, morning/evening briefs, actionable calls, push delivery, or cron setup here by default.
+
 ## SEO Keywords
 
 OpenClaw, stock analysis skill, AI stock copilot, China A-shares, Hong Kong stocks, US stocks, quantitative analysis, fundamental analysis, technical analysis, sentiment analysis, industry radar, morning evening brief, watchlist, portfolio monitoring, QVeris API, THS iFinD, Caidazi, Alpha Vantage, Finnhub, X sentiment, investment research assistant
@@ -53,8 +57,8 @@ OpenClaw, stock analysis skill, AI stock copilot, China A-shares, Hong Kong stoc
 - Single-stock analysis (`analyze`): valuation, quality, technicals, sentiment, risk/timing
 - Multi-stock comparison (`compare`): cross-symbol ranking and portfolio-level view
 - Watchlist/holdings management (`watch`): list/add/remove for holdings and watchlist
-- Morning/Evening brief (`brief`): holdings-focused daily actionable briefing
-- Industry hot-topic radar (`radar`): multi-source topic aggregation for investable themes
+- Morning/Evening brief (`brief`): holdings-focused briefing; explicit user request required in this repo
+- Industry hot-topic radar (`radar`): multi-source topic aggregation; explicit user request required in this repo
 - Multi-format output: `markdown`, `json`, `chat`
 - OpenClaw LLM-ready flow: structured data in code + guided narrative in `SKILL.md`
 
@@ -156,6 +160,8 @@ Primary script: `scripts/stock_copilot_pro.mjs`
 
 ## OpenClaw scheduled tasks (morning/evening brief and radar)
 
+Project gate: do not create, suggest, or run scheduled tasks from this repository unless the user explicitly asks for `stock-copilot-pro` scheduling or delivery. These examples are reference material, not default project behavior.
+
 To set up morning brief, evening brief, or daily radar in OpenClaw, use **only** the official OpenClaw cron format and create jobs via the CLI or Gateway cron tool. Do not edit `~/.openclaw/cron/jobs.json` directly.
 
 - Reference: the `jobs` array in `config/openclaw-cron.example.json`; each item is one `cron.add` payload (fields: `name`, `schedule: { kind, expr, tz }`, `sessionTarget: "isolated"`, `payload: { kind: "agentTurn", message: "..." }`, `delivery`).
@@ -217,6 +223,7 @@ To set up morning brief, evening brief, or daily radar in OpenClaw, use **only**
 - External source URLs remain hidden by default; only shown when `--include-source-urls` is explicitly enabled.
 - No package installation or arbitrary command execution is performed by this skill script.
 - Research-only output. Not investment advice.
+- In `D:\vcp_hunter\产业链投研`, any actionable guidance, brief, radar recommendation, push delivery, or cron setup requires an explicit user request and remains outside the default `user-investment-framework` route.
 
 ## Single Stock Analysis Guide
 
@@ -279,12 +286,12 @@ When analyzing `analyze` output, act as a senior buy-side analyst and deliver a 
 - Avoid data dumping; each key number must include interpretation.
 - Every numeric claim must be grounded in actual payload values; do not fabricate numbers.
 - Keep concise but complete (target 250-500 characters for narrative).
-- Must include actionable guidance and time window.
+- If the user explicitly requested actionable output, include guidance and time window; otherwise keep the output research-only and route final conclusions through the project framework.
 - Ticker and technical terms in English.
 
 ## Daily Brief Analysis Guide
 
-When analyzing `brief` output, generate an actionable morning/evening briefing for OpenClaw conversation.
+When analyzing `brief` output, generate a morning/evening briefing only after an explicit user request for this skill or workflow.
 
 ### Morning Brief
 
@@ -311,7 +318,7 @@ When analyzing `brief` output, generate an actionable morning/evening briefing f
 
 ## Hot Topic Analysis Guide
 
-When analyzing `radar` output, cluster signals into investable themes and provide concise actionable conclusions.
+When analyzing `radar` output, cluster signals into themes only after an explicit user request for this skill or workflow.
 
 ### Required Output (per theme)
 

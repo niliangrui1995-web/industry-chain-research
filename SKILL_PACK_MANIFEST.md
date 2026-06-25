@@ -9,6 +9,7 @@
 - 外部 API / MCP / 网页模型类 skill 默认是数据层、采集层或交易上下文层，不能直接升级为官方证据或最终投资结论。
 - 对外部 API skill 做维护或改动时，先做只读 smoke test；涉及付费额度、写外部状态或模拟交易下单时必须有明确用户指令。
 - 本项目默认不创建定时任务、简报机器人、邮件/IM 推送、cron、heartbeat 或批量自动化流水线。
+- 新增报告和公司卡片使用 `docs/evidence_label_policy.md` 的证据标签；文档/Office skill 维护遵守 `docs/skill_vendoring_policy.md`。
 
 ## 核心入口
 
@@ -66,8 +67,8 @@
 | `finance` | 股票、ETF、指数、FX、部分 crypto、美国公司数据和 Financial Datasets 兜底。 | 补充数据源。 |
 | `alpha-vantage` | Alpha Vantage 官方 API，全球市场、宏观、基本面和技术指标。 | 外部 API 数据源，注意 key、限速和条款。 |
 | `banana-farmer` | 动量、RSI、波动率、技术风险、交易弹性辅助。 | 只用于交易弹性和技术风险。 |
-| `stock-copilot-pro` | QVeris/OpenClaw 报价、基本面、技术、新闻和情绪。 | 可选工具，不自动生成默认结论、简报或行动建议。 |
-| `finance-news` | 市场新闻简报、提醒、投递工作流。 | 只有用户明确要新闻简报或推送时使用。 |
+| `stock-copilot-pro` | QVeris/OpenClaw 报价、基本面、技术、新闻和情绪。 | explicit-only / reference-only；不自动生成默认结论、简报、行动建议或 cron。 |
+| `finance-news` | 市场新闻简报、提醒、投递工作流。 | explicit-only / reference-only；只有用户明确要新闻简报、提醒或推送时使用。 |
 
 ## 表格、评分与模型
 
@@ -81,6 +82,8 @@
 | `data-scientist` / `senior-data-scientist` | 数据分析、统计建模、因果和鲁棒性。 | 数据任务使用，不替代投研证据链。 |
 
 ## 文档与交付物
+
+维护边界见 `docs/skill_vendoring_policy.md`。本项目不在没有专项清理计划时删除、搬运或双向手改 document-skills 副本。
 
 | Skill | 使用场景 |
 |---|---|
@@ -112,7 +115,8 @@ Public Equity Investing 插件只作为 PM 工作流 companion layer。它可以
 | 主入口 | `user-investment-framework` |
 | 兼容保留 | `industry-research-router` |
 | 强推荐保留 | `semiconductor-ai-chain-investment-researcher`, `industry-chain-deep-disassembly`, `stock-fundamental-moat-triad`, `stock-evaluator`, `a-share-company-tracking`, `a-share-disclosure-trading-data`, `search-specialist`, `research-summarizer`, `advanced-evaluation` |
-| 可选数据/API 层 | `tdx-finance-data`, `ht-local-market-data`, `ifind-finance-data`, iFinD MCPs, HTSC/DFCF data skills, `allstock-data`, `finance`, `alpha-vantage`, `banana-farmer`, `stock-copilot-pro`, `finance-news`, `firecrawl-scraper`, `tavily-web`, `apify-*` |
+| 可选数据/API 层 | `tdx-finance-data`, `ht-local-market-data`, `ifind-finance-data`, iFinD MCPs, HTSC/DFCF data skills, `allstock-data`, `finance`, `alpha-vantage`, `banana-farmer`, `firecrawl-scraper`, `tavily-web`, `apify-*` |
+| 显式/参考工具 | `stock-copilot-pro`, `finance-news` |
 | 可选技术/产品辅助 | `ai-engineer`, `ai-ml`, `ai-product`, `tech-stack-evaluator`, `cto-advisor`, `senior-architect`, `arm-cortex-expert`, `product-manager`, `product-manager-toolkit` |
 | 文件交付 | `spreadsheet`, `xlsx`, `xlsx-official`, `docx`, `pdf`, `pptx` |
 | 全局 fallback | 全局 `web-scraper`（仅在已安装且需要通用网页抽取时使用） |
