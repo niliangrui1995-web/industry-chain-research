@@ -1,13 +1,13 @@
 # 芯碁微装 688630.SH 最小跟踪卡
 
-updated_at: 2026-06-21
+updated_at: 2026-06-25
 company: 合肥芯碁微电子装备股份有限公司
 ticker: 688630.SH
 exchange: SSE STAR
 coverage_type: minimal_advanced_packaging_equipment_evidence_gap_card
 status: advanced_packaging_equipment_watch / evidence_gap_card
-collection_scope: gmail_2026-06-17_0853_2026-06-18_0854_repo_and_public_disclosure
-gmail_status: connector_timeout; user_supplied_leads_and_repo_message_ids_only
+collection_scope: gmail_2026-06-17_0853_2026-06-18_0854_2026-06-25_0849_repo_and_public_disclosure_micron_post_earnings
+gmail_status: connector_read_2026-06-25_0849; lead_only_for_company_mapping
 not_investment_advice: true
 
 ## 结论先行
@@ -15,6 +15,8 @@ not_investment_advice: true
 芯碁微装可以补入 `先进封装直写光刻设备 / WLP-PLP / IC载板设备` 跟踪池，当前定位为 `advanced_packaging_equipment_watch / evidence_gap_card`，不是已确认 HBM4 或 CoWoS 主链直接受益标的。
 
 可写入的硬证据是：公司定期报告确认 WLP/PLP 系列覆盖 RDL、Bumping、TSV、Fan-In / Fan-Out WLP、2.5D/3D 等先进封装制程；2025 半年报确认 WLP 2000 获得中道头部客户重复订单并出货，WLP 系列已在多个头部客户验收量产中；MAS 6P 在封装载板头部客户验收、投量并获得批量订单，面向下一代 HPC/AI 芯片高阶 HDI 与 ICS 封装载板量产要求。2026Q1 收入、利润和经营现金流翻倍、合同负债高增，可支持“设备订单景气和交付可见度提升”的观察。
+
+Micron 2026-06-24 盘后官方财报/业绩会已经把主链口径收紧：`HBM / DRAM / LPDRAM / NAND / eSSD` 维持全链最硬 `hard_bottleneck`；`CoWoS / EFB / SoIC / advanced packaging / substrate` 仍是 `soft_bottleneck/watch+`，其中新加坡 advanced packaging 产能是 2027H1 后的 HBM packaging 供给缓解路径，不是 2026-2027 紧张解除。对芯碁微装的直接影响只应写成先进封装、WLP/PLP、IC 载板设备景气和验证优先级加强，不上调为 HBM/CoWoS 直接订单兑现。
 
 仍不能写成事实的是：SK 海力士清州 HBM4 封装备产、Amkor 与 TSMC 美国先进封装十年协议、或邮件/媒体中的类 CoWoS-L 量产线索，已经转化为芯碁微装 HBM4 / CoWoS 直接客户、订单金额、收入占比、毛利率或交付节奏。当前缺公司公告、客户公开材料、订单合同、收入拆分和验收节奏的 A/B 闭环。
 
@@ -33,6 +35,8 @@ not_investment_advice: true
 
 | 日期 | 等级 | 来源 | 结论与边界 |
 |---|---|---|---|
+| 2026-06-25 | A / confirmed_official for chain only | Micron FQ3 FY26 官方财报、prepared remarks、IR event page；[AI 全链 state](../../weekly_chain_tracking/ai_chain/state.md) 已吸收 | Micron 确认 FQ4 revenue `50.0B USD ± 1.0B`、non-GAAP gross margin 约 `86%`、non-GAAP EPS `31.00 ± 1.00`；data center SSD revenue 超过 `5B USD` 且环比翻倍；DRAM/NAND demand 显著超过 supply，紧张预计延续到 `calendar 2027` 之后；HBM4 12-high ramp、HBM4 revenue 超过 `1B USD`；Singapore advanced packaging 预计 `2027H1` 开始贡献 HBM packaging capacity。可强化主链 `memory/storage hard` 与 `advanced packaging / substrate watch+`，但官方未点名芯碁微装、WLP/PLP 设备订单、HBM/CoWoS 客户、收入或毛利。 |
+| 2026-06-25 08:49 | C/lead | Gmail 《AI产业链战报》message_id: `19efc414da7a9a7d` | 邮件把“HBM advanced packaging 成为新瓶颈”、TSV/Hybrid Bonding、精测电子/芯碁微装/有研新材映射写成高弹性线索。按本项目证据规则仅作 `Grok未经审计 / mixed-source / lead_only`：可提高核验优先级，不能独立证明芯碁微装进入 Micron/SK hynix/TSMC/Amkor/NVIDIA/AMD 供应链，也不能证明订单、收入占比、ASP、毛利率或交付节奏。 |
 | 2026-06-17 / 2026-06-18 | C/lead | Gmail 《AI产业链战报》线索；仓库既有 message_id: `19ed311c00d42982` / `19ed839406cf9db2` | SK 海力士 HBM4 封装备产、Amkor-TSMC 美国先进封装协议、芯碁微装订单/WLP 线索只作为触发核对；不能独立证明芯碁微装客户、订单或收入。 |
 | 2026-06-21 | repo synthesis | [AI 全链 state](../../weekly_chain_tracking/ai_chain/state.md) | 当前全链把 `CoWoS / EFB / SoIC / advanced packaging / substrate` 定位为 `soft_bottleneck/watch+`，需求强但官方交期/allocation 证据不足；A 股映射必须逐公司证明。 |
 | 2026-04-30 | A | 芯碁微装 2026 年第一季度报告 / 上交所 | 2026Q1 营收 5.15 亿元，同比 +112.48%；归母净利润 1.08 亿元，同比 +108.98%；经营现金流净额 1.65 亿元，同比 +625.51%；合同负债较上年末 +109.30%，原因为预收客户货款较大。支持订单景气，但未拆先进封装/HBM/CoWoS 收入。 |
@@ -53,6 +57,8 @@ not_investment_advice: true
 
 最大的风险是把行业扩产线索直接写成公司受益事实。SK 海力士清州 HBM4 封装备产能证明 HBM/先进封装景气，不证明芯碁微装进入 SK hynix 供应链；Amkor 与 TSMC 美国先进封装协议证明美国先进封装生态扩张，不证明芯碁微装取得 Amkor/TSMC 订单；类 CoWoS-L 量产线索也不能等同于 TSMC CoWoS-L 主线订单，除非出现客户、合同、验收和收入拆分。
 
+Micron 官方信息的正确用法也必须分层：FQ4 指引、HBM4 ramp、SCAs/RPO/客户押金、DRAM/NAND/eSSD 紧张和 2027H1 Singapore HBM packaging capacity 路径，可以强化 `advanced packaging / WLP-PLP / substrate` 景气和设备核验价值；但仍不能外推成芯碁微装的 HBM/CoWoS 直接客户、订单、收入、毛利或交付排期。邮件里的“HBM advanced packaging 成为新瓶颈”只提高跟踪权重，不改变证据等级。
+
 第二个风险是把 WLP 在手订单突破 1 亿元与公司整体合同负债高增直接相加。二者口径、时间、客户和产品结构不同；没有定期报告拆分前，只能分别作为“WLP 订单线索”和“整体订单景气”观察。
 
 ## 后续跟踪指标
@@ -62,7 +68,8 @@ not_investment_advice: true
 3. WLP 系列“多家头部客户验收量产”是否进一步实名或被客户公告、招标、产线投产材料交叉验证。
 4. WLP 在手订单突破 1 亿元是否在 2026H1/H2 转化为收入、现金流和毛利改善。
 5. 若只有邮件、官微转述、券商或社媒热度，而没有公司公告/财报/客户材料闭环，则维持 `evidence_gap_card`，不升 `main_candidate`。
-6. 若后续全链 state 将 `CoWoS / advanced packaging` 从 `soft_bottleneck/watch+` 上调或下调，本卡同步更新边界。
+6. 若后续全链 state 将 `CoWoS / advanced packaging / substrate` 从 `soft_bottleneck/watch+` 上调或下调，本卡只同步链条景气边界；公司评级上调仍必须等芯碁微装自身 A/B 证据。
+7. 继续跟 Micron/SK hynix/Samsung/TSMC/OSAT 是否在官方材料里点名 WLP/PLP、LDI、RDL、TSV、Hybrid Bonding、IC substrate 设备交期或供应商订单；没有点名前，不把海外 capex 写成芯碁微装订单。
 
 ## 回链
 
@@ -70,9 +77,13 @@ not_investment_advice: true
 - AI PCB 设备观察: [weekly_chain_tracking/ai_pcb/2026-05-07.md](../../weekly_chain_tracking/ai_pcb/2026-05-07.md)
 - 先进封装寡头节点研究: [oligopoly_node_research.md](../../../docs/ai_chain_disassembly/oligopoly_node_research.md)
 - 邮件线索: `gmail_message_id:19ed311c00d42982` / `gmail_message_id:19ed839406cf9db2`
+- 2026-06-25 邮件线索: `gmail_message_id:19efc414da7a9a7d`
 
 ## Sources
 
+- Micron FQ3 FY26 results press release: https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-record-results-third-quarter
+- Micron FQ3 FY26 prepared remarks: https://investors.micron.com/static-files/631b1a32-5537-46ae-8f40-82e42fc79dfe
+- Micron Events & Presentations / Q3 2026 Financial Call: https://investors.micron.com/events-and-presentations
 - 芯碁微装 2026 年第一季度报告（上交所）: https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-04-30/688630_20260430_CFXN.pdf
 - 芯碁微装 2025 年年度报告摘要（CNINFO）: https://static.cninfo.com.cn/finalpage/2026-03-14/1225007946.PDF
 - 芯碁微装 2025 年半年度报告（CNINFO）: https://static.cninfo.com.cn/finalpage/2025-08-28/1224592479.PDF

@@ -15,6 +15,8 @@
 
 2026-06-25 SK hynix / ASML EUV 光学元件线索最小吸收：新增 [茂莱光学 688502.SH 最小跟踪卡](../../company_tracking/688502.SH/state.md)。DART 确认 SK hynix EUV scanner 采购和 DR/ADR 资金用途包含 EUV scanner、Yongin 半导体集群一期 fab、Cheongju P&T7 Advanced Packaging fab，能强化 `晶圆制造与先进制程服务 > EUV lithography scanner / ASML 单一供应商节点` 的 capex 观察；但不能直接写成茂莱光学 ASML/SK hynix 订单、EUV scanner 指定部件收入占比或毛利兑现。福晶科技仅保留为邮件中的长期 EUV 光源晶体材料线索，本次不扩写公司卡、不改变全链主排序。
 
+2026-06-25 Corning GlassBridge / 沃格光电 TGV-CPO 窄口径吸收：新增 [沃格光电 603773.SH 最小跟踪卡](../../company_tracking/603773.SH/state.md)。Corning 官方产品页、手册和 OFC 2026 材料只确认 GlassBridge 是面向 Fiber-to-PIC、NPO/CPO 和高密度 photonic modules 的玻璃接口/连接平台；The Elec 对 2026-06-24 展示的报道只能作为会议展示补充。沃格公司侧可确认 TGV/GCP、光模块/CPO 玻璃基封装载板、1.6T/CPO 合作开发、批量送样和 `5μm / 100:1` 等公开口径；2026-06 异动公告明确泛半导体仍处早期、研发验证或送样验证、尚未规模化工业量产、营收占比极低。全链层只强化 `CoPoS/FOPLP/glass core/TGV` 观察层，不升 hard，不把 `3μm / 150:1`、Corning/NVIDIA/Apple/Samsung 客户、订单、收入或毛利写成事实。
+
 ## 任务边界
 
 本任务负责 AI 产业链横向雷达、堵点账本、赛道优先级和上市主体映射，不重复展开光模块和 AI PCB 专项细节。每次执行必须读取：
@@ -174,6 +176,11 @@ Micron 2026-06-24 盘后官方财报与 earnings call prepared remarks 已落地
 - 沪电股份投资者关系记录: https://data.eastmoney.com/notices/detail/002463/AN202606181823669664.html
 - TrendForce high-end MLCC: https://www.trendforce.com/presscenter/news/20260617-13105.html
 - TrendForce CoPoS/FOPLP/glass substrate: https://www.trendforce.com/presscenter/news/20260617-13107.html
+- Corning GlassBridge product page: https://www.corning.com/oem-solutions/worldwide/en/home/products-solutions/optical-communication-components/next-generation-optics/glassbridge-connector.html
+- Corning GlassBridge brochure: https://www.corning.com/catalog/coc/documents/brochures/OEM-152-AEN.pdf
+- Corning OFC 2026 GlassBridge / CPO note: https://www.corning.com/optical-communications/worldwide/en/home/the-signal-network-blog/corning-at-ofc-2026.html
+- 沃格光电 2025 年半年度报告: https://static.cninfo.com.cn/finalpage/2025-08-28/1224594914.PDF
+- 沃格光电 2026-06-10 股票交易异常波动公告镜像: https://stockmc.xueqiu.com/202606/603773_20260610_F6AC.pdf
 
 ## 对话窗口摘要
 
@@ -192,7 +199,7 @@ Micron 2026-06-24 盘后官方财报与 earnings call prepared remarks 已落地
 | 潜在卡点环节 | 可能成为卡点的原因 | 当前证据/争议 | 预计成为卡点时间 | 升级触发阈值 | 反转指标 |
 |---|---|---|---|---|---|
 | 高端 MLCC/X6S 与 AI power passives | AI ASIC/accelerator 板卡功率上升，带动小尺寸高容高温 MLCC 用量和可靠性要求。 | TrendForce B 级线索强；缺供应商官方 allocation 和 A 股客户料号。 | `2026H2-2027` | 两家以上 MLCC 龙头披露涨价/lead time/AI server 客户订单；A 股披露料号、收入占比和毛利。 | 扩产兑现、价格不涨、lead time 正常、客户多源认证顺利。 |
-| CoPoS/FOPLP/玻璃基板/TGV | Package 面积和成本压力推动面板化与玻璃基板，但 TGV、对位、翘曲和良率难。 | TrendForce 指向 2026 验证、2027 试产、2H28 量产；当前不是量产瓶颈。 | `2027-2028+` | TSMC/OSAT/设备/基板厂披露试产通过、客户导入或产能上修。 | CoWoS 扩产满足需求，玻璃基板继续延后。 |
+| CoPoS/FOPLP/玻璃基板/TGV | Package 面积和成本压力推动面板化与玻璃基板，但 TGV、对位、翘曲和良率难。 | TrendForce 指向 2026 验证、2027 试产、2H28 量产；Corning 官方 GlassBridge 强化 Fiber-to-PIC/CPO 路线，沃格只确认合作开发、批量送样和早期验证，当前不是量产瓶颈。 | `2027-2028+` | TSMC/OSAT/设备/基板厂披露试产通过、客户导入或产能上修。 | CoWoS 扩产满足需求，玻璃基板继续延后。 |
 | 1.6T/3.2T 光电芯片/FAU/主动对准/热管理 | 高速 analog、精密耦合、老化测试和散热良率随 1.6T/3.2T 升级而收窄。 | Marvell 需求强，光模块专项列 future watch；缺单品交期。 | `2026H2-2028` | 多供应商披露 driver/TIA/DSP/FAU/thermal lead time、allocation 或良率拖累。 | 二供认证快，1.6T/3.2T 放量顺畅，交期回落。 |
 | M9/M10/Q cloth/NER/HVLP4/5 与成品板良率/测试 | Rubin、AI switch、224G+ 高速板推动材料、加工和测试窗口同步收窄。 | PCB 专项为 soft+/watch_to_soft；沪电 IR 支持材料偏紧但成品板 hard 证据不足。 | `2026H2-2028` | 官方 allocation、报价上涨、交期延长、客户提前锁料或成品板良率被点名。 | 多家供应商稳定量产，报价回落，板厂良率改善。 |
 | AI networking ASIC/NIC/DPU/retimer/substrate | 51.2T/102.4T switch、custom XPU、CPO/NPO 拉动先进制程、SerDes、package/substrate。 | Broadcom/Marvell A 级需求强；缺 silicon/substrate allocation。 | `2026H2-2027` | 官方披露交期、allocation、客户排产延期或 substrate/package 限制。 | 交付顺畅，客户不延期，封装/基板扩产跟上。 |
