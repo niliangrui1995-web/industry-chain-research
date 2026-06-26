@@ -1,9 +1,9 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
-更新时间：2026-06-25（北京时间；Micron 2026-06-24 盘后官方财报/业绩会最小吸收）
+更新时间：2026-06-26（北京时间；公司跟踪 2026-06-26 窄口径主状态同步）
 最新报告：`artifacts/weekly_chain_tracking/ai_chain/2026-06-21.md`
-覆盖窗口：2026-06-15 至 2026-06-25，北京时间（06-25 为 Micron post-earnings 窄口径吸收）
-当前阶段：第九期全链雷达。已吸收光模块专项最新状态、AI PCB 专项 2026-06-21 状态和 Micron FQ3 2026 财报后官方口径；本期主深挖为 `memory/storage/server parts + HBM test/probe` 与 `数据中心电力/并网/液冷/800VDC`。
+覆盖窗口：2026-06-15 至 2026-06-26，北京时间（06-26 为公司跟踪 canonical 筛选）
+当前阶段：第九期全链雷达。已吸收光模块专项最新状态、AI PCB 专项 2026-06-21 状态、Micron FQ3 2026 财报后官方口径和 2026-06-26 公司跟踪筛选；本期主深挖为 `memory/storage/server parts + HBM test/probe` 与 `数据中心电力/并网/液冷/800VDC`。
 
 2026-06-22 08:53 邮件窄口径复核：建滔 CCL 单张毛利 80 元、铜冠 HVLP4 涨价和 HVLP5 送样、生益科技/南亚新材映射，均不改变全链主排序。邮件本身作为 `mixed-source / lead_only`；和沪电 IR、Mitsui、Co-Tech 证据合并后，只能更收敛地维持 AI PCB 材料链 `soft+ / watch_to_soft`，不能升 hard。全链层最关键 source gap 仍是 A 股公司在 M8/M9/M10 CCL、HVLP4/5、高频高速树脂上的分产品收入、ASP/加工费、毛利率和客户认证闭环。
 
@@ -16,6 +16,8 @@
 2026-06-25 SK hynix / ASML EUV 光学元件线索最小吸收：新增 [茂莱光学 688502.SH 最小跟踪卡](../../company_tracking/688502.SH/state.md)。DART 确认 SK hynix EUV scanner 采购和 DR/ADR 资金用途包含 EUV scanner、Yongin 半导体集群一期 fab、Cheongju P&T7 Advanced Packaging fab，能强化 `晶圆制造与先进制程服务 > EUV lithography scanner / ASML 单一供应商节点` 的 capex 观察；但不能直接写成茂莱光学 ASML/SK hynix 订单、EUV scanner 指定部件收入占比或毛利兑现。福晶科技仅保留为邮件中的长期 EUV 光源晶体材料线索，本次不扩写公司卡、不改变全链主排序。
 
 2026-06-25 Corning GlassBridge / 沃格光电 TGV-CPO 窄口径吸收：新增 [沃格光电 603773.SH 最小跟踪卡](../../company_tracking/603773.SH/state.md)。Corning 官方产品页、手册和 OFC 2026 材料只确认 GlassBridge 是面向 Fiber-to-PIC、NPO/CPO 和高密度 photonic modules 的玻璃接口/连接平台；The Elec 对 2026-06-24 展示的报道只能作为会议展示补充。沃格公司侧可确认 TGV/GCP、光模块/CPO 玻璃基封装载板、1.6T/CPO 合作开发、批量送样和 `5μm / 100:1` 等公开口径；2026-06 异动公告明确泛半导体仍处早期、研发验证或送样验证、尚未规模化工业量产、营收占比极低。全链层只强化 `CoPoS/FOPLP/glass core/TGV` 观察层，不升 hard，不把 `3μm / 150:1`、Corning/NVIDIA/Apple/Samsung 客户、订单、收入或毛利写成事实。
+
+2026-06-26 公司跟踪 canonical 筛选：对应 [2026-06-26 公司跟踪报告](../../company_tracking/2026-06-26.md) 与四张公司卡。宏和科技 603256.SH 的 6 月 27 日 T+1 异常波动公告、无应披未披回复、UNICORN ACE 减持比例由 2.0% 下修至 1.5% 和 6 月 26 日龙虎榜，只进入“高端电子布/Low CTE 交易拥挤与筹码供给风险”边界，不改变 `高端电子玻纤布 / Low Dk / Low CTE / T-glass` 的 `soft_bottleneck+` 等级，也不写成 Low CTE/T-glass 客户、订单、价格、收入占比或毛利兑现。德福科技 301511.SZ 的同规格、同卖方席位大宗交易继续留在交易结构/减持线索，归属和剩余额度待后续官方减持进展确认，不升级 HVLP/RTF 客户认证、正式订单、收入占比或毛利率。中际旭创 300308.SZ 的两笔平价大宗交易只作为高价位机构换手观察，不改变 1.6T/800G、硅光、客户需求、上游物料或毛利率主线。麦格米特 002851.SZ 正式向港交所递交 H 股申请并刊发申请资料，进入 `800VDC / rack power / AI 数据中心电源` 的资本平台与募资用途跟踪，但仍是 `watch+ / catalyst_watch`，不升 `main_candidate`，不写成 NVIDIA/Google/云厂客户订单、收入占比、毛利率或交付节奏兑现。本次不改变全链主排序和堵点账本。
 
 ## 任务边界
 
