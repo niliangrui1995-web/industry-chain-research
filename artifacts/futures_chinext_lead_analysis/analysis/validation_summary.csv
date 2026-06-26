@@ -1,0 +1,14 @@
+﻿check,value
+expected_chinext_trading_days,295
+cffex_contract_rows,4720
+cffex_rank_rows,82060
+main_contract_rows,1180
+main_signal_rows,1180
+model_dataset_rows,294
+product_date_rows_ok,1180
+product_date_rows_total,1180
+daily_rows_ok,294
+daily_rows_total,295
+latest_futures_signal_date,2026-06-26
+latest_model_signal_date,2026-06-25
+latest_chinext_date,2026-06-26
