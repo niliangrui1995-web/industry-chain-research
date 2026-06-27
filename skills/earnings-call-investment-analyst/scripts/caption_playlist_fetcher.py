@@ -17,7 +17,12 @@ from pathlib import Path
 DEFAULT_USER_AGENT = "earnings-call-investment-analyst/0.1"
 MAX_PLAYLIST_BYTES = 5 * 1024 * 1024
 MAX_SEGMENT_BYTES = 5 * 1024 * 1024
+MAX_TOTAL_SEGMENT_BYTES = 100 * 1024 * 1024
 MAX_SEGMENTS = 5000
+
+
+class CaptionSizeError(ValueError):
+    """Raised when caption downloads exceed local safety limits."""
 
 
 def fetch_text(url: str, user_agent: str, max_bytes: int) -> str:
@@ -72,6 +77,14 @@ def playlist_duration_seconds(playlist_text: str) -> float:
     return duration
 
 
+def checked_segment_size(current_total_bytes: int, segment_text: str) -> tuple[int, int]:
+    segment_bytes = len(segment_text.encode("utf-8"))
+    new_total = current_total_bytes + segment_bytes
+    if new_total > MAX_TOTAL_SEGMENT_BYTES:
+        raise CaptionSizeError(f"caption segments exceed total size limit: {MAX_TOTAL_SEGMENT_BYTES} bytes")
+    return new_total, segment_bytes
+
+
 def normalize_vtt_segment(text: str) -> list[str]:
     lines = []
     for raw_line in text.splitlines():
@@ -123,16 +136,20 @@ def main() -> int:
     duration_seconds = playlist_duration_seconds(playlist_text)
     merged_lines = ["WEBVTT", ""]
     segment_records = []
+    total_segment_bytes = 0
     for index, segment_url in enumerate(segments):
         try:
             segment_text = fetch_text(segment_url, args.user_agent, MAX_SEGMENT_BYTES)
+            total_segment_bytes, segment_bytes = checked_segment_size(total_segment_bytes, segment_text)
             segment_path = raw_dir / f"segment_{index:04d}.vtt"
             segment_path.write_text(segment_text, encoding="utf-8")
             merged_lines.extend(normalize_vtt_segment(segment_text))
             merged_lines.append("")
-            segment_records.append({"url": segment_url, "path": str(segment_path), "status": "ok"})
+            segment_records.append({"url": segment_url, "path": str(segment_path), "status": "ok", "bytes": segment_bytes})
         except Exception as exc:
             segment_records.append({"url": segment_url, "status": "error", "error": repr(exc)})
+            if isinstance(exc, CaptionSizeError):
+                break
 
     merged_vtt = "\n".join(merged_lines).strip() + "\n"
     merged_vtt_path = out_dir / "captions_merged.vtt"
@@ -151,6 +168,7 @@ def main() -> int:
         "playlist_duration_seconds": duration_seconds,
         "segment_count": len(segments),
         "downloaded_count": sum(1 for item in segment_records if item["status"] == "ok"),
+        "segment_bytes_total": total_segment_bytes,
         "segments": segment_records,
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
     }

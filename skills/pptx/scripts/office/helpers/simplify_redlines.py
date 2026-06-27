@@ -15,6 +15,7 @@ import zipfile
 from pathlib import Path
 
 import defusedxml.minidom
+from safe_zip import MAX_ZIP_COMPRESSION_RATIO, MAX_ZIP_MEMBER_BYTES, UnsafeZipError
 
 WORD_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 
@@ -151,7 +152,12 @@ def _get_authors_from_docx(docx_path: Path) -> dict[str, int]:
         with zipfile.ZipFile(docx_path, "r") as zf:
             if "word/document.xml" not in zf.namelist():
                 return {}
-            with zf.open("word/document.xml") as f:
+            info = zf.getinfo("word/document.xml")
+            if info.file_size > MAX_ZIP_MEMBER_BYTES:
+                raise UnsafeZipError("word/document.xml exceeds size limit")
+            if info.compress_size and info.file_size / info.compress_size > MAX_ZIP_COMPRESSION_RATIO:
+                raise UnsafeZipError("word/document.xml has suspicious compression ratio")
+            with zf.open(info) as f:
                 tree = ET.parse(f)
                 root = tree.getroot()
 

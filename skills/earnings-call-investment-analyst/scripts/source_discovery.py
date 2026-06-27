@@ -23,19 +23,31 @@ from typing import Any
 
 SEC_TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
 SEC_SUBMISSIONS_URL = "https://data.sec.gov/submissions/CIK{cik}.json"
+MAX_SEC_JSON_BYTES = 25 * 1024 * 1024
 DEFAULT_USER_AGENT = os.environ.get(
     "SEC_USER_AGENT",
     "earnings-call-investment-analyst/0.1 contact@example.com",
 )
 
 
-def fetch_json(url: str, user_agent: str) -> Any:
+def fetch_json(url: str, user_agent: str, max_bytes: int = MAX_SEC_JSON_BYTES) -> Any:
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme not in {"http", "https"}:
+        raise ValueError(f"unsupported URL scheme: {parsed.scheme or 'none'}")
     last_error: Exception | None = None
     for attempt in range(3):
         try:
             request = urllib.request.Request(url, headers={"User-Agent": user_agent})
             with urllib.request.urlopen(request, timeout=30) as response:
-                return json.loads(response.read().decode("utf-8"))
+                length = response.headers.get("Content-Length")
+                if length and int(length) > max_bytes:
+                    raise ValueError(f"response exceeds max size: {int(length)} bytes")
+                data = response.read(max_bytes + 1)
+                if len(data) > max_bytes:
+                    raise ValueError(f"response exceeds max size: {max_bytes} bytes")
+                return json.loads(data.decode("utf-8"))
+        except ValueError:
+            raise
         except Exception as exc:
             last_error = exc
             if attempt < 2:
