@@ -4,10 +4,19 @@ import sys
 from pdf2image import convert_from_path
 
 
+MAX_PDF_PAGES = 100
+PDF_RENDER_TIMEOUT_SECONDS = 120
 
 
-def convert(pdf_path, output_dir, max_dim=1000):
-    images = convert_from_path(pdf_path, dpi=200)
+def convert(pdf_path, output_dir, max_dim=1000, max_pages=MAX_PDF_PAGES):
+    os.makedirs(output_dir, exist_ok=True)
+    images = convert_from_path(
+        pdf_path,
+        dpi=200,
+        first_page=1,
+        last_page=max_pages,
+        timeout=PDF_RENDER_TIMEOUT_SECONDS,
+    )
 
     for i, image in enumerate(images):
         width, height = image.size

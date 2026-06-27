@@ -15,15 +15,31 @@ from pathlib import Path
 
 
 DEFAULT_USER_AGENT = "earnings-call-investment-analyst/0.1"
+MAX_PLAYLIST_BYTES = 5 * 1024 * 1024
+MAX_SEGMENT_BYTES = 5 * 1024 * 1024
+MAX_SEGMENTS = 5000
 
 
-def fetch_text(url: str, user_agent: str) -> str:
+def fetch_text(url: str, user_agent: str, max_bytes: int) -> str:
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme not in {"http", "https"}:
+        raise ValueError(f"unsupported URL scheme: {parsed.scheme or 'none'}")
     last_error: Exception | None = None
     for attempt in range(3):
         try:
             request = urllib.request.Request(url, headers={"User-Agent": user_agent})
             with urllib.request.urlopen(request, timeout=60) as response:
-                return response.read().decode("utf-8", errors="replace")
+                length = response.headers.get("Content-Length")
+                if length and int(length) > max_bytes:
+                    raise ValueError(f"response exceeds max size: {int(length)} bytes")
+                data = bytearray()
+                while True:
+                    chunk = response.read(256 * 1024)
+                    if not chunk:
+                        return bytes(data).decode("utf-8", errors="replace")
+                    data.extend(chunk)
+                    if len(data) > max_bytes:
+                        raise ValueError(f"response exceeds max size: {max_bytes} bytes")
         except Exception as exc:
             last_error = exc
             if attempt < 2:
@@ -96,18 +112,20 @@ def main() -> int:
     raw_dir.mkdir(parents=True, exist_ok=True)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    playlist_text = fetch_text(args.playlist_url, args.user_agent)
+    playlist_text = fetch_text(args.playlist_url, args.user_agent, MAX_PLAYLIST_BYTES)
     playlist_path = raw_dir / "subtitles.m3u8"
     playlist_path.write_text(playlist_text, encoding="utf-8")
 
     segments = playlist_segments(playlist_text, args.playlist_url)
+    if len(segments) > MAX_SEGMENTS:
+        raise ValueError(f"playlist has too many segments: {len(segments)}")
     is_complete_playlist = "#EXT-X-ENDLIST" in playlist_text
     duration_seconds = playlist_duration_seconds(playlist_text)
     merged_lines = ["WEBVTT", ""]
     segment_records = []
     for index, segment_url in enumerate(segments):
         try:
-            segment_text = fetch_text(segment_url, args.user_agent)
+            segment_text = fetch_text(segment_url, args.user_agent, MAX_SEGMENT_BYTES)
             segment_path = raw_dir / f"segment_{index:04d}.vtt"
             segment_path.write_text(segment_text, encoding="utf-8")
             merged_lines.extend(normalize_vtt_segment(segment_text))

@@ -7,6 +7,8 @@ import tempfile
 import zipfile
 from pathlib import Path
 
+from safe_zip import safe_extractall
+
 
 class RedliningValidator:
 
@@ -61,7 +63,7 @@ class RedliningValidator:
 
             try:
                 with zipfile.ZipFile(self.original_docx, "r") as zip_ref:
-                    zip_ref.extractall(temp_path)
+                    safe_extractall(zip_ref, temp_path)
             except Exception as e:
                 print(f"FAILED - Error unpacking original docx: {e}")
                 return False

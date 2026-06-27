@@ -27,6 +27,7 @@ DEFAULT_USER_AGENT = os.environ.get(
     "EARNINGS_FETCH_USER_AGENT",
     "earnings-call-investment-analyst/0.1",
 )
+DEFAULT_FETCH_MAX_BYTES = 10 * 1024 * 1024
 URL_RE = re.compile(r"https?:\\?/\\?/[^\"'<>\s)]+", re.IGNORECASE)
 ATTR_RE = re.compile(r"""(?:src|href)\s*=\s*["']([^"']+)["']""", re.IGNORECASE)
 ASSET_EXTENSIONS = {
@@ -59,13 +60,31 @@ PLATFORM_HINTS = {
 Q4INC_EVENT_ID_RE = re.compile(r"(?:attendee|event)/([0-9]{6,})", re.IGNORECASE)
 
 
-def fetch_bytes(url: str, user_agent: str, timeout: int = 30) -> bytes:
+def fetch_bytes(
+    url: str,
+    user_agent: str,
+    timeout: int = 30,
+    max_bytes: int = DEFAULT_FETCH_MAX_BYTES,
+) -> bytes:
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme not in {"http", "https"}:
+        raise ValueError(f"unsupported URL scheme: {parsed.scheme or 'none'}")
     last_error: Exception | None = None
     for attempt in range(3):
         try:
             request = urllib.request.Request(url, headers={"User-Agent": user_agent})
             with urllib.request.urlopen(request, timeout=timeout) as response:
-                return response.read()
+                length = response.headers.get("Content-Length")
+                if length and int(length) > max_bytes:
+                    raise ValueError(f"response exceeds max size: {int(length)} bytes")
+                data = bytearray()
+                while True:
+                    chunk = response.read(1024 * 1024)
+                    if not chunk:
+                        return bytes(data)
+                    data.extend(chunk)
+                    if len(data) > max_bytes:
+                        raise ValueError(f"response exceeds max size: {max_bytes} bytes")
         except Exception as exc:
             last_error = exc
             if attempt < 2:
@@ -192,7 +211,7 @@ def should_download(category: str, mode: str) -> bool:
 
 
 def download_asset(url: str, out_path: Path, user_agent: str, max_mb: int) -> dict[str, object]:
-    data = fetch_bytes(url, user_agent, timeout=60)
+    data = fetch_bytes(url, user_agent, timeout=60, max_bytes=max_mb * 1024 * 1024)
     size_mb = len(data) / (1024 * 1024)
     if size_mb > max_mb:
         return {"downloaded": False, "reason": f"asset exceeds max size: {size_mb:.1f} MB"}

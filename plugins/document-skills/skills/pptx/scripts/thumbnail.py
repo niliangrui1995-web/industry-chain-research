@@ -35,6 +35,8 @@ GRID_PADDING = 20
 BORDER_WIDTH = 2
 FONT_SIZE_RATIO = 0.10
 LABEL_PADDING_RATIO = 0.4
+MAX_SLIDES = 200
+CONVERSION_TIMEOUT_SECONDS = 180
 
 
 def main():
@@ -70,10 +72,12 @@ def main():
 
     try:
         slide_info = get_slide_info(input_path)
+        if len(slide_info) > MAX_SLIDES:
+            raise RuntimeError(f"Deck has too many slides: {len(slide_info)}")
 
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
-            visible_images = convert_to_images(input_path, temp_path)
+            visible_images = convert_to_images(input_path, temp_path, len(slide_info))
 
             if not visible_images and not any(s["hidden"] for s in slide_info):
                 print("Error: No slides found", file=sys.stderr)
@@ -155,7 +159,7 @@ def create_hidden_placeholder(size: tuple[int, int]) -> Image.Image:
     return img
 
 
-def convert_to_images(pptx_path: Path, temp_dir: Path) -> list[Path]:
+def convert_to_images(pptx_path: Path, temp_dir: Path, slide_count: int) -> list[Path]:
     pdf_path = temp_dir / f"{pptx_path.stem}.pdf"
 
     result = subprocess.run(
@@ -171,6 +175,7 @@ def convert_to_images(pptx_path: Path, temp_dir: Path) -> list[Path]:
         capture_output=True,
         text=True,
         env=get_soffice_env(),
+        timeout=CONVERSION_TIMEOUT_SECONDS,
     )
     if result.returncode != 0 or not pdf_path.exists():
         raise RuntimeError("PDF conversion failed")
@@ -181,11 +186,16 @@ def convert_to_images(pptx_path: Path, temp_dir: Path) -> list[Path]:
             "-jpeg",
             "-r",
             str(CONVERSION_DPI),
+            "-f",
+            "1",
+            "-l",
+            str(min(slide_count, MAX_SLIDES)),
             str(pdf_path),
             str(temp_dir / "slide"),
         ],
         capture_output=True,
         text=True,
+        timeout=CONVERSION_TIMEOUT_SECONDS,
     )
     if result.returncode != 0:
         raise RuntimeError("Image conversion failed")

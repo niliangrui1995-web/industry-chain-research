@@ -54,8 +54,7 @@ def _soffice_command() -> str:
     return "soffice"
 
 
-
-_SHIM_SO = Path(tempfile.gettempdir()) / "lo_socket_shim.so"
+_SHIM_SO: Path | None = None
 
 
 def _needs_shim() -> bool:
@@ -71,10 +70,13 @@ def _needs_shim() -> bool:
 
 
 def _ensure_shim() -> Path:
-    if _SHIM_SO.exists():
+    global _SHIM_SO
+    if _SHIM_SO and _SHIM_SO.exists():
         return _SHIM_SO
 
-    src = Path(tempfile.gettempdir()) / "lo_socket_shim.c"
+    shim_dir = Path(tempfile.mkdtemp(prefix="lo-socket-shim-"))
+    _SHIM_SO = shim_dir / "lo_socket_shim.so"
+    src = shim_dir / "lo_socket_shim.c"
     src.write_text(_SHIM_SOURCE)
     subprocess.run(
         ["gcc", "-shared", "-fPIC", "-o", str(_SHIM_SO), str(src), "-ldl"],

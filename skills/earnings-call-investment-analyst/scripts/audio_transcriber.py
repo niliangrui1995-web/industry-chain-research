@@ -24,6 +24,8 @@ DEFAULT_USER_AGENT = os.environ.get(
     "EARNINGS_FETCH_USER_AGENT",
     "earnings-call-investment-analyst/0.1",
 )
+DEFAULT_MAX_DOWNLOAD_MB = 2048
+DEFAULT_FFMPEG_TIMEOUT_SECONDS = 1800
 
 
 def is_url(value: str) -> bool:
@@ -81,19 +83,35 @@ def resolve_executable(name: str) -> str | None:
     return None
 
 
-def download_url(url: str, out_dir: Path, user_agent: str) -> Path:
+def download_url(url: str, out_dir: Path, user_agent: str, max_mb: int) -> Path:
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme not in {"http", "https"}:
+        raise ValueError(f"unsupported URL scheme: {parsed.scheme or 'none'}")
     target = out_dir / safe_name_from_url(url)
     request = urllib.request.Request(url, headers={"User-Agent": user_agent})
+    max_bytes = max_mb * 1024 * 1024
     with urllib.request.urlopen(request, timeout=120) as response:
-        target.write_bytes(response.read())
+        length = response.headers.get("Content-Length")
+        if length and int(length) > max_bytes:
+            raise ValueError(f"download exceeds max size: {int(length)} bytes")
+        total = 0
+        with target.open("wb") as fh:
+            while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                    break
+                total += len(chunk)
+                if total > max_bytes:
+                    raise ValueError(f"download exceeds max size: {max_bytes} bytes")
+                fh.write(chunk)
     return target
 
 
-def run_command(command: list[str]) -> None:
-    subprocess.run(command, check=True)
+def run_command(command: list[str], timeout: int | None = None) -> None:
+    subprocess.run(command, check=True, timeout=timeout)
 
 
-def extract_audio(ffmpeg: str, input_path: Path, output_path: Path) -> None:
+def extract_audio(ffmpeg: str, input_path: Path, output_path: Path, timeout: int) -> None:
     command = [
         ffmpeg,
         "-y",
@@ -108,10 +126,16 @@ def extract_audio(ffmpeg: str, input_path: Path, output_path: Path) -> None:
         "pcm_s16le",
         str(output_path),
     ]
-    run_command(command)
+    run_command(command, timeout=timeout)
 
 
-def split_audio(ffmpeg: str, audio_path: Path, chunk_dir: Path, chunk_seconds: int) -> list[Path]:
+def split_audio(
+    ffmpeg: str,
+    audio_path: Path,
+    chunk_dir: Path,
+    chunk_seconds: int,
+    timeout: int,
+) -> list[Path]:
     chunk_dir.mkdir(parents=True, exist_ok=True)
     pattern = chunk_dir / "chunk_%03d.wav"
     command = [
@@ -131,7 +155,7 @@ def split_audio(ffmpeg: str, audio_path: Path, chunk_dir: Path, chunk_seconds: i
         "pcm_s16le",
         str(pattern),
     ]
-    run_command(command)
+    run_command(command, timeout=timeout)
     return sorted(chunk_dir.glob("chunk_*.wav"))
 
 
@@ -361,6 +385,8 @@ def main() -> int:
     parser.add_argument("--compute-type", default="auto", help="Compute type for faster-whisper, for example auto, int8, float16, or int8_float16.")
     parser.add_argument("--check-deps", action="store_true", help="Print transcription dependency status and exit.")
     parser.add_argument("--user-agent", default=DEFAULT_USER_AGENT, help="HTTP User-Agent header for URL input.")
+    parser.add_argument("--max-download-mb", type=int, default=DEFAULT_MAX_DOWNLOAD_MB, help="Maximum HTTP media download size.")
+    parser.add_argument("--ffmpeg-timeout-seconds", type=int, default=DEFAULT_FFMPEG_TIMEOUT_SECONDS, help="Maximum seconds for each ffmpeg command.")
     args = parser.parse_args()
 
     if args.check_deps:
@@ -376,7 +402,7 @@ def main() -> int:
 
     source = args.input
     if is_url(source):
-        media_path = download_url(source, raw_dir, args.user_agent)
+        media_path = download_url(source, raw_dir, args.user_agent, args.max_download_mb)
     else:
         media_path = Path(source).expanduser().resolve()
         if not media_path.exists():
@@ -391,7 +417,7 @@ def main() -> int:
             raise RuntimeError(
                 "ffmpeg was not found. Install ffmpeg, pass --ffmpeg, or use --provider faster-whisper --no-ffmpeg."
             )
-        extract_audio(ffmpeg_path, media_path, audio_path)
+        extract_audio(ffmpeg_path, media_path, audio_path, args.ffmpeg_timeout_seconds)
 
     provider = args.provider
     if provider == "whisper-cli":
@@ -419,7 +445,13 @@ def main() -> int:
     elif provider == "openai":
         if not ffmpeg_path:
             raise RuntimeError("ffmpeg is required for OpenAI chunking.")
-        chunks = split_audio(ffmpeg_path, audio_path, chunk_dir, args.chunk_seconds)
+        chunks = split_audio(
+            ffmpeg_path,
+            audio_path,
+            chunk_dir,
+            args.chunk_seconds,
+            args.ffmpeg_timeout_seconds,
+        )
         transcript_path = transcribe_with_openai(chunks, out_dir, model, language)
         if not args.keep_chunks:
             for chunk in chunks:

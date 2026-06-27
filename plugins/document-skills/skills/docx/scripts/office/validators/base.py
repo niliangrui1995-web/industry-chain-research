@@ -7,6 +7,7 @@ from pathlib import Path
 
 import defusedxml.minidom
 import lxml.etree
+from safe_zip import safe_extractall
 
 
 class BaseSchemaValidator:
@@ -799,7 +800,7 @@ class BaseSchemaValidator:
             temp_path = Path(temp_dir)
 
             with zipfile.ZipFile(self.original_file, "r") as zip_ref:
-                zip_ref.extractall(temp_path)
+                safe_extractall(zip_ref, temp_path)
 
             original_xml_file = temp_path / relative_path
 
