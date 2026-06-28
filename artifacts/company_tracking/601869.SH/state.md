@@ -1,6 +1,6 @@
 # 长飞光纤（601869.SH）滚动跟踪状态
 
-更新日期：2026-06-25
+更新日期：2026-06-28
 跟踪性质：公司首次深研后的滚动状态，不构成买卖建议。
 grok_status: unavailable_no_callable_chrome_tool_exposed
 
@@ -25,6 +25,7 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 - 2025 年 12 月 IR：公司称空芯光纤仍处发展前期，相关业务尚未对经营业绩产生重大影响。
 - 2026 年 2 月异动公告：公司提示数据中心内部及互连相关光纤光缆产品数量占全球需求总量比例较小，公司目前不从事 CPO 相关业务。
 - 2026-05-08 腾讯行情：601869.SH 收盘价 397.23 元，换手率 4.79%，总市值约 3,288.69 亿元，TTM PE 约 284.20。仅作为交易弹性观察。
+- 2026-06-28 窄口径补证：本轮“光纤上游”涨价/紧张最明确落在光纤预制棒，尤其数据中心高密度布线相关的 A2/G.657.A2 类光棒；普通 G.652D 光棒也有二级涨价线索，但普通光纤/光缆、光棒、石英材料和高密度数据中心连接件不能混写。长飞侧仍只确认行业上行与部分产品价格波动不确定，尚未闭合到 G.657.A2 实现 ASP、订单、收入拆分或毛利。
 
 ## 2026-06-22 日更
 
@@ -52,6 +53,7 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 ## 观察池
 
 - 光纤价格：G.652D、G.657A2、G.654.E 的集采价格、现货价格、急单价格是否分化。
+- 光纤上游拆层：普通光纤/光缆、G.652D 普通光棒、A2/G.657.A2 高密度布线预制棒、高纯石英砂/光纤级石英套管/炉芯管、以及 FAU/MT/MPO/PM fiber/fiber array 等高密度连接/被动件分别跟踪，避免用一个环节替代另一个环节。
 - 运营商集采：中国移动、中国电信、中国联通普通光缆、新型光纤、空芯光纤、混合光缆中标份额和价格。
 - AI 数据中心：数据中心内部/互连场景光纤光缆产品的收入占比、订单、客户是否披露。
 - 光互联组件：长芯博创收入、毛利率、订单质量、客户集中度。
@@ -66,6 +68,8 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 - 产能口径不足：光棒、光纤、光缆、空芯光纤名义产能缺官方数字。
 - 价格周期缺官方连续数据：产业媒体价格需用运营商招标和公司毛利率反复验证。
 - G.657.A2 价格缺公司实现口径：需补运营商/云厂商采购价格、长飞分产品 ASP、订单或毛利率拆分；当前 550% 涨幅仍是可信二级行业价格线索。
+- 石英材料传导缺公司口径：高纯石英砂、光纤级石英套管、炉芯管等只构成上游成本/供给线索，尚缺长飞采购成本、库存、锁价、供应商或毛利率传导披露。
+- 高密度连接/被动件未闭合：Corning 长协能证明北美 optical fiber/cable/connectivity 锁产能观察增强，但 FAU、MT ferrule、MPO、PM fiber、fiber array 等单品仍缺交期、涨价、订单排队或长飞收入证据。
 - Corning 长单未桥接长飞：Amazon/NVIDIA/Meta 对 Corning 的锁供只能说明北美光连接产能被锁定，不能替代长飞客户、订单、收入或毛利证据。
 - 公司官网 IR 页面本次直连失败：需在可访问官网或 Chrome 登录环境下补查 2026-05-08~2026-05-09 是否有投资者服务/公告通函新增。
 - Grok/X 未运行：当前无 @chrome 工具暴露，缺少社交热度与海外实时讨论层。
@@ -76,8 +80,11 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 2. Q1 利润中有多少来自普通光纤价格修复，多少来自光互联组件和新型光纤？
 3. 公司是否披露 2025 全年海外收入占比及海外利润率？
 4. G.657.A2 或其他 bend-insensitive fiber/数据中心光纤是否出现长飞口径的订单、客户、ASP、收入占比或毛利率拆分？
-5. 空芯光纤下一次可验证的规模化节点是什么：运营商集采、云厂商 DCI、海外试点还是标准推进？
-6. 高估值下，股东减持、H 股折价配售和 A/H 溢价会否成为交易压制因素？
+5. 光棒涨价是否能被运营商/云厂商采购价格、长飞光传输产品 ASP 或 Q2/Q3 毛利率验证，而不是只停留在行业报价？
+6. 高纯石英砂、石英套管、炉芯管是否出现官方/公司级供给紧张、锁价、成本传导或长飞采购侧证据？
+7. 高密度连接/被动件是否出现 Corning/Fujikura/Sumitomo、模块厂或连接件厂层面的交期、涨价、订单排队和客户认证证据？
+8. 空芯光纤下一次可验证的规模化节点是什么：运营商集采、云厂商 DCI、海外试点还是标准推进？
+9. 高估值下，股东减持、H 股折价配售和 A/H 溢价会否成为交易压制因素？
 
 ## 常用来源
 
@@ -88,6 +95,9 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 - IR 2025-12-26：https://dataclouds.cninfo.com.cn/shgonggao/investor/2025/20251226/2b3b93d44dc44df196884c97afa28810.PDF
 - IR 2025-06-27：https://dataclouds.cninfo.com.cn/shgonggao/2025/2025-06-27/b40a18cc533a11f089d0fa163e39923a.pdf
 - 异动公告 2026-06-24：https://paper.cnstock.com/html/2026-06/24/content_2234332.htm
+- 央视财经光纤光缆订单/光棒瓶颈：https://www.21jingji.com/article/20260604/herald/b04acaaff318ab90a5827e23ee479460.html
+- 上证报/证券时报光棒涨价：https://www.stcn.com/article/detail/3973253.html
+- 上证报高纯石英材料传导：https://www.21jingji.com/article/20260605/herald/1db25ddc038887160e7178f60674eafa.html
 - Amazon-Corning：https://www.aboutamazon.com/news/company-news/amazon-corning-fiber-optics-1000-jobs-north-carolina
 - NVIDIA-Corning：https://nvidianews.nvidia.com/news/nvidia-and-corning-announce-long-term-partnership-to-strengthen-us-manufacturing-for-ai-infrastructure
 - Meta-Corning：https://about.fb.com/news/2026/01/meta-6-billion-agreement-corning-support-us-manufacturing/
@@ -222,3 +232,13 @@ grok_status: unavailable_no_callable_chrome_tool_exposed
 - `lead_only / 未闭合`：邮件中的“中国厂商定价权提升”“长飞光棒产能 5600 吨、自给率 90%+”仍需公司公告、年报产销口径、运营商集采、客户合同或可信数据源补证；本轮在 2025 年报/2026Q1/异动公告中未闭合到长飞披露的 G.657.A2 产销量、订单、客户或单品价格。
 - 不能升级为硬事实：Corning 的 Amazon/NVIDIA/Meta 长单是 Corning 自身客户和美国本地产能锁定，不能写成长飞新增 Amazon/NVIDIA/Meta 订单、客户导入或海外收入拆分；G.657.A2 涨价是行业景气和供需背景，不能直接写成长飞新增收入、毛利率兑现或数据中心光纤业务占比提升。
 - 状态变化：外部行业信号从“普通光纤价格修复 + 数据中心光连接需求”进一步强化为“高密度数据中心光纤/光连接锁产能观察层增强”；长飞公司层面仍维持 `watch / evidence_gap_card`，核心验证项不变：Q2/Q3 财报毛利率、光传输产品 ASP/销量、G.657.A2 或数据中心光纤订单、海外业务质量、以及是否披露达到公告标准的客户协议。
+
+## 2026-06-28 窄口径补证：光纤上游涨价/供给收紧拆层
+
+- 本轮补证口径：只回答“光纤供不应求再往上游追溯，哪些环节真的可能涨价或收紧”，不把行业景气直接写成长飞经营兑现。
+- `credible_secondary`：央视财经报道光纤光缆订单饱满、排产到 2027 年，并把扩产瓶颈指向光纤预制棒；这能抬升“光纤/光缆需求强 + 光棒瓶颈”的行业链条，但未拆到长飞订单或毛利。
+- `credible_secondary`：上海证券报/证券时报 2026-06-23 称通用 G.652D 光棒报价涨幅超过 180%，用于数据中心高密度布线的 G.657.A2 类光棒报价由 22-30 元/等效芯公里涨至 160 元/等效芯公里，紧缺或延续至 2027 年。该证据把最强涨价对象从“泛光纤”收敛到“预制棒/光棒，尤其 A2/G.657.A2”。
+- `credible_secondary`：上海证券报 2026-06-05 将 A2 类预制棒涨价进一步连接到高纯石英砂、光纤级石英套管、炉芯管、石英管等材料/制品，并给出光纤用高纯砂报价与 6N 以上供给紧张线索；这只能说明上游成本和材料供给压力，不等于长飞采购成本或毛利已受益。
+- `confirmed_official`：Amazon、NVIDIA、Meta 与 Corning 的官方长协继续确认北美云厂商在 optical fiber、cable、connectivity solutions / optical connectivity 上锁定供给和扩产；这是高密度数据中心光连接的全球需求与产能锁定证据，不是长飞客户、订单或收入证据。
+- `confirmed_official / 公司边界`：长飞 2026-06-24 异动公告确认全球光纤光缆行业处于上行周期，但公司日常经营正常、行业环境未发生重大变化，部分产品价格波动幅度及其对公司业绩影响仍需结合市场环境和业务结构判断。
+- 拆层结论：普通光纤/光缆只是需求景气层；光纤预制棒/光棒是当前最明确的涨价和供给收紧层，其中 A2/G.657.A2 强于普通 G.652D；高纯石英砂/石英制品是上游成本压力层；高密度数据中心 optical connectivity/被动件是全球云厂锁产能观察层。四层都不能直接写成长飞订单、收入或毛利兑现。
