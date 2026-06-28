@@ -1,16 +1,16 @@
 {
-  "generated_at_beijing": "2026-06-22 00:40",
+  "generated_at_beijing": "2026-06-28 23:04",
   "status": "ok",
   "mode": "dry_run",
   "window": {
-    "now_beijing": "2026-06-22 00:40",
-    "window_end_beijing": "2026-06-25 00:40"
+    "now_beijing": "2026-06-28 23:04",
+    "window_end_beijing": "2026-07-01 23:04"
   },
   "calendar_read": {
-    "today_arg": "2026-06-21",
+    "today_arg": "2026-06-27",
     "lookahead_days": 5,
     "allow_network": false,
-    "event_count": 2,
+    "event_count": 1,
     "future_candidate_count": 1,
     "past_event_count": 0
   },
@@ -25,35 +25,28 @@
     {
       "ticker": "6594.T",
       "company": "Nidec",
-      "report_date": "2026-06-24",
-      "status": "reviewed_no_official_call_time",
-      "reason": "agent_reviewed_official_sources_no_call_announced",
+      "report_date": "2026-06-30",
+      "status": "needs_agent_review",
+      "reason": "third_party_estimate_no_official_call_time",
       "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "agent_reviewed_no_official_call_time 2026-06-22: Nidec IR calendar/briefings/webcast and TDnet checked; no 2026-06-24 earnings call/webcast/results briefing found; FY2026 results disclosure remains postponed; default proxy retained.",
-      "official_source_url": "https://www.release.tdnet.info/inbs/140120260616572098.pdf",
-      "reviewed_source_confidence": "official_date_mismatch",
-      "child_id": "6594-t-nidec-2026-06-24",
+      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
+      "suggested_official_checks": [
+        "Company IR",
+        "TDnet disclosure",
+        "JPX listing/company calendar",
+        "third-party calendars as leads only"
+      ],
       "hard_stop": false
     }
   ],
   "soft_probe_candidates": [],
   "soft_warnings": {
     "legacy_name": [],
-    "source_header": [
-      {
-        "child_id": "6594-t-nidec-2026-06-24",
-        "ticker": "6594.T",
-        "report_date": "2026-06-24",
-        "problem": "existing_source_header_stronger_than_calendar",
-        "existing_source_confidence": "official_date_mismatch",
-        "calendar_source_confidence": "non_official_estimate",
-        "hard_stop": false
-      }
-    ]
+    "source_header": []
   },
   "scheduler_scan_problems": [],
   "final_validation": {
-    "child_count": 16,
+    "child_count": 17,
     "bad_rrules": [],
     "active_with_memory": [],
     "active_past": [],
@@ -76,7 +69,7 @@
     {
       "child_id": "6594-t-nidec-2026-06-24",
       "name": "财报电话会深挖 6594.T Nidec 2026-06-24",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "6594.T|2026-06-24|",
       "ticker": "6594.T",
       "company": "Nidec",
@@ -86,8 +79,35 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "RRULE:FREQ=WEEKLY;BYDAY=WE;BYHOUR=12;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
+      "scheduler_status": "PAUSED",
+      "scheduler_next_run_beijing": "",
+      "scheduler_last_run_beijing": "2026-06-24 20:00",
+      "scheduler_next_run_matches_planned": false,
+      "scheduler_next_run_delta_seconds": null,
+      "model": "gpt-5.5",
+      "reasoning_effort": "xhigh",
+      "has_memory": true,
+      "calendar_source": "Yahoo Finance",
+      "event_status": "estimated_unverified",
+      "source_confidence": "official_date_mismatch",
+      "official_source_url": "https://www.release.tdnet.info/inbs/140120260616572098.pdf",
+      "prompt_sha1": "0efa740a205c7aa33d70e6b0ca9666bb32ff87e0"
+    },
+    {
+      "child_id": "6594-t-nidec-2026-06-30",
+      "name": "财报电话会深挖 6594.T Nidec 2026-06-30",
+      "status": "ACTIVE",
+      "task_key": "6594.T|2026-06-30|",
+      "ticker": "6594.T",
+      "company": "Nidec",
+      "report_date": "2026-06-30",
+      "fiscal_period": "",
+      "planned_child_start_beijing": "2026-06-30 20:00",
+      "schedule_basis": "default_proxy_not_call_time",
+      "rrule": "RRULE:FREQ=WEEKLY;BYDAY=TU;BYHOUR=12;BYMINUTE=0;COUNT=1",
+      "rrule_ok": true,
       "scheduler_status": "ACTIVE",
-      "scheduler_next_run_beijing": "2026-06-24 20:00",
+      "scheduler_next_run_beijing": "2026-06-30 20:00",
       "scheduler_last_run_beijing": "",
       "scheduler_next_run_matches_planned": true,
       "scheduler_next_run_delta_seconds": 0,
@@ -96,9 +116,9 @@
       "has_memory": false,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
-      "source_confidence": "official_date_mismatch",
-      "official_source_url": "https://www.release.tdnet.info/inbs/140120260616572098.pdf",
-      "prompt_sha1": "0efa740a205c7aa33d70e6b0ca9666bb32ff87e0"
+      "source_confidence": "non_official_estimate",
+      "official_source_url": "N/A",
+      "prompt_sha1": "c80e5e5d2beabce9a25f1b82005919a1b6c848bd"
     },
     {
       "child_id": "ec-6594-t-20260525-f606f2",
