@@ -1,13 +1,13 @@
 {
-  "generated_at_beijing": "2026-06-28 23:04",
+  "generated_at_beijing": "2026-06-29 22:33",
   "status": "ok",
   "mode": "dry_run",
   "window": {
-    "now_beijing": "2026-06-28 23:04",
-    "window_end_beijing": "2026-07-01 23:04"
+    "now_beijing": "2026-06-29 22:33",
+    "window_end_beijing": "2026-07-02 22:33"
   },
   "calendar_read": {
-    "today_arg": "2026-06-27",
+    "today_arg": "2026-06-28",
     "lookahead_days": 5,
     "allow_network": false,
     "event_count": 1,
