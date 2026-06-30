@@ -1,10 +1,10 @@
 # 300394.SZ 天孚通信 跟踪状态
 
 baseline_status: done
-last_checked: 2026-06-20 21:44 Asia/Shanghai
-browser_scope: no_chrome_grok_callable_tool
-grok_status: unavailable_no_callable_chrome_tool
-open_web_fallback_status: searched_observation_only_market_move_no_material_event
+last_checked: 2026-06-30 20:35 Asia/Shanghai
+browser_scope: not_used_by_policy
+grok_status: not_used_by_policy
+open_web_fallback_status: searched_observation_only_official_mirror_no_new_order_signal_2026-06-30
 announcement_window_checked: T_and_T_plus_1
 not_investment_advice: true
 
@@ -43,6 +43,14 @@ not_investment_advice: true
 已将天孚通信新增为 watchlist enabled 公司并完成首次基线。2026-05-14 当日有投资者关系活动记录，构成本次新增的最新公司 IR 硬事件。
 
 龙虎榜方面，同花顺页面显示最近 1 个月内该股未能登上龙虎榜。大宗交易方面，公开页面显示最近记录为 2026-05-08 两笔大宗交易，成交价均为 326.30 元，成交金额分别为 2447.25 万元和 8048.29 万元；未见 2026-05-14 新增大宗交易记录。
+
+## 2026-06-30 日更
+
+- 公告窗口：北京时间 20:00 后完成 `2026-06-30` 与 `2026-07-01` 的 T/T+1 检查；CNINFO 公司名/代码查询确认新增《关于全资子公司对外投资设立合资公司的进展公告》。
+- 新增官方事件：新加坡天孚、SUPERX AI SOLUTION LIMITED、APEX VERVE LIMITED 共同设立的 SUPERX OPTICAL COMMUNICATIONS PTE. LTD. 已完成工商注册登记并取得注册证明，注册资本 200 万新币；新加坡天孚已按合资协议实缴出资 70 万新币，持股 35%。
+- 龙虎榜：2026-06-30 未发现天孚通信新增龙虎榜。
+- 大宗交易：东方财富大宗交易数据显示 1 笔小额平价交易，成交 1.00 万股、成交价 302.68 元、成交金额 302.68 万元，买方华泰证券福建分公司，卖方机构专用；金额较小，仅作交易结构观察。
+- 状态变化：SuperX 光互连合资公司从协议推进到注册和实缴落地，海外/AI 光互连业务布局确定性增强；但仍不能写成 CPO、FAU/ELS、1.6T 光引擎的新增订单、客户、收入占比或毛利率兑现。
 
 ## 关键假设
 

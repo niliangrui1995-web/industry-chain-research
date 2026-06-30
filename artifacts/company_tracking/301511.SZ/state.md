@@ -1,9 +1,9 @@
 # 德福科技 301511.SZ 滚动状态
 
-更新日期：2026-06-29
-browser_scope: not_available_no_callable_chrome_grok_tool
-grok_status: unavailable_no_callable_chrome_grok_tool_surface
-open_web_fallback_status: searched_observation_only_no_new_customer_revenue_signal
+更新日期：2026-06-30
+browser_scope: not_used_by_policy
+grok_status: not_used_by_policy
+open_web_fallback_status: searched_observation_only_no_new_customer_revenue_signal_2026-06-30
 用途：公司跟踪状态，不构成买卖建议。
 
 ## 当前跟踪结论
@@ -81,6 +81,13 @@ open_web_fallback_status: searched_observation_only_no_new_customer_revenue_sign
 - 龙虎榜：2026-06-29 未发现新增龙虎榜。
 - 大宗交易：深交所权益类证券大宗交易确认新增 1 笔协议交易，成交 50.00 万股、成交价 137.36 元、成交金额 6868.00 万元，买方机构专用，卖方中信证券股份有限公司北京分公司；东方财富交叉显示较收盘价约折价 1.50%。
 - 状态变化：担保/融资支持继续增加，同时 50 万股同规格、同卖方席位大宗交易延续。6 月 25、26、29 交易归属和剩余额度仍待后续权益变动或减持进展公告确认；HVLP/RTF 商业化状态不变。
+
+## 2026-06-30 日更
+
+- 公告窗口：北京时间 20:00 后完成 `2026-06-30` 与 `2026-07-01` 的 T/T+1 检查；CNINFO 公司名/代码查询未发现新增发行人公告或 IR。
+- 龙虎榜：2026-06-30 未发现新增龙虎榜。
+- 大宗交易：东方财富大宗交易数据显示新增 1 笔大宗交易，成交 50.00 万股、成交价 142.41 元、成交金额 7120.50 万元，买方机构专用，卖方中信证券股份有限公司北京分公司，较当日收盘价约折价 1.00%。深交所直连本轮 SSL 断连，作为交易数据 source gap 记录。
+- 状态变化：6 月 25 日官方确认 6 月 5 日至 24 日累计减持后，6 月 25、26、29、30 同规格、同卖方席位大宗交易继续出现，筹码供给/减持线索仍未结束；HVLP/RTF 商业化状态不变，仍无客户认证、正式订单、收入占比或毛利率新增硬证据。
 
 ## 关键假设
 
