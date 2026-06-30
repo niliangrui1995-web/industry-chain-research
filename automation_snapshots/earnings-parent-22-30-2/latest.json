@@ -1,44 +1,27 @@
 {
-  "generated_at_beijing": "2026-06-29 22:33",
+  "generated_at_beijing": "2026-06-30 22:35",
   "status": "ok",
   "mode": "dry_run",
   "window": {
-    "now_beijing": "2026-06-29 22:33",
-    "window_end_beijing": "2026-07-02 22:33"
+    "now_beijing": "2026-06-30 22:35",
+    "window_end_beijing": "2026-07-03 22:35"
   },
   "calendar_read": {
-    "today_arg": "2026-06-28",
+    "today_arg": "2026-06-29",
     "lookahead_days": 5,
     "allow_network": false,
     "event_count": 1,
-    "future_candidate_count": 1,
-    "past_event_count": 0
+    "future_candidate_count": 0,
+    "past_event_count": 1
   },
   "action_counts": {
     "create": 0,
     "update": 0,
     "pause": 0,
-    "validate_pending": 1,
+    "validate_pending": 0,
     "repair_rrule": 0
   },
-  "review_items": [
-    {
-      "ticker": "6594.T",
-      "company": "Nidec",
-      "report_date": "2026-06-30",
-      "status": "needs_agent_review",
-      "reason": "third_party_estimate_no_official_call_time",
-      "calendar_source": "Yahoo Finance",
-      "calendar_caveat": "Yahoo Finance estimate only; no credible official call/webcast time found; scheduled by default proxy.",
-      "suggested_official_checks": [
-        "Company IR",
-        "TDnet disclosure",
-        "JPX listing/company calendar",
-        "third-party calendars as leads only"
-      ],
-      "hard_stop": false
-    }
-  ],
+  "review_items": [],
   "soft_probe_candidates": [],
   "soft_warnings": {
     "legacy_name": [],
@@ -96,7 +79,7 @@
     {
       "child_id": "6594-t-nidec-2026-06-30",
       "name": "财报电话会深挖 6594.T Nidec 2026-06-30",
-      "status": "ACTIVE",
+      "status": "PAUSED",
       "task_key": "6594.T|2026-06-30|",
       "ticker": "6594.T",
       "company": "Nidec",
@@ -106,14 +89,14 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "RRULE:FREQ=WEEKLY;BYDAY=TU;BYHOUR=12;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "scheduler_status": "ACTIVE",
-      "scheduler_next_run_beijing": "2026-06-30 20:00",
-      "scheduler_last_run_beijing": "",
-      "scheduler_next_run_matches_planned": true,
-      "scheduler_next_run_delta_seconds": 0,
+      "scheduler_status": "PAUSED",
+      "scheduler_next_run_beijing": "",
+      "scheduler_last_run_beijing": "2026-06-30 20:00",
+      "scheduler_next_run_matches_planned": false,
+      "scheduler_next_run_delta_seconds": null,
       "model": "gpt-5.5",
       "reasoning_effort": "xhigh",
-      "has_memory": false,
+      "has_memory": true,
       "calendar_source": "Yahoo Finance",
       "event_status": "estimated_unverified",
       "source_confidence": "non_official_estimate",
