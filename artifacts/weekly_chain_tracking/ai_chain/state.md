@@ -1,7 +1,8 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
-更新时间：2026-06-28（北京时间；全链周报 2026-06-28 已完成）
+更新时间：2026-07-03（北京时间；高端 MLCC 证据缺口最小同步）
 最新报告：`artifacts/weekly_chain_tracking/ai_chain/2026-06-28.md`
+2026-07-03 高端 MLCC 证据缺口同步：7 月 1 日上海证券报/新浪转引国巨涨价与代理商核验，叠加 TrendForce 6 月高端 X6S 结构性偏紧线索，只能作为行业侧 `credible_secondary / lead_only` 和交易催化；风华高科 6 月 30 日严重异常波动公告反而强化了公司侧边界，明确全线暂停接单和英伟达认证传闻不属实、新兴市场营收占比不超过 15%。本地 HT 日线显示风华、三环在 7 月 1-2 日均出现高波动；该行情只解释交易弹性和拥挤，不证明 A 股公司 AI server 客户、料号、订单、ASP、收入占比或毛利率兑现。全链层维持 `High-end MLCC / X6S / AI power passives = future_watch/watch_to_soft`，不升级为 hard。
 2026-06-28 存储涨价时间线最小沉淀：新增 [2026-06-28_storage_price_timeline.md](2026-06-28_storage_price_timeline.md)，按 HBM / server DRAM / LPDDR / NAND / enterprise SSD / HDD 拆分启动时点、供需驱动、相互传导和证据层级；不新增 A 股订单、客户、收入或利润兑现判断。
 2026-06-28 全链周报完成：新增 [2026-06-28.md](2026-06-28.md)，覆盖 2026-06-22 至 2026-06-28。全链层吸收光模块专项 2026-06-28、AI PCB 专项 2026-06-28、Micron FQ3 FY26 官方财报/prepared remarks、存储涨价时间线、FERC/Google/NVIDIA 电力液冷证据；本期只深挖 `memory/storage/LPDRAM/eSSD + HBM test/probe` 与 `data-center power/liquid/800VDC`，不重复展开光模块和 PCB 专项细节。
 覆盖窗口：2026-06-22 至 2026-06-28，北京时间
@@ -69,7 +70,7 @@
 | 800VDC / SST / SiC / GaN power conversion | `watch_to_soft` | 高功率 rack 推动 medium-voltage-to-rack、GaN/SiC、hot-swap/protection 和系统认证。 | attention_up | `2027-2028`；精确持续 `N/A` | 800VDC 推迟，传统架构继续满足；design win 无法转收入 | 跟 NVIDIA ecosystem、Delta/Lite-On/Megmeet、麦格米特等 design win 转量产。 |
 | CoWoS / EFB / SoIC / advanced packaging / substrate | `soft_bottleneck/watch+` | GPU/ASIC multi-die 和 HBM 需求推高 2.5D/3D 封装、基板、键合、测试和设备负荷；Micron 新加坡 advanced packaging center 预计 2027H1 开始贡献 HBM packaging capacity，是供给缓解路径而非当前短缺解除。 | micron_supply_path_added | `2026H2-2027H1` 偏紧，2027 后边际缓解 | TSMC/OSAT/Micron HBM packaging 交期恢复，客户不再锁封装产能 | 跟 TSMC/ASE/Amkor/基板/设备、Micron Singapore HBM packaging ramp。 |
 | AI networking switch ASIC / NIC / DPU / retimer / custom XPU | `strategic_watch/watch_to_soft` | Broadcom/Marvell/NVIDIA/Oracle 需求强，但缺 silicon allocation、lead time 或出货受限证据。 | attention_up | `N/A`；出现 allocation 后升级 | 出货顺畅，客户部署不推迟 | 跟 Broadcom/Marvell/NVIDIA/Arista。 |
-| High-end MLCC / X6S / AI power passives | `future_watch/watch_to_soft` | AI ASIC/accelerator 板卡功率上升，带动小尺寸高容高温 MLCC 用量和可靠性要求。 | new | `2026H2-2027` 可能升级；中置信 | 扩产兑现、价格不涨、lead time 正常、客户多源认证顺利 | 跟村田/TDK/三星电机/国巨/风华高科/三环集团订单、料号、ASP、毛利。 |
+| High-end MLCC / X6S / AI power passives | `future_watch/watch_to_soft` | AI ASIC/accelerator 板卡功率上升，带动小尺寸高容高温 MLCC 用量和可靠性要求。 | 7/1_price_hike_lead_no_upgrade | `2026H2-2027` 可能升级；中置信 | 扩产兑现、价格不涨、lead time 正常、客户多源认证顺利 | 跟村田/TDK/三星电机/国巨/风华高科/三环集团订单、料号、ASP、毛利；A 股公司未披露前不写经营兑现。 |
 
 ## 2026-06-21 芯碁微装先进封装设备最小跟踪卡
 
@@ -183,6 +184,8 @@ Micron 2026-06-24 盘后官方财报与 earnings call prepared remarks 已落地
 - NVIDIA developer blog 800VDC: https://developer.nvidia.com/blog/nvidia-800-vdc-architecture-will-define-the-next-generation-of-ai-factories/
 - 沪电股份投资者关系记录: https://data.eastmoney.com/notices/detail/002463/AN202606181823669664.html
 - TrendForce high-end MLCC: https://www.trendforce.com/presscenter/news/20260617-13105.html
+- 上海证券报/新浪财经 2026-07-01 MLCC 龙头涨价: https://finance.sina.com.cn/wm/2026-07-01/doc-inifhrqu1008061.shtml
+- 风华高科 2026-06-30 严重异常波动公告: https://static.cninfo.com.cn/finalpage/2026-06-30/1225397295.PDF
 - TrendForce CoPoS/FOPLP/glass substrate: https://www.trendforce.com/presscenter/news/20260617-13107.html
 - Corning GlassBridge product page: https://www.corning.com/oem-solutions/worldwide/en/home/products-solutions/optical-communication-components/next-generation-optics/glassbridge-connector.html
 - Corning GlassBridge brochure: https://www.corning.com/catalog/coc/documents/brochures/OEM-152-AEN.pdf

@@ -1,6 +1,6 @@
 # 三环集团 300408.SZ 跟踪卡
 
-updated_at: 2026-06-23
+updated_at: 2026-07-03
 company: 潮州三环（集团）股份有限公司
 ticker: 300408.SZ
 exchange: SZSE
@@ -18,6 +18,12 @@ not_investment_advice: true
 可写入的逻辑是：AI ASIC / accelerator 板卡功率上升，推动小尺寸、高容、高温、高可靠 MLCC 需求上行；仓库既有 MLCC 次主线材料已经把三环集团排在“基本面质量优先、证据加权业绩弹性靠前”的位置。公司侧可确认的支撑来自既有备忘录整理：2025 年报披露产品应用于数据中心，已推出多尺寸高容 MLCC 和面向 48V 电源系统的多规格高容 MLCC；2026Q1 收入、利润增长与 MLCC 产品客户认可度提升、光通信需求增长有关。
 
 必须保留的边界是：目前仍缺 AI server / ASIC 客户名单、具体 X6S 或高容高温料号、订单金额、交期、ASP、AI server 收入拆分和毛利率拆分。不能把 TrendForce、J.P. Morgan 或 Rubin 价值量材料里的行业需求上行，直接写成三环集团已拿到客户订单或高端 MLCC 已涨价兑现。
+
+## 2026-07-03 72 小时窄口径复核
+
+- `canonical_card`：最近 72 小时公开检索未见三环集团新增官方公告、IR 记录或定期报告关闭 AI server 高端 MLCC/X6S 的客户、料号、订单、ASP、收入占比、毛利率缺口；正式卡仍以 2025 年报的数据中心高容 MLCC、48V 电源系统多规格高容 MLCC、2026Q1 业绩为公司侧证据。
+- `market_data_vendor`：本地 HT 日线最新至 2026-07-02；三环集团 2026-05-18 收盘 87.90 元、2026-06-29 收盘 166.69 元，简单收盘涨幅约 +89.64%；2026-07-01 收 170.46 元、2026-07-02 收 148.20 元。该信息说明 MLCC 交易热度和短线波动同步升高，但不构成经营兑现。
+- `lead_only / industry_support`：7 月 1 日国巨电容涨价、渠道延迟供货与 TrendForce 高端 X6S 偏紧线索可以强化行业侧 `future_watch/watch_to_soft`，但不能写成三环集团已涨价、已锁客户或已确认 AI server 订单。本卡维持 `fundamental_main_beneficiary_candidate / evidence_gap_card`。
 
 ## 产业链位置
 
