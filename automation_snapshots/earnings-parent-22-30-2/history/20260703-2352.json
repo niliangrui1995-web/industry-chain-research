@@ -1,7 +1,7 @@
 {
   "generated_at_beijing": "2026-07-03 23:52",
-  "status": "ok",
-  "mode": "dry_run",
+  "status": "post_apply_validation_failed",
+  "mode": "apply_mechanical",
   "window": {
     "now_beijing": "2026-07-03 23:52",
     "window_end_beijing": "2026-07-06 23:52"
@@ -16,9 +16,9 @@
   },
   "action_counts": {
     "create": 0,
-    "update": 0,
+    "update": 1,
     "pause": 0,
-    "validate_pending": 1,
+    "validate_pending": 0,
     "repair_rrule": 0
   },
   "review_items": [
@@ -54,8 +54,21 @@
     "active_missing_template_markers": [],
     "active_missing_source_headers": [],
     "active_unmatched_future": [],
-    "scheduler_status_mismatch": [],
-    "scheduler_next_run_mismatch": [],
+    "scheduler_status_mismatch": [
+      {
+        "child_id": "ec-6594-t-20260706-ab2b4a",
+        "toml_status": "ACTIVE",
+        "scheduler_status": "missing"
+      }
+    ],
+    "scheduler_next_run_mismatch": [
+      {
+        "child_id": "ec-6594-t-20260706-ab2b4a",
+        "planned_child_start_beijing": "2026-07-06 20:00",
+        "scheduler_next_run_beijing": "missing",
+        "delta_seconds": null
+      }
+    ],
     "duplicate_task_keys": {},
     "duplicate_ticker_dates": {}
   },
@@ -295,11 +308,11 @@
       "schedule_basis": "default_proxy_not_call_time",
       "rrule": "RRULE:FREQ=WEEKLY;BYDAY=MO;BYHOUR=12;BYMINUTE=0;COUNT=1",
       "rrule_ok": true,
-      "scheduler_status": "ACTIVE",
-      "scheduler_next_run_beijing": "2026-07-06 20:00",
+      "scheduler_status": "",
+      "scheduler_next_run_beijing": "",
       "scheduler_last_run_beijing": "",
-      "scheduler_next_run_matches_planned": true,
-      "scheduler_next_run_delta_seconds": 0,
+      "scheduler_next_run_matches_planned": false,
+      "scheduler_next_run_delta_seconds": null,
       "model": "gpt-5.5",
       "reasoning_effort": "xhigh",
       "has_memory": false,
