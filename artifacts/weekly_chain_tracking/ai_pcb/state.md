@@ -1,11 +1,13 @@
 # 周度跟踪：AI PCB 及上游材料设备 - 滚动状态
 
-更新时间：2026-06-28
+更新时间：2026-07-03（A 股公司跟踪交易结构边界最小同步）
 最近报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-28.md`
 前次报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-21.md`
 前次证据追杀：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_hvlp_tglass_nvidia_capacity_evidence_layering.md`、`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_hvlp_tglass_nvidia_official_lock_capacity_chase.md`
 A股供给压力卡：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_defu_block_trade_supply_pressure_card.md`
 A股 CCL 质量锚最小卡：`artifacts/company_tracking/600183.SH/state.md`
+
+2026-07-03 A 股公司跟踪最小同步：宏和科技 603256.SH 的减持计划进入执行，7 月 3 日 30 笔折价大宗交易与 UNICORN ACE 大宗减持数量相互印证，只强化板级 PCB/CCL 高端电子布 `end_use` 下的筹码供给和融资/扩产压力观察，不证明 Low CTE/T-glass 客户、订单、价格、收入占比或毛利率兑现；德福科技 301511.SZ 继续出现 50 万股同卖方席位大宗交易，仍是 HVLP/RTF 铜箔交易结构和减持链线索，归属和剩余额度待官方进展公告，不升级客户认证、正式订单、收入占比或毛利率。
 
 当前阶段：完成 2026-06-22 至 2026-06-28 周度更新。本期不升级任何节点为 `hard_bottleneck`。`高端电子玻纤布 / Low Dk / Low CTE / T-glass / Q cloth` 与 `M7/M8/M9/M10 CCL / prepreg` 继续作为当前最强 `soft_bottleneck+`。本期主新增是台玻/富乔/Reuters-CNA/DIGITIMES 线索共同强化高端布、CCL/prepreg、树脂/化学材料和上游材料交期压力；但仍未形成 official allocation、客户 AVL 排队数量、订单延期、分产品 lead time 或两家以上官方供需缺口闭环。
 
