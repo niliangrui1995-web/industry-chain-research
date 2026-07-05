@@ -8,7 +8,7 @@
 ## 结论先行
 
 1. ABF / IC载板：全球节点确定性强，A股直接硬映射仍弱。Ajinomoto 的硬证据是 ABF film 材料高集中，不是“涨价已经被官方确认”；Ibiden 的硬证据最强，是海外 IC package substrate 制造环节的扩产与客户需求锚。A股里深南电路是基本面质量锚，兴森科技更像 FCBGA / ABF 订单突破的交易弹性期权。
-2. MLCC：AI server 高端 MLCC 交期拉长、供需结构性偏紧有 TrendForce 等 B+ 证据支撑；具体涨价幅度仍以行业媒体、渠道和券商口径为主，不能当 A 级确认。A股里三环集团更接近基本面主受益候选，风华高科是有部分基本面验证的高交易弹性标的。
+2. MLCC：AI server 高端 MLCC 交期拉长、供需结构性偏紧有 TrendForce 等 B+ 证据支撑；2026-07-01 国巨涨价与代理商核验只能按 `credible_secondary / lead_only` 写入行业侧涨价线索，不当 A 级确认。A股里三环集团更接近 `fundamental_main_beneficiary_candidate`，风华高科维持 `watch+ / event_trade`。
 3. 四家公司三层排序：
    - 基本面质量：深南电路 ≈ 三环集团 > 风华高科 > 兴森科技。
    - 证据加权业绩弹性：三环集团 > 深南电路 > 风华高科 > 兴森科技；若只看事件弹性上限，兴森科技和风华高科显著更高。
@@ -36,8 +36,8 @@
 | 公司 | 主线 | A级已验证内容 | 证据缺口 | 基本面质量 | 证据加权业绩弹性 | 交易弹性 | 本轮定位 |
 |---|---|---|---|---:|---:|---:|---|
 | 深南电路（002916.SZ） | AI PCB + 封装基板 / FC-BGA | 2026Q1 营收 65.96 亿元、归母净利润 8.50 亿元；公司说明受益 AI 算力升级、400G 以上高速交换机和光模块占比提升、数据中心收入增长；FC-BGA 22 层及以下已量产，24 层及以上研发打样推进。 | 没有看到直接绑定 NVIDIA / AMD 高端 AI GPU ABF 载板订单；封装基板受益还包括存储、处理器类和 BT。 | 高 | 中高 | 中低 | 基本面主受益 / 质量锚，不是纯 ABF 高弹性标的。 |
-| 三环集团（300408.SZ） | 高端 MLCC + 光通信陶瓷 | 2025 年报披露产品应用于数据中心，MLCC 产品满足下游各领域需求；数据中心领域已推出多尺寸高容 MLCC 和针对 48V 电源系统的多规格高容 MLCC；2026Q1 营收 26.81 亿元、归母净利润 7.91 亿元，增长来自 MLCC 产品客户认可度提升与光通信需求增长。 | 未披露 AI server 客户名单、具体高端 MLCC ASP 涨价、AI server 收入拆分；股价和估值已充分反映一部分景气。 | 高 | 高 | 中高 | MLCC 基本面主受益候选，不只是情绪映射。 |
-| [风华高科（000636.SZ）](../../company_tracking/000636.SZ/state.md) | 高端 MLCC 国产替代 | 2025 年 IR 披露极限高容 MLCC 容量突破 220μF，并应用于 AI 服务器等领域；2026 年业绩说明会披露高端化、车规和高容产品进展，多个 MLCC 产品完成客户编码认定并批量交付；同时明确目前尚未直接供货英伟达。 | 缺少 AI server 大客户、收入占比、涨价执行和毛利改善的直接披露；高估值和高换手显示交易拥挤。 | 中 | 中 | 高 | 高交易弹性标的，带部分基本面兑现；“直供英伟达”相关叙事应视为情绪映射。 |
+| 三环集团（300408.SZ） | 高端 MLCC + 光通信陶瓷 | 2025 年报披露产品应用于数据中心，MLCC 产品满足下游各领域需求；数据中心领域已推出多尺寸高容 MLCC 和针对 48V 电源系统的多规格高容 MLCC；2026Q1 营收 26.81 亿元、归母净利润 7.91 亿元，增长来自 MLCC 产品客户认可度提升与光通信需求增长。 | 未披露 AI server 客户名单、具体高端 MLCC ASP 涨价、AI server 收入拆分；行业涨价线索不能替公司补客户和收入。 | 高 | 高 | 中高 | `fundamental_main_beneficiary_candidate`，不只是情绪映射；不凭国巨/行业涨价上调为已兑现。 |
+| [风华高科（000636.SZ）](../../company_tracking/000636.SZ/state.md) | 高端 MLCC 国产替代 | 2025 年 IR 披露极限高容 MLCC 容量突破 220μF，并应用于 AI 服务器等领域；2026 年业绩说明会披露高端化、车规和高容产品进展，多个 MLCC 产品完成客户编码认定并批量交付；2026-06-30 严重异常波动公告明确未直供英伟达、英伟达未开展产品认证，新兴市场营收占比不超过 15%。 | 缺少 AI server 大客户、收入占比、涨价执行和毛利改善的直接披露；7 月初高波动和高换手只说明交易拥挤。 | 中 | 中 | 高 | `watch+ / event_trade`，带部分基本面线索；不能写成订单、ASP、收入占比或毛利兑现。 |
 | 兴森科技（002436.SZ） | FCBGA / ABF 载板 + 光模块板 | 2026 年 IR 披露 FCBGA / ABF 封装基板处于小批量生产；低层板良率超 95%、高层板良率超 90%；1.6T 光模块产品板处于量产爬坡、多客户验证导入；2025 年 IC 封装基板销售 16.7 亿元，同比增长近 50%。 | 公司明确 FCBGA 大批量量产取决于客户量产进展和供应商管理策略；国际顶尖大厂实质订单仅为争取突破；FCBGA 过去对利润有拖累。 | 中低 | 低到中 | 高 | ABF / FCBGA 订单突破期权和交易弹性标的，当前不是基本面主受益。 |
 
 ## 当前行情与估值校验
@@ -62,10 +62,11 @@
 
 ### MLCC
 
-1. AI server 高端 MLCC 是本次更值得持续跟踪的次主线：交期拉长、BB ratio 上升、Q4 缺货风险等信息支持“高端规格偏紧”，但具体涨幅和传导仍需公司披露验证。
-2. 三环集团是基本面质量优先：年报中数据中心高容 MLCC、48V 电源系统高容 MLCC、电子元件收入增长和高盈利质量形成 A级支撑；但 AI server 客户与涨价兑现未拆出来。
-3. 风华高科是交易弹性优先：公司有 AI服务器应用、高容 MLCC、客户编码批量交付等 A级线索，也明确未直接供货英伟达；所以它不是纯情绪映射，但“英伟达直供”和大幅涨价兑现仍不能写成事实。
-4. 普通 MLCC 周期复苏不能直接等于 AI server 受益。后续必须看高容量、大尺寸、高压、高可靠、48V power shelf / GPU board / switch board 相关料号的收入、客户、价格和毛利。
+1. AI server 高端 MLCC 是本次更值得持续跟踪的次主线：TrendForce 指向高端 X6S 结构性偏紧、BB ratio 上升、交期拉长和 2H26/Q4 缺货风险，但仍属于行业侧 `credible_secondary`，需要供应商官方 allocation、客户料号和公司收入拆分验证。
+2. 2026-07-01 国巨全系列电容涨价与上海证券报代理商核验，只能写成 `credible_secondary / lead_only` 的涨价与交易催化线索；它不等于 A股公司 AI server MLCC 订单、ASP、收入占比或毛利率已经兑现。
+3. 三环集团是基本面质量优先：年报中数据中心高容 MLCC、48V 电源系统高容 MLCC、电子元件收入增长和高盈利质量形成 A级支撑；但 AI server 客户与涨价兑现未拆出来，行业涨价不能替它补客户和收入。
+4. 风华高科是交易弹性优先：公司有 AI服务器应用、高容 MLCC、客户编码批量交付等 A级线索；但 2026-06-30 严重异常波动公告明确压住“全线暂停接单”“英伟达认证/直供”和新兴市场占比外推，7 月初高波动只证明 `watch+ / event_trade` 的拥挤属性。
+5. 普通 MLCC 周期复苏不能直接等于 AI server 受益。后续必须看高容量、大尺寸、高压、高可靠、48V power shelf / GPU board / switch board 相关料号的收入、客户、价格和毛利。
 
 ## 后续跟踪指标
 
@@ -73,8 +74,8 @@
 2. Ibiden：AI server substrate 产能投放、advance payment、switch / ASIC / GPU substrate 收入拆分、FY2027 量产兑现。
 3. 深南电路：FC-BGA 24 层及以上进度、封装基板收入与毛利、数据中心 PCB 收入占比、原材料涨价传导。
 4. 兴森科技：FCBGA / ABF 大批量订单、客户层级、单季收入和毛利改善、过去拖累项是否收敛。
-5. 三环集团：数据中心高容 MLCC 和 48V MLCC 客户认证、收入占比、ASP、毛利率；光通信陶瓷与 SOFC 是否继续贡献增量。
-6. 风华高科：AI服务器 MLCC 批量交付规模、客户编码数量、涨价执行、净利率改善；同时跟踪高换手后资金退潮风险。
+5. 三环集团：数据中心高容 MLCC 和 48V MLCC 客户认证、收入占比、ASP、毛利率；光通信陶瓷与 SOFC 是否继续贡献增量；行业涨价线索不得替代公司级披露。
+6. 风华高科：AI服务器 MLCC 批量交付规模、客户编码数量、涨价执行、净利率改善；同时跟踪严重异常波动后的高换手、跌停/反弹和资金退潮风险。
 
 新增回链：风华高科最小跟踪卡见 [artifacts/company_tracking/000636.SZ/state.md](../../company_tracking/000636.SZ/state.md)，用于承接 2026-06-18 08:54 邮件中 AMD MI450 / 高容 MLCC 线索与公司证据缺口。
 
@@ -88,7 +89,9 @@
 - Ibiden FY2025 results：https://www.ibiden.com/ir/items/en_kessannsetsumeiFY2025.pdf
 - Ibiden FY2025 Q&A：https://www.ibiden.com/ir/items/en_QA_FY25Q4.pdf
 - TrendForce MLCC Market Bulletin 2026-06-08：https://www.trendforce.com/research/download/RP260608BK
+- TrendForce high-end MLCC / X6S 结构性偏紧：https://www.trendforce.com/presscenter/news/20260617-13105.html
 - TrendForce MLCC 分类页：https://www.trendforce.com/research/category/Semiconductors/MLCC
+- 上海证券报 2026-07-02 国巨电容涨价与代理商核验：https://paper.cnstock.com/html/2026-07/02/content_2238767.htm
 - TrendForce 转引 Samsung Electro-Mechanics MLCC 涨价线索：https://www.trendforce.com/news/2026/02/24/news-samsung-electro-mechanics-reportedly-weighs-double-digit-mlcc-price-hike-in-april-amid-ai-demand/
 - DIGITIMES 高端 MLCC 供需线索：https://www.digitimes.com/news/a20260611PD213/data-center-high-end-mlcc-demand-taiwan-supply-chain.html
 - 三环集团 2025 年年度报告：https://static.cninfo.com.cn/finalpage/2026-03-28/1225041594.PDF
@@ -96,6 +99,7 @@
 - 兴森科技 2026-05-08 投资者关系活动记录表：https://pdf.dfcfw.com/pdf/H2_AN202605081822074596_1.pdf
 - 深南电路 2026-05-27 投资者关系活动记录表：https://pdf.dfcfw.com/pdf/H2_AN202605271822921177_1.PDF
 - 风华高科 2026-05-12 业绩说明会活动记录表：https://pdf.dfcfw.com/pdf/H2_AN202605121822221005_1.pdf
+- 风华高科 2026-06-30 严重异常波动暨风险提示公告：https://static.cninfo.com.cn/finalpage/2026-06-30/1225397295.PDF
 - 风华高科 2025-08-25 投资者关系活动记录表：https://static.cninfo.com.cn/finalpage/2025-08-26/1224574201.PDF
 - iFinD A股股票摘要与日频行情：2026-06-16 采集。
 
