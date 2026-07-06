@@ -1,10 +1,10 @@
 # 300394.SZ 天孚通信 跟踪状态
 
 baseline_status: done
-last_checked: 2026-06-30 20:35 Asia/Shanghai
+last_checked: 2026-07-06 20:34 Asia/Shanghai
 browser_scope: not_used_by_policy
 grok_status: not_used_by_policy
-open_web_fallback_status: searched_observation_only_official_mirror_no_new_order_signal_2026-06-30
+open_web_fallback_status: searched_social_leads_only_no_confirmed_signal_2026-07-06
 announcement_window_checked: T_and_T_plus_1
 not_investment_advice: true
 
@@ -29,6 +29,14 @@ not_investment_advice: true
 - 2026-04-21：2026Q1 收入 13.303 亿元，同比 +40.82%；归母净利润 4.922 亿元，同比 +45.79%；扣非净利润 4.932 亿元，同比 +48.44%；经营现金流 1.823 亿元，同比 -37.92%。
 - 2026-04-10：公司向香港联交所递交 H 股发行并上市申请，仍待相关监管批准、核准或备案。
 - 2026-04-08：2025 年报披露收入 51.634 亿元、归母净利润 20.173 亿元；有源光器件收入 29.979 亿元；公司称完成 1.6T 光引擎规模量产和 CPO 配套光器件研发。
+
+## 2026-07-06 日更
+
+- 公告窗口：北京时间 20:00 后完成 `2026-07-06` 与 `2026-07-07` 的 T/T+1 检查，并补扫 `2026-07-05`；CNINFO 确认 2026-07-07 新增《关于独立董事取得独立董事资格证书的公告》。
+- 新增官方治理事项：独立董事杜琳琳女士已参加深交所上市公司独立董事任前培训并取得《上市公司独立董事培训证明》；其任期自公司 H 股发行上市之日起至第五届董事会任期届满之日止。
+- 龙虎榜 / 大宗交易：2026-07-06 未发现新增龙虎榜或大宗交易。
+- 状态变化：该事项属于低影响治理/合规补齐，不改变 CPO 配套 FAU/ELS、1.6T 光引擎、泰国产能、客户集中或 H 股发行审批主线；后续仍看 H 股监管节点、CPO/1.6T 收入和毛利率量化。
+
 
 ## 2026-06-09 日更
 
