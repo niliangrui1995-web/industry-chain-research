@@ -1,9 +1,9 @@
 # 东山精密（002384.SZ）滚动状态
 
-更新日期：2026-07-03
+更新日期：2026-07-07
 状态文件用途：记录当前跟踪结论、关键假设、最新证据、观察池、source gaps 和后续问题。
 Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`
-Open web fallback：`open_web_fallback_status: searched`
+Open web fallback：`open_web_fallback_status: searched_media_risk_observation_2026-07-07`
 Browser scope：`browser_scope: not_available`
 Batch 2 Grok status：`grok_status: unavailable: chrome plugin tool not exposed`
 Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observation_pool_only`
@@ -11,6 +11,13 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 ## 当前跟踪结论
 
 东山精密处在“传统电子制造基本盘 + AI PCB/光模块重估”的加速验证期。2025 年光模块仅并表四季度，但已经贡献 14.36 亿元收入和 36.74% 毛利率；2026Q1 收入和利润大幅增长，显示索尔思并表和 AI 光通信需求已经改变利润弹性。当前最需要跟踪的不是“有没有 AI 叙事”，而是 AI PCB 与光模块能否持续披露客户、订单、毛利率、产能爬坡和现金流证据。
+
+## 2026-07-07 日更
+
+- 公告窗口：北京时间 20:00 后完成 `2026-07-07` 与 `2026-07-08` 的 T/T+1 检查；CNINFO 公司名/代码查询未发现新增发行人公告或 IR。
+- 龙虎榜 / 大宗交易：2026-07-07 未发现新增龙虎榜或大宗交易。
+- open-web 观察：证券之星经新浪财经转载的文章把索尔思 12 亿美元光芯片/光模块扩产、索尔思对 2026Q1 利润贡献、原有 PCB/显示业务压力、短债/商誉和 H 股募资需求放在同一风险框架下讨论。该内容为媒体观察，不替代公告、财报、客户或订单披露。
+- 状态变化：补充“高弹性业务与财务质量约束需同步验证”的观察池条目；东山精密的核心跟踪点仍是索尔思订单/毛利率/产能爬坡、AI PCB客户与利润贡献、现金流、债务结构和 H 股募资进展。
 
 ## 2026-07-03 日更
 
