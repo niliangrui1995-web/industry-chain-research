@@ -4,10 +4,10 @@ metadata:
 - company: 中际旭创股份有限公司
 - ticker: 300308.SZ
 - exchange: SZSE
-- updated_at: 2026-07-06
+- updated_at: 2026-07-08
 - state_type: company_tracking
 - grok_status: unavailable_chrome_plugin_not_exposed
-- open_web_fallback_status: searched/credible_media_company_response_observation
+- open_web_fallback_status: searched/no_new_open_web_signal_2026-07-08
 - advice_status: 不是买卖建议
 
 ## 当前跟踪结论
@@ -21,6 +21,13 @@ metadata:
 - 硅光占比和良率改善是否能继续支撑毛利率。
 - 预付锁料能否保障交付，而不是变成库存和现金流压力。
 - 客户年降和同行扩产是否开始压缩毛利率。
+
+## 2026-07-08 日更
+
+- 公告窗口：北京时间 20:00 后完成 `2026-07-08` 与 `2026-07-09` 的 T/T+1 检查；CNINFO 公司名/代码查询未发现新增发行人公告或 IR。
+- 龙虎榜：2026-07-08 未发现新增龙虎榜；回扫 2026-07-07 也未发现上一轮后刷新的龙虎榜命中。
+- 大宗交易：2026-07-08 未发现新增大宗交易；但深交所权益类证券大宗交易确认上一轮后刷新出 2026-07-07 共 4 笔平价大宗交易，成交价均为 1121.90 元，合计成交 49.52 万股、55,551.77 万元，买卖席位包括机构专用、光大证券宁波甬江大道、中信证券宁波海晏北路、中信建投佛山季华西路和中金财富证券深圳中金大厦。
+- 状态变化：本轮为延迟数据补入，7 月以来高价位平价机构/大户换手继续活跃，交易结构观察优先级维持高位；经营主线仍等待 1.6T、800G、硅光占比、上游物料和毛利率的财报/IR 量化验证。
 
 ## 2026-07-06 日更
 
