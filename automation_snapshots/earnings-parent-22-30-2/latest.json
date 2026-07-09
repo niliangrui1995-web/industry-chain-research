@@ -1,18 +1,18 @@
 {
-  "generated_at_beijing": "2026-07-06 22:36",
+  "generated_at_beijing": "2026-07-09 22:48",
   "status": "ok",
   "mode": "dry_run",
   "window": {
-    "now_beijing": "2026-07-06 22:36",
-    "window_end_beijing": "2026-07-09 22:36"
+    "now_beijing": "2026-07-09 22:48",
+    "window_end_beijing": "2026-07-12 22:48"
   },
   "calendar_read": {
-    "today_arg": "2026-07-05",
+    "today_arg": "2026-07-08",
     "lookahead_days": 5,
     "allow_network": false,
-    "event_count": 1,
+    "event_count": 0,
     "future_candidate_count": 0,
-    "past_event_count": 1
+    "past_event_count": 0
   },
   "action_counts": {
     "create": 0,
