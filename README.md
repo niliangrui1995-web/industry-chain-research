@@ -20,7 +20,7 @@ Last verified: 2026-07-10
 | `a-share-company-tracking` | A 股 watchlist、baseline/state/events、日报和完成对账 |
 | `a-share-disclosure-trading-data` | CNINFO、交易所、IR、龙虎榜、大宗交易和 T/T+1 公告窗口 |
 | `earnings-call-investment-analyst` | 财报、指引、电话会、前季比较、需求与瓶颈抽取 |
-| `ht-local-market-data` | 只读检查 `C:\zd_huatai` 盘后本地行情文件 |
+| `ht-local-market-data` | 只读检查 `D:\HT` 盘后本地行情文件 |
 
 普通文档、Excel、PDF、PPT、搜索、行情、金融数据和统计任务直接使用当前会话已安装的全局技能、插件或原生工具，不在仓库重复 vendoring。
 

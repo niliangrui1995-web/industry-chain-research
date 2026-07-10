@@ -23,7 +23,7 @@ def load_module(name: str, path: Path):
 
 
 class HtLocalMarketDataTests(unittest.TestCase):
-    def test_cli_defaults_to_zd_huatai_root(self) -> None:
+    def test_cli_defaults_to_ht_root(self) -> None:
         module = load_module(
             "inspect_ht_data_default_root",
             ROOT / ".agents" / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
@@ -33,7 +33,7 @@ class HtLocalMarketDataTests(unittest.TestCase):
                 exit_code = module.main(["--json"])
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(inspect_mock.call_args.args[0], Path(r"C:\zd_huatai"))
+        self.assertEqual(inspect_mock.call_args.args[0], Path(r"D:\HT"))
 
     def test_inspector_rejects_root_without_market_data_sentinels(self) -> None:
         module = load_module(

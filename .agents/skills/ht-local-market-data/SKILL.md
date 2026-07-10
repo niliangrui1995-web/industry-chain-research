@@ -1,18 +1,18 @@
 ---
 name: ht-local-market-data
-description: Read and validate the user's local C:\zd_huatai HT/TongdaXin market-data folder. Use for manually refreshed A-share .day daily K-lines, local block pools, hq_cache vendor tables, gpcw financial packages, or post-close freshness checks. Output is market_data_vendor or secondary_trading_context only. Never inspect account, password, order,委托 or log details unless the user explicitly requests that diagnostic.
+description: Read and validate the user's local D:\HT HT/TongdaXin market-data folder. Use for manually refreshed A-share .day daily K-lines, local block pools, hq_cache vendor tables, gpcw financial packages, or post-close freshness checks. Output is market_data_vendor or secondary_trading_context only. Never inspect account, password, order,委托 or log details unless the user explicitly requests that diagnostic.
 ---
 
 # HT Local Market Data
 
-只读使用 `C:\zd_huatai` 的盘后本地行情数据。该目录不是官方披露源，也不是实时交易接口。
+只读使用 `D:\HT` 的盘后本地行情数据。该目录不是官方披露源，也不是实时交易接口。
 
 ## 边界
 
 - `.day` 日线、`vipdoc\cw` 财务包和 `hq_cache` 属于 `market_data_vendor`。
 - `T0002\blocknew`、概念和自定义板块只属 `secondary_trading_context`。
 - 本地数据不能证明客户、订单、收入、真实受益或公司基本面。
-- 不读取或总结账户目录、`.pass`、委托/订单、交易历史、密码缓存和日志；本技能绝不写入 `C:\zd_huatai`。
+- 不读取或总结账户目录、`.pass`、委托/订单、交易历史、密码缓存和日志；本技能绝不写入 `D:\HT`。
 - 需要实时分时、当前估值、涨跌停细节或资金流时，改用当前可用行情工具。
 
 2026-07-10 的已验证目录快照见 [references/tested-snapshot-2026-07-10.md](references/tested-snapshot-2026-07-10.md)；当前任务仍需重新检查新鲜度，不能把旧快照当成今日状态。
@@ -32,9 +32,9 @@ description: Read and validate the user's local C:\zd_huatai HT/TongdaXin market
 ## 只读脚本
 
 ```powershell
-python .agents/skills/ht-local-market-data/scripts/inspect_ht_data.py --root C:\zd_huatai --json
-python .agents/skills/ht-local-market-data/scripts/inspect_ht_data.py --root C:\zd_huatai --codes sh000001 sz000001 sh600000 sz300750 --json
-python .agents/skills/ht-local-market-data/scripts/inspect_ht_data.py --root C:\zd_huatai --skip-block-samples --json
+python .agents/skills/ht-local-market-data/scripts/inspect_ht_data.py --root D:\HT --json
+python .agents/skills/ht-local-market-data/scripts/inspect_ht_data.py --root D:\HT --codes sh000001 sz000001 sh600000 sz300750 --json
+python .agents/skills/ht-local-market-data/scripts/inspect_ht_data.py --root D:\HT --skip-block-samples --json
 ```
 
 脚本会拒绝缺少有效市场数据哨兵的空目录，并跳过账户、交易和日志边界。

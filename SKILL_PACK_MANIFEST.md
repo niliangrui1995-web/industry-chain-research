@@ -12,7 +12,7 @@
 | `a-share-company-tracking` | watchlist 日更、baseline/state/events | 仅写命名的项目状态文件；逐公司完成并对账 |
 | `a-share-disclosure-trading-data` | 公告、CNINFO、IR、龙虎榜、大宗交易 | 官方事实与交易结构分开；执行 T/T+1 晚间窗口 |
 | `earnings-call-investment-analyst` | 财报、指引、电话会、QoQ、需求/瓶颈 | 原始来源优先；完整深挖才加载详细 checklist 和采集脚本 |
-| `ht-local-market-data` | 本地 `C:\zd_huatai` 日线、板块池、厂商表 | 只读、非官方、非实时；账户/订单/日志默认禁读 |
+| `ht-local-market-data` | 本地 `D:\HT` 日线、板块池、厂商表 | 只读、非官方、非实时；账户/订单/日志默认禁读 |
 
 ## 已移出项目技能层
 

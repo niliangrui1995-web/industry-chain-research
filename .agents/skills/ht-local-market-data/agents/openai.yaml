@@ -1,6 +1,6 @@
 interface:
   display_name: "HT 本地行情数据"
   short_description: "只读检查本地日线、板块池和厂商数据新鲜度"
-  default_prompt: "Use $ht-local-market-data to inspect the requested C:\\zd_huatai market-data files read-only."
+  default_prompt: "Use $ht-local-market-data to inspect the requested D:\\HT market-data files read-only."
 policy:
   allow_implicit_invocation: true

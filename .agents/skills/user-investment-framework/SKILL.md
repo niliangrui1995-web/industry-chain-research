@@ -44,7 +44,7 @@ description: Evidence-first investment research for industry chains, companies, 
 | A 股 watchlist、baseline/state/events 日常维护 | `a-share-company-tracking` |
 | CNINFO、交易所公告、IR、龙虎榜、大宗交易 | `a-share-disclosure-trading-data` |
 | 财报、指引、电话会、前后季度对比 | `earnings-call-investment-analyst` |
-| 本地 `C:\zd_huatai` 盘后行情文件 | `ht-local-market-data` |
+| 本地 `D:\HT` 盘后行情文件 | `ht-local-market-data` |
 
 文档、表格、通用搜索、网页、行情和金融数据优先使用当前会话已安装的全局技能、插件或原生工具，不在项目内维护重复副本。选择外部工具前按需读 [references/tool-boundaries.md](references/tool-boundaries.md)；使用 TDX 时再读 [references/tdx-finance-data-boundary.md](references/tdx-finance-data-boundary.md)；AI 节点映射时再读 [references/ai-chain-node-taxonomy.md](references/ai-chain-node-taxonomy.md)。
 

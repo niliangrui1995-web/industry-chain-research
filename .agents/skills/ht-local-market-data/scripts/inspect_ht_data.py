@@ -433,7 +433,7 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description="Inspect local HT/TongdaXin data read-only.")
     parser.add_argument(
         "--root",
-        default=r"C:\zd_huatai",
+        default=r"D:\HT",
         help="HT/TongdaXin installation/data root (default: %(default)s).",
     )
     parser.add_argument(

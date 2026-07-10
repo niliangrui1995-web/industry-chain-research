@@ -282,7 +282,7 @@ def check_ht_inspect_help() -> CheckResult:
         [sys.executable, str(SKILL_ROOT / "ht-local-market-data" / "scripts" / "inspect_ht_data.py"), "--help"],
         timeout=30,
     )
-    expected_root = r"C:\zd_huatai"
+    expected_root = r"D:\HT"
     details = [line for line in [stdout.splitlines()[0] if stdout else "", stderr] if line]
     if code == 0 and expected_root not in stdout:
         details.append(f"default root missing from help: {expected_root}")
