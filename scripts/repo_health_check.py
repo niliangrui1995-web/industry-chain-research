@@ -220,8 +220,11 @@ def check_ht_inspect_help() -> CheckResult:
         [sys.executable, str(ROOT / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py"), "--help"],
         timeout=30,
     )
+    expected_root = r"C:\zd_huatai"
     details = [line for line in [stdout.splitlines()[0] if stdout else "", stderr] if line]
-    return result("ht_inspect_help", code == 0, details)
+    if code == 0 and expected_root not in stdout:
+        details.append(f"default root missing from help: {expected_root}")
+    return result("ht_inspect_help", code == 0 and expected_root in stdout, details)
 
 
 def check_earnings_guardrail() -> CheckResult:

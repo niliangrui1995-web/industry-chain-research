@@ -2,7 +2,7 @@
 name: ht-local-market-data
 description: >-
   Read and validate the user's manually updated local HT/TongdaXin market-data
-  folder at D:\HT. Use after user-investment-framework when an investment task
+  folder at C:\zd_huatai. Use after user-investment-framework when an investment task
   needs local A-share daily K-line data, HT/TongdaXin vipdoc files, T0002 block
   lists, hq_cache vendor tables, gpcw financial packages, or freshness checks
   for data updated after the market close. This is a market_data_vendor and
@@ -15,23 +15,23 @@ description: >-
 
 # HT Local Market Data
 
-Use this skill as the project-local bridge to `D:\HT`, the user's local 华泰/通达信 data folder. It is useful for fast, offline market context after the user has manually refreshed the client data, especially for A-share daily K-lines, local block pools, vendor classification tables, and quick freshness checks.
+Use this skill as the project-local bridge to `C:\zd_huatai`, the user's local 华泰/通达信 data folder. It is useful for fast, offline market context after the user has manually refreshed the client data, especially for A-share daily K-lines, local block pools, vendor classification tables, and quick freshness checks.
 
 This skill is a data-source boundary, not an investment framework. Always start investment research from `user-investment-framework`, then load this skill only when local HT data adds specific market, candidate-pool, or freshness value.
 
 ## Tested Data Surface
 
-The folder was inspected read-only on 2026-06-22 after the afternoon update.
+The folder was inspected read-only on 2026-07-10 after the post-close update.
 
 | Path | Data found | Tested status | Evidence label |
 |---|---|---|---|
-| `D:\HT\vipdoc\sh\lday`, `sz\lday`, `bj\lday` | TDX `.day` daily OHLCV files for Shanghai, Shenzhen, Beijing stocks and indexes | 9,595 files parsed, all record sizes valid; most latest records were `20260622` | `market_data_vendor` |
-| `D:\HT\vipdoc\sh\minline`, `sz\minline`, `bj\minline` | TDX `.lc1` 1-minute K-line files | 8,997 files parsed structurally, but latest records clustered at `20251223`/`20251229`; do not use as current minute data | `market_data_vendor`, stale unless explicitly accepted |
-| `D:\HT\vipdoc\cw` | `gpcw*.zip` financial packages and per-stock `gp*.dat` files | 148 zip files found; 147 nonzero zips passed integrity checks; `gpcw20180331.zip` was zero bytes; future-quarter tiny zips can be placeholders | `market_data_vendor`, not official filings |
-| `D:\HT\T0002\blocknew` | Local/custom TDX block pools and self-defined candidate lists | 41 `.blk` files found, 37 nonempty; parse as candidate/watchlist pools only | `secondary_trading_context` |
-| `D:\HT\T0002\hq_cache` | Code tables, vendor industry/concept/chain tables, fund and HK metadata | Useful for lookup and vendor classification context; verify exact fields before relying on them | `market_data_vendor` or `secondary_trading_context` |
-| `D:\HT\T0002\cache`, `zst_cache`, `tmp` | Session/chart caches and temporary files | Not stable data contracts; inspect freshness only unless a specific format is re-tested | context only |
-| `D:\HT\htlog`, `T0001`, `lct`, `funcs_jy`, `华泰证券网上交易委托系统` | Logs, software runtime, trading UI, templates, and possible account state | Do not read details by default; skip account/password/order/log content | out of scope unless explicitly requested |
+| `C:\zd_huatai\vipdoc\sh\lday`, `sz\lday`, `bj\lday` | TDX `.day` daily OHLCV files for Shanghai, Shenzhen, Beijing stocks and indexes | 9,389 files parsed, all record sizes valid; 9,358 latest records were `20260710` | `market_data_vendor` |
+| `C:\zd_huatai\vipdoc\sh\minline`, `sz\minline`, `bj\minline` | TDX `.lc1` 1-minute K-line files | Directories exist but contain 0 `.lc1` files; do not use this root for minute data | unavailable |
+| `C:\zd_huatai\vipdoc\cw` | `gpcw*.zip` financial packages and per-stock `gp*.dat` files | 147 nonzero zip files passed integrity checks; 7,399 per-stock `gp*.dat` files found | `market_data_vendor`, not official filings |
+| `C:\zd_huatai\T0002\blocknew` | Local/custom TDX block pools and self-defined candidate lists | 4 `.blk` files found, 3 nonempty; parse as candidate/watchlist pools only | `secondary_trading_context` |
+| `C:\zd_huatai\T0002\hq_cache` | Code tables, vendor industry/concept/chain tables, fund and HK metadata | 89 files found; core code, industry, concept, chain, fund, and HK metadata tables are present | `market_data_vendor` or `secondary_trading_context` |
+| `C:\zd_huatai\T0002\cache`, `zst_cache`, `tmp` | Session/chart caches and temporary files | Not stable data contracts; inspect freshness only unless a specific format is re-tested | context only |
+| `C:\zd_huatai\htlog`, `T0001`, `lct`, `funcs_jy`, `华泰证券网上交易委托系统` | Logs, software runtime, trading UI, templates, and possible account state | Do not read details by default; skip account/password/order/log content | out of scope unless explicitly requested |
 
 ## Workflow
 
@@ -39,7 +39,7 @@ The folder was inspected read-only on 2026-06-22 after the afternoon update.
    Use this skill for local daily K-line freshness, historical OHLCV, local block-pool membership, vendor concept/industry context, or a quick check that the user's afternoon manual update completed.
 
 2. Run a narrow freshness check.
-   Prefer `scripts/inspect_ht_data.py --root D:\HT --json` for a read-only inventory. Compare latest parsed `.day` record dates with the expected trading date and mention whether the data is post-close, stale, partial, or unavailable.
+   Prefer `scripts/inspect_ht_data.py --root C:\zd_huatai --json` for a read-only inventory. The helper rejects roots missing the required directories, valid Shanghai/Shenzhen benchmark `.day` files, or a nonempty core `hq_cache` file, so an empty directory skeleton cannot silently produce an empty result. Compare latest parsed `.day` record dates with the expected trading date and mention whether the data is post-close, stale, partial, or unavailable.
 
 3. Parse daily K-lines from `.day` only when needed.
    TDX `.day` records are 32 bytes:
@@ -51,7 +51,7 @@ The folder was inspected read-only on 2026-06-22 after the afternoon update.
 
    Use the market-prefixed filename as the ticker, for example `sh600000.day`, `sz300750.day`, `bj899050.day`.
 
-4. Treat minute K-lines as stale unless re-tested.
+4. Treat local minute K-lines as unavailable unless re-tested.
    `.lc1` records are structurally parseable as:
 
    ```text
@@ -67,7 +67,7 @@ The folder was inspected read-only on 2026-06-22 after the afternoon update.
    day = packed_date % 100
    ```
 
-   The tested folder's `.lc1` data was not current, so use TDX/iFinD/web APIs for current intraday or minute-level work.
+   The tested folder contains no `.lc1` files, so use TDX/iFinD/web APIs for current intraday or minute-level work.
 
 5. Use local block files as candidate pools only.
    `T0002\blocknew\*.blk` lines usually store a market flag plus six-digit code:
@@ -84,7 +84,7 @@ The folder was inspected read-only on 2026-06-22 after the afternoon update.
    They are vendor-transformed financial snapshots. Check zip integrity, file size, and reporting period before use. For any hard financial claim, retrieve the official filing, CNINFO/exchange announcement, annual report, quarterly report, or company IR source.
 
 7. Preserve privacy and write safety.
-   Do not open or summarize account directories, `.pass` files, trading委托 files, logs, order history, password caches, or broker UI runtime details unless the user explicitly asks for that diagnostic. Never write to `D:\HT` from this skill.
+   Do not open or summarize account directories, `.pass` files, trading委托 files, logs, order history, password caches, or broker UI runtime details unless the user explicitly asks for that diagnostic. Never write to `C:\zd_huatai` from this skill.
 
 ## Routing Boundary
 
@@ -103,14 +103,14 @@ Never upgrade this skill's output above `market_data_vendor` or `secondary_tradi
 Run:
 
 ```bash
-python skills/ht-local-market-data/scripts/inspect_ht_data.py --root D:\HT --json
+python skills/ht-local-market-data/scripts/inspect_ht_data.py --root C:\zd_huatai --json
 ```
 
 Useful options:
 
 ```bash
-python skills/ht-local-market-data/scripts/inspect_ht_data.py --root D:\HT --codes sh000001 sz000001 sh600000 sz300750 --json
-python skills/ht-local-market-data/scripts/inspect_ht_data.py --root D:\HT --skip-block-samples --json
+python skills/ht-local-market-data/scripts/inspect_ht_data.py --root C:\zd_huatai --codes sh000001 sz000001 sh600000 sz300750 --json
+python skills/ht-local-market-data/scripts/inspect_ht_data.py --root C:\zd_huatai --skip-block-samples --json
 ```
 
-The helper avoids account/trading/log directories and returns compact JSON covering top-level inventory, `.day` freshness, stale `.lc1` state, `gpcw` zip integrity, block-pool counts, and selected `hq_cache` files.
+The helper avoids account/trading/log directories and returns compact JSON covering top-level inventory, `.day` freshness, `.lc1` availability, `gpcw` zip integrity, block-pool counts, and selected `hq_cache` files.

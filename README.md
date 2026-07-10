@@ -1,10 +1,10 @@
 # 产业链投研
 
-Last verified: 2026-06-25
+Last verified: 2026-07-10
 
 Current primary entrypoint: use `skills/user-investment-framework` first for any investment research task, then let it choose the smallest necessary companion skills.
 
-Local HT/TongdaXin data: use `skills/ht-local-market-data` as a read-only `D:\HT` market-data layer for post-close daily K-lines, block pools, vendor tables, financial package freshness, and data-boundary checks. Treat it as vendor/context data, not official evidence.
+Local HT/TongdaXin data: use `skills/ht-local-market-data` as a read-only `C:\zd_huatai` market-data layer for post-close daily K-lines, block pools, vendor tables, financial package freshness, and data-boundary checks. Treat it as vendor/context data, not official evidence.
 
 Public Equity Investing plugin skills are companion PM workflow layers only: thesis trackers, catalyst calendars, dated event underwriting, earnings preview/deep-dive, scenario sensitivity, position risk, model update/audit, and formal memo/pitch packaging after the project framework has established evidence, chain position, downstream demand, and issuer/security context.
 

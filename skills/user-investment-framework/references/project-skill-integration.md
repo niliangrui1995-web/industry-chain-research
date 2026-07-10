@@ -56,7 +56,7 @@ Before using a remote API or MCP:
 5. For write-capable tools, get explicit user instruction first.
 6. For broad API changes or flaky external dependencies, use a subagent for read-only deep testing before updating project routing.
 
-Local `D:\HT` file reads through `ht-local-market-data` are not remote API calls, but they still have privacy boundaries: do not inspect trading-account, password, order,委托, or log details unless explicitly requested.
+Local `C:\zd_huatai` file reads through `ht-local-market-data` are not remote API calls, but they still have privacy boundaries: do not inspect trading-account, password, order,委托, or log details unless explicitly requested.
 
 ## Public Equity Investing Boundary
 

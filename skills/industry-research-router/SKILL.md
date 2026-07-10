@@ -26,7 +26,7 @@ Choose the smallest useful combination:
 - Earnings releases, management guidance, and conference-call analysis: `earnings-call-investment-analyst`.
 - A-share watchlist tracking and daily state maintenance: `a-share-company-tracking`; add `a-share-disclosure-trading-data` whenever CNINFO, exchange announcements, investor-relations records, dragon-tiger lists, block trades, or T/T+1 evening announcement windows matter.
 - Company fundamentals after segment/source selection: `stock-fundamental-moat-triad`, then `stock-evaluator`, `business-analyst`, plus market-data skills according to listing market.
-- A-share/HK/US live data and K-line checks: `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, iFinD MCPs, `ht-local-market-data` for local `D:\HT` post-close daily files/block pools, `allstock-data`, `banana-farmer`, or `finance`. Market data cannot prove beneficiary status.
+- A-share/HK/US live data and K-line checks: `TDX Finance Data:tdx-finance-data`, `tdx-finance-data`, iFinD MCPs, `ht-local-market-data` for local `C:\zd_huatai` post-close daily files/block pools, `allstock-data`, `banana-farmer`, or `finance`. Market data cannot prove beneficiary status.
 - Overseas oligarch data: `finance`, `alpha-vantage`, iFinD global stock MCP, and official filings/IR; still use official filings and company sources for hard claims.
 - Structured comparison, score consistency, and watchlist tables: `spreadsheet`, `xlsx-official`, `advanced-evaluation`.
 - Web/news/filings collection: `search-specialist`, then `firecrawl-scraper`, `tavily-web`, or global `web-scraper`; use `research-summarizer` for long sources.

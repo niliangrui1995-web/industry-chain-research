@@ -77,11 +77,11 @@ For detailed tested boundaries and query patterns, read `references/tdx-finance-
 
 ## HT Local Market Data Boundary
 
-Use `ht-local-market-data` when a task explicitly needs the user's local `D:\HT` data or when a post-close local HT/TongdaXin snapshot is enough for A-share daily K-line, block-pool, vendor classification, or financial-package freshness checks.
+Use `ht-local-market-data` when a task explicitly needs the user's local `C:\zd_huatai` data or when a post-close local HT/TongdaXin snapshot is enough for A-share daily K-line, block-pool, vendor classification, or financial-package freshness checks.
 
-Treat it as `market_data_vendor` for parsed `.day` daily OHLCV and `secondary_trading_context` for `T0002\blocknew` pools, concept labels, and vendor classifications. It is not live intraday data, not official disclosure, and not proof of beneficiary status. The tested `.lc1` minute files were structurally parseable but stale, so use TDX/iFinD/current web data for current intraday or minute-level tasks.
+Treat it as `market_data_vendor` for parsed `.day` daily OHLCV and `secondary_trading_context` for `T0002\blocknew` pools, concept labels, and vendor classifications. It is not live intraday data, not official disclosure, and not proof of beneficiary status. The tested root contains no `.lc1` minute files, so use TDX/iFinD/current web data for current intraday or minute-level tasks.
 
-Do not read HT trading-account, password, order,委托, or log details unless the user explicitly asks for that diagnostic. Never write to `D:\HT` through this project route.
+Do not read HT trading-account, password, order,委托, or log details unless the user explicitly asks for that diagnostic. Never write to `C:\zd_huatai` through this project route.
 
 ## Public Equity Investing Plugin Boundary
 

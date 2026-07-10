@@ -22,10 +22,20 @@ SKIPPED_TOP_DIRS = {
     "htlog",
     "T0001",
     "lct",
+    "funcs_jy",
     "chrome",
     "chrome49",
     "华泰证券网上交易委托系统",
 }
+REQUIRED_DATA_DIRS = (
+    Path("vipdoc") / "sh" / "lday",
+    Path("vipdoc") / "sz" / "lday",
+    Path("T0002") / "hq_cache",
+)
+REQUIRED_DAY_FILES = (
+    Path("vipdoc") / "sh" / "lday" / "sh000001.day",
+    Path("vipdoc") / "sz" / "lday" / "sz399001.day",
+)
 HQ_CACHE_FILES = [
     "base.dbf",
     "sh.tcu",
@@ -378,8 +388,28 @@ def summarize_hq_cache(root: Path) -> dict[str, Any]:
 
 
 def inspect(root: Path, codes: list[str], include_block_samples: bool) -> dict[str, Any]:
-    if not root.exists():
+    if not root.is_dir():
         raise FileNotFoundError(root)
+    missing = [path for path in REQUIRED_DATA_DIRS if not (root / path).is_dir()]
+    if missing:
+        expected = ", ".join(str(path) for path in REQUIRED_DATA_DIRS)
+        raise FileNotFoundError(f"{root} does not contain the required market-data directories: {expected}")
+    invalid_day_files = []
+    for relative in REQUIRED_DAY_FILES:
+        path = root / relative
+        try:
+            tail = parse_day_tail(path, 1)
+        except (OSError, ValueError, struct.error):
+            invalid_day_files.append(relative)
+            continue
+        if not tail or not 19900101 <= int(tail[0]["date"]) <= 21001231:
+            invalid_day_files.append(relative)
+    if invalid_day_files:
+        expected = ", ".join(str(path) for path in REQUIRED_DAY_FILES)
+        raise FileNotFoundError(f"{root} does not contain valid .day sentinel files: {expected}")
+    hq_dir = root / "T0002" / "hq_cache"
+    if not any((hq_dir / name).is_file() and (hq_dir / name).stat().st_size > 0 for name in HQ_CACHE_FILES):
+        raise FileNotFoundError(f"{root} does not contain a nonempty core hq_cache file")
     return {
         "root": str(root),
         "generated_at": fmt_time(time.time()),
@@ -391,7 +421,7 @@ def inspect(root: Path, codes: list[str], include_block_samples: bool) -> dict[s
         "hq_cache": summarize_hq_cache(root),
         "evidence_boundary": {
             "daily_day": "market_data_vendor",
-            "minute_lc1": "market_data_vendor, stale unless re-tested",
+            "minute_lc1": "market_data_vendor when present; unavailable if absent",
             "blocknew": "secondary_trading_context",
             "financial_cw": "market_data_vendor, not official filings",
         },
@@ -401,7 +431,11 @@ def inspect(root: Path, codes: list[str], include_block_samples: bool) -> dict[s
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description="Inspect local HT/TongdaXin data read-only.")
-    parser.add_argument("--root", default=r"D:\HT", help="HT/TongdaXin installation/data root.")
+    parser.add_argument(
+        "--root",
+        default=r"C:\zd_huatai",
+        help="HT/TongdaXin installation/data root (default: %(default)s).",
+    )
     parser.add_argument(
         "--codes",
         nargs="*",
