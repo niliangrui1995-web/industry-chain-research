@@ -80,6 +80,8 @@ CHILD_NAME_PREFIX = "\u8d22\u62a5\u7535\u8bdd\u4f1a\u6df1\u6316"
 SNAPSHOT_ROOT_NAME = "automation_snapshots"
 SNAPSHOT_KIND = "earnings-parent-22-30-2"
 CHILD_TEMPLATE_RELATIVE_PATH = Path("docs") / "earnings_parent" / "CHILD_PROMPT_TEMPLATE.md"
+DEFAULT_CHILD_MODEL = "gpt-5.6-sol"
+DEFAULT_CHILD_REASONING_EFFORT = "ultra"
 CHILD_BODY_MARKER = "CHILD TASK SKILL HARD GATE:"
 REQUIRED_CHILD_PROMPT_MARKERS = (
     "Project-local skill resolution is successful",
@@ -178,11 +180,11 @@ def _safe_url(value: str) -> str | None:
 
 
 def _model_policy_for_event(event: PlannedEvent) -> tuple[str, str]:
-    return "gpt-5.5", "xhigh"
+    return DEFAULT_CHILD_MODEL, DEFAULT_CHILD_REASONING_EFFORT
 
 
 def _model_policy_for_child(child: ChildRecord) -> tuple[str, str]:
-    return "gpt-5.5", "xhigh"
+    return DEFAULT_CHILD_MODEL, DEFAULT_CHILD_REASONING_EFFORT
 
 
 def _dump_toml(data: dict[str, Any]) -> str:

@@ -22,6 +22,21 @@ def load_module(name: str, path: Path):
 
 
 class EarningsParentGuardrailTests(unittest.TestCase):
+    def test_model_policy_defaults_to_gpt_5_6_sol_ultra(self) -> None:
+        module = load_module(
+            "earnings_parent_guardrail_model",
+            ROOT / "scripts" / "earnings_parent_guardrail.py",
+        )
+
+        self.assertEqual(
+            module._model_policy_for_event(None),
+            ("gpt-5.6-sol", "ultra"),
+        )
+        self.assertEqual(
+            module._model_policy_for_child(None),
+            ("gpt-5.6-sol", "ultra"),
+        )
+
     def test_scan_children_flags_scheduler_next_run_mismatch(self) -> None:
         module = load_module("earnings_parent_guardrail", ROOT / "scripts" / "earnings_parent_guardrail.py")
         planned = dt.datetime(2026, 6, 25, 7, 30, tzinfo=module.BEIJING_TZ)
