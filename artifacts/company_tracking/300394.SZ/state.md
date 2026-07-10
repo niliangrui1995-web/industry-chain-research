@@ -1,10 +1,10 @@
 # 300394.SZ 天孚通信 跟踪状态
 
 baseline_status: done
-last_checked: 2026-07-06 20:34 Asia/Shanghai
+last_checked: 2026-07-10 20:42 Asia/Shanghai
 browser_scope: not_used_by_policy
 grok_status: not_used_by_policy
-open_web_fallback_status: searched_social_leads_only_no_confirmed_signal_2026-07-06
+open_web_fallback_status: searched_useful_media_signal_official_backfill_2026-07-10
 announcement_window_checked: T_and_T_plus_1
 not_investment_advice: true
 
@@ -13,6 +13,14 @@ not_investment_advice: true
 天孚通信按“AI 数据中心光器件平台供应商 + 精密无源/高速有源双主线 + CPO 配套 FAU/ELS + 1.6T 光引擎 + 海外产能”跟踪。硬证据来自 2025 年报、2026Q1、2026-05-14 IR、H 股申请公告和新加坡合资公告。
 
 公司质量和业绩弹性都较强，但当前只能按公司级窄口径承接光模块主状态：FAU/ELS 已稳定交付，1.6T 光引擎已规模量产，个别物料仍阶段性缺货；仍缺订单、收入、毛利率、客户和产能锁定量化，不能把 CPO、1.6T、NVIDIA、海外 CSP 或光模块客户扩产叙事直接写成公司确认订单。
+
+## 2026-07-10 日更与官方 IR 延迟补录
+
+- 公告窗口：北京时间 20:00 后完成 `2026-07-10` 与 `2026-07-11` 的 T/T+1 检查；CNINFO 未发现本窗口新增发行人公告。逐公司 open-web 检索命中 7 月 9 日可信媒体对天孚通信调研内容的转述，由此回到 CNINFO 补录 6 月 28 日《投资者关系活动记录表》（调研日期 6 月 27 日）。
+- 延迟补录的官方 IR：泰国工厂无源产品线稳定量产并按客户需求扩产，有源产品线已通过客户审核，预计下半年产能利用率提升；CPO 配套 FAU、ELS 外置光源处于稳定交付状态；公司预计未来几年持续增加资本开支。Q1 光引擎以单通道 200G、EML 路线为主，公司预计个别物料供应紧张从下半年开始逐步缓解。
+- 来源边界：每日经济新闻 7 月 9 日报道补充了 A/B 栋、200G EML 供给缓解和泰国公司扭亏等更细颗粒信息；未取得对应新增官方原文的部分只保留在可信媒体观察层，不升级为正式披露。
+- 龙虎榜 / 大宗交易：2026-07-10 未发现天孚通信新增龙虎榜或大宗交易；2026-07-09 回扫无新增延迟数据。
+- 状态变化：泰国有源产线通过客户审核、CPO 配套稳定交付和物料紧张预计缓解，增强产能爬坡与交付能力证据；仍缺泰国产能利用率、收入、毛利率、客户及 CPO/1.6T 订单量化，不能直接上调到完整业绩兑现。
 
 ## 2026-06-20 光模块主状态窄口径同步
 
