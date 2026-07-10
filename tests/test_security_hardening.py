@@ -12,9 +12,6 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 
 SAFE_ZIP_PATHS = [
-    ROOT / "skills" / "docx" / "scripts" / "office" / "safe_zip.py",
-    ROOT / "skills" / "pptx" / "scripts" / "office" / "safe_zip.py",
-    ROOT / "skills" / "xlsx" / "scripts" / "office" / "safe_zip.py",
     ROOT / "plugins" / "document-skills" / "skills" / "docx" / "scripts" / "office" / "safe_zip.py",
     ROOT / "plugins" / "document-skills" / "skills" / "pptx" / "scripts" / "office" / "safe_zip.py",
     ROOT / "plugins" / "document-skills" / "skills" / "xlsx" / "scripts" / "office" / "safe_zip.py",
@@ -47,7 +44,7 @@ def load_office_helper(name: str, path: Path):
 
 
 class SecurityHardeningTests(unittest.TestCase):
-    def test_safe_zip_rejects_path_escape_in_roots_and_mirrors(self) -> None:
+    def test_safe_zip_rejects_path_escape_in_document_plugin(self) -> None:
         for index, path in enumerate(SAFE_ZIP_PATHS):
             with self.subTest(path=path):
                 module = load_module(f"test_safe_zip_escape_{index}", path)
@@ -61,7 +58,7 @@ class SecurityHardeningTests(unittest.TestCase):
                         with self.assertRaises(module.UnsafeZipError):
                             module.safe_extractall(zf, out_dir)
 
-    def test_safe_zip_rejects_uncompressed_size_budget_in_roots_and_mirrors(self) -> None:
+    def test_safe_zip_rejects_uncompressed_size_budget_in_document_plugin(self) -> None:
         for index, path in enumerate(SAFE_ZIP_PATHS):
             with self.subTest(path=path):
                 module = load_module(f"test_safe_zip_size_{index}", path)
@@ -76,7 +73,7 @@ class SecurityHardeningTests(unittest.TestCase):
                         with self.assertRaises(module.UnsafeZipError):
                             module.safe_extractall(zf, out_dir)
 
-    def test_redline_author_reader_rejects_oversized_document_xml_in_roots_and_mirrors(self) -> None:
+    def test_redline_author_reader_rejects_oversized_document_xml_in_document_plugin(self) -> None:
         for index, path in enumerate(SIMPLIFY_REDLINES_PATHS):
             with self.subTest(path=path):
                 module = load_office_helper(f"test_simplify_redlines_{index}", path)
@@ -93,6 +90,7 @@ class SecurityHardeningTests(unittest.TestCase):
         module = load_module(
             "webcast_asset_fetcher_for_test",
             ROOT
+            / ".agents"
             / "skills"
             / "earnings-call-investment-analyst"
             / "scripts"
@@ -106,6 +104,7 @@ class SecurityHardeningTests(unittest.TestCase):
         module = load_module(
             "audio_transcriber_for_test",
             ROOT
+            / ".agents"
             / "skills"
             / "earnings-call-investment-analyst"
             / "scripts"
@@ -120,6 +119,7 @@ class SecurityHardeningTests(unittest.TestCase):
         module = load_module(
             "source_discovery_for_scheme_test",
             ROOT
+            / ".agents"
             / "skills"
             / "earnings-call-investment-analyst"
             / "scripts"
@@ -133,6 +133,7 @@ class SecurityHardeningTests(unittest.TestCase):
         module = load_module(
             "source_discovery_for_size_test",
             ROOT
+            / ".agents"
             / "skills"
             / "earnings-call-investment-analyst"
             / "scripts"
@@ -159,6 +160,7 @@ class SecurityHardeningTests(unittest.TestCase):
         module = load_module(
             "caption_playlist_fetcher_for_size_test",
             ROOT
+            / ".agents"
             / "skills"
             / "earnings-call-investment-analyst"
             / "scripts"

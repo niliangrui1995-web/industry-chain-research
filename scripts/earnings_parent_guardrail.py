@@ -1321,7 +1321,7 @@ def _preflight(project_root: Path, zijin_root: Path, automations_root: Path) -> 
     required = {
         "project_root": project_root,
         "zijin_root": zijin_root,
-        "earnings_skill": project_root / "skills" / "earnings-call-investment-analyst",
+        "earnings_skill": project_root / ".agents" / "skills" / "earnings-call-investment-analyst",
         "automations_root": automations_root,
     }
     for label, path in required.items():

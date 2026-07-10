@@ -9,14 +9,10 @@
 ## 运行前硬门
 
 1. 先阅读并遵守 `D:\vcp_hunter\产业链投研\AGENTS.md`。
-2. 先读取并遵守项目本地技能：
-   - `D:\vcp_hunter\产业链投研\skills\user-investment-framework\SKILL.md`
-   - `D:\vcp_hunter\产业链投研\skills\industry-research-router\SKILL.md`
-   - `D:\vcp_hunter\产业链投研\skills\a-share-disclosure-trading-data\SKILL.md`
-   - `D:\vcp_hunter\产业链投研\skills\search-specialist\SKILL.md`
-   - `D:\vcp_hunter\产业链投研\skills\research-summarizer\SKILL.md`
-   - `D:\vcp_hunter\产业链投研\skills\stock-fundamental-moat-triad\SKILL.md`
-   - `D:\vcp_hunter\产业链投研\skills\stock-evaluator\SKILL.md`
+2. 调用并遵守两个项目本地技能，其余研究由当前高能力模型直接完成：
+   - `D:\vcp_hunter\产业链投研\.agents\skills\user-investment-framework\SKILL.md`
+   - `D:\vcp_hunter\产业链投研\.agents\skills\a-share-disclosure-trading-data\SKILL.md`
+   不再预加载兼容路由、搜索、摘要、公司分析和评分技能。
 3. 不创建、更新或暂停其他自动化；不提交 Git；不推送；不改紫金研选代码；只读紫金研选数据源。
 4. 不打开紫金研选 UI。用本地持久化状态读取业绩异动 Tab 数据。
 5. 任务使用最高能力配置运行；但若 24 小时内没有新增股票，完成本地读取和过滤确认后即可快速结束，不为了保持任务长度而联网或深挖。

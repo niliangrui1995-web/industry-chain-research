@@ -11,7 +11,7 @@ Child scheduler addendum: after every child create, update, or pause, validate b
 
 运行边界和预检硬门：
 - 所有母任务和子任务只在 D:\vcp_hunter\产业链投研 运行；D:\vcp_hunter\紫金研选 只作财报日历数据源和官方电话会时间写回目标。
-- 单公司子任务必须使用项目本地 skill D:\vcp_hunter\产业链投研\skills\earnings-call-investment-analyst。
+- 单公司子任务必须使用项目本地 skill D:\vcp_hunter\产业链投研\.agents\skills\earnings-call-investment-analyst。
 - 读取或写回紫金研选代码时优先用 D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe；若从产业链投研启动 Python，先把 D:\vcp_hunter\紫金研选 插入 sys.path 后再 import domains.global_earnings_calendar.service。
 - 先确认上述两个项目根、项目本地 skill、policy/template 文件均存在；用紫金研选 venv Python 验证 import requests、GlobalEarningsCalendarService、EarningsCalendarEvent。失败则报告 environment_preflight_failed，不创建/更新子任务。
 

@@ -26,7 +26,7 @@ class HtLocalMarketDataTests(unittest.TestCase):
     def test_cli_defaults_to_zd_huatai_root(self) -> None:
         module = load_module(
             "inspect_ht_data_default_root",
-            ROOT / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+            ROOT / ".agents" / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
         )
         with patch.object(module, "inspect", return_value={}) as inspect_mock:
             with redirect_stdout(StringIO()):
@@ -38,7 +38,7 @@ class HtLocalMarketDataTests(unittest.TestCase):
     def test_inspector_rejects_root_without_market_data_sentinels(self) -> None:
         module = load_module(
             "inspect_ht_data_invalid_root",
-            ROOT / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+            ROOT / ".agents" / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
         )
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -50,7 +50,7 @@ class HtLocalMarketDataTests(unittest.TestCase):
     def test_inspector_rejects_empty_market_data_sentinels(self) -> None:
         module = load_module(
             "inspect_ht_data_empty_sentinels",
-            ROOT / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+            ROOT / ".agents" / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
         )
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -63,7 +63,7 @@ class HtLocalMarketDataTests(unittest.TestCase):
     def test_inspector_skips_account_trading_log_boundaries(self) -> None:
         module = load_module(
             "inspect_ht_data",
-            ROOT / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+            ROOT / ".agents" / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
         )
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

@@ -1,4 +1,0 @@
-interface:
-  display_name: "AI Chain Research Orchestrator"
-  short_description: "Coordinate AI-chain research with Grok/X discovery, optional Gemini source help, and Codex verification."
-  default_prompt: "Use $ai-chain-research-orchestrator for AI supply-chain research. For live news or rumors, start with Grok/X discovery through the logged-in Chrome plugin path; use Gemini through Chrome only when requested or useful for source discovery, counter-evidence, Deep Research, or source gaps. Codex must verify important claims, map the industry chain, and rank fundamental quality, earnings elasticity, and trading elasticity separately."

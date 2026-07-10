@@ -1,4 +1,0 @@
-interface:
-  display_name: "Industry Chain Deep Disassembly"
-  short_description: "Disassemble industry chains, deep-dive bottlenecks, and forecast supply gaps."
-  default_prompt: "Use $industry-chain-deep-disassembly to decompose a growth industry into demand signals, supply-chain topology, BOM/value nodes, current supply-gap choke points, constraint mechanisms, bottleneck-node deep dives with persistence estimates, and future supply-gap migration. Treat 堵点/卡点 as nodes where demand exceeds qualified supply in the stated window. When a node is identified as a supply-gap bottleneck, continue into exact-node research and estimate how long the bottleneck may persist before final synthesis or optional stock mapping. Only map stocks if the user explicitly asks for listed exposure after node diagnosis."

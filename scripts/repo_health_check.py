@@ -17,19 +17,29 @@ from typing import Iterable
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SKILL_ROOT = ROOT / ".agents" / "skills"
+EXPECTED_PROJECT_SKILLS = {
+    "a-share-company-tracking",
+    "a-share-disclosure-trading-data",
+    "ai-chain-research-orchestrator",
+    "earnings-call-investment-analyst",
+    "ht-local-market-data",
+    "research-industry-chain",
+    "user-investment-framework",
+}
 SKILL_HEALTH_OVERRIDES = Path.home() / ".codex" / "skill-routing" / "skill-health-overrides.json"
 DEFAULT_DOCS = [
     ROOT / "README.md",
     ROOT / "AGENTS.md",
     ROOT / "SKILL_PACK_MANIFEST.md",
-    ROOT / "skills" / "user-investment-framework" / "references" / "skill-mcp-boundary-matrix.md",
+    SKILL_ROOT / "user-investment-framework" / "references" / "tool-boundaries.md",
 ]
 PYTHON_FILES = [
     ROOT / "scripts" / "update_tungsten_price_tracker.py",
     ROOT / "scripts" / "earnings_parent_guardrail.py",
     ROOT / "scripts" / "create_company_watchlist.py",
     ROOT / "scripts" / "repo_health_check.py",
-    ROOT / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+    SKILL_ROOT / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
 ]
 SECRET_PATTERNS = [
     ("openai_key", re.compile(r"\b(?:sk-proj-[A-Za-z0-9_-]{40,}|sk-[A-Za-z0-9]{32,})\b")),
@@ -50,8 +60,11 @@ ALLOWED_REFERENCE_CONTEXT = (
     "显式",
     "参考",
     "归档",
+    "移出",
+    "删除",
     "不进入默认",
     "不自动",
+    "不保留",
     "只有用户明确",
     "only when",
     "do not route",
@@ -101,33 +114,82 @@ def check_routing_consistency() -> CheckResult:
     readme = read_text(ROOT / "README.md")
     agents = read_text(ROOT / "AGENTS.md")
     manifest = read_text(ROOT / "SKILL_PACK_MANIFEST.md")
-    matrix = read_text(ROOT / "skills" / "user-investment-framework" / "references" / "skill-mcp-boundary-matrix.md")
+    framework = read_text(SKILL_ROOT / "user-investment-framework" / "SKILL.md")
+    boundaries = read_text(SKILL_ROOT / "user-investment-framework" / "references" / "tool-boundaries.md")
 
     problems: list[str] = []
     required_pairs = [
-        ("README.md", readme, "Current primary entrypoint: use `skills/user-investment-framework` first"),
-        ("README.md", readme, "`skills/industry-research-router/`：兼容层和细分路由表"),
-        ("AGENTS.md", agents, "start with `skills/user-investment-framework`"),
-        ("SKILL_PACK_MANIFEST.md", manifest, "主入口只有一个：`user-investment-framework`"),
-        ("skill-mcp-boundary-matrix.md", matrix, "1. Start with `user-investment-framework`."),
+        ("README.md", readme, "项目技能已迁到 Codex 标准仓库路径 `.agents/skills/`"),
+        ("AGENTS.md", agents, "仓库技能位于 `.agents/skills/`"),
+        ("SKILL_PACK_MANIFEST.md", manifest, "项目技能根目录：`.agents/skills/`"),
+        ("user-investment-framework/SKILL.md", framework, "默认最多选择 1 个领域技能和 1 个数据、文件或状态技能"),
+        ("tool-boundaries.md", boundaries, "## 写入与账户硬门"),
     ]
     for path, text, needle in required_pairs:
         if needle not in text:
             problems.append(f"{path}: missing `{needle}`")
 
-    forbidden_readme = [
-        "先读 `skills/industry-research-router`",
-        "`industry-research-router` +",
-        "20-andruia-niche-intelligence",
-    ]
-    for needle in forbidden_readme:
-        if needle in readme:
-            problems.append(f"README.md: old active routing text still present: `{needle}`")
-
-    if "`stock-copilot-pro`" in manifest and "显式/参考工具" not in manifest:
-        problems.append("SKILL_PACK_MANIFEST.md: stock-copilot-pro is not isolated under explicit/reference tools")
+    for path, text in [("README.md", readme), ("AGENTS.md", agents), ("user-investment-framework/SKILL.md", framework)]:
+        for needle in ["skills/user-investment-framework", "skills/industry-research-router", "`industry-research-router` +"]:
+            if needle in text:
+                problems.append(f"{path}: legacy routing text still present: `{needle}`")
 
     return result("routing_consistency", not problems, problems)
+
+
+def check_skill_library_layout() -> CheckResult:
+    problems: list[str] = []
+    legacy_root = ROOT / "skills"
+    if legacy_root.exists():
+        problems.append("legacy root skills/ still exists; repository skills must live under .agents/skills")
+    if not SKILL_ROOT.is_dir():
+        return result("skill_library_layout", False, [f"missing {rel(SKILL_ROOT)}"])
+
+    actual = {path.name for path in SKILL_ROOT.iterdir() if path.is_dir()}
+    for name in sorted(EXPECTED_PROJECT_SKILLS - actual):
+        problems.append(f"missing project skill: {name}")
+    for name in sorted(actual - EXPECTED_PROJECT_SKILLS):
+        problems.append(f"unexpected project skill: {name}")
+
+    forbidden_active_terms = [
+        "industry-research-router",
+        "browser-grok-gemini-research",
+        "semiconductor-ai-chain-investment-researcher",
+    ]
+    for name in sorted(actual & EXPECTED_PROJECT_SKILLS):
+        skill_dir = SKILL_ROOT / name
+        skill_file = skill_dir / "SKILL.md"
+        metadata_file = skill_dir / "agents" / "openai.yaml"
+        if not skill_file.is_file():
+            problems.append(f"{name}: missing SKILL.md")
+            continue
+        text = read_text(skill_file)
+        lines = text.splitlines()
+        if len(lines) > 180:
+            problems.append(f"{name}: SKILL.md is {len(lines)} lines; expected <= 180")
+        if name == "user-investment-framework" and len(lines) > 100:
+            problems.append(f"{name}: master entrypoint is {len(lines)} lines; expected <= 100")
+        frontmatter = re.match(r"\A---\s*\n(.*?)\n---\s*\n", text, flags=re.DOTALL)
+        if not frontmatter:
+            problems.append(f"{name}: invalid frontmatter")
+        else:
+            name_match = re.search(r"(?m)^name:\s*([^\n]+)$", frontmatter.group(1))
+            if not name_match or name_match.group(1).strip().strip('"\'') != name:
+                problems.append(f"{name}: frontmatter name mismatch")
+        for term in forbidden_active_terms:
+            if term in text:
+                problems.append(f"{name}: active SKILL.md references removed route `{term}`")
+        if not metadata_file.is_file():
+            problems.append(f"{name}: missing agents/openai.yaml")
+        else:
+            metadata = read_text(metadata_file)
+            if f"${name}" not in metadata:
+                problems.append(f"{name}: agents/openai.yaml default prompt does not mention ${name}")
+
+    agents_lines = read_text(ROOT / "AGENTS.md").splitlines()
+    if len(agents_lines) > 60:
+        problems.append(f"AGENTS.md is {len(agents_lines)} lines; expected <= 60")
+    return result("skill_library_layout", not problems, problems)
 
 
 def load_archived_slugs() -> list[str]:
@@ -217,7 +279,7 @@ def check_tungsten_report_only() -> CheckResult:
 
 def check_ht_inspect_help() -> CheckResult:
     code, stdout, stderr = run_cmd(
-        [sys.executable, str(ROOT / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py"), "--help"],
+        [sys.executable, str(SKILL_ROOT / "ht-local-market-data" / "scripts" / "inspect_ht_data.py"), "--help"],
         timeout=30,
     )
     expected_root = r"C:\zd_huatai"
@@ -304,6 +366,7 @@ def check_git_diff_check() -> CheckResult:
 def run_checks(skip_slow: bool) -> list[CheckResult]:
     checks = [
         check_routing_consistency(),
+        check_skill_library_layout(),
         check_archived_default_references(),
         check_py_compile(),
         check_tungsten_report_only(),

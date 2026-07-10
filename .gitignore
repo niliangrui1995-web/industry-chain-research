@@ -41,8 +41,8 @@ q4_event_*.json
 htmlcov/
 .coverage
 
-# Generated coverage reports inside bundled skills
-skills/**/htmlcov/
+# Generated coverage reports inside repository skills
+.agents/skills/**/htmlcov/
 
 # OS / IDE
 .vscode/

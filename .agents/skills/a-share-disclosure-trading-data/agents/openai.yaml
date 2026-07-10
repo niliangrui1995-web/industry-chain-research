@@ -1,0 +1,6 @@
+interface:
+  display_name: "A 股公告与交易事件"
+  short_description: "核验公告、IR、龙虎榜、大宗交易与晚间窗口"
+  default_prompt: "Use $a-share-disclosure-trading-data to verify this A-share disclosure or trading event."
+policy:
+  allow_implicit_invocation: true

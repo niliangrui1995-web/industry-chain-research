@@ -8,7 +8,7 @@
 - 母任务不得调用或执行 `earnings-call-investment-analyst`；该 skill 只允许单公司子任务运行时调用。
 - 所有母任务和子任务只在 `D:\vcp_hunter\产业链投研` 运行。
 - `D:\vcp_hunter\紫金研选` 只作为财报日历数据源和官方电话会时间写回目标。
-- 单公司子任务运行时必须使用项目本地 skill：`D:\vcp_hunter\产业链投研\skills\earnings-call-investment-analyst`。
+- 单公司子任务运行时必须使用项目本地 skill：`D:\vcp_hunter\产业链投研\.agents\skills\earnings-call-investment-analyst`。
 - 读取或写回紫金研选代码时，优先使用 `D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe`。若从产业链投研启动 Python，必须先把 `D:\vcp_hunter\紫金研选` 插入 `sys.path` 后再 import `domains.global_earnings_calendar.service`。
 
 ## 硬停条件

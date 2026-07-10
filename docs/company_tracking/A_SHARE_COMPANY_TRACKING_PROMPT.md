@@ -4,8 +4,8 @@
 
 ## Hard Gates
 
-1. 先阅读本项目 `AGENTS.md`，并从 `skills/industry-research-router` 进入研究路由。
-1A. 本任务必须调用并遵循项目 skill：`skills/a-share-company-tracking`；公告、CNINFO、交易所披露、龙虎榜、大宗交易和公告窗口核验必须调用并遵循 `skills/a-share-disclosure-trading-data`。
+1. 先阅读本项目 `AGENTS.md`。
+1A. 本任务只预加载两个项目 skill：`.agents/skills/a-share-company-tracking`；公告、CNINFO、交易所披露、龙虎榜、大宗交易和公告窗口核验使用 `.agents/skills/a-share-disclosure-trading-data`。不要追加兼容路由或固定通用技能栈。
 2. 读取 `watchlists/a_share_company_watchlist.xlsx` 的 `watchlist` 工作表，只处理 `enabled=Y` 的公司。
 3. 首次或新增公司规则：`baseline_status` 为 `pending`、`refresh_needed` 或空值的公司，必须先做完整公司基线深研；本任务首跑要一次性完成全部待建基线公司。
 4. 不调用外部浏览器、浏览器插件、第三方网页模型或社交搜索工具作为发现层。最近 24 小时消息统一使用 Codex 自身联网能力 / open-web search；联网搜索只是观察层，不是阻断项。
@@ -20,16 +20,12 @@
 
 ## Skill Route
 
-默认使用：
+默认只使用：
 
-- `industry-research-router`：入口和证据纪律。
-- `a-share-company-tracking`：A 股 watchlist 日更、baseline/state/events、公司级独立任务块、run_status 和最终核对。
-- `a-share-disclosure-trading-data`：CNINFO、交易所公告、IR 记录、龙虎榜、大宗交易和 T/T+1 公告窗口硬门。
-- `search-specialist`：官方公告、交易所、CNINFO、公司 IR、龙虎榜、大宗交易的检索策略。
-- `research-summarizer`：消化公告、年报、季报、投资者关系记录等长材料。
-- `stock-evaluator` + `business-analyst`：公司基本面、业务结构、财务质量和风险。
-- `allstock-data` / `finance`：必要时核对行情、交易状态、估值和流动性。
-- 不使用浏览器采集类 skill、外部浏览器、浏览器插件、第三方网页模型或社交搜索工具；最近消息统一用 Codex 自身联网能力 / open-web search。
+- `a-share-company-tracking`：A 股 watchlist、baseline/state/events、公司级任务块、run_status 和最终核对。
+- `a-share-disclosure-trading-data`：CNINFO、交易所、IR、龙虎榜、大宗交易和 T/T+1 公告窗口。
+- 搜索、长材料消化、公司分析和行情核对由当前模型按需直接使用原生工具或已安装能力，不预加载额外技能。
+- 不使用外部浏览器、浏览器插件、第三方网页模型或社交搜索工具；最近消息统一用 Codex 自身联网能力 / open-web search。
 
 ## Input Schema
 

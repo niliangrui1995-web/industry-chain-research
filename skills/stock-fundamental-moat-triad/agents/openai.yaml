@@ -1,4 +1,0 @@
-interface:
-  display_name: "Stock Fundamental Moat Triad"
-  short_description: "Future highlights and monetization path"
-  default_prompt: "Use $stock-fundamental-moat-triad to judge this stock's future highlights first, then use value-chain position, international peers, Porter Five Forces, and customer-certification milestones to test whether the future can become earnings."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "产业链与公司研究路由"
-  short_description: "Compatibility router for project-local industry-chain and stock research skills"
-  default_prompt: "Use $industry-research-router as the compatibility router after $user-investment-framework has selected the research task type."

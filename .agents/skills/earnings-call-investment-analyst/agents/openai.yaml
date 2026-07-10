@@ -1,0 +1,6 @@
+interface:
+  display_name: "财报与电话会分析"
+  short_description: "核验财报、指引、电话会增量与预期差"
+  default_prompt: "Use $earnings-call-investment-analyst to analyze this earnings release or call with source-aware comparisons."
+policy:
+  allow_implicit_invocation: true
