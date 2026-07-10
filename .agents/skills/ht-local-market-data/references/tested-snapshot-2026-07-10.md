@@ -1,10 +1,10 @@
 # 2026-07-10 只读目录快照
 
-该快照仅说明当次审计看到的数据面，不代表未来运行状态。
+该快照记录 2026-07-10 对 `D:\HT` 的只读审计结果，不代表未来运行状态。
 
 | 路径 | 当次结果 | 边界 |
 |---|---|---|
-| `vipdoc\sh\lday`、`sz\lday`、`bj\lday` | 9,389 个 `.day` 文件，记录长度有效；9,358 个最新记录为 `20260710` | `market_data_vendor` |
+| `vipdoc\sh\lday`、`sz\lday`、`bj\lday` | 9,389 个 `.day` 文件，记录长度有效；9,357 个最新记录为 `20260710` | `market_data_vendor` |
 | `vipdoc\sh\minline`、`sz\minline`、`bj\minline` | 目录存在但 `.lc1` 为 0 | 分钟数据不可用 |
 | `vipdoc\cw` | 147 个非空 `gpcw*.zip` 通过完整性检查；7,399 个 `gp*.dat` | 厂商财务快照，不是官方财报 |
 | `T0002\blocknew` | 4 个 `.blk`，其中 3 个非空 | 候选池/交易上下文 |
