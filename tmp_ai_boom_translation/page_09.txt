@@ -1,0 +1,34 @@
+Worse, OpenAI has no real co-signer. While the market long priced in an implied Microsoft
+backstop, Microsoft stripped away every structural strut in April 2026 - ending the revenue share,
+dropping exclusivity, and surrendering its right of first refusal to supply compute. Microsoft kept
+its 27% equity upside but walked away from OpenAI’s bills. SoftBank, the other great OpenAI
+backer, is itself now trying toraise a $10B margin loan against its OpenAI stake - offering a
+personal guarantee after lenders balked at the collateral. Even the co-signer has no co-signer.
+Microsoft’s own behavior is the signal. The most informed counterparty in the complex - the one
+that saw OpenAI’s books from the inside for years - has recognized the credit risk. Rather than
+building its own compute on fifteen-year leases that outlast the chips, it foresaw the
+commoditization of frontier models and committed over $60B to neocloud providers through
+shorter, five-year capacity agreements: renting at the peak to avoid owning through the trough.
+That is not a bet on OpenAI’s durability. It is a lender shortening duration on a borrower it
+has decided not to underwrite - the same subprime credit this section describes, priced by the
+party that knows it best.
+The critical divergence here is counterparty risk. When an investor or lessor underwrites
+Anthropic, they are ultimately looking through the structure to underwrite the pristine balance
+sheets of Google and Broadcom. The credit risk is synthetically lifted to investment-grade. When
+underwriting OpenAI, there is no look-through. Counterparties are exposed to a naked,
+standalone start-up sitting on an underwater unit economic model. Without a parental balance
+sheet, OpenAI is entirely dependent on a continuous refinancing treadmill - servicing each
+old obligation with the proceeds of the next, larger equity raise. That is the counterpartyrisk
+hiding inside roughly half of the $2.1 trillion backlog the market has priced as bankable.
+Thanks for reading! Subscribe for free to receive new posts and support my work.
+VII. The Reflexive Flip
+The take-or-pay contracts are the structural foundation - the collateral that makes the borrowing
+possible. But they are not a passive constraint. The Nash equilibrium is what pushes the
+hyperscalers to sign those contracts in the first place, and to sign them at ever-larger scales. The
+race does not bypass the loan book; it writes the loanbook. To justify the next gigawatt of spend,
+a hyperscaler needs the next gigawatt ofbacklog - so it pushes its tenants to commit further
+forward. The $2.1 trillion backlog is not a pre-existing limit on the arms race; it is the arms race’
+s own paper trail. The contracts are the collateral; the race is the demand for more collateral.
+Once that collateral is signed, it must be converted into infrastructure before the cash arrives.
+That conversion - the act of turning a signed contract into a live data center - is what drives the
+capex machine. And that machine is now consuming cash faster than the backlog can validate it.

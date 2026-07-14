@@ -1,0 +1,24 @@
+several years, for compute it has not yet consumed. The counterparty - Oracle, CoreWeave, a
+hyperscaler - books that promise as backlog and borrows against it, raising debt to pour concrete
+and rack GPUs. Reduce the arrangement to its skeleton and it is a loan: the counterparty
+advances capital in kind - a building full of chips - against the borrower’s commitment to pay it
+back, with interest and principal amortization baked directly into the take-or-pay rate. The data
+center is the collateral. The lab’s contracted payments are the debt service. And the structure
+performs only so long as the borrower can keep funding those payments - which, for a company
+with no profits, means only so long as it can keep raising money.
+This is precisely why the analogy is 2008, not 2000. AI capital expenditure is not a capital
+budget. It is a loan book. Leases in form; debt in substance. The capex is the funded principal;
+the contracted backlog - the remaining performance obligation, in the filings - is the lease
+receivable. When a hyperscaler or a neocloud reports a record capex figure, the financial press
+reads it as confidence, as proof of demand. Read it instead as origination volume. Each gigawatt
+of committed build is a loan extended to whichever tenant has signed the take-or-pay beneath it,
+and the credit quality of that loan is precisely the credit quality of the tenant. The market
+is celebrating loan growth and calling it revenue growth.
+V. The Borrower With No Income
+Every subprime cycle has a borrower who could only refinance, never repay. In this one, that
+borrower is OpenAI.
+OpenAI has committed to pay for compute on a scale without precedent in corporate history:
+multi-year, take-or-pay capacity contracts whose aggregate obligations run to the hundreds of
+billions of dollars. Against them sits an operating business that does not yet earn a profit -
+revenue real, large, and growing quickly, but short of covering the company’s own cash burn and
+nowhere near covering the contracted payments.

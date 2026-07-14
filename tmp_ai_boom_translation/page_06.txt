@@ -1,0 +1,31 @@
+Those payments are therefore not serviced out of earnings. They are serviced out
+of financing, and financing, for a borrower in this position, is available on a single condition:
+that each new round price above the last.
+For OpenAI the up-round is not a measure of progress; it is the funding event itself -the
+mechanism by which the prior period’s commitments are paid and the next period’s are made
+signable. The markup is the cash flow.
+A company funded by its own appreciation is solvent not in proportion to how high the
+mark stands but in proportion to how fast it is still rising - because a burn rate is an
+accelerating schedule, indifferent to the size of the last round. Each new phase of compute
+expansion demands an exponentially larger cash injection. When the step-up compresses from
+1.91× down to 1.23×, the math breaks: the valuation can print a record at the precise moment
+the company’s capacity to fund its structural deficit is contracting. This is not a paradox; it is the
+arithmetic of a borrower whose liquidity is bound to the first derivative of its own price.
+And that value is set by the very capital providers who need it to keep rising. OpenAI’s most
+recent round - reported at roughly $122 billion of fresh capital - set its valuation near $852 billion,
+with the same names underneath it: Microsoft, SoftBank, Nvidia, Amazon. These are the
+counterparties whose compute the proceeds will buy. The mark goes up because money came in;
+more money comes in because the markwent up. The appraiser, the lender, and the buyer are the
+same three people, passingthe same dollar in a circle and marking it higher on each pass. It works
+gloriously - for a while - for exactly the reason the 2/28 worked: as long as the mark keeps
+rising,the lab can refinance.
+Measured as a level, OpenAI’s valuation is the most remarkable appreciation in the history of
+private markets - roughly $86 billion in early 2024, then about $157 billion,$300 billion, $500
+billion, and approximately $852 billion by the spring of 2026. Measured as a rate of change, the
+same series inverts: the round-over-round step-up ran 1.83×, 1.91×, 1.67×, 1.70×, and falls to
+roughly 1.23× implied by the reported public-offering target. Private marks are inherently lumpy
+- negotiated, episodic, set by a handful of insiders - so no single step is decisive. But the trend
+is unmistakable: it bends down, and it bends hardest at the one mark set by the deepest, most
+unforgiving pool of capital - the public market. The implied IPO step-up is both the lowest in the
+sequence and the hardest to negotiate, and it is theone the structure must actually clear. This
+arithmetic is also the most probable explanation for OpenAI’s recent IPO delay.

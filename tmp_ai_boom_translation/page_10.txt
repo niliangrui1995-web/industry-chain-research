@@ -1,0 +1,19 @@
+The year the cash runs out - capex converges on 100% of operating cash flow.
+Aggregate capex as a share of operating cash flow ran near 30% in 2022, roughly 42% in 2023,
+about 50% in 2024, and approximately 60% in 2025; on consensus spending it reaches 100% in
+2026. Above that line, by definition, every marginal dollar of capacity is funded not from internal
+cash but from the balance sheet - debt or equity. The “fortress balance sheet, self-funded” story
+is true only below 100%, and the consensus path crosses 100% this year. The fortress is not
+being defended; itis being spent.
+Past 100% of cash flow, accelerating capex means borrowing more, faster, every quarter,
+against a rating that only has so many notches left. Hyperscaler debt issuance has to climb
+steeply over the coming year - the bond market becomes the marginal funder of the entire
+build.
+Why are hyperscalers betting over 100% of operating cash flow on an uncertain return?
+Because, until now, they have been paid to. Capital expenditure has gone vertical: roughly $150
+billion in 2023, $226 billion in 2024, $410 billion in 2025, an estimated $725 billion in 2026, and
+approaching $1.1 trillion in 2027. As a level, it is the largest private capital-formation event in
+history. As a first derivative, the growth rates read +51%, +81%, +77%, +52%. And as a second
+derivative, the acceleration peaked at roughly +30 percentage points into 2025 and has turned
+negative: about −4 points, then about −25. The level is at records. The velocity is still high. The
+acceleration has already rolled over.

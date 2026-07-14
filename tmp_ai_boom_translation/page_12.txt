@@ -1,0 +1,39 @@
+The capex arms race is a Nash equilibrium, but a conditional one: it holds only while the market
+rewards the next dollar of spending as a call option on growth. In that regime - the boom
+regime - the dominant strategy for every hyperscaler is to spend,because the alternative is to be
+the one player who blinked and ceded the future. Mutual escalation is stable precisely because
+the market applauds it. Each CFO spends because every other CFO is spending and the multiple
+rewards the spender.
+Morgan Stanley caught the psychology exactly when it described 2027 capex estimates leaping
+thirty percent in a single quarter, toward $1.1 trillion, as the dynamics of an auction. An auction is
+the right frame, because in an auction the price is set by the most optimistic bidder and the act of
+bidding is itself the signal - the applause, the proof of seriousness. Keynes’s beauty contest, with
+chips: you arenot spending on what you think the compute is worth; you are spending on
+what you think the market will reward you for being seen to spend.
+That equilibrium is not anchored to anything physical. It is anchored to a belief - the market’s
+reading of what the next dollar of capex means - and beliefs reprice. The flip comes the first
+time a hyperscaler announces a capex cut and its multiple expands on the news rather than
+contracting. The instant discipline is rewarded instead of punished, every payoff on the
+board rewrites. Spending, formerly the dominant strategy, becomes the move that gets you
+punished alone; holding, formerly surrender, becomes the move that gets you re-rated. The Nash
+equilibrium inverts from “everyone spends” to “everyone cuts” - and because it is
+a coordination equilibrium, the inversion is not gradual. The first mover rewarded for cutting
+gives every other CFO both the cover and the incentive to follow, and discipline cascades as fast
+as the spending it replaces. The day the market cheers a cut is the day the arms race ends.
+Goldman’s head of Delta One trading put it as plainly as it can be put:
+“The first hyperscaler to signal that it can slow the pace of spending will likely see its share price
+rewarded (and will crush semiconductor stocks). If that happens, others will take notice. That is
+the reflexivity that ultimately stalls the capex cycle - not a lack of demand, but investors deciding
+that incremental returns on the next dollar of spend are no longer attractive.”
+The cruelty of the flip is what it does to the contracts. In the boom regime, a
+signed take-or-pay commitment is an asset to everyone who touches it: forward demand for
+the hyperscaler, bankable backlog for the neocloud, collateral for the lender. In the repriced
+regime, the identical contract is a liability for all of them simultaneously.
+The lab cannot fund the payments it locked in; the hyperscaler holds a receivable from a visibly
+distressed counterparty; the neocloud is left servicing debt against data centers it financed on a
+contract now worth less than the debt. This is negative convexity wired directly into the demand
+side: the same instrument is an asset on the way up and a liability on the way down, and the
+transition between the two states is a repricing of belief, not a change in the underlying
+hardware. Nothing physical has to break. The market only has to change its mind.
+It lands hardest on the frontier labs, who can carry these contracts only by raising more capital -
+and the flip closes that window. What follows is not a clean default but a negotiation - volumes

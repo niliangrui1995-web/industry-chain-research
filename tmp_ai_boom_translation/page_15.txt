@@ -1,0 +1,39 @@
+burn. Which is why news of OpenAI’s delayed IPO matters far more than the market initially
+understood.
+The terminal refinance carries a trap the private rounds did not. To reach the public pool the
+borrower must file an S-1 - and the S-1 discloses exactly the fragility that made the refinance
+necessary: audited losses, customer concentration, the full $600 billion-plus of take-or-pay
+obligations laid out for any reader. The document that unlocks the capital is the same document
+that prices the risk.
+OpenAI needs the market’s money and cannot fully afford the market’s scrutiny - the bind
+of a company whose story is better than its statements.
+Now do the arithmetic the delay is hiding. The step-up from roughly $852 billion to the
+reported >$1 trillion target is the next hurdle - barely 1.23×, the lowest step-up in the entire
+sequence, and far below the 1.7×–1.9× multiples that funded the prior burns. It must do two
+incompatible things at once: clear at a level the public market will actually pay, and raise
+enough to retire a cumulative burn approaching $115 billion. The implied step-up cannot do
+both: the price that clears the market does not retire the burn, and the price that retires the burn
+does not clear the market. Therefinance of last resort is failing quietly - pricing below the mark
+the structure requires, and waiting.
+XI. How It Breaks
+The trigger is narrow and specific: the next mark fails to clear at the required step-up- not a
+collapse, merely a deceleration below the threshold the structure needs. This is the 2006 dynamic
+replayed: the velocity rolled over while the level was still climbing.
+From there the sequence runs in order:
+(1) The terminal refinance prices below the required mark - the step from about $852 billion to
+more than $1 trillion does not clear, or clears at a level that cannot retire the burn; the delay is the
+signal. (2) The borrower pulls back on compute commitments to conserve cash - and a pull-back
+on a take-or-pay obligation is a covenant breach against the provider whose debt is
+collateralized by that commitment. (3) The breach lands first and hardest on the neoclouds -
+CoreWeave, Lambda, Crusoe - whose entire business is the spread between borrowed
+money and resold compute. A neocloud is not a business so much as a spread trade with
+nobalance sheet to warehouse the risk: when the spread inverts, it is insolvent by definition, not
+by choice. Oracle, corporate-funded but dangerously concentrated, takes the next blow - its
+impairment deeper than the hyperscalers’, but it does not seize; it bleeds. A hyperscaler can fund
+a missed payment out of Search, or Windows,or Retail; the neocloud has no second cash
+flow. (4) Credit freezes across the complex: RPO reprices from forward demand to counterparty
+risk, GPU-backed notes cannot roll, the originate-to-distribute machine seizes. (5) Equity
+decimates - negative convexity in reverse, capex repriced from option to cost,
+multiples compressing across every name in the chain. (6) The strong survive: the
+best-capitalized actors with the least exposure buy stranded data centers for pennies
+and backstops the leases that must endure.

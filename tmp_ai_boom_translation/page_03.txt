@@ -1,0 +1,25 @@
+Borrowed time is dangerous in exact proportion to the convexity of the instruments riding on top
+of S. A long-dated equity multiple is roughly linear in expectations; it can deflate slowly and
+reflate, the way the dot-com index took two years to bottom and many survivors simply de-rated.
+A leveraged credit structure is negatively convex: it earns a fixed coupon on the way up and
+absorbs unbounded loss on the way down, and its covenants are step functions, not smooth
+curves. This distinction -between an equity story that can drift and a credit story that snaps - is
+the difference between 2000 and 2008. It is also the difference between what the marketthinks AI
+is and what AI actually is.
+III. The AI Boom is a Credit-Driven Real Estate Cycle
+Open any AI bull or bear note and observe what it argues about. It argues about levels - how
+many billions of revenue, how many gigawatts, how large the total addressable market - and
+about the first derivative - is growth 200% or 150%, is enterprise inflecting, are
+tokens-per-minute rising. The bears say the levels are unsustainable; the bulls say the growth
+justifies them. Both camps are staring at S and S′. Neither is watching S″. And the entire
+financing architecture erected over the past twenty-four months is a bet on S″ - on
+the acceleration of demand continuing -dressed up as a bet on the level.
+This matters because the dominant analogy in everyone’s head is the wrong one.“Is AI a bubble
+like dot-com?”is the question being asked, and it produces dot-com answers: maybe the leaders
+survive and the laggards wash out; maybe multiples compress; maybe we get a 50% drawdown
+and a recovery. That framing is a category error.
+The year 2000 was an equity-multiple event - too much optimism priced into stocks with thin
+balance sheets and almost no debt. The pain was real but it was equity pain, and equity is patient
+capital that can simply be marked down and held. The AI build-out is structurally different. It is
+increasingly financed not by selling overpriced equity but by contracting future cash flows and
+borrowing against hardware - take-or-pay capacity deals, GPU-collateralized term loans,

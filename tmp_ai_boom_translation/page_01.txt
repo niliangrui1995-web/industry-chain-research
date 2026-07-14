@@ -1,0 +1,24 @@
+The Second Derivative: Why No
+One Understands the AI Boom
+Jul 02, 2026
+Ask a portfolio manager what caused the 2008 mortgage crisis and you will hear a tidy causal
+chain: lax underwriting produced loans that should never have been made, home prices crashed,
+borrowers found themselves underwater, they defaulted, and the securities written on top of
+those loans detonated. Prices fell, therefore borrowers defaulted. It has the great virtue of
+sounding obvious. It is also, as a matter of sequence, wrong. It is the same error the market is
+making right now about the AI boom.
+The subprime machine did not run on prices. It ran on the change in prices, and more
+precisely on the change in that change. The canonical product of the era - the 2/28 and 3/27
+hybrid adjustable-rate mortgage - was not designed to be repaid on its stated terms. It was
+designed to be refinanced.
+A borrower took a low“teaser”rate for two or three years. The implicit underwriting assumption,
+shared by originator and borrower alike, was that the loan would never reach its reset: rising
+home values would manufacture equity, the borrower would refinance into a fresh teaser and the
+clock would start again. The structure was a treadmill, and the treadmill was powered by
+appreciation. It worked spectacularly while it worked. Nearly four in five subprime hybrid ARMs
+originated in2003 had been refinanced away by the end of 2006.
+Now watch the timing. National home-price appreciation did not crash in 2006. It decelerated.
+The year-over-year rate of gain, which had run in the mid-to-high teens through 2004 and into
+early 2005, began bleeding off - still positive, still printing green, but slowing. Prices were higher
+than they had ever been. And yet, with prices at their peak and still rising, subprime
+delinquencies inflected upward.

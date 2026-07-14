@@ -1,0 +1,25 @@
+This deceleration is not arbitrary. It reflects the two structural headwinds directly attacking the
+revenue growth the marks require: token efficiency and Chinese open weights. The industry’s
+central optimization project - routing simple queries to cheap models and trimming ‘thinking’
+tokens - has eroded the token-per-task tailwind that padded revenue. Meanwhile, Chinese
+open-weight models have repriced the commodity middle of inference to near-zero, capturing
+over 60% of OpenRouter tokens at a fraction the price. Revenue still grows - adoption is real
+- but the rate of growth is precisely what is under attack, and the rate is what the next mark
+needs to clear.
+VI. The Lender’s Backlog
+Move up one level, from the borrower to the lenders. The credit they’ve extended takes a specific
+form: remaining performance obligations - RPO - the contracted revenue a company has under
+signed agreement. The backlog. Wall Street loves backlog; it reads as visibility, as demand pulled
+forward and locked in.
+On the hyperscaler balance sheets that backlog has swelled into the hundreds of billions
+apiece, and every quarter the growth in RPO is presented as proof that the demand is real
+and the buildout justified. The larger the backlog, the more secure the story: a company
+does not build a gigawatt on a hope, it builds it against a contract.
+An RPO is not a liquid asset; it is a forward contractual commitment - a promise of future
+payment in exchange for future compute. And a multi-year commitment is worth exactly the
+creditworthiness of the entity on the other end of it. When that entity is investment-grade and
+cash-generative, the backlog is what it claims to be: high-quality visibility, merely deferred. When
+that entity is a pre-profit company that loses tens of billions a year and can pay only by
+continuously refinancing its own equity valuation, the backlog is something else entirely. It is a
+subprime commitment, used to justify massive, un-depreciated capital expenditure, reported to
+shareholders as structural strength.
