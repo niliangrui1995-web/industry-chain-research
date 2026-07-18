@@ -21,6 +21,7 @@ SKILL_ROOT = ROOT / ".agents" / "skills"
 EXPECTED_PROJECT_SKILLS = {
     "a-share-company-tracking",
     "a-share-disclosure-trading-data",
+    "a-share-leverage-capitulation-analyst",
     "ai-chain-research-orchestrator",
     "earnings-call-investment-analyst",
     "ht-local-market-data",
@@ -40,6 +41,10 @@ PYTHON_FILES = [
     ROOT / "scripts" / "create_company_watchlist.py",
     ROOT / "scripts" / "repo_health_check.py",
     SKILL_ROOT / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+    SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "audit_margin_history.py",
+    SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "audit_market_data.py",
+    SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "fetch_szse_margin_repairs.py",
+    SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "leverage_capitulation_backtest.py",
 ]
 SECRET_PATTERNS = [
     ("openai_key", re.compile(r"\b(?:sk-proj-[A-Za-z0-9_-]{40,}|sk-[A-Za-z0-9]{32,})\b")),

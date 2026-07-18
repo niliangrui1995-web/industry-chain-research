@@ -1,0 +1,6 @@
+interface:
+  display_name: "两融去杠杆压力分析"
+  short_description: "审计并回测 A 股指数急跌、融资余额收缩与普跌宽度共振"
+  default_prompt: "Use $a-share-leverage-capitulation-analyst to audit and backtest A-share deleveraging stress signals."
+policy:
+  allow_implicit_invocation: false

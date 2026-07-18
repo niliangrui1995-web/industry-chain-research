@@ -10,6 +10,7 @@ SKILL_ROOT = ROOT / ".agents" / "skills"
 EXPECTED_SKILLS = {
     "a-share-company-tracking",
     "a-share-disclosure-trading-data",
+    "a-share-leverage-capitulation-analyst",
     "ai-chain-research-orchestrator",
     "earnings-call-investment-analyst",
     "ht-local-market-data",
