@@ -1,6 +1,6 @@
 ---
 name: user-investment-framework
-description: Evidence-first investment research for industry chains, companies, listed securities, valuation, filings, market data, beneficiary checks, stock comparisons, and market-cycle or trading-structure analysis in the 产业链投研 project. Use for 产业链研究、公司研究、个股研究、上下游、技术壁垒、国产替代、全球龙头、估值、基本面、业绩弹性、交易弹性、真假受益，以及涉及牛市或熊市、主升浪、中级调整、MA30、量化信号、双头、长假后首日大跌或核心板块轮动的判断. Do not use for unrelated engineering or general writing tasks.
+description: Evidence-first investment research for industry chains, companies, listed securities, valuation, filings, market data, beneficiary checks, stock comparisons, market-cycle or trading-structure analysis, and investment discipline in the 产业链投研 project. Use for 产业链研究、公司研究、个股研究、上下游、技术壁垒、国产替代、全球龙头、估值、基本面、业绩弹性、交易弹性、真假受益，以及涉及牛市或熊市、主升浪、中级调整、MA30、量化信号、双头、长假后首日大跌、核心板块轮动、市场情绪过热、贪婪膨胀、追涨扩仓或依赖单一指标的判断. Do not use for unrelated engineering or general writing tasks.
 ---
 
 # User Investment Framework
@@ -41,6 +41,14 @@ description: Evidence-first investment research for industry chains, companies, 
 2. 牛市主升浪出现用户所称“量化信号”时，提醒短期仍可能再创新高；熊市或弱市中，提醒往往需要两次以上信号才可能止跌。若未给出信号定义，不臆测公式或阈值。
 3. 牛市主升浪出现双头，或长假后第一个交易日大跌时，主动提高风险警戒。
 4. 牛市中期的中级调整结束、确认进入下一轮主升浪时，优先检查前期涨幅较少的核心板块，或新爆发、可作为“中途上车”候选的核心板块；“核心”仍须用产业与市场证据确认。
+
+## 用户情绪纪律提醒（条件强制）
+
+当市场或持仓连续快速上涨，并且用户表现出明显兴奋、贪婪、膨胀、追涨、扩仓或加杠杆冲动，或者在上述上涨或情绪过热语境中，用户或拟答主要依赖基本面、估值、技术、流动性、情绪等任一单项指标推导确定性结论时，必须在回答的结论或风险段逐字附上以下原文；不要改写、省略或弱化，也不要在无关场景机械重复：
+
+> 当你涨的浑身燥热时，很贪婪，很膨胀的时候，一定要回顾历史，确定当下市场在历史中所处的位置，不要迷信任何一个单一指标，比如基本面，每一次都一样！！！
+
+把这句话视为用户的个人风险纪律，不表述为历史必然精确重演的事实或自动买卖信号。命中后，用当前可验证数据做多维历史比较，说明比较对象、样本区间、指标口径、数据时间、相似与不同之处、反证和证据缺口；不要用任何单一指标替代市场位置判断，数据不足时明确写 `N/A`，不要补造历史分位或确定性结论。
 
 复杂任务的详细检查表见 [references/research-method.md](references/research-method.md)。
 
