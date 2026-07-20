@@ -1,9 +1,9 @@
 # 东山精密（002384.SZ）滚动状态
 
-更新日期：2026-07-16
+更新日期：2026-07-20
 状态文件用途：记录当前跟踪结论、关键假设、最新证据、观察池、source gaps 和后续问题。
 Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`
-Open web fallback：`open_web_fallback_status: searched_no_new_nonofficial_signal_2026-07-16`
+Open web fallback：`open_web_fallback_status: searched_no_new_nonofficial_signal_2026-07-20`
 Browser scope：`browser_scope: not_available`
 Batch 2 Grok status：`grok_status: unavailable: chrome plugin tool not exposed`
 Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observation_pool_only`
@@ -309,3 +309,11 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 龙虎榜 / 大宗交易：2026-06-18 未发现新增龙虎榜或大宗交易。
 - open-web / 互动问答镜像：证券时报行情页互动问答镜像显示，公司回复索尔思股权变更登记、ODI 合规和资金储备问题。公司称已全额支付交易对价，股权变更登记因涉及开曼等多地主体属程序性工作并按辖区法规推进；不存在规避 ODI 审批或拆分股权规避监管；经营现金流稳定、融资渠道多元，相关产业投资分阶段投入，资金储备可支撑目前产业投资。
 - 状态变化：索尔思收购合规/交割手续和 12 亿美元扩产资金疑虑得到边界解释，风险观察项边际缓和；但客户名称、订单金额、单独收入、毛利率、良率、具体产能和项目审批节奏仍未量化。下一步仍看立项/环评/能评、资金安排、MOCVD/InP/DSP 供应和客户订单兑现。
+
+## 2026-07-20 日更
+
+- 公告窗口：20:00 后检查 2026-07-17 至 2026-07-21。T+1 回购报告书明确拟以自有或自筹资金回购 2 亿—3 亿元，价格不超过 367.04 元/股，预计约 54.49 万—81.73 万股，占总股本约 0.030%—0.045%，用于员工持股计划或股权激励，期限 12 个月。
+- 重要性：回购金额相对 2026Q1 末资产和净资产较小，属于资本配置和激励信号；不新增 AI PCB、光芯片/光模块客户、订单、收入、良率或毛利率证据。
+- 龙虎榜：7 月 20 日因日跌幅偏离值 `-8.67%` 上榜，成交 10,882.41 万股、245.8374 亿元；公开席位合计买入约 30.3951 亿元、卖出约 23.1285 亿元、净买入约 7.2665 亿元，深股通和机构席位双向活跃。
+- 大宗交易：7 月 20 日 1 笔平价交易，217.73 元、1.50 万股、326.60 万元，买方为华泰证券福建分公司、卖方为机构专用；金额较小，只作交易结构记录。
+- 状态变化：新增回购/激励和高波动交易证据，索尔思扩产与 AI PCB 的经营兑现判断不变；继续等待客户、订单、收入、良率、产能和毛利率量化。

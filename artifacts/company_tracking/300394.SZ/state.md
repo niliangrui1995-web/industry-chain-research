@@ -1,10 +1,10 @@
 # 300394.SZ 天孚通信 跟踪状态
 
 baseline_status: done
-last_checked: 2026-07-10 20:42 Asia/Shanghai
+last_checked: 2026-07-20 20:58 Asia/Shanghai
 browser_scope: not_used_by_policy
 grok_status: not_used_by_policy
-open_web_fallback_status: searched_useful_media_signal_official_backfill_2026-07-10
+open_web_fallback_status: searched_no_new_nonofficial_signal_2026-07-20
 announcement_window_checked: T_and_T_plus_1
 not_investment_advice: true
 
@@ -158,6 +158,14 @@ not_investment_advice: true
 - 大宗交易：深交所权益类证券大宗交易确认 2026-06-15 发生 1 笔协议交易，成交价 305.04 元、成交 2.00 万股、成交金额 610.08 万元，买卖双方均为机构专用，成交价与当日收盘价一致。
 - open-web：普通联网搜索主要返回大宗交易、转增股上市和既有 1.6T/CPO/H 股叙事镜像，没有新增可写入经营层证据的客户、订单、收入占比、毛利率、泰国产能或 H 股审批信号。
 - 状态变化：追加小额平价机构大宗交易；核心判断不变，继续跟踪 1.6T 光引擎收入与毛利率、CPO 配套 FAU/ELS、泰国产能、关键物料、客户集中和 H 股发行审批。
+
+## 2026-07-20 日更
+
+- 公告窗口：检查 2026-07-17 至 2026-07-21。7 月 18 日半年度业绩预告预计归母净利润 11.2405 亿—13.0390 亿元，同比增长 25%—45%；扣非净利润 10.8905 亿—12.8390 亿元，同比增长 25.56%—48.02%。
+- 经营驱动与约束：公司将增长归因于全球 AI 和数据中心建设带动高速光器件需求，垂直整合、自动化和精益改善；个别物料紧缺限制提产，汇兑损失增加财务费用，股权激励税前扣除形成正向影响，预计非经常性损益 2,000 万—3,500 万元。
+- 龙虎榜 / 大宗交易：7 月 17、20 日均未命中。
+- open-web：除业绩预告转述和板块行情外，无新增可靠公司级事实。
+- 状态变化：利润增长与高速光器件需求的公司级证据增强，同时物料和汇率约束得到正式确认；仍缺 1.6T/CPO 分产品收入、客户结构、订单、产能利用率和毛利率量化。
 
 ## 2026-06-23 日更
 

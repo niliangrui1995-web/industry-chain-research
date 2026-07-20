@@ -5,437 +5,176 @@
     "c_code": "016823"
   },
   "baseline": {
-    "id": "th_global_nev_qdii_lof_default_nav_estimation_20260622",
-    "status": "active_default",
-    "valid_from_nav_date": "2026-06-22",
-    "created_at": "2026-06-23 23:43:08",
-    "model_version": "q2_external_stock_only_fit_v1",
-    "source_workbook": "D:\\vcp_hunter\\产业链投研\\artifacts\\fund_tracking\\天弘全球新能源汽车QDII_LOF_Q2新增外部持仓_误差0点2以内组合_20260622.xlsx",
-    "calibration_window": [
-      "2026-06-08",
-      "2026-06-09",
-      "2026-06-10",
-      "2026-06-11",
-      "2026-06-12",
-      "2026-06-15",
-      "2026-06-16",
-      "2026-06-17",
-      "2026-06-18",
-      "2026-06-22"
-    ],
-    "max_abs_error_pct_point": 0.1606780811368211,
-    "usage": "默认用于平时估算164212/016823基金日净值变化，直到出现新的披露或重新拟合基准。"
+    "id": "th_global_nev_qdii_lof_q2_disclosure_anchor_20260720",
+    "status": "official_anchor_pending_refit",
+    "valid_from_report_date": "2026-06-30",
+    "created_at": "2026-07-20 21:53:45",
+    "model_version": "official_q2_top10_fund_investment_anchor_v1",
+    "source_pdf": "https://pdf.dfcfw.com/pdf/H2_AN202607201827148844_1.pdf",
+    "source_local_pdf": "D:\\vcp_hunter\\产业链投研\\artifacts\\fund_tracking\\q2_2026_164212.pdf",
+    "tracking_workbook": "D:\\vcp_hunter\\产业链投研\\artifacts\\fund_tracking\\天弘全球新能源汽车QDII_LOF_164212_持仓跟踪.xlsx",
+    "previous_fit_backup": "D:\\vcp_hunter\\产业链投研\\artifacts\\fund_tracking\\default_estimation_holdings_164212.pre_q2_official_20260720_215346.json",
+    "usage": "用于后续估算的官方Q2锚点；未披露权益桶需重新拟合，不能当作完整持仓。"
   },
   "constraints": {
-    "q1_top10_and_two_etf_fixed": true,
-    "remaining_single_name_cap_pct": 3.27,
-    "remaining_total_cap_pct": 58.42,
-    "q2_external_holdings_allowed": true,
-    "extra_etf_candidates_excluded": true,
-    "bond_weight_pct": 0.43
+    "quarterly_report_discloses_full_stock_book": false,
+    "q2_equity_total_nav_pct": 86.07,
+    "q2_top10_stock_weight_pct": 29.02,
+    "q2_fund_investment_weight_pct": 6.77,
+    "q2_bond_weight_pct": 0.05,
+    "undisclosed_equity_bucket_pct": 57.05,
+    "cash_other_net_bucket_pct": 7.11,
+    "fund_investment_products": [
+      "7709.HK",
+      "7747.HK / 9747.HK"
+    ]
   },
   "summary": {
-    "holding_count": 35,
-    "fixed_count": 13,
-    "remaining_count": 22,
-    "total_weight_pct": 100.00000001,
-    "fixed_weight_pct": 41.58,
-    "remaining_weight_pct": 58.42000001,
-    "max_remaining_weight_pct": 3.27,
-    "all_remaining_within_cap": true
+    "official_anchor_count": 13,
+    "bucket_count": 2,
+    "total_weight_pct": 100.0,
+    "refit_required": true
   },
   "holdings": [
     {
-      "group": "Q1固定锚点",
-      "symbol": "NVDA",
-      "name": "英伟达",
+      "group": "Q2正式披露锚点",
+      "symbol": "GLW",
+      "name": "康宁(Corning)",
       "currency": "USD",
-      "weight_pct": 4.64,
+      "weight_pct": 5.0,
       "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
     },
     {
-      "group": "Q1固定锚点",
-      "symbol": "TSM",
-      "name": "台积电ADR",
-      "currency": "USD",
-      "weight_pct": 4.37,
-      "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
-    },
-    {
-      "group": "Q1固定锚点",
-      "symbol": "LITE",
-      "name": "Lumentum",
+      "group": "Q2正式披露锚点",
+      "symbol": "MRVL",
+      "name": "迈威尔科技",
       "currency": "USD",
       "weight_pct": 4.15,
       "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
     },
     {
-      "group": "Q1固定锚点",
-      "symbol": "TER",
-      "name": "Teradyne",
+      "group": "Q2正式披露锚点",
+      "symbol": "MU",
+      "name": "美光科技",
       "currency": "USD",
-      "weight_pct": 3.83,
+      "weight_pct": 3.98,
       "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
     },
     {
-      "group": "Q1固定锚点",
-      "symbol": "KLAC",
-      "name": "KLA",
-      "currency": "USD",
-      "weight_pct": 3.64,
-      "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
-    },
-    {
-      "group": "Q1固定锚点",
-      "symbol": "TSLA",
-      "name": "特斯拉",
-      "currency": "USD",
-      "weight_pct": 3.57,
-      "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
-    },
-    {
-      "group": "Q1固定锚点",
-      "symbol": "AVGO",
-      "name": "博通",
-      "currency": "USD",
-      "weight_pct": 3.43,
-      "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
-    },
-    {
-      "group": "Q1固定锚点",
-      "symbol": "COHR",
-      "name": "Coherent",
-      "currency": "USD",
-      "weight_pct": 3.34,
-      "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
-    },
-    {
-      "group": "Q1固定锚点",
+      "group": "Q2正式披露锚点",
       "symbol": "AMD",
-      "name": "AMD",
+      "name": "美国超威半导体公司",
       "currency": "USD",
       "weight_pct": 3.31,
       "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
     },
     {
-      "group": "Q1固定锚点",
-      "symbol": "LRCX",
-      "name": "Lam Research",
+      "group": "Q2正式披露锚点",
+      "symbol": "TER",
+      "name": "泰瑞达",
       "currency": "USD",
-      "weight_pct": 3.27,
+      "weight_pct": 2.24,
       "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
     },
     {
-      "group": "Q1固定锚点",
+      "group": "Q2正式披露锚点",
+      "symbol": "LITE",
+      "name": "Lumentum Holdings Inc",
+      "currency": "USD",
+      "weight_pct": 2.2,
+      "fixed": true,
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
+    },
+    {
+      "group": "Q2正式披露锚点",
+      "symbol": "AMAT",
+      "name": "应用材料",
+      "currency": "USD",
+      "weight_pct": 2.19,
+      "fixed": true,
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
+    },
+    {
+      "group": "Q2正式披露锚点",
+      "symbol": "COHR",
+      "name": "Coherent Corp",
+      "currency": "USD",
+      "weight_pct": 2.03,
+      "fixed": true,
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
+    },
+    {
+      "group": "Q2正式披露锚点",
+      "symbol": "STM",
+      "name": "意法半导体",
+      "currency": "USD",
+      "weight_pct": 1.97,
+      "fixed": true,
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
+    },
+    {
+      "group": "Q2正式披露锚点",
+      "symbol": "01347.HK",
+      "name": "华虹半导体有限公司",
+      "currency": "HKD",
+      "weight_pct": 1.95,
+      "fixed": true,
+      "source_note": "2026Q2季报前十大股票/存托凭证，权重为NAV占比"
+    },
+    {
+      "group": "Q2正式披露锚点",
       "symbol": "7709.HK",
-      "name": "CSOP SK Hynix 2x",
+      "name": "CSOP SK Hynix Daily 2x Leveraged Product",
       "currency": "HKD",
-      "weight_pct": 2.3,
+      "weight_pct": 4.87,
       "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
+      "source_note": "2026Q2季报前十名基金投资，权重为NAV占比"
     },
     {
-      "group": "Q1固定锚点",
-      "symbol": "7747.HK",
-      "name": "CSOP Samsung 2x",
+      "group": "Q2正式披露锚点",
+      "symbol": "7747.HK / 9747.HK",
+      "name": "CSOP Samsung Electronics Daily 2x Leveraged Product",
       "currency": "HKD",
-      "weight_pct": 1.3,
+      "weight_pct": 1.9,
       "fixed": true,
-      "source_note": "Q1披露前十大股票/两只ETF，权重锁定"
+      "source_note": "2026Q2季报前十名基金投资，权重为NAV占比"
     },
     {
-      "group": "Q1固定债券",
-      "symbol": "102298",
-      "name": "国债2508",
+      "group": "Q2正式披露锚点",
+      "symbol": "019792",
+      "name": "25国债19",
       "currency": "CNY",
-      "weight_pct": 0.43,
+      "weight_pct": 0.05,
       "fixed": true,
-      "source_note": "Q1披露债券；短期净值拟合中按0日收益处理"
+      "source_note": "2026Q2债券投资，短期净值估算中按低波动处理"
     },
     {
-      "group": "Q2新增披露外候选",
-      "symbol": "000660.KS",
-      "name": "SK hynix",
-      "currency": "KRW",
-      "weight_pct": 3.27,
+      "group": "Q2未披露权益桶",
+      "symbol": "UNDISCLOSED_EQUITY_BUCKET",
+      "name": "未披露权益持仓合计",
+      "currency": "MIXED",
+      "weight_pct": 57.05,
       "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
+      "source_note": "Q2权益NAV 86.07% - 前十大股票29.02%；个股待中报或重新拟合"
     },
     {
-      "group": "年报/交易披露候选",
-      "symbol": "002466.SZ",
-      "name": "TIANQI LITHIUM CORPORATION",
-      "currency": "CNY",
-      "weight_pct": 3.27,
+      "group": "现金/其他净敞口",
+      "symbol": "CASH_OTHER_NET",
+      "name": "现金、应收应付和其他净敞口",
+      "currency": "CNY/MIXED",
+      "weight_pct": 7.11,
       "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "089030.KQ",
-      "name": "Techwing",
-      "currency": "KRW",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "247540.KQ",
-      "name": "ECOPROBM",
-      "currency": "KRW",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "600563.SS",
-      "name": "600563.SS",
-      "currency": "CNY",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "年报/交易披露候选",
-      "symbol": "605376.SS",
-      "name": "JIANGSU BOQIAN NEW MATERIALS ST",
-      "currency": "CNY",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "年报/交易披露候选",
-      "symbol": "688052.SS",
-      "name": "SUZHOU NOVOSENSE MICROELECTRONI",
-      "currency": "CNY",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "688559.SS",
-      "name": "688559.SS",
-      "currency": "CNY",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "CRDO",
-      "name": "Credo Technology Group Holding ",
-      "currency": "USD",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "MU",
-      "name": "Micron Technology, Inc.",
-      "currency": "USD",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "NBIS",
-      "name": "Nebius Group N.V.",
-      "currency": "USD",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "SERV",
-      "name": "Serve Robotics Inc.",
-      "currency": "USD",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "WOLF",
-      "name": "Wolfspeed, Inc.",
-      "currency": "USD",
-      "weight_pct": 3.27,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "300679.SZ",
-      "name": "300679.SZ",
-      "currency": "CNY",
-      "weight_pct": 3.00349887,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "年报/交易披露候选",
-      "symbol": "002738.SZ",
-      "name": "SINOMINE RESOURCE GROUP CO LTD",
-      "currency": "CNY",
-      "weight_pct": 2.72762467,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "年报/交易披露候选",
-      "symbol": "300450.SZ",
-      "name": "WUXI LEAD INTELLIGENT EQUIPMENT",
-      "currency": "CNY",
-      "weight_pct": 2.53947223,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "WDC",
-      "name": "Western Digital Corporation",
-      "currency": "USD",
-      "weight_pct": 2.52275336,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "年报/交易披露候选",
-      "symbol": "VRT",
-      "name": "Vertiv Holdings, LLC",
-      "currency": "USD",
-      "weight_pct": 2.50739347,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "002138.SZ",
-      "name": "002138.SZ",
-      "currency": "CNY",
-      "weight_pct": 0.94293403,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "年报/交易披露候选",
-      "symbol": "002497.SZ",
-      "name": "SICHUAN YAHUA INDUSTRIAL GROUP ",
-      "currency": "CNY",
-      "weight_pct": 0.69314041,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "年报/交易披露候选",
-      "symbol": "002407.SZ",
-      "name": "DO-FLUORIDE NEW MATERIALS CO LT",
-      "currency": "CNY",
-      "weight_pct": 0.63772566,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    },
-    {
-      "group": "Q2新增披露外候选",
-      "symbol": "ASML",
-      "name": "ASML Holding N.V. - New York Re",
-      "currency": "USD",
-      "weight_pct": 0.33545731,
-      "fixed": false,
-      "source_note": "LP最小化10日最大误差；单只<=3.27%"
-    }
-  ],
-  "validation_errors": [
-    {
-      "date": "2026-06-08",
-      "actual_pct": -0.52,
-      "estimated_pct": -0.3593219192631756,
-      "error_pct_point": 0.1606780807368244,
-      "within_0_2pct": true
-    },
-    {
-      "date": "2026-06-09",
-      "actual_pct": 2.03,
-      "estimated_pct": 1.869321919624568,
-      "error_pct_point": -0.1606780803754317,
-      "within_0_2pct": true
-    },
-    {
-      "date": "2026-06-10",
-      "actual_pct": -3.19,
-      "estimated_pct": -3.350678080708269,
-      "error_pct_point": -0.1606780807082693,
-      "within_0_2pct": true
-    },
-    {
-      "date": "2026-06-11",
-      "actual_pct": 4.29,
-      "estimated_pct": 4.129321920177809,
-      "error_pct_point": -0.1606780798221914,
-      "within_0_2pct": true
-    },
-    {
-      "date": "2026-06-12",
-      "actual_pct": 1.06,
-      "estimated_pct": 1.220678081136821,
-      "error_pct_point": 0.1606780811368211,
-      "within_0_2pct": true
-    },
-    {
-      "date": "2026-06-15",
-      "actual_pct": 6.63,
-      "estimated_pct": 6.469321919645424,
-      "error_pct_point": -0.1606780803545762,
-      "within_0_2pct": true
-    },
-    {
-      "date": "2026-06-16",
-      "actual_pct": -1.65,
-      "estimated_pct": -1.810678080653824,
-      "error_pct_point": -0.1606780806538239,
-      "within_0_2pct": true
-    },
-    {
-      "date": "2026-06-17",
-      "actual_pct": 2.1,
-      "estimated_pct": 1.939321919093511,
-      "error_pct_point": -0.1606780809064889,
-      "within_0_2pct": true
-    },
-    {
-      "date": "2026-06-18",
-      "actual_pct": 4.11,
-      "estimated_pct": 4.176697195586391,
-      "error_pct_point": 0.0666971955863902,
-      "within_0_2pct": true
-    },
-    {
-      "date": "2026-06-22",
-      "actual_pct": 2.87,
-      "estimated_pct": 2.709321919538544,
-      "error_pct_point": -0.160678080461456,
-      "within_0_2pct": true
+      "source_note": "100% - 权益86.07% - 基金投资6.77% - 债券0.05%；用于低波动余项"
     }
   ],
   "caveats": [
-    "该持仓为净值行为反推，不是基金官方披露完整Q2持仓。",
-    "Q2新增披露外候选用于解释6月净值走势，后续若半年报/季报披露应替换。",
-    "估算时需按证券市场交易日、汇率和基金估值时点折算人民币收益。"
+    "2026Q2季报只披露前十大股票/存托凭证、前十名基金投资和资产配置，不披露全部股票。",
+    "未披露权益桶不是单一证券，不能直接用于逐股行情估算；需要用最新净值样本重新拟合。",
+    "两只CSOP 2x产品在二季报中仍有披露，合计占基金资产净值6.77%。"
   ]
 }
