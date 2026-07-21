@@ -22,7 +22,7 @@ def load_module(name: str, path: Path):
 
 
 class EarningsParentGuardrailTests(unittest.TestCase):
-    def test_model_policy_defaults_to_gpt_5_6_sol_ultra(self) -> None:
+    def test_model_policy_defaults_to_gpt_5_6_sol_xhigh(self) -> None:
         module = load_module(
             "earnings_parent_guardrail_model",
             ROOT / "scripts" / "earnings_parent_guardrail.py",
@@ -30,11 +30,11 @@ class EarningsParentGuardrailTests(unittest.TestCase):
 
         self.assertEqual(
             module._model_policy_for_event(None),
-            ("gpt-5.6-sol", "ultra"),
+            ("gpt-5.6-sol", "xhigh"),
         )
         self.assertEqual(
             module._model_policy_for_child(None),
-            ("gpt-5.6-sol", "ultra"),
+            ("gpt-5.6-sol", "xhigh"),
         )
 
     def test_scan_children_flags_scheduler_next_run_mismatch(self) -> None:

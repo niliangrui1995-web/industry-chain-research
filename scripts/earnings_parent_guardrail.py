@@ -81,7 +81,7 @@ SNAPSHOT_ROOT_NAME = "automation_snapshots"
 SNAPSHOT_KIND = "earnings-parent-22-30-2"
 CHILD_TEMPLATE_RELATIVE_PATH = Path("docs") / "earnings_parent" / "CHILD_PROMPT_TEMPLATE.md"
 DEFAULT_CHILD_MODEL = "gpt-5.6-sol"
-DEFAULT_CHILD_REASONING_EFFORT = "ultra"
+DEFAULT_CHILD_REASONING_EFFORT = "xhigh"
 CHILD_BODY_MARKER = "CHILD TASK SKILL HARD GATE:"
 REQUIRED_CHILD_PROMPT_MARKERS = (
     "Project-local skill resolution is successful",

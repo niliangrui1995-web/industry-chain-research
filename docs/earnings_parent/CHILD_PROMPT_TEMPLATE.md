@@ -2,7 +2,7 @@
 
 Use this template whenever the parent automation creates or updates a single-company child automation. Fill every bracketed value at runtime. If a credible value is unavailable, write `N/A` or `not_found`; do not delete header fields.
 
-The child automation configuration lives outside the prompt body. Every child created or updated from this template must use `model="gpt-5.6-sol"` and `reasoning_effort="ultra"` (Codex UI: `5.6 sol` / `ULTRA`). Do not copy these configuration fields into the generated child prompt header.
+The child automation configuration lives outside the prompt body. Every child created or updated from this template must use `model="gpt-5.6-sol"` and `reasoning_effort="xhigh"` (Codex UI: `5.6 sol` / `XHIGH`). Do not copy these configuration fields into the generated child prompt header.
 
 The child prompt body must be written in English. The only Chinese text should be the final-answer requirement and the exact final judgment labels that the child must use in its Chinese output. Exception: the generated Chinese final output must render the downstream demand outlook section and upstream bottleneck evidence section in Chinese, while preserving the allowed `Mention Status` enum values exactly as written.
 

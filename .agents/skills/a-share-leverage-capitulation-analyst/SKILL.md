@@ -1,11 +1,11 @@
 ---
 name: a-share-leverage-capitulation-analyst
-description: Audit and compare an A-share deleveraging stress proxy using Shenzhen Composite, ChiNext Index, or ChiNext Composite declines with fixed financing-balance outflow and market-breadth factors. Use for market-wide stress, margin deleveraging, historical signal studies, and post-close rebound analysis.
+description: Update and analyze a DFCF-only A-share margin-balance table, then compare deleveraging pressure with Shenzhen Composite, ChiNext Index, ChiNext Composite, and market breadth. Use for daily margin updates, market-wide stress, margin deleveraging, historical signal studies, and post-close rebound analysis.
 ---
 
 # A 股两融去杠杆压力分析
 
-用于分析市场急跌时的两融余额收缩与普跌共振。该模型识别的是**去杠杆压力代理信号**，不能仅凭融资余额下降证明被动强平、爆仓、市场底或未来反弹。
+用于每日更新东方财富（DFCF）两融余额表，并分析市场急跌时的两融余额收缩与普跌共振。该模型识别的是**去杠杆压力代理信号**，不能仅凭融资余额下降证明被动强平、爆仓、市场底或未来反弹。
 
 ## 用户应用总结
 
@@ -16,28 +16,29 @@ description: Audit and compare an A-share deleveraging stress proxy using Shenzh
 ## 数据硬门槛
 
 1. 先确认行情和两融数据的截止日期，不得补写尚未公布的数据。
-2. 上交所、深交所官方汇总是两融余额的校验基准。东方财富批量快照必须保留来源和哈希，先按官方交易日历检查日期覆盖；沪市与上交所全量逐值核验，深市逐值核验范围必须如实披露，不得把厂商快照写成交易所官方原始数据。
+2. 日更任务只使用东方财富数据中心 `RPTA_WEB_RZRQ_LSSH`，沪市代码 `007`、深市代码 `001`；禁止请求上交所、深交所网站或 API。DFCF 属于行情厂商数据，必须保留来源、抓取时间和哈希，不得写成交易所官方原始数据。
 3. 指数对比使用深证综指 `399106`、创业板指 `399006`、创业板综指 `399102`；三者必须分别读取和标注，不得混用序列或名称。
 4. 市场宽度可使用只读的本地 TDX 日线，但必须披露当前证券池带来的幸存者偏差及停牌样本处理。
-5. 数据不完整、来源未核验或样本数过小时，输出 `N/A` 或“证据不足”，不得给确定性胜率。
-6. 用户给定的融资余额估算只能作为单独场景展示，必须标记“未纳入正式统计”；不得写入 `verified_margin_balances.csv`，不得改变正式样本数、胜率或平均收益，尚未发生的未来收益保持空白。
+5. 必须先确认 DFCF 沪、深最新日期一致，再计算两市合计；任一市场缺失或日期不同则合计和信号输出 `N/A`，不得估算或沿用旧值。
+6. DFCF 日更结果统一标记 `dfcf_vendor_only_unverified_by_exchange`。数据不完整或样本过小时写 `N/A` 或“证据不足”，不得给确定性胜率。
 
-## 融资余额唯一输入
+## DFCF 日更唯一输入
 
 - 项目根目录旧文件 `ashare_daily_margin_history.csv` 已删除并永久停用，不得恢复、读取或作为失败回退。
-- 回测只能读取本次审计目录生成的 `verified_margin_balances.csv`，并同时提供同目录 `margin_audit.json`。
-- 必须先核对 `verified_snapshot_complete=true`，并验证 `verified_margin_balances_sha256` 与文件实际哈希一致；否则阻断回测。
-- `eastmoney_sse_margin.csv` 和 `eastmoney_szse_margin.csv` 是厂商原始快照，只用于审计，不直接作为回测输入。
-- 网络刷新中断时可用 `fetch_eastmoney_margin_2016_present.ps1 -ReuseSnapshots` 对已完整落盘的原始快照重新审计；该模式不得冒充新的联网抓取，审计报告必须记录 `snapshot_mode=reuse` 和本次网络请求数为 0。
+- 每日日更只运行 `scripts/update_dfcf_margin_daily.py`。该入口只能访问 DFCF，不得调用 `fetch_official_margin_2016_present.ps1`、`fetch_eastmoney_margin_2016_present.ps1`、`audit_margin_history.py` 或 `run_verified_leverage_backtest.ps1`。
+- 日更表固定写入 `artifacts/leverage_capitulation/dfcf_daily/dfcf_margin_balances.csv`，原始分市场快照写入同目录 `dfcf_sse_margin.csv` 和 `dfcf_szse_margin.csv`，审计写入 `dfcf_margin_audit.json`。
+- 日更表必须按日期升序、去重，包含沪市、深市、两市融资余额及各自日变动金额和比例；只合并沪深共同日期。无新共同日期时不得重复旧报告。
+- 不得用 DFCF 日更覆盖或改写 `verified_margin_balances.csv`、`margin_audit.json`、`official_sse_margin.csv`、`official_szse_margin.csv` 或任何既有正式回测产物。
+- 既有 `verified_*` 产物仅作为冻结的历史受控结果；除非用户另行明确要求恢复官方审计流程，否则本技能不得刷新它们。
 
 ## 因子定义
 
 默认参数仅是待验证基准，不是“黄金模型”：
 
 1. **指数跌幅极值**：深证综指、创业板指和创业板综指的单日收益率，分别计算截至当日的滚动 3 个日历年最差排名，基准阈值为前 15 名。
-2. **融资流出比例**：
+2. **融资流出比例（DFCF 厂商口径）**：
    `-(当日两市融资余额 - 前一交易日两市融资余额) / 前一交易日两市融资余额`，
-   计算截至当日的滚动 3 个日历年最大排名，基准阈值为前 15 名。绝对流出金额只作描述，不替代比例因子。
+   计算截至当日的滚动 3 个日历年最大排名，基准阈值为前 15 名。绝对流出金额只作描述，不替代比例因子；结果必须标记为 DFCF 厂商口径，不能称交易所正式信号。
 3. **普跌宽度**：当日收跌股票数 / 当日有可比收盘价股票数，基准阈值为 `>= 80%`。
 4. **长假噪声控制**：若信号日到下一交易日间隔至少 5 个日历日，则排除该日。此规则只能降低长假前主动还款噪声，不能识别“主动还款”与“被动强平”。
 
@@ -50,7 +51,7 @@ description: Audit and compare an A-share deleveraging stress proxy using Shenzh
 1. 对交易日 `T` 每只存在有效收盘价、且存在上一条有效本地日线记录的 A 股，计算 `close(T) / previous_valid_close - 1`；停牌无 `T` 记录、IPO 首条记录和无效收盘价不进入当日横截面。
 2. 将当日全部可比收益从小到大排序；奇数样本取中间值，偶数样本取中间两值均值。主结果保留全部有效收益，同时输出剔除绝对收益超过 22% 的审计中位数，检查本地未复权价格跳变的影响。
 3. “过去三年排名”只能在 `[T-3个日历年, T]` 内计算，至少需要 600 个有效交易日；排名为 `1 + 窗口内严格低于T日中位数的天数`，因此第 1 名代表窗口内最惨。不得用全样本排序后回填历史名次。
-4. 原因子压力发生日记为 `T`。指数跌幅和普跌宽度在 T 日收盘后可得，但 T 日融资余额在下一交易日开市前才公开，所以正式表必须另列 `signal_available_date=T+1交易日`；T 日中位数排名只作压力日描述，任何可执行回测从 T+1 开始。
+4. 原因子压力发生日记为 `T`。指数跌幅和普跌宽度在 T 日收盘后可得，但完整信号只能在 DFCF 沪深同日数据均发布后确认；必须另列实际 `signal_available_date`，不得机械写成 T 日收盘可得。T 日中位数排名只作压力日描述。
 5. 本地 TDX 当前文件池无法证明完整保留所有历史退市证券，必须保留幸存者偏差说明；不得把该横截面写成交易所官方统计。
 6. 用户指定“平均股价指数”时读取本地通达信 `D:\HT\vipdoc\sh\lday\sh880003.day`，使用 `close(T) / close(T-1交易记录) - 1` 计算日涨跌幅。`880003` 属于通达信厂商指数，不得写成交易所官方指数，也不得用个股收益算术平均值替代。
 7. `880003` 的过去三年排名同样只使用 `[T-3个日历年, T]`，至少 600 个观测，排名第 1 表示窗口内跌幅最大；正式信号与估算场景表同时输出中位数排名和平均股价指数排名，但二者都只是压力日描述字段，不改变原三因子。
@@ -67,14 +68,15 @@ description: Audit and compare an A-share deleveraging stress proxy using Shenzh
 
 1. `T-1` 必须是该指数上一实际交易日收盘，不得使用 T 日开盘、T 日最高价或跨越缺失交易日的上一条残存记录。
 2. 三年排名使用未四舍五入原值，在 `[T-3个日历年,T]` 内计算：`1 + 严格低于T日值的交易日数`，因此第 1 名代表盘中跌幅最深；相同值采用并列最优名次。
-3. 排名只使用 T 日及以前的最低价和收盘价，不含跨日未来数据；但 T 日最终最低价只能在收盘后确定，叠加 T 日融资余额后完整信号仍到 T+1 开市前才可得。
+3. 排名只使用 T 日及以前的最低价和收盘价，不含跨日未来数据；但 T 日最终最低价只能在收盘后确定，完整信号还必须等待 DFCF 沪深同日融资余额均发布，并记录实际可得日期。
 4. `399106`、`399006`、`399102` 的正式低点数据优先读取国证官网 OHLC 快照，并与本地 TDX 开高低收逐日核验。`880003` 必须读取通达信官网完整板块指数包；当前华泰增量文件缺少的 4 个历史交易日不得用于受控排名。
 5. 若只是要求“重新统计原信号日排名”，必须保留原正式信号日期，仅新增盘中严重度字段。若明确把盘中排名替换指数因子，必须另建变体信号表，列出共同日期、仅收盘口径日期和仅盘中口径日期，不得覆盖原正式信号。
-6. 三年窗口完整性不得再使用“窗口起点后 7 天内必须出现交易日”的启发式；春节、国庆可能产生更长的合法休市。应先审计官方交易日集合无缺口，再要求底层序列覆盖到 `T-3年` 及以前且有效观测不少于 600。
+6. 三年窗口完整性不得使用“窗口起点后 7 天内必须出现交易日”的启发式；春节、国庆可能产生更长的合法休市。日更模式以 DFCF 沪深共同日期和本地指数交易日期交集审计覆盖，再要求底层序列覆盖到 `T-3年` 及以前且有效观测不少于 600；不得为补日访问交易所接口。
 7. 受控产物位于 `artifacts/leverage_capitulation/verified_2016_present/intraday_index_drawdown_3y/`；审计 JSON 必须保留国证快照、通达信完整包、融资余额和输出文件哈希。
 
 ## 回测约束
 
+- 每日日更不刷新正式回测。DFCF 日更表可用于当日滚动排名和 `DFCF口径三因子信号`，但不得混入既有 `verified_*` 正式样本、胜率或平均收益。
 - 排名窗口只能使用当日及之前的数据；窗口必须覆盖完整的 3 个日历年并至少有 600 个有效观测。
 - 按用户指定，所有主结果、信号日明细和均线分组统一以信号日 T 日收盘价为起点：`return_T+N = close(T+N) / close(T) - 1`。其中 `T+1` 明确表示下一交易日收盘相对 T 日收盘，依次统计 T+1/T+2/T+5/T+10/T+20/T+40；不得把 T+1 开盘价当成主统计起点，也不得在同一汇总表中混用两种基准。
 - 分析 MA20/MA50/MA250 时，只用对应指数截至 T 日且包含 T 日的历史收盘价计算简单移动平均；均线位置、排列和斜率均不得读取 T+1 及以后数据。没有满 250 个历史观测的日期不进入 MA250 分组。
@@ -88,46 +90,38 @@ description: Audit and compare an A-share deleveraging stress proxy using Shenzh
 
 ## 确定性流程
 
-先获取并核验 2016-01-01 以来的两融余额，再运行 2019-01-01 以来的回测：
+每日从项目根运行专用 DFCF 日更入口：
 
 ```powershell
-./scripts/run_verified_leverage_backtest.ps1
+python .agents/skills/a-share-leverage-capitulation-analyst/scripts/update_dfcf_margin_daily.py `
+  --project-root "D:\vcp_hunter\产业链投研"
 ```
 
-抓取主路径使用东方财富融资融券历史接口，每页 500 行；截至 2026-07-18，沪市和深市各 6 页，共 12 次请求。脚本会分别保存东方财富原始快照、交易所官方校验快照、校验范围和最终合并快照哈希，并硬性检查日期集合、行数、重复及空值。若需分步运行：
+脚本执行以下固定流程：
 
-```powershell
-./scripts/fetch_eastmoney_margin_2016_present.ps1
+- 仅请求 DFCF 数据中心接口；审计字段必须保持 `dfcf_only=true`、`exchange_requests=0`。
+- 首次运行从 2016-01-01 建表；后续默认回看14个日历日，合并可能的修订值并去重。
+- 只有沪深共同日期进入合并表；日期不一致时记录 `sh_only_dates` / `sz_only_dates`，不得计算缺失日合计。
+- 使用临时文件和原子替换更新 CSV/JSON；不改变项目代码、watchlist、账户和交易状态。
+- 检查 `dfcf_margin_audit.json` 中原始快照及合并表 SHA-256；若哈希、重复、空值或正数检查失败，阻断分析。
+- 若 `new_common_dates=0`，简要报告 DFCF 暂无新共同日期并结束，不重复旧报告。
 
-python scripts/audit_margin_history.py `
-  --output-dir <audit-output> `
-  --start-date 2016-01-01 `
-  --end-date YYYY-MM-DD
+日更产物固定为：
 
-python scripts/leverage_capitulation_backtest.py `
-  --margin-csv <audit-output>/verified_margin_balances.csv `
-  --margin-audit-json <audit-output>/margin_audit.json `
-  --index-source cnindex `
-  --output-dir <backtest-output>
+- `artifacts/leverage_capitulation/dfcf_daily/dfcf_sse_margin.csv`
+- `artifacts/leverage_capitulation/dfcf_daily/dfcf_szse_margin.csv`
+- `artifacts/leverage_capitulation/dfcf_daily/dfcf_margin_balances.csv`
+- `artifacts/leverage_capitulation/dfcf_daily/dfcf_margin_audit.json`
 
-python scripts/export_signal_workbook.py
-python scripts/validate_signal_workbook.py
-```
+合并表字段至少包括：
 
-计算过去十年逐交易日市场收益中位数、通达信平均股价指数 `880003` 涨跌幅，并把原因子 `399106` 三因子正式信号映射到无未来函数的滚动三年排名：
+- `date`
+- `sh_margin_y`、`sz_margin_y`、`total_margin_y`
+- `sh_change_y`、`sh_change_pct`
+- `sz_change_y`、`sz_change_pct`
+- `total_change_y`、`total_change_pct`
+- `source`、`sample_status`
 
-```powershell
-python scripts/analyze_market_median_returns.py
-```
+## 受控历史产物保护
 
-按盘中最低价相对前收计算四指数滚动三年排名，保留原信号日并单列盘中因子替换实验：
-
-```powershell
-python scripts/analyze_intraday_index_drawdown_ranks.py
-```
-
-该脚本会阻断国证 OHLC 与本地日线不一致、`880003` 完整包缺日、融资余额审计哈希不一致或原收盘口径信号无法复现的情况。
-
-产物位于 `artifacts/leverage_capitulation/verified_2016_present/market_median_10y/`：`market_median_daily_10y.csv`、仅含正式样本的 `original_399106_signal_market_median_rank_3y.csv`、单独的 `estimated_original_399106_signal_market_median_rank_3y.csv`、带 `sample_status` 的合并展示表 `original_399106_signal_market_median_rank_3y_with_scenarios.csv`，以及带输入/输出哈希的 `market_median_analysis_audit.json`。指数替换实验另输出 `signals_tdx_average_price_880003_triple.csv`、正式比较表 `signal_date_comparison_399106_vs_880003.csv` 和带估算场景的 `signal_date_comparison_399106_vs_880003_with_scenarios.csv`。估算融资余额场景不得改变正式样本数或混入正式统计；如用户要求同表查看，只能进入明确标记状态的合并展示表。
-
-融资余额产物包括 `eastmoney_sse_margin.csv`、`eastmoney_szse_margin.csv`、`verified_margin_balances.csv` 和 `margin_audit.json`。回测产物包括 `backtest_results.json`、`factor_panel.csv`、三类指数保留全部日期的信号明细、对应的 `*_terminal_10d.csv` 终点样本、144 行 `sensitivity.csv`，以及 `three_index_triple_factor_comparison_2019_present.xlsx`。工作簿明细必须保留全部正式日期，后期走势汇总与交叉表现使用 `terminal_10d` 并标注“事后”；审计结论与最近一次受控回测见 `references/leverage_capitulation_backtest_2019_present.md`，其中的日期、样本和胜率必须与生成产物一致。
+`artifacts/leverage_capitulation/verified_2016_present/` 下的融资审计、因子面板、信号明细、敏感性分析和工作簿均为冻结的受控历史产物。DFCF 日更不得覆盖、追加或重算这些文件，也不得把厂商口径日更结果包装为既有正式回测的延伸。
