@@ -1,0 +1,722 @@
+{
+    "fund_profile":  {
+                         "input_fund_id":  "100055",
+                         "fund_code":  "100055",
+                         "fund_name":  "富国全球科技互联网股票(QDII)A",
+                         "fund_type":  "QDII-普通股票",
+                         "fund_btype":  "007001",
+                         "etf_code":  "",
+                         "etf_shortname":  ""
+                     },
+    "request_context":  {
+                            "report_period":  "2026-06-30,2026-03-31",
+                            "period_mode":  "specified",
+                            "holding_type":  "all"
+                        },
+    "holding_overview":  {
+                             "report_date":  "2026-06-30",
+                             "available_report_dates":  [
+                                                            "2026-06-30",
+                                                            "2026-03-31"
+                                                        ],
+                             "top10_ratio_components":  [
+                                                            5.62,
+                                                            5.51,
+                                                            5.04,
+                                                            4.7,
+                                                            4.62,
+                                                            4.58,
+                                                            4.58,
+                                                            4.31,
+                                                            4.28,
+                                                            4.22
+                                                        ],
+                             "data_lag_notice":  "持仓数据通常基于最近一期定期报告披露，可能存在 1-3 个月滞后，请结合 report_date 一并阅读。"
+                         },
+    "top_holdings":  {
+                         "stock":  [
+                                       {
+                                           "GPDM":  "00522",
+                                           "GPJC":  "ASMPT",
+                                           "INDEXNAME":  "电子",
+                                           "JZBL":  5.62,
+                                           "PCTNVCHG":  -0.67,
+                                           "PCTNVCHGTYPE":  "减持",
+                                           "NEWTEXCH":  "116",
+                                           "CCSZ":  103704.87
+                                       },
+                                       {
+                                           "GPDM":  "603986",
+                                           "GPJC":  "兆易创新",
+                                           "INDEXNAME":  "电子",
+                                           "JZBL":  5.51,
+                                           "PCTNVCHG":  5.51,
+                                           "PCTNVCHGTYPE":  "新增",
+                                           "NEWTEXCH":  "1",
+                                           "CCSZ":  101565.3
+                                       },
+                                       {
+                                           "GPDM":  "SNDK",
+                                           "GPJC":  "闪迪",
+                                           "INDEXNAME":  "",
+                                           "JZBL":  5.04,
+                                           "PCTNVCHG":  5.04,
+                                           "PCTNVCHGTYPE":  "新增",
+                                           "NEWTEXCH":  "105",
+                                           "CCSZ":  92916.885942
+                                       },
+                                       {
+                                           "GPDM":  "600183",
+                                           "GPJC":  "生益科技",
+                                           "INDEXNAME":  "电子",
+                                           "JZBL":  4.7,
+                                           "PCTNVCHG":  4.7,
+                                           "PCTNVCHGTYPE":  "新增",
+                                           "NEWTEXCH":  "1",
+                                           "CCSZ":  86712.88362
+                                       },
+                                       {
+                                           "GPDM":  "000660",
+                                           "GPJC":  "SK海力士",
+                                           "INDEXNAME":  "",
+                                           "JZBL":  4.62,
+                                           "PCTNVCHG":  0.51,
+                                           "PCTNVCHGTYPE":  "增持",
+                                           "NEWTEXCH":  "",
+                                           "CCSZ":  85098.858411
+                                       },
+                                       {
+                                           "GPDM":  "005930",
+                                           "GPJC":  "三星电子",
+                                           "INDEXNAME":  "",
+                                           "JZBL":  4.58,
+                                           "PCTNVCHG":  1.25,
+                                           "PCTNVCHGTYPE":  "增持",
+                                           "NEWTEXCH":  "",
+                                           "CCSZ":  84482.996939
+                                       },
+                                       {
+                                           "GPDM":  "285A",
+                                           "GPJC":  "KIOXIA",
+                                           "INDEXNAME":  "",
+                                           "JZBL":  4.58,
+                                           "PCTNVCHG":  4.58,
+                                           "PCTNVCHGTYPE":  "新增",
+                                           "NEWTEXCH":  "",
+                                           "CCSZ":  84461.34144
+                                       },
+                                       {
+                                           "GPDM":  "MU",
+                                           "GPJC":  "美光科技",
+                                           "INDEXNAME":  "",
+                                           "JZBL":  4.31,
+                                           "PCTNVCHG":  4.31,
+                                           "PCTNVCHGTYPE":  "新增",
+                                           "NEWTEXCH":  "105",
+                                           "CCSZ":  79403.712986
+                                       },
+                                       {
+                                           "GPDM":  "STX",
+                                           "GPJC":  "希捷科技",
+                                           "INDEXNAME":  "",
+                                           "JZBL":  4.28,
+                                           "PCTNVCHG":  4.28,
+                                           "PCTNVCHGTYPE":  "新增",
+                                           "NEWTEXCH":  "105",
+                                           "CCSZ":  78870.222
+                                       },
+                                       {
+                                           "GPDM":  "WDC",
+                                           "GPJC":  "西部数据",
+                                           "INDEXNAME":  "",
+                                           "JZBL":  4.22,
+                                           "PCTNVCHG":  4.22,
+                                           "PCTNVCHGTYPE":  "新增",
+                                           "NEWTEXCH":  "105",
+                                           "CCSZ":  77869.619059
+                                       }
+                                   ],
+                         "bond":  [
+
+                                  ],
+                         "fof":  [
+
+                                 ],
+                         "etf_code":  "",
+                         "etf_shortname":  ""
+                     },
+    "asset_allocation":  {
+                             "BZDM":  "100055",
+                             "FSRQ":  "2026-06-30",
+                             "JZC":  184.3647,
+                             "JJ":  0.77,
+                             "GP":  92.25,
+                             "ZQ":  "",
+                             "HB":  10.82,
+                             "QT":  0,
+                             "GP_AVG_BTYPE":  "",
+                             "JJCHGRT":  0.77,
+                             "BSPCTNV":  "",
+                             "ABSPCTNV":  "",
+                             "BREPOPCTNV":  "",
+                             "MPCTNV":  10.82,
+                             "OIPCTNV":  2.15
+                         },
+    "industry_allocation":  [
+                                {
+                                    "HYMC":  "合计",
+                                    "SZ":  17007040278.35,
+                                    "ZJZBL":  92.25,
+                                    "FSRQ":  "2026-06-30"
+                                },
+                                {
+                                    "HYMC":  "信息技术",
+                                    "SZ":  12409446454.04,
+                                    "ZJZBL":  67.31,
+                                    "FSRQ":  "2026-06-30"
+                                },
+                                {
+                                    "HYMC":  "通信服务",
+                                    "SZ":  1832296554.2,
+                                    "ZJZBL":  9.94,
+                                    "FSRQ":  "2026-06-30"
+                                },
+                                {
+                                    "HYMC":  "非日常生活消费品",
+                                    "SZ":  1455981722.7,
+                                    "ZJZBL":  7.9,
+                                    "FSRQ":  "2026-06-30"
+                                },
+                                {
+                                    "HYMC":  "原材料",
+                                    "SZ":  806060990.93,
+                                    "ZJZBL":  4.37,
+                                    "FSRQ":  "2026-06-30"
+                                },
+                                {
+                                    "HYMC":  "工业",
+                                    "SZ":  489699699.31,
+                                    "ZJZBL":  2.66,
+                                    "FSRQ":  "2026-06-30"
+                                },
+                                {
+                                    "HYMC":  "医疗保健",
+                                    "SZ":  12704565.73,
+                                    "ZJZBL":  0.07,
+                                    "FSRQ":  "2026-06-30"
+                                },
+                                {
+                                    "HYMC":  "公用事业",
+                                    "SZ":  850291.44,
+                                    "ZJZBL":  0,
+                                    "FSRQ":  "2026-06-30"
+                                }
+                            ],
+    "period_mode":  "specified",
+    "periods":  [
+                    {
+                        "asset_allocation":  {
+                                                 "BZDM":  "100055",
+                                                 "FSRQ":  "2026-06-30",
+                                                 "JZC":  184.3647,
+                                                 "JJ":  0.77,
+                                                 "GP":  92.25,
+                                                 "ZQ":  "",
+                                                 "HB":  10.82,
+                                                 "QT":  0,
+                                                 "GP_AVG_BTYPE":  "",
+                                                 "JJCHGRT":  0.77,
+                                                 "BSPCTNV":  "",
+                                                 "ABSPCTNV":  "",
+                                                 "BREPOPCTNV":  "",
+                                                 "MPCTNV":  10.82,
+                                                 "OIPCTNV":  2.15
+                                             },
+                        "top_holdings":  {
+                                             "stocks":  [
+                                                            {
+                                                                "GPDM":  "00522",
+                                                                "GPJC":  "ASMPT",
+                                                                "INDEXNAME":  "电子",
+                                                                "JZBL":  5.62,
+                                                                "PCTNVCHG":  -0.67,
+                                                                "PCTNVCHGTYPE":  "减持",
+                                                                "NEWTEXCH":  "116",
+                                                                "CCSZ":  103704.87
+                                                            },
+                                                            {
+                                                                "GPDM":  "603986",
+                                                                "GPJC":  "兆易创新",
+                                                                "INDEXNAME":  "电子",
+                                                                "JZBL":  5.51,
+                                                                "PCTNVCHG":  5.51,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "1",
+                                                                "CCSZ":  101565.3
+                                                            },
+                                                            {
+                                                                "GPDM":  "SNDK",
+                                                                "GPJC":  "闪迪",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  5.04,
+                                                                "PCTNVCHG":  5.04,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "105",
+                                                                "CCSZ":  92916.885942
+                                                            },
+                                                            {
+                                                                "GPDM":  "600183",
+                                                                "GPJC":  "生益科技",
+                                                                "INDEXNAME":  "电子",
+                                                                "JZBL":  4.7,
+                                                                "PCTNVCHG":  4.7,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "1",
+                                                                "CCSZ":  86712.88362
+                                                            },
+                                                            {
+                                                                "GPDM":  "000660",
+                                                                "GPJC":  "SK海力士",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  4.62,
+                                                                "PCTNVCHG":  0.51,
+                                                                "PCTNVCHGTYPE":  "增持",
+                                                                "NEWTEXCH":  "",
+                                                                "CCSZ":  85098.858411
+                                                            },
+                                                            {
+                                                                "GPDM":  "005930",
+                                                                "GPJC":  "三星电子",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  4.58,
+                                                                "PCTNVCHG":  1.25,
+                                                                "PCTNVCHGTYPE":  "增持",
+                                                                "NEWTEXCH":  "",
+                                                                "CCSZ":  84482.996939
+                                                            },
+                                                            {
+                                                                "GPDM":  "285A",
+                                                                "GPJC":  "KIOXIA",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  4.58,
+                                                                "PCTNVCHG":  4.58,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "",
+                                                                "CCSZ":  84461.34144
+                                                            },
+                                                            {
+                                                                "GPDM":  "MU",
+                                                                "GPJC":  "美光科技",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  4.31,
+                                                                "PCTNVCHG":  4.31,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "105",
+                                                                "CCSZ":  79403.712986
+                                                            },
+                                                            {
+                                                                "GPDM":  "STX",
+                                                                "GPJC":  "希捷科技",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  4.28,
+                                                                "PCTNVCHG":  4.28,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "105",
+                                                                "CCSZ":  78870.222
+                                                            },
+                                                            {
+                                                                "GPDM":  "WDC",
+                                                                "GPJC":  "西部数据",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  4.22,
+                                                                "PCTNVCHG":  4.22,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "105",
+                                                                "CCSZ":  77869.619059
+                                                            }
+                                                        ],
+                                             "bonds":  [
+
+                                                       ],
+                                             "funds":  [
+
+                                                       ]
+                                         },
+                        "industry_allocation":  [
+                                                    {
+                                                        "HYMC":  "合计",
+                                                        "SZ":  17007040278.35,
+                                                        "ZJZBL":  92.25,
+                                                        "FSRQ":  "2026-06-30"
+                                                    },
+                                                    {
+                                                        "HYMC":  "信息技术",
+                                                        "SZ":  12409446454.04,
+                                                        "ZJZBL":  67.31,
+                                                        "FSRQ":  "2026-06-30"
+                                                    },
+                                                    {
+                                                        "HYMC":  "通信服务",
+                                                        "SZ":  1832296554.2,
+                                                        "ZJZBL":  9.94,
+                                                        "FSRQ":  "2026-06-30"
+                                                    },
+                                                    {
+                                                        "HYMC":  "非日常生活消费品",
+                                                        "SZ":  1455981722.7,
+                                                        "ZJZBL":  7.9,
+                                                        "FSRQ":  "2026-06-30"
+                                                    },
+                                                    {
+                                                        "HYMC":  "原材料",
+                                                        "SZ":  806060990.93,
+                                                        "ZJZBL":  4.37,
+                                                        "FSRQ":  "2026-06-30"
+                                                    },
+                                                    {
+                                                        "HYMC":  "工业",
+                                                        "SZ":  489699699.31,
+                                                        "ZJZBL":  2.66,
+                                                        "FSRQ":  "2026-06-30"
+                                                    },
+                                                    {
+                                                        "HYMC":  "医疗保健",
+                                                        "SZ":  12704565.73,
+                                                        "ZJZBL":  0.07,
+                                                        "FSRQ":  "2026-06-30"
+                                                    },
+                                                    {
+                                                        "HYMC":  "公用事业",
+                                                        "SZ":  850291.44,
+                                                        "ZJZBL":  0,
+                                                        "FSRQ":  "2026-06-30"
+                                                    }
+                                                ],
+                        "distributions":  {
+                                              "fund_types":  [
+
+                                                             ],
+                                              "bond_types":  [
+                                                                 {
+                                                                     "FCODE":  "100055",
+                                                                     "REPORTDATE":  "2026-06-30",
+                                                                     "BONDTYPENEW":  "1",
+                                                                     "PCTNV":  0
+                                                                 },
+                                                                 {
+                                                                     "FCODE":  "100055",
+                                                                     "REPORTDATE":  "2026-06-30",
+                                                                     "BONDTYPENEW":  "3",
+                                                                     "PCTNV":  0
+                                                                 },
+                                                                 {
+                                                                     "FCODE":  "100055",
+                                                                     "REPORTDATE":  "2026-06-30",
+                                                                     "BONDTYPENEW":  "4",
+                                                                     "PCTNV":  0
+                                                                 },
+                                                                 {
+                                                                     "FCODE":  "100055",
+                                                                     "REPORTDATE":  "2026-06-30",
+                                                                     "BONDTYPENEW":  "2",
+                                                                     "PCTNV":  0
+                                                                 }
+                                                             ],
+                                              "stock_topics":  [
+
+                                                               ]
+                                          },
+                        "money_market":  null,
+                        "report_date":  "2026-06-30",
+                        "missing_sections":  [
+                                                 "bond",
+                                                 "fof",
+                                                 "fund_distribution",
+                                                 "stock_distribution",
+                                                 "money_market"
+                                             ]
+                    },
+                    {
+                        "asset_allocation":  {
+                                                 "BZDM":  "100055",
+                                                 "FSRQ":  "2026-03-31",
+                                                 "JZC":  20.9243,
+                                                 "JJ":  "",
+                                                 "GP":  69.64,
+                                                 "ZQ":  "",
+                                                 "HB":  19.85,
+                                                 "QT":  10.51,
+                                                 "GP_AVG_BTYPE":  78.79,
+                                                 "JJCHGRT":  "",
+                                                 "BSPCTNV":  "",
+                                                 "ABSPCTNV":  "",
+                                                 "BREPOPCTNV":  "",
+                                                 "MPCTNV":  19.85,
+                                                 "OIPCTNV":  1.64
+                                             },
+                        "top_holdings":  {
+                                             "stocks":  [
+                                                            {
+                                                                "GPDM":  "TSM",
+                                                                "GPJC":  "台积电",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  10.06,
+                                                                "PCTNVCHG":  0.72,
+                                                                "PCTNVCHGTYPE":  "增持",
+                                                                "NEWTEXCH":  "106",
+                                                                "CCSZ":  21045.70107
+                                                            },
+                                                            {
+                                                                "GPDM":  "NVDA",
+                                                                "GPJC":  "英伟达",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  9.8,
+                                                                "PCTNVCHG":  0.64,
+                                                                "PCTNVCHGTYPE":  "增持",
+                                                                "NEWTEXCH":  "105",
+                                                                "CCSZ":  20514.63712
+                                                            },
+                                                            {
+                                                                "GPDM":  "GOOGL",
+                                                                "GPJC":  "谷歌-A",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  8.56,
+                                                                "PCTNVCHG":  -0.62,
+                                                                "PCTNVCHGTYPE":  "减持",
+                                                                "NEWTEXCH":  "105",
+                                                                "CCSZ":  17907.683976
+                                                            },
+                                                            {
+                                                                "GPDM":  "09899",
+                                                                "GPJC":  "网易云音乐",
+                                                                "INDEXNAME":  "传媒",
+                                                                "JZBL":  8.17,
+                                                                "PCTNVCHG":  -0.7,
+                                                                "PCTNVCHGTYPE":  "减持",
+                                                                "NEWTEXCH":  "116",
+                                                                "CCSZ":  17085.0825
+                                                            },
+                                                            {
+                                                                "GPDM":  "AMD",
+                                                                "GPJC":  "超威半导体",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  7.4,
+                                                                "PCTNVCHG":  7.4,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "105",
+                                                                "CCSZ":  15483.748962
+                                                            },
+                                                            {
+                                                                "GPDM":  "00522",
+                                                                "GPJC":  "ASMPT",
+                                                                "INDEXNAME":  "电子",
+                                                                "JZBL":  6.29,
+                                                                "PCTNVCHG":  6.29,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "116",
+                                                                "CCSZ":  13151.54025
+                                                            },
+                                                            {
+                                                                "GPDM":  "000660",
+                                                                "GPJC":  "SK海力士",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  4.11,
+                                                                "PCTNVCHG":  4.11,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "",
+                                                                "CCSZ":  8598.863818
+                                                            },
+                                                            {
+                                                                "GPDM":  "INTC",
+                                                                "GPJC":  "英特尔",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  3.66,
+                                                                "PCTNVCHG":  3.66,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "105",
+                                                                "CCSZ":  7664.363362
+                                                            },
+                                                            {
+                                                                "GPDM":  "ASML",
+                                                                "GPJC":  "阿斯麦",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  3.58,
+                                                                "PCTNVCHG":  3.58,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "105",
+                                                                "CCSZ":  7494.267904
+                                                            },
+                                                            {
+                                                                "GPDM":  "005930",
+                                                                "GPJC":  "三星电子",
+                                                                "INDEXNAME":  "",
+                                                                "JZBL":  3.33,
+                                                                "PCTNVCHG":  3.33,
+                                                                "PCTNVCHGTYPE":  "新增",
+                                                                "NEWTEXCH":  "",
+                                                                "CCSZ":  6974.671771
+                                                            }
+                                                        ],
+                                             "bonds":  [
+
+                                                       ],
+                                             "funds":  [
+
+                                                       ]
+                                         },
+                        "industry_allocation":  [
+                                                    {
+                                                        "HYMC":  "合计",
+                                                        "SZ":  1883037960.7,
+                                                        "ZJZBL":  89.99,
+                                                        "FSRQ":  "2026-03-31"
+                                                    },
+                                                    {
+                                                        "HYMC":  "信息技术",
+                                                        "SZ":  1236477118.71,
+                                                        "ZJZBL":  59.09,
+                                                        "FSRQ":  "2026-03-31"
+                                                    },
+                                                    {
+                                                        "HYMC":  "通信服务",
+                                                        "SZ":  411892275.64,
+                                                        "ZJZBL":  19.68,
+                                                        "FSRQ":  "2026-03-31"
+                                                    },
+                                                    {
+                                                        "HYMC":  "非日常生活消费品",
+                                                        "SZ":  163027392.49,
+                                                        "ZJZBL":  7.79,
+                                                        "FSRQ":  "2026-03-31"
+                                                    },
+                                                    {
+                                                        "HYMC":  "原材料",
+                                                        "SZ":  40544925.36,
+                                                        "ZJZBL":  1.94,
+                                                        "FSRQ":  "2026-03-31"
+                                                    },
+                                                    {
+                                                        "HYMC":  "工业",
+                                                        "SZ":  20280742.31,
+                                                        "ZJZBL":  0.97,
+                                                        "FSRQ":  "2026-03-31"
+                                                    },
+                                                    {
+                                                        "HYMC":  "医疗保健",
+                                                        "SZ":  9118546.93,
+                                                        "ZJZBL":  0.44,
+                                                        "FSRQ":  "2026-03-31"
+                                                    },
+                                                    {
+                                                        "HYMC":  "日常消费品",
+                                                        "SZ":  1696959.26,
+                                                        "ZJZBL":  0.08,
+                                                        "FSRQ":  "2026-03-31"
+                                                    }
+                                                ],
+                        "distributions":  {
+                                              "fund_types":  [
+
+                                                             ],
+                                              "bond_types":  [
+                                                                 {
+                                                                     "FCODE":  "100055",
+                                                                     "REPORTDATE":  "2026-03-31",
+                                                                     "BONDTYPENEW":  "1",
+                                                                     "PCTNV":  0
+                                                                 },
+                                                                 {
+                                                                     "FCODE":  "100055",
+                                                                     "REPORTDATE":  "2026-03-31",
+                                                                     "BONDTYPENEW":  "4",
+                                                                     "PCTNV":  0
+                                                                 },
+                                                                 {
+                                                                     "FCODE":  "100055",
+                                                                     "REPORTDATE":  "2026-03-31",
+                                                                     "BONDTYPENEW":  "2",
+                                                                     "PCTNV":  0
+                                                                 },
+                                                                 {
+                                                                     "FCODE":  "100055",
+                                                                     "REPORTDATE":  "2026-03-31",
+                                                                     "BONDTYPENEW":  "3",
+                                                                     "PCTNV":  0
+                                                                 }
+                                                             ],
+                                              "stock_topics":  [
+
+                                                               ]
+                                          },
+                        "money_market":  null,
+                        "report_date":  "2026-03-31",
+                        "missing_sections":  [
+                                                 "bond",
+                                                 "fof",
+                                                 "fund_distribution",
+                                                 "stock_distribution",
+                                                 "money_market"
+                                             ]
+                    }
+                ],
+    "available_report_dates":  [
+                                   "2026-06-30",
+                                   "2026-03-31"
+                               ],
+    "warnings":  [
+
+                 ],
+    "invalid_fund_codes":  [
+
+                           ],
+    "field_profile":  "fund_position_page_v1",
+    "source":  "FundArchivesMongo",
+    "ai_summary":  {
+                       "report_date":  "2026-03-31",
+                       "fund_code":  "100055",
+                       "text":  "该基金聚焦半导体产业链与互联网科技两大核心领域。主要仓位配置在半导体制造与设备领域，如台积电、英伟达和超威半导体。同时布局互联网平台与数字内容领域，包括谷歌-A和网易云音乐。"
+                   },
+    "disambiguation_candidates":  [
+                                      {
+                                          "fcode":  "100055",
+                                          "showfcode":  "100055",
+                                          "ftype":  "QDII-普通股票",
+                                          "shortname":  "富国全球科技互联网股票(QDII)A",
+                                          "hightlight":  "\u003cfont color=\u0027#ff4400\u0027\u003e1\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e0\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e0\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e0\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e5\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e5\u003c/font\u003e_富国全球科技互联网股票(QDII)A",
+                                          "fcodetype":  0,
+                                          "secondfcodetype":  0,
+                                          "abbname":  "FGQQKJHLWGPQDIIA",
+                                          "abbtname":  "FUGUOQUANQIUKEJIHULIANWANGGUPIAOQDIIA",
+                                          "foreshortname":  "富国全球科技互联网股票(QDII)A",
+                                          "t":  "Q",
+                                          "p":  "F",
+                                          "f":  "",
+                                          "newtexch":  "",
+                                          "isOpenTJD":  "0",
+                                          "stkexchg":  "0",
+                                          "fundexchg":  "1",
+                                          "isBuy":  "1"
+                                      }
+                                  ],
+    "resolution_selected":  {
+                                "fcode":  "100055",
+                                "showfcode":  "100055",
+                                "ftype":  "QDII-普通股票",
+                                "shortname":  "富国全球科技互联网股票(QDII)A",
+                                "hightlight":  "\u003cfont color=\u0027#ff4400\u0027\u003e1\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e0\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e0\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e0\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e5\u003c/font\u003e\u003cfont color=\u0027#ff4400\u0027\u003e5\u003c/font\u003e_富国全球科技互联网股票(QDII)A",
+                                "fcodetype":  0,
+                                "secondfcodetype":  0,
+                                "abbname":  "FGQQKJHLWGPQDIIA",
+                                "abbtname":  "FUGUOQUANQIUKEJIHULIANWANGGUPIAOQDIIA",
+                                "foreshortname":  "富国全球科技互联网股票(QDII)A",
+                                "t":  "Q",
+                                "p":  "F",
+                                "f":  "",
+                                "newtexch":  "",
+                                "isOpenTJD":  "0",
+                                "stkexchg":  "0",
+                                "fundexchg":  "1",
+                                "isBuy":  "1"
+                            },
+    "risk_disclaimer":  "风险提示：基金持仓、行业配置和 AI 摘要均基于公开披露报告或历史加工结果，不代表未来表现，也不等同于实时持仓，基金投资有风险，购买前请结合自身风险承受能力审慎决策。"
+}
