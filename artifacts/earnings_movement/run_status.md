@@ -1,22 +1,22 @@
 # A 股业绩异动自动化运行状态
 
-- 北京时间：2026-07-21T09:17:21+08:00
-- 24 小时窗口：2026-07-20T09:04:26+08:00 至 2026-07-21T09:04:26+08:00
+- 北京时间：2026-07-22T09:03:34+08:00
+- 24 小时窗口：2026-07-21T09:03:34+08:00 至 2026-07-22T09:03:34+08:00
 - 数据源：D:\vcp_hunter\紫金研选\data\vcp_hunter.db
 - 读取模式：SQLite mode=ro、PRAGMA query_only=ON、WAL-aware
-- kv_store.updated_at：2026-07-20 16:00:23
-- last_sync_date：2026-07-21
-- earnings_state SHA256：e2db2a31ec2a10eae815f13187ac59787f1f73e65ad5897238dbf1aaaf3d7e1d
-- 原始记录数：54
-- ST 剔除后数量：54
-- 去重后数量：54
-- 24 小时命中数量：1
-- 命中标的：688268.SH 华特气体
+- kv_store.updated_at：2026-07-21 16:00:22
+- last_sync_date：2026-07-22
+- earnings_state SHA256：1c87e973e7ed540f4db9ac9286de9428c0265a3c2968ae74768ee47475d77af7
+- 原始记录数：57
+- ST 剔除后数量：57
+- 去重后数量：57
+- 24 小时命中数量：4
+- 命中标的：688268.SH 华特气体、300408.SZ 三环集团、688498.SH 源杰科技、688195.SH 腾景科技
 - time_filter_fallback：false
-- 官方核验覆盖率：1/1
-- official_disclosure_status：1/1 confirmed_official
-- announcement_window_checked：T_and_T_plus_1（2026-07-20 晚间挂出、公告日 2026-07-21）
-- 交易数据截点：公告后首个完整交易日尚未完成，交易弹性 N/A
-- 报告：D:\vcp_hunter\产业链投研\artifacts\earnings_movement\2026-07-21.md
+- 官方核验覆盖率：4/4
+- official_disclosure_status：4/4 confirmed_official
+- announcement_window_checked：pending_evening_rescan（已核对 2026-07-21 与 2026-07-22 早间公告）
+- 交易数据截点：2026-07-22 09:03，A 股尚未开盘，交易弹性 N/A
+- 报告：D:\vcp_hunter\产业链投研\artifacts\earnings_movement\2026-07-22.md
 - 失败项：0
-- 运行结果：completed_with_1_new_earnings_movement
+- 运行结果：completed_with_4_new_earnings_movement
