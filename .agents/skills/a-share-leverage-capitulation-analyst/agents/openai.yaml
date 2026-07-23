@@ -1,6 +1,6 @@
 interface:
-  display_name: "两融去杠杆压力分析"
-  short_description: "用 DFCF 日更两融表并分析指数急跌与市场宽度共振"
-  default_prompt: "Use $a-share-leverage-capitulation-analyst to update the DFCF-only margin table and analyze A-share deleveraging pressure."
+  display_name: "A股两融与抱团风险分析"
+  short_description: "分析两融去杠杆、市场压力与抱团顶部风险"
+  default_prompt: "Use $a-share-leverage-capitulation-analyst to audit A-share margin data and analyze deleveraging pressure or crowding-related market-top risk."
 policy:
   allow_implicit_invocation: false

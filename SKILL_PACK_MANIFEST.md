@@ -11,7 +11,7 @@
 | `ai-chain-research-orchestrator` | 最近 AI 消息、爆料、Grok/X、Gemini | 采集与核验层；模型输出不直接成为投资证据 |
 | `a-share-company-tracking` | watchlist 日更、baseline/state/events | 仅写命名的项目状态文件；逐公司完成并对账 |
 | `a-share-disclosure-trading-data` | 公告、CNINFO、IR、龙虎榜、大宗交易 | 官方事实与交易结构分开；执行 T/T+1 晚间窗口 |
-| `a-share-leverage-capitulation-analyst` | 大盘压力、两融去杠杆、暴跌共振、滚动3年排名 | 两融须逐日官方核验；信号只是压力代理，不证明强平或市场底；主结果统一以 T 日收盘为起点，另列 T+1 可执行口径 |
+| `a-share-leverage-capitulation-analyst` | 大盘压力、两融去杠杆、暴跌共振、抱团拥挤与顶部风险 | 日更与逐股明细均保留 DFCF 厂商边界；见底三因子与顶部研究独立；价格拥挤负责顶部排序，融资流出只作瓦解确认；所有可执行口径从 T+1 起 |
 | `earnings-call-investment-analyst` | 财报、指引、电话会、QoQ、需求/瓶颈 | 原始来源优先；完整深挖才加载详细 checklist 和采集脚本 |
 | `ht-local-market-data` | 本地 `D:\HT` 日线、板块池、厂商表 | 只读、非官方、非实时；账户/订单/日志默认禁读 |
 

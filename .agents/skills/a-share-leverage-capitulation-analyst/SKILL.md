@@ -1,6 +1,6 @@
 ---
 name: a-share-leverage-capitulation-analyst
-description: Update and analyze a DFCF-only A-share margin-balance table, then compare deleveraging pressure with Shenzhen Composite, ChiNext Index, ChiNext Composite, and market breadth. Use for daily margin updates, market-wide stress, margin deleveraging, historical signal studies, and post-close rebound analysis.
+description: Update and analyze a DFCF-only A-share margin-balance table, then compare deleveraging pressure with Shenzhen Composite, ChiNext Index, ChiNext Composite, and market breadth. Use for daily margin updates, market-wide stress, margin deleveraging, historical signal studies, post-close rebound analysis, and causal studies of dynamic A-share crowding, stock-level margin-flow concentration/outflow, and market-top risk.
 ---
 
 # A 股两融去杠杆压力分析
@@ -33,48 +33,55 @@ description: Update and analyze a DFCF-only A-share margin-balance table, then c
 
 ## DFCF 个股融资余额历史库
 
-用户明确要求逐只证券的融资余额历史时，使用东方财富数据中心
-`RPTA_WEB_RZRQ_GGMX`，并与市场汇总日更表物理隔离：
+用户明确要求逐只证券的融资余额历史时，使用东方财富数据中心 `RPTA_WEB_RZRQ_GGMX`，并与市场汇总日更表物理隔离：
 
-- 首次抓取范围固定为 `2016-01-01` 至东方财富最新已发布日；后续默认回看
-  14 个日历日并断点续传。
-- 原始接口同时包含 A 股股票和 ETF。数据库必须保留原始全量，通过
-  `a_share_stock_margin_daily` 视图排除交易市场代码为 `069001001`、
-  `069001002` 的 ETF；不得把 ETF 记录计为个股样本。
-- 每个交易日必须核对接口声明的 `count`、`pages` 与实际落库行数，并以
-  `(trade_date, secu_code)` 为唯一键。任一日期分页不完整、重复或融资余额为空时，
-  `vendor_pagination_complete=false`。
-- 若东方财富对交易日明确返回代码 `9201`“数据为空”，必须记录为
-  `vendor_no_data` 固定缺口，不得反复当作网络失败、插值或补造。此时可用日期的分页
-  仍可完整，但 `calendar_coverage_complete=false`，并单列日期覆盖率和缺口日期。
-- 分页完整只证明东方财富明细接口已被完整读取，不证明明细求和等于交易所或东方财富
-  市场汇总。必须与 `dfcf_daily/dfcf_margin_balances.csv` 逐日对账；若不精确相等，
-  明细库只能用于证券级历史，禁止汇总后替代市场两融因子。
-- 个股库统一标记 `dfcf_vendor_individual_detail_unverified_by_exchange`，不得写成
-  交易所官方逐股原始数据，也不得覆盖 `dfcf_daily` 或 `verified_*` 产物。
+- 首次抓取范围固定为 `2016-01-01` 至东方财富最新已发布日；后续默认回看 14 个日历日并断点续传。
+- 原始接口同时包含 A 股股票和 ETF。数据库必须保留原始全量，通过 `a_share_stock_margin_daily` 视图排除交易市场代码为 `069001001`、`069001002` 的 ETF；不得把 ETF 记录计为个股样本。
+- 每个交易日必须核对接口声明的 `count`、`pages` 与实际落库行数，并以 `(trade_date, secu_code)` 为唯一键。任一日期分页不完整、重复或融资余额为空时，`vendor_pagination_complete=false`。
+- 若东方财富对交易日明确返回代码 `9201`“数据为空”，必须记录为 `vendor_no_data` 固定缺口，不得反复当作网络失败、插值或补造。此时可用日期的分页仍可完整，但 `calendar_coverage_complete=false`，并单列日期覆盖率和缺口日期。
+- 分页完整只证明东方财富明细接口已被完整读取，不证明明细求和等于交易所或东方财富市场汇总。必须与 `dfcf_daily/dfcf_margin_balances.csv` 逐日对账；若不精确相等，明细库只能用于证券级历史，禁止汇总后替代市场两融因子。
+- 个股库统一标记 `dfcf_vendor_individual_detail_unverified_by_exchange`，不得写成交易所官方逐股原始数据，也不得覆盖 `dfcf_daily` 或 `verified_*` 产物。
 
-固定入口：
+固定入口：`powershell -NoProfile -ExecutionPolicy Bypass -File ".agents\skills\a-share-leverage-capitulation-analyst\scripts\fetch_eastmoney_individual_margin_2016_present.ps1" -Python "C:\Python314\python.exe" -Workers 8`
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File `
-  ".agents\skills\a-share-leverage-capitulation-analyst\scripts\fetch_eastmoney_individual_margin_2016_present.ps1" `
-  -Python "C:\Python314\python.exe" -Workers 8
-```
+固定产物：`artifacts/leverage_capitulation/individual_margin_2016_present/eastmoney_individual_margin.sqlite`、`latest_a_share_stock_margin.csv`、`individual_margin_audit.json`。
 
-固定产物：
+## 抱团与个股融资顶部风险研究（独立研究线）
 
-- `artifacts/leverage_capitulation/individual_margin_2016_present/eastmoney_individual_margin.sqlite`
-- `artifacts/leverage_capitulation/individual_margin_2016_present/latest_a_share_stock_margin.csv`
-- `artifacts/leverage_capitulation/individual_margin_2016_present/individual_margin_audit.json`
+本研究用于检验抱团拥挤、融资集中和融资撤退是否提高后续顶部或下跌风险，与下文三因子去杠杆压力信号完全独立；不得合并信号日期、样本数、胜率或结论，也不得解释为融资变化导致市场见顶。
+
+1. **样本与动态抱团**：主样本只含沪深 A 股，ETF 通过 `a_share_stock_margin_daily` 排除，以 `secu_code` 为唯一证券标识。价格抱团必须先在完整本地沪深股票池中识别，再与融资明细相交。基准定义使用至少 120 个有效收益观测，取动量前 10%，并要求过去 20 日进入前 10% 不少于 12 次；抱团数不足 30 时输出 `N/A`。T 日收益和融资流只使用 T−1 已确定的成员 `C_(T-1)`，不得用 T 日选出的 `C_T` 回填 T 日。
+2. **价格数据因果处理**：本地 TDX `.day` 是厂商未复权数据，不得把当前复权因子向历史回填。除权事件只能在事件发生日调整参考价；IPO 前 20 条记录不进入动量，无法解释的绝对收益超过 22% 时剔除并重置动量历史。长跑前应复制逐文件哈希锁定的只读研究快照；活动中的 `D:\HT` 文件可被行情客户端重写，不得作为长跑期间的可变输入。
+3. **个股融资口径**：余额暴露变化使用 `RZYE(T)-RZYE(T-1)`；交易行为另列 `RZMRE-RZCHE`，两者残差单列为会计调整代理，禁止相互替代。`vendor_no_data` 日期及其下一交易日的逐股变化为 `N/A`。个股明细求和不得替代 `dfcf_daily` 两市汇总。融资完整性门槛必须在“T−1 已具融资记录的抱团子集”内部计算：该子集在 T 日连续记录覆盖至少 80%，且至少 30 只；同时单列该子集占全部抱团股的比例，不能把“是否具备融资资格”误当成数据缺失。
+4. **研究变量**：分别保留价格拥挤度、融资集中度、融资撤退宽度与极端流出占比、抱团相对非抱团的余额变化和交易净额差、价格—融资背离、两市总融资变化，以及只使用 T 日及以前数据计算的 MA20/MA50/MA250 上升、下降和过渡环境。余额变化因子与交易流因子必须分组报告。
+5. **标签与未来函数**：`future_worst_close_return_N(T) = min(close(T+1...T+N)/close(T)-1)`，分别统计 5/10/20/40 个完整交易日；未来区间缺失或尚未结束时标签为 `N/A`。该指标是相对 T 日收盘的未来最低收盘收益，不是路径峰谷最大回撤。顶部属于事后确认标签；监督标签使用未聚类候选峰，40 日去重只用于事件研究。若顶部确认窗内任一必要收益缺失，标签必须为 `N/A`。
+6. **检验方式**：正式统计从 2019-01-01 开始，使用扩展窗口时间序列走步验证，并至少留出 40 个交易日 embargo。依次比较价格基准、价格加两市总融资、再加入逐股融资、再加入市场环境。报告 PR-AUC、ROC-AUC、Brier、固定概率分箱校准、基准事件率、样本数和事件数；至少检查强势分位 85%/90%/95%、20 日命中 10/12/14 次及融资连续覆盖 70%/80%/90%，不得只报告单一最优参数。
+7. **当前风险输出**：最新风险分数只能由标签已完整结束的历史样本训练，训练与评分日至少隔离 40 个交易日。输出是基于厂商历史样本的相对风险和校准结果，不是精确见顶概率、因果结论或投资建议；当前特征缺失数、融资连续覆盖率和融资资格子集占比必须同时输出。
+
+固定入口：`python .agents/skills/a-share-leverage-capitulation-analyst/scripts/analyze_crowding_margin_top_risk.py --project-root "D:\vcp_hunter\产业链投研"`
+
+固定产物：`artifacts/leverage_capitulation/crowding_margin_top_risk_2016_present/` 和 `crowding_margin_top_risk_input_snapshot_20260722/`。产物必须保留输入审计、源文件哈希、逐日因子面板、样本外预测、概率校准、事件成员、敏感性分析、研究报告和 `_RUN_COMPLETE.json`；不得写入或覆盖 `verified_2016_present/`。
+
+## 抱团顶部研究的稳定结论
+
+回答抱团见顶特征、融资集中与顶部关系、历史顶部风险区间或当前顶部风险时，先读取 `references/crowding_margin_top_risk_findings_20260722.md`，并遵守以下结论边界：
+
+1. 把价格与市场状态特征组合作为顶部风险排序的主基准；其中价格拥挤度在顶部窗口明显较高，是核心候选变量，但尚未单独验证其独立增量。把两市总融资只作为背景变量；当前样本中，逐股融资没有提供稳定的提前见顶增量，不得因加入更多融资字段就声称模型更可靠。
+2. 区分“顶部前杠杆追涨”和“顶部后去杠杆”：顶部前更常见的是价格已高度拥挤、融资仍流入并向抱团股集中；融资占比下降、余额转负和流出宽度扩大更适合确认抱团已经瓦解，不能倒置为稳定的顶部先行因子。
+3. 不把模型原始 `probability` 当作真实概率。只报告相对风险排序、训练期阈值、固定分箱实测率、样本数和校准误差；稀疏组合 `N<20` 一律写“证据不足”。
+4. `crowding_intensity_score >= 0.80` 且 `crowd_flow_5d_pctile >= 0.80` 只是截至 2026-07-22 的探索性观察条件，不是正式交易信号或真正样本外规则。若展示实时风险状态，只能令当日原始预警在随后 10 个交易日内保持有效；第 11 个无新预警交易日自动结束，不得事后链式分组后选择最后一次信号。
+5. T 日融资数据发布后才能确认 T 日状态，最早执行时点为 T+1。事后顶部日期、未来最低收盘收益和 40 日去重只能用于验证，不能参与当时的区间生成。
+
+本节数值是日期快照，不是永久参数。若沪深融资最新共同日期晚于 `2026-07-22`，或输入/脚本哈希、动态抱团、滚动分位、标签、阈值、模型、embargo 参数、数据审计状态、融资资格覆盖、厂商缺口任一变化，先重跑固定脚本并新建带日期的参考文件，再引用更新数字。
+
+详细数字只保存在带日期参考文件和该文件列出的受控产物中；不得把 2026 年案例、2019—2021 区间或探索性阈值复制成下文三因子见底模型的固定规则。
 
 ## 因子定义
 
 默认参数仅是待验证基准，不是“黄金模型”：
 
 1. **指数跌幅极值**：深证综指、创业板指和创业板综指的单日收益率，分别计算截至当日的滚动 3 个日历年最差排名，基准阈值为前 15 名。
-2. **融资流出比例（DFCF 厂商口径）**：
-   `-(当日两市融资余额 - 前一交易日两市融资余额) / 前一交易日两市融资余额`，
-   计算截至当日的滚动 3 个日历年最大排名，基准阈值为前 15 名。绝对流出金额只作描述，不替代比例因子；结果必须标记为 DFCF 厂商口径，不能称交易所正式信号。
+2. **融资流出比例（DFCF 厂商口径）**：`-(当日两市融资余额 - 前一交易日两市融资余额) / 前一交易日两市融资余额`，计算截至当日的滚动 3 个日历年最大排名，基准阈值为前 15 名。绝对流出金额只作描述，不替代比例因子；结果必须标记为 DFCF 厂商口径，不能称交易所正式信号。
 3. **普跌宽度**：当日收跌股票数 / 当日有可比收盘价股票数，基准阈值为 `>= 80%`。
 4. **长假噪声控制**：若信号日到下一交易日间隔至少 5 个日历日，则排除该日。此规则只能降低长假前主动还款噪声，不能识别“主动还款”与“被动强平”。
 
@@ -126,12 +133,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 
 ## 确定性流程
 
-每日从项目根运行专用 DFCF 日更入口：
-
-```powershell
-python .agents/skills/a-share-leverage-capitulation-analyst/scripts/update_dfcf_margin_daily.py `
-  --project-root "D:\vcp_hunter\产业链投研"
-```
+每日从项目根运行专用 DFCF 日更入口：`python .agents/skills/a-share-leverage-capitulation-analyst/scripts/update_dfcf_margin_daily.py --project-root "D:\vcp_hunter\产业链投研"`
 
 脚本执行以下固定流程：
 
@@ -142,22 +144,12 @@ python .agents/skills/a-share-leverage-capitulation-analyst/scripts/update_dfcf_
 - 检查 `dfcf_margin_audit.json` 中原始快照及合并表 SHA-256；若哈希、重复、空值或正数检查失败，阻断分析。
 - 若 `new_common_dates=0`，简要报告 DFCF 暂无新共同日期并结束，不重复旧报告。
 
-日更产物固定为：
+日更产物固定为 `artifacts/leverage_capitulation/dfcf_daily/` 下的 `dfcf_sse_margin.csv`、`dfcf_szse_margin.csv`、`dfcf_margin_balances.csv` 和 `dfcf_margin_audit.json`。
 
-- `artifacts/leverage_capitulation/dfcf_daily/dfcf_sse_margin.csv`
-- `artifacts/leverage_capitulation/dfcf_daily/dfcf_szse_margin.csv`
-- `artifacts/leverage_capitulation/dfcf_daily/dfcf_margin_balances.csv`
-- `artifacts/leverage_capitulation/dfcf_daily/dfcf_margin_audit.json`
-
-合并表字段至少包括：
-
-- `date`
-- `sh_margin_y`、`sz_margin_y`、`total_margin_y`
-- `sh_change_y`、`sh_change_pct`
-- `sz_change_y`、`sz_change_pct`
-- `total_change_y`、`total_change_pct`
-- `source`、`sample_status`
+合并表字段至少包括：`date`；`sh_margin_y`、`sz_margin_y`、`total_margin_y`；`sh_change_y`、`sh_change_pct`；`sz_change_y`、`sz_change_pct`；`total_change_y`、`total_change_pct`；`source`、`sample_status`。
 
 ## 受控历史产物保护
 
 `artifacts/leverage_capitulation/verified_2016_present/` 下的融资审计、因子面板、信号明细、敏感性分析和工作簿均为冻结的受控历史产物。DFCF 日更不得覆盖、追加或重算这些文件，也不得把厂商口径日更结果包装为既有正式回测的延伸。
+
+抱团与顶部风险研究只能写入 `crowding_margin_top_risk_2016_present/` 独立目录；其 DFCF 厂商数据结论不得升级为交易所官方数据，也不得覆盖、追加或解释为 `verified_2016_present/` 的正式三因子结果。
