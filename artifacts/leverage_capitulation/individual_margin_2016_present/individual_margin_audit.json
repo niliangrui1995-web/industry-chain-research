@@ -1,0 +1,95 @@
+{
+  "dfcf_only": true,
+  "exchange_requests": 0,
+  "source_name": "东方财富数据中心",
+  "source_url": "https://datacenter-web.eastmoney.com/api/data/v1/get",
+  "detail_report_name": "RPTA_WEB_RZRQ_GGMX",
+  "calendar_report_name": "RPTA_WEB_RZRQ_LSSH",
+  "sample_status": "dfcf_vendor_individual_detail_unverified_by_exchange",
+  "requested_start": "2016-01-01",
+  "requested_end": "2026-07-23",
+  "calendar_start": "2016-01-04",
+  "calendar_end": "2026-07-22",
+  "calendar_dates": 2562,
+  "calendar_requests": 6,
+  "network": {
+    "attempts": 138,
+    "successes": 132,
+    "retries": 0
+  },
+  "database_rows": 6012400,
+  "database_dates": 2556,
+  "database_start": "2016-01-04",
+  "database_end": "2026-07-22",
+  "rows_by_instrument_type": {
+    "A_SHARE_STOCK": 5560394,
+    "ETF": 452006
+  },
+  "rows_per_date": {
+    "min": 896.0,
+    "median": 2081.5,
+    "max": 4415.0
+  },
+  "unknown_instrument_rows": 0,
+  "null_financing_balance_rows": 0,
+  "negative_financing_balance_rows": 0,
+  "missing_calendar_dates": [],
+  "vendor_no_data_dates": [
+    "2016-06-30",
+    "2017-06-30",
+    "2019-12-31",
+    "2020-06-30",
+    "2020-12-31",
+    "2021-06-30"
+  ],
+  "failed_dates": [],
+  "row_mismatch_dates": [],
+  "vendor_pagination_complete": true,
+  "calendar_coverage_complete": false,
+  "calendar_date_coverage_ratio": 0.9976580796252927,
+  "latest_stock_export_date": "2026-07-22",
+  "latest_stock_export_rows": 3837,
+  "aggregate_reconciliation": {
+    "available": true,
+    "aggregate_csv": "D:\\vcp_hunter\\产业链投研\\artifacts\\leverage_capitulation\\dfcf_daily\\dfcf_margin_balances.csv",
+    "exact_reconciliation_passed": false,
+    "markets": {
+      "SH": {
+        "dates_compared": 2556,
+        "exact_reconciliation_passed": false,
+        "coverage_ratio": {
+          "min": 0.9850581242938402,
+          "median": 0.9945590960563137,
+          "max": 0.9991860804346004
+        },
+        "latest_date": "2026-07-22",
+        "latest_detail_balance_yuan": 1354532770543,
+        "latest_aggregate_balance_yuan": 1363230592667,
+        "latest_difference_yuan": -8697822124
+      },
+      "SZ": {
+        "dates_compared": 2556,
+        "exact_reconciliation_passed": false,
+        "coverage_ratio": {
+          "min": 0.9571864571776738,
+          "median": 0.9930462078121247,
+          "max": 0.9994134171612193
+        },
+        "latest_date": "2026-07-22",
+        "latest_detail_balance_yuan": 1317017639085,
+        "latest_aggregate_balance_yuan": 1327037003842,
+        "latest_difference_yuan": -10019364757
+      }
+    },
+    "interpretation": "Pagination completeness only proves the DFCF detail endpoint was fully read. A non-zero aggregate difference means the detail table must not reconstruct or replace the SH/SZ market-total balance series."
+  },
+  "usage_boundary": {
+    "security_level_history": "Use the a_share_stock_margin_daily SQLite view for DFCF vendor security-level history.",
+    "market_total": "Do not sum this detail table to replace dfcf_margin_balances.csv unless aggregate reconciliation is exact.",
+    "official_status": "Not exchange-official per-security raw data."
+  },
+  "updated_at_utc": "2026-07-23T07:52:08+00:00",
+  "database_sha256": "fca09bbb33776a5378b1a8c61ea720a92d2cc9608832a8f63c2968c7959eab44",
+  "latest_stock_export_sha256": "126c5f5f9946c61bc84f84088a46789e615d3725b450e18641be1802488e5e15",
+  "database_size_bytes": 1639239680
+}
