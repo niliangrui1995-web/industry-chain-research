@@ -1,6 +1,6 @@
 ---
 name: user-investment-framework
-description: Evidence-first investment research for industry chains, companies, listed securities, valuation, filings, market data, beneficiary checks, stock comparisons, market-cycle or trading-structure analysis, and investment discipline in the 产业链投研 project. Use for 产业链研究、公司研究、个股研究、上下游、技术壁垒、国产替代、全球龙头、估值、基本面、业绩弹性、交易弹性、真假受益，以及涉及牛市或熊市、主升浪、中级调整、MA30、量化信号、双头、长假后首日大跌、核心板块轮动、市场情绪过热、贪婪膨胀、追涨扩仓或依赖单一指标的判断. Do not use for unrelated engineering or general writing tasks.
+description: Evidence-first investment research for industry chains, companies, listed securities, valuation, filings, market data, beneficiary checks, stock comparisons, market-cycle or trading-structure analysis, and investment discipline in the 产业链投研 project. Use for 产业链研究、公司研究、个股研究、盈利预期、超预期/低于预期、上下游、技术壁垒、国产替代、全球龙头、估值、基本面、业绩弹性、交易弹性、真假受益，以及涉及牛市或熊市、主升浪、中级调整、MA30、量化信号、双头、长假后首日大跌、核心板块轮动、市场情绪过热、贪婪膨胀、追涨扩仓或依赖单一指标的判断. Do not use for unrelated engineering or general writing tasks.
 ---
 
 # User Investment Framework
@@ -22,6 +22,22 @@ description: Evidence-first investment research for industry chains, companies, 
 4. 先确认上市主体、市场和 ticker，再比较公司；跨市场时说明口径差异。
 5. 账户、外部 watchlist、模拟交易、自动化、消息发送或其他外部写入必须有用户明确授权；不得泄露密钥、账户、密码、订单或无关日志。
 6. 缺少可靠数据时写 `N/A`、证据缺口和置信度，不用记忆补精确数字。
+
+## 上市公司盈利预期门禁（条件强制）
+
+凡进行上市公司深研、个股比较、估值或投资判断，除非用户只问简单常识或纯产品定义，必须在结论前主动检查最近一次可用业绩、业绩预告/快报或指引是否相对市场预期超预期、符合、低于或证据不足；不要等待用户另行追问。
+
+1. 先固定事件、披露时间和 `expectation_as_of`；只使用事件发生前市场最后可得的有效 point-in-time 共识，不要求机构预测恰好在前一日更新。
+2. 同时记录共识快照时点、各预测发布日期和 `expectation_age_days`。旧预测不因日期早自动剔除；只有明确口径不一致、已失效或未吸收此前重大公开信息时才排除或单列，并说明对结论的影响。
+3. 无历史 point-in-time 快照时，为每家机构只保留事件前最后一份目标年度归母净利润预测，重建全年共识并披露样本数、均值、中位数、区间、日期和来源；少于 3 家标记小样本。F10 或研报只写“净利润”时先核对表头、脚注和定义，无法确认是否归母时记录 `consensus_metric=unresolved`，不做比较。
+4. 当前滚动 F10、一致预期网页或搜索缓存先核对底层预测日期。若能确认所有成分均形成于事件前且没有事后回填，可作为较低置信度的公开重建；否则只能作线索，不能直接冒充历史点时共识。
+5. A 股是否超预期统一使用用户指定口径：先取得最新单季度扣非归母净利润，再计算 `单季度扣非年化值=最新单季度扣非归母×4`，直接对比事件前机构全年归母净利润共识；记录 `comparison_basis=annualized_quarterly_deducted_vs_fy_attributable_consensus`。机构另有扣非预期时只作辅助同口径参照，不替代该主判断。
+6. 使用 `(单季度扣非年化值-机构全年归母共识)/abs(机构全年归母共识)`，记录 `annualized_core_gap_status=above|straddles|below|insufficient`；区间年化低值高于共识记 `above`，高值低于共识记 `below`，其余记 `straddles`。结论写“按单季扣非年化口径超预期/区间跨越/低于预期/证据不足”，不得事后自设容忍带；这是用户定义的跨期间、跨指标 run-rate 判断，`formal_surprise_status=N/A`。
+7. 正式定期报告、业绩预告和业绩快报使用同一计算逻辑；正式报告发布后以正式值替换预告值。凡累计披露都必须先反推最新单季：`Q2扣非=H1扣非-Q1扣非`、`Q3扣非=前三季度扣非-H1扣非`、`Q4扣非=全年扣非-前三季度扣非`，再乘 4；记录 `company_value_type=actual_quarter|preannouncement_quarter_range|derived_quarter`、`derivation_formula`、来源和舍入误差。无法取得或可靠反推单季度扣非时写 `N/A`。
+8. 计算 PE(TTM) 也统一使用用户口径：`PE(TTM，用户口径)=当前总市值/(最新单季度扣非归母×4)`，记录市值时点和 `valuation_basis=latest_single_quarter_deducted_attributable_net_profit_x4`；利润为区间时输出对应 PE 区间，年化利润小于等于 0 时写 `N/A/不适用`。该口径实质是单季年化 run-rate PE；除非用户另行指定，不改用最近四季度利润之和。
+9. 最少输出 `expectation_as_of`、`expectation_age_days`、单季度期间、`company_metric`、`consensus_metric`、`comparison_basis`、`company_value_type`、年化因子 4、样本数、共识、单季扣非、年化扣非、预期差、`annualized_core_gap_status`、`formal_surprise_status`、结论、置信度和证据缺口；涉及估值再输出总市值及其时点、PE 区间和 `valuation_basis`。
+
+财报、预告、快报、指引或电话会是核心时，再加载 `earnings-call-investment-analyst`；复杂公司深研的字段见 [references/research-method.md](references/research-method.md)。
 
 ## 研究启发式
 
@@ -62,7 +78,7 @@ description: Evidence-first investment research for industry chains, companies, 
 | 最近 AI 产业链消息、Grok/X、Gemini、传闻核验 | `ai-chain-research-orchestrator` |
 | A 股 watchlist、baseline/state/events 日常维护 | `a-share-company-tracking` |
 | CNINFO、交易所公告、IR、龙虎榜、大宗交易 | `a-share-disclosure-trading-data` |
-| 财报、指引、电话会、前后季度对比 | `earnings-call-investment-analyst` |
+| 财报、指引、电话会、盈利是否超预期、前后季度对比 | `earnings-call-investment-analyst` |
 | 本地 `D:\HT` 盘后行情文件 | `ht-local-market-data` |
 
 文档、表格、通用搜索、网页、行情和金融数据优先使用当前会话已安装的全局技能、插件或原生工具，不在项目内维护重复副本。选择外部工具前按需读 [references/tool-boundaries.md](references/tool-boundaries.md)；使用 TDX 时再读 [references/tdx-finance-data-boundary.md](references/tdx-finance-data-boundary.md)；AI 节点映射时再读 [references/ai-chain-node-taxonomy.md](references/ai-chain-node-taxonomy.md)。

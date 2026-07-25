@@ -52,6 +52,7 @@ For example, a Quartr audio file can be `source_type: original_call_audio` and `
   "actuals": {},
   "guidance": {},
   "consensus": {},
+  "valuation": {},
   "call_takeaways": [],
   "risk_flags": [],
   "evidence_ledger": [],
@@ -160,18 +161,81 @@ Use this object for reported financial results:
 ```json
 {
   "provider": "Source name",
-  "as_of": "ISO-8601 date or timestamp",
+  "expectation_as_of": "ISO-8601 date or timestamp",
+  "value_type": "historical_point_in_time | public_pre_event_reconstruction | current_rolling",
+  "contributor_count": 5,
+  "member_prediction_dates": ["ISO-8601 date"],
+  "expectation_age_days": 30,
   "metrics": [
     {
       "name": "revenue",
+      "consensus_metric": "revenue",
+      "metric_basis": "reported | deducted_nonrecurring | adjusted_non_gaap",
       "period": "Q1 FY2026",
       "value": 27000000,
       "unit": "USD",
       "source_refs": ["S010"]
     }
+  ],
+  "comparisons": [
+    {
+      "source_period": "Q2 FY2026",
+      "company_metric": "annualized_single_quarter_deducted_attributable_net_profit",
+      "company_value_type": "actual_quarter | preannouncement_quarter_range | derived_quarter",
+      "quarterly_value_low": 0,
+      "quarterly_value_mid": 0,
+      "quarterly_value_high": 0,
+      "annualization_factor": 4,
+      "annualized_value_low": 0,
+      "annualized_value_mid": 0,
+      "annualized_value_high": 0,
+      "derivation_formula": "H1-Q1 for Q2, nine-month-H1 for Q3, FY-nine-month for Q4, or empty string",
+      "consensus_metric": "fy_attributable_net_profit",
+      "consensus_period": "FY2026",
+      "consensus_value": 0,
+      "comparison_basis": "annualized_quarterly_deducted_vs_fy_attributable_consensus",
+      "gap_low": null,
+      "gap_mid": null,
+      "gap_high": null,
+      "annualized_core_gap_status": "above | straddles | below | insufficient",
+      "formal_surprise_status": "N/A",
+      "attributable_minus_deducted": null,
+      "source_refs": ["S001", "S010"],
+      "notes": "User-defined cross-period and cross-metric run-rate comparison."
+    }
   ]
 }
 ```
+
+For A-share comparisons, annualize the latest single-quarter deducted attributable profit by multiplying it by four, compare it with the pre-event full-year attributable-profit consensus, use `comparison_basis: annualized_quarterly_deducted_vs_fy_attributable_consensus`, and keep `formal_surprise_status: N/A`. A derived quarter must use same-company official cumulative disclosures on the same accounting basis and include `derivation_formula`. Preserve the raw quarterly values and `annualization_factor: 4`; do not store only the annualized result.
+
+## Valuation Object
+
+Use this object when PE(TTM) is requested. It records the user's single-quarter annualized convention rather than a standard trailing-four-quarter multiple.
+
+```json
+{
+  "market_cap_as_of": "ISO-8601 timestamp",
+  "total_market_cap": 0,
+  "currency": "CNY",
+  "profit_source_period": "Q2 FY2026",
+  "quarterly_deducted_profit_low": 0,
+  "quarterly_deducted_profit_mid": 0,
+  "quarterly_deducted_profit_high": 0,
+  "annualization_factor": 4,
+  "annualized_deducted_profit_low": 0,
+  "annualized_deducted_profit_mid": 0,
+  "annualized_deducted_profit_high": 0,
+  "pe_ttm_user_low": null,
+  "pe_ttm_user_mid": null,
+  "pe_ttm_user_high": null,
+  "valuation_basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+  "source_refs": ["S001", "S020"],
+  "notes": "If annualized profit is non-positive, PE is N/A/not meaningful."
+}
+```
+
+For a positive profit range, calculate the PE range in reverse order: `pe_ttm_user_low = market_cap / annualized_deducted_profit_high` and `pe_ttm_user_high = market_cap / annualized_deducted_profit_low`. Keep market cap and profit in the same currency and label the output `PE(TTM, user-defined)` or `PE(TTM，用户口径)`.
 
 ## Call Takeaway Object
 
@@ -231,6 +295,8 @@ Use this for every important conclusion or data point:
 - Every reported financial metric should have at least one `company_original` or `regulatory_filing` source reference when available.
 - Every management statement should reference an official call transcript, official audio/video replay, official event platform, or `original_call_audio` when complete official media is unavailable.
 - Every third-party number should be labeled with provider and date.
+- Every A-share consensus comparison should record `expectation_as_of`, source quarter, raw quarterly deducted profit, `annualization_factor: 4`, annualized profit, full-year attributable consensus, `comparison_basis`, and company `value_type`; a derived quarter must record its formula and official source references.
+- Every user-defined PE(TTM) should record total market cap, `market_cap_as_of`, source quarter, annualized deducted-profit denominator, `valuation_basis`, and source references; return `N/A` when the denominator is non-positive.
 - Third-party-hosted original call audio must not be listed as a company-hosted or official-event-hosted source.
 - When a reputable full transcript and original call audio are both available from fallback providers, use the full transcript as the primary working source and record audio only as targeted verification evidence unless full-audio ASR was explicitly requested.
 - The final analysis should not cite `media_or_analyst` as the sole source for reported results.

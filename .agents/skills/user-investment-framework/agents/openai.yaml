@@ -1,6 +1,6 @@
 interface:
   display_name: "投资研究框架"
-  short_description: "证据优先的产业链、公司、股票、市场周期与投资纪律研究框架"
-  default_prompt: "Use $user-investment-framework to answer this investment question with the smallest necessary research path."
+  short_description: "证据优先的产业链、公司、单季扣非年化预期差与估值研究框架"
+  default_prompt: "Use $user-investment-framework to answer this investment question with the smallest necessary research path. For A-share earnings checks, annualize the latest single-quarter deducted attributable profit by multiplying it by four and compare it with pre-event full-year attributable-profit consensus. Calculate the user-defined PE(TTM) with the same annualized deducted-profit denominator."
 policy:
   allow_implicit_invocation: true

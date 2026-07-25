@@ -29,14 +29,26 @@
 
 推荐表：
 
-| Metric | Actual | Prior Guidance | Consensus | Prior Quarter | QoQ | YoY | Beat/Miss | Source |
-|---|---:|---:|---:|---:|---:|---:|---|---|
+| Metric | Company Metric | Actual | Prior Guidance | Consensus Metric | Consensus | Comparison Basis | Prior Quarter | QoQ | YoY | Gap/Surprise Status | Source |
+|---|---|---:|---:|---|---:|---|---:|---:|---:|---|---|
 
 - 收入、分部收入、订单、库存、capex、现金流等水平值用 `(current-prior)/abs(prior)` 计算 QoQ；
 - 毛利率等比率用基点变化；
 - EPS/净利润为负、接近零或受一次性项目干扰时，用金额变化并说明百分比失真；
 - 前季值无法核实时写 `prior-quarter source gap`，不从记忆估算；
 - GAAP 与 non-GAAP 必须分开。
+- Consensus 必须是事件前市场最后可得的 point-in-time 数据；不要求机构预测在前一日更新，同时记录 `expectation_as_of`、预测发布日期和 `expectation_age_days`。
+- 无历史快照时，为每家机构只保留事件前最后一份目标年度归母净利润预测进行公开重建，并披露机构数、均值、中位数、区间和最新日期；少于 3 家标记小样本。
+- 旧预测不因发布时间较早自动剔除；检查它是否仍是事件前最后可得值、是否已吸收此前重大公开信息，并把失效或明显滞后的样本单列说明。
+- 当前滚动 F10、搜索缓存和事后页面须核对底层预测日期；只有能确认成分均形成于事件前且没有事后回填时，才可作为较低置信度的公开重建。
+- F10 或研报只写“净利润”时先核对表头、脚注和定义；无法确认是否归母时记录 `consensus_metric=unresolved`，比较结果为 `N/A`。
+- A 股统一使用 `最新单季度扣非归母×4` 对比事件前机构目标年度归母共识，记录 `company_metric=annualized_single_quarter_deducted_attributable_net_profit`、`consensus_metric=fy_attributable_net_profit` 和 `comparison_basis=annualized_quarterly_deducted_vs_fy_attributable_consensus`。
+- 使用 `(单季度扣非年化值-机构全年归母共识)/abs(机构全年归母共识)`；年化低值高于共识记 `above`，年化高值低于共识记 `below`，否则记 `straddles`，证据不足记 `insufficient`，字段为 `annualized_core_gap_status`。主结论写“按单季扣非年化口径超预期/区间跨越/低于预期/证据不足”，不得事后自设容忍带；该跨期间、跨指标判断的 `formal_surprise_status=N/A`。
+- 正式定期报告、业绩预告和业绩快报使用同一计算逻辑；正式报告发布后以正式值替换预告值。凡累计值都必须先反推最新单季：`Q2扣非=H1扣非-Q1扣非`、`Q3扣非=前三季度扣非-H1扣非`、`Q4扣非=全年扣非-前三季度扣非`，再乘 4。记录 `company_value_type=actual_quarter|preannouncement_quarter_range|derived_quarter`、`derivation_formula`、`annualization_factor=4`、来源和舍入误差；无法取得或可靠反推单季度扣非时为 `N/A`。
+- 同时列示公司归母、扣非与非经常性损益影响，解释单季年化 beat/miss 的质量；机构另有扣非预测时只作辅助同口径参照，不替代用户指定主口径。
+- 公司归母与扣非均为区间且公告未说明端点对应同一情景时，不得机械用低值减低值；非经常性损益影响范围使用 `[归母低值-扣非高值, 归母高值-扣非低值]`。
+- 机构全年归母共识为负、零或接近零时以金额差为主并把百分比标为 `N/M`。必须提示季节性、周期价格、补贴、费用或确认节奏可能使单季乘 4 失真。
+- 计算 PE(TTM) 时也使用 `当前总市值/(最新单季度扣非归母×4)`，记录市值时点和 `valuation_basis=latest_single_quarter_deducted_attributable_net_profit_x4`；区间利润输出反向 PE 区间，年化利润不为正时写 `N/A/不适用`。输出标为“PE(TTM，用户口径)”，不得与最近四季度利润之和计算的市场标准 PE(TTM) 混写。
 
 解释 beat/miss 来自需求、价格、结构、拉货、成本、税率、股本、一次性项目还是会计因素。可用 `clean_beat`、`low_quality_beat`、`mixed`、`beat_and_raise`、`thesis_break` 或 `evidence_insufficient`，但不必为简单任务贴标签。
 

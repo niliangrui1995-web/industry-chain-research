@@ -57,6 +57,44 @@
 
 候选可分为 `main_candidate`、`watch`、`event_trade_only`、`theme_adjacent`、`reject`。不要为凑数强行给出三家公司。
 
+## 盈利预期差
+
+公司深研、个股比较、估值或投资判断必须加入最近一次可用业绩事件的预期检查：
+
+| 字段 | 规则 |
+|---|---|
+| 事件与时点 | 记录业绩、预告、快报或指引的期间、披露时间，以及事件前最后可得的 `expectation_as_of`；不要求预测在前一日更新 |
+| 预期来源 | 优先历史 point-in-time 数据；否则为每家机构只保留事件前最后一份目标年度归母净利润预测 |
+| 样本质量 | 披露机构数、均值、中位数、最小/最大值、预测发布日期、`expectation_age_days`、失效或排除项；少于 3 家标记小样本 |
+| 必须核对 | 币种、合并范围、归母定义、扣非口径、单季度来源、预告/实际性质和舍入误差 |
+| A 股主比较口径 | `最新单季度扣非归母×4` 对比事件前机构目标年度归母共识，记录 `comparison_basis=annualized_quarterly_deducted_vs_fy_attributable_consensus` |
+| 次要参照 | 可列机构扣非预测、公司归母、非经常性损益或标准最近四季度 PE，但不得替代用户指定主口径 |
+| 结果 | 输出 `annualized_core_gap_status=above|straddles|below|insufficient`，结论写“按单季扣非年化口径超预期/区间跨越/低于预期/证据不足”；`formal_surprise_status=N/A` |
+| 缺口 | 找不到公告前全年归母共识、机构“净利润”定义不明或无法取得单季度扣非时写 `N/A`；股价反应不得替代预期差 |
+
+主口径使用：
+
+```text
+annualized_quarterly_deducted = latest_single_quarter_deducted_attributable_net_profit * 4
+annualized_core_gap =
+    (annualized_quarterly_deducted - pre_event_fy_attributable_consensus)
+    / abs(pre_event_fy_attributable_consensus)
+```
+
+正式定期报告、业绩预告和业绩快报使用同一计算逻辑；正式报告发布后以正式值替换预告值。累计披露必须先反推最新单季，例如 `Q2扣非=H1扣非-Q1扣非`、`Q3扣非=前三季度扣非-H1扣非`、`Q4扣非=全年扣非-前三季度扣非`，再乘 4；记录 `company_value_type=actual_quarter|preannouncement_quarter_range|derived_quarter`、`derivation_formula`、来源和舍入误差。预告为区间时对单季低值、中值和高值分别乘 4：年化低值高于共识为 `above`，年化高值低于共识为 `below`，否则为 `straddles`。机构归母共识为负、零或接近零时以金额差为主并把百分比标为 `N/M`；公司扣非既未披露又无法可靠反推时为 `N/A`。
+
+这是用户指定的跨期间、跨指标 run-rate 检验，不是市场标准同期间 surprise。必须同时展示单季扣非、乘数 4、年化值、机构全年归母共识和公式，并提示季节性、补贴确认、费用节奏或周期价格可能使单季年化失真。旧预测不因发布时间较早自动失效；检查它是否仍是事件前市场最后可得值、是否已吸收此前重大公开信息。公司指引、市场共识和前期实际值是三个独立基准，不混写。
+
+## PE(TTM) 用户口径
+
+除非用户另行指定，估值统一使用：
+
+```text
+PE_TTM_user = total_market_cap_as_of / (latest_single_quarter_deducted_attributable_net_profit * 4)
+```
+
+使用总市值而非流通市值，市值与利润保持同币种并记录行情时点。单季扣非为区间时，PE 区间为 `[市值/(单季扣非高值×4), 市值/(单季扣非低值×4)]`；年化利润小于等于 0 时写 `N/A/不适用`。记录 `valuation_basis=latest_single_quarter_deducted_attributable_net_profit_x4`。行业标准 trailing P/E 通常使用最近四个季度利润之和，因此输出必须标为“PE(TTM，用户口径)”并展示公式，避免与行情商标准 PE(TTM) 混淆。
+
 ## 三层排序
 
 只在用户要求股票比较、排序或交易判断时使用：
