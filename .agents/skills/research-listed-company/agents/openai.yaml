@@ -1,0 +1,4 @@
+interface:
+  display_name: "上市公司深度研究"
+  short_description: "核验生意本质、护城河、管理层、预期差、估值与最强反方"
+  default_prompt: "Use $research-listed-company to conduct evidence-first listed-company research and state the strongest falsifiable bear case."

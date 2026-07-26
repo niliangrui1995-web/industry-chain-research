@@ -4,8 +4,9 @@
 
 - 仓库技能位于 `.agents/skills/`，由 Codex 自动发现。
 - 本项目覆盖账户级“每次先查四份路由文件”的细节：普通任务直接按当前技能列表和任务语义选择；仅在技能维护、技能缺失/冲突或路由确实无法判断时，才查询 `C:\Users\Administrator\.codex\skill-routing`。
-- 投研任务可使用 `user-investment-framework`；简单、常识性或非实时问题允许直接回答。
-- 默认最多加载 1 个领域技能和 1 个数据、文件或状态技能。不要使用固定技能栈，也不要为展示流程调用重复的通用推理技能。
+- 按问题语义选择唯一领域入口：上市公司深研用 `research-listed-company`，产业链用 `research-industry-chain`，财报/电话会用 `earnings-call-investment-analyst`，收益安全用 `income-investment`，持续跟踪用 `a-share-company-tracking`，两融压力/顶部共振用 `a-share-leverage-capitulation-analyst`，个人市场周期/过热纪律用 `user-investment-discipline`，最近 AI 消息核验用 `ai-chain-research-orchestrator`；公告、行情和本地数据技能只作相应证据伴侣。简单、常识性或非实时问题允许直接回答。
+- 决策关键的市值、预期差、估值、覆盖率、单位换算或派生数字，必须附加 `financial-evidence-audit`；核验失败或口径冲突时不得准出确定性结论。
+- 默认最多加载 1 个领域技能和 1 个数据、文件或状态技能；命中决策关键数字时，`financial-evidence-audit` 作为额外强制准出门，不计作第二领域技能。不要使用固定技能栈，也不要为展示流程调用重复的通用推理技能。
 - 非投研任务不要加载投研框架；按任务使用当前会话的全局技能、插件或原生工具。
 
 ## 投研硬边界
@@ -26,4 +27,5 @@
 ## 输出与维护
 
 - 结论先行，按问题给证据、关键假设、最大风险和跟踪指标；快速问题不强行生成大表或完整报告。
+- 所有自动化任务的最终对话结果、运行摘要、告警、失败原因和其他用户可见文本必须使用中文；ticker、代码、文件名、URL、字段名、精确标签和必要英文枚举可保留原文。
 - 保持中文、路径和文档编码；实质修改后先报告并等待用户确认，再按账户级规则提交和推送。

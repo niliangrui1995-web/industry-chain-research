@@ -24,16 +24,20 @@ EXPECTED_PROJECT_SKILLS = {
     "a-share-leverage-capitulation-analyst",
     "ai-chain-research-orchestrator",
     "earnings-call-investment-analyst",
+    "financial-evidence-audit",
     "ht-local-market-data",
+    "income-investment",
     "research-industry-chain",
-    "user-investment-framework",
+    "research-listed-company",
+    "user-investment-discipline",
 }
 SKILL_HEALTH_OVERRIDES = Path.home() / ".codex" / "skill-routing" / "skill-health-overrides.json"
 DEFAULT_DOCS = [
     ROOT / "README.md",
     ROOT / "AGENTS.md",
     ROOT / "SKILL_PACK_MANIFEST.md",
-    SKILL_ROOT / "user-investment-framework" / "references" / "tool-boundaries.md",
+    SKILL_ROOT / "research-listed-company" / "SKILL.md",
+    SKILL_ROOT / "financial-evidence-audit" / "SKILL.md",
 ]
 PYTHON_FILES = [
     ROOT / "scripts" / "update_tungsten_price_tracker.py",
@@ -45,6 +49,8 @@ PYTHON_FILES = [
     SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "audit_market_data.py",
     SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "fetch_szse_margin_repairs.py",
     SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "leverage_capitulation_backtest.py",
+    SKILL_ROOT / "financial-evidence-audit" / "scripts" / "financial_evidence_audit.py",
+    SKILL_ROOT / "research-industry-chain" / "scripts" / "validate_bottleneck_evidence.py",
 ]
 SECRET_PATTERNS = [
     ("openai_key", re.compile(r"\b(?:sk-proj-[A-Za-z0-9_-]{40,}|sk-[A-Za-z0-9]{32,})\b")),
@@ -119,23 +125,41 @@ def check_routing_consistency() -> CheckResult:
     readme = read_text(ROOT / "README.md")
     agents = read_text(ROOT / "AGENTS.md")
     manifest = read_text(ROOT / "SKILL_PACK_MANIFEST.md")
-    framework = read_text(SKILL_ROOT / "user-investment-framework" / "SKILL.md")
-    boundaries = read_text(SKILL_ROOT / "user-investment-framework" / "references" / "tool-boundaries.md")
+    company = read_text(SKILL_ROOT / "research-listed-company" / "SKILL.md")
+    industry = read_text(SKILL_ROOT / "research-industry-chain" / "SKILL.md")
+    income = read_text(SKILL_ROOT / "income-investment" / "SKILL.md")
+    discipline = read_text(SKILL_ROOT / "user-investment-discipline" / "SKILL.md")
+    audit = read_text(SKILL_ROOT / "financial-evidence-audit" / "SKILL.md")
 
     problems: list[str] = []
     required_pairs = [
-        ("README.md", readme, "项目技能已迁到 Codex 标准仓库路径 `.agents/skills/`"),
+        ("README.md", readme, "项目技能位于 Codex 标准仓库路径 `.agents/skills/`"),
         ("AGENTS.md", agents, "仓库技能位于 `.agents/skills/`"),
         ("SKILL_PACK_MANIFEST.md", manifest, "项目技能根目录：`.agents/skills/`"),
-        ("user-investment-framework/SKILL.md", framework, "默认最多选择 1 个领域技能和 1 个数据、文件或状态技能"),
-        ("tool-boundaries.md", boundaries, "## 写入与账户硬门"),
+        ("research-listed-company/SKILL.md", company, "financial-evidence-audit"),
+        ("research-industry-chain/SKILL.md", industry, "需求超过合格供给"),
+        ("income-investment/SKILL.md", income, "不得对所有行业机械使用 EPS payout"),
+        ("user-investment-discipline/SKILL.md", discipline, "每一次都一样！！！"),
+        ("financial-evidence-audit/SKILL.md", audit, "投资数字的强制准出门"),
     ]
     for path, text, needle in required_pairs:
         if needle not in text:
             problems.append(f"{path}: missing `{needle}`")
 
-    for path, text in [("README.md", readme), ("AGENTS.md", agents), ("user-investment-framework/SKILL.md", framework)]:
-        for needle in ["skills/user-investment-framework", "skills/industry-research-router", "`industry-research-router` +"]:
+    active_route_docs = [
+        ("README.md", readme),
+        ("AGENTS.md", agents),
+        ("research-listed-company/SKILL.md", company),
+        ("research-industry-chain/SKILL.md", industry),
+        ("income-investment/SKILL.md", income),
+        ("user-investment-discipline/SKILL.md", discipline),
+    ]
+    for path, text in active_route_docs:
+        for needle in [
+            "user-investment-framework",
+            "skills/industry-research-router",
+            "`industry-research-router` +",
+        ]:
             if needle in text:
                 problems.append(f"{path}: legacy routing text still present: `{needle}`")
 
@@ -160,6 +184,7 @@ def check_skill_library_layout() -> CheckResult:
         "industry-research-router",
         "browser-grok-gemini-research",
         "semiconductor-ai-chain-investment-researcher",
+        "user-investment-framework",
     ]
     for name in sorted(actual & EXPECTED_PROJECT_SKILLS):
         skill_dir = SKILL_ROOT / name
@@ -172,8 +197,8 @@ def check_skill_library_layout() -> CheckResult:
         lines = text.splitlines()
         if len(lines) > 180:
             problems.append(f"{name}: SKILL.md is {len(lines)} lines; expected <= 180")
-        if name == "user-investment-framework" and len(lines) > 100:
-            problems.append(f"{name}: master entrypoint is {len(lines)} lines; expected <= 100")
+        if name == "user-investment-discipline" and len(lines) > 100:
+            problems.append(f"{name}: discipline entrypoint is {len(lines)} lines; expected <= 100")
         frontmatter = re.match(r"\A---\s*\n(.*?)\n---\s*\n", text, flags=re.DOTALL)
         if not frontmatter:
             problems.append(f"{name}: invalid frontmatter")

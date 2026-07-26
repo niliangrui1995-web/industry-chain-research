@@ -8,11 +8,12 @@
 
 ## 运行前硬门
 
+0. 最终对话结果、运行摘要、告警、失败原因和其他用户可见文本必须使用中文；ticker、代码、文件名、URL、字段名和必要英文枚举可保留原文。
 1. 先阅读并遵守 `D:\vcp_hunter\产业链投研\AGENTS.md`。
-2. 调用并遵守两个项目本地技能，其余研究由当前高能力模型直接完成：
-   - `D:\vcp_hunter\产业链投研\.agents\skills\user-investment-framework\SKILL.md`
+2. 调用并遵守两个项目本地领域/数据技能；涉及市值、预期差、估值或派生财务计算时，再调用 `financial-evidence-audit`：
+   - `D:\vcp_hunter\产业链投研\.agents\skills\earnings-call-investment-analyst\SKILL.md`
    - `D:\vcp_hunter\产业链投研\.agents\skills\a-share-disclosure-trading-data\SKILL.md`
-   不再预加载兼容路由、搜索、摘要、公司分析和评分技能。
+   财报 skill 自带公司基线；不再并行加载 `research-listed-company`，也不预加载兼容路由、搜索、摘要和评分技能。
 3. 不创建、更新或暂停其他自动化；不提交 Git；不推送；不改紫金研选代码；只读紫金研选数据源。
 4. 不打开紫金研选 UI。用本地持久化状态读取业绩异动 Tab 数据。
 5. 任务使用最高能力配置运行；但若 24 小时内没有新增股票，完成本地读取和过滤确认后即可快速结束，不为了保持任务长度而联网或深挖。

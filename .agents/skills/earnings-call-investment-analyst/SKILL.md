@@ -27,12 +27,14 @@ description: Analyze public-company earnings releases, financial results, guidan
 
 找不到官方 transcript 或 replay 不是停止理由；换用搜索、浏览器、页面源码、网络请求、直接下载或可靠 provider。脚本失败也不是停止理由。
 
+所有会改变 beat/miss、估值、业绩质量或投资结论的计算与多源数字冲突都必须使用 `financial-evidence-audit`。审计为 `FAIL / blocked` 或冲突尚未解释时，阻断相关数值结论；电话会原始材料暂缺但没有未解决数值冲突时，才可按 fallback 证据给出 provisional 文字判断。
+
 ## 自适应流程
 
 1. **建立公司基线**：用一段话说明卖什么、客户是谁、如何赚钱；只列会影响本季度解读的业务线、竞争位置和 KPI。
-2. **确定比较口径**：确认当前财季和前一财季，收集事件前市场最后可得的 point-in-time 全年归母共识、前期指引和前一季度官方实际值；不要求机构预测在前一日更新，但要记录预测发布日期和新鲜度。A 股正式报告、预告和快报均先取得或由累计官方数据反推最新单季度扣非归母，再乘 4 对比机构全年归母共识；正式报告发布后替换预告值。记录 `comparison_basis=annualized_quarterly_deducted_vs_fy_attributable_consensus`；指标含义或单季扣非无法确认时写 `N/A`。
-3. **核对结果与指引**：分开归母与扣非、GAAP 与 non-GAAP，检查收入、利润率、EPS、现金流、资产负债和关键分部；结论写明这是用户定义的单季年化 run-rate 判断。需要 PE(TTM) 时按 `当前总市值/(最新单季度扣非归母×4)` 计算并标注市值时点，年化利润不为正时写 `N/A/不适用`。
-4. **提取电话会增量**：关注需求、订单、客户、价格、产能、良率、库存、供应链、监管、融资和分析师 Q&A；与前一季度同类事件比较。
+2. **确定比较口径**：确认当前财季和前一财季，收集事件前市场最后可得的 point-in-time 全年归母共识、前期指引和前一季度官方实际值；不要求机构预测在前一日更新，但要记录预测发布日期和新鲜度。A 股正式报告、预告和快报均先取得或由累计官方数据反推最新单季度扣非归母，再乘 4 对比机构全年归母共识；正式报告发布后替换预告值。记录 `comparison_basis=annualized_quarterly_deducted_vs_fy_attributable_consensus`；指标含义或单季扣非无法确认时写 `N/A`。非 A 股的 reported actual 与公司 forward guidance 分别使用 `expectation_surprise` 的 `subject_kind=reported_actual|company_guidance`，只对事件前同期间、同指标、同 GAAP/non-GAAP 口径共识形成正式 beat/meet/miss。
+3. **核对结果、指引与财务质量**：分开归母与扣非、GAAP 与 non-GAAP，检查收入、利润率、EPS、现金流、资产负债和关键分部；同时核对关联交易、SBC 及稀释、或有负债/承诺、会计政策或分部重分类，以及应收、库存、经营现金流和 capex 与收入/利润的异常关系。异常关系只是调查 lead，必须核实口径和公司解释后再判断。仅当 `market=A-share` 且任务或用户明确要求用户 run-rate 时，才按 `当前总市值/(最新单季度扣非归母×4)` 输出 `PE(TTM，用户口径)`；非 A 股使用同一 GAAP/non-GAAP 口径的标准 TTM 或明确标注的 forward denominator，不能取得可比值时写 `N/A`，不得把单季×4冒充标准 PE(TTM)。决策关键计算和来源冲突按 `financial-evidence-audit` 准出。
+4. **提取电话会增量**：关注需求、订单、客户、价格、产能、良率、库存、供应链、监管和融资；从上一期材料提取可衡量且已到期的承诺，核对本期兑现、部分兑现、未兑现、撤回或无法验证。对尖锐 Q&A 记录是否正面回答、是否给出数字/时间表和是否回避；语气变化只能作为继续核验的 lead，不能单独支撑投资结论。与前一季度同类事件比较时控制来源完整性差异。
 5. **检查需求和瓶颈**：明确管理层是否提及下游需求和上游约束；没有提及就写 `not_mentioned`，不要用行业新闻补成管理层观点。
 6. **形成投资解读**：区分事实、管理层主张、外部分析和自身推断；给反转条件与后续 KPI。只有重要且不确定性可量化时才做情景分析。
 
@@ -44,6 +46,7 @@ description: Analyze public-company earnings releases, financial results, guidan
 
 - 原始来源、webcast、transcript 或音频收集：[references/source-workflow.md](references/source-workflow.md)
 - 证据包字段：[references/evidence-schema.md](references/evidence-schema.md)
+- 决策关键计算、来源独立性和准出：`financial-evidence-audit`
 - 官方来源清单：`scripts/source_discovery.py`
 - webcast 资产探测：`scripts/webcast_asset_fetcher.py`
 - HLS 字幕合并：`scripts/caption_playlist_fetcher.py`
@@ -57,6 +60,6 @@ description: Analyze public-company earnings releases, financial results, guidan
 
 结论先行，按问题需要展示数字对比、指引、电话会增量、前季变化、下游需求、上游瓶颈、投资解读、风险和跟踪指标。完整深挖必须说明：
 
-`company_original_status`、`call_content_status`、`final_source_type`、`missing_materials`、`provisional true/false`、`confidence level`。
+`company_original_status`、`call_content_status`、`final_source_type`、`missing_materials`、`provisional true/false`、`confidence level`、`calculation_audit_status`、`audit_release_status`、`audit_artifact`、`audit_blockers`、`unresolved_numeric_conflicts`。
 
-资料不完整时给 provisional 结论和明确缺口，不为满足模板编造数字、管理层表述或上游瓶颈。
+电话会材料不完整时按 fallback 路径给 provisional 结论和明确缺口，不为满足模板编造数字、管理层表述或上游瓶颈。未解决数值冲突、口径不一致或计算审计失败时，不得用 provisional 绕过阻断。

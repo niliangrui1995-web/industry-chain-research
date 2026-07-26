@@ -33,12 +33,17 @@ Calendar caveat: [one-line caveat explaining official, estimate, conflict, skipp
 
 ## Prompt Body
 
+OUTPUT LANGUAGE HARD GATE: Every user-visible final result, run summary, warning, failure reason, and conclusion must be written in Chinese. Keep only tickers, code, filenames, URLs, field names, exact labels, and required enums in their original form.
+
 CHILD TASK SKILL HARD GATE: At the start of this single-company child task, before collecting or analyzing anything, invoke and follow the skill earnings-call-investment-analyst. The standard project-local skill directory is D:\vcp_hunter\产业链投研\.agents\skills\earnings-call-investment-analyst. Project-local skill resolution is successful if that SKILL.md exists and you follow it as the task skill; absence from the global skill inventory alone is not missing_skill. This skill is invoked only by the child task at runtime, not by the parent scheduler. If the child task cannot invoke it from that project location, stop immediately and report missing_skill: earnings-call-investment-analyst. Do not silently substitute another skill or generic search for the skill invocation. Reading SKILL.md is valid only when its workflow is actually followed.
+
+FINANCIAL EVIDENCE AUDIT HARD GATE: Before publishing any decision-critical number, comparison, beat/miss judgment, valuation, or derived financial conclusion, invoke and follow the project-local skill financial-evidence-audit at D:\vcp_hunter\产业链投研\.agents\skills\financial-evidence-audit. Build the required evidence package and run its deterministic audit rather than relying on mental arithmetic. A `FAIL`, `blocked`, unresolved conflict, missing required provenance, or missing skill blocks only the affected numerical conclusion and every downstream conclusion that depends on it; it cannot be bypassed by a provisional label. Report `missing_skill: financial-evidence-audit` when the skill is unavailable.
 
 ## Scope
 
 - Analyze only the company and ticker specified in the header. Do not turn this task into a sector overview or multi-company comparison.
 - Invoke `earnings-call-investment-analyst` first. Only after that skill is successfully invoked may you collect materials, verify financials, analyze the call, and form an investment judgment.
+- Invoke `financial-evidence-audit` for every decision-critical calculation or source conflict before numerical release. Preserve the audit input and result paths in the final output.
 - Collect and verify the company's IR materials, earnings release, financial statements, presentation, SEC or exchange filings, conference call, earnings webcast, results briefing, investor meeting, audio/video replay, transcript, captions, and Q&A when available.
 
 ## Fundamental Baseline Hard Constraint
@@ -125,6 +130,7 @@ Verify and analyze:
 - call, webcast, results-briefing, investor-meeting, and Q&A evidence on outlook, customer ordering intent, AI/data-center demand, pricing, inventory, lead times, capacity, upstream bottlenecks, and supply-chain impact
 - changes versus the resolved prior-quarter conference call, earnings webcast, results briefing, or investor meeting, using prior-quarter transcript/replay/captions or reliable third-party full transcript when official event content is unavailable
 - whether the quarter was above expectations, in line, below expectations, or not sufficiently evidenced
+- whether forward guidance was above expectations, in line, below expectations, straddling, or not sufficiently evidenced; audit non-A-share reported actual and guidance comparisons with `expectation_surprise` using `subject_kind=reported_actual|company_guidance`
 - confidence level and the evidence tier supporting that confidence
 
 ## Final Output Requirement
@@ -139,3 +145,8 @@ The final Chinese output must include:
 - `missing_materials`
 - `provisional true/false`
 - `confidence level`
+- `calculation_audit_status`
+- `audit_release_status`
+- `audit_artifact`
+- `audit_blockers`
+- `unresolved_numeric_conflicts`

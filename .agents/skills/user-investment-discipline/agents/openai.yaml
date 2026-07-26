@@ -1,0 +1,4 @@
+interface:
+  display_name: "用户投资纪律"
+  short_description: "在市场周期、过热、追涨、扩仓或加杠杆时执行用户风险纪律"
+  default_prompt: "Use $user-investment-discipline when the request triggers the user market-cycle or emotional-risk rules."

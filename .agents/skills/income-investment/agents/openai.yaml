@@ -1,0 +1,4 @@
+interface:
+  display_name: "收益型投资研究"
+  short_description: "核验派息现金覆盖、行业专用指标、减息情景、税务币种和收益陷阱"
+  default_prompt: "Use $income-investment to assess distribution durability with sector-specific cash coverage, cut scenarios, tax, currency, and portfolio boundaries."

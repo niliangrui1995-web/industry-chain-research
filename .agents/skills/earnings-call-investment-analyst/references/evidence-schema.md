@@ -39,6 +39,8 @@ For example, a Quartr audio file can be `source_type: original_call_audio` and `
   "quarter": "Q1",
   "fiscal_year": "2026",
   "company_original_status": "found | partial | missing | unavailable",
+  "call_content_status": "official_complete | official_partial | fallback_complete | fallback_partial | missing",
+  "missing_materials": [],
   "provisional": false,
   "fallback_completed": false,
   "recheck_after": "ISO-8601 timestamp or empty string",
@@ -53,6 +55,10 @@ For example, a Quartr audio file can be `source_type: original_call_audio` and `
   "guidance": {},
   "consensus": {},
   "valuation": {},
+  "calculation_audits": [],
+  "financial_quality_checks": [],
+  "management_commitments": [],
+  "qa_assessments": [],
   "call_takeaways": [],
   "risk_flags": [],
   "evidence_ledger": [],
@@ -180,7 +186,8 @@ Use this object for reported financial results:
   "comparisons": [
     {
       "source_period": "Q2 FY2026",
-      "company_metric": "annualized_single_quarter_deducted_attributable_net_profit",
+      "company_metric": "deducted_attributable_net_profit",
+      "derived_metric": "annualized_single_quarter_deducted_attributable_net_profit",
       "company_value_type": "actual_quarter | preannouncement_quarter_range | derived_quarter",
       "quarterly_value_low": 0,
       "quarterly_value_mid": 0,
@@ -207,11 +214,17 @@ Use this object for reported financial results:
 }
 ```
 
+For non-A-share reported actual or company guidance surprise, retain the
+`financial-evidence-audit` `expectation_surprise` artifact with
+`subject_kind=reported_actual|company_guidance`, same-period/same-metric/same-basis
+consensus lineage, explicit meet band, and PIT source dates. Do not reuse the A-share
+annualized-quarter comparison object for global GAAP/non-GAAP results or guidance.
+
 For A-share comparisons, annualize the latest single-quarter deducted attributable profit by multiplying it by four, compare it with the pre-event full-year attributable-profit consensus, use `comparison_basis: annualized_quarterly_deducted_vs_fy_attributable_consensus`, and keep `formal_surprise_status: N/A`. A derived quarter must use same-company official cumulative disclosures on the same accounting basis and include `derivation_formula`. Preserve the raw quarterly values and `annualization_factor: 4`; do not store only the annualized result.
 
 ## Valuation Object
 
-Use this object when PE(TTM) is requested. It records the user's single-quarter annualized convention rather than a standard trailing-four-quarter multiple.
+Use this object only when `market=A-share` and the task or user explicitly requests the single-quarter annualized convention. It is not a standard trailing-four-quarter multiple. For non-A-share companies, use a same-basis standard TTM or explicitly labeled forward denominator and the generic valuation audit contract.
 
 ```json
 {
@@ -236,6 +249,93 @@ Use this object when PE(TTM) is requested. It records the user's single-quarter 
 ```
 
 For a positive profit range, calculate the PE range in reverse order: `pe_ttm_user_low = market_cap / annualized_deducted_profit_high` and `pe_ttm_user_high = market_cap / annualized_deducted_profit_low`. Keep market cap and profit in the same currency and label the output `PE(TTM, user-defined)` or `PE(TTM，用户口径)`.
+
+## Calculation Audit Object
+
+Use this for every decision-critical calculation or reconciliation. It records the `financial-evidence-audit` result; it does not duplicate the full audit artifact.
+
+```json
+{
+  "id": "CA001",
+  "calculation_type": "qoq | yoy | expectation_gap | derived_quarter | annualization | market_cap | pe | sbc_dilution | cash_conversion | other",
+  "input_periods": ["Q1 FY2026", "Q2 FY2026"],
+  "currency": "CNY",
+  "unit": "million",
+  "metric_basis": "reported | deducted_nonrecurring | adjusted_non_gaap | other",
+  "source_refs": ["S001", "S010"],
+  "origin_ids": ["issuer-filing-Q2FY2026", "consensus-snapshot-2026-07-20"],
+  "calculation_audit_status": "PASS | FAIL | ERROR | not_run",
+  "audit_release_status": "publishable | blocked | provisional | invalid_input",
+  "audit_artifact": "path to retained JSON audit record or empty string",
+  "audit_blockers": ["blocking code or evidence gap"],
+  "unresolved_numeric_conflicts": [],
+  "notes": "Explain period, unit, definition, lineage, rounding, or conflict resolution."
+}
+```
+
+An audit `PASS` confirms only that the supplied inputs meet the declared calculation and evidence contract. It does not prove that an unsupported input is true. `FAIL`, a non-publishable `audit_release_status`, non-empty `audit_blockers`, or unresolved numeric conflicts block the related beat/miss, valuation, dilution, financial-quality, or investment conclusion.
+
+## Financial Quality Check Object
+
+Use this for footnotes and cross-statement relationships. An unusual relationship is a research lead until its accounting basis, company explanation, and period comparability are verified.
+
+```json
+{
+  "check_type": "related_party | sbc_dilution | contingency_or_commitment | accounting_policy_change | segment_reclassification | receivables_vs_revenue | inventory_vs_revenue | operating_cash_flow_vs_net_income | capex_or_capitalization",
+  "periods": ["Q2 FY2026", "Q2 FY2025"],
+  "observations": "Source-backed facts and any company explanation",
+  "status": "lead | explained | warning | material_risk | not_disclosed | not_comparable | evidence_absent",
+  "investment_meaning": "Why this may or may not change earnings quality or valuation",
+  "source_refs": ["S001", "S002"],
+  "calculation_audit_refs": ["CA004"],
+  "follow_up": "What evidence or later period should resolve the issue"
+}
+```
+
+For related parties record the counterparty, relationship, transaction nature, amount, pricing basis, and balance where disclosed. For SBC record both the accounting add-back and actual diluted-share effect. For contingencies record the obligation, possible timing, disclosed range, and why an amount is not estimable. For accounting-policy or segment changes preserve the old and new basis and whether prior periods were restated.
+
+## Management Commitment Object
+
+Track only measurable or otherwise verifiable prior management commitments. Do not treat aspirations or generic confidence statements as commitments.
+
+```json
+{
+  "id": "MC001",
+  "commitment": "Reach gross margin of X-Y% in Q2 FY2026",
+  "stated_at": "Q1 FY2026 call",
+  "due_period": "Q2 FY2026",
+  "metric_or_event": "gross_margin",
+  "target": "X-Y%",
+  "original_source_refs": ["S004"],
+  "current_result": "Reported result or event evidence",
+  "result_source_refs": ["S001", "S005"],
+  "status": "fulfilled | partially_fulfilled | missed | walked_back | not_yet_due | unverifiable",
+  "assessment": "Explain basis changes, external conditions, or why verification is impossible"
+}
+```
+
+Only commitments whose due period has arrived and whose original target and current result are comparable may be marked fulfilled, partially fulfilled, missed, or walked back. Do not calculate an aggregate fulfillment rate from non-comparable or selectively disclosed commitments.
+
+## Q&A Assessment Object
+
+Use this for decision-relevant analyst questions, especially questions about guidance gaps, margins, cash flow, customer loss, inventory, regulation, financing, accounting, or prior commitments.
+
+```json
+{
+  "question": "Paraphrased question",
+  "why_it_matters": "Decision relevance",
+  "management_answer": "Short paraphrase or compliant excerpt",
+  "directness": "direct | partial | evasive | not_answered | source_incomplete",
+  "numeric_or_timeline_support": "Specific support or none",
+  "tone_observation": "Optional observation",
+  "tone_lead_only": true,
+  "follow_up": "Evidence needed next",
+  "source_refs": ["S004"],
+  "timestamp": "00:42:10"
+}
+```
+
+Tone, pauses, wording, or emotion may create a lead but cannot alone support a conclusion about integrity, orders, demand, or financial performance. Do not compare tone when the two periods use materially different source types or completeness.
 
 ## Call Takeaway Object
 
@@ -296,10 +396,15 @@ Use this for every important conclusion or data point:
 - Every management statement should reference an official call transcript, official audio/video replay, official event platform, or `original_call_audio` when complete official media is unavailable.
 - Every third-party number should be labeled with provider and date.
 - Every A-share consensus comparison should record `expectation_as_of`, source quarter, raw quarterly deducted profit, `annualization_factor: 4`, annualized profit, full-year attributable consensus, `comparison_basis`, and company `value_type`; a derived quarter must record its formula and official source references.
-- Every user-defined PE(TTM) should record total market cap, `market_cap_as_of`, source quarter, annualized deducted-profit denominator, `valuation_basis`, and source references; return `N/A` when the denominator is non-positive.
+- Every A-share user-defined PE(TTM) should record total market cap, `market_cap_as_of`, source quarter, annualized deducted-profit denominator, `valuation_basis`, and source references; return `N/A` when the denominator is non-positive. Non-A-share valuation must not use this object.
+- Every decision-critical calculation must have a `calculation_audits` entry with independent source lineage, `calculation_audit_status: PASS`, and a publishable release before the derived number enters a formal conclusion. `FAIL`, `ERROR`, `not_run`, `blocked`, non-empty `audit_blockers`, or an unresolved numeric conflict must block the related conclusion and cannot be bypassed by setting `provisional: true`.
+- Financial-quality warnings must cite official or regulatory evidence when available. Receivables, inventory, cash-flow, capex, SBC, policy, or segment changes are investigation leads until period, unit, definition, consolidation scope, and company explanation are checked.
+- A management commitment may be graded only when the original commitment is measurable or verifiable, its due period has arrived, and both the original statement and current result have source references. Generic confidence language must not enter the commitment denominator.
+- A Q&A directness judgment must preserve the decision-relevant question, the management answer, source completeness, and any numerical or timeline support. Tone observations must remain `tone_lead_only: true` and cannot be sole evidence for an investment conclusion.
 - Third-party-hosted original call audio must not be listed as a company-hosted or official-event-hosted source.
 - When a reputable full transcript and original call audio are both available from fallback providers, use the full transcript as the primary working source and record audio only as targeted verification evidence unless full-audio ASR was explicitly requested.
 - The final analysis should not cite `media_or_analyst` as the sole source for reported results.
 - Missing official company materials must create a `gaps` entry.
 - A script returning no usable asset, 401/403, stale data, or a parser miss must create a `script_runs` entry if the script was run, and must not be treated as completion of fallback search.
 - If official transcript, official replay, official audio/video, and official complete captions are missing while the call analysis uses third-party transcript or third-party-hosted original audio, set `provisional: true`, set `fallback_completed: true` only after obtaining complete reliable fallback call content or documenting a reasonable source-specific search, list `missing_materials` in `gaps`, and set `recheck_after` when a near-term official replay/transcript update is likely.
+- Missing call material may therefore produce a provisional call interpretation through the documented fallback path, but official reported figures still require official/regulatory evidence when available, and unresolved numerical conflicts remain blocking.

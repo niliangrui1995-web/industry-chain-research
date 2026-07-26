@@ -5,17 +5,17 @@
 ## 角色和边界
 
 - 母任务只读取紫金研选寡头财报日历，并为严格未来 72 小时内需要启动分析的上市公司创建、更新或暂停独立的一次性“财报电话会深挖”子任务。
-- 母任务不得调用或执行 `earnings-call-investment-analyst`；该 skill 只允许单公司子任务运行时调用。
+- 母任务不得调用或执行 `earnings-call-investment-analyst` 或 `financial-evidence-audit`；这两个 skill 只允许单公司子任务运行时按先领域分析、后数值准出的顺序调用。
 - 所有母任务和子任务只在 `D:\vcp_hunter\产业链投研` 运行。
 - `D:\vcp_hunter\紫金研选` 只作为财报日历数据源和官方电话会时间写回目标。
-- 单公司子任务运行时必须使用项目本地 skill：`D:\vcp_hunter\产业链投研\.agents\skills\earnings-call-investment-analyst`。
+- 单公司子任务运行时必须使用项目本地 skill：`D:\vcp_hunter\产业链投研\.agents\skills\earnings-call-investment-analyst`，并在发布决策关键数字前使用 `D:\vcp_hunter\产业链投研\.agents\skills\financial-evidence-audit`。
 - 读取或写回紫金研选代码时，优先使用 `D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe`。若从产业链投研启动 Python，必须先把 `D:\vcp_hunter\紫金研选` 插入 `sys.path` 后再 import `domains.global_earnings_calendar.service`。
 
 ## 硬停条件
 
 出现以下情况时停止受影响操作并报告，不得创建或更新受影响子任务：
 
-- `D:\vcp_hunter\紫金研选`、`D:\vcp_hunter\产业链投研`、或项目本地 `earnings-call-investment-analyst` skill 缺失。
+- `D:\vcp_hunter\紫金研选`、`D:\vcp_hunter\产业链投研`、项目本地 `earnings-call-investment-analyst` 或 `financial-evidence-audit` skill 缺失。
 - venv Python 无法 import `requests`、`GlobalEarningsCalendarService` 或 `EarningsCalendarEvent`，报告 `environment_preflight_failed`。
 - 候选事件出现 ticker/company 不一致、ticker 后缀和 market 不一致、同 ticker 多公司、同 company 冲突 ticker、相邻串位或反向错配信号，且联网核验后仍无法解释，报告 `candidate_mapping_failed`。
 - 台湾 PCB 回归硬门失败：Wus 必须是 `2316.TW`，Compeq 必须是 `2313.TW`，Tripod 必须是 `3044.TW`。若本轮涉及台湾 PCB 且发现错配、重复、缺失或无法确认，报告 `ticker_company_mapping_failed`。
@@ -121,7 +121,7 @@ RRULE:FREQ=WEEKLY;BYDAY=<weekday>;BYHOUR=<hour>;BYMINUTE=<minute>;COUNT=1
 ^(?:DTSTART:\d{8}T\d{6}\n)?RRULE:FREQ=WEEKLY;BYDAY=(SU|MO|TU|WE|TH|FR|SA);BYHOUR=\d{1,2};BYMINUTE=\d{1,2};COUNT=1$
 ```
 
-- 子任务 prompt 必须按 `CHILD_PROMPT_TEMPLATE.md` 生成，并保留其中的 literal hard gate、project-local skill resolution、baseline、downstream demand outlook、upstream bottleneck evidence、source-quality、prior-quarter period resolution、QoQ growth、prior-quarter conference-call / earnings-webcast / results-briefing / investor-meeting comparison 和最终中文输出要求。子任务 prompt 正文必须使用英文；除本地路径和最终中文输出标签外，不要混用中文说明。
+- 子任务 prompt 必须按 `CHILD_PROMPT_TEMPLATE.md` 生成，并保留其中的双 skill hard gate、project-local skill resolution、财务证据审计准出、baseline、downstream demand outlook、upstream bottleneck evidence、source-quality、prior-quarter period resolution、QoQ growth、prior-quarter conference-call / earnings-webcast / results-briefing / investor-meeting comparison 和最终中文输出要求。子任务 prompt 正文必须使用英文；除本地路径和最终中文输出标签外，不要混用中文说明。
 - 已存在的未来 ACTIVE 子任务如果缺少上述 downstream demand outlook / prior-quarter / QoQ / prior-call comparison 标记，必须更新为当前 `CHILD_PROMPT_TEMPLATE.md` 正文；不得仅因 header、rrule、model、reasoningEffort 正确就视为有效。
 
 ## 子任务收尾清理
@@ -132,6 +132,8 @@ RRULE:FREQ=WEEKLY;BYDAY=<weekday>;BYHOUR=<hour>;BYMINUTE=<minute>;COUNT=1
 - 不暂停尚未运行且没有 completion evidence 的未来 ACTIVE children；只校验其 one-shot rrule，并报告 `pending_child_validated`。
 
 ## 最终汇报
+
+母任务和所有子任务的最终结果、运行摘要、告警、失败原因和其他用户可见文本必须使用中文；ticker、代码、URL、字段名、精确标签和必要英文枚举可保留原文。
 
 母任务完成后用中文汇报：
 

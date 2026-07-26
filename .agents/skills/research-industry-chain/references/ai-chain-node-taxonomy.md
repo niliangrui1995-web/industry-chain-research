@@ -1,6 +1,6 @@
 # AI Chain Node Taxonomy
 
-Use this reference when `user-investment-framework` handles AI data-center, AI hardware, semiconductor-chain, AI 产业链, bottleneck, node comparison, or listed-company mapping tasks.
+Use this reference when `research-industry-chain` handles AI data-center, AI hardware, semiconductor-chain, bottleneck, node comparison, or listed-company mapping tasks.
 
 This is a local node map, not an evidence source. It helps choose the exact industry-chain node before collecting demand, supply, pricing, customer, filing, or market evidence.
 
@@ -46,43 +46,24 @@ Do not treat `P0`, `P1`, or `P2` as an investment ranking by itself. These label
 
 ## Workflow Hook
 
-When the task is AI-chain related:
-
 1. If the user starts from a stock or company and the product/node is unknown, first identify the listed entity, official business lines, disclosed products, customer applications, and evidence grade. Do not choose a taxonomy node from the stock name alone.
 2. Search candidate product, material, equipment, component, process, or application terms in `节点清单`.
-3. Keep multiple candidate paths when the exposure is ambiguous. Mark each as `confirmed`, `partial clue`, `rumor only`, or `not found` according to the company evidence.
+3. Keep multiple candidate paths when the exposure is ambiguous. Mark each as `confirmed`, `partial_clue`, `rumor_only`, or `not_found`.
 4. Record the path at the narrowest useful level, usually Level 3 or Level 4 P0.
-5. Translate the path into the core demand bridge: `terminal demand -> downstream application/customer -> selected node -> company product/service -> revenue/ASP/margin path`.
-6. Use `P5摘要` only to expand source-search keywords for materials, equipment, processes, or components.
-7. Collect A/B evidence for demand, supply gap, pricing, customer validation, and company exposure.
+5. Translate the path into `terminal demand -> downstream application/customer -> selected node -> company product/service -> revenue/ASP/margin path`.
+6. Use `P5摘要` only to expand source-search keywords.
+7. Collect A/B evidence for demand, qualified supply, pricing, customer validation, and company exposure.
 8. Map listed companies only after the exact node and pass-through path are explicit.
 9. Keep final rankings separated into fundamental quality, earnings elasticity, and trading elasticity.
 
 ## Evidence Boundary
 
-The taxonomy can answer:
+The taxonomy can locate adjacent nodes and search terms. It cannot prove current demand acceleration, qualified-supply shortage, price or margin improvement, company customer/order/capacity/yield exposure, or investment quality. C-grade sources and model output can guide search but cannot prove a main bottleneck or main stock pick.
 
-- where a node sits in the AI data-center chain;
-- which upstream and downstream branches are adjacent;
-- what Level 3 or Level 4 granularity should be used for comparison;
-- which material, equipment, process, or component keywords may help source discovery.
-
-The taxonomy cannot answer by itself:
-
-- whether demand is currently accelerating;
-- whether qualified supply is short;
-- whether prices, ASP, ARPU, utilization, or margins are rising;
-- whether a company has official customer, order, capacity, yield, or revenue exposure;
-- whether a stock has fundamental quality, earnings elasticity, or trading elasticity.
-
-Use evidence grades from the main skill after node selection. C-grade sources and model output can guide search, but cannot prove a main bottleneck or main stock pick without A/B confirmation.
-
-## Output Requirement
-
-When this reference materially shapes the answer, include the node path in the analysis:
+When this reference materially shapes the answer, include:
 
 ```text
 taxonomy path: AI 数据中心 / 智算中心 > [Level 1] > [Level 2] > [Level 3] > [Level 4 P0 if available]
 ```
 
-If the exact path is unavailable or the user's topic falls outside the cleaned tree, state the gap and continue with the normal industry-chain workflow.
+If the path is unavailable, state the gap and continue with the normal industry-chain workflow.

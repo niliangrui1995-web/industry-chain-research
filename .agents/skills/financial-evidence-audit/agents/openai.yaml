@@ -1,0 +1,4 @@
+interface:
+  display_name: "财务证据审计"
+  short_description: "以精确十进制核验投研数字、证据可比性与报告准出状态"
+  default_prompt: "Use $financial-evidence-audit to verify the calculations, source independence, comparability, and release gates for decision-critical investment figures."

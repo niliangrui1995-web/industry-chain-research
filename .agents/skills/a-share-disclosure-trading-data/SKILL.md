@@ -41,6 +41,8 @@ description: Verify A-share official disclosures and trading events from CNINFO,
 
 TDX 或其他行情工具的涨跌停、封单、连板、板型、概念和原因揭秘标为 `secondary_trading_context`。它们可以解释市场反应或指导公告检索，不能确认订单、客户、产品暴露或业绩影响。
 
+需要决定 TDX 自然语言查询的市场范围、适用字段和证据等级时，读取 [references/tdx-finance-data-boundary.md](references/tdx-finance-data-boundary.md)。
+
 ## 输出
 
 返回紧凑证据表：
