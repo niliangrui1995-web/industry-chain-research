@@ -1,15 +1,18 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
-更新时间：2026-07-08（北京时间；A 股公司跟踪交易结构边界最小同步）
-最新报告：`artifacts/weekly_chain_tracking/ai_chain/2026-06-28.md`
+更新时间：2026-07-26（北京时间；第十一期全链雷达）
+最新报告：`artifacts/weekly_chain_tracking/ai_chain/2026-07-26.md`
+2026-07-26 全链周报完成：新增 [2026-07-26.md](2026-07-26.md)，主证据窗口为 2026-07-20 至 2026-07-26，并补扫 2026-06-29 至 2026-07-19。当前 5 个重点赛道为：云计算有效容量/服务器 CPU-memory-storage-parts、先进制程与后端封装测试、200G EML/合格 InP 前道、高频高速 PCB 材料组合、数据中心电力并网/电气设备/液冷。仅深挖前两项。
+2026-07-26 状态增量：Alphabet、Intel 与 TSMC 的最新官方披露分别确认云计算有效容量、服务器 CPU/广义 memory-substrate-parts、先进制程与后端封装测试存在需求超过有效供给；先进制程与后端封装测试升级为 `hard_bottleneck`。光模块专项把 hard 收窄为 `200G/lane EML + 合格 InP substrate/epiwafer/器件前道`；AI PCB 专项把高频高速铜箔整体升级为 `soft_bottleneck+`，但全链仍无 PCB hard。美国重点区域并网维持 `hard operational`，电气设备 `soft+`，液冷设施集成 `watch_to_soft`。
+覆盖窗口：2026-07-20 至 2026-07-26；补扫 2026-06-29 至 2026-07-19；北京时间
+当前阶段：第十一期全链雷达。当前硬卡点集中在合格/有效产能而非名义产能；HBM test/probe/Cube Prober、CPO 对准测试、HVLP5/Q cloth/M10、液冷设施集成、800VDC 和玻璃/替代基板继续列未来迁移，不跨节点升级。
+
 2026-07-08 A 股公司跟踪总账同步：云南锗业 002428.SZ 跌停龙虎榜、德福科技 301511.SZ 7 月 7-8 日同规格同卖方席位大宗交易、中际旭创 300308.SZ 7 月 7 日四笔平价大宗交易，分别由光模块专项与 AI PCB 专项承接；全链层只吸收交易结构、供给压力、席位/换手和拥挤度变化，不新增客户、订单、收入占比、ASP、毛利率或基本面兑现证据，主排序和堵点账本不变。
 2026-07-03 A 股公司跟踪总账同步：宏和科技 603256.SH 减持进展与折价大宗交易、德福科技 301511.SZ 同规格同卖方席位大宗交易、中际旭创 300308.SZ 平价机构大宗交易、东山精密 002384.SZ 高振幅龙虎榜、云南锗业 002428.SZ 高管离任、风华高科 000636.SZ 分红实施，均只进入交易结构、治理或股东回报观察；不新增客户、订单、收入占比、ASP、毛利率或利润兑现证据。AI PCB 与光模块专项承接具体节点，全链主排序和堵点账本不变。
 2026-07-03 江波龙 H1 预告最小同步：巨潮《2026 年半年度业绩预告》确认 301308.SZ 江波龙 2026H1 预计归母净利润 92.00-110.00 亿元、扣非净利润 90.00-105.00 亿元、营业收入 220.00-250.00 亿元，原因落在下游需求增加、全球存储晶圆产能总体增长有限、与全球主要存储晶圆原厂续签 LTA/MOU，以及 SPU 主控芯片、HLC 软件架构和自有高端封测产能支撑端侧 AI 存储需求。全链层只把它落到 `HBM / server DRAM / LPDRAM / NAND / enterprise SSD / AI server parts` 主链的 A 股公司侧验证和业绩弹性增强，不新增公司卡、不升级为江波龙长期利润率或持续高增长结论；继续盯存储晶圆 LTA/MOU 覆盖期限、实际采购价格、端侧 AI 存储放量、mSSD/HLC/SPU 对 ASP/毛利的真实贡献、经营现金流和库存。
 2026-07-03 高端 MLCC 证据缺口同步：7 月 1 日上海证券报/新浪转引国巨涨价与代理商核验，叠加 TrendForce 6 月高端 X6S 结构性偏紧线索，只能作为行业侧 `credible_secondary / lead_only` 和交易催化；风华高科 6 月 30 日严重异常波动公告反而强化了公司侧边界，明确全线暂停接单和英伟达认证传闻不属实、新兴市场营收占比不超过 15%。本地 HT 日线显示风华、三环在 7 月 1-2 日均出现高波动；该行情只解释交易弹性和拥挤，不证明 A 股公司 AI server 客户、料号、订单、ASP、收入占比或毛利率兑现。全链层维持 `High-end MLCC / X6S / AI power passives = future_watch/watch_to_soft`，不升级为 hard。
 2026-06-28 存储涨价时间线最小沉淀：新增 [2026-06-28_storage_price_timeline.md](2026-06-28_storage_price_timeline.md)，按 HBM / server DRAM / LPDDR / NAND / enterprise SSD / HDD 拆分启动时点、供需驱动、相互传导和证据层级；不新增 A 股订单、客户、收入或利润兑现判断。
-2026-06-28 全链周报完成：新增 [2026-06-28.md](2026-06-28.md)，覆盖 2026-06-22 至 2026-06-28。全链层吸收光模块专项 2026-06-28、AI PCB 专项 2026-06-28、Micron FQ3 FY26 官方财报/prepared remarks、存储涨价时间线、FERC/Google/NVIDIA 电力液冷证据；本期只深挖 `memory/storage/LPDRAM/eSSD + HBM test/probe` 与 `data-center power/liquid/800VDC`，不重复展开光模块和 PCB 专项细节。
-覆盖窗口：2026-06-22 至 2026-06-28，北京时间
-当前阶段：第十期全链雷达。Micron 官方证据将 memory/storage 主链进一步坐实为 `hard_bottleneck`；光源链 hard 与 PCB 材料 soft+ 由专项承接；电力/液冷/800VDC 维持 `soft_bottleneck / regional hard operational`；高端 MLCC、CoPoS/FOPLP/glass/TGV、AI networking silicon、1.6T/3.2T 光电测试与热管理继续列未来卡点扫描。
+2026-06-28 全链周报完成：新增 [2026-06-28.md](2026-06-28.md)，覆盖 2026-06-22 至 2026-06-28。全链层吸收光模块专项 2026-06-28、AI PCB 专项 2026-06-28、Micron FQ3 FY26 官方财报/prepared remarks、存储涨价时间线、FERC/Google/NVIDIA 电力液冷证据；该期只深挖 `memory/storage/LPDRAM/eSSD + HBM test/probe` 与 `data-center power/liquid/800VDC`，不重复展开光模块和 PCB 专项细节。
 
 2026-06-22 08:53 邮件窄口径复核：建滔 CCL 单张毛利 80 元、铜冠 HVLP4 涨价和 HVLP5 送样、生益科技/南亚新材映射，均不改变全链主排序。邮件本身作为 `mixed-source / lead_only`；和沪电 IR、Mitsui、Co-Tech 证据合并后，只能更收敛地维持 AI PCB 材料链 `soft+ / watch_to_soft`，不能升 hard。全链层最关键 source gap 仍是 A 股公司在 M8/M9/M10 CCL、HVLP4/5、高频高速树脂上的分产品收入、ASP/加工费、毛利率和客户认证闭环。
 
@@ -41,7 +44,89 @@
 
 对话窗口摘要只保留两张表：`当前核心卡点｜原因/约束机制｜关键证据｜预计持续时间｜缓解/反转指标`，以及 `未来潜在卡点环节｜可能成为卡点的原因｜当前证据/争议｜预计成为卡点时间｜升级触发阈值｜反转指标`。
 
-## 本期全链结论
+## 2026-07-26 当前全链结论
+
+1. `云计算有效容量 + 服务器 CPU / memory / substrate / storage / parts` 为当前第一优先级 `hard_bottleneck`。Alphabet 明确需求仍超过新增容量、需以第三方容量过桥；Intel 明确需求超过可供产品，内部产能及行业 memory/substrate/关键部件短缺预计至 2027；Micron、Dell、HPE 的既有 A 级证据继续支持 DRAM/NAND/eSSD/parts 约束。Alphabet 不能外推到具名 GPU/HBM 供应商；Intel 的广义 memory/substrate 不能拆成 HBM、DRAM、NAND、eSSD、ABF 或 BT。
+2. `先进制程逻辑 + 先进封装 / 后端测试` 新升级为 `hard_bottleneck`。TSMC 明确先进制程供需缺口很大、后端仍短缺且缺口更大、客户产品所需 testers 处于短缺。精确持续期 `N/A`；替代基板/封装路径约仍需一年成熟。TSMC 通用 tester 语境不能升级 HBM test/probe/Cube Prober。
+3. 光模块专项把当前 hard 收窄为 `200G/lane EML + 合格 InP substrate/epiwafer/器件前道`，预计公司端 2026H2 边际改善、系统性约束观察至 `2027H1`；模块核心料齐套 `soft/easing`，CPO 主动对准/OWAT/WLBI `watch_to_soft`。
+4. AI PCB 专项确认高频高速铜箔整体 `soft_bottleneck+`、HVLP4 `soft`，高端电子布及 M8-M10 CCL `soft+`，PCB 光刻胶公司级 `soft`/链级 `watch_to_soft`；仍无任何 PCB `hard_bottleneck`。
+5. 数据中心电力链需分层：美国重点区域并网为 `hard operational`；GE Vernova 自身燃机槽位为公司级 hard、全球行业缺口 `N/A`；变压器/开关柜/变电站设备 `soft+`；液冷设施集成 `watch_to_soft`，未见全行业延期/配额闭环。
+
+### 当前 5 个重点赛道与账本
+
+| 节点 | 状态 | 本期变化 | 预计持续时间 | 反转指标 | 下次动作 |
+|---|---|---|---|---|---|
+| 云计算有效容量 | `hard_bottleneck` | Alphabet 新增 A 级确认 | 至少未来数季；解除 `N/A` | 不再称 demand > capacity；第三方过桥退出；backlog/CapEx 不再同步上修 | 跟 Alphabet Q3 与其他 CSP |
+| 服务器 CPU + 广义 memory/substrate/parts | `hard_bottleneck` | Intel 新增 A 级交叉验证；Micron/Dell/HPE 基线维持 | Intel 至 2027；memory/storage `2026H2-2027` | 取消供给不足表述；库存恢复；预付款、定金和提前锁量下降 | SK hynix 7/29 Q2；Intel/Dell/HPE/ODM |
+| 先进制程逻辑 + 后端先进封装/测试 | `hard_bottleneck` | **由 soft/watch 升 hard** | 精确时点 `N/A`；替代路径约一年成熟 | TSMC 不再称后端短缺/封装限制客户增长/tester shortage；交期恢复 | 跟 TSMC/OSAT/ATE 同节点证据，不跨到 HBM test |
+| 200G EML + 合格 InP 前道 | `hard_bottleneck` | hard 口径收窄并增强 | `2026H2-2027H1`；精确缺口 `N/A` | 订单—交付缺口消失；预付款/优先权取消；二供认证 | 交光模块专项跟天孚/中际/新易盛与 AXT/Coherent/IQE |
+| 高频高速铜箔/高端电子布/高阶 CCL | `soft_bottleneck+` | 铜箔由 watch_to_soft 升 soft+；其余维持 | 至少贯穿 2026；正常化 `N/A` | 加工费/报价回落、配额与安全库存取消、多料号认证、交期恢复 | 交 PCB 专项拆 HVLP3/4/5、Q cloth、M10 |
+| 数据中心并网 | 区域 `hard operational` | 维持并强化区域口径 | `2026-2028+` | 排队周期缩短、已获电容量兑现、弃建率下降 | 跟 FERC/PJM/ERCOT、现场发电 |
+| 变压器/开关柜/变电站 | `soft+` | GE Vernova 提供多年积压 A 级样本 | 至少 `2027-2028` | book-to-bill<1、积压下降、交期正常 | 增加第二家设备厂/utility 交叉验证 |
+| 液冷设施集成 | `watch_to_soft` | Vertiv 扩产与集成实验室强化观察，不升 hard | `2026H2-2027 watch` | 多厂商认证、交付周期与故障率稳定 | 跟项目级联调、延期和故障率 |
+
+### 本期深挖方向
+
+1. `云容量 -> server CPU/memory/storage/parts`：用 Alphabet、Intel、Micron、Dell、HPE 建立“下游 demand > capacity—中游可供产品不足—上游长协/预付款锁量”的跨层闭环；严格保留 product-grade 缺口。本周 HBM/DRAM/NAND/eSSD 新细分证据 `N/A`，待 SK hynix 2026-07-29 官方结果。
+2. `先进制程逻辑 -> 先进封装 -> 后端测试`：TSMC 的需求缺口、后端 shortage 和 tester shortage 满足 hard 定义；但精确持续期、tester 类别、供应商和订单均 `N/A`。公司同时表示扩产计划没有被设备供应整体卡住，这是反对“全设备 hard”的重要缓解证据。
+
+### 未来 6-24 个月卡点迁移
+
+| 潜在节点 | 当前状态 | 预计窗口 | 升级触发阈值 | 反转指标 |
+|---|---|---|---|---|
+| HBM final/package test、probe card、Cube Prober | `watch_to_soft` | `2026H2-2027H2` | 内存厂点名出货限制，或两家供应商披露 lead time/allocation/延期 | 内存厂不点名；ATE/probe/handler 交期回落、二供顺畅 |
+| CPO 主动对准、OWAT/WLBI、光电联合测试 | `watch_to_soft` | `2027-2028` | 客户量产延期、设备排队、专项合同/验收收入或良率拖累 | 多家设备批量验收、良率稳定 |
+| HVLP5/Q cloth/M10 + 成品板良率/测试 | `soft/watch` | `2027H2-2028` | 分等级 allocation/涨价/延期或板厂点名良率 | 多源量产、价格/交期回落、良率改善 |
+| 800VDC/SST/GaN/SiC + 液冷设施集成 | `watch_to_soft` | `2027-2028` | design win 转量产，或设施联调限制投产 | 传统架构满足；多厂商认证和故障率稳定 |
+| 102.4T networking silicon/retimer/substrate | `strategic_watch` | `2026H2-2027` | 官方披露 silicon/substrate/package allocation 或客户延期 | 交付顺畅、客户不延期、封装/基板扩产跟上 |
+| 玻璃/替代基板、CoPoS/FOPLP/TGV | `long_horizon_watch` | `2027-2028+` | 客户认证、量产良率、设备订单与产能上修 | CoWoS 扩产满足，替代路径延期 |
+| 高端 MLCC/X6S/AI power passives | `future_watch` | `2026H2-2027` | 两家以上龙头披露 AI 料号、lead time、allocation/涨价 | 扩产兑现、价格不涨、lead time 正常 |
+
+### 三类排名快照
+
+- 结构重要性：①云容量+服务器 CPU/memory/storage/parts；②先进制程+先进封装/测试；③200G EML/InP；④并网/电气/液冷/800VDC；⑤高频高速 PCB 材料。
+- 业绩弹性：①memory/storage 直接供应商；②200G EML/InP 与模块交付释放；③高频高速 PCB 直接材料/板厂；④先进封装/测试有效产能及缓解设备；⑤电气/firm power/液冷。未重建全体公司事件前点时共识，正式超预期 `N/A`。
+- 交易弹性（专项 2026-07-24 收盘快照）：①A 股光模块/InP/CPO 设备；②A 股 AI PCB/HVLP/高端布/CCL；③A 股电力/液冷/800VDC；④US/KR/TW memory/foundry/advanced packaging；⑤US networking/custom ASIC。行情只描述交易属性，不证明卡点兑现。
+
+### 下期默认跟踪问题
+
+1. SK hynix 2026-07-29 Q2 是否拆出 HBM/DRAM/NAND/eSSD 的售罄期、allocation、价格、认证与 2027 供给？Samsung/Kioxia/Micron 是否交叉确认？
+2. TSMC/OSAT/ATE/handler/probe card 是否披露后端 tester 的具体类别、lead time、追加订单或客户延期？是否继续排除对 HBM test 的跨节点外推？
+3. Intel、Dell、HPE/ODM 是否继续披露 CPU、memory、substrate、SSD 和其他 parts 对 backlog 转收入的限制；Alphabet 第三方容量能否按期过桥？
+4. 200G EML 缺料是否在 H2 转为交付/毛利改善；AXT/Coherent/IQE/云南能否披露 6 英寸良率、认证和可售出货？
+5. 能否获得第二家板厂对同一 HVLP/电子布/CCL 等级的交期/allocation 交叉确认；并网、电气设备和液冷能否给出项目级延期、交期或故障率？
+
+### 2026-07-26 主要新增来源
+
+- Alphabet Q2 earnings transcript: https://s206.q4cdn.com/479360582/files/doc_events/2026/Jul/22/2026_Q2_Earnings_Transcript.pdf
+- Alphabet Q2 10-Q: https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm
+- TSMC Q2 official page: https://investor.tsmc.com/english/quarterly-results/2026/q2
+- TSMC Q2 transcript: https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-07/547d1696765e05ce3adb81c108ce1c8c1682b80c/TSMC%202Q26%20Transcript.pdf
+- Intel Q2 10-Q: https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm
+- GE Vernova transcript: https://www.gevernova.com/sites/default/files/gev_webcast_transcript_07222026.pdf
+- 光模块专项：`artifacts/weekly_chain_tracking/optical_module/2026-07-26.md`
+- AI PCB 专项：`artifacts/weekly_chain_tracking/ai_pcb/2026-07-26.md`
+- 本期全链周报：`artifacts/weekly_chain_tracking/ai_chain/2026-07-26.md`
+
+### 2026-07-26 对话窗口摘要
+
+| 当前核心卡点 | 原因/约束机制 | 关键证据 | 预计持续时间 | 缓解/反转指标 |
+|---|---|---|---|---|
+| 云容量 + 服务器 CPU/memory/storage/parts | 算力需求与 backlog 快于服务器、数据中心、网络和关键部件交付 | Alphabet、Intel、Micron、Dell/HPE 官方披露 | 数季至 2027；细分解除 `N/A` | 不再称需求超过容量/供给；库存恢复、预付款与提前锁量弱化 |
+| 先进制程 + 先进封装/后端测试 | 先进制程与后端有效产能不足、测试机短缺 | TSMC 2026Q2 官方业绩会 | 精确时点 `N/A`；替代路径约一年成熟 | 后端不再短缺、testers 交期恢复、替代方案认证量产 |
+| 200G EML + 合格 InP 前道 | 合格芯片、6 英寸扩产、良率、老化和认证限制模块交付 | 天孚/中际/新易盛 + AXT-Coherent | `2026H2-2027H1`，精确缺口 `N/A` | 订单—交付缺口消失、二供认证、预付款/优先权取消 |
+| 高频高速 PCB 材料组合 | HVLP、特种布、树脂受工艺、良率、合格产能和 AVL 约束 | 铜冠、沪电官方披露 | 至少贯穿 2026；正常化 `N/A` | 加工费/报价回落、配额取消、多料号认证、交期恢复 |
+| 区域并网 + 电气设备 | 接入制度、输配电建设和设备多年积压限制项目投产 | FERC、GE Vernova | 并网 `2026-2028+`；设备至少 `2027-2028` | 排队/交期缩短、积压下降、已获电容量兑现 |
+
+| 未来潜在卡点环节 | 可能成为卡点的原因 | 当前证据/争议 | 预计成为卡点时间 | 升级触发阈值 | 反转指标 |
+|---|---|---|---|---|---|
+| HBM test/probe/Cube Prober | HBM4/HBM4E 增加 KGD、stack/final test 负荷 | 只有负荷逻辑；TSMC 通用 tester 不可跨节点 | `2026H2-2027H2` | 内存厂点名或两家供应商披露 allocation/延期 | ATE/probe/handler 交期回落、二供顺畅 |
+| CPO 对准/OWAT/WLBI/联合测试 | 光引擎与封装整体良率窗口收窄 | 设备路线推进；缺客户量产延期、合同和良率 | `2027-2028` | 客户延期、设备排队、专项验收收入或良率拖累 | 多家批量验收、良率稳定 |
+| HVLP5/Q cloth/M10 + 成品板良率 | 224G+ 材料组合和加工窗口同步收窄 | 当前 soft/watch；具体等级有效产能 `N/A` | `2027H2-2028` | 分等级 allocation/涨价/延期或板厂点名良率 | 多源量产、价格/交期回落、良率改善 |
+| 800VDC/SST/GaN/SiC + 液冷设施集成 | MW rack 推高供电转换、设施水环和整站可靠性难度 | 方向与扩产成立；全行业延期证据不足 | `2027-2028` | design win 转量产或集成限制投产 | 传统架构继续满足；多厂商认证和故障率稳定 |
+| 玻璃/替代基板、CoPoS/FOPLP/TGV | 大封装面积/成本压力，但工艺良率与认证慢 | TSMC 称约仍需一年成熟，当前非有效供给 | `2027-2028+` | 客户认证、量产良率、设备订单和产能上修 | CoWoS 扩产满足、替代路径延期 |
+
+## 2026-06-28 上期全链结论（历史基线）
 
 1. `HBM / server DRAM / LPDRAM / NAND / enterprise SSD / AI server parts supply` 维持全链最硬 `hard_bottleneck`。Micron FQ3 2026 官方财报/业绩会将 `FQ4 revenue 50.0B USD ± 1.0B / gross margin ~86% / non-GAAP EPS 31.00 ± 1.00`、data center SSD 收入超过 50 亿美元且环比翻倍、DRAM/NAND 需求显著超过供给、紧张延续到 `calendar 2027` 之后、16 份 SCA/RPO/客户押金共同写成 A 级证据。预计 `2026H2-2027全年` 偏紧；2028 只写边际改善观察，不写短缺解除；中高置信。
 2. `HBM final/package test / memory probe card / Cube Prober` 维持 `watch_to_soft / soft_bottleneck_candidate`，不升 hard。Micron 官方确认 HBM4 12-high ramp、HBM4 收入超过 10 亿美元和新加坡先进封装/HBM packaging capacity 2027H1 贡献路径，但未点名测试/探针/Cube Prober 交期、allocation 或供应商订单；The Elec/Techwing/MJC 仍需合同金额、数量、交期和内存厂官方瓶颈表述。预计 `2026H2-2027H2`，精确交期 `N/A`，中置信。
@@ -50,14 +135,14 @@
 5. `数据中心电力 / 并网 / transformer / switchgear / UPS / busway / rack power / CDU / 冷板 / 800VDC` 维持 `soft_bottleneck`，区域并网按 `regional hard operational bottleneck`。FERC 2026-06-18 大负载行动和 Google Brazos 提供 A 级方向证据；NVIDIA 800VDC 仍为 2027 起架构迁移观察。
 6. `高端 MLCC / X6S / AI power passives` 新增为 `future_watch/watch_to_soft`。TrendForce 线索说明 2H26 起可能出现结构性短缺，但缺供应商官方 allocation、客户料号和公司收入拆分。
 
-## 专项吸收状态
+## 2026-06-28 专项吸收状态（历史）
 
 | 专项任务 | 最新状态 | 本期吸收结论 | 对全链排序影响 |
 |---|---|---|---|
 | 光模块及上游 | `artifacts/weekly_chain_tracking/optical_module/state.md` | InP/6 英寸合格 InP/EML/CW-DFB/UHP/ELS 为 hard；整机装配 soft/eased；FAU/主动对准/WLBI/ELSFP thermal 为 future watch；长飞光纤 2026-06-24 异动公告和 2026-06-25 最小核验卡只补充 AI 数据中心光纤价格、Corning 锁产能和毛利验证边界。 | 光源链排当前核心卡点第 2；1.6T/3.2T driver/TIA/DSP/GaN/FAU/热管理列未来迁移；长飞不改变排序。 |
 | AI PCB 及上游 | `artifacts/weekly_chain_tracking/ai_pcb/state.md` | 高端电子玻纤布与 M7-M10 CCL/prepreg 并列 soft+；HVLP4/5、高频高速树脂、板厂良率/测试为 watch_to_soft。 | PCB 材料链排当前核心卡点第 3；M9/M10/Q cloth/HVLP/板厂测试列未来迁移。 |
 
-## 当前全链堵点账本
+## 2026-06-28 全链堵点账本（历史）
 
 | 节点 | 状态 | 造成堵点的机制 | 本期变化 | 预计持续时间 | 反转指标 | 下次动作 |
 |---|---|---|---|---|---|---|
@@ -103,12 +188,12 @@ Micron 2026-06-24 盘后官方财报与 earnings call prepared remarks 已落地
 | Capex / advanced packaging supply | FQ3 capex `7.1B USD`，FQ4 capex 约 `10B USD`，FY2026 capex 约 `27B USD`；FY2027 quarterly capex 将高于 FQ4，过半增量来自 construction capex。ID1 预计 `mid-CY2027` 首片晶圆、ID2 `late-CY2028`；Tongluo 预计 `mid-CY2027` 有意义出货；Singapore advanced packaging 预计 `2027H1` 开始贡献 HBM packaging capacity。 | 供给端不是“马上缓解”，而是 `2027+ capacity relief path`；先进封装/HBM packaging 维持 watch+，不证伪 2026-2027 tight。 | 对 A 股只写观察：不能把 Micron Singapore/Tongluo/Idaho capex 直接写成北方华创、雅克科技、精测电子或其他 A 股公司的订单、收入占比、毛利率。 |
 | CXMT / SemiAnalysis 冲突处理 | SemiAnalysis 2026-06-23 公开页题名指向 CXMT IPO、process-node deficit、China HBM、wafer adds 和 memory LTAs，属于可跟踪竞争风险。Micron 官方则明确 2026-2027 DRAM/NAND 供需 tight beyond CY2027，并称 2028 也只是 gradual improvement。 | 主链保留 `2026H2-2027` hard，不因 CXMT 公开页降级。 | CXMT 只进入 `2028+ standard DRAM competition / China supply watch`，不能拿来写成 HBM/eSSD 即期供给解除，也不能外推到雅克/精测订单。 |
 
-## 本期深挖方向
+## 2026-06-28 深挖方向（历史）
 
 1. `HBM/DRAM/LPDRAM/NAND/eSSD + AI server parts supply + HBM test/probe`：Micron 已用官方财报/业绩会收紧为 FQ4 指引、HBM4 ramp、SCA/RPO/押金、DRAM/NAND tight beyond CY2027、data center SSD revenue >5B USD、capex/advanced packaging supply path。主链 hard 加强，但 HBM test/probe/Cube Prober 和 A 股设备/材料订单仍缺官方同节点闭环。Samsung/SK hynix/Kioxia-SanDisk 仍需各自最新官方财报/业绩会确认 LTA、库存和 capacity allocation；继续跟 eSSD/LPDRAM、HBM4/HBM4E 认证、Techwing/MJC/ATE/probe card 交期和合同规模。
 2. `AI cloud capex -> 数据中心电力/并网 + 液冷 + 800VDC`：重点把区域 hard operational 约束和全球设备/液冷单品 soft/watch 分开；跟踪 FERC/PJM/ERCOT、Oracle/Meta/Google/Microsoft/Amazon CapEx、Google Brazos/OCP、NVIDIA 800VDC、transformer/switchgear/UPS/CDU/PDU lead time、A 股订单纯度。
 
-## 未来 6-24 个月卡点迁移
+## 2026-06-28 未来 6-24 个月卡点迁移（历史）
 
 | 节点/赛道 | 当前状态 | 未来状态 | 需求触发 | 供给滞后机制 | 可能时间 | 升级触发阈值 | 证据缺口 | 反转指标 |
 |---|---|---|---|---|---|---|---|---|
@@ -121,7 +206,7 @@ Micron 2026-06-24 盘后官方财报与 earnings call prepared remarks 已落地
 | CoPoS/FOPLP/glass core/TGV | watch | long_horizon_watch | Package 面积和成本压力 | TGV、对位、翘曲、良率和设备生态 | `2027-2028+` | 试产通过、客户 tape-out、设备订单 | 量产良率、成本、客户产品、设备产能 | CoWoS 扩产满足需求，面板化延后。 |
 | AI networking silicon / retimer / substrate | strategic_watch | watch_to_soft | 102.4T switch、NVLink Fusion、custom XPU | SerDes/IP、advanced process、substrate/package | `2026H2-2027` | silicon/substrate/package 被点名限制出货 | 直接交期证据 | 交付顺畅，客户不延期。 |
 
-## 三类排名快照
+## 2026-06-28 三类排名快照（历史）
 
 ### 细分赛道结构重要性
 
@@ -151,7 +236,7 @@ Micron 2026-06-24 盘后官方财报与 earnings call prepared remarks 已落地
 5. US/KR/TW memory/HBM 龙头
 6. US networking/custom ASIC 龙头
 
-## 下期默认跟踪问题
+## 2026-06-28 下期跟踪问题（历史）
 
 1. HPE/Dell/SMCI/ODM 是否继续披露 DRAM/NAND/eSSD/parts supply constraints、purchase commitments、inventory 或 backlog 转收入受限？
 2. Micron：下一步验证 FQ4 指引兑现、price increase rate moderation 是否只是涨价斜率放缓、SCA RPO/客户押金是否继续增长、FY2027 capex/advanced packaging supply 是否形成供给缓解；Samsung、SK hynix、Kioxia/SanDisk：仍需各自最新官方财报/业绩会确认 eSSD/NAND/LPDRAM/HBM 价格、LTA、库存和 capacity allocation。
@@ -161,7 +246,7 @@ Micron 2026-06-24 盘后官方财报与 earnings call prepared remarks 已落地
 6. 沪电、台玻、Nittobo、台系 CCL、建滔、生益、南亚、德福/诺德/嘉元/铜冠是否继续披露高端玻纤布、M8/M9/M10、HVLP4/5 交期、报价、客户认证、分产品收入和毛利？
 7. TrendForce MLCC 线索能否被村田、TDK、三星电机、国巨、风华高科、三环集团等官方订单、料号、ASP 或收入拆分验证？
 
-## 最近证据源
+## 2026-06-28 证据源（历史）
 
 - HPE 10-Q: https://www.sec.gov/Archives/edgar/data/1645590/000164559026000055/hpe-20260430.htm
 - HPE Q2 FY26 transcript: https://investors.hpe.com/~/media/Files/H/HP-Enterprise-IR/documents/q2-2026/q2-2026-transcript.pdf
@@ -198,7 +283,7 @@ Micron 2026-06-24 盘后官方财报与 earnings call prepared remarks 已落地
 - 2026-06-28 全链周报：`artifacts/weekly_chain_tracking/ai_chain/2026-06-28.md`
 - 2026-06-28 存储涨价时间线：`artifacts/weekly_chain_tracking/ai_chain/2026-06-28_storage_price_timeline.md`
 
-## 对话窗口摘要
+## 2026-06-28 对话窗口摘要（历史）
 
 ### 当前核心卡点表
 

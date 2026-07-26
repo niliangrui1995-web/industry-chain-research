@@ -1,111 +1,121 @@
 # 周度跟踪：AI PCB 及上游材料设备 - 滚动状态
 
-更新时间：2026-07-08（A 股公司跟踪交易结构边界最小同步）
-最近报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-28.md`
-前次报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-21.md`
-前次证据追杀：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_hvlp_tglass_nvidia_capacity_evidence_layering.md`、`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_hvlp_tglass_nvidia_official_lock_capacity_chase.md`
-A股供给压力卡：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-17_defu_block_trade_supply_pressure_card.md`
-A股 CCL 质量锚最小卡：`artifacts/company_tracking/600183.SH/state.md`
+更新时间：2026-07-26
+最近报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-07-26.md`
+前次报告：`artifacts/weekly_chain_tracking/ai_pcb/2026-06-28.md`
+基线模板：`artifacts/weekly_chain_tracking/ai_pcb/BASELINE_TEMPLATE.md`
 
-2026-07-03 A 股公司跟踪最小同步：宏和科技 603256.SH 的减持计划进入执行，7 月 3 日 30 笔折价大宗交易与 UNICORN ACE 大宗减持数量相互印证，只强化板级 PCB/CCL 高端电子布 `end_use` 下的筹码供给和融资/扩产压力观察，不证明 Low CTE/T-glass 客户、订单、价格、收入占比或毛利率兑现；德福科技 301511.SZ 继续出现 50 万股同卖方席位大宗交易，仍是 HVLP/RTF 铜箔交易结构和减持链线索，归属和剩余额度待官方进展公告，不升级客户认证、正式订单、收入占比或毛利率。
+本期主深挖：板级高频高速铜箔及 HVLP4 代际。
+本期次级环节：高端电子布/玻纤、M8/M9/M10 CCL-prepreg-树脂材料组合、PCB 光刻胶。
+证据截止：2026-07-26，北京时间。行情最新可靠收盘日：2026-07-24。
 
-2026-07-08 A 股公司跟踪最小同步：德福科技 301511.SZ 补入 2026-07-07 大宗交易并新增 2026-07-08 大宗交易，两日均为 50.00 万股，成交金额分别为 6225.00 万元、5820.00 万元，买方均为机构专用，卖方均为中信证券北京分公司。该 delta 只强化 HVLP/RTF PCB 铜箔观察层下的同规格、同卖方席位大宗交易链和筹码供给/减持线索，归属与剩余额度仍待官方减持进展或权益变动披露；不证明 HVLP/RTF 客户认证、正式订单、收入占比、ASP、加工费或毛利率兑现。
+## 当前阶段
 
-当前阶段：完成 2026-06-22 至 2026-06-28 周度更新。本期不升级任何节点为 `hard_bottleneck`。`高端电子玻纤布 / Low Dk / Low CTE / T-glass / Q cloth` 与 `M7/M8/M9/M10 CCL / prepreg` 继续作为当前最强 `soft_bottleneck+`。本期主新增是台玻/富乔/Reuters-CNA/DIGITIMES 线索共同强化高端布、CCL/prepreg、树脂/化学材料和上游材料交期压力；但仍未形成 official allocation、客户 AVL 排队数量、订单延期、分产品 lead time 或两家以上官方供需缺口闭环。
+- 本期没有任何节点达到 `hard_bottleneck`。仍缺分等级 allocation、客户订单延期、硬交期、LTA/capacity reservation，或两家以上独立客户与供应商对同一具体等级的闭环。
+- 板级高频高速 PCB 铜箔整体从 `watch_to_soft` 升为 `soft_bottleneck+`；HVLP4 单一等级为 `soft_bottleneck`。铜冠铜箔正式确认广义高频高速铜箔供不应求、加工费收入和毛利改善，沪电从板厂端确认 HVLP 受工艺、良率和阶段性合格产能限制。两者均未拆 HVLP3/4/5，禁止外推为 HVLP4/5 硬短缺。
+- 高端 Low Dk/Df/超薄电子布维持 `soft_bottleneck+`，状态 `worsened_confirmed`。宏和的需求—价格—利润证据和沪电采购端证据已交叉；菲利华石英电子布开始出现需求/收入，但仍处客户测试和终端认证，Q cloth 大规模 qualified supply 未成立。
+- M8/M9/M10 CCL/prepreg 维持 `soft_bottleneck+`。南亚塑胶披露 CCL 稼动率超过 90%、聚合供需缺口扩大及逐月调价，南亚新材/华正新材确认订单或供应链紧平衡；生益扩产释放是对全面 hard shortage 的反证。分等级 lead time、锁料、二供和毛利均为 `N/A`。
+- 超低损耗树脂在板厂类别口径为 `soft_bottleneck`、置信度中低；PPO/PPE/碳氢/活性酯/BMI 等具体牌号、供应商、lead time、allocation、客户 AVL 为 `N/A`。Reuters/CNA 已更正删除的 SABIC/PPE 停产叙事继续拒绝采用。
+- 容大感光出现单一供应商 PCB 光刻胶产能趋满证据，定为公司级 `soft_bottleneck`、链级 `watch_to_soft`。AI server、汽车、光模块、IC 载板用途混合，AI 专用收入、客户和行业缺口为 `N/A`。
+- 成品 AI PCB 独立制程维持 `watch_to_soft`；大族数控、鼎泰高科只证明设备/耗材需求强和产能爬坡，未披露 backlog、设备交期或客户排队，设备/钻针/湿化学维持 `watch`。
+- ABF/BT 封装载板继续 `watch_separate`；Low CTE/T-glass 若用于载板，不能并入板级 PCB/CCL。Nittobo 的 NE-glass 板级路线与 T-glass 载板路线必须分开。
 
-`高端电子玻纤布 / Low Dk / Low CTE / T-glass / Q cloth` 维持 `soft_bottleneck+`，本期状态 `unchanged_to_worsened`。台玻高端玻纤布供不应求至 2027 年底来自 CNA 股东会报道；富乔 Low DK2 订单能见度、M9 认证和石英布送样来自自由财经股东会报道；前期沪电 IR 从板厂侧确认特种高性能玻纤布阶段性供应偏紧。以上足以维持 2026H2-2027 年底偏紧判断，但不够升 hard，因为缺分布种 official lead time、allocation、客户 AVL 排队和订单延期。
+## 本期最重要证据变化
 
-`M7/M8/M9/M10 CCL / prepreg` 维持 `soft_bottleneck+`。本期 DIGITIMES 6 月底继续出现 AI server 推动台湾 PCB 产值、关键材料趋紧和高端玻纤布供应紧张的 B 级标题线索；Reuters/CNA 的 PCB 材料成本报道强化材料压力。但 M8/M9/M10 分产品报价有效期、lead time、客户提前锁料、二供认证、分产品收入/ASP/毛利仍未闭环。
-
-`高频高速树脂 / PCB 化学材料` 从上期新增观察继续升为次级重点跟踪，严重程度 `watch_to_soft`，本期状态 `worsened`。Reuters/CNA 报道称 epoxy resin 等化学材料等待时间从约 3 周拉长至最长约 15 周；前期沪电 IR 点名超低损耗树脂阶段性偏紧。限制：该报道是泛 PCB 化学材料，不是 M8/M9/M10 超低损耗树脂牌号级证据；且 Reuters/CNA 已更正删除“伊朗袭击导致 SABIC PPE 产线停摆”等段落，因此 PPE/树脂断供不能写成事实，只能作为被削弱线索。
-
-`HVLP4/HVLP5 PCB 铜箔` 维持 `watch_to_soft / 高优先级验证`。Mitsui、Co-Tech 年报与 DIGITIMES 可支持高端 HVLP 需求、扩产刚性和 NVIDIA 接洽 Co-Tech 的 B 级线索，但 `NVIDIA 直签`、`寄售/consignment`、`LTA`、`capacity reservation`、`prepayment` 仍未形成 A 级闭环；A 股公司仍缺 HVLP4/5 多客户批量收入、客户认证、加工费和毛利贡献。
-
-`成品 AI PCB 高层板良率 / 测试 / 交付` 维持 `watch_to_soft`。需求和订单兑现继续强，Reuters/CNA 增加材料成本和供应链压力背景，但当前没有足够交期/良率/测试瓶颈证据。`钻针/测试设备/湿化学/油墨/PCB 光刻胶` 维持 `watch`；`ABF/BT 封装载板` 继续 `watch_separate`，不得并入板级 AI PCB。
+| 节点 | 新证据 | 证据等级 | 状态变化 | 强制边界 |
+|---|---|---:|---|---|
+| 高频高速/HVLP 铜箔 | 铜冠 2026-07-20 H1 预告：广义高频高速铜箔供不应求，销量、加工费收入和毛利改善；沪电 2026-07-22 再次确认 HVLP 工艺/良率/合格产能约束 | A | 整体升 `soft+`；HVLP4 升 `soft` | 无 HVLP3/4/5 分拆、客户、lead time、实际配额或 LTA |
+| 高端电子布 | 宏和 2026-07-15 预告：需求上升、供需推动价格上涨、聚焦市场急缺特种布；菲利华 2026-07-20：石英电子布仍在客户测试/终端认证 | A / A-镜像 | `soft+ / worsened_confirmed`；Q cloth 为未来 watch | 特种布不自动等于 Low CTE/T-glass/Q cloth；测试需求不等于批供 |
+| CCL/prepreg | 南亚塑胶 2026-07-09：CCL 稼动率 >90%、聚合缺口扩大、售价逐月调涨；南亚新材/华正新材确认订单/供应链紧平衡；生益确认扩产释放 | A | `soft+ / evidence_strengthened` | 原文有聚合口径且混列 ABF；M8/M9/M10 分级数据为 N/A |
+| 高频高速树脂 | 沪电确认超低损耗树脂类别偏紧；东材确认高速树脂渗透和盈利改善；媒体核实 PPO/PPE/OPE/MPPO 调价 | A + B | 类别 `soft`，精确牌号 `N/A` | 价格/渗透不等于合格供给短缺；不恢复 SABIC 停产故事 |
+| PCB 光刻胶 | 容大 2026-07-24 可研：订单扩大、现有产能趋饱和，广州/泰国项目建设期 1.5/2 年 | A（公司口径） | 公司级 `soft`；链级 `watch_to_soft` | AI 专用产品、客户、收入和行业 lead time 为 N/A |
+| 成品板/设备/钻针 | 深南需求及产能爬坡；大族 AI PCB 设备产销两旺；鼎泰客户采购旺盛、产能爬坡 | A | 维持 `watch_to_soft` / `watch` | 无良率、订单延期、测试不足、backlog 或设备交期证据 |
 
 ## 任务边界
 
-本任务只跟踪板级 AI PCB 及其上游材料、设备和耗材：
-- AI 服务器 / 交换机板级 PCB。
-- 高速多层板、HDI/mSAP、类载板工艺；不等同于 ABF/BT 封装载板。
-- 高端 CCL / prepreg：M7/M8/M9/M10 低损耗材料。
-- 低 Dk / 低 Df / 低 CTE 电子布、T-glass、NER-glass、Q cloth、石英布、超薄布。
-- HVLP / VLP / RTF PCB 铜箔。
-- PPO / PPE / 碳氢 / 活性酯 / BMI 等高频高速树脂体系，以及与 PCB/CCL 相关的 epoxy resin 等化学材料。
-- 钻针、铣刀、压合、曝光、钻孔、电镀、测试设备。
-- 湿化学、油墨、PCB 光刻胶等工艺材料。
+本任务跟踪：
 
-强制边界：
-- 板级 PCB 与 ABF/BT 封装载板必须分开。
-- 载板 T-glass/Q glass 与板级 CCL Low Dk/Low CTE 电子布必须标注 `end_use`，不得跨用途自动升级。
-- Reuters/CNA 更正后的 SABIC/PPE 停产叙事不能采用；只保留泛 PCB 材料等待时间/成本压力。
-- 行情、涨停、换手、媒体标题、X/Grok/Gemini 结论只能作为交易或核验线索，不能证明产业受益或卡点成立。
+- AI server/switch 板级 PCB，包括高层高速板、HDI/mSAP、类载板工艺；不等同 ABF/BT 封装载板。
+- M7/M8/M9/M10 CCL 与 prepreg。
+- Low Dk/Df、超薄电子布；Low CTE/T-glass、Q cloth/石英布必须标注 `end_use`。
+- HVLP/VLP/RTF PCB 铜箔；普通锂电铜箔不能替代 PCB 级 qualified output。
+- PPO/PPE、碳氢、活性酯、BMI 等高频高速树脂体系及 PCB 化学材料。
+- 钻针/铣刀、压合、曝光、钻孔、电镀、测试设备，湿化学、油墨、PCB 光刻胶。
 
-## 执行补充要求
+强制判定：
 
-- 每次更新报告时，必须对当前 `hard_bottleneck` 和 `soft_bottleneck` 预估可能持续时间，写明时间窗口、判断依据、置信度、缓解路径和反转指标；证据不足时写 `N/A`，并说明缺哪类证据。
-- 每次不能只分析主深挖节点，还要扫描其他材料、设备、耗材、化学品和成品板环节，判断未来 6-24 个月可能出现的新卡点或卡点迁移。
-- 对话窗口最终摘要只保留两张表：`当前核心卡点｜原因/约束机制｜关键证据｜预计持续时间｜缓解/反转指标`，以及 `未来潜在卡点环节｜可能成为卡点的原因｜当前证据/争议｜预计成为卡点时间｜升级触发阈值｜反转指标`。
-- 行情快照必须按项目 `skills/allstock-data` 的多源 fallback 规则执行：A/H/美股优先腾讯 `qt.gtimg.cn`，台股优先 TWSE MIS；行情只用于交易弹性上下文，不证明产业受益或堵点成立。
+- 卡点以“需求超过合格供给、有效产能、良率、交付或认证供应商”为准；名义扩产、送样、概念或行情不成立。
+- `hard_bottleneck` 需要 allocation/锁产、长交期或订单延期等硬约束并有多源闭环；`soft_bottleneck` 可由官方供应偏紧加价格/加工费/良率/有效产能或缓解动作闭环。
+- 公司映射不得把概念、上游线索、行情或产品能力写成客户、订单、收入事实。
+- 行情与用户口径 Q2 扣非×4 PE 只用于交易/估值上下文，不是法定 TTM，也不证明卡点。
 
 ## 上期问题回访状态
 
 | 待验证问题 | 当前状态 | 结论 |
 |---|---|---|
-| 沪电之外，是否有第二家以上板厂正式确认超低损耗树脂、HVLP 铜箔、特种高性能玻纤布交期拉长或订单延期 | 部分证实，仍待官方 | Reuters/CNA 报道中提到胜宏等 PCB 厂面对树脂、铜箔、玻纤等材料成本和供应链压力，但它是 B 级媒体报道，不等于公司正式 IR/公告。 |
-| 台玻、富乔、Nittobo、宏和、中材、国际复材是否披露 Low Dk/Low CTE/T-glass/Q cloth 分产品交期、allocation、客户 AVL、良率和价格 | 证据增强但未 hard | CNA 台玻、自由财经富乔、DIGITIMES 线索共同强化高端布偏紧，但缺分产品 official allocation、AVL 排队、良率和价格。 |
-| 台光电、台燿、联茂、建滔、生益、南亚是否披露 M8/M9/M10 CCL/prepreg 报价有效期、客户锁料、二供认证、lead time、分产品收入、ASP 或毛利 | 部分证实，仍待跟踪 | 台系材料紧张和产值线索延续，沪电/Reuters-CNA 强化材料压力，但 M8/M9/M10 分产品 lead time、报价有效期和毛利闭环仍缺。 |
-| Co-Tech、Mitsui、德福、诺德、嘉元、铜冠、逸豪是否出现 HVLP4/HVLP5 多客户批量收入、加工费、毛利、客户认证或锁产合同证据 | 未证实，维持观察 | 海外高端 HVLP 偏紧有 A/B 级支撑；A 股端仍缺 HVLP4/5 批量收入、客户、加工费和毛利；不能因股价强、邮件或互动线索升主结论。 |
-| 成品板和设备耗材是否出现交期、良率、测试产能、设备 backlog、钻针/药水/油墨认证排队证据 | 需求/材料压力证实，制程瓶颈未 hard | 成品板 `watch_to_soft`，设备耗材仍 `watch`。仍缺两家以上板厂交期/良率/测试瓶颈和设备耗材 backlog/认证排队证据。 |
-| NVIDIA、AWS、Google、Meta、Nittobo、Mitsui、Co-Tech 是否出现 LTA、consignment、prepayment、allocation 或 capacity reservation 官方表述 | 仍未闭环 | 未见客户/供应商/材料/合同条款同框；DIGITIMES 仍只能支持 NVIDIA 接洽 Co-Tech 的 B 级线索。 |
+| 沪电之外，第二家以上板厂是否确认同一材料的交期/订单延期 | `未完成` | 沪电证据重复增强；TTM 仅有匿名 AI 客户关键原料长交期案例，未给材料名称、时长或系统范围。 |
+| 高端电子布是否出现分布种交期、allocation、AVL、良率和价格 | `部分完成` | 宏和给出需求/价格/稀缺，菲利华给出 Q cloth 测试/认证和收入；分布种 lead time、配额、AVL 和量产良率仍为 N/A。 |
+| CCL 是否出现 M8/M9/M10 报价、锁料、二供、lead time、收入/毛利 | `部分完成` | 聚合供需、稼动率、量价/毛利已增强；M8/M9/M10 分级商业数据仍为 N/A。 |
+| HVLP4/HVLP5 是否出现多客户批供、加工费、毛利、认证或锁产 | `部分完成` | 广义高频高速铜箔已有供不应求和利润闭环；HVLP4/5 分级客户、收入、良率和合同仍为 N/A。 |
+| 成品板、设备耗材是否出现良率、测试、backlog 或认证排队 | `部分完成` | 光刻胶出现单一公司产能卡；成品板制程、设备、钻针、湿化学仍无硬数据。 |
+| LTA/consignment/prepayment/allocation/capacity reservation | `仅缓解动作部分出现` | 沪电披露优先配额、安全库存和多源认证；不是 LTA、锁产或预付款。 |
 
 ## 当前堵点账本
 
-| 节点 | 定位 | 严重程度 | 造成堵点的机制 | 本期变化 | 关键证据 | 预计持续时间 | 缓解路径 | 反转指标 | 下次动作 |
-|---|---|---|---|---|---|---|---|---|---|
-| 当前 `hard_bottleneck` | N/A | N/A | N/A | `unchanged_none` | 未见 official allocation、订单延期、硬交期、客户锁产或多源 A/B 供需缺口闭环 | `N/A`，缺两家以上官方/客户/供应商供需缺口证据 | N/A | N/A | 继续按节点寻找 official allocation / AVL / lead time / order delay |
-| 高端电子玻纤布 / Low Dk / Low CTE / T-glass / Q cloth | 本期主深挖卡点 | `soft_bottleneck+` | 窑炉、拉丝、电子级纱、织布、后处理、良率、专利和客户 AVL 限制 qualified output；普通布/工业纱不可替代 | `unchanged_to_worsened` | CNA 台玻称高端玻纤布供不应求至 2027 年底；自由财经富乔披露 Low DK2、M9、石英布进展；前期沪电 IR 点名特种高性能玻纤布偏紧 | 2026H2-2027年底中高置信；Q cloth/石英布 2027H2-2028 watch | 台玻/富乔/Nittobo/宏和/中材/国际复材扩产或二供验证，Nittobo 2027-2028 扩产，CCL 配方优化 | 报价回落、交期缩短、库存恢复，多供应商进入核心客户 AVL | 查正式法说、分布种交期、客户认证、良率和 allocation |
-| M7/M8/M9/M10 CCL / prepreg | 当前最明确板级材料卡点 | `soft_bottleneck+` | AI server/networking 拉动低损耗材料；玻纤布、超低损耗树脂、HVLP 铜箔、新线 qualified output 和客户认证共同约束 | `unchanged` | 沪电官方点名三类材料偏紧；DIGITIMES 6 月底延续关键材料趋紧和台湾 PCB 产值线索；Reuters/CNA 增加材料交期压力 | 2026H2 中高置信偏紧；2027H1 中等偏高；2027H2 取决于高端布、树脂、铜箔和 CCL 新线释放 | CCL 高端线投产，二供通过终端认证，上游材料同步放松 | 报价停涨或回落，lead time 常态化，客户不再提前锁料，二供进入核心 AVL | 查 M8/M9/M10 lead time、报价有效期、分产品收入、ASP 和毛利 |
-| 高频高速树脂 / PCB 化学材料 | 新增次级重点 | `watch_to_soft` | M8/M9/M10 CCL 对 PPO/PPE、碳氢、活性酯、BMI 等牌号和配方认证提出更高要求；泛 PCB 化学材料等待时间拉长 | `worsened` | Reuters/CNA 称 epoxy resin 等化学材料等待时间从约 3 周拉长至最长约 15 周；前期沪电点名超低损耗树脂偏紧；CNA/Reuters 更正删除 SABIC/PPE 停产段落 | 2026H2-2027 watch_to_soft；持续时间 N/A，缺超低损耗树脂牌号级供应商、交期、价格和客户证据 | 替代配方通过认证，树脂/化学材料供应恢复 | 树脂牌号供给恢复、交期正常、CCL 厂不再提示材料压力；SABIC/PPE 断供说法继续无闭环 | 查 CCL 厂和树脂供应商是否披露牌号、价格、交期和认证 |
-| HVLP4/HVLP5 PCB 铜箔 | 次级跟踪 | `watch_to_soft` | 表面处理、低粗糙度一致性、添加剂配方、客户认证和进口供应集中限制高端供给；锂电铜箔不能替代 PCB 级铜箔 | `unchanged_high_priority / lock_capacity_unclosed` | Mitsui 官方确认高端 HVLP 需求增长和扩产；Co-Tech 年报确认 HVLP4 结构性缺口、认证时间长和良率慢；DIGITIMES 称 NVIDIA 接洽 Co-Tech | 2026H2-2027 watch_to_soft；持续时间 N/A，缺 HVLP4/5 多客户批量收入、客户、加工费、毛利和锁产合同证据 | 国内外多供应商稳定量产，并被 CCL/板厂客户认证 | PCB 级 HVLP4/5 多客户批量供货、加工费回落、国产良率确认；或官方确认/否认客户锁产 | 查 Mitsui/Co-Tech/德福/诺德/嘉元/铜冠/逸豪 PCB 级 HVLP4/5 交付、收入、加工费、客户和毛利证据 |
-| 成品 AI PCB 高层板良率 / 测试 / 交付 | 次级跟踪 | `watch_to_soft` | 高层压合、背钻、钻孔、电镀、阻抗测试和客户审厂可能成为材料之后的制程瓶颈 | `unchanged` | 沪电/TTM/胜宏/深南证明需求和高端产品放量；Reuters/CNA 增加材料压力背景；仍缺交期/良率/测试硬证据 | 2026H2-2027 watch_to_soft；持续时间 N/A，缺两家以上官方制程瓶颈证据 | 板厂扩产达产、客户二供补足 | 交期恢复、订单延期减少、未出现良率/测试瓶颈 | 查沪电、生益电子、深南、胜宏、TTM、Sanmina、金像电、臻鼎 backlog、交期、良率、测试产能 |
-| 钻针/测试设备/湿化学/油墨/PCB 光刻胶 | 观察 | `watch` | 板厂 capex 和高端工艺升级带动设备、耗材和工艺材料需求 | `unchanged` | 大族数控/尖点等证明需求方向；缺 A/B 级 backlog、短缺或客户认证排队 | 2027-2028 watch；中低置信 | 国产设备/耗材供应与客户验证顺利 | 设备交付恢复，价格稳定，客户认证不排队 | 跟踪 backlog、交期、认证排队 |
-| ABF/BT 封装载板 | 单独观察 | `watch_separate` | 封装载板链路，和板级 AI PCB 不同 | `separate_only` | 相邻链路景气不能并入板级 PCB | 6-24 个月单独跟踪 | 单独载板扩产和良率改善 | 与板级 PCB 混同即无效 | 如有载板证据单独开表 |
+| 节点 | end_use | 严重程度 | 变化 | 预计持续时间 | 置信度 | 缓解路径 | 反转指标 | 下次动作 |
+|---|---|---|---|---|---:|---|---|---|
+| 当前 hard bottleneck | 板级 PCB | `N/A` | `unchanged_none` | `N/A` | 低 | N/A | N/A | 查 allocation、订单延期、硬交期和多源闭环 |
+| 高频高速 PCB 铜箔整体 | 板级 PCB/CCL | `soft_bottleneck+` | `upgraded` | 2026H2；2027 有望收窄 | 中高 | Mitsui/国内扩产、良率爬坡、二供认证 | 加工费/交期回落、优先配额取消、多源批供 | 查 HVLP3/4/5 分级供给、客户、毛利和合同 |
+| HVLP4 | 板级 PCB/CCL | `soft_bottleneck` | `upgraded_but_grade_unclosed` | 2026H2-2027 | 中 | 多供应商稳定批供并入同平台 AVL | 分级良率/供给提升、板厂不再提示偏紧 | 防止把广义证据升级成 HVLP4 hard |
+| 高端 Low Dk/Df/超薄电子布 | 板级 PCB/CCL | `soft_bottleneck+` | `worsened_confirmed` | 2026H2；或延续到 2027 | 中高/中 | 扩产、良率和二供认证 | 分布种交期/价格回落、多源入 AVL | 查 Low Dk/Q cloth 分产品数据 |
+| Low CTE/T-glass | 主要为 ABF/IC 载板 | `watch_separate` | `boundary_strengthened` | 2026H2-2028 单独观察 | 中 | 载板专用扩产和良率爬坡 | 载板交期/良率恢复 | 不并入板级统计 |
+| M8/M9/M10 CCL/prepreg | 板级 PCB | `soft_bottleneck+` | `evidence_strengthened` | 2026H2-2027H1 | 中 | 上游放松、CCL 新线 qualified、二供入 AVL | 报价/lead time 常态化、停止锁料 | 查分等级 commercial evidence |
+| 超低损耗树脂 | 板级 CCL | 类别 `soft_bottleneck` | `officially_supported` | 持续期 N/A；2026H2 组合仍紧 | 中低 | 替代配方、供应商增产、认证 | 牌号交期恢复、板厂不再提示偏紧 | 查供应商/牌号/交期/AVL |
+| 成品 AI PCB 良率/测试/交付 | 板级 PCB | `watch_to_soft` | `unchanged` | 2026H2-2027 watch | 中低 | 板厂扩产、良率/测试爬坡 | 两家以上板厂交期正常、无延期 | 查压合/背钻/电镀/测试数据 |
+| PCB 光刻胶 | 板级为主、需求混合 | 公司 `soft` / 链级 `watch_to_soft` | `upgraded` | 公司当前；链级 2027-2028 watch | 中低 | 广州/泰国新线合格达产 | 交期/价格稳定、多源认证 | 查 AI 产品/客户、行业交期与项目进展 |
+| 设备/钻针/湿化学/油墨 | 板级 PCB | `watch` | `unchanged` | 2027-2028 watch | 低 | 扩产、本地化、认证 | backlog/交期稳定 | 查设备 backlog 与认证排队 |
+| ABF/BT 封装载板 | 封装载板 | `watch_separate` | `separate_only` | 2026H2-2028 | 中低 | 载板扩产和良率改善 | 单独看 allocation、交期和良率 | 不与板级 PCB 混同 |
 
-## 候选观察池
+## 未来 6-24 个月候选池
 
-| 候选节点 | 需要验证的堵点问题 | 当前处理 |
-|---|---|---|
-| 高端电子玻纤布分产品 | Low Dk/Df、Low CTE、T-glass、Q cloth/石英布是否出现交期/配额硬证据 | 当前最重要主线，2026H2-2027年底维持偏紧 |
-| M9/M10 低损耗 CCL/prepreg | 是否从当前软卡点升级为官方 allocation/lead time 硬卡点 | `soft_bottleneck+ / likely_future_bottleneck` |
-| 高频高速树脂 / PCB 化学材料 | 超低损耗树脂是否出现牌号级短缺、涨价和客户 AVL 排队；泛 PCB 化学材料等待时间是否被官方交叉验证 | `watch_to_soft`，本期优先级上调 |
-| HVLP4/HVLP5 PCB 铜箔 | 是否有 PCB 级批量交付、客户认证、收入贡献和加工费上调 | `watch_to_soft`，NVIDIA/Co-Tech 线索提高验证优先级但锁产未闭环 |
-| 成品板良率/测试 | 是否从订单兑现升级为制程瓶颈 | `watch_to_soft` |
-| 钻孔/压合/电镀/测试设备 | 是否出现设备交期拉长和板厂 capex 排队 | 未来迁移观察 |
-| 湿化学/油墨/PCB 光刻胶 | 是否出现客户认证排队和高端产品短缺 | 未来迁移观察 |
+| 节点 | 可能时间 | 当前处理 | 升级触发阈值 | 反转指标 |
+|---|---|---|---|---|
+| HVLP5/下一代超低粗糙度铜箔 | 2027H2-2028 | `future_watch`；产品/送样明确，多客户批供 N/A | 两家以上供应商批供且板厂/CCL 确认配额、交期或加工费上涨 | 多源同平台 AVL、加工费/交期回落 |
+| Q cloth/石英布 | 2027H2-2028 | 菲利华需求/收入起量但仍在认证；`future_watch` | 客户/CCL 厂披露量产型号、AVL、交期或 allocation | 配方替代、多家稳定量产 |
+| M10 CCL/prepreg | 2027-2028 | 当前只有材料组合 soft | M10 批量收入/lead time；客户提前锁料或二供排队 | 多家量产、报价回落、客户不锁料 |
+| 成品高层板良率/测试 | 2026H2-2027 | `watch_to_soft` | 两家以上板厂披露良率/测试不足、延期或转单 | 扩产达产、良率和交期恢复 |
+| PCB 光刻胶/干膜 | 2027-2028 | 公司级卡点，链级证据 N/A | 两家以上供应商/板厂披露 AI 级排队、涨价或订单受限 | 新线按期形成 qualified output |
+| 钻针、钻孔/曝光/测试设备 | 2027-2028 | `watch` | 设备 backlog/交期显著拉长，板厂扩产受设备约束 | 交付周期回落、及时验收 |
+| ABF/BT 载板级 T-glass/Q glass | 2026H2-2028 | `watch_separate` | 单独出现 allocation、预付款、锁产、交期或良率证据 | 载板专用产能和良率改善 |
+
+## 公司映射与三类排名状态
+
+- 基本面质量：高端电子布以 Nittobo/旭化成和宏和为技术/经营锚；CCL 以 Panasonic/台光电/台燿及生益为锚；HVLP 以 Mitsui 为技术锚，A 股中铜冠现有供需/利润证据强于德福；成品板看 TTM、沪电、胜宏、深南、生益电子。
+- 业绩弹性：本期直接材料按正式 H1 预告为铜冠 > 宏和；设备中大族数控 H1 弹性强，但没有 backlog 证据。所有正式“超预期”结论均为 `N/A`，因为缺事件前同口径点时一致预期。
+- 交易弹性：铜冠、德福、国际复材、宏和的波动/拥挤度高；交易弹性不等于基本面质量或卡点兑现。2026-07-24 收盘相对 7 月 17 日，铜冠 -30.17%、德福 -21.55%、国际复材 -18.65%、宏和 -9.05%。
+- 用户口径：铜冠隐含 Q2 扣非 0.9795-1.1795 亿元、对应 PE 158.3x-190.7x；宏和隐含 Q2 扣非 1.8778-2.6012 亿元、对应 PE 126.7x-175.6x；大族数控隐含 Q2 扣非 5.7684-6.7684 亿元、对应 PE 47.0x-55.2x。均按 Q2 扣非×4 和 7/24 市值计算，非 TTM/一致预期；正式 surprise 均为 N/A。
 
 ## 下期默认跟踪问题
 
-1. 胜宏/深南/生益电子/TTM/Sanmina 是否正式确认树脂、HVLP 铜箔、玻纤布、CCL/prepreg 的交期、涨价或订单延期。
-2. 台玻、富乔、Nittobo、宏和科技、中材科技、国际复材是否披露 Low Dk/Low CTE/T-glass/Q cloth/石英布分产品交期、allocation、客户 AVL、良率和价格。
-3. 台光电、台燿、联茂、建滔、生益、南亚是否披露 M8/M9/M10 CCL/prepreg 报价有效期、客户锁料、二供认证、lead time、分产品收入、ASP 或毛利。
-4. Co-Tech、Mitsui、德福、诺德、嘉元、铜冠、逸豪是否出现 HVLP4/HVLP5 多客户批量收入、加工费、毛利、客户认证或锁产合同证据。
-5. 树脂/化学材料：Reuters/CNA 的 epoxy resin 15 周等待时间是否能被 CCL 厂、板厂、树脂厂或供应商正式交叉验证；PPE/SABIC 断供类叙事继续按更正降级。
-6. 成品板和设备耗材是否出现交期、良率、测试产能、设备 backlog、钻针/药水/油墨认证排队证据。
-7. 后续所有 T-glass/Low CTE/Q glass/石英布记录必须标注 `end_use`，严格区分 ABF/IC 载板与板级 PCB/CCL；同一供应商同一材料词不自动跨用途升级。
+1. 除沪电外，胜宏、深南、生益电子、TTM 是否正式披露同一材料的具体 lead time、配额、订单延期或转单？
+2. 铜冠、德福、Mitsui、Co-Tech 是否披露 HVLP3/4/5 分级销量、良率、客户数、加工费、毛利或锁产合同？
+3. 宏和、Nittobo、台玻、中材、菲利华能否按板级 Low Dk/Df、载板 Low CTE/T-glass、Q cloth 分别披露产能、良率、AVL 和交期？
+4. 台光电、台燿、联茂、生益等是否披露 M8/M9/M10 报价有效期、lead time、锁料、二供认证和分产品毛利？树脂能否落到供应商和牌号？
+5. 容大项目是否按期开工/认证；大族、鼎泰、天承和板厂是否出现可核验的设备 backlog、钻针/药水/光刻胶认证排队或交付受阻？
 
 ## 对话窗口摘要
 
 | 当前核心卡点 | 原因/约束机制 | 关键证据 | 预计持续时间 | 缓解/反转指标 |
 |---|---|---|---|---|
-| 高端电子玻纤布 / Low Dk / Low CTE / T-glass / Q cloth | 窑炉、拉丝、织布、后处理、良率、专利和客户 AVL 限制 qualified output；普通布不可替代 | CNA 台玻称高端玻纤布供不应求至 2027 年底；自由财经富乔称 Low DK2 订单能见度、M9/石英布认证/送样；前期沪电 IR 点名特种高性能玻纤布偏紧 | 2026H2-2027年底中高置信；Q cloth/石英布 2027H2-2028 watch | 台玻/Nittobo/二供产能转为 qualified output；报价回落、交期缩短、库存恢复，多供应商进入核心 AVL |
-| M7/M8/M9/M10 CCL / prepreg | AI server/networking 推动低损耗材料升级；玻纤布、树脂、HVLP 铜箔、新线 qualified output 和客户认证共同约束 | 沪电 IR 点名三类高端材料阶段性偏紧；DIGITIMES 6 月底继续出现 AI PCB 产值和关键材料趋紧线索；Reuters/CNA 增加材料交期压力 | 2026H2 中高置信偏紧；2027H1 中等偏高；2027H2 取决于上游材料和 CCL 新线释放 | 报价停涨或回落，lead time 常态化，客户不再提前锁料，二供进入核心 AVL |
-| 高频高速树脂 / PCB 化学材料 | M8/M9/M10 配方和 PCB 制造依赖认证牌号；化学材料交付和供应商集中可能拖累 CCL/板厂 | Reuters/CNA 称 epoxy resin 等化学材料等待时间从约 3 周拉长至最长约 15 周；但 SABIC/PPE 停产说法已被更正删除 | 2026H2-2027 watch_to_soft；持续时间 N/A，缺超低损耗树脂牌号级供应商、交期、价格和客户证据 | 树脂/化学材料交期恢复，替代配方通过认证，CCL 厂不再提示材料压力 |
-| HVLP4/HVLP5 PCB 铜箔 | 表面处理、低粗糙度一致性、添加剂、客户认证和进口供应集中限制高端供给；锂电铜箔不能替代 PCB 级铜箔 | Mitsui/Co-Tech 官方支持高端 HVLP 需求和供给刚性；DIGITIMES NVIDIA/Co-Tech 仍只是 B 级线索；A 股批量收入和锁产未闭环 | 2026H2-2027 watch_to_soft；持续时间 N/A，缺多客户批量收入、加工费、毛利和锁产合同 | 多供应商稳定供货，加工费回落，国产良率确认；或官方否认/淡化锁产叙事 |
+| 高频高速 PCB 铜箔整体；HVLP4 单列 | 表面处理、低粗糙度一致性、树脂匹配、良率和客户认证限制 qualified output | 铜冠确认供不应求并有加工费/毛利传导；沪电确认 HVLP 工艺/良率/阶段性产能约束。整体 `soft+`，HVLP4 `soft`，无 hard | 2026H2 偏紧；2027 有望收窄；2028 或紧平衡，置信度中 | 扩产形成合格批供、二供入同平台 AVL；加工费/交期回落、优先配额取消 |
+| 高端 Low Dk/Df/超薄电子布 | 玻璃配方、拉丝/织布、后处理、良率和 AVL 限制 | 宏和需求/价格/稀缺利润传导；沪电确认特种布偏紧；菲利华 Q cloth 仍在认证 | 2026H2 中高置信；延续至 2027 为中等置信 | 分布种交期/价格回落，多源入 AVL；扩产良率稳定 |
+| M8/M9/M10 CCL/prepreg 与超低损耗树脂组合 | 布、铜箔、树脂需共同匹配配方与终端认证 | 沪电优先配额；南亚塑胶/南亚新材/华正聚合供需证据。分产品 CCL/树脂牌号仍 N/A | 2026H2-2027H1；树脂单类持续期 N/A | CCL lead time/报价常态化、停止锁料；树脂牌号供给恢复、二供认证 |
+| PCB 光刻胶 | 配方、认证和新线 1.5-2 年建设/爬坡 | 容大订单扩大、现有产能趋满；AI 专用收入/客户为 N/A | 公司当前偏紧；链级 2027-2028 watch | 新线按期形成 qualified output；交期/价格稳定、多源认证 |
 
 | 未来潜在卡点环节 | 可能成为卡点的原因 | 当前证据/争议 | 预计成为卡点时间 | 升级触发阈值 | 反转指标 |
 |---|---|---|---|---|---|
-| 成品 AI PCB 高层板良率/测试 | 材料缓解后瓶颈可能迁移到高层压合、背钻、电镀、阻抗/可靠性测试和客户审厂 | 板厂需求强、材料压力增强，但交期/良率/测试硬证据不足 | 2026H2-2027 watch_to_soft | 两家以上板厂披露交期拉长、良率瓶颈、测试产能不足、订单延期或客户转单 | 扩产达产，订单延期减少，交期正常 |
-| M9/M10 CCL/prepreg | 1.6T/3.2T、Rubin 和 cableless rack 对材料组合、客户认证和 qualified output 要求更高 | 当前 CCL 为 soft+，但分产品 M9/M10 lead time、报价有效期和客户锁料仍缺 | 2026H2-2027H2 | M9/M10 报价继续上调、lead time 3-6 个月、客户提前锁料或二供排队 | 多家稳定量产，报价回落，客户不提前锁料 |
-| 钻针/设备/湿化学/油墨/PCB 光刻胶 | HDI/mSAP/N+M 和高层高速板 capex 带动设备、耗材、药水和油墨认证压力 | 需求方向存在，但 backlog、交期、认证排队证据不足 | 2027-2028 watch | 设备 backlog、交期拉长、认证排队、短缺或涨价由板厂/供应商确认 | 交付恢复，价格稳定，客户认证不排队 |
-| ABF/BT 封装载板 | AI chip advanced packaging 可能单独拉动载板、ABF film、stepper 和载板级 T-glass/Q glass | 与板级 AI PCB 不同链条；当前证据必须单独处理 | 2026H2-2028 separate watch | 单独出现 ABF allocation、advance payment、capacity reservation 或交期证据 | 与板级 PCB/CCL 混同即无效；载板产能和良率改善 |
+| HVLP5/下一代超低粗糙度铜箔 | 3.2T/M10 提高粗糙度、一致性、树脂匹配和良率要求 | 产品/送样方向明确，多客户批供和 lead time 为 N/A | 2027H2-2028 | 两家以上供应商批供，板厂/CCL 确认配额、交期或加工费上涨 | 多源同平台 AVL，加工费/交期回落 |
+| Q cloth/石英布与 M10 材料组合 | 更低损耗叠加玻璃配方、织布、树脂和认证长周期 | 菲利华需求/收入起量但仍在认证；板级客户、产能和短缺未闭环；载板用途不混入 | 2027H2-2028 | 客户/CCL 披露量产型号、AVL、lead time 或 allocation | 配方替代、多家量产、报价回落 |
+| 成品高层板良率/测试 | 材料缓解后瓶颈可能迁移到压合、背钻、电镀和可靠性测试 | 需求强，独立制程瓶颈仍 N/A | 2026H2-2027 | 两家以上板厂披露良率/测试不足、订单延期或转单 | 扩产达产、良率与交期恢复 |
+| 光刻胶、钻针、设备/湿化学 | 高层/HDI/mSAP 提高设备耗材强度，建设和认证慢 | 容大仅公司级产能趋满；设备 backlog/认证排队未证实 | 2027-2028 | 两家以上供应商/板厂确认短缺、backlog、交付或认证排队 | 新线合格达产、设备交期回落、多源供给 |
+| ABF/BT 载板级 T-glass/Q glass | AI 封装单独拉动载板材料、设备和良率 | 与板级 AI PCB 不同链路 | 2026H2-2028，单独观察 | 单独出现 allocation、锁产、预付款、交期或良率证据 | 载板专用产能与良率改善 |
