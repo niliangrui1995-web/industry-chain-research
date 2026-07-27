@@ -21,10 +21,24 @@ Each run should keep these files current:
 ## Per-Company Isolation
 
 - Each enabled company must be processed as a separate work unit.
-- Process company work units with a maximum parallelism of 6. If more than 6 companies are enabled, queued companies must be started as earlier slots finish.
-- When Chrome/Grok browser control is available, use a separate Chrome/Grok tab or window per company and run only that company's query terms in that tab.
-- If a separate browser tab/window is unavailable, keep the company as a separate checklist item and continue non-browser checks.
-- The daily report or `run_status.md` should include a per-company completion table so missing companies are visible before the run ends.
+- The controller processes companies in watchlist order without spawning company-level sub-agents or browser workers.
+- The daily report or `run_status.md` must include a per-company completion table in the exact enabled-watchlist order so missing, duplicate, or extra companies are visible before the run ends.
+
+## End-to-End Run Validation
+
+Before changing the workbook or appending events, create a snapshot:
+
+```powershell
+python scripts/validate_company_tracking_run.py snapshot --watchlist watchlists/a_share_company_watchlist.xlsx --events-root artifacts/company_tracking --output artifacts/company_tracking/.run_validation_snapshot.tmp
+```
+
+After all writes and before reporting success, validate Excel round-trip/structure, append-only JSONL records and the completion table:
+
+```powershell
+python scripts/validate_company_tracking_run.py validate --snapshot artifacts/company_tracking/.run_validation_snapshot.tmp --watchlist watchlists/a_share_company_watchlist.xlsx --events-root artifacts/company_tracking --run-status artifacts/company_tracking/run_status.md
+```
+
+Only `status=passed` may complete the run. A failure must be reported as `blocked/postwrite_validation_failed` with the validator error.
 
 ## Source Rules
 
@@ -35,13 +49,4 @@ Each run should keep these files current:
 
 ## Chat Summary Contract
 
-At the end of each automation run, include a short chat summary with:
-
-1. Updated file paths.
-2. Companies with material changes today.
-3. Announcement, dragon-tiger list, and block-trade highlights.
-4. Grok/X 24-hour observation-pool items, if available.
-5. Changes versus the existing baseline.
-6. The next 3-5 tracking questions.
-7. Per-company completion status and any miss-risk notes.
-8. Batch/queue status when more than 6 companies are enabled.
+The chat summary stays short: companies with material changes, announcement/dragon-tiger/block-trade highlights, changes versus baseline, thesis-gate result, main attribution and the next 3-5 questions. File paths, per-company completion status and queue details stay in the report or `run_status.md` unless they affect the user's next decision.

@@ -6,6 +6,8 @@
 
 0. 最终对话结果、运行摘要、告警、失败原因和其他用户可见文本必须使用中文；ticker、代码、文件名、URL、字段名和必要英文枚举可保留原文。
 1. 先阅读本项目 `AGENTS.md`。
+1V. 读取 `docs/automation/AUTOMATION_RUN_CONTRACT.md`，在任何业务采集或写入前运行 `python scripts/automation_run_metadata.py --repo-root "D:\vcp_hunter\产业链投研" --skill a-share-company-tracking --skill a-share-disclosure-trading-data --pretty`。把输出的 `skill_revision`、`prompt_contract_version`、`skill_content_sha256`、`skill_tree_status` 和 `skills` 写入本轮日报与 `run_status.md`；无新增或提前结束也不能省略。若后续条件性调用 `financial-evidence-audit`，完成前带该 Skill 重跑并覆盖元数据。预检失败时只写最小失败状态并以 `blocked/precheck_failed` 结束。
+1E. 元数据预检通过后、修改 Excel 或追加任何 `events.jsonl` 前运行 `python scripts/validate_company_tracking_run.py snapshot --watchlist watchlists/a_share_company_watchlist.xlsx --events-root artifacts/company_tracking --output artifacts/company_tracking/.run_validation_snapshot.tmp`。快照失败即停止，不得产生部分业务写入。
 1A. 本任务只预加载两个项目 skill：`.agents/skills/a-share-company-tracking`；公告、CNINFO、交易所披露、龙虎榜、大宗交易和公告窗口核验使用 `.agents/skills/a-share-disclosure-trading-data`。补建基线、判断 thesis 漂移或归因事件前，读取 `.agents/skills/a-share-company-tracking/references/thesis-drift-event-attribution.md`。不要追加兼容路由或固定通用技能栈。
 2. 读取 `watchlists/a_share_company_watchlist.xlsx` 的 `watchlist` 工作表，只处理 `enabled=Y` 的公司。
 3. 首次或新增公司规则：`baseline_status` 为 `pending`、`refresh_needed` 或空值的公司，必须先做完整公司基线深研；本任务首跑要一次性完成全部待建基线公司。
@@ -176,6 +178,7 @@ The daily report must include:
    - baseline-created count;
    - daily-updated count;
    - open-web search summary.
+   - `skill_revision` and `prompt_contract_version` resolved from the automation run contract.
 2. 有实质变化的公司，并逐家公司写清 `change_type`、发生了什么、为什么重要、证据来源类型、支持与反证、置信度和持续窗口；不要只列公司名。
 3. Companies with dragon-tiger list or block-trade events.
 4. Open-web 24-hour observation pool.
@@ -214,6 +217,7 @@ The final chat summary must be short and include:
 - Do not use external browsers, browser plugins, third-party web model tools, or social-search tools in this workflow. Use Codex's own internet/web-search capability only.
 - If open-web search fails, keep processing that company through official disclosures, exchange data, dragon-tiger list, block trades, and local files. Mark only `open_web_search_status` failed.
 - Before finishing, audit the enabled watchlist against the per-company completion table. If any enabled company is missing, reopen that company task block before writing the final summary.
+- Before declaring success, run `python scripts/validate_company_tracking_run.py validate --snapshot artifacts/company_tracking/.run_validation_snapshot.tmp --watchlist watchlists/a_share_company_watchlist.xlsx --events-root artifacts/company_tracking --run-status artifacts/company_tracking/run_status.md`. Only `status=passed` may complete the run; otherwise record the exact validator error and report `blocked/postwrite_validation_failed` instead of success.
 - If more than 6 companies are enabled, verify that queued companies beyond the first batch were actually started and completed.
 - Preserve Chinese text and file encoding. Do not rewrite unrelated project files.
 - Never translate tracking output into automatic buy/sell, position, stop-loss, target-price, or external portfolio actions.

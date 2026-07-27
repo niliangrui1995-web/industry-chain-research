@@ -18,6 +18,8 @@ from typing import Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_ROOT = ROOT / ".agents" / "skills"
+ZIJIN_ROOT = ROOT.parent / "紫金研选"
+ZIJIN_PYTHON = ZIJIN_ROOT / ".venv" / "Scripts" / "python.exe"
 EXPECTED_PROJECT_SKILLS = {
     "a-share-company-tracking",
     "a-share-disclosure-trading-data",
@@ -40,10 +42,12 @@ DEFAULT_DOCS = [
     SKILL_ROOT / "financial-evidence-audit" / "SKILL.md",
 ]
 PYTHON_FILES = [
+    ROOT / "scripts" / "automation_run_metadata.py",
     ROOT / "scripts" / "update_tungsten_price_tracker.py",
     ROOT / "scripts" / "earnings_parent_guardrail.py",
     ROOT / "scripts" / "create_company_watchlist.py",
     ROOT / "scripts" / "repo_health_check.py",
+    ROOT / "scripts" / "validate_company_tracking_run.py",
     SKILL_ROOT / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
     SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "audit_margin_history.py",
     SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "audit_market_data.py",
@@ -320,12 +324,15 @@ def check_ht_inspect_help() -> CheckResult:
 
 
 def check_earnings_guardrail() -> CheckResult:
+    interpreter = ZIJIN_PYTHON if ZIJIN_PYTHON.is_file() else Path(sys.executable)
     code, stdout, stderr = run_cmd(
         [
-            sys.executable,
+            str(interpreter),
             str(ROOT / "scripts" / "earnings_parent_guardrail.py"),
             "--project-root",
             str(ROOT),
+            "--zijin-root",
+            str(ZIJIN_ROOT),
             "--output",
             "json",
         ],

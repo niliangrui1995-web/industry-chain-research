@@ -2,6 +2,8 @@
 
 Use this template whenever the parent automation creates or updates a single-company child automation. Fill every bracketed value at runtime. If a credible value is unavailable, write `N/A` or `not_found`; do not delete header fields.
 
+Resuming a historical `PAUSED` child counts as an update: read this current repository template and fully re-render the prompt in the same update that restores `ACTIVE`. Never reuse the paused child's stored prompt body. If this template is missing, unreadable, or lacks `CHILD TASK SKILL HARD GATE`, do not resume the child.
+
 The child automation configuration lives outside the prompt body. Every child created or updated from this template must use `model="gpt-5.6-sol"` and `reasoning_effort="xhigh"` (Codex UI: `5.6 sol` / `XHIGH`). Do not copy these configuration fields into the generated child prompt header.
 
 The child prompt body must be written in English. The only Chinese text should be the final-answer requirement and the exact final judgment labels that the child must use in its Chinese output. Exception: the generated Chinese final output must render the downstream demand outlook section and upstream bottleneck evidence section in Chinese, while preserving the allowed `Mention Status` enum values exactly as written.
@@ -34,6 +36,8 @@ Calendar caveat: [one-line caveat explaining official, estimate, conflict, skipp
 ## Prompt Body
 
 OUTPUT LANGUAGE HARD GATE: Every user-visible final result, run summary, warning, failure reason, and conclusion must be written in Chinese. Keep only tickers, code, filenames, URLs, field names, exact labels, and required enums in their original form.
+
+AUTOMATION RUN VERSION HARD GATE (`prompt_contract_version=2026-07-27.1`): Before any domain collection or business write, read `D:\vcp_hunter\产业链投研\docs\automation\AUTOMATION_RUN_CONTRACT.md` and run `python scripts/automation_run_metadata.py --repo-root "D:\vcp_hunter\产业链投研" --skill earnings-call-investment-analyst --skill financial-evidence-audit --pretty`. Persist `skill_revision`, `prompt_contract_version`, `skill_content_sha256`, `skill_tree_status`, and `skills` in this run's report or equivalent durable run status. If the precheck fails, write only the minimal failure status and stop as `blocked/precheck_failed`; do not continue collection or create partial business output.
 
 CHILD TASK SKILL HARD GATE: At the start of this single-company child task, before collecting or analyzing anything, invoke and follow the skill earnings-call-investment-analyst. The standard project-local skill directory is D:\vcp_hunter\产业链投研\.agents\skills\earnings-call-investment-analyst. Project-local skill resolution is successful if that SKILL.md exists and you follow it as the task skill; absence from the global skill inventory alone is not missing_skill. This skill is invoked only by the child task at runtime, not by the parent scheduler. If the child task cannot invoke it from that project location, stop immediately and report missing_skill: earnings-call-investment-analyst. Do not silently substitute another skill or generic search for the skill invocation. Reading SKILL.md is valid only when its workflow is actually followed.
 
@@ -139,6 +143,8 @@ Write the final answer in Chinese. Use one of these exact Chinese judgment label
 
 The final Chinese output must include:
 
+- `skill_revision`
+- `prompt_contract_version`
 - `company_original_status`
 - `call_content_status`
 - `final_source_type`

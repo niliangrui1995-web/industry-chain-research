@@ -42,7 +42,7 @@ WEEKDAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
 RRULE_PATTERN = re.compile(
     r"^(?:DTSTART:\d{8}T\d{6}\n)?"
     r"RRULE:FREQ=WEEKLY;BYDAY=(SU|MO|TU|WE|TH|FR|SA);"
-    r"BYHOUR=\d{1,2};BYMINUTE=\d{1,2};COUNT=1$"
+    r"BYHOUR=(\d{1,2});BYMINUTE=(\d{1,2});COUNT=1$"
 )
 OFFICIAL_CALL_SOURCE_TYPES = {
     "official_ir_event",
@@ -82,8 +82,12 @@ SNAPSHOT_KIND = "earnings-parent-22-30-2"
 CHILD_TEMPLATE_RELATIVE_PATH = Path("docs") / "earnings_parent" / "CHILD_PROMPT_TEMPLATE.md"
 DEFAULT_CHILD_MODEL = "gpt-5.6-sol"
 DEFAULT_CHILD_REASONING_EFFORT = "xhigh"
-CHILD_BODY_MARKER = "CHILD TASK SKILL HARD GATE:"
+CHILD_BODY_MARKER = "## Prompt Body"
 REQUIRED_CHILD_PROMPT_MARKERS = (
+    "OUTPUT LANGUAGE HARD GATE",
+    "prompt_contract_version=2026-07-27.1",
+    "CHILD TASK SKILL HARD GATE",
+    "FINANCIAL EVIDENCE AUDIT HARD GATE",
     "Project-local skill resolution is successful",
     "earnings webcast, results briefing, or investor meeting",
     "Downstream Demand Outlook Hard Constraint",
@@ -288,10 +292,29 @@ def _format_epoch_ms_beijing(value: Any) -> str:
 
 
 def _make_one_shot_rrule(start: dt.datetime) -> str:
-    scheduler_time = start.astimezone(dt.UTC)
+    if start.tzinfo is None:
+        raise ValueError("child start time must be timezone-aware")
+    # Codex automation RRULE fields are interpreted as Asia/Shanghai local
+    # wall-clock values in this workspace. The scheduler database readback is
+    # still the final execution-time truth and is checked separately.
+    scheduler_time = start.astimezone(BEIJING_TZ)
     return (
         f"RRULE:FREQ=WEEKLY;BYDAY={WEEKDAYS[scheduler_time.weekday()]};"
         f"BYHOUR={scheduler_time.hour};BYMINUTE={scheduler_time.minute};COUNT=1"
+    )
+
+
+def _rrule_matches_planned_local_wall_clock(rrule: str, planned_dt: dt.datetime | None) -> bool:
+    if planned_dt is None or planned_dt.tzinfo is None:
+        return False
+    match = RRULE_PATTERN.fullmatch(str(rrule or ""))
+    if not match:
+        return False
+    planned_local = planned_dt.astimezone(BEIJING_TZ)
+    return (
+        match.group(1) == WEEKDAYS[planned_local.weekday()]
+        and int(match.group(2)) == planned_local.hour
+        and int(match.group(3)) == planned_local.minute
     )
 
 
@@ -494,7 +517,10 @@ def _scan_children(
             schedule_basis=_prompt_field(prompt, "Schedule basis"),
             planned_dt=planned_dt,
             has_memory=(path.parent / "memory.md").exists(),
-            rrule_ok=bool(RRULE_PATTERN.match(str(data.get("rrule", "")))),
+            rrule_ok=_rrule_matches_planned_local_wall_clock(
+                str(data.get("rrule", "")),
+                planned_dt,
+            ),
             scheduler_next_run_beijing=_format_epoch_ms_beijing(scheduler_row.get("next_run_at")),
             scheduler_last_run_beijing=_format_epoch_ms_beijing(scheduler_row.get("last_run_at")),
             scheduler_next_run_matches_planned=scheduler_matches,
@@ -505,20 +531,16 @@ def _scan_children(
     return children, problems
 
 
-def _template_body(project_root: Path, children: list[ChildRecord]) -> str | None:
+def _template_body(project_root: Path, _children: list[ChildRecord]) -> str | None:
     template_path = project_root / CHILD_TEMPLATE_RELATIVE_PATH
     if template_path.exists():
         text = template_path.read_text(encoding="utf-8")
         index = text.find(CHILD_BODY_MARKER)
         if index >= 0:
             return "\n\n" + text[index:].strip() + "\n"
-
-    marker = "\n\nCHILD TASK SKILL HARD GATE:"
-    for child in children:
-        prompt = str(child.data.get("prompt", "") or "")
-        index = prompt.find(marker)
-        if index >= 0 and "Company Fundamental Baseline" in prompt:
-            return prompt[index:]
+    # Never fall back to a historical child prompt. In particular, a PAUSED
+    # child may only be resumed after the current repository template is read
+    # and rendered into the same update that changes it back to ACTIVE.
     return None
 
 
@@ -677,8 +699,6 @@ def _match_child(event: PlannedEvent, children: list[ChildRecord]) -> tuple[Chil
 
 def _child_matches_event(child: ChildRecord, event: PlannedEvent) -> tuple[bool, list[str]]:
     prompt = str(child.data.get("prompt", "") or "")
-    expected_rrule_dt = _parse_beijing_time(event.planned_child_start_beijing)
-    expected_rrule = _make_one_shot_rrule(expected_rrule_dt) if expected_rrule_dt else ""
     existing_source_fields = {
         "calendar_source": _prompt_field(prompt, "Calendar source"),
         "event_status": _prompt_field(prompt, "Event status"),
@@ -705,7 +725,7 @@ def _child_matches_event(child: ChildRecord, event: PlannedEvent) -> tuple[bool,
         "official_call_beijing": _prompt_field(prompt, "Official call Beijing time") == event.official_call_beijing,
         "source_header": source_ok,
         "prompt_template_body": template_markers_ok,
-        "rrule": str(child.data.get("rrule", "")) == expected_rrule,
+        "rrule": child.rrule_ok,
         "scheduler_next_run": child.scheduler_next_run_matches_planned,
         "model": child.data.get("model") == expected_model,
         "reasoning_effort": child.data.get("reasoning_effort") == expected_reasoning,
@@ -988,6 +1008,8 @@ def _build_action_plan(
                 actions["validate_pending"].append({"child_id": child_id, **payload})
                 validated_child_ids.add(child_id)
             else:
+                if str(child.data.get("status")) == "PAUSED":
+                    failed = [*failed, "prompt_template_sync_before_resume"]
                 actions["update"].append({"child_id": child_id, "update_reasons": failed, **payload})
                 validated_child_ids.add(child_id)
         else:
@@ -1435,6 +1457,7 @@ def main() -> int:
     active_with_memory: list[str] = []
     active_past: list[str] = []
     bad_rrules: list[str] = []
+    paused_requires_sync_before_resume: list[dict[str, Any]] = []
     bad_static_contract: list[dict[str, Any]] = []
     active_missing_template_markers: list[dict[str, Any]] = []
     active_missing_source_headers: list[dict[str, Any]] = []
@@ -1463,8 +1486,18 @@ def main() -> int:
             active_with_memory.append(child_id)
         if toml_status == "ACTIVE" and child.planned_dt and child.planned_dt < now:
             active_past.append(child_id)
-        if not child.rrule_ok:
+        if toml_status == "ACTIVE" and not child.rrule_ok:
             bad_rrules.append(child_id)
+        if toml_status == "PAUSED":
+            resume_sync_reasons: list[str] = []
+            if not child.rrule_ok:
+                resume_sync_reasons.append("rrule_local_wall_clock")
+            if _missing_prompt_markers(child):
+                resume_sync_reasons.append("current_prompt_template")
+            if resume_sync_reasons:
+                paused_requires_sync_before_resume.append(
+                    {"child_id": child_id, "reasons": resume_sync_reasons}
+                )
         if toml_status == "ACTIVE" and child.planned_dt and child.planned_dt >= now and not child.scheduler_next_run_matches_planned:
             scheduler_next_run_mismatch.append(
                 {
@@ -1487,6 +1520,7 @@ def main() -> int:
     duplicate_ticker_dates = {key: ids for key, ids in ticker_date_index.items() if key and len(ids) > 1}
     final_validation_issues = {
         "bad_rrules": bad_rrules,
+        "paused_requires_sync_before_resume": paused_requires_sync_before_resume,
         "active_with_memory": active_with_memory,
         "active_past": active_past,
         "bad_static_contract": bad_static_contract,
@@ -1577,6 +1611,7 @@ def main() -> int:
         print(f"legacy warnings: {len(soft_warnings['legacy_name'])}")
         print(f"create/update/pause: {len(actions['create'])}/{len(actions['update'])}/{len(actions['pause'])}")
         print(f"bad rrules: {len(bad_rrules)}")
+        print(f"paused requiring sync before resume: {len(paused_requires_sync_before_resume)}")
     return 0 if status == "ok" else 2
 
 

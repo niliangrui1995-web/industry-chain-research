@@ -10,6 +10,7 @@
 
 0. 最终对话结果、运行摘要、告警、失败原因和其他用户可见文本必须使用中文；ticker、代码、文件名、URL、字段名和必要英文枚举可保留原文。
 1. 先阅读并遵守 `D:\vcp_hunter\产业链投研\AGENTS.md`。
+1V. 读取 `D:\vcp_hunter\产业链投研\docs\automation\AUTOMATION_RUN_CONTRACT.md`，在任何业务读取或写入前运行 `python scripts/automation_run_metadata.py --repo-root "D:\vcp_hunter\产业链投研" --skill earnings-call-investment-analyst --skill a-share-disclosure-trading-data --pretty`。把输出的 `skill_revision`、`prompt_contract_version`、`skill_content_sha256`、`skill_tree_status` 和 `skills` 写入 `run_status.md` 及本期日报；无新增早停也不能省略。若后续条件性调用 `financial-evidence-audit`，完成前带该 Skill 重跑并覆盖元数据。预检失败时只写最小失败状态并以 `blocked/precheck_failed` 结束。
 2. 调用并遵守两个项目本地领域/数据技能；涉及市值、预期差、估值或派生财务计算时，再调用 `financial-evidence-audit`：
    - `D:\vcp_hunter\产业链投研\.agents\skills\earnings-call-investment-analyst\SKILL.md`
    - `D:\vcp_hunter\产业链投研\.agents\skills\a-share-disclosure-trading-data\SKILL.md`
@@ -80,6 +81,7 @@
 
 最小状态至少记录：
 
+- `skill_revision` 与 `prompt_contract_version`；
 - 北京时间；
 - 24 小时窗口；
 - 数据源；
@@ -130,7 +132,7 @@
 
 日报结构必须包含：
 
-- 运行元数据：北京时间、24 小时窗口、数据源、命中数量、官方核验覆盖率。
+- 运行元数据：`skill_revision`、`prompt_contract_version`、北京时间、24 小时窗口、数据源、命中数量、官方核验覆盖率。
 - 结论先行：含金量最高、最值得继续深研、最像一次性/低基数、证据不足名单、最大共性风险。
 - 总表：ticker、name、类型、报告期、揭晓日、环比、同比、当季利润、公告状态、含金量、基本面质量、业绩弹性、交易弹性、下一步。
 - 单公司卡片：官方证据、核心财务变化、业绩原因拆解、基本面判断、含金量判断、风险、跟踪指标。

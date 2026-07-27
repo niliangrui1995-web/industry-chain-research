@@ -44,11 +44,10 @@
 | 状态 | 含义 |
 |---|---|
 | `new` | 本期新增堵点或新进入观察的潜在卡点 |
-| `worsened` | 供需缺口扩大、交期拉长、价格更强、良率/认证更紧 |
+| `upgraded` | 证据闭环或严重程度较上期升级，包括供需缺口扩大、交期拉长、良率/认证收紧 |
 | `unchanged` | 堵点仍存在，但没有明显边际变化 |
-| `eased` | 供给改善、交期缩短、价格回落、替代/二供推进 |
+| `downgraded` | 供给改善、交期缩短、替代/二供推进，或原有证据不足而降级 |
 | `resolved` | 供需缺口已被证实消除 |
-| `downgraded_to_watch` | 原堵点证据不足或边际弱化，降为观察 |
 | `rejected` | 被证据证伪，不再作为堵点跟踪 |
 
 ## 证据分级
@@ -63,15 +62,36 @@
 
 执行中可以按研究复杂度自主拆分任务并调用子代理；子代理适合承担独立的信息收集、证据核验、细分环节拆解、海外龙头梳理和上市主体初筛。子代理默认使用超高智能。若子代理达到上限，应排队等待前面的子代理完成，再继续新建后续子代理；主代理负责最终证据分级、交叉验证、堵点判断、排名和报告合成。
 
+0. 读取 `docs/automation/AUTOMATION_RUN_CONTRACT.md`，在业务采集或写入前运行 `python scripts/automation_run_metadata.py --repo-root "D:\vcp_hunter\产业链投研" --skill research-industry-chain --pretty`；将 `skill_revision`、`prompt_contract_version` 及完整元数据写入本期报告和 `state.md`。如后续调用 `ai-chain-research-orchestrator` 或 `financial-evidence-audit`，完成前带齐实际 Skill 重跑并覆盖元数据。预检失败时只写最小失败状态并以 `blocked/precheck_failed` 结束。
 1. 读取本任务 `state.md` 和最近一期报告。
 2. 回访上次留下的 3-5 个跟踪问题。
 3. 建立本周新增证据表，标明 A/B/C 等级。
-4. 更新当前堵点账本：缓解、加剧、不变、证伪、新增。
-5. 对 `hard_bottleneck` 和 `soft_bottleneck` 做节点深挖。
+4. 更新当前堵点账本；`status_change` 只使用 `new | upgraded | unchanged | downgraded | resolved | rejected`。
+5. 为每个 `hard_bottleneck` 和 `soft_bottleneck` 建立唯一 `evidence_check_id` 的三腿证据包：需求、供给、缺口分别记录证据日期、来源类型和可复核定位，并做节点深挖。
 6. 预估当前 `hard_bottleneck` 和 `soft_bottleneck` 的可能持续时间，写明时间窗口、判断依据、置信度、缓解路径和反转指标；证据不足时写 `N/A` 并说明缺什么证据。
 7. 扫描未进入本期主深挖的其他产业链环节，预测未来 6-24 个月可能出现的新卡点或卡点迁移，写明需求触发、供给滞后机制、可能时间、升级触发阈值、证据日期/类型/定位、最大证据年龄、证据缺口和反转指标。`likely_future_bottleneck` 或 high confidence 只接受不晚于本期 `as_of` 且默认 365 天内的 A/B 级可信来源；陈旧或弱来源只能 low-confidence `watch`。
-8. 只有在堵点节点明确后，才映射上市公司。
-9. 更新本期报告和 `state.md`。
+8. 只有在堵点节点明确后，才映射上市公司，并完整记录商业化阶段证据链、`revenue_materiality` 和 `verdict`。
+9. 生成本期结构化证据包，依次运行 strict normalizer 与 bottleneck validator；只有两者均通过，hard/soft 才可准出。
+10. 更新本期报告和 `state.md`。
+
+## 结构化准出合同
+
+三份 `BASELINE_TEMPLATE.md` 中的“当前堵点账本”“瓶颈证据检查”“未来 6-24 个月卡点迁移”“上市公司映射”分别对应 `bottleneck_ledger`、`bottleneck_evidence_checks`、`future_bottleneck_scenarios`、`china_candidates`。表头使用 normalizer 支持的中文字段名，不得自行改成未登记同义词。
+
+每期至少保存：
+
+- `YYYY-MM-DD.evidence.json`：上述结构化表的原始证据包。
+- `YYYY-MM-DD.bottleneck_evidence_checks.csv`：与 JSON 中同一批 `bottleneck_evidence_checks` 记录一致，供独立 validator 复核。
+- `YYYY-MM-DD.normalized.json`：strict normalizer 输出。
+
+以同一个明确的 `as_of` 依次运行：
+
+```powershell
+python .agents/skills/research-industry-chain/scripts/normalize_research_inputs.py --input artifacts/weekly_chain_tracking/<task>/YYYY-MM-DD.evidence.json --as-of YYYY-MM-DD --strict --pretty --out artifacts/weekly_chain_tracking/<task>/YYYY-MM-DD.normalized.json
+python .agents/skills/research-industry-chain/scripts/validate_bottleneck_evidence.py --csv artifacts/weekly_chain_tracking/<task>/YYYY-MM-DD.bottleneck_evidence_checks.csv --as-of YYYY-MM-DD --pretty
+```
+
+normalizer 与 validator 都只做证据完整性和等级一致性门，不自动授予瓶颈结论。ledger 的 `evidence_review_status` 必须与 normalizer 计算值一致；validator 非零退出、证据过期、来源等级不足或交叉表关联失败时，必须降为 `watch/rejected` 或保留为明确的证据缺口，不能继续输出 hard/soft。
 
 ## 行情快照规则
 
@@ -96,6 +116,7 @@
 - `state.md`：滚动状态。
 - `BASELINE_TEMPLATE.md`：首期和后续报告模板。
 - `YYYY-MM-DD.md`：每期实际报告。
+- `YYYY-MM-DD.evidence.json`、`YYYY-MM-DD.bottleneck_evidence_checks.csv`、`YYYY-MM-DD.normalized.json`：结构化证据、独立验证输入和规范化结果。
 
 ## 对话窗口摘要要求
 

@@ -4,6 +4,14 @@
 覆盖窗口：YYYY-MM-DD 至 YYYY-MM-DD  
 任务目录：`artifacts/weekly_chain_tracking/ai_pcb/`
 
+## 运行元数据
+
+- `skill_revision`：
+- `prompt_contract_version`：`2026-07-27.1`
+- `skill_content_sha256`：
+- `skill_tree_status`：
+- `skills`：
+
 ## 结论先行
 
 - 本周最明确堵点：
@@ -40,13 +48,17 @@
 
 ## 当前堵点账本
 
-| 堵点节点 | 影响层级 | 需求证据 | 供给证据 | 供需缺口证据 | 约束机制 | 严重程度 | 本期状态 | 时间维度 | 反转指标 | 证据等级 | 来源 |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| N/A | N/A | N/A | N/A | N/A | N/A | watch | new | N/A | N/A | N/A | N/A |
+| 堵点 | 声明时点 | 证据检查ID | 证据评审状态 | 影响层级 | 需求证据 | 供给证据 | 供应缺口证据 | 约束机制 | 严重程度 | 时间维度 | 替代路径 | 二供状态 | 缓解窗口 | 正面验证 | 反证 | 前次状态 | 状态变化 | 关键反转 | 证据等级 | 来源 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
-`严重程度` 只能使用：`hard_bottleneck / soft_bottleneck / watch / rejected`。  
-`本期状态` 只能使用：`new / worsened / unchanged / eased / resolved / downgraded_to_watch / rejected`。
-`时间维度` 必须写当前堵点可能持续的时间窗口、缓解路径和置信度；证据不足时写 `N/A`，但要说明缺口证据。
+`严重程度` 只能使用 `hard_bottleneck | soft_bottleneck | watch | rejected`；`状态变化` 只能使用 `new | upgraded | unchanged | downgraded | resolved | rejected`。hard/soft 行的 `声明时点` 必须等于本期 `as_of`，`证据检查ID` 必须唯一关联下表同一节点、严重程度、时间维度的 `current` 证据包；`证据评审状态` 必须等于 normalizer 重新计算的结果，不得自评。严格模式拒绝空值和裸 `N/A/TBD/evidence_absent`，未知项须写明检索范围与具体证据缺口。
+
+### 瓶颈证据检查
+
+每个 hard/soft 行都必须填写一条三腿证据记录。需求、供给、缺口三腿分别记录日期、来源类型和可复核定位；hard 三腿仅限 `regulatory | official | company_original | official_counterparty`，soft 可增加 `credible_third_party`。当前声明默认要求四类证据日期在 `声明时点` 前 180 天内。
+
+| 检查ID | 节点 | 严重程度 | 声明窗口 | 声明时点 | 最大证据年龄天数 | 需求证据类型 | 供给证据类型 | 需求证据 | 需求证据日期 | 需求来源类型 | 需求来源定位 | 供给证据 | 供给证据日期 | 供给来源类型 | 供给来源定位 | 供应缺口证据 | 缺口证据日期 | 缺口来源类型 | 缺口来源定位 | 直接缺口后果 | 约束机制 | 时间维度 | 替代路径 | 二供状态 | 缓解窗口 | 正面验证 | 反证 | 关键反转 | 证据等级 | 来源 | 来源日期 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
 ## 堵点深挖
 
@@ -58,21 +70,21 @@
 
 ## 未来 6-24 个月卡点迁移
 
-本节必须覆盖未进入本期主深挖的其他材料、设备、耗材、化学品和成品板环节，至少横扫成品板订单兑现、CCL/prepreg、电子布/玻纤、铜箔、树脂、设备/耗材/化学品。没有证据升级的节点也要写清为什么仍为 `watch` 或 `rejected/watch`。
+本节必须覆盖未进入本期主深挖的其他材料、设备、耗材、化学品和成品板环节，至少横扫成品板订单兑现、CCL/prepreg、电子布/玻纤、铜箔、树脂、设备/耗材/化学品。没有证据升级的节点也要写清为什么仍为 `watch`、`downgraded` 或 `resolved`。
 
 `likely_future_bottleneck` 或 high confidence 必须填写不晚于本期 `as_of` 且 365 天内的 A/B 级可信来源；陈旧或弱来源只能 low-confidence `watch`。
 
-| 节点 | 是否本期主深挖 | 当前状态 | 未来状态 | 需求触发 | 供给滞后机制 | 可能时间 | 升级触发阈值 | 置信度 | 证据日期 | 来源类型 | 来源定位 | 最大证据年龄天数 | 证据缺口 | 反转指标 |
+`未来状态` 只能使用 `likely_future_bottleneck | watch | downgraded | resolved`；`当前状态` 只能使用 `hard_bottleneck | soft_bottleneck | watch | downgraded | resolved`。
+
+| 节点 | 当前状态 | 未来状态 | 需求触发 | 供给滞后机制 | 预计时间 | 置信度 | 证据缺口 | 反转指标 | 证据日期 | 未来证据最大年龄天数 | 来源类型 | 来源定位 | 证据等级 | 来源 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| N/A | 否 | N/A | watch | N/A | N/A | N/A | N/A | low | N/A | N/A | N/A | 365 | N/A | N/A |
 
 ## 上市公司映射
 
-只有在堵点节点明确后再填写。必须先写对应节点，再写公司。
+只有在堵点节点明确后再填写，必须先写对应节点，再写公司。商业化阶段只允许 `rd_plan | sampling | validation | design_win | qualification | mass_production | shipment | revenue | profit_cashflow`，不得从当前阶段推断下一阶段；`阶段声明窗口` 只允许 `current | historical`，`结论` 只允许 `main_candidate | watch_only | theme_adjacent | reject`。`revenue`、`profit_cashflow` 或 `main_candidate` 必须由 A 级、可定位的 `regulatory | official | company_original | official_counterparty` 原始来源支持。必须分开收入重要性、基本面质量、业绩弹性和交易弹性。
 
-| 公司 | ticker | 市场 | 对应节点 | 暴露证据 | 收入/利润弹性 | 基本面质量 | 业绩弹性 | 交易弹性 | 结论 | 证据等级 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
+| 公司 | 代码 | 交易所 | 对应节点 | 敞口证据 | 商业化阶段 | 阶段证据 | 阶段日期 | 阶段声明窗口 | 阶段最大证据年龄天数 | 阶段来源 | 阶段来源类型 | 阶段来源定位 | 纯度 | 收入占比 | 证据缺口 | 基本面质量 | 业绩弹性 | 交易弹性 | 结论 | 纳入理由 | 淘汰理由 | 下一验证证据 | 证据等级 | 来源 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
 ## 行情快照规则
 

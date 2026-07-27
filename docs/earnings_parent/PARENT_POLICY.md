@@ -11,6 +11,8 @@
 - 单公司子任务运行时必须使用项目本地 skill：`D:\vcp_hunter\产业链投研\.agents\skills\earnings-call-investment-analyst`，并在发布决策关键数字前使用 `D:\vcp_hunter\产业链投研\.agents\skills\financial-evidence-audit`。
 - 读取或写回紫金研选代码时，优先使用 `D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe`。若从产业链投研启动 Python，必须先把 `D:\vcp_hunter\紫金研选` 插入 `sys.path` 后再 import `domains.global_earnings_calendar.service`。
 
+母任务在日历读取或自动化变更前，必须先读取 `docs/automation/AUTOMATION_RUN_CONTRACT.md`，运行 `python scripts/automation_run_metadata.py --repo-root "D:\vcp_hunter\产业链投研" --skill earnings-call-investment-analyst --skill financial-evidence-audit --pretty`，并在运行报告记录 `skill_revision`、`prompt_contract_version` 及完整元数据；当前合同版本为 `2026-07-27.1`。预检失败时只允许记录最小 `blocked/precheck_failed` 状态，不得继续创建、更新、恢复或暂停自动化。新建或恢复的 child 必须继承当前 `CHILD_PROMPT_TEMPLATE.md` 中同一版本合同。
+
 ## 硬停条件
 
 出现以下情况时停止受影响操作并报告，不得创建或更新受影响子任务：
@@ -74,8 +76,8 @@
 
 新增硬门：子任务创建、更新或暂停后，必须同时验证两层时间：
 
-- `automation.toml` 中的 rrule 必须仍然通过一次性 weekly `COUNT=1` 正则校验。
-- Codex 调度库 `$CODEX_HOME\sqlite\codex-dev.db` 的 `automations.next_run_at` 必须能换算成同一个 `Planned child start Beijing`。未来 ACTIVE 子任务如果实际 `next_run_at` 缺失、无法读取、状态与 TOML 不一致，或换算后的北京时间与计划开始时间不一致，必须报告 `child_scheduler_next_run_mismatch` 或 `child_scheduler_status_mismatch`，并停止把该子任务视为有效。只看 rrule 文本通过不再足够。
+- 配置门：`automation.toml` 中的 rrule 必须通过一次性 weekly `COUNT=1` 正则校验，且 `BYDAY/BYHOUR/BYMINUTE` 必须与 `Planned child start Beijing` 的 Asia/Shanghai 本地墙钟完全一致。
+- 执行真值门：Codex 调度库 `$CODEX_HOME\sqlite\codex-dev.db` 的 `automations.next_run_at` 是最终执行时间真值，必须能换算成同一个 `Planned child start Beijing`。未来 ACTIVE 子任务如果实际 `next_run_at` 缺失、无法读取、状态与 TOML 不一致，或换算后的北京时间与计划开始时间不一致，必须报告 `child_scheduler_next_run_mismatch` 或 `child_scheduler_status_mismatch`，并停止把该子任务视为有效。配置门通过不能替代数据库回读。
 - 调度库只允许只读校验；不得手工写 SQLite。若需要修复调度状态，优先使用 `automation_update` 更新同一个子任务，而不是直接改数据库。
 
 若 `D:\vcp_hunter\产业链投研\scripts\earnings_parent_guardrail.py` 存在，子任务 create/update/pause 前必须先 dry-run：
@@ -106,14 +108,14 @@ D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe D:\vcp_hunter\产业链投�
 - 每家公司必须创建独立 cron 子任务，命名：`财报电话会深挖 {ticker} {company} {report_date}`。
 - 子任务工作区仅 `D:\vcp_hunter\产业链投研`，`executionEnvironment=local`。所有现有、未来新建或更新的子任务（包括 `PAUSED`）均统一写入 `model="gpt-5.6-sol"`、`reasoning_effort="xhigh"`（Codex UI：`5.6 sol` / `XHIGH`）；不得再因 `default_proxy_not_call_time`、日期-only、非核心观察项或其他排期依据降档。UI/提示词标签必须与 TOML 字段一致。
 - 本节模型合同是母任务及其全部子任务的唯一业务真相；若 live parent prompt 或任何 child 仍含旧模型组合，所有 create/update payload 和 guardrail 校验均以 `gpt-5.6-sol` / `xhigh` 为准。
-- 子任务 rrule 必须使用 Codex 调度器可执行的一次性周规则。`Planned child start Beijing` 仍是业务真相；rrule 的 `BYDAY/BYHOUR/BYMINUTE` 必须使用该北京时间换算后的 UTC 等价值，让调度库 `next_run_at` 换算回北京时间后等于 header 计划时间：
+- 子任务 rrule 必须使用 Codex 调度器可执行的一次性周规则。`Planned child start Beijing` 是业务计划真相；本工作区 Codex 调度器按 Asia/Shanghai 本地墙钟解释 rrule，因此 `BYDAY/BYHOUR/BYMINUTE` 必须直接使用该计划北京时间的星期、小时和分钟：
 
 ```text
 RRULE:FREQ=WEEKLY;BYDAY=<weekday>;BYHOUR=<hour>;BYMINUTE=<minute>;COUNT=1
 ```
 
-- `BYDAY/BYHOUR/BYMINUTE` 必须全部来自同一个最终计划开始北京时间的 UTC 等价值；例如北京时间 `2026-06-24 20:00` 应写成 UTC 周三 `BYHOUR=12;BYMINUTE=0`。
-- 不再新生成 `DTSTART`。历史 child 如已带 `DTSTART` 且调度库 `next_run_at` 与 header 北京时间一致，可兼容校验；未来新建/更新 child 统一使用无 `DTSTART` 的 native RRULE。
+- `BYDAY/BYHOUR/BYMINUTE` 必须全部来自同一个最终计划开始北京时间的本地墙钟；例如北京时间 `2026-06-24 20:00` 应写成周三 `BYHOUR=20;BYMINUTE=0`，不得再换算成 UTC `BYHOUR=12`。
+- 不再新生成 `DTSTART`。历史 child 如已带 `DTSTART`，只有在其 weekly 字段符合北京时间本地墙钟、且调度库 `next_run_at` 回读与 header 北京时间一致时才可兼容；未来新建/更新 child 统一使用无 `DTSTART` 的 native RRULE。
 - 禁止裸 DTSTART，禁止 `RRULE:FREQ=DAILY;COUNT=1`、`FREQ=DAILY`、`FREQ=HOURLY` 或任何没有 `COUNT=1` 的重复规则。
 - 创建或更新后必须读取 child `automation.toml`，用正则校验：
 
@@ -123,6 +125,8 @@ RRULE:FREQ=WEEKLY;BYDAY=<weekday>;BYHOUR=<hour>;BYMINUTE=<minute>;COUNT=1
 
 - 子任务 prompt 必须按 `CHILD_PROMPT_TEMPLATE.md` 生成，并保留其中的双 skill hard gate、project-local skill resolution、财务证据审计准出、baseline、downstream demand outlook、upstream bottleneck evidence、source-quality、prior-quarter period resolution、QoQ growth、prior-quarter conference-call / earnings-webcast / results-briefing / investor-meeting comparison 和最终中文输出要求。子任务 prompt 正文必须使用英文；除本地路径和最终中文输出标签外，不要混用中文说明。
 - 已存在的未来 ACTIVE 子任务如果缺少上述 downstream demand outlook / prior-quarter / QoQ / prior-call comparison 标记，必须更新为当前 `CHILD_PROMPT_TEMPLATE.md` 正文；不得仅因 header、rrule、model、reasoningEffort 正确就视为有效。
+- 历史 `PAUSED` child 再次命中未来候选时，恢复 `ACTIVE` 前必须从仓库当前 `CHILD_PROMPT_TEMPLATE.md` 重新读取并完整渲染 prompt；模板同步和状态恢复必须属于同一次 update，不得复用该 child 的旧 prompt 正文。当前模板缺失、不可读或缺少 `CHILD TASK SKILL HARD GATE` 时停止恢复并报告 `child_template_body_not_found`。
+- 尚未命中未来候选的历史 `PAUSED` child 如有旧 UTC rrule 或旧 prompt，只记录为非阻断的 `paused_requires_sync_before_resume`；不得因此批量恢复或重写。它再次命中时，必须在恢复 update 中同时修复本地墙钟 rrule、同步当前模板，并通过数据库回读门。TOML 与调度库状态不一致仍是独立硬错误，不适用本条豁免。
 
 ## 子任务收尾清理
 
