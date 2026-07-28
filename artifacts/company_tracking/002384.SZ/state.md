@@ -1,9 +1,9 @@
 # 东山精密（002384.SZ）滚动状态
 
-更新日期：2026-07-20
+更新日期：2026-07-29
 状态文件用途：记录当前跟踪结论、关键假设、最新证据、观察池、source gaps 和后续问题。
 Grok/X：`grok_status: unavailable_chrome_tool_not_exposed`
-Open web fallback：`open_web_fallback_status: searched_no_new_nonofficial_signal_2026-07-20`
+Open web fallback：`open_web_fallback_status: searched_no_new_nonofficial_signal_2026-07-29`
 Browser scope：`browser_scope: not_available`
 Batch 2 Grok status：`grok_status: unavailable: chrome plugin tool not exposed`
 Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observation_pool_only`
@@ -317,3 +317,13 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 龙虎榜：7 月 20 日因日跌幅偏离值 `-8.67%` 上榜，成交 10,882.41 万股、245.8374 亿元；公开席位合计买入约 30.3951 亿元、卖出约 23.1285 亿元、净买入约 7.2665 亿元，深股通和机构席位双向活跃。
 - 大宗交易：7 月 20 日 1 笔平价交易，217.73 元、1.50 万股、326.60 万元，买方为华泰证券福建分公司、卖方为机构专用；金额较小，只作交易结构记录。
 - 状态变化：新增回购/激励和高波动交易证据，索尔思扩产与 AI PCB 的经营兑现判断不变；继续等待客户、订单、收入、良率、产能和毛利率量化。
+
+## 2026-07-29 日更
+
+- 公告窗口：回扫公告日期 `2026-07-21` 至 `2026-07-29`；因 20:00 前运行，`announcement_window_checked=pending_evening_rescan`。
+- 新增官方资本事件：公司于 7 月 27 日首次回购 11.50 万股，占总股本 0.00628%，成交价 199.06—200.60 元，成交金额 2,294.15 万元。该执行对应既有 2 亿—3 亿元回购计划，拟用于员工持股计划或股权激励。
+- 龙虎榜：完成交易日 7 月 21—28 日未发现新增记录。
+- 大宗交易：7 月 21、22、24 日共 4 笔平价交易，合计 8.50 万股、1,831.88 万元；规模较小，只作交易结构记录。
+- 相对基线：回购由方案推进到首次执行，但属于资本动作，不改变索尔思扩产、AI PCB 客户/订单、良率、产能和毛利率的基本面证据边界。
+- 下一步：跟踪累计回购进度及最终用途，并等待索尔思和 PCB 分部的客户、收入、良率与毛利率量化。
+- 来源：CNINFO《首次回购公司股份的公告》https://static.cninfo.com.cn/finalpage/2026-07-28/1225442506.PDF

@@ -1,13 +1,13 @@
 # 铜冠铜箔（301217.SZ）滚动跟踪状态
 
-updated_at: 2026-07-20T20:58:00+08:00
+updated_at: 2026-07-29T01:30:02+08:00
 company: 安徽铜冠铜箔集团股份有限公司
 ticker: 301217.SZ
 exchange: SZSE
 coverage_type: initial_full_baseline_plus_daily_tracking
 status: watch
 baseline_status: done
-open_web_fallback_status: searched_2026-07-16_no_new_material_signal
+open_web_fallback_status: searched_observation_only_no_new_hard_signal_2026-07-29
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -74,3 +74,13 @@ not_investment_advice: true
 - 龙虎榜：7 月 20 日收盘跌停，深交所确认成交 2,504.69 万股、26.6615 亿元；公开席位合计买入约 2.4115 亿元、卖出约 2.7724 亿元、净卖出约 3,608.56 万元。7 月 17、20 日均无大宗交易。
 - open-web：除业绩预告和行情转述外，没有可升级为事实的具名客户或订单信息。
 - 状态变化：相对首次基线，高频高速铜箔已从供货/产量线索推进到半年度利润驱动，但仍不能把全部利润增长归因 HVLP；交易端同时出现跌停和净卖出，基本面质量、业绩弹性与交易风险继续分开判断。
+
+## 2026-07-29 日更
+
+- 公告窗口：回扫公告日期 `2026-07-21` 至 `2026-07-29`；20:00 前运行，晚间公告待复扫。
+- 新增官方治理事件：职工代表董事李大双因个人及家庭原因辞职，辞职后不再担任公司任何职务；公司称董事会仍可正常运作，并将按程序补选职工代表董事。
+- 龙虎榜 / 大宗交易：完成交易日 7 月 21—28 日均未发现新增记录。
+- 联网观察：未发现可升级为事实的 HVLP 具名客户、订单或分代收入；未经公司或交易所确认的“英伟达供应商”等说法继续排除。
+- 相对基线：属于低重要性治理变化，不改变高频高速铜箔销量和加工费改善、但 HVLP 分代收入/毛利率仍缺失的判断。
+- 下一步：跟踪职工董事补选、H1 HVLP 分代销量/加工费/毛利率、存货与经营现金流。
+- 来源：CNINFO《职工代表董事辞职公告》https://static.cninfo.com.cn/finalpage/2026-07-22/1225437039.PDF

@@ -1,0 +1,179 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "company-tracking-688498-2026-07-29",
+  "as_of": "2026-07-29T01:20:36+08:00",
+  "sources": [
+    {
+      "id": "S_REPORT",
+      "source_type": "report_under_audit",
+      "origin_id": "report:company-tracking:2026-07-29",
+      "locator": "artifacts/company_tracking/2026-07-29.md",
+      "source_date": "2026-07-29",
+      "checked_at": "2026-07-29T01:20:36+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_OFFICIAL",
+      "source_type": "official_filing",
+      "origin_id": "issuer:688498:2026H1-earnings-forecast:1225434864",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-07-22/1225434864.PDF#pages=1-2",
+      "source_date": "2026-07-22",
+      "checked_at": "2026-07-29T01:20:36+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_REPORT_REVENUE_LOW",
+      "metric": "revenue",
+      "value": "90000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-29",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_OFFICIAL_REVENUE_LOW",
+      "metric": "revenue",
+      "value": "90000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-22",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_OFFICIAL"]
+    },
+    {
+      "id": "F_REPORT_REVENUE_HIGH",
+      "metric": "revenue",
+      "value": "95000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-29",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_OFFICIAL_REVENUE_HIGH",
+      "metric": "revenue",
+      "value": "95000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-22",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_OFFICIAL"]
+    },
+    {
+      "id": "F_REPORT_ATTRIBUTABLE_LOW",
+      "metric": "attributable_net_profit",
+      "value": "60000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-29",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_OFFICIAL_ATTRIBUTABLE_LOW",
+      "metric": "attributable_net_profit",
+      "value": "60000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-22",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_OFFICIAL"]
+    },
+    {
+      "id": "F_REPORT_ATTRIBUTABLE_HIGH",
+      "metric": "attributable_net_profit",
+      "value": "65000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-29",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_OFFICIAL_ATTRIBUTABLE_HIGH",
+      "metric": "attributable_net_profit",
+      "value": "65000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-22",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_OFFICIAL"]
+    },
+    {
+      "id": "F_REPORT_DEDUCTED_LOW",
+      "metric": "deducted_attributable_net_profit",
+      "value": "50000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-29",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_OFFICIAL_DEDUCTED_LOW",
+      "metric": "deducted_attributable_net_profit",
+      "value": "50000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-22",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_OFFICIAL"]
+    },
+    {
+      "id": "F_REPORT_DEDUCTED_HIGH",
+      "metric": "deducted_attributable_net_profit",
+      "value": "55000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-29",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_OFFICIAL_DEDUCTED_HIGH",
+      "metric": "deducted_attributable_net_profit",
+      "value": "55000.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "10000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-07-22",
+      "basis": "preannouncement_consolidated_prc_gaap",
+      "source_refs": ["S_OFFICIAL"]
+    }
+  ],
+  "checks": [
+    {"id": "C_REVENUE_LOW", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_REVENUE_LOW"}, "references": [{"fact_id": "F_OFFICIAL_REVENUE_LOW"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_REVENUE_HIGH", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_REVENUE_HIGH"}, "references": [{"fact_id": "F_OFFICIAL_REVENUE_HIGH"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_ATTRIBUTABLE_LOW", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_ATTRIBUTABLE_LOW"}, "references": [{"fact_id": "F_OFFICIAL_ATTRIBUTABLE_LOW"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_ATTRIBUTABLE_HIGH", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_ATTRIBUTABLE_HIGH"}, "references": [{"fact_id": "F_OFFICIAL_ATTRIBUTABLE_HIGH"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_DEDUCTED_LOW", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_DEDUCTED_LOW"}, "references": [{"fact_id": "F_OFFICIAL_DEDUCTED_LOW"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_DEDUCTED_HIGH", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_DEDUCTED_HIGH"}, "references": [{"fact_id": "F_OFFICIAL_DEDUCTED_HIGH"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}}
+  ]
+}

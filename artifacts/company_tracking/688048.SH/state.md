@@ -1,13 +1,13 @@
 # 长光华芯（688048.SH）滚动跟踪状态
 
-updated_at: 2026-07-20T20:58:00+08:00
+updated_at: 2026-07-29T01:30:02+08:00
 company: 苏州长光华芯光电技术股份有限公司
 ticker: 688048.SH
 exchange: SSE STAR
 coverage_type: initial_full_baseline_plus_daily_tracking
 status: watch
 baseline_status: done
-open_web_fallback_status: searched_2026-07-16_no_new_material_signal
+open_web_fallback_status: searched_management_interview_observation_only_2026-07-29
 not_investment_advice: true
 
 ## 结论先行
@@ -140,3 +140,12 @@ not_investment_advice: true
 - 龙虎榜：上交所确认 7 月 17 日收盘跌停，上榜成交 1,712.14 万股、61.6333 亿元；公开席位买入约 7.8583 亿元、卖出约 7.4574 亿元、净买入约 4,009.36 万元，沪股通、机构及多家券商席位双向活跃。7 月 17、20 日均无大宗交易。
 - open-web：近 24 小时主要是 CPO 板块回撤和旧风险提示转述，没有新的客户、订单、收入、良率或量产硬证据。
 - 状态变化：100G EML 已有小规模收入但低毛利、高功率单管仍为收入基本盘的判断不变；新增跌停龙虎榜只强化估值、拥挤和回撤风险，200G EML 与更高速产品仍待量产验证。
+
+## 2026-07-29 日更
+
+- 公告窗口：回扫公告日期 `2026-07-21` 至 `2026-07-29`，上交所、CNINFO 和公司 IR 未发现新增正式公告；20:00 前运行，晚间公告待复扫。
+- 联网观察：7 月 24 日《中国日报》对董事长兼总经理闵大勇的专访称，200G EML 仍处研发、送样和客户验证阶段，计划 2026Q4 量产、2027 年大规模供货；100G EML 与 70/100mW CW DFB 已批量供应。该信息属于可信媒体中的管理层主张，不等同交易所披露，计划时点也不是已实现量产。
+- 龙虎榜 / 大宗交易：完成交易日 7 月 21—28 日均未发现新增记录。
+- 相对基线：100G EML 和 CW DFB 的批量口径获得管理层再次确认，200G EML 仍严格停留在 `validation`；基本面分类不变，仍缺客户、订单、分产品收入、良率和毛利率。
+- 下一步：核验 200G EML 客户验证转量产的官方披露、CW DFB 分功率段出货/收入、光通信毛利率和经营现金流。
+- 来源：中国日报董事长专访 https://cn.chinadaily.com.cn/a/202607/24/WS6a62fbada310d709c2fbf7ac.html

@@ -1,11 +1,11 @@
 # 688668.SH 鼎通科技 跟踪状态
 
 baseline_status: done
-last_checked: 2026-07-20 20:58 Asia/Shanghai
-announcement_window_checked: T_and_T_plus_1
+last_checked: 2026-07-29 01:30 Asia/Shanghai
+announcement_window_checked: pending_evening_rescan
 browser_scope: not_used_by_policy
 grok_status: not_used_by_policy
-open_web_fallback_status: searched_official_forecast_media_crosscheck_2026-07-16
+open_web_fallback_status: searched_observation_only_no_new_operating_signal_2026-07-29
 not_investment_advice: true
 
 ## 当前跟踪结论
@@ -153,3 +153,13 @@ open-web fallback 仅发现交易和媒体观察，未发现可升级为官方�
 - 龙虎榜：上交所确认 7 月 17 日收盘跌停，上榜成交 856.21 万股、22.4200 亿元；公开席位买入约 6.3479 亿元、卖出约 5.5212 亿元、净买入约 8,266.33 万元，沪股通及机构席位双向活跃。7 月 17、20 日均无大宗交易。
 - open-web：没有发现高速通讯连接器、112G/224G、液冷客户、订单、收入占比或毛利率的新硬证据。
 - 状态变化：经营判断仍由半年度预告中的 112G/224G 量产和利润增长支撑；新增跌停龙虎榜只提高估值、拥挤与波动风险，液冷仍停留在小批试产边界。
+
+## 2026-07-29 日更
+
+- 公告窗口：回扫公告日期 `2026-07-21` 至 `2026-07-29`；因 20:00 前运行，晚间公告待复扫。
+- 可转债事件：截至 7 月 21 日已触发“鼎通转债”向下修正条款，董事会提议向下修正转股价格；须经股东会三分之二以上表决通过，最终修正价尚未确定。
+- 信用评级：7 月 28 日跟踪评级维持主体 `A+`、评级展望稳定，“鼎通转债”维持 `A+`。这不抵消潜在下修带来的稀释/资本结构风险。
+- 龙虎榜 / 大宗交易：完成交易日 7 月 21—28 日均未发现新增记录。
+- 相对基线：112G/224G 量产和 H1 利润增长的经营判断不变；新增变化主要是可转债条款与潜在稀释风险，归因于公司资本结构事件。
+- 下一步：跟踪股东会表决和最终转股价、转股规模及稀释路径、H1 高速连接器分产品收入/毛利率和液冷量产边界。
+- 来源：CNINFO《董事会提议向下修正“鼎通转债”转股价格的公告》https://static.cninfo.com.cn/finalpage/2026-07-22/1225435157.PDF；《跟踪评级报告》https://static.cninfo.com.cn/finalpage/2026-07-28/1225442926.PDF

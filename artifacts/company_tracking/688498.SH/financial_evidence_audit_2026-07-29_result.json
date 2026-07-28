@@ -1,0 +1,301 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "company-tracking-688498-2026-07-29",
+  "input_sha256": "84586e91ed3ee9373ad62032e22242a6ec7864b7165c5d9d7aac417c1942a10f",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 6,
+    "verified_count": 6,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_REVENUE_LOW",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_OFFICIAL"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:688498:2026H1-earnings-forecast:1225434864"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "900000000",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "preannouncement_consolidated_prc_gaap",
+          "source_ids": [
+            "S_OFFICIAL",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_REVENUE_HIGH",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_OFFICIAL"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:688498:2026H1-earnings-forecast:1225434864"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "950000000",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "preannouncement_consolidated_prc_gaap",
+          "source_ids": [
+            "S_OFFICIAL",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_ATTRIBUTABLE_LOW",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_OFFICIAL"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:688498:2026H1-earnings-forecast:1225434864"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "600000000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "preannouncement_consolidated_prc_gaap",
+          "source_ids": [
+            "S_OFFICIAL",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_ATTRIBUTABLE_HIGH",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_OFFICIAL"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:688498:2026H1-earnings-forecast:1225434864"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "650000000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "preannouncement_consolidated_prc_gaap",
+          "source_ids": [
+            "S_OFFICIAL",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_DEDUCTED_LOW",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_OFFICIAL"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:688498:2026H1-earnings-forecast:1225434864"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "500000000",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "preannouncement_consolidated_prc_gaap",
+          "source_ids": [
+            "S_OFFICIAL",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_DEDUCTED_HIGH",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_OFFICIAL"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:688498:2026H1-earnings-forecast:1225434864"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "550000000",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "preannouncement_consolidated_prc_gaap",
+          "source_ids": [
+            "S_OFFICIAL",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    }
+  ]
+}
