@@ -1,0 +1,1205 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "000660-ks-jun-2026-core-20260729",
+  "input_sha256": "63aec00480e3f70d1c8d092ca81bc4ac179e3a35ce49468b3d297605fc76a454",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 22,
+    "verified_count": 22,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_INVENTORY_REPORT",
+      "kind": "cross_source",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "17986000000000",
+          "metric": "inventory",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+09:00"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_REPORT_UNDER_AUDIT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_AR_REPORT",
+      "kind": "cross_source",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "47821000000000",
+          "metric": "accounts_receivable",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+09:00"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_REPORT_UNDER_AUDIT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OCF_REPORT",
+      "kind": "cross_source",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "65710000000000",
+          "metric": "operating_cash_flow",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_REPORT_UNDER_AUDIT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_CAPEX_REPORT",
+      "kind": "cross_source",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "10671000000000",
+          "metric": "capital_expenditure",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "acquisition_of_pp_and_e_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_REPORT_UNDER_AUDIT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_CURRENT_EPS_REPORT",
+      "kind": "cross_source",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "132126",
+          "metric": "basic_eps",
+          "unit": "currency_per_share",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_basic_eps",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_REPORT_UNDER_AUDIT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_CASH_REPORT",
+      "kind": "cross_source",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "87958000000000",
+          "metric": "cash_and_short_term_investments",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+09:00"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_REPORT_UNDER_AUDIT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_DEBT_REPORT",
+      "kind": "cross_source",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "18587000000000",
+          "metric": "interest_bearing_debt",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+09:00"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_REPORT_UNDER_AUDIT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_NONOP_REPORT",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "62166000000000",
+          "metric": "non_operating_profit",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_REPORT_UNDER_AUDIT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_INVESTMENT_GAIN_REPORT",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "63270000000000",
+          "metric": "investment_asset_related_gain",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_REPORT_UNDER_AUDIT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_REVENUE_CROSS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "79318700000000",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OP_CROSS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "60542600000000",
+          "metric": "operating_profit",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_NET_PROFIT_CROSS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "93922600000000",
+          "metric": "net_profit",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OPERATING_MARGIN_CROSS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "76",
+          "metric": "operating_margin",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_REVENUE_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE",
+          "S_PRIOR_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q1:earnings-release",
+          "skhynix:2026q2:earnings-release"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "50.86398244075752763127112406160190047607001633816",
+          "metric": "revenue_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_qoq",
+          "source_ids": [
+            "S_CURRENT_RELEASE",
+            "S_PRIOR_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "revenue_qoq_pct",
+        "contracted_output_basis": "reported_consolidated_k_ifrs_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OP_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE",
+          "S_PRIOR_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q1:earnings-release",
+          "skhynix:2026q2:earnings-release"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "60.973456739244302757489304791506581973555116550519",
+          "metric": "operating_profit_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_qoq",
+          "source_ids": [
+            "S_CURRENT_RELEASE",
+            "S_PRIOR_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "operating_profit_qoq_pct",
+        "contracted_output_basis": "reported_consolidated_k_ifrs_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_NET_PROFIT_QOQ",
+      "kind": "percentage",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE",
+          "S_PRIOR_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q1:earnings-release",
+          "skhynix:2026q2:earnings-release"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "132.79341890997598268969089795989183535377820298965",
+          "metric": "net_profit_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_qoq",
+          "source_ids": [
+            "S_CURRENT_RELEASE",
+            "S_PRIOR_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "net_profit_qoq_pct",
+        "contracted_output_basis": "reported_consolidated_k_ifrs_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OCF_QOQ",
+      "kind": "percentage",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK",
+          "S_PRIOR_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q1:earnings-release",
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "148.61899356791524782444192205826712069617858494135",
+          "metric": "operating_cash_flow_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_qoq",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_PRIOR_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "operating_cash_flow_qoq_pct",
+        "contracted_output_basis": "reported_consolidated_k_ifrs_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_CAPEX_QOQ",
+      "kind": "percentage",
+      "materiality": "supporting",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_DECK",
+          "S_PRIOR_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q1:earnings-release",
+          "skhynix:2026q2:earnings-presentation"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "39.362674676766357581298158547734099516782029515476",
+          "metric": "capital_expenditure_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "acquisition_of_pp_and_e_consolidated_k_ifrs_qoq",
+          "source_ids": [
+            "S_CURRENT_DECK",
+            "S_PRIOR_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "capital_expenditure_qoq_pct",
+        "contracted_output_basis": "acquisition_of_pp_and_e_consolidated_k_ifrs_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_REVENUE_SURPRISE",
+      "kind": "expectation_surprise",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "miss",
+      "source_gate": {
+        "source_ids": [
+          "S_CONSENSUS",
+          "S_CURRENT_RELEASE"
+        ],
+        "counted_tier": "any_credible",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-release",
+          "yonhap-infomax:14-broker-consensus:2026q2:20260726"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "absolute_low": {
+          "value": "-4781300000000",
+          "metric": "revenue_surprise_absolute",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_vs_pre_event_consensus",
+          "source_ids": [
+            "S_CONSENSUS",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        },
+        "absolute_high": {
+          "value": "-4781300000000",
+          "metric": "revenue_surprise_absolute",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_vs_pre_event_consensus",
+          "source_ids": [
+            "S_CONSENSUS",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        },
+        "percentage_low": {
+          "value": "-5.6852556480380499405469678953626634958382877526754",
+          "metric": "revenue_surprise_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_vs_pre_event_consensus",
+          "source_ids": [
+            "S_CONSENSUS",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        },
+        "percentage_high": {
+          "value": "-5.6852556480380499405469678953626634958382877526754",
+          "metric": "revenue_surprise_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_vs_pre_event_consensus",
+          "source_ids": [
+            "S_CONSENSUS",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "status": "miss",
+        "subject_kind": "reported_actual",
+        "formula_absolute": "subject - consensus",
+        "formula_percentage": "(subject - consensus) / abs(consensus) * 100",
+        "meet_band": "max(absolute_base, abs(consensus) * relative_pct / 100)",
+        "allowed_absolute_difference": "841000000000",
+        "expected_kind": null
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OP_SURPRISE",
+      "kind": "expectation_surprise",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "miss",
+      "source_gate": {
+        "source_ids": [
+          "S_CONSENSUS",
+          "S_CURRENT_RELEASE"
+        ],
+        "counted_tier": "any_credible",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:earnings-release",
+          "yonhap-infomax:14-broker-consensus:2026q2:20260726"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "absolute_low": {
+          "value": "-3557400000000",
+          "metric": "operating_profit_surprise_absolute",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_vs_pre_event_consensus",
+          "source_ids": [
+            "S_CONSENSUS",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        },
+        "absolute_high": {
+          "value": "-3557400000000",
+          "metric": "operating_profit_surprise_absolute",
+          "unit": "currency",
+          "currency": "KRW",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_vs_pre_event_consensus",
+          "source_ids": [
+            "S_CONSENSUS",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        },
+        "percentage_low": {
+          "value": "-5.5497659906396255850234009360374414976599063962559",
+          "metric": "operating_profit_surprise_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_vs_pre_event_consensus",
+          "source_ids": [
+            "S_CONSENSUS",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        },
+        "percentage_high": {
+          "value": "-5.5497659906396255850234009360374414976599063962559",
+          "metric": "operating_profit_surprise_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 FY2026"
+          },
+          "basis": "reported_consolidated_k_ifrs_vs_pre_event_consensus",
+          "source_ids": [
+            "S_CONSENSUS",
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "status": "miss",
+        "subject_kind": "reported_actual",
+        "formula_absolute": "subject - consensus",
+        "formula_percentage": "(subject - consensus) / abs(consensus) * 100",
+        "meet_band": "max(absolute_base, abs(consensus) * relative_pct / 100)",
+        "allowed_absolute_difference": "641000000000",
+        "expected_kind": null
+      },
+      "issues": []
+    },
+    {
+      "id": "C_LTA_COUNT_CROSS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_AUDIO"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:official-event-audio"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "10",
+          "metric": "lta_customer_count",
+          "unit": "count",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-07-29T09:00:00+09:00"
+          },
+          "basis": "management_approximate_count",
+          "source_ids": [
+            "S_CURRENT_AUDIO",
+            "S_CURRENT_DECK"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_Q3_DRAM_GUIDANCE_CROSS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_AUDIO"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q2:official-event-audio"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "10",
+          "metric": "dram_bit_shipment_growth",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "estimate",
+            "expectation_as_of": "2026-07-29T09:00:00+09:00",
+            "target_start": "2026-07-01",
+            "target_end": "2026-09-30",
+            "frequency": "quarter",
+            "label": "Q3 FY2026E"
+          },
+          "basis": "management_approximate_qoq_guidance",
+          "source_ids": [
+            "S_CURRENT_AUDIO",
+            "S_CURRENT_DECK"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    }
+  ]
+}

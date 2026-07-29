@@ -1,0 +1,214 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "ROG-Jun-2026-expectations",
+  "as_of": "2026-07-29T08:22:24+08:00",
+  "sources": [
+    {
+      "id": "S_Q2_8K_EX99",
+      "source_type": "official_filing",
+      "origin_id": "sec:rog:2026q2:8k-ex99-1",
+      "locator": "https://www.sec.gov/Archives/edgar/data/84748/000008474826000046/q22026resultsannouncement.htm",
+      "source_date": "2026-07-28T16:07:09-04:00",
+      "checked_at": "2026-07-29T08:22:24+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_MARKETBEAT_EXCLUDED",
+      "source_type": "credible_secondary",
+      "origin_id": "marketbeat:rog:2026-07-28-event-page",
+      "locator": "https://www.marketbeat.com/earnings/reports/2026-7-28-rogers-co-stock/",
+      "source_date": "2026-07-29T08:22:24+08:00",
+      "checked_at": "2026-07-29T08:22:24+08:00",
+      "status": "excluded",
+      "exclusion_code": "lookahead_or_stale",
+      "exclusion_reason": "页面可见 EPS 0.99 与 revenue 215.0，但无法证明同口径数值在 2026-07-28 16:07:09 ET 前已形成并冻结。"
+    },
+    {
+      "id": "S_INVESTING_EXCLUDED",
+      "source_type": "credible_secondary",
+      "origin_id": "investing:rog:2026q2-event-page",
+      "locator": "https://www.investing.com/equities/rogers-corp-earnings",
+      "source_date": "2026-07-29T08:22:24+08:00",
+      "checked_at": "2026-07-29T08:22:24+08:00",
+      "status": "excluded",
+      "exclusion_code": "basis_mismatch",
+      "exclusion_reason": "页面可见 EPS forecast 0.793 与 revenue 210.90，EPS 与公司 adjusted EPS 的 accounting basis 未得到证实，且与其他来源冲突。"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_Q2_ACTUAL_REVENUE",
+      "metric": "revenue",
+      "value": "216.8",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "duration", "start": "2026-04-01", "end": "2026-06-30", "frequency": "quarter", "label": "Q2 2026"},
+      "available_at": "2026-07-28T16:07:09-04:00",
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q2_REVENUE_CONSENSUS_MISSING",
+      "metric": "revenue",
+      "value": null,
+      "missing_reason": "pre_event_same_basis_snapshot_unavailable",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "estimate", "expectation_as_of": "2026-07-27", "target_start": "2026-04-01", "target_end": "2026-06-30", "frequency": "quarter", "label": "Q2 2026 consensus"},
+      "available_at": "2026-07-27",
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": []
+    },
+    {
+      "id": "F_Q2_ACTUAL_ADJ_EPS",
+      "metric": "adjusted_eps",
+      "value": "0.92",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-04-01", "end": "2026-06-30", "frequency": "quarter", "label": "Q2 2026"},
+      "available_at": "2026-07-28T16:07:09-04:00",
+      "basis": "non_gaap_adjusted_diluted_eps",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q2_ADJ_EPS_CONSENSUS_MISSING",
+      "metric": "adjusted_eps",
+      "value": null,
+      "missing_reason": "pre_event_same_basis_snapshot_unavailable",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind": "estimate", "expectation_as_of": "2026-07-27", "target_start": "2026-04-01", "target_end": "2026-06-30", "frequency": "quarter", "label": "Q2 2026 consensus"},
+      "available_at": "2026-07-27",
+      "basis": "non_gaap_adjusted_diluted_eps",
+      "source_refs": []
+    },
+    {
+      "id": "F_Q3_GUIDANCE_REVENUE_LOW",
+      "metric": "revenue",
+      "value": "233",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "estimate", "expectation_as_of": "2026-07-28T16:07:09-04:00", "target_start": "2026-07-01", "target_end": "2026-09-30", "frequency": "quarter", "label": "Q3 2026 guidance"},
+      "available_at": "2026-07-28T16:07:09-04:00",
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q3_GUIDANCE_REVENUE_HIGH",
+      "metric": "revenue",
+      "value": "243",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "estimate", "expectation_as_of": "2026-07-28T16:07:09-04:00", "target_start": "2026-07-01", "target_end": "2026-09-30", "frequency": "quarter", "label": "Q3 2026 guidance"},
+      "available_at": "2026-07-28T16:07:09-04:00",
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q3_REVENUE_CONSENSUS_MISSING",
+      "metric": "revenue",
+      "value": null,
+      "missing_reason": "pre_event_same_basis_snapshot_unavailable",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "estimate", "expectation_as_of": "2026-07-27", "target_start": "2026-07-01", "target_end": "2026-09-30", "frequency": "quarter", "label": "Q3 2026 consensus"},
+      "available_at": "2026-07-27",
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": []
+    },
+    {
+      "id": "F_Q3_GUIDANCE_ADJ_EPS_LOW",
+      "metric": "adjusted_eps",
+      "value": "1.10",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind": "estimate", "expectation_as_of": "2026-07-28T16:07:09-04:00", "target_start": "2026-07-01", "target_end": "2026-09-30", "frequency": "quarter", "label": "Q3 2026 guidance"},
+      "available_at": "2026-07-28T16:07:09-04:00",
+      "basis": "non_gaap_adjusted_diluted_eps",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q3_GUIDANCE_ADJ_EPS_HIGH",
+      "metric": "adjusted_eps",
+      "value": "1.30",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind": "estimate", "expectation_as_of": "2026-07-28T16:07:09-04:00", "target_start": "2026-07-01", "target_end": "2026-09-30", "frequency": "quarter", "label": "Q3 2026 guidance"},
+      "available_at": "2026-07-28T16:07:09-04:00",
+      "basis": "non_gaap_adjusted_diluted_eps",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q3_ADJ_EPS_CONSENSUS_MISSING",
+      "metric": "adjusted_eps",
+      "value": null,
+      "missing_reason": "pre_event_same_basis_snapshot_unavailable",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind": "estimate", "expectation_as_of": "2026-07-27", "target_start": "2026-07-01", "target_end": "2026-09-30", "frequency": "quarter", "label": "Q3 2026 consensus"},
+      "available_at": "2026-07-27",
+      "basis": "non_gaap_adjusted_diluted_eps",
+      "source_refs": []
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_Q2_REVENUE_SURPRISE",
+      "kind": "expectation_surprise",
+      "materiality": "material",
+      "subject_kind": "reported_actual",
+      "actual_low": {"fact_id": "F_Q2_ACTUAL_REVENUE"},
+      "actual_high": {"fact_id": "F_Q2_ACTUAL_REVENUE"},
+      "consensus": {"fact_id": "F_Q2_REVENUE_CONSENSUS_MISSING"},
+      "event_at": "2026-07-28T16:07:09-04:00",
+      "tolerance": {"relative_pct": "1", "absolute_base": "0"},
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "official"}
+    },
+    {
+      "id": "C_Q2_ADJ_EPS_SURPRISE",
+      "kind": "expectation_surprise",
+      "materiality": "material",
+      "subject_kind": "reported_actual",
+      "actual_low": {"fact_id": "F_Q2_ACTUAL_ADJ_EPS"},
+      "actual_high": {"fact_id": "F_Q2_ACTUAL_ADJ_EPS"},
+      "consensus": {"fact_id": "F_Q2_ADJ_EPS_CONSENSUS_MISSING"},
+      "event_at": "2026-07-28T16:07:09-04:00",
+      "tolerance": {"relative_pct": "1", "absolute_base": "0"},
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "official"}
+    },
+    {
+      "id": "C_Q3_REVENUE_GUIDANCE_SURPRISE",
+      "kind": "expectation_surprise",
+      "materiality": "material",
+      "subject_kind": "company_guidance",
+      "guidance_low": {"fact_id": "F_Q3_GUIDANCE_REVENUE_LOW"},
+      "guidance_high": {"fact_id": "F_Q3_GUIDANCE_REVENUE_HIGH"},
+      "consensus": {"fact_id": "F_Q3_REVENUE_CONSENSUS_MISSING"},
+      "event_at": "2026-07-28T16:07:09-04:00",
+      "tolerance": {"relative_pct": "1", "absolute_base": "0"},
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "official"}
+    },
+    {
+      "id": "C_Q3_ADJ_EPS_GUIDANCE_SURPRISE",
+      "kind": "expectation_surprise",
+      "materiality": "material",
+      "subject_kind": "company_guidance",
+      "guidance_low": {"fact_id": "F_Q3_GUIDANCE_ADJ_EPS_LOW"},
+      "guidance_high": {"fact_id": "F_Q3_GUIDANCE_ADJ_EPS_HIGH"},
+      "consensus": {"fact_id": "F_Q3_ADJ_EPS_CONSENSUS_MISSING"},
+      "event_at": "2026-07-28T16:07:09-04:00",
+      "tolerance": {"relative_pct": "1", "absolute_base": "0"},
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "official"}
+    }
+  ]
+}

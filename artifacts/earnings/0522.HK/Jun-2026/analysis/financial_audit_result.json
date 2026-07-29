@@ -1,0 +1,384 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "0522-hk-jun-2026-core-20260729",
+  "input_sha256": "9568694b0265205b919d1c894cce50a5c5d7eb8c510ce0d138ea36f5c1deb46f",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 7,
+    "verified_count": 7,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_REVENUE_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_Q1_RESULTS",
+          "S_Q2_RESULTS"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asmpt:q1-2026:results-announcement",
+          "asmpt:q2-2026:results-announcement"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "24.427750327720076636079459513965917112029847736211",
+          "metric": "revenue_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 2026"
+          },
+          "basis": "reported_consolidated_hkfrs_continuing_operations_qoq",
+          "source_ids": [
+            "S_Q1_RESULTS",
+            "S_Q2_RESULTS"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "revenue_qoq_pct",
+        "contracted_output_basis": "reported_consolidated_hkfrs_continuing_operations_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_BOOKINGS_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_Q1_RESULTS",
+          "S_Q2_RESULTS"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asmpt:q1-2026:results-announcement",
+          "asmpt:q2-2026:results-announcement"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "24.799943596432474354002890682835689357351852504671",
+          "metric": "bookings_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 2026"
+          },
+          "basis": "company_reported_bookings_continuing_operations_qoq",
+          "source_ids": [
+            "S_Q1_RESULTS",
+            "S_Q2_RESULTS"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "bookings_qoq_pct",
+        "contracted_output_basis": "company_reported_bookings_continuing_operations_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_SMT_BOOKINGS_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_Q1_RESULTS",
+          "S_Q2_RESULTS"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asmpt:q1-2026:results-announcement",
+          "asmpt:q2-2026:results-announcement"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "14.304123711340206185567010309278350515463917525773",
+          "metric": "bookings_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 2026"
+          },
+          "basis": "company_reported_smt_bookings_continuing_operations_qoq",
+          "source_ids": [
+            "S_Q1_RESULTS",
+            "S_Q2_RESULTS"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "bookings_qoq_pct",
+        "contracted_output_basis": "company_reported_smt_bookings_continuing_operations_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_ADJ_NET_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_Q1_RESULTS",
+          "S_Q2_RESULTS"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asmpt:q1-2026:results-announcement",
+          "asmpt:q2-2026:results-announcement"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "90.181970049519718393890579321042897201837599188593",
+          "metric": "net_profit_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 2026"
+          },
+          "basis": "non_hkfrs_adjusted_continuing_operations_qoq",
+          "source_ids": [
+            "S_Q1_RESULTS",
+            "S_Q2_RESULTS"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "net_profit_qoq_pct",
+        "contracted_output_basis": "non_hkfrs_adjusted_continuing_operations_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_ADJ_EPS_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_Q1_RESULTS",
+          "S_Q2_RESULTS"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asmpt:q1-2026:results-announcement",
+          "asmpt:q2-2026:results-announcement"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "88.888888888888888888888888888888888888888888888889",
+          "metric": "earnings_per_share_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 2026"
+          },
+          "basis": "non_hkfrs_adjusted_basic_eps_continuing_operations_qoq",
+          "source_ids": [
+            "S_Q1_RESULTS",
+            "S_Q2_RESULTS"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "earnings_per_share_qoq_pct",
+        "contracted_output_basis": "non_hkfrs_adjusted_basic_eps_continuing_operations_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_Q2_ADJ_GROSS_MARGIN",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_Q2_RESULTS"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asmpt:q2-2026:results-announcement"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "42.503221362291827059443251347299323311317314315815",
+          "metric": "gross_margin_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "Q2 2026"
+          },
+          "basis": "non_hkfrs_adjusted_continuing_operations_over_non_hkfrs_adjusted_continuing_operations",
+          "source_ids": [
+            "S_Q2_RESULTS"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator * 100",
+        "state": "meaningful",
+        "period_relation": "same",
+        "contracted_output_metric": "gross_margin_pct",
+        "contracted_output_basis": "non_hkfrs_adjusted_continuing_operations_over_non_hkfrs_adjusted_continuing_operations"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_Q1_ADJ_GROSS_MARGIN",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_Q1_RESULTS"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asmpt:q1-2026:results-announcement"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "39.478874659675305031763638197035393768276696581628",
+          "metric": "gross_margin_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-03-31",
+            "frequency": "quarter",
+            "label": "Q1 2026"
+          },
+          "basis": "non_hkfrs_adjusted_continuing_operations_over_non_hkfrs_adjusted_continuing_operations",
+          "source_ids": [
+            "S_Q1_RESULTS"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator * 100",
+        "state": "meaningful",
+        "period_relation": "same",
+        "contracted_output_metric": "gross_margin_pct",
+        "contracted_output_basis": "non_hkfrs_adjusted_continuing_operations_over_non_hkfrs_adjusted_continuing_operations"
+      },
+      "issues": []
+    }
+  ]
+}

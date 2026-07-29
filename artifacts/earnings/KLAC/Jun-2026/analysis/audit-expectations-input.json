@@ -1,0 +1,253 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "klac-jun-2026-expectations-20260729",
+  "as_of": "2026-07-29T08:34:00+08:00",
+  "sources": [
+    {
+      "id": "S_CURRENT_RELEASE",
+      "source_type": "company_ir",
+      "origin_id": "kla:FY2026-Q4:earnings-release:2026-07-28",
+      "locator": "https://ir.kla.com/news-events/press-releases/detail/518/kla-corporation-reports-fiscal-2026-fourth-quarter-and-full",
+      "source_date": "2026-07-28T16:05:00-04:00",
+      "checked_at": "2026-07-29T08:34:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_MARKETBEAT_20260721",
+      "source_type": "market_data_vendor",
+      "origin_id": "marketbeat:KLAC:FY2026-Q4:preview:2026-07-21",
+      "locator": "https://www.marketbeat.com/instant-alerts/kla-klac-to-release-quarterly-earnings-on-tuesday-2026-07-21/",
+      "source_date": "2026-07-21",
+      "checked_at": "2026-07-29T08:34:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_ZACKS_20260724",
+      "source_type": "market_data_vendor",
+      "origin_id": "zacks:KLAC:FY2026-Q4:preview:2026-07-24",
+      "locator": "https://www.zacks.com/stock/news/2960402/klas-q4-earnings-loom-buy-sell-or-hold-the-klac-stock",
+      "source_date": "2026-07-24",
+      "checked_at": "2026-07-29T08:34:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_CHARTMILL_20260724",
+      "source_type": "market_data_vendor",
+      "origin_id": "chartmill:KLAC:FY2026-Q4:preview:2026-07-24",
+      "locator": "https://www.chartmill.com/stock/quote/KLAC/analyst-ratings",
+      "source_date": "2026-07-24",
+      "checked_at": "2026-07-29T08:34:00+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_ACTUAL_REVENUE",
+      "metric": "revenue",
+      "value": "3657.556",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind":"duration","start":"2026-04-01","end":"2026-06-30","frequency":"quarter","label":"FY2026 Q4"},
+      "available_at": "2026-07-28T16:05:00-04:00",
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_CURRENT_RELEASE"]
+    },
+    {
+      "id": "F_ACTUAL_EPS",
+      "metric": "diluted_eps",
+      "value": "1.05",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind":"duration","start":"2026-04-01","end":"2026-06-30","frequency":"quarter","label":"FY2026 Q4"},
+      "available_at": "2026-07-28T16:05:00-04:00",
+      "basis": "company_non_gaap_adjusted_diluted_eps_split_adjusted",
+      "source_refs": ["S_CURRENT_RELEASE"]
+    },
+    {
+      "id": "F_MB_REVENUE_CONSENSUS",
+      "metric": "revenue",
+      "value": "3.6016",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000000",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-21","target_start":"2026-04-01","target_end":"2026-06-30","frequency":"quarter","label":"FY2026 Q4E"},
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_MARKETBEAT_20260721"]
+    },
+    {
+      "id": "F_ZACKS_REVENUE_CONSENSUS",
+      "metric": "revenue",
+      "value": "3.61",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000000",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-24","target_start":"2026-04-01","target_end":"2026-06-30","frequency":"quarter","label":"FY2026 Q4E"},
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_ZACKS_20260724"]
+    },
+    {
+      "id": "F_CHARTMILL_REVENUE_CONSENSUS",
+      "metric": "revenue",
+      "value": "3.67",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000000",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-24","target_start":"2026-04-01","target_end":"2026-06-30","frequency":"quarter","label":"FY2026 Q4E"},
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_CHARTMILL_20260724"]
+    },
+    {
+      "id": "F_MB_EPS_CONSENSUS",
+      "metric": "diluted_eps",
+      "value": "1.00",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-21","target_start":"2026-04-01","target_end":"2026-06-30","frequency":"quarter","label":"FY2026 Q4E"},
+      "basis": "company_non_gaap_adjusted_diluted_eps_split_adjusted",
+      "source_refs": ["S_MARKETBEAT_20260721"]
+    },
+    {
+      "id": "F_ZACKS_EPS_CONSENSUS",
+      "metric": "diluted_eps",
+      "value": "1.00",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-24","target_start":"2026-04-01","target_end":"2026-06-30","frequency":"quarter","label":"FY2026 Q4E"},
+      "basis": "company_non_gaap_adjusted_diluted_eps_split_adjusted",
+      "source_refs": ["S_ZACKS_20260724"]
+    },
+    {
+      "id": "F_CHARTMILL_EPS_CONSENSUS",
+      "metric": "diluted_eps",
+      "value": "1.02",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-24","target_start":"2026-04-01","target_end":"2026-06-30","frequency":"quarter","label":"FY2026 Q4E"},
+      "basis": "company_non_gaap_adjusted_diluted_eps_split_adjusted",
+      "source_refs": ["S_CHARTMILL_20260724"]
+    },
+    {
+      "id": "F_GUIDANCE_REVENUE_LOW",
+      "metric": "revenue",
+      "value": "3.8",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000000",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-28T16:05:00-04:00","target_start":"2026-07-01","target_end":"2026-09-30","frequency":"quarter","label":"FY2027 Q1E"},
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_CURRENT_RELEASE"]
+    },
+    {
+      "id": "F_GUIDANCE_REVENUE_HIGH",
+      "metric": "revenue",
+      "value": "4.2",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000000",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-28T16:05:00-04:00","target_start":"2026-07-01","target_end":"2026-09-30","frequency":"quarter","label":"FY2027 Q1E"},
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_CURRENT_RELEASE"]
+    },
+    {
+      "id": "F_GUIDANCE_EPS_LOW",
+      "metric": "diluted_eps",
+      "value": "1.06",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-28T16:05:00-04:00","target_start":"2026-07-01","target_end":"2026-09-30","frequency":"quarter","label":"FY2027 Q1E"},
+      "basis": "company_non_gaap_adjusted_diluted_eps_split_adjusted",
+      "source_refs": ["S_CURRENT_RELEASE"]
+    },
+    {
+      "id": "F_GUIDANCE_EPS_HIGH",
+      "metric": "diluted_eps",
+      "value": "1.26",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-28T16:05:00-04:00","target_start":"2026-07-01","target_end":"2026-09-30","frequency":"quarter","label":"FY2027 Q1E"},
+      "basis": "company_non_gaap_adjusted_diluted_eps_split_adjusted",
+      "source_refs": ["S_CURRENT_RELEASE"]
+    },
+    {
+      "id": "F_GUIDANCE_REVENUE_CONSENSUS_MISSING",
+      "metric": "revenue",
+      "value": null,
+      "missing_reason": "evidence_absent_pre_event_consensus",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000000",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-27T23:59:59-04:00","target_start":"2026-07-01","target_end":"2026-09-30","frequency":"quarter","label":"FY2027 Q1E"},
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": []
+    },
+    {
+      "id": "F_GUIDANCE_EPS_CONSENSUS_MISSING",
+      "metric": "diluted_eps",
+      "value": null,
+      "missing_reason": "evidence_absent_pre_event_consensus",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind":"estimate","expectation_as_of":"2026-07-27T23:59:59-04:00","target_start":"2026-07-01","target_end":"2026-09-30","frequency":"quarter","label":"FY2027 Q1E"},
+      "basis": "company_non_gaap_adjusted_diluted_eps_split_adjusted",
+      "source_refs": []
+    }
+  ],
+  "checks": [
+    {
+      "id":"C_REVENUE_SURPRISE_MB","kind":"expectation_surprise","materiality":"material","subject_kind":"reported_actual",
+      "actual_low":{"fact_id":"F_ACTUAL_REVENUE"},"actual_high":{"fact_id":"F_ACTUAL_REVENUE"},"consensus":{"fact_id":"F_MB_REVENUE_CONSENSUS"},
+      "event_at":"2026-07-28T16:05:00-04:00","tolerance":{"relative_pct":"1","absolute_base":"0"},
+      "source_gate":{"min_independent_origins":2,"counted_tier":"vendor_or_official","required_anchor_tier":"official"}
+    },
+    {
+      "id":"C_REVENUE_SURPRISE_ZACKS","kind":"expectation_surprise","materiality":"material","subject_kind":"reported_actual",
+      "actual_low":{"fact_id":"F_ACTUAL_REVENUE"},"actual_high":{"fact_id":"F_ACTUAL_REVENUE"},"consensus":{"fact_id":"F_ZACKS_REVENUE_CONSENSUS"},
+      "event_at":"2026-07-28T16:05:00-04:00","tolerance":{"relative_pct":"1","absolute_base":"0"},
+      "source_gate":{"min_independent_origins":2,"counted_tier":"vendor_or_official","required_anchor_tier":"official"}
+    },
+    {
+      "id":"C_REVENUE_SURPRISE_CHARTMILL","kind":"expectation_surprise","materiality":"material","subject_kind":"reported_actual",
+      "actual_low":{"fact_id":"F_ACTUAL_REVENUE"},"actual_high":{"fact_id":"F_ACTUAL_REVENUE"},"consensus":{"fact_id":"F_CHARTMILL_REVENUE_CONSENSUS"},
+      "event_at":"2026-07-28T16:05:00-04:00","tolerance":{"relative_pct":"1","absolute_base":"0"},
+      "source_gate":{"min_independent_origins":2,"counted_tier":"vendor_or_official","required_anchor_tier":"official"}
+    },
+    {
+      "id":"C_EPS_SURPRISE_MB","kind":"expectation_surprise","materiality":"material","subject_kind":"reported_actual",
+      "actual_low":{"fact_id":"F_ACTUAL_EPS"},"actual_high":{"fact_id":"F_ACTUAL_EPS"},"consensus":{"fact_id":"F_MB_EPS_CONSENSUS"},
+      "event_at":"2026-07-28T16:05:00-04:00","tolerance":{"relative_pct":"1","absolute_base":"0"},
+      "source_gate":{"min_independent_origins":2,"counted_tier":"vendor_or_official","required_anchor_tier":"official"}
+    },
+    {
+      "id":"C_EPS_SURPRISE_ZACKS","kind":"expectation_surprise","materiality":"material","subject_kind":"reported_actual",
+      "actual_low":{"fact_id":"F_ACTUAL_EPS"},"actual_high":{"fact_id":"F_ACTUAL_EPS"},"consensus":{"fact_id":"F_ZACKS_EPS_CONSENSUS"},
+      "event_at":"2026-07-28T16:05:00-04:00","tolerance":{"relative_pct":"1","absolute_base":"0"},
+      "source_gate":{"min_independent_origins":2,"counted_tier":"vendor_or_official","required_anchor_tier":"official"}
+    },
+    {
+      "id":"C_EPS_SURPRISE_CHARTMILL","kind":"expectation_surprise","materiality":"material","subject_kind":"reported_actual",
+      "actual_low":{"fact_id":"F_ACTUAL_EPS"},"actual_high":{"fact_id":"F_ACTUAL_EPS"},"consensus":{"fact_id":"F_CHARTMILL_EPS_CONSENSUS"},
+      "event_at":"2026-07-28T16:05:00-04:00","tolerance":{"relative_pct":"1","absolute_base":"0"},
+      "source_gate":{"min_independent_origins":2,"counted_tier":"vendor_or_official","required_anchor_tier":"official"}
+    },
+    {
+      "id":"C_GUIDANCE_REVENUE_SURPRISE","kind":"expectation_surprise","materiality":"material","subject_kind":"company_guidance",
+      "guidance_low":{"fact_id":"F_GUIDANCE_REVENUE_LOW"},"guidance_high":{"fact_id":"F_GUIDANCE_REVENUE_HIGH"},"consensus":{"fact_id":"F_GUIDANCE_REVENUE_CONSENSUS_MISSING"},
+      "event_at":"2026-07-28T16:05:00-04:00","tolerance":{"relative_pct":"1","absolute_base":"0"},
+      "source_gate":{"min_independent_origins":2,"counted_tier":"vendor_or_official","required_anchor_tier":"official"}
+    },
+    {
+      "id":"C_GUIDANCE_EPS_SURPRISE","kind":"expectation_surprise","materiality":"material","subject_kind":"company_guidance",
+      "guidance_low":{"fact_id":"F_GUIDANCE_EPS_LOW"},"guidance_high":{"fact_id":"F_GUIDANCE_EPS_HIGH"},"consensus":{"fact_id":"F_GUIDANCE_EPS_CONSENSUS_MISSING"},
+      "event_at":"2026-07-28T16:05:00-04:00","tolerance":{"relative_pct":"1","absolute_base":"0"},
+      "source_gate":{"min_independent_origins":2,"counted_tier":"vendor_or_official","required_anchor_tier":"official"}
+    }
+  ]
+}

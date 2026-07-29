@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "000660-ks-jun-2026-eps-conflict-20260729",
+  "input_sha256": "018ec48fb8cfeb2fdc8bb10cb385068ee17a50b7ce4096fc072d100241c07f10",
+  "verdict": "FAIL",
+  "release_status": "blocked",
+  "summary": {
+    "checks_total": 1,
+    "verified_count": 0,
+    "material_failure_count": 1,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [
+    {
+      "code": "NO_VERIFIED_CHECKS",
+      "message": "zero checks were verified",
+      "refs": [],
+      "provisional_eligible": false
+    }
+  ],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_Q1_EPS_CONFLICT",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "FAIL",
+      "verified": false,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_PRIOR_DECK"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "skhynix:2026q1:earnings-presentation"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {},
+      "details": {
+        "reference_count": 1
+      },
+      "issues": [
+        {
+          "code": "MATERIAL_CONFLICT",
+          "message": "numeric difference 35323 exceeds allowed 0",
+          "refs": [
+            "reference[0]",
+            "target"
+          ],
+          "provisional_eligible": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+ 
+  
+(Page 1 of 5) 
+ [Press Release] 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ASMPT Announces 2026 First Quarter Results 
+ 
+Strong Demand Driven by AI  
+ 
+Group Performance at a Glance 
+ 
+Key Highlights 
+ 
+ Multiple products benefitting from AI technology evolution 
+ Group quarterly bookings exceed expectations; SMT bookings at record level 
+ SEMI adjusted gross margin hit 46.4%, driven by product mix 
+ Revenue and adjusted EPS above market consensus 
+ 
+ 
+Group Results Summary  
+  
+(in HK$ million) Q1 2026 QoQ YoY 
+ Continuing Operations 
+Bookings 5,673.4 
+(US$727.0 million) +46.0% +71.6% 
+Revenue 3,966.8 
+(US$507.9 million) +0.2% +32.0% 
+Gross Margin 39.5% +364bps -150bps 
+Operating Profit 385.2 +139.2% +105.6% 
+Net Profit  323.8 -70.8% +192.9% 
+Basic Earnings Per Share HK$0.78 -70.8% +188.9% 
+ Non-HKFRS Measures2 of Continuing Operations 
+Adjusted Gross Margin 39.5% +357bps -151bps 
+Adjusted Operating Profit 395.7 +103.2% +107.4% 
+Adjusted Net Profit 335.2 +123.8% +193.5% 
+Adjusted Basic Earnings Per Share HK$0.81 +118.9% +189.3% 
+    
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+ASMPT Limited  
+22 April 2026   
+ 
+(Page 2 of 5) 
+(in HK$ million) Q1 2026 QoQ YoY 
+ Discontinued1 Operation 
+Net Loss  (72.6) -53.5% +159.6% 
+Adjusted Net Loss (Non-HKFRS Measures2) (72.6) NM +159.9% 
+    
+ NM: Not meaningful 
+ 
+(in HK$ million) Q1 2026 QoQ YoY 
+ Continuing and Discontinued1 Operations 
+Net Profit  251.2 -73.7% +204.1% 
+Basic Earnings Per Share HK$0.61 -73.5% +205.0% 
+ Non-HKFRS Measures2 of Continuing and 
+Discontinued1 Operations 
+Adjusted Net Profit 262.6 +24.1% +204.4% 
+Adjusted Basic Earnings Per Share HK$0.64   +23.1% +204.8% 
+    
+ 
+Revenue Guidance for Q2 2026  
+ US$540 million to US$600 million, up 12.2% QoQ and 37.0% YoY at mid-point of 
+US$570 million 
+ 
+Full Results Announcement and Investor Presentation available from : 
+https://www.asmpt.com/en/investor-relations/financial-information/ 
+ 
+1 As disclosed by the Group in Q4 2025 , the Group has decided to divest ASMPT NEXX, Inc. (“NEXX”), which has 
+been classified as a Discontinued Operation. As at the date of the Group’s Q1 2026 results announcement, no binding 
+agreement has been entered into for the proposed divestment. Further updates will be provided as required under 
+applicable disclosure obligations. 
+2 For more information about the Non -HKFRS Measures presented above, please refer to the section under 
+“Reconciliation of HKFRS Measures to the non-HKFRS Measures” of the Group’s Q1 2026 results announcement. 
+ 
+ 
+(Hong Kong, 22 April 2026) — ASMPT Limited (ASMPT / the Group / the Company) (Stock 
+code: 0522), a leading global provider of hardware and software solutions for the 
+manufacture of semiconductors and electronics, announced its first quarter results for the 
+three months ended 31 March 202 6. As the AI landscape evolves, the Group is seeing a 
+significant shift of both value and complexity into backend semiconductor manufacturing, 
+supporting broad-based demand for its comprehensive suite of solutions . Meanwhile, AI 
+infrastructure buildouts continue to support SEMI and SMT mainstream applications with 
+increasing power density and reliability requirements.  
+ 
+Mr. Robin Ng, Group CEO : “We delivered one of our strongest quarters in recent years. 
+Notably, we are seeing just how broadly AI demand is translating into more opportunities 
+across multiple products and customer segments in ASMPT – including TCB, photonics & 
+CPO, and our mainstream platforms. As the value and complexity of backend manufacturing 
+increases, ASMPT is well-positioned to play a critical role  as AI moves increasingly from 
+innovation into broad deployment.”  
+ 
+
+ASMPT Limited  
+22 April 2026   
+ 
+(Page 3 of 5) 
+The following review will include the Group’s Continuing Operations only, after adjustments 
+under non-HKFRS measures, unless otherwise specified.  
+ 
+ 
+Group Q1 2026 Highlights 
+The rapid evolution of AI technolog y is increasing the value and complexity of backend 
+semiconductor manufacturing . New AI Architectures  demand heterogeneous integration, 
+tighter interconnect pitch, higher bandwidth and power efficiency across data -centre, cloud 
+and edge workloads. These requirements  are driving higher precision, alignment and 
+process-control needs across packaging flows, increasing demand for the Group's solutions, 
+which include Thermo-Compression Bonding (TCB) and Hybrid Bonding (HB) for advanced 
+logic-to-memory interconnects, high-precision Flip Chip and Mass Reflow for cost -efficient 
+scaling, and Photonics & Co-Packaged Optics (CPO) as connectivity constraints emerge. In 
+parallel, AI-infrastructure build-outs continue to  support SEMI and SMT mainstream 
+applications with increasing power density and reliability requirements. 
+ 
+• Group revenue of HK $3.97 billion (US $507.9 million) was above mid -point of 
+guidance, up 0.2% QoQ and 32.0% YoY.  
+• Group bookings of HK$5.67 billion (US$727.0 million) were up 46.0% QoQ and 71.6% 
+YoY, significantly stronger than expected  and the highest in the last 4 years .  The 
+book-to-bill ratio was 1.43. Growth came from multiple products, notably SMT, wire 
+& die bonders, and Photonics.  
+• Group adjusted gross margin of 39.5% was up 357 bps QoQ but down 151 bps YoY. 
+QoQ improvement was due to higher gross margin and revenue contribution from 
+SEMI, while the YoY drop was due higher revenue contribution from SMT.  
+• Group adjusted operating expenses (O PEX) were down 4.6% QoQ mainly due to 
+cost control measures. Adjusted OPEX was up 12.4% YoY largely due to  
+unfavourable FX impact, strategic infrastructure and R&D investments. 
+• Adjusted net profit was HK$335.2 million, up 123.8% QoQ and 193.5% YoY, due to 
+higher operating profit. 
+ 
+TCB: In Logic, the Group further solidified its leadership in chip-to-substrate (C2S), through 
+sizeable shipments and repeat orders in Q1. For chip-to-wafer (C2W), the Group booked a 
+total of four tools in Q1 for its ultrafine -pitch TCB solution featuring the Group’s proprietary 
+plasma AOR technology from a leading advanced logic customer. The Group is also actively 
+collaborating with key logic players across multiple programmes and is well-positioned for 
+more opportunities as the industry advances towards more complex logic chip architectures. 
+ 
+In Memory, the Group remains at the forefront of technology development, with a key 
+memory player adopting its flux based TCB tool for sampling and qualifying the Group’s AOR 
+fluxless process for HBM4 16H. 
+
+ASMPT Limited  
+22 April 2026   
+ 
+(Page 4 of 5) 
+ 
+Photonics & CPO : The Group’s Photonics solutions achieved a five-fold increase in YoY 
+revenue growth, propelled by strong demand from high -speed transceivers of 800G and 
+beyond. Notably, its 1.6T transceiver solutions received bulk orders from key optics suppliers 
+in the data centre networking supply chain. This demonstrates strong traction for the Group’s 
+optical transceiver solutions as the market leader.  In CPO, the Group deepened 
+engagements with multiple leading global CPO players , positioning it well to gain market 
+share as CPO adoption accelerates.  
+ 
+Flip Chip High Precision Die -Bonding (FC): The Group’s FC solutions achieved strong 
+bookings growth. The rapid adoption of 2.5D packaging for larger AI package sizes has led 
+to a steady order pipeline for the Group’s FC solutions for embedded bridge die bonding  
+across both Chip -on-Wafer (CoW) and Chip -on-Panel (CoP) applications. The Group’s 
+solutions are also gaining traction in Panel -Level Fan-Out (PLFO) for radio frequency and 
+power devices.  These solutions offer cost effectiveness, scalability, and both superior 
+placement accuracy and throughput. 
+ 
+SEMI Mainstream:  SEMI's mainstream business benefit ted from sustained utilisation at 
+leading global IDMs and  OSATs, and increased demand  for power management solutions 
+for AI data centres. In China, the mainstream business saw increased demand for wire and 
+die bonding applications due to AI infrastructure capacity expansion and robust OSAT 
+utilisation. 
+ 
+SMT: SMT delivered record bookings in Q1, driven by strong demand from AI servers, 
+optical transceivers and China EVs. In particular, SMT’s high flex, high force solutions for 
+large format boards are a leading choice for AI server assembly, combining fast pick-and-
+place of large, heavy components with high -density, multi-angle placement & enhanced 
+inspection capabilities to drive superior yield and throughput. 
+ 
+ 
+Outlook  
+The Group expects Q2 2026 revenue to be between US$5 40 million to US$600 million, up 
+12.2% QoQ and 37.0% YoY at mid -point of US$5 70 million, which is above market 
+consensus. This strong growth will be driven mainly by SEMI. 
+ 
+The Group expects bookings in Q2 2026 to remain elevated for both segments, though SMT 
+will be down QoQ due to high base effect.  
+ 
+The continued proliferation of AI is expected to drive broad -based, structural demand for 
+ASMPT across multiple products. These include the Group’s cutting -edge TCB and HB 
+solutions enabling next -generation AI compute and HBM, photonics and CPO supporting 
+
+ASMPT Limited  
+22 April 2026   
+ 
+(Page 5 of 5) 
+high-speed data requirements, to wire & die bonding and pick-and-place solutions enabling 
+AI infrastructure deployment. Looking ahead, structural AI -driven demand is expected to 
+support revenue growth across both SEMI and SMT in 2026. 
+ 
+While the Group has not experienced any material impact from the ongoing geopolitical 
+developments in the Middle East, it acknowledges that uncertainties remain. The Group’s 
+global presence provides it with the flexibility to navigate any potential impact, and it will 
+continue to monitor the situation closely and adapt as needed. 
+  
+About ASMPT Limited (ASMPT) 
+ASMPT Limited is a leading global supplier of hardware and software solutions for the manufacture of 
+semiconductors and electronics. Headquartered in Singapore, ASMPT's offerings encompass the 
+semiconductor assembly & packaging, and SMT (surface mount tech nology) industries, ranging from wafer 
+deposition to the various solutions that organise, assemble and package delicate electronic components into 
+a vast range of end-user devices. ASMPT partners with customers very closely, with continuous investment in 
+R&D helping to provide cost -effective, industry-shaping solutions that achieve higher productivity, greater 
+reliability, and enhanced quality. ASMPT is also a founding member of the Semiconductor Climate Consortium.  
+ 
+ASMPT is listed on the Stock Exchange of Hong Kong (HKEX stock code: 0522) and is one of the constituent 
+stocks of the HKEX Tech 100 Index, Hang Seng Composite MidCap Index under the Hang Seng Composite 
+Size Indexes, the Hang Seng Composite Information Technology Industry Index under Hang Seng Composite 
+Industry Indexes, the Hang Seng Corporate Sustainability Benchmark Index, and the Hang Seng HK 35 Index. 
+To learn more about ASMPT, please visit us at http://www.asmpt.com. 
+ 
+Forward-Looking Statements  
+All statements included herein, other than statements of historical facts, are or may be forward -looking 
+statements. These forward-looking statements reflect ASMPT’s current expectations, beliefs, hopes, intentions 
+or strategies regarding the future and as sumptions in light of currently available information. Such forward -
+looking statements are not guarantees of future performance or events and involve known or unknown risks 
+and uncertainties. Accordingly, actual results may differ materially from informati on contained in the forward -
+looking statements as a result of a number of factors. Readers should not place undue reliance on such 
+forward-looking statements, and ASMPT does not undertake any obligation to update publicly or revise any 
+forward-looking statements. Save as otherwise referred to below, no statement herein is intended to be or may 
+be construed as a profit forecast.  
+ 
+- End - 
+ 
+For media enquiries: 
+ 
+Lim Ee Guan  
+Director, Corporate Communications 
+Tel: +65 6450 1445 
+Email: eg.lim@asmpt.com  
+ 
+On behalf of ASMPT:  
+Strategic Financial Relations Limited 
+Mandy Go / Vivienne Leung / Angela Shen 
+Tel:  +852 2864 4812 / 2864 4862/ 2864 4870 
+Fax: +852 2527 1196 
+Email: mandy.go@sprg.com.hk / vivienne.leung@sprg.com.hk / angela.shen@sprg.com.hk 

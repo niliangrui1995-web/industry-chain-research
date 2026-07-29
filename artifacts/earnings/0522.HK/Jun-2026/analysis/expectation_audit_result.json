@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "0522-hk-jun-2026-expectations-20260729",
+  "input_sha256": "92af6fa2f64db7fd6bcda21234757f1328792f683e33491ede5ddb831fb3937f",
+  "verdict": "FAIL",
+  "release_status": "blocked",
+  "summary": {
+    "checks_total": 2,
+    "verified_count": 0,
+    "material_failure_count": 2,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [
+    {
+      "code": "NO_VERIFIED_CHECKS",
+      "message": "zero checks were verified",
+      "refs": [],
+      "provisional_eligible": false
+    }
+  ],
+  "excluded_sources": [
+    {
+      "id": "S_IFIND_EMPTY",
+      "source_type": "market_data_vendor",
+      "origin_id": "ifind:global-stock-financial:0522.hk:20260729",
+      "locator": "iFinD global_stock_financial point-in-time query",
+      "source_date": "2026-07-29T11:38:00+08:00",
+      "checked_at": "2026-07-29T11:45:29+08:00",
+      "status": "excluded",
+      "exclusion_code": "no_numeric_values",
+      "exclusion_reason": "查询返回字段但没有事件前 Q2 实际或 Q3 指引共识数值"
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_Q2_REVENUE_SURPRISE",
+      "kind": "expectation_surprise",
+      "materiality": "material",
+      "status": "FAIL",
+      "verified": false,
+      "state": "not_meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_Q2_RESULTS"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asmpt:q2-2026:results-announcement"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {},
+      "details": {
+        "status": "not_meaningful",
+        "subject_kind": "reported_actual",
+        "formula_absolute": "subject - consensus",
+        "formula_percentage": "(subject - consensus) / abs(consensus) * 100",
+        "meet_band": "max(absolute_base, abs(consensus) * relative_pct / 100)",
+        "allowed_absolute_difference": null,
+        "expected_kind": null
+      },
+      "issues": [
+        {
+          "code": "MISSING_REQUIRED_SOURCE",
+          "message": "independent origins 1 below required 2",
+          "refs": [
+            "S_Q2_RESULTS"
+          ],
+          "provisional_eligible": false
+        },
+        {
+          "code": "MISSING_VALUE",
+          "message": "consensus has no numeric value (vendor_missing)",
+          "refs": [
+            "consensus"
+          ],
+          "provisional_eligible": false
+        }
+      ]
+    },
+    {
+      "id": "C_Q3_REVENUE_GUIDANCE_SURPRISE",
+      "kind": "expectation_surprise",
+      "materiality": "material",
+      "status": "FAIL",
+      "verified": false,
+      "state": "not_meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_Q2_RESULTS"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asmpt:q2-2026:results-announcement"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {},
+      "details": {
+        "status": "not_meaningful",
+        "subject_kind": "company_guidance",
+        "formula_absolute": "subject - consensus",
+        "formula_percentage": "(subject - consensus) / abs(consensus) * 100",
+        "meet_band": "max(absolute_base, abs(consensus) * relative_pct / 100)",
+        "allowed_absolute_difference": null,
+        "expected_kind": null
+      },
+      "issues": [
+        {
+          "code": "MISSING_REQUIRED_SOURCE",
+          "message": "independent origins 1 below required 2",
+          "refs": [
+            "S_Q2_RESULTS"
+          ],
+          "provisional_eligible": false
+        },
+        {
+          "code": "MISSING_VALUE",
+          "message": "consensus has no numeric value (vendor_missing)",
+          "refs": [
+            "consensus"
+          ],
+          "provisional_eligible": false
+        }
+      ]
+    }
+  ]
+}

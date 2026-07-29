@@ -1,0 +1,649 @@
+Q2 2026
+Results Presentation
+29 July 2026
+
+Disclaimer
+2
+The information contained in this presentation is provided for 
+informational purpose only and should not be relied upon for the 
+purpose of making any investment or for any other purpose.  
+Some of the information used in preparing this presentation was 
+obtained from third parties or public sources. The information 
+contained in this presentation has not been independently verified. 
+No representation or warranty, expressed or implied, is made as 
+to, and no reliance should be placed on, the fairness, 
+reasonableness, accuracy, completeness or correctness of such 
+information or opinions contained herein. It is not the intention to 
+provide, and you may not rely on this presentation as providing, a 
+complete or comprehensive analysis of our financial or trading 
+position or prospects. The information and opinions contained in 
+this presentation are provided as at the date of this presentation 
+and are subject to change without notice and will not be updated to 
+reflect any developments which may occur after the date of this 
+presentation. 
+All statements, other than statements of historical facts included in 
+this presentation, are or may be forward-looking statements.  
+Forward-looking statements include, but are not limited to, those 
+using words such as “seek”, “expect”, “anticipate”, “estimate”, 
+“believe”, “intend”, “project”, “plan”, “strategy”, “forecast” and 
+similar expressions or future or conditional verbs such as “will”, 
+“would”, “should”, “could”, “may” and “might”. 
+These forward-looking statements reflect the Company’s current 
+expectations, beliefs, hopes, intentions or strategies regarding the 
+future and assumptions in light of currently available information.  
+Such forward-looking statements are not guarantees of future 
+performance or events and involve known or unknown risks and 
+uncertainties. Accordingly, actual results may differ materially from 
+information contained in the forward-looking statements as a result 
+of a number of factors.  You should not place undue reliance on 
+such forward-looking statements, and the Company does not 
+undertake any obligation to update publicly or revise any forward-
+looking statements. No statement in this presentation is intended 
+to be or may be construed as a profit forecast.
+We also do not undertake any obligation to provide you with 
+access to any additional information or to update this presentation 
+or any additional information or to correct any inaccuracies in this 
+presentation or any additional information which may become 
+apparent. 
+This presentation does not constitute an offer or invitation to 
+purchase or subscribe for any shares and no part of it shall form 
+the basis of or be relied upon in connection with any contract, 
+commitment or investment decision in relation thereto.
+
+
+Private and confidential
+Key Highlights
+
+Key 1H 2026 Highlights
+Record bookings for SMT; SEMI AP bookings doubled YoY
+AI continued to fuel strong revenue and bookings
+Strong revenue growth driven by mainstream and Photonics
+Higher adjusted gross margin driven by SMT
+Revenue and adjusted EPS beat consensus
+
+Group Business Highlights – Continuing Operations 
+AI Continued to Fuel Strong Performance
+1H 2026
+Group Revenue
+US$1,138M
+Mainstream
+~70%
+Advanced 
+Packaging 
+~30%
+Advanced Packaging
+TCB
+• TAM: expected to expand beyond US$1.6 billion by 2028
+• C2S: order momentum remained strong; repeat orders for larger compound die 
+• C2W: secured a bulk order and delivered ultrafine-pitch TCB tools
+• Memory: continued to secure repeat orders; signed JEP with a key memory player
+• Panel-level packaging: tool for qualification with a leading customer; developing both 
+embedded and surface silicon bridge solutions
+Photonics
+• Pluggable Optical Transceiver: revenue almost tripled YoY to ~US$75 million; 
+further growth expected for the rest of 2026
+• CPO: most comprehensive range of solutions
+Mainstream
+• SEMI benefited from rising demand for AI data centre power management
+• SMT revenue growth largely driven by strong demand from AI servers
+• Beyond AI, Group’s mainstream business also experienced some recovery from 
+traditional applications (consumer, industrial and automotive EVs)
+
+Bonding Step ASMPT Equipment Placement 
+Precision
+DSP & Passive 
+Component Attach
+SMT SIPLACE 
+Placement Solutions ±15µm to ±25µm
+Transmitter & 
+Receiver Attach
+SEMI High-End 
+Photonics Solutions ±2µm to ±3µm
+Chips on 
+Submount Assembly SEMI AMICRA Solutions ±3µm
+Electrical & Optic 
+Accessories SEMI Photonics Solutions ±5µm to ±15µm
+Bonding Step ASMPT Equipment Placement 
+Precision
+EIC on PIC SEMI Hybrid Bonding and 
+TCB solutions ±200nm to ±2µm
+Optical Engine 
+on Substrate
+SEMI Flip Chip 
+Mass Reflow Solutions ±5µm
+FAU and 
+Micro Lens Attach SEMI AMICRA Solutions ±500nm to ±1µm
+Strong Position in Photonics
+6
+Comprehensive Solutions from Pluggable Optical Transceivers to CPO
+1
+2
+3
+1
+2
+3
+4
+1
+3
+2
+DSP: Digital Signal Processor
+Laminate substrate
+Interposer
+XPU die
+ Photonic IC (PIC)
+Electronic IC (EIC)
+Fibre Attach Unit (FAU)
+Fibre Array
+Optical Module
+2 3 41
+Pluggable Optical Transceiver Co-Packaged Optics (CPO)
+
+Private and confidential
+Financial Performance
+
+1H 2026 Adjusted Group Financial Results
+8
+Adj. Net Profit (HK$’M)*
+Adj. Gross Margin*
+Adj. Operating Profit (HK$’M)*
+Revenue 
+• Strong SEMI and SMT growth due to AI tailwinds
+Bookings
+• SEMI and SMT up significantly
+• Book-to bill ratio of 1.43, highest since 1H 2021
+Adjusted Gross Margin
+• Higher gross margin from both SEMI and SMT
+Adjusted Operating Profit and Net Profit
+• Strong HoH and YoY improvement due to improved 
+gross margin and operating leverage
+Revenue (US$’M)
+Bookings (US$’M)
+Adj. Basic EPS (HK$)*
+Note: *For more information, please refer to appendix for reconciliation to Non-HKFRS Measures
+YoY (%)
++42.5
++85.1
++86bps
++195.6
++230.5
++234.3
+1H 2026
+1,138.0
+1,630.6
+41.2%
+1,242.6
+972.7
+2.34
+- Continuing Operations
+HoH (%)
++18.9
++441bps
++220.9
++263.8
++260.0
++68.1
+
+Q2 2026 Adjusted Group Financial Results
+9
+Adj. Net Profit (HK$’M)*
+Adj. Gross Margin*
+Adj. Operating Profit (HK$’M)*
+QoQ (%)Q2 2026 YoY (%)
+Revenue (US$’M)
+Bookings (US$’M)
++24.4630.0 +52.1
+Adj. Basic EPS (HK$)*
++24.8903.6 +97.6
++302bps42.5% +284bps
++114.1847.0 +268.8
++90.2637.5 +253.9
++88.91.53 +255.8
+Revenue 
+• Exceeded the upper end of guidance
+• Driven by SEMI and SMT
+Bookings
+• Significantly better than anticipated
+Adjusted Gross Margin
+• QoQ and YoY increase driven by SEMI and SMT
+Adjusted Operating Profit and Net Profit
+• QoQ and YoY improvements mainly due to higher gross 
+margin and operating leverage
+- Continuing Operations
+Note: *For more information, please refer to appendix for reconciliation to Non-HKFRS Measures
+
+Q2 2026 Semiconductor Solutions
+10
+Adj. Segment Margin*
+Adj. Gross Margin*
+Bookings
+• QoQ increase due to higher demand for wire and die 
+bonders and Photonics
+• YoY increase due to higher demand for wire and die 
+bonders, Photonics and TCB
+• Book-to-bill ratio was 1.16
+Revenue 
+• Growth was driven by:
+• Photonics due to AI related applications 
+• Wire and die bonders due to both AI and consumer 
+related applications
+Adjusted Gross Margin
+• QoQ increase due to higher volume offset by product mix
+• YoY increase due to higher volume
+45.0% 46.4% 46.5%
+Adj. Segment Profit*(HK$’M)
+Adjusted Segment Profit
+• QoQ and YoY improvements due to higher adjusted 
+gross profit and operating leverage
+223.3 309.4 603.2
+12.1% 14.4% 20.9%
+US$’M
+Adjusted Segment Performance – Continuing Operations 
+369 
+274 238 
+428 
+310 
+191 
+Q2 2026Q1 2026Q2 2025
+Revenue Booking
+Note: *For more information, please refer to appendix for reconciliation to Non-HKFRS Measures
+
+Q2 2026 SMT Solutions
+11
+Adj. Segment Margin*
+Adj. Gross Margin* 32.6% 31.3% 36.8%
+Adj. Segment Profit* (HK$’M)
+US$’M
+58.6 141.8 284.8
+4.2% 7.8% 13.9%
+Revenue and Bookings
+• Both growth largely driven by strong demand from AI 
+servers
+Adjusted Gross Margin
+• QoQ  increase was due to favourable product mix and 
+higher volume
+• YoY increase was mainly due to higher volume
+Adjusted Segment Profit
+• QoQ and YoY due to higher gross profit and operating 
+leverage
+Adjusted Segment Performance
+261 233 
+179 
+475 
+417 
+269 
+Q2 2026Q1 2026Q2 2025
+Revenue Booking
+Note: *For more information, please refer to appendix for reconciliation to Non-HKFRS Measures
+
+12
+Key End-Market Applications - Continuing Operations
+Serving Broad-based End-Market Applications*
+~12%~32% ~11% ~21%1H 2025 ~8%
+Computer
+ Consumer
+ Automotive
+ Communication
+ Industrial
+ Others
+12
+Personal Computers
+Servers
+Data centres
+HPC
+Photonics^
+Other Computers
+TV
+Wearables
+Audio devices
+Video devices
+Gaming consoles
+Other Consumers
+EV Charging
+Smart Factories
+Smart Offices
+Other Industrial
+Mobile Phones
+Wired Infrastructure
+Wireless
+5G Communications
+Infrastructure
+Note: *    Revenue mix is based on management’s best estimates
+**  Others include revenue from spares, services and other applications that cannot be meaningfully identified
+^   Reclassified from Communication to Computer applications for both years
+~18%~33% ~10% ~18%
+Medical Devices
+Aerospace
+Others**
+1H 2026 
+Group 
+Revenue
+~9%
+~16%
+Visual Sensors
+Infotainment
+LIDAR Sensors
+V2X communications
+Entertainment Platforms
+~12%
+
+Key Partner to Global Customers 
+- Continuing Operations
+38%
+8%
+12%
+5%
+12%
+3%
+14%
+1% 1% 1%
+5%
+42%
+12% 12%
+10% 9%
+6%
+4%
+2% 1% 1% 1%
+China Taiwan Europe Malaysia Americas Thailand Korea India Singapore Philippines others
+Revenue Contribution by Geography
+1H 2025 1H 2026
+
+Returning To Shareholders 
+14
+50% Payout Ratio for 1H 2026 as per Dividend Policy
+0.61
+0.35 0.26
+0.97
+0.26
+0.07 0.34
+0.52
+0.25
+0.79
+FY23 FY24 FY25 1H2026
+Interim Dividend Final Dividend Special Dividend
+Dividend Payout (%) of Adjusted EPS
+FY23
+(incl. Special
+Dividend)
+FY24
+(incl. Special
+Dividend)
+FY25
+(incl. Special
+Dividend)
+Note: *FY23, FY24 and FY25 are based on original reported figures; 
+Interim dividends of HK$0.97 in 1H 2026 were based on 50% Payout Ratio of Adjusted EPS for Continuing and Discontinued operations of HK$1.94
+1H26
+50%76%* 64%* 116%*
+
+Private and confidential
+Q3 2026
+Revenue Guidance
+& Outlook
+
+16
+(+4.8% QoQ and +46.3% YoY at mid-point of guidance)
+US$630m to US$690m
+Q3 2026 Revenue Guidance
+Q3 2026:
+• Sustained growth despite longer lead times for certain materials 
+• Bookings are expected to grow by a high single-digit percentage sequentially, mainly driven by TCB and 
+Photonics 
+Looking Ahead:
+• Expect revenue growth for both SEMI and SMT in 2026 despite longer lead times (as above), and customers’ 
+dynamic AI product rollout schedules
+• Continue to benefit from structural demand for advanced AI applications and computing needs
+• Recovery of demand for some traditional mainstream applications will continue
+Outlook & Q3 2026 Revenue Guidance 
+- Continuing Operations
+
+Private and confidential
+Q&A
+
+asmpt.com
+Private and confidential
+Thank You!
+For enquiries, please contact:
+Mr. Benjamin Poh / b.poh@asmpt.com
+Mr. Leonard Lee / leonard.lee@asmpt.com
+
+Private and confidential
+Appendix
+
+Reconciliation to Non-HKFRS Measures – Group 
+Continuing Operations (Q2 2026)
+20
+The below tables highlighted the reconciliations of the Group’s financial measures for continuing operations prepared in accordance with HKFRS Accounting Standards 
+(“HKFRS”) for Q2 2026, Q1 2026 and Q2 2025 to the non-HKFRS measures:
+The Group has provided adjusted results and adjusted earnings per share which are supplementary to the Group’s consolidated results in accordance with HKFRS. The Group believes 
+that these additional figures provide our shareholders and investors with useful supplementary information about our ongoing operating performance and facilitates the analysis and 
+comparison of financial trends and results between periods. The adjusted results and adjusted earnings per share exclude the impact of impairment losses on goodwill and intangibles, 
+loss on deemed disposal of SWAT business, gain on adjustment of contingent consideration, share-based payments, restructuring costs (mainly related to employee severance, benefit 
+arrangements and shutdown-related costs) and related tax effects.
+The use of these non-HKFRS measures may have certain limitations as a tool for analysis and comparison. Shareholders and investors are advised not to consider these non-HKFRS 
+measures in isolation from, or as a substitute for analysis of, the Group’s financial performance as reported under HKFRS. Also, please note that these non-HKFRS measures may be 
+defined differently from similar terms used by other companies.
+Group
+Q2 2026 Q1 2026 Q2 2025
+Gross 
+profit 
+(HK$’M)
+Gross 
+profit 
+margin
+Operating 
+profit 
+(HK$’M)
+Net profit  
+(HK$’M)
+Net 
+profit 
+margin
+Basic 
+EPS 
+(HK$)
+Gross 
+profit 
+(HK$’M)
+Gross 
+profit 
+margin
+Operating 
+profit 
+(HK$’M)
+Net profit  
+(HK$’M)
+Net 
+profit 
+margin
+Basic 
+EPS 
+(HK$)
+Gross 
+profit 
+(HK$’M)
+Gross 
+profit 
+margin
+Operating 
+profit 
+(HK$’M)
+Net profit  
+(HK$’M)
+Net 
+profit 
+margin
+Basic 
+EPS 
+(HK$)
+As reported 2,092.5 42.4% 786.5 417.8 8.5% 1.01 1,566.0 39.5% 385.2 323.8 8.2% 0.78 1,283.2 39.6% 196.5 150.8 4.6% 0.35
+Non-HKFRS adjustments :
+Impairment losses on assets 22.0 0.4% 0.05
+Loss on deemed disposal of SWAT 152.5 3.1% 0.36
+Gain on adjustment of contingent 
+consideration (11.4) (0.2%) (0.03)
+Share-based payments 5.4 0.1% 60.5 60.5 1.2% 0.14 10.5 10.5 0.3% 0.03 3.6 0.1% 33.1 33.1 1.0% 0.08
+Restructuring costs 6.5 0.1% 0.02 3.6 0.1% 0.01 0.8 0.1% 0.01
+Income tax effect (10.4) (0.2%) (0.02) (2.7) (0.1%) (0.01) (4.5) (0.1%) (0.01)
+As adjusted 2,097.9 42.5% 847.0 637.5 12.9% 1.53 1,566.0 39.5% 395.7 335.2 8.5% 0.81 1,286.8 39.7% 229.6 180.1 5.6% 0.43
+
+Reconciliation to Non-HKFRS Measures – SEMI and SMT Solutions 
+Continuing Operations (Q2 2026)
+21
+The below tables highlighted the reconciliations of the SEMI and SMT Solutions Segments’ financial measures for continuing operations prepared in accordance with 
+HKFRS Accounting Standards (“HKFRS”) for Q2 2026, Q1 2026 and Q2 2025 to the non-HKFRS measures:
+The Group has provided adjusted results and adjusted earnings per share which are supplementary to the Group’s consolidated results in accordance with HKFRS. The Group believes that 
+these additional figures provide our shareholders and investors with useful supplementary information about our ongoing operating performance and facilitates the analysis and comparison of 
+financial trends and results between periods. The adjusted gross profit and segment profit exclude the impact of share-based payments.
+The use of these non-HKFRS measures may have certain limitations as a tool for analysis and comparison. Shareholders and investors are advised not to consider these non-HKFRS 
+measures in isolation from, or as a substitute for analysis of, the Group’s financial performance as reported under HKFRS. Also, please note that these non-HKFRS measures may be defined 
+differently from similar terms used by other companies.
+Q2 2026 Q1 2026 Q2 2025
+SEMI SMT SEMI SMT SEMI SMT
+Gross profit (HK$’M) 1,339.8 752.7 994.8 571.3 830.5 452.7
+Non-HKFRS adjustment:
+   Share-based payments 5.1 0.3 - - 3.3 0.3
+Adjusted Gross profit (HK$’M) 1,344.9 753.0 994.8 571.3 833.8 453.0
+Gross profit margin 46.3% 36.8% 46.4% 31.3% 44.8% 32.5%
+Adjusted Gross profit margin 46.5% 36.8% 46.4% 31.3% 45.0% 32.6%
+Segment profit (HK$’M) 564.2 276.9 306.9 141.1 202.0 53.4
+Non-HKFRS adjustment:
+   Share-based payments 39.0 7.9 2.5 0.8 21.2 5.2
+Adjusted Segment profit (HK$’M) 603.2 284.8 309.4 141.9 223.2 58.6
+Segment profit margin 19.5% 13.5% 14.3% 7.7% 10.9% 3.8%
+Adjusted Segment profit margin 20.9% 13.9% 14.4% 7.8% 12.1% 4.2%
+
+Group
+1H 2026 2H 2025
+Gross 
+profit 
+(HK$’M)
+Gross profit 
+margin
+Operating 
+profit 
+(HK$’M)
+Net profit  
+(HK$’M)
+Net profit 
+margin
+Basic EPS 
+(HK$)
+Gross profit 
+(HK$’M)
+Gross profit 
+margin
+Operating 
+profit (HK$’M)
+Net profit  
+(HK$’M)
+Net profit 
+margin
+Basic 
+EPS 
+(HK$)
+As reported 3,658.5 41.1% 1,171.6 741.6 8.3% 1.79 2,671.2 35.7% 241.6 823.4 11.0% 1.98
+Non-HKFRS adjustments :
+Impairment losses on assets 22.0 0.2% 0.05 67.0 0.9% 0.16
+Loss on deemed disposal of SWAT 152.5 1.7% 0.37
+Gain on adjustment of contingent consideration (11.4) (0.1%) (0.03)
+Share-based payments 5.4 0.1% 71.0 71.0 0.8% 0.17 6.1 0.1% 71.7 71.7 0.9% 0.17
+Restructuring costs 10.1 0.1% 0.02 341.8 4.6% 0.82
+One-off inventory write-off 73.9 0.9% 73.9 73.9 1.0% 0.18
+Gain on disposal of a joint venture (1,113.5) (14.9%) (2.67)
+Loss on dilution effect on investment in an associate 5.0 0.1% 0.01
+Income tax effect (13.1) (0.1%) (0.03) (1.9) 0.0% 0.00
+As adjusted 3,663.9 41.2% 1,242.6 972.7 10.9% 2.34 2,751.2 36.7% 387.2 267.4 3.6% 0.65
+Reconciliation to Non-HKFRS Measures – Group 
+Continuing Operations (1H 2026)
+22
+The below tables highlighted the reconciliations of the Group’s financial measures for continuing operations prepared in accordance with HKFRS Accounting Standards 
+(“HKFRS”) for 1H 2026 and 2H 2025 to the non-HKFRS measures:
+The Group has provided adjusted results and adjusted earnings per share which are supplementary to the Group’s consolidated results in accordance with HKFRS. The Group believes 
+that these additional figures provide our shareholders and investors with useful supplementary information about our ongoing operating performance and facilitates the analysis and 
+comparison of financial trends and results between periods. The adjusted results and adjusted earnings per share exclude the impact of impairment losses on goodwill and intangibles, 
+loss on deemed disposal of SWAT business, gain on adjustment of contingent consideration, share-based payments, restructuring costs (mainly related to employee severance, benefit 
+arrangements and shutdown-related costs), one-off inventory write-off due to portfolio optimisation resulted from the closure of AEC in 2H25, gain on disposal of a joint venture, loss on 
+dilution effect on investment in an associate and related tax effects.
+The use of these non-HKFRS measures may have certain limitations as a tool for analysis and comparison. Shareholders and investors are advised not to consider these non-HKFRS 
+measures in isolation from, or as a substitute for analysis of, the Group’s financial performance as reported under HKFRS. Also, please note that these non-HKFRS measures may be 
+defined differently from similar terms used by other companies.
+
+Group
+1H 2026 1H 2025
+Gross profit 
+(HK$’M)
+Gross profit 
+margin
+Operating 
+profit (HK$’M)
+Net profit  
+(HK$’M)
+Net profit 
+margin
+Basic 
+EPS 
+(HK$)
+Gross profit 
+(HK$’M)
+Gross profit 
+margin
+Operating 
+profit (HK$’M)
+Net profit  
+(HK$’M)
+Net profit 
+margin
+Basic 
+EPS 
+(HK$)
+As reported 3,658.5 41.1% 1,171.6 741.6 8.3% 1.79 2,514.7 40.2% 383.9 261.4 4.2% 0.62
+Non-HKFRS adjustments :
+Impairment losses on assets 22.0 0.2% 0.05
+Loss on deemed disposal of SWAT 152.5 1.7% 0.37
+Gain on adjustment of contingent consideration (11.4) (0.1%) (0.03)
+Share-based payments 5.4 0.1% 71.0 71.0 0.8% 0.17 3.8 0.1% 36.5 36.5 0.6% 0.09
+Restructuring costs 10.1 0.1% 0.02 1.6 0.0% 0.00
+Income tax effect (13.1) (0.1%) (0.03) (5.1) (0.1%) (0.01)
+As adjusted 3,663.9 41.2% 1,242.6 972.7 10.9% 2.34 2,518.5 40.3% 420.4 294.4 4.7% 0.70
+Reconciliation to Non-HKFRS Measures – Group 
+Continuing Operations (1H 2026)
+23
+The below tables highlighted the reconciliations of the Group’s financial measures for continuing operations prepared in accordance with HKFRS Accounting Standards 
+(“HKFRS”) for 1H 2026 and 1H 2025 to the non-HKFRS measures:
+The Group has provided adjusted results and adjusted earnings per share which are supplementary to the Group’s consolidated results in accordance with HKFRS. The Group believes 
+that these additional figures provide our shareholders and investors with useful supplementary information about our ongoing operating performance and facilitates the analysis and 
+comparison of financial trends and results between periods. The adjusted results and adjusted earnings per share exclude the impact of impairment losses on goodwill and intangibles, 
+loss on deemed disposal of SWAT business, gain on adjustment of contingent consideration, share-based payments, restructuring costs (mainly related to employee severance, benefit 
+arrangements and shutdown-related costs) and related tax effects.
+The use of these non-HKFRS measures may have certain limitations as a tool for analysis and comparison. Shareholders and investors are advised not to consider these non-HKFRS 
+measures in isolation from, or as a substitute for analysis of, the Group’s financial performance as reported under HKFRS. Also, please note that these non-HKFRS measures may be 
+defined differently from similar terms used by other companies.
+
+Reconciliation to Non-HKFRS Measures – SEMI and SMT Solutions 
+Continuing Operations (1H 2026)
+24
+The below tables highlighted the reconciliations of the SEMI and SMT Solutions Segments’ financial measures for continuing operations prepared in accordance with 
+HKFRS Accounting Standards (“HKFRS”) for 1H 2026, 2H 2025 and 1H 2025 to the non-HKFRS measures:
+The Group has provided adjusted results and adjusted earnings per share which are supplementary to the Group’s consolidated results in accordance with HKFRS. The Group believes that 
+these additional figures provide our shareholders and investors with useful supplementary information about our ongoing operating performance and facilitates the analysis and comparison of 
+financial trends and results between periods. The adjusted gross profit and segment profit exclude the impact of share-based payments and one-off inventory write-off due to portfolio 
+optimisation resulted from the closure of AEC in 2H25.
+The use of these non-HKFRS measures may have certain limitations as a tool for analysis and comparison. Shareholders and investors are advised not to consider these non-HKFRS 
+measures in isolation from, or as a substitute for analysis of, the Group’s financial performance as reported under HKFRS. Also, please note that these non-HKFRS measures may be defined 
+differently from similar terms used by other companies.
+1H 2026 2H 2025 1H 2025
+SEMI SMT SEMI SMT SEMI SMT
+Gross profit (HK$’M) 2,334.6 1,324.0 1,419.2 1,252.0 1,705.0 809.6
+Non-HKFRS adjustments:
+One-off inventory write-off 73.9
+Share-based payments 5.1 0.3 5.7 0.4 3.5 0.3
+Adjusted Gross profit (HK$’M) 2,339.7 1,324.3 1,498.8 1,252.4 1,708.5 809.9
+Gross profit margin 46.4% 34.2% 38.8% 32.7% 45.8% 32.0%
+Adjusted Gross profit margin 46.5% 34.2% 41.0% 32.7% 45.9% 32.1%
+Segment profit (HK$’M) 871.1 418.0 84.4 356.0 465.4 48.1
+Non-HKFRS adjustments:
+One-off inventory write-off 73.9
+Share-based payments 41.5 8.7 40.7 10.5 22.8 5.6
+Adjusted Segment profit (HK$’M) 912.6 426.7 199.0 366.5 488.2 53.7
+Segment profit margin 17.3% 10.8% 2.3% 9.3% 12.5% 1.9%
+Adjusted Segment profit margin 18.1% 11.0% 5.4% 9.6% 13.1% 2.1%

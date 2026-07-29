@@ -1,0 +1,28 @@
+# KLAC Jun/2026 自动化运行状态
+
+- task_key: `KLAC|2026-07-28|Jun/2026`
+- status: `completed_with_partial_audit_release`
+- captured_at_beijing: `2026-07-29T08:01:12+08:00`
+- skill_revision: `git:bc9242494edc9582877b7fb850ca87cc6162d311`
+- prompt_contract_version: `2026-07-27.1`
+- skill_content_sha256: `1d8e93b9831ac4353aa9c196bb3cd2f9c82c03462bcc9100ebf927fe88d6b357`
+- skill_tree_status: `clean`
+- skills: `earnings-call-investment-analyst`, `financial-evidence-audit`
+- current_period_resolved: `Jun/2026`（KLA FY2026 Q4）
+- prior_period_resolved: `Mar/2026`（KLA FY2026 Q3）
+- comparison_rule: `Jun/2026 - 3 months = Mar/2026`
+- completed_at_beijing: `2026-07-29T08:43:15+08:00`
+- company_original_status: `available_complete_official_audio`
+- call_content_status: `complete_prepared_remarks_and_q_and_a`
+- final_source_type: `company_original + regulatory_filing + official_event_platform + third_party_transcript`
+- missing_materials: `official_transcript_or_captions; FY2026_Form_10-K; quarterly_orders_or_bookings; FY2027_Q1_pre_event_consensus; guidance_coverage_ratio`
+- provisional: `false`
+- confidence_level: `中高`
+- calculation_audit_status: `core PASS; expectations FAIL/blocked`
+- audit_release_status: `partial_release`
+- audit_artifact: `analysis/audit-manifest.json`
+- audit_blockers: `revenue_consensus_conflict; FY2027_Q1_pre_event_consensus_absent`
+- unresolved_numeric_conflicts: `FY2026_Q4_revenue_consensus=3.6016B/3.61B/3.67B; adjusted_EPS_consensus=1.00/1.00/1.02`
+- final_report: `analysis/earnings_review.md`
+- evidence_pack: `analysis/evidence_pack.json`
+- source_inventory: `analysis/source_inventory.md`

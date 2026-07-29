@@ -1,0 +1,386 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-07-29T11:49:42+08:00",
+  "company": "SK hynix",
+  "ticker": "000660.KS",
+  "quarter": "Q2",
+  "fiscal_year": "2026",
+  "fiscal_period": "Jun/2026",
+  "prior_quarter_resolution": "Jun/2026 -> Mar/2026",
+  "skill_revision": "git:bc9242494edc9582877b7fb850ca87cc6162d311",
+  "prompt_contract_version": "2026-07-27.1",
+  "skill_content_sha256": "1d8e93b9831ac4353aa9c196bb3cd2f9c82c03462bcc9100ebf927fe88d6b357",
+  "skill_tree_status": "clean",
+  "skills": [
+    "earnings-call-investment-analyst",
+    "financial-evidence-audit"
+  ],
+  "company_original_status": "found",
+  "call_content_status": "official_complete",
+  "final_source_type": "official_event_platform",
+  "missing_materials": [
+    "公司未发布官方书面逐字稿或完整官方字幕",
+    "2026Q2 外部审阅尚未完成，完整半年度报告与附注尚未取得",
+    "未披露订单总额、backlog、LTA 对收入的覆盖比例、客户名单及个别合同价格",
+    "未提供 Q3 收入、经营利润或 EPS 数值指引",
+    "未披露当季分业务利润率及主要外部上游供应商瓶颈"
+  ],
+  "provisional": false,
+  "fallback_completed": false,
+  "recheck_after": "",
+  "source_policy": {
+    "reported_financials": "company_original_or_exchange_only",
+    "management_wording": "official_replay_or_company_original",
+    "consensus": "pre_event_point_in_time_credible_secondary",
+    "third_party_transcript": "not_used_for_final_call_interpretation",
+    "evidence_boundary": "industry_or_market_context_does_not_prove_company_orders_or_revenue"
+  },
+  "sources": [
+    {
+      "id": "S001",
+      "title": "SK hynix Q2 2026 Business Results",
+      "source_type": "company_original",
+      "url": "https://news.skhynix.com/en/q2-2026-business-results/",
+      "file_path": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/raw/current_earnings_release.html",
+      "retrieved_at": "2026-07-29T11:00:00+08:00",
+      "publisher": "SK hynix",
+      "hosting_type": "company_hosted",
+      "origin_source_id": "skhynix:2026q2:earnings-release",
+      "content_origin": "company",
+      "notes": "当季初步 K-IFRS 合并业绩"
+    },
+    {
+      "id": "S002",
+      "title": "SK hynix FY2026 Q2 Earnings Presentation",
+      "source_type": "company_original",
+      "url": "https://mis-prod-koce-homepage-cdn-01-blob-ep.azureedge.net/web/attach/13571040283022005.pdf",
+      "file_path": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/raw/current_earnings_presentation.pdf",
+      "retrieved_at": "2026-07-29T11:00:00+08:00",
+      "publisher": "SK hynix IR",
+      "hosting_type": "company_cdn",
+      "origin_source_id": "skhynix:2026q2:earnings-presentation",
+      "content_origin": "company",
+      "notes": "19 页演示稿，SHA-256 332909850FC2C95989B5F4D7C4385FBF9F36BB6D1F60585430DAA7EDABC3EEE5"
+    },
+    {
+      "id": "S003",
+      "title": "SK hynix FY2026 Q2 Official English Replay",
+      "source_type": "official_event_platform",
+      "url": "https://replay.teletogether.com/aod/_definst/mp4:hynix/hynix2026Q2_eng.m4a/playlist.m3u8",
+      "file_path": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/raw/current_call_audio_complete.m4a",
+      "retrieved_at": "2026-07-29T11:10:00+08:00",
+      "publisher": "SK hynix IR event platform",
+      "hosting_type": "official_event_platform",
+      "origin_source_id": "skhynix:2026q2:official-event-audio",
+      "content_origin": "company_event",
+      "notes": "完整英文回放约 67 分 23 秒，SHA-256 443680EEAB4AF8B5AE71A2DEF0C45DD68DF23148DCD53F1D94C96F00D7785E08"
+    },
+    {
+      "id": "S004",
+      "title": "KIND Q2 2026 IR Schedule Announcement",
+      "source_type": "regulatory_filing",
+      "url": "https://kind.krx.co.kr/external/2026/07/15/000456/20260708001396/99664.htm",
+      "file_path": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/raw/krx_call_announcement.html",
+      "retrieved_at": "2026-07-29T11:00:00+08:00",
+      "publisher": "Korea Exchange KIND",
+      "hosting_type": "exchange_hosted",
+      "origin_source_id": "krx:skhynix:2026q2:ir-schedule",
+      "content_origin": "exchange",
+      "notes": "确认 2026-07-29 09:00 KST 电话会及 Q&A"
+    },
+    {
+      "id": "S005",
+      "title": "SK hynix Q1 2026 Business Results",
+      "source_type": "company_original",
+      "url": "https://news.skhynix.com/en/q1-2026-business-results/",
+      "file_path": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/raw/prior_earnings_release.html",
+      "retrieved_at": "2026-07-29T11:00:00+08:00",
+      "publisher": "SK hynix",
+      "hosting_type": "company_hosted",
+      "origin_source_id": "skhynix:2026q1:earnings-release",
+      "content_origin": "company",
+      "notes": "上一季度官方比较基准"
+    },
+    {
+      "id": "S006",
+      "title": "SK hynix FY2026 Q1 Earnings Presentation",
+      "source_type": "company_original",
+      "url": "https://mis-prod-koce-homepage-cdn-01-blob-ep.azureedge.net/web/attach/18333727317328069.pdf",
+      "file_path": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/raw/prior_earnings_presentation.pdf",
+      "retrieved_at": "2026-07-29T11:00:00+08:00",
+      "publisher": "SK hynix IR",
+      "hosting_type": "company_cdn",
+      "origin_source_id": "skhynix:2026q1:earnings-presentation",
+      "content_origin": "company",
+      "notes": "SHA-256 C7FC763E5B93CBD656AE909587E02EF0D4322EEBAFFC9DECCA5DF51996174E75"
+    },
+    {
+      "id": "S007",
+      "title": "SK hynix FY2026 Q1 Official English Replay",
+      "source_type": "official_event_platform",
+      "url": "https://replay.teletogether.com/aod/_definst/mp4:hynix/hynix2026Q1_eng.m4a/playlist.m3u8",
+      "file_path": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/raw/prior_call_audio.m4a",
+      "retrieved_at": "2026-07-29T11:10:00+08:00",
+      "publisher": "SK hynix IR event platform",
+      "hosting_type": "official_event_platform",
+      "origin_source_id": "skhynix:2026q1:official-event-audio",
+      "content_origin": "company_event",
+      "notes": "完整英文回放约 74 分 32 秒，SHA-256 2A34411C01057294B0347C3E61E42E8D353AEB001C40F5A787876CC94A0D5540"
+    },
+    {
+      "id": "S008",
+      "title": "Yonhap Infomax 14-broker Q2 consensus",
+      "source_type": "media_or_analyst",
+      "url": "https://en.yna.co.kr/view/AEN20260726000800320",
+      "file_path": "",
+      "retrieved_at": "2026-07-29T11:30:00+08:00",
+      "publisher": "Yonhap News Agency / Yonhap Infomax",
+      "hosting_type": "publisher_hosted",
+      "origin_source_id": "yonhap-infomax:14-broker-consensus:2026q2:20260726",
+      "content_origin": "credible_secondary",
+      "notes": "2026-07-26 09:55 KST 事前快照，14 家本地券商"
+    },
+    {
+      "id": "S009",
+      "title": "000660.KS intraday market snapshot",
+      "source_type": "market_data_vendor",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/000660.KS",
+      "file_path": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/raw/market_reaction_yahoo_5m_20260729.json",
+      "retrieved_at": "2026-07-29T11:35:00+08:00",
+      "publisher": "Yahoo Finance",
+      "hosting_type": "vendor_api",
+      "origin_source_id": "yahoo-finance:000660.ks:5m:20260729T120848KST",
+      "content_origin": "market_data_vendor",
+      "notes": "仅作盘中方向性反应，不作为收盘价或估值依据"
+    }
+  ],
+  "discovery": {
+    "official_ir_api": "https://homeapi.skhynix.com/board/list?searchYear=null&searchKeyword=null&bcode=105&lang=ENG&page=1&pageSize=200",
+    "official_webcast_page": "https://irsvc.teletogether.com/hynix/hynix2026Q2_eng.php",
+    "official_transcript_found": false,
+    "official_complete_audio_found": true,
+    "third_party_full_transcript_used": false,
+    "notes": "官方短视频不是完整电话会；最终使用完整官方回放及本地派生转写"
+  },
+  "script_runs": [
+    {
+      "script_used": "automation_run_metadata.py",
+      "purpose": "核验技能版本、合同版本与技能树状态",
+      "script_result": "found",
+      "script_limitation": "",
+      "manual_fallback_path": "",
+      "final_source_type": "company_original",
+      "notes": "status=ok；最终复核时间 2026-07-29T11:49:42+08:00"
+    },
+    {
+      "script_used": "audio_transcriber.py",
+      "purpose": "转写当前季度完整官方回放",
+      "script_result": "found",
+      "script_limitation": "整段 float16/CUDA 首次因缺少 cublas64_12.dll 失败；整段 CPU 因内存峰值失败；分段后完成",
+      "manual_fallback_path": "安装官方 PyPI CUDA 运行库，按 10 分钟分段；前两段 CPU small.en，余下 CUDA large-v3-turbo",
+      "final_source_type": "official_event_platform",
+      "notes": "完整覆盖管理层陈述与 Q&A；转写为 local_derivative"
+    },
+    {
+      "script_used": "audio_transcriber.py",
+      "purpose": "转写上一季度完整官方回放以做同源比较",
+      "script_result": "found",
+      "script_limitation": "small.en 对韩英切换、姓名和少数缩写存在误识别",
+      "manual_fallback_path": "用官方演示稿及回放时间戳复核关键陈述",
+      "final_source_type": "official_event_platform",
+      "notes": "8 个分段完整覆盖"
+    },
+    {
+      "script_used": "financial_evidence_audit.py",
+      "purpose": "审计核心财务、QoQ、预期差、LTA 数量及 Q3 DRAM 指引",
+      "script_result": "found",
+      "script_limitation": "时点型库存/应收和盘中价格不伪装成 duration 变化率",
+      "manual_fallback_path": "库存、应收和盘中行情只保留官方/厂商原始状态；不发布不受支持的变化率",
+      "final_source_type": "company_original",
+      "notes": "PASS / publishable，22/22 checks verified"
+    },
+    {
+      "script_used": "financial_evidence_audit.py",
+      "purpose": "核验 Q1 basic EPS 在当季与上一季演示稿中的比较列",
+      "script_result": "blocked",
+      "script_limitation": "两个公司原始演示稿对同一 Q1 basic EPS 给出冲突值",
+      "manual_fallback_path": "封锁 EPS QoQ 及其下游结论，保留当季 basic EPS 单季披露",
+      "final_source_type": "company_original",
+      "notes": "FAIL / blocked，仅影响 EPS 比较"
+    }
+  ],
+  "fallback_source_matrix": [
+    {
+      "route": "official_written_transcript",
+      "status": "missing",
+      "impact": "无官方书面逐字稿"
+    },
+    {
+      "route": "official_event_audio",
+      "status": "complete",
+      "impact": "完整官方回放支持非 provisional 电话会判断"
+    },
+    {
+      "route": "third_party_transcript",
+      "status": "not_used",
+      "impact": "无需降低证据层级"
+    }
+  ],
+  "webcast": {
+    "event_at": "2026-07-29T09:00:00+09:00",
+    "official_page": "https://irsvc.teletogether.com/hynix/hynix2026Q2_eng.php",
+    "replay_url": "https://replay.teletogether.com/aod/_definst/mp4:hynix/hynix2026Q2_eng.m4a/playlist.m3u8",
+    "duration_seconds": 4043.43,
+    "complete": true,
+    "source_refs": ["S003", "S004"]
+  },
+  "transcript": {
+    "official_written_transcript": false,
+    "local_derivative_complete": true,
+    "index_path": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/transcript/transcript_index.md",
+    "quality": "medium_high",
+    "limitations": "韩英切换、姓名和少数缩写可能误识别；关键数字不取自 ASR",
+    "source_refs": ["S003", "S007"]
+  },
+  "actuals": {
+    "period": "Q2 FY2026",
+    "currency": "KRW",
+    "metrics": [
+      {"name": "revenue", "actual": 79.3187, "unit": "KRW trillion", "gaap_type": "reported K-IFRS", "consensus": 84.1, "qoq": 50.86398244075753, "source_refs": ["S001", "S002"], "notes": "低于事前共识 5.68525564803805%"},
+      {"name": "operating_profit", "actual": 60.5426, "unit": "KRW trillion", "gaap_type": "reported K-IFRS", "consensus": 64.1, "qoq": 60.9734567392443, "source_refs": ["S001", "S002"], "notes": "低于事前共识 5.549765990639626%"},
+      {"name": "operating_margin", "actual": 76, "unit": "percent", "gaap_type": "reported K-IFRS", "consensus": null, "qoq": null, "source_refs": ["S001", "S002"], "notes": "公司披露的四舍五入值"},
+      {"name": "net_profit", "actual": 93.9226, "unit": "KRW trillion", "gaap_type": "reported K-IFRS", "consensus": null, "qoq": 132.79341890997598, "source_refs": ["S001", "S002"], "notes": "受投资资产相关收益显著推动"},
+      {"name": "basic_eps", "actual": 132126, "unit": "KRW per share", "gaap_type": "reported K-IFRS", "consensus": null, "qoq": null, "source_refs": ["S002"], "notes": "当季值可准出；Q1 比较列冲突，QoQ 被封锁"},
+      {"name": "operating_cash_flow", "actual": 65.71, "unit": "KRW trillion", "gaap_type": "reported K-IFRS", "consensus": null, "qoq": 148.61899356791524, "source_refs": ["S002", "S006"], "notes": "现金流强，但营运资金流出扩大"},
+      {"name": "acquisition_of_pp_and_e", "actual": 10.671, "unit": "KRW trillion", "gaap_type": "reported K-IFRS", "consensus": null, "qoq": 39.36267467676636, "source_refs": ["S002", "S006"], "notes": "季度 PP&E 取得支出"},
+      {"name": "inventory", "actual": 17.986, "unit": "KRW trillion", "gaap_type": "reported K-IFRS", "consensus": null, "qoq": null, "source_refs": ["S002"], "notes": "时点余额，不发布 duration 变化率"},
+      {"name": "accounts_receivable", "actual": 47.821, "unit": "KRW trillion", "gaap_type": "reported K-IFRS", "consensus": null, "qoq": null, "source_refs": ["S002"], "notes": "时点余额，不发布 duration 变化率"}
+    ]
+  },
+  "guidance": {
+    "period": "Q3 FY2026 and FY2026",
+    "metrics": [
+      {"name": "Q3 DRAM bit shipment growth", "range_low": null, "range_high": null, "midpoint": 10, "unit": "approximate percent QoQ", "consensus": null, "source_refs": ["S002", "S003"], "notes": "约 10%"},
+      {"name": "Q3 NAND bit shipment growth", "range_low": null, "range_high": null, "midpoint": null, "unit": "low-single-digit percent QoQ", "consensus": null, "source_refs": ["S002", "S003"], "notes": "原文为 low-single%"},
+      {"name": "FY2026 CapEx", "range_low": null, "range_high": null, "midpoint": null, "unit": "high KRW 40 trillion range", "consensus": null, "source_refs": ["S002", "S003"], "notes": "模糊区间，不换算为点值"}
+    ],
+    "revenue_operating_profit_eps_guidance": "not_disclosed",
+    "formal_guidance_surprise_status": "证据不足"
+  },
+  "consensus": {
+    "provider": "Yonhap Infomax",
+    "expectation_as_of": "2026-07-26T09:55:00+09:00",
+    "value_type": "historical_point_in_time",
+    "contributor_count": 14,
+    "member_prediction_dates": [],
+    "expectation_age_days": 3,
+    "metrics": [
+      {"name": "revenue", "consensus_metric": "revenue", "metric_basis": "reported consolidated K-IFRS", "period": "Q2 FY2026", "value": 84.1, "unit": "KRW trillion", "source_refs": ["S008"]},
+      {"name": "operating_profit", "consensus_metric": "operating_profit", "metric_basis": "reported consolidated K-IFRS", "period": "Q2 FY2026", "value": 64.1, "unit": "KRW trillion", "source_refs": ["S008"]}
+    ],
+    "comparisons": []
+  },
+  "valuation": {
+    "status": "N/A",
+    "reason": "未对 ADR 发行后的股本、收盘价与估值口径建立完整审计链，不发布估值结论"
+  },
+  "calculation_audits": [
+    {
+      "id": "CA001",
+      "calculation_type": "qoq_and_expectation_surprise_and_cross_source",
+      "input_periods": ["Q1 FY2026", "Q2 FY2026", "Q3 FY2026E"],
+      "currency": "KRW",
+      "unit": "mixed",
+      "metric_basis": "reported consolidated K-IFRS",
+      "source_refs": ["S001", "S002", "S003", "S005", "S006", "S008"],
+      "origin_ids": ["skhynix:2026q2:earnings-release", "skhynix:2026q2:earnings-presentation", "skhynix:2026q1:earnings-release", "yonhap-infomax:14-broker-consensus:2026q2:20260726"],
+      "calculation_audit_status": "PASS",
+      "audit_release_status": "publishable",
+      "audit_artifact": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/audit/core_evidence_audit_result.json",
+      "audit_blockers": [],
+      "unresolved_numeric_conflicts": [],
+      "notes": "financial_evidence_audit.py 1.4.1，22/22 checks verified"
+    },
+    {
+      "id": "CA002",
+      "calculation_type": "other",
+      "input_periods": ["Q1 FY2026"],
+      "currency": "KRW",
+      "unit": "currency_per_share",
+      "metric_basis": "reported consolidated K-IFRS basic EPS",
+      "source_refs": ["S002", "S006"],
+      "origin_ids": ["skhynix:2026q2:earnings-presentation", "skhynix:2026q1:earnings-presentation"],
+      "calculation_audit_status": "FAIL",
+      "audit_release_status": "blocked",
+      "audit_artifact": "D:/vcp_hunter/产业链投研/artifacts/earnings/000660.KS/Jun-2026/audit/eps_conflict_audit_result.json",
+      "audit_blockers": ["MATERIAL_CONFLICT"],
+      "unresolved_numeric_conflicts": ["Q1 FY2026 basic EPS：Q2 演示稿比较列为 KRW 21,852，Q1 演示稿为 KRW 57,175"],
+      "notes": "只封锁 EPS QoQ、EPS 预期差及其下游结论"
+    }
+  ],
+  "financial_quality_checks": [
+    {"check_type": "operating_cash_flow_vs_net_income", "periods": ["Q2 FY2026"], "observations": "经营现金流 KRW 65.710T；净利润 KRW 93.923T；营运资金等流出 KRW 32.243T", "status": "warning", "investment_meaning": "净利润受非经营项目推动，且应收、营运资金占用上升，不能把 118% 净利率外推", "source_refs": ["S002"], "calculation_audit_refs": ["CA001"], "follow_up": "等待半年度报告附注和审阅结果"},
+    {"check_type": "accounting_policy_change", "periods": ["Q2 FY2026"], "observations": "当前初步材料未披露会计政策变化或重述", "status": "evidence_absent", "investment_meaning": "不能据此确认无变化", "source_refs": ["S001", "S002"], "calculation_audit_refs": [], "follow_up": "检查半年度报告附注"},
+    {"check_type": "related_party", "periods": ["Q2 FY2026"], "observations": "当前初步材料未披露关联方交易明细", "status": "not_disclosed", "investment_meaning": "证据缺口，不补造", "source_refs": ["S001", "S002"], "calculation_audit_refs": [], "follow_up": "检查半年度报告附注"},
+    {"check_type": "contingency_or_commitment", "periods": ["Q2 FY2026"], "observations": "当前初步材料未提供完整或有事项和采购承诺附注", "status": "not_disclosed", "investment_meaning": "无法完成完整资产负债表风险评估", "source_refs": ["S001", "S002"], "calculation_audit_refs": [], "follow_up": "检查半年度报告附注"}
+  ],
+  "management_commitments": [
+    {"id": "MC001", "commitment": "Q2 DRAM bit shipments 增长 high-single% QoQ", "stated_at": "Q1 FY2026 call", "due_period": "Q2 FY2026", "metric_or_event": "dram_bit_shipment_growth", "target": "high-single% QoQ", "original_source_refs": ["S006", "S007"], "current_result": "Q2 实际为 high-single% QoQ", "result_source_refs": ["S002", "S003"], "status": "fulfilled", "assessment": "公司原文区间一致，不换算成单点"},
+    {"id": "MC002", "commitment": "Q2 NAND bit shipments 增长 mid-teen% QoQ", "stated_at": "Q1 FY2026 call", "due_period": "Q2 FY2026", "metric_or_event": "nand_bit_shipment_growth", "target": "mid-teen% QoQ", "original_source_refs": ["S006", "S007"], "current_result": "Q2 实际为 mid-teen% QoQ", "result_source_refs": ["S002", "S003"], "status": "fulfilled", "assessment": "公司原文区间一致，不换算成单点"},
+    {"id": "MC003", "commitment": "HBM4E 样品在 H2 开始供应", "stated_at": "Q1 FY2026 call", "due_period": "H2 FY2026", "metric_or_event": "hbm4e_sample_delivery", "target": "H2 FY2026", "original_source_refs": ["S007"], "current_result": "Q2 材料称 H1 已向一家主要客户供应 1cnm HBM4E 样品", "result_source_refs": ["S002", "S003"], "status": "fulfilled", "assessment": "表面上提前完成；样品版本和客户口径未完全展开，不计入汇总兑现率"},
+    {"id": "MC004", "commitment": "年末将 321L 提升至国内产能约一半", "stated_at": "Q1 FY2026 call", "due_period": "FY2026 year-end", "metric_or_event": "321l_domestic_capacity_share", "target": "approximately 50%", "original_source_refs": ["S006", "S007"], "current_result": "Q2 重申按计划推进", "result_source_refs": ["S002", "S003"], "status": "not_yet_due", "assessment": "等待年末实际产能结构"}
+  ],
+  "qa_assessments": [
+    {"question": "数据中心租赁和高效模型是否意味着 CSP AI 投资放缓？", "why_it_matters": "决定 HBM、server DRAM 与 eSSD 的持续性", "management_answer": "管理层认为这是提高既有基础设施利用率与商业化，不是投资收缩；但电力和数据中心建设会影响单个项目节奏", "directness": "direct", "numeric_or_timeline_support": "称 AI 投资在明年以后仍稳健，但未给客户级 CapEx 数字", "tone_observation": "坚定", "tone_lead_only": true, "follow_up": "跟踪 hyperscaler CapEx、供电与数据中心开工", "source_refs": ["S003"], "timestamp": "00:14:16-00:19:56"},
+    {"question": "扩产依据、是否由 LTA 支撑、会否过剩？", "why_it_matters": "决定供给周期与资本回报", "management_answer": "扩产基于客户长期需求讨论和已获得的可见度，分阶段执行，并称按确认需求灵活推进", "directness": "partial", "numeric_or_timeline_support": "未披露 LTA 覆盖收入比例", "tone_observation": "审慎积极", "tone_lead_only": true, "follow_up": "要求披露合同覆盖、产能投放和客户集中度", "source_refs": ["S003"], "timestamp": "00:20:34-00:24:06"},
+    {"question": "LTA 的期限、定价、购买承诺和销售覆盖？", "why_it_matters": "区分真实需求可见度与软性意向", "management_answer": "合同通常为多年期，含长期量承诺和保证履约的财务机制；定价因客户与产品而异；拒绝披露总销售覆盖", "directness": "partial", "numeric_or_timeline_support": "约 10 家客户已完成谈判；总收入覆盖未披露", "tone_observation": "信息边界清晰", "tone_lead_only": true, "follow_up": "追踪 deposits、take-or-pay、取消条款和收入覆盖", "source_refs": ["S002", "S003"], "timestamp": "00:25:04-00:29:45"},
+    {"question": "Q2 DRAM ASP 低于市场预期的原因及 H2 展望？", "why_it_matters": "直接解释经营性 miss", "management_answer": "部分高附加值产品出货推迟至 H2，产品组合压低 blended ASP；预期 HBM4 和 1cnm DRAM 放量改善量价", "directness": "direct", "numeric_or_timeline_support": "H2 bit growth 预计高于 H1；未给 ASP 数值区间", "tone_observation": "解释具体", "tone_lead_only": true, "follow_up": "验证 H2 延后出货是否兑现而非继续推迟", "source_refs": ["S003"], "timestamp": "00:30:30-00:34:26"},
+    {"question": "HBM4 的差异化和量产能力？", "why_it_matters": "决定 HBM 领导力能否转化为供货", "management_answer": "强调性能、良率、质量、规模供应；称 HBM4 良率和质量已接近成熟期 HBM3E，当前重点是扩产", "directness": "direct", "numeric_or_timeline_support": "Q2 开始量产出货，H2 全面爬坡", "tone_observation": "强", "tone_lead_only": true, "follow_up": "验证主要客户认证、产量和盈利率", "source_refs": ["S002", "S003"], "timestamp": "00:35:13-00:38:30"},
+    {"question": "2027 年 HBM 量价谈判进度？", "why_it_matters": "决定下一年盈利可见度", "management_answer": "称主要客户量价讨论顺利、需求坚实，但不披露个别价格和条款", "directness": "partial", "numeric_or_timeline_support": "无客户级数量与价格", "tone_observation": "积极但保留", "tone_lead_only": true, "follow_up": "等待 2027 HBM 合同锁定与 mix", "source_refs": ["S003"], "timestamp": "00:42:41-00:47:23"}
+  ],
+  "call_takeaways": [
+    {"rank": 1, "topic": "经营性结果低于事前共识", "management_said": "DRAM blended ASP 受产品组合和部分高附加值出货推迟影响", "evidence_type": "hard_fact", "investment_meaning": "纪录利润不等于 beat；市场首先交易经营 miss", "follow_up": "验证 H2 延后量是否兑现", "source_refs": ["S001", "S002", "S003", "S008"], "timestamp": "00:30:30"},
+    {"rank": 2, "topic": "LTA 从讨论进入落地", "management_said": "约 10 家客户完成谈判，含量承诺和履约机制；总收入覆盖未披露", "evidence_type": "management_claim", "investment_meaning": "需求可见度增强，但不能等同 non-cancellable backlog", "follow_up": "合同覆盖与取消条款", "source_refs": ["S002", "S003", "S007"], "timestamp": "00:25:39"},
+    {"rank": 3, "topic": "HBM4 执行进展", "management_said": "Q2 开始量产出货，良率和质量接近成熟 HBM3E，H2 扩产", "evidence_type": "management_claim", "investment_meaning": "从上一季计划推进到实际出货，执行证据增强", "follow_up": "客户认证、出货量和盈利率", "source_refs": ["S002", "S003"], "timestamp": "00:36:54"},
+    {"rank": 4, "topic": "净利润质量", "management_said": "非经营利润和投资资产相关收益显著抬升净利润", "evidence_type": "hard_fact", "investment_meaning": "118% 净利率不可持续外推", "follow_up": "半年度报告附注与税务影响", "source_refs": ["S002", "S003"], "timestamp": "00:03:26"},
+    {"rank": 5, "topic": "NAND AI 化扩散", "management_said": "eSSD、KV-cache offloading 与 near-GPU storage 扩大 NAND 在 AI 内存层级中的作用", "evidence_type": "management_claim", "investment_meaning": "增长不只依赖 HBM，但客户和订单证据仍未量化", "follow_up": "eSSD 收入结构、QLC/TLC mix 与客户认证", "source_refs": ["S002", "S003"], "timestamp": "00:53:43"}
+  ],
+  "downstream_demand_outlook": [
+    {"item": "AI 数据中心与 hyperscaler", "mention_status": "demand_accelerating", "evidence": "大客户扩大基础设施与 memory procurement，并继续要求更多供给", "timeframe": "H2 2026 及明年以后", "demand_quality": "durable ramp with physical timing constraints", "source_refs": ["S002", "S003"]},
+    {"item": "HBM 与 2027 客户采购", "mention_status": "demand_accelerating", "evidence": "HBM4 Q2 出货、2027 量价讨论顺利", "timeframe": "H2 2026-2027", "demand_quality": "qualified ramp; customer terms not disclosed", "source_refs": ["S002", "S003"]},
+    {"item": "server DRAM 与 SOCAMM2", "mention_status": "demand_accelerating", "evidence": "agentic AI 扩大 server DRAM，SOCAMM2 已开始正式供应", "timeframe": "2026", "demand_quality": "durable AI infrastructure ramp", "source_refs": ["S002", "S003"]},
+    {"item": "enterprise SSD 与 NAND", "mention_status": "demand_accelerating", "evidence": "AI inference、KV-cache offloading 和高容量存储需求增强", "timeframe": "2026 及中长期", "demand_quality": "durable ramp plus price and mix", "source_refs": ["S002", "S003"]},
+    {"item": "PC 与 mobile", "mention_status": "demand_uncertain", "evidence": "当季称因难以取得 memory 发生暂时销售调整；没有给出客户订单或库存数据", "timeframe": "近期", "demand_quality": "supply-constrained and uncertain", "source_refs": ["S002", "S003"]},
+    {"item": "LTA 与客户下单意向", "mention_status": "demand_stable", "evidence": "约 10 家客户、长期量承诺及 deposits 等履约机制", "timeframe": "通常多年期", "demand_quality": "improved visibility, not disclosed as non-cancellable backlog", "source_refs": ["S002", "S003"]},
+    {"item": "收入指引覆盖", "mention_status": "demand_uncertain", "evidence": "未披露 LTA 覆盖收入比例，也未给出收入/经营利润指引", "timeframe": "Q3 2026", "demand_quality": "evidence_absent", "source_refs": ["S002", "S003"]},
+    {"item": "telecom、auto、industrial", "mention_status": "not_mentioned", "evidence": "完整材料中未形成可用客户需求证据", "timeframe": "N/A", "demand_quality": "evidence_absent", "source_refs": ["S003"]}
+  ],
+  "upstream_bottleneck_evidence": [
+    {"item": "Fab 产能与新设施建设周期", "mention_status": "mentioned_current_bottleneck", "evidence": "先进工艺复杂度和新设施建设周期使供需难以短期改善", "timeframe": "近期至中期", "investment_meaning": "供给约束支撑价格，但也限制销量兑现", "source_refs": ["S002", "S003"]},
+    {"item": "HBM wafer、先进工艺、TSV 与 packaging 资源", "mention_status": "mentioned_current_bottleneck", "evidence": "管理层将更多 wafer、先进工艺、TSV/packaging capacity 列为 HBM 的资源与机会成本", "timeframe": "HBM4/HBM4E 爬坡期", "investment_meaning": "资源强度是量产和定价约束，不等于某一外部材料短缺", "source_refs": ["S003"]},
+    {"item": "HBM4 良率与质量", "mention_status": "mentioned_mitigated", "evidence": "称已接近成熟 HBM3E 水平，当前重点转向扩大产能", "timeframe": "Q2-H2 2026", "investment_meaning": "技术风险下降，但客户级验证和规模未量化", "source_refs": ["S003"]},
+    {"item": "M15X 与 Yongin 产能投放", "mention_status": "mentioned_future_risk", "evidence": "提前建设与扩产，仍受建设周期、投资效率和需求可见度约束", "timeframe": "H2 2026-2027", "investment_meaning": "执行速度决定 latent demand 能否转为出货", "source_refs": ["S002", "S003"]},
+    {"item": "helium、bromine、tungsten、LNG", "mention_status": "not_mentioned", "evidence": "本季未更新；上一季称已多元化供应并有库存或长期协议，影响有限", "timeframe": "本季 N/A", "investment_meaning": "不能把上一季缓解状态自动外推为当前确认", "source_refs": ["S003", "S007"]},
+    {"item": "基板、化学品、外部封装供应商或设备缺件", "mention_status": "not_mentioned", "evidence": "完整本季材料未识别具体外部供应商短缺", "timeframe": "N/A", "investment_meaning": "evidence_absent，不做供应商映射", "source_refs": ["S003"]}
+  ],
+  "risk_flags": [
+    {"risk": "operating_expectation_miss", "severity": "high", "description": "收入和经营利润均低于事前同口径共识", "source_refs": ["S001", "S002", "S008"], "follow_up": "H2 延后产品与 HBM4 量产兑现"},
+    {"risk": "non_operating_gain_quality", "severity": "high", "description": "净利润显著受投资资产相关收益推动", "source_refs": ["S002", "S003"], "follow_up": "等待半年度报告附注"},
+    {"risk": "lta_coverage_not_disclosed", "severity": "medium", "description": "LTA 数量和机制增强，但收入覆盖、取消条款和客户集中度未披露", "source_refs": ["S002", "S003"], "follow_up": "后续电话会和合同披露"},
+    {"risk": "capacity_execution", "severity": "medium", "description": "当前供给不足，未来产能需要 M15X、Yongin 和先进封装按计划兑现", "source_refs": ["S002", "S003"], "follow_up": "capex、cleanroom、equipment move-in 和良率"},
+    {"risk": "eps_comparator_conflict", "severity": "medium", "description": "Q1 basic EPS 在两份公司演示稿中冲突", "source_refs": ["S002", "S006"], "follow_up": "等待公司更正或半年度报告"}
+  ],
+  "evidence_ledger": [
+    {"claim": "当季经营性结果为低于预期", "claim_type": "expectation_surprise", "confidence": "high", "source_refs": ["S001", "S002", "S008"], "quote_or_excerpt": "审计状态 miss", "notes": "收入 -5.6853%，经营利润 -5.5498%，均通过 deterministic audit"},
+    {"claim": "需求可见度较上一季增强", "claim_type": "demand_quality", "confidence": "medium", "source_refs": ["S002", "S003", "S007"], "quote_or_excerpt": "从 reviewing LTA 进展到约 10 家客户完成谈判", "notes": "管理层主张；总收入覆盖未披露"},
+    {"claim": "HBM4 执行证据增强", "claim_type": "execution", "confidence": "medium", "source_refs": ["S002", "S003", "S006", "S007"], "quote_or_excerpt": "Q2 began mass production shipments", "notes": "客户级数量和盈利率仍未披露"},
+    {"claim": "净利润不宜作为持续盈利能力代表", "claim_type": "earnings_quality", "confidence": "high", "source_refs": ["S002", "S003"], "quote_or_excerpt": "investment asset related gains", "notes": "不推算未经披露的调整后净利润"}
+  ],
+  "gaps": [
+    {"gap": "无官方书面逐字稿", "impact": "关键表述依赖官方回放本地转写", "severity": "low", "next_step": "如公司后续发布 transcript，逐段对照"},
+    {"gap": "半年度报告及审阅附注未发布", "impact": "关联方、或有事项、政策变化和投资收益明细不完整", "severity": "high", "next_step": "报告发布后补审"},
+    {"gap": "LTA 收入覆盖与取消条款未披露", "impact": "不能把 LTA 升级为 non-cancellable backlog", "severity": "high", "next_step": "跟踪后续披露"},
+    {"gap": "Q3 财务指引缺失", "impact": "forward guidance surprise 为证据不足", "severity": "medium", "next_step": "使用下一次正式财务指引或可靠 PIT 共识重新评估"},
+    {"gap": "Q1 basic EPS 冲突", "impact": "EPS QoQ 与 EPS 预期差被封锁", "severity": "medium", "next_step": "等待公司更正或半年度报告"}
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "ROG-Jun-2026-calculations",
+  "as_of": "2026-07-29T08:22:24+08:00",
+  "sources": [
+    {
+      "id": "S_Q2_8K_EX99",
+      "source_type": "official_filing",
+      "origin_id": "sec:rog:2026q2:8k-ex99-1",
+      "locator": "https://www.sec.gov/Archives/edgar/data/84748/000008474826000046/q22026resultsannouncement.htm",
+      "source_date": "2026-07-28T16:07:09-04:00",
+      "checked_at": "2026-07-29T08:22:24+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_Q2_2026_REVENUE",
+      "metric": "revenue",
+      "value": "216.8",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "duration", "start": "2026-04-01", "end": "2026-06-30", "frequency": "quarter", "label": "Q2 2026"},
+      "available_at": "2026-07-28T16:07:09-04:00",
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q1_2026_REVENUE",
+      "metric": "revenue",
+      "value": "200.5",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-03-31", "frequency": "quarter", "label": "Q1 2026"},
+      "available_at": "2026-04-28T16:05:00-04:00",
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q2_2025_REVENUE",
+      "metric": "revenue",
+      "value": "202.8",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "duration", "start": "2025-04-01", "end": "2025-06-30", "frequency": "quarter", "label": "Q2 2025"},
+      "available_at": "2025-07-29",
+      "basis": "reported_consolidated_us_gaap",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q2_2026_ADJ_EPS",
+      "metric": "adjusted_eps",
+      "value": "0.92",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-04-01", "end": "2026-06-30", "frequency": "quarter", "label": "Q2 2026"},
+      "available_at": "2026-07-28T16:07:09-04:00",
+      "basis": "non_gaap_adjusted_diluted_eps",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q1_2026_ADJ_EPS",
+      "metric": "adjusted_eps",
+      "value": "0.75",
+      "unit": "currency_per_share",
+      "currency": "USD",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-03-31", "frequency": "quarter", "label": "Q1 2026"},
+      "available_at": "2026-04-28T16:05:00-04:00",
+      "basis": "non_gaap_adjusted_diluted_eps",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q2_2026_ADJ_EBITDA",
+      "metric": "adjusted_ebitda",
+      "value": "37.6",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "duration", "start": "2026-04-01", "end": "2026-06-30", "frequency": "quarter", "label": "Q2 2026"},
+      "available_at": "2026-07-28T16:07:09-04:00",
+      "basis": "non_gaap_adjusted_ebitda",
+      "source_refs": ["S_Q2_8K_EX99"]
+    },
+    {
+      "id": "F_Q1_2026_ADJ_EBITDA",
+      "metric": "adjusted_ebitda",
+      "value": "32.0",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-03-31", "frequency": "quarter", "label": "Q1 2026"},
+      "available_at": "2026-04-28T16:05:00-04:00",
+      "basis": "non_gaap_adjusted_ebitda",
+      "source_refs": ["S_Q2_8K_EX99"]
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_REVENUE_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {"fact_id": "F_Q2_2026_REVENUE"},
+      "base": {"fact_id": "F_Q1_2026_REVENUE"},
+      "period_relation": "qoq",
+      "output_metric": "revenue_qoq_pct",
+      "output_basis": "reported_consolidated_us_gaap_qoq",
+      "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}
+    },
+    {
+      "id": "C_REVENUE_YOY",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {"fact_id": "F_Q2_2026_REVENUE"},
+      "base": {"fact_id": "F_Q2_2025_REVENUE"},
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_us_gaap_yoy",
+      "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}
+    },
+    {
+      "id": "C_ADJ_EPS_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {"fact_id": "F_Q2_2026_ADJ_EPS"},
+      "base": {"fact_id": "F_Q1_2026_ADJ_EPS"},
+      "period_relation": "qoq",
+      "output_metric": "adjusted_eps_qoq_pct",
+      "output_basis": "non_gaap_adjusted_diluted_eps_qoq",
+      "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}
+    },
+    {
+      "id": "C_ADJ_EBITDA_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {"fact_id": "F_Q2_2026_ADJ_EBITDA"},
+      "base": {"fact_id": "F_Q1_2026_ADJ_EBITDA"},
+      "period_relation": "qoq",
+      "output_metric": "adjusted_ebitda_qoq_pct",
+      "output_basis": "non_gaap_adjusted_ebitda_qoq",
+      "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}
+    }
+  ]
+}

@@ -1,0 +1,512 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "klac-jun-2026-core-20260729",
+  "input_sha256": "614ff6a5426bafe1c5b77e731668759f8dafdf31e6159057d4e51a309c62a729",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 10,
+    "verified_count": 10,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_REVENUE_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE",
+          "S_PRIOR_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q3:earnings-release:2026-04-29",
+          "kla:FY2026-Q4:earnings-release:2026-07-28"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "7.1002185015979137226148275383461226947085835228361",
+          "metric": "revenue_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "FY2026 Q4"
+          },
+          "basis": "reported_consolidated_us_gaap_qoq",
+          "source_ids": [
+            "S_CURRENT_RELEASE",
+            "S_PRIOR_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "revenue_qoq_pct",
+        "contracted_output_basis": "reported_consolidated_us_gaap_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_NET_INCOME_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE",
+          "S_PRIOR_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q3:earnings-release:2026-04-29",
+          "kla:FY2026-Q4:earnings-release:2026-07-28"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "13.494616941023655484225513950990432892863387705143",
+          "metric": "net_income_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "FY2026 Q4"
+          },
+          "basis": "reported_consolidated_us_gaap_qoq",
+          "source_ids": [
+            "S_CURRENT_RELEASE",
+            "S_PRIOR_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "net_income_qoq_pct",
+        "contracted_output_basis": "reported_consolidated_us_gaap_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_SERVICE_REVENUE_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE",
+          "S_PRIOR_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q3:earnings-release:2026-04-29",
+          "kla:FY2026-Q4:earnings-release:2026-07-28"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "5.8872650818091588570337032825626523798030694729288",
+          "metric": "revenue_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "FY2026 Q4 service"
+          },
+          "basis": "reported_service_revenue_us_gaap_qoq",
+          "source_ids": [
+            "S_CURRENT_RELEASE",
+            "S_PRIOR_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "revenue_qoq_pct",
+        "contracted_output_basis": "reported_service_revenue_us_gaap_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_NONGAAP_EPS_QOQ",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q4:earnings-release:2026-07-28"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "11.70212765957446808510638297872340425531914893617",
+          "metric": "non_gaap_diluted_eps_qoq_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "FY2026 Q4"
+          },
+          "basis": "company_non_gaap_adjusted_diluted_eps_split_adjusted_qoq",
+          "source_ids": [
+            "S_CURRENT_RELEASE"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "qoq",
+        "contracted_output_metric": "non_gaap_diluted_eps_qoq_pct",
+        "contracted_output_basis": "company_non_gaap_adjusted_diluted_eps_split_adjusted_qoq"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_GROSS_MARGIN_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_LETTER"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q4:shareholder-letter:2026-07-28"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "62.4",
+          "metric": "gross_margin",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "FY2026 Q4"
+          },
+          "basis": "company_non_gaap_gross_margin",
+          "source_ids": [
+            "S_CURRENT_LETTER",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OCF_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q4:earnings-release:2026-07-28"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "906430000",
+          "metric": "operating_cash_flow",
+          "unit": "currency",
+          "currency": "USD",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "FY2026 Q4"
+          },
+          "basis": "reported_consolidated_us_gaap",
+          "source_ids": [
+            "S_CURRENT_RELEASE",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_FCF_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q4:earnings-release:2026-07-28"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "817100000",
+          "metric": "free_cash_flow",
+          "unit": "currency",
+          "currency": "USD",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "FY2026 Q4"
+          },
+          "basis": "company_non_gaap_operating_cash_flow_less_capex",
+          "source_ids": [
+            "S_CURRENT_RELEASE",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_CAPEX_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_RELEASE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q4:earnings-release:2026-07-28"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "89288000",
+          "metric": "capital_expenditures",
+          "unit": "currency",
+          "currency": "USD",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "FY2026 Q4"
+          },
+          "basis": "reported_consolidated_us_gaap",
+          "source_ids": [
+            "S_CURRENT_RELEASE",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_BACKLOG_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_CALL"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q4:official-on24-call:2026-07-28"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "12500000000",
+          "metric": "remaining_performance_obligations",
+          "unit": "currency",
+          "currency": "USD",
+          "period": {
+            "kind": "estimate",
+            "expectation_as_of": "2026-07-28T17:00:00-04:00",
+            "target_start": "2026-04-01",
+            "target_end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "June 2026 quarter-end backlog estimate"
+          },
+          "basis": "management_estimate_rpo_or_backlog",
+          "source_ids": [
+            "S_CURRENT_CALL",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_AP_REVENUE_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_CURRENT_LETTER"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "kla:FY2026-Q4:shareholder-letter:2026-07-28"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "1100000000",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "USD",
+          "period": {
+            "kind": "estimate",
+            "expectation_as_of": "2026-07-28T16:05:00-04:00",
+            "target_start": "2026-01-01",
+            "target_end": "2026-12-31",
+            "frequency": "year",
+            "label": "CY2026 advanced packaging process control systems forecast"
+          },
+          "basis": "management_forecast_advanced_packaging_process_control_systems_revenue",
+          "source_ids": [
+            "S_CURRENT_LETTER",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    }
+  ]
+}
