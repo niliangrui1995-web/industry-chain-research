@@ -88,11 +88,11 @@ class EarningsParentGuardrailTests(unittest.TestCase):
 
         self.assertEqual(
             module._model_policy_for_event(None),
-            ("gpt-5.6-sol", "xhigh"),
+            ("gpt-5.6-terra", "xhigh"),
         )
         self.assertEqual(
             module._model_policy_for_child(None),
-            ("gpt-5.6-sol", "xhigh"),
+            ("gpt-5.6-terra", "xhigh"),
         )
 
     def test_one_shot_rrule_uses_beijing_local_wall_clock(self) -> None:
@@ -220,7 +220,7 @@ class EarningsParentGuardrailTests(unittest.TestCase):
                 "prompt": child_prompt(status_marker="OLD_TEMPLATE_SENTINEL"),
                 "status": "PAUSED",
                 "rrule": module._make_one_shot_rrule(planned),
-                "model": "gpt-5.6-sol",
+                "model": "gpt-5.6-terra",
                 "reasoning_effort": "xhigh",
                 "execution_environment": "local",
                 "cwds": [str(root)],

@@ -1,9 +1,15 @@
 # 产业链投研项目规则
 
-## 技能使用
+## 响应语言与通用要求 (Response Language)
 
-- 仓库技能位于 `.agents/skills/`，由 Codex 自动发现。
-- 本项目覆盖账户级“每次先查四份路由文件”的细节：普通任务直接按当前技能列表和任务语义选择；仅在技能维护、技能缺失/冲突或路由确实无法判断时，才查询 `C:\Users\Administrator\.codex\skill-routing`。
+- 无论用户输入使用何种语言，一律使用中文回答（Always reply in Chinese, regardless of the language used in the user's input）。
+- 仅在代码、命令、文件名、API、精确引用或用户明确要求的产出物中保留非中文文本。
+
+## 技能优先与路由规则 (Skills First & Skill Routing)
+
+- 每次回答或任务执行前，先检查可用的技能库并选择合适的技能或技能组合。
+- 如果任务明确匹配某个技能，在回答或编辑文件前，必须阅读并遵循相关 `SKILL.md` 指引。
+- 仓库技能位于 `.agents/skills/`，由 Codex/Antigravity 自动发现；技能查找与路由仅查询本项目技能，无需查询全局或外部技能仓库（如 `C:\Users\Administrator\.codex\skill-routing`）。
 - 按问题语义选择唯一领域入口：上市公司深研用 `research-listed-company`，产业链用 `research-industry-chain`，财报/电话会用 `earnings-call-investment-analyst`，收益安全用 `income-investment`，持续跟踪用 `a-share-company-tracking`，两融压力/顶部共振用 `a-share-leverage-capitulation-analyst`，个人市场周期/过热纪律用 `user-investment-discipline`，最近 AI 消息核验用 `ai-chain-research-orchestrator`；公告、行情和本地数据技能只作相应证据伴侣。简单、常识性或非实时问题允许直接回答。
 - 决策关键的市值、预期差、估值、覆盖率、单位换算或派生数字，必须附加 `financial-evidence-audit`；核验失败或口径冲突时不得准出确定性结论。
 - 默认最多加载 1 个领域技能和 1 个数据、文件或状态技能；命中决策关键数字时，`financial-evidence-audit` 作为额外强制准出门，不计作第二领域技能。不要使用固定技能栈，也不要为展示流程调用重复的通用推理技能。

@@ -4,7 +4,7 @@ Use this template whenever the parent automation creates or updates a single-com
 
 Resuming a historical `PAUSED` child counts as an update: read this current repository template and fully re-render the prompt in the same update that restores `ACTIVE`. Never reuse the paused child's stored prompt body. If this template is missing, unreadable, or lacks `CHILD TASK SKILL HARD GATE`, do not resume the child.
 
-The child automation configuration lives outside the prompt body. Every child created or updated from this template must use `model="gpt-5.6-sol"` and `reasoning_effort="xhigh"` (Codex UI: `5.6 sol` / `XHIGH`). Do not copy these configuration fields into the generated child prompt header.
+The child automation configuration lives outside the prompt body. Every child created or updated from this template must use `model="gpt-5.6-terra"` and `reasoning_effort="xhigh"` (Codex UI: `5.6 terra` / `XHIGH`). Do not copy these configuration fields into the generated child prompt header.
 
 The child prompt body must be written in English. The only Chinese text should be the final-answer requirement and the exact final judgment labels that the child must use in its Chinese output. Exception: the generated Chinese final output must render the downstream demand outlook section and upstream bottleneck evidence section in Chinese, while preserving the allowed `Mention Status` enum values exactly as written.
 

@@ -106,8 +106,8 @@ D:\vcp_hunter\紫金研选\.venv\Scripts\python.exe D:\vcp_hunter\产业链投�
 ## 子任务自动化合同
 
 - 每家公司必须创建独立 cron 子任务，命名：`财报电话会深挖 {ticker} {company} {report_date}`。
-- 子任务工作区仅 `D:\vcp_hunter\产业链投研`，`executionEnvironment=local`。所有现有、未来新建或更新的子任务（包括 `PAUSED`）均统一写入 `model="gpt-5.6-sol"`、`reasoning_effort="xhigh"`（Codex UI：`5.6 sol` / `XHIGH`）；不得再因 `default_proxy_not_call_time`、日期-only、非核心观察项或其他排期依据降档。UI/提示词标签必须与 TOML 字段一致。
-- 本节模型合同是母任务及其全部子任务的唯一业务真相；若 live parent prompt 或任何 child 仍含旧模型组合，所有 create/update payload 和 guardrail 校验均以 `gpt-5.6-sol` / `xhigh` 为准。
+- 子任务工作区仅 `D:\vcp_hunter\产业链投研`，`executionEnvironment=local`。所有现有、未来新建或更新的子任务（包括 `PAUSED`）均统一写入 `model="gpt-5.6-terra"`、`reasoning_effort="xhigh"`（Codex UI：`5.6 terra` / `XHIGH`）；不得再因 `default_proxy_not_call_time`、日期-only、非核心观察项或其他排期依据降档。UI/提示词标签必须与 TOML 字段一致。
+- 本节模型合同是母任务及其全部子任务的唯一业务真相；若 live parent prompt 或任何 child 仍含旧模型组合，所有 create/update payload 和 guardrail 校验均以 `gpt-5.6-terra` / `xhigh` 为准。
 - 子任务 rrule 必须使用 Codex 调度器可执行的一次性周规则。`Planned child start Beijing` 是业务计划真相；本工作区 Codex 调度器按 Asia/Shanghai 本地墙钟解释 rrule，因此 `BYDAY/BYHOUR/BYMINUTE` 必须直接使用该计划北京时间的星期、小时和分钟：
 
 ```text
