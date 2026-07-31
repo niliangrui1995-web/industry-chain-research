@@ -153,3 +153,9 @@ multi_agent_status: used_by_explicit_user_permission
 本轮只复核麦格米特 AI 数据中心电源、800VDC、Sidecar、Power Shelf、BBU 和 Power system components 相关官方/原始口径。2025 年报摘要和 2026-05-20 投资者关系活动记录表确认了阶段性进展：多个小批量送测/试产订单、部分北美大客户项目制需求批量交付、国内部分头部云厂突破和大多数服务器厂准入。但公司对二季度订单、Rubin 出货进展、具体数量和大订单问题仍统一要求以后续公告或半年报为准，且巨潮 2026-06-19 至 2026-06-22 未见发行人新增公告。
 
 结论：阶段性官方进展可以修正“订单/交付全空白”的表述，但仍不足以把麦格米特从主题观察推进为 `main_candidate` 或更实的 company_tracking 主结论。继续维持 `watch+ / catalyst_watch`，等待客户名称、订单金额、收入占比、毛利率、平台归属和可核验交付节奏。
+
+## 2026-07-31 日更
+
+- 8月6日5.15%限售股解禁、双向龙虎榜及折价大宗交易提高供给和交易分歧观察；AIDC thesis 未变。
+- announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
+- thesis_effect=unchanged。

@@ -335,3 +335,9 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 证据边界：本轮未取得原始互动平台 URL；保险公司确认、实际损失/赔付金额、到账时点、客户与产品型号、交付延期或客户索赔均为 `evidence_absent`。因此“全额获赔、影响不重大”只记为管理层主张，不写成赔付已确认事实。
 - 龙虎榜：7 月 29 日未发现新增记录。大宗交易：新增 1 笔平价交易，179.78 元、2.00 万股、359.56 万元，买方为中信证券上海分公司、卖方为机构专用。
 - 相对基线：索尔思和 AI PCB 商业化阶段不变；新增运输、保险与客户交付风险观察项。下一步核验原始互动记录、警方/保险进展、赔款会计处理及客户交付影响。
+
+## 2026-07-31 日更
+
+- 回购累计49,994,780元，7月30日龙虎榜更新交易风险；索尔思、保险和客户交付的证据边界不变。
+- announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
+- thesis_effect=unchanged。

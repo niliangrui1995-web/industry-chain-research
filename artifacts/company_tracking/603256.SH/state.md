@@ -304,3 +304,9 @@ Open-web fallback：通过普通公开网页搜索核对近一周公司消息，
 - 大宗交易：7 月 29 日未发现新增记录。
 - open-web：最近 24 小时主要为高端电子布行业供需、评级和既有公告转述，未发现 Low CTE/T-glass 客户、订单、收入占比、ASP、毛利率、扩产审批或 H 股审核新增硬证据。
 - 相对基线：基本面判断不变；交易分歧和拥挤退潮风险进一步上升。下一步仍核验半年报特种电子布拆分、黄石扩产与 H 股进程。
+
+## 2026-07-31 日更
+
+- 公告确认三日异常下跌但经营正常；新增龙虎榜和平价大宗交易，未见特种电子布经营硬证据。下一步看半年报、黄石扩产、H股与减持执行。
+- announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
+- thesis_effect=unchanged。

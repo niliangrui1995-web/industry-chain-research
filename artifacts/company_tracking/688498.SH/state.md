@@ -267,3 +267,9 @@ Batch 2 结论：本轮无新增官方公告、无龙虎榜、无大宗交易、
 - 证据边界：本轮未取得交易所/CNINFO 原始链接；“合作意向”不等于 `design_win`、正式订单或收入。客户名称、出货量、ASP、良率、分产品收入与毛利率均为 `evidence_absent`，商业化阶段不升级。
 - 龙虎榜 / 大宗交易：7 月 29 日均未发现新增记录。
 - 相对基线：公司级经营口径更完整，但 H1 业绩预告仍是更高等级的财务证据；继续核验半年报 CW/EML 拆分、合作意向转订单、设备到位和美国工厂进度。
+
+## 2026-07-31 日更
+
+- 7月30日龙虎榜仅更新高波动交易状态；未见EML/CW新订单、出货或收入硬证据。
+- announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
+- thesis_effect=unchanged。
