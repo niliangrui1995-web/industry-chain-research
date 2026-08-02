@@ -80,7 +80,7 @@ def planned_event(module):
 
 
 class EarningsParentGuardrailTests(unittest.TestCase):
-    def test_model_policy_defaults_to_gpt_5_6_sol_xhigh(self) -> None:
+    def test_model_policy_defaults_to_gpt_5_6_terra_ultra(self) -> None:
         module = load_module(
             "earnings_parent_guardrail_model",
             ROOT / "scripts" / "earnings_parent_guardrail.py",
@@ -88,11 +88,11 @@ class EarningsParentGuardrailTests(unittest.TestCase):
 
         self.assertEqual(
             module._model_policy_for_event(None),
-            ("gpt-5.6-terra", "xhigh"),
+            ("gpt-5.6-terra", "ultra"),
         )
         self.assertEqual(
             module._model_policy_for_child(None),
-            ("gpt-5.6-terra", "xhigh"),
+            ("gpt-5.6-terra", "ultra"),
         )
 
     def test_one_shot_rrule_uses_beijing_local_wall_clock(self) -> None:
