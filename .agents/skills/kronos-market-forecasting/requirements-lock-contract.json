@@ -1,0 +1,22 @@
+{
+  "schema_version": "kronos-dependency-lock-contract-v1",
+  "generated_by": "uv 0.10.11",
+  "training": {
+    "input": "requirements-training.in",
+    "input_sha256": "602292f3423b7b9c4ebb9e07639146fd1fae6c362527c238c0988fe3fbcf418c",
+    "lock": "requirements-training.lock",
+    "lock_sha256": "f93a6a0f0632198673d3bc59771a8dbdf2a5a0424fba449c97965635525a340b",
+    "package_count": 201,
+    "index_url": "https://pypi.org/simple"
+  },
+  "torch_cu118": {
+    "input": "requirements-torch-cu118.txt",
+    "input_sha256": "48dd0868b1bec58f8b93e967c23e56055954bd2bfbf9452a351d779d6e0132e2",
+    "lock": "requirements-torch-cu118.lock",
+    "lock_sha256": "edeadb06325a1a8145a7a9dad9de11fd2578da9cf304451ea37ef5ad66b74607",
+    "package_count": 1,
+    "index_url": "https://download.pytorch.org/whl/cu118",
+    "expected_torch": "2.7.1+cu118",
+    "no_deps": true
+  }
+}

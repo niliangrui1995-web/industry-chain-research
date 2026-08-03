@@ -25,7 +25,7 @@ Last verified: 2026-08-03
 | `a-share-leverage-capitulation-analyst` | 两融去杠杆、市场压力、拥挤与顶部/见底证据 |
 | `earnings-call-investment-analyst` | 财报、指引、电话会、前季比较、需求与瓶颈抽取 |
 | `ht-local-market-data` | 只读检查 `D:\HT` 盘后本地行情文件 |
-| `kronos-market-forecasting` | 离线运行本地 Kronos-base，校验 OHLCV/时间戳并保存带 provenance 的 `model_output` |
+| `kronos-market-forecasting` | 离线运行 Kronos-base，构建A股PIT快照、执行LoRA/评分头微调并以样本外门禁保存 `model_output` |
 
 普通文档、Excel、PDF、PPT、搜索、行情、金融数据和统计任务直接使用当前会话已安装的全局技能、插件或原生工具，不在仓库重复 vendoring。
 
@@ -50,6 +50,7 @@ Last verified: 2026-08-03
 - `watchlists/`：观察池和持续跟踪名单。
 - `docs/`：自动化合同、证据规范和专题说明。
 - `scripts/`：确定性项目辅助脚本。
+- `_training/kronos_ashare/`：被 Git 忽略的 Kronos A股数据、缓存、运行时、checkpoint 与评估产物；所有训练写入必须留在此目录。
 - `SKILL_PACK_MANIFEST.md`：精简后的技能清单和迁移边界。
 - `THIRD_PARTY_NOTICES.md`：上游方法改写的版本归属与许可证全文。
 

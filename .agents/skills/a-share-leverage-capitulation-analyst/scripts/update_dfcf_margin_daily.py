@@ -235,6 +235,11 @@ def main() -> None:
     parser.add_argument("--project-root", default=None)
     parser.add_argument("--output-dir", default=None)
     parser.add_argument("--bootstrap-start", default="2016-01-01")
+    parser.add_argument(
+        "--backfill-start",
+        default=None,
+        help="explicit full-history fetch start; overrides the normal trailing refresh window",
+    )
     parser.add_argument("--end-date", default=date.today().isoformat())
     parser.add_argument("--refresh-days", type=int, default=14)
     args = parser.parse_args()
@@ -259,7 +264,9 @@ def main() -> None:
         if not existing[market].empty:
             latest_dates.append(existing[market]["date"].max())
 
-    if len(latest_dates) == len(MARKETS):
+    if args.backfill_start:
+        start_date = args.backfill_start
+    elif len(latest_dates) == len(MARKETS):
         refresh_start = min(latest_dates) - timedelta(days=args.refresh_days)
         start_date = max(refresh_start, pd.Timestamp(args.bootstrap_start)).date().isoformat()
     else:
@@ -304,6 +311,7 @@ def main() -> None:
         "report_name": DFCF_REPORT,
         "market_codes": {"SH": "007", "SZ": "001"},
         "requested_start": start_date,
+        "backfill_start": args.backfill_start,
         "requested_end": args.end_date,
         "network_requests": sum(meta["requests"] for meta in request_meta.values()),
         "sh_rows": len(updated["SH"]),

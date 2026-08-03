@@ -20,7 +20,7 @@ Kronos 把连续 OHLCV K 线先量化为分层离散 token，再由自回归 Tra
 | 单序列零样本预测 | 本 Skill 已封装 | 输入历史 K 线，输出未来 OHLCV/amount |
 | 多样本生成并平均 | 上游支持 | `sample_count` 增大显存和耗时；5GB 显存从 1 开始 |
 | 批量序列预测 | 上游 `predict_batch` 支持 | 本 Skill CLI 暂不封装，序列长度需一致 |
-| Tokenizer/Predictor 微调 | 上游提供示例 | 本地未配置 Qlib、训练集或多 GPU 训练 |
+| Tokenizer/Predictor 微调 | 项目已封装 A股两阶段训练 | 仅 D盘隔离训练环境；必须通过 PIT、样本外和成本准出门 |
 | 回测 | 上游有演示代码 | 演示不是生产交易系统，必须另做样本外评估和成本建模 |
 
 模型不读取财报、新闻、订单、估值、宏观变量或公司身份；它不能单独证明基本面、因果关系或投资价值。输出不是上涨概率，也不是确定目标价。
@@ -42,13 +42,15 @@ Kronos 把连续 OHLCV K 线先量化为分层离散 token，再由自回归 Tra
 
 Base 为 102.3M 参数，最大上下文为 512 根 K 线。两个运行权重合计约 405.4 MiB。环境使用 Python 3.12、PyTorch `2.7.1+cu118`；CUDA 11.8 构建用于兼容本机 GTX 1060 的 `sm_61`。
 
-需要重建环境时，只从官方 PyTorch 与 PyPI 下载：
+本项目分开路由两个环境：Base 零样本推理 `run_kronos_forecast.py` 使用 `.venv_kronos\Scripts\python.exe`；A股 `snapshot` 至 `pipeline` 的九个命令使用 `D:\vcp_hunter\产业链投研\_training\kronos_ashare\runtime\venvs\kronos-ashare\Scripts\python.exe`。不要用 Base 环境启动 A股数据、训练或评估命令。
+
+需要重建环境时，使用项目脚本从官方 PyPI 与 PyTorch CU118 索引重建两个环境：
 
 ```powershell
-uv venv --python 3.12.13 .venv_kronos
-uv pip install --python .venv_kronos\Scripts\python.exe torch==2.7.1 --index-url https://download.pytorch.org/whl/cu118
-uv pip install --python .venv_kronos\Scripts\python.exe numpy==1.26.4 pandas==2.2.2 einops==0.8.1 huggingface_hub==0.33.1 matplotlib==3.9.3 tqdm==4.67.1 safetensors==0.6.2
+powershell -NoProfile -ExecutionPolicy Bypass -File .agents\skills\kronos-market-forecasting\scripts\rebuild_kronos_envs.ps1
 ```
+
+脚本先用 `requirements-lock-contract.json` 验证 input/lock SHA256、包数和两个哈希锁零重叠；公共依赖由 `requirements-training.lock` 管理，`requirements-torch-cu118.lock` 只含 CUDA 11.8 Torch 轮子并以 `--no-deps` 安装。重建结束前还会运行 `uv pip check`，以隔离 Python 验证安装包集合、版本和实际 D盘 runtime path，并在每个环境写入带 SHA256 sidecar 的 `kronos-package-manifest.json`。manifest 验证前失败才回滚；验证后的备份清理失败返回 `cleanup_pending`，保留新环境供使用和人工清理备份。
 
 恢复源码与权重时使用上表固定 revision；不要只下载 Predictor 而漏掉 Tokenizer。先下载到新目录并通过脚本哈希检查，再替换当前运行目录，避免产生半更新状态。
 

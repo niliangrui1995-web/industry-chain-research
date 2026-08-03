@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import py_compile
 import re
@@ -34,6 +35,17 @@ EXPECTED_PROJECT_SKILLS = {
     "research-listed-company",
     "user-investment-discipline",
 }
+EXPECTED_KRONOS_A_SHARE_COMMANDS = {
+    "snapshot",
+    "prepare",
+    "check",
+    "train-adapter",
+    "train-scorer",
+    "evaluate",
+    "score-as-of",
+    "inspect-checkpoint",
+    "pipeline",
+}
 SKILL_HEALTH_OVERRIDES = Path.home() / ".codex" / "skill-routing" / "skill-health-overrides.json"
 DEFAULT_DOCS = [
     ROOT / "README.md",
@@ -56,6 +68,16 @@ PYTHON_FILES = [
     SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "leverage_capitulation_backtest.py",
     SKILL_ROOT / "financial-evidence-audit" / "scripts" / "financial_evidence_audit.py",
     SKILL_ROOT / "research-industry-chain" / "scripts" / "validate_bottleneck_evidence.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "kronos_a_share_baseline.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "kronos_a_share_data.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "kronos_a_share_dataset.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "kronos_a_share_evaluation.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "kronos_a_share_forward.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "kronos_a_share_model.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "kronos_a_share_public_data.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "kronos_a_share_runtime.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "kronos_a_share_training.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "run_kronos_a_share.py",
     SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "run_kronos_forecast.py",
 ]
 SECRET_PATTERNS = [
@@ -153,7 +175,6 @@ def check_routing_consistency() -> CheckResult:
     for path, text, needle in required_pairs:
         if needle not in text:
             problems.append(f"{path}: missing `{needle}`")
-
     active_route_docs = [
         ("README.md", readme),
         ("AGENTS.md", agents),
@@ -276,6 +297,234 @@ def check_kronos_runner_contract() -> CheckResult:
     )
     details = [item for item in [stdout, stderr] if item]
     return result("kronos_runner_contract", code == 0, details)
+
+
+def check_kronos_a_share_skill_contract() -> CheckResult:
+    skill_dir = SKILL_ROOT / "kronos-market-forecasting"
+    cli_path = skill_dir / "scripts" / "run_kronos_a_share.py"
+    migration_path = skill_dir / "scripts" / "migrate_kronos_storage.ps1"
+    rebuild_path = skill_dir / "scripts" / "rebuild_kronos_envs.ps1"
+    config_path = skill_dir / "configs" / "a_share_daily_v1.yaml"
+    pit_normalization_example_path = (
+        skill_dir / "configs" / "pit_normalization_v1.example.json"
+    )
+    reference_path = skill_dir / "references" / "a-share-finetuning.md"
+    requirements_path = skill_dir / "requirements-training.in"
+    training_lock_path = skill_dir / "requirements-training.lock"
+    torch_input_path = skill_dir / "requirements-torch-cu118.txt"
+    torch_lock_path = skill_dir / "requirements-torch-cu118.lock"
+    lock_contract_path = skill_dir / "requirements-lock-contract.json"
+    manifest_path = ROOT / "SKILL_PACK_MANIFEST.md"
+    problems: list[str] = []
+
+    required_files = [
+        cli_path,
+        migration_path,
+        rebuild_path,
+        config_path,
+        pit_normalization_example_path,
+        reference_path,
+        requirements_path,
+        training_lock_path,
+        torch_input_path,
+        torch_lock_path,
+        lock_contract_path,
+    ]
+    for path in required_files:
+        if not path.is_file():
+            problems.append(f"missing {rel(path)}")
+    if problems:
+        return result("kronos_a_share_skill_contract", False, problems)
+
+    skill = read_text(skill_dir / "SKILL.md")
+    cli = read_text(cli_path)
+    migration = read_text(migration_path)
+    rebuild = read_text(rebuild_path)
+    config = read_text(config_path)
+    pit_normalization_example = read_text(pit_normalization_example_path)
+    reference = read_text(reference_path)
+    training_lock = read_text(training_lock_path)
+    torch_input = read_text(torch_input_path)
+    torch_lock = read_text(torch_lock_path)
+    lock_contract_text = read_text(lock_contract_path)
+    manifest = read_text(manifest_path)
+    gitignore = read_text(ROOT / ".gitignore")
+    training_root = r"D:\vcp_hunter\产业链投研\_training\kronos_ashare"
+    training_python = training_root + r"\runtime\venvs\kronos-ashare\Scripts\python.exe"
+
+    required_pairs = [
+        ("SKILL.md", skill, "scripts/run_kronos_a_share.py"),
+        ("SKILL.md", skill, r"_training\kronos_ashare"),
+        ("SKILL.md", skill, "evidence_class=model_output"),
+        ("SKILL.md", skill, "`N/A`"),
+        ("a_share_daily_v1.yaml", config, "schema_version: kronos-a-share-v1"),
+        ("a_share_daily_v1.yaml", config, f"training_root: '{training_root}'"),
+        (
+            "pit_normalization_v1.example.json",
+            pit_normalization_example,
+            '"schema_version": "kronos-a-share-pit-normalization-v1"',
+        ),
+        ("migrate_kronos_storage.ps1", migration, f"$TrainingRoot = '{training_root}'"),
+        ("migrate_kronos_storage.ps1", migration, "UV_CACHE_DIR"),
+        ("migrate_kronos_storage.ps1", migration, "UV_PYTHON_INSTALL_DIR"),
+        ("migrate_kronos_storage.ps1", migration, "PIP_CACHE_DIR"),
+        ("migrate_kronos_storage.ps1", migration, "-ItemType Junction"),
+        ("rebuild_kronos_envs.ps1", rebuild, "requirements-training.lock"),
+        ("rebuild_kronos_envs.ps1", rebuild, "requirements-torch-cu118.lock"),
+        ("rebuild_kronos_envs.ps1", rebuild, "--require-hashes"),
+        ("rebuild_kronos_envs.ps1", rebuild, "function Assert-LockConsistency"),
+        ("rebuild_kronos_envs.ps1", rebuild, "requirements-lock-contract.json"),
+        ("rebuild_kronos_envs.ps1", rebuild, "training input/lock contract drifted"),
+        ("rebuild_kronos_envs.ps1", rebuild, "'--no-deps', '--require-hashes'"),
+        ("rebuild_kronos_envs.ps1", rebuild, "'pip', 'check', '--python', $python"),
+        ("rebuild_kronos_envs.ps1", rebuild, "function Assert-InstalledPackages"),
+        ("rebuild_kronos_envs.ps1", rebuild, "kronos-package-manifest.json"),
+        ("rebuild_kronos_envs.ps1", rebuild, "kronos-environment-packages-v1"),
+        ("rebuild_kronos_envs.ps1", rebuild, "runtime_observation = $RuntimeObservation"),
+        ("rebuild_kronos_envs.ps1", rebuild, "& $python -I -B -c $validation"),
+        ("rebuild_kronos_envs.ps1", rebuild, "& $PythonPath -I -B -c $inventoryScript"),
+        ("rebuild_kronos_envs.ps1", rebuild, "cleanup_status = $cleanupStatus"),
+        ("SKILL.md", skill, training_python),
+        ("a-share-finetuning.md", reference, "migrate_kronos_storage.ps1 -Apply"),
+        ("a-share-finetuning.md", reference, "rebuild_kronos_envs.ps1"),
+        ("a-share-finetuning.md", reference, training_python),
+        ("a-share-finetuning.md", reference, "& $AsharePython $AshareCli"),
+        ("a-share-finetuning.md", reference, "build_project_qlib_provider()"),
+        ("a-share-finetuning.md", reference, "build_evaluation_companion()"),
+        ("a-share-finetuning.md", reference, "gate-head.json"),
+        ("a-share-finetuning.md", reference, "registry_root_sha256"),
+        ("a-share-finetuning.md", reference, "--inference-snapshot"),
+        ("a-share-finetuning.md", reference, ".research-only.csv"),
+        ("a-share-finetuning.md", reference, "output_type=N/A"),
+        ("a-share-finetuning.md", reference, "evidence_class=model_output"),
+        ("SKILL_PACK_MANIFEST.md", manifest, "`kronos-market-forecasting`"),
+        ("SKILL_PACK_MANIFEST.md", manifest, "`model_output`"),
+        ("SKILL_PACK_MANIFEST.md", manifest, "`N/A`"),
+        ("run_kronos_a_share.py", cli, 'evidence_class="model_output"'),
+        ("run_kronos_a_share.py", cli, 'output_type="N/A"'),
+    ]
+    for path, text, needle in required_pairs:
+        if needle not in text:
+            problems.append(f"{path}: missing `{needle}`")
+    if "_training/" not in {line.strip() for line in gitignore.splitlines()}:
+        problems.append(".gitignore: missing exact `_training/` entry")
+    if len(EXPECTED_PROJECT_SKILLS) != 12:
+        problems.append(
+            "project skill allowlist changed; Kronos A-share must extend the existing skill"
+        )
+
+    def parse_hashed_lock(text: str, label: str) -> dict[str, str]:
+        matches = list(
+            re.finditer(
+                r"(?m)^([A-Za-z0-9][A-Za-z0-9_.-]*(?:\[[^\]]+\])?)==([^\s\\;]+)",
+                text,
+            )
+        )
+        pins: dict[str, str] = {}
+        for index, match in enumerate(matches):
+            name = re.sub(r"[-_.]+", "-", re.sub(r"\[.*$", "", match.group(1))).lower()
+            if name in pins:
+                problems.append(f"{label}: duplicate exact pin `{name}`")
+                continue
+            pins[name] = match.group(2)
+            end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+            if not re.search(r"--hash=sha256:[0-9a-f]{64}", text[match.start():end]):
+                problems.append(f"{label}: `{name}` has no SHA256 hash")
+        if not pins:
+            problems.append(f"{label}: no exact package pins")
+        return pins
+
+    training_pins = parse_hashed_lock(training_lock, "requirements-training.lock")
+    torch_pins = parse_hashed_lock(torch_lock, "requirements-torch-cu118.lock")
+    overlap = sorted(set(training_pins) & set(torch_pins))
+    if "torch" in training_pins:
+        problems.append("requirements-training.lock: torch must be wheel-lock only")
+    if torch_pins != {"torch": "2.7.1+cu118"}:
+        problems.append("requirements-torch-cu118.lock: expected only torch==2.7.1+cu118")
+    if overlap:
+        problems.append(f"Kronos dependency locks overlap: {overlap}")
+    torch_input_lines = [
+        line for line in torch_input.splitlines() if line and not line.startswith("#")
+    ]
+    if torch_input_lines != [
+        "--index-url https://download.pytorch.org/whl/cu118",
+        "torch==2.7.1+cu118",
+    ]:
+        problems.append("requirements-torch-cu118.txt: official index or exact pin drifted")
+    if not any(
+        "--no-deps" in line
+        for line in torch_lock.splitlines()
+        if line.startswith("#")
+    ):
+        problems.append("requirements-torch-cu118.lock: compile provenance lacks --no-deps")
+    try:
+        declared_lock_contract = json.loads(lock_contract_text)
+    except json.JSONDecodeError as exc:
+        problems.append(f"requirements-lock-contract.json: invalid JSON: {exc}")
+        declared_lock_contract = {}
+    if not isinstance(declared_lock_contract, dict):
+        problems.append("requirements-lock-contract.json: root must be an object")
+        declared_lock_contract = {}
+    if declared_lock_contract.get("schema_version") != "kronos-dependency-lock-contract-v1":
+        problems.append("requirements-lock-contract.json: schema mismatch")
+    lock_contract_sections = [
+        ("training", requirements_path, training_lock_path, training_pins),
+        ("torch_cu118", torch_input_path, torch_lock_path, torch_pins),
+    ]
+    for section, input_path, locked_path, pins in lock_contract_sections:
+        declared = declared_lock_contract.get(section, {})
+        expected_input_hash = hashlib.sha256(input_path.read_bytes()).hexdigest()
+        expected_lock_hash = hashlib.sha256(locked_path.read_bytes()).hexdigest()
+        if declared.get("input_sha256") != expected_input_hash:
+            problems.append(f"requirements-lock-contract.json: {section} input hash drift")
+        if declared.get("lock_sha256") != expected_lock_hash:
+            problems.append(f"requirements-lock-contract.json: {section} lock hash drift")
+        if declared.get("package_count") != len(pins):
+            problems.append(f"requirements-lock-contract.json: {section} package count drift")
+    preflight = rebuild.find("$lockContract = Assert-LockConsistency")
+    first_rebuild = rebuild.find("$packageManifests += Rebuild-Venv")
+    if preflight < 0 or first_rebuild < 0 or preflight >= first_rebuild:
+        problems.append("rebuild_kronos_envs.ps1: lock preflight must run before venv rebuild")
+    commit = rebuild.find("# Commit boundary:")
+    cleanup = rebuild.find("Remove-Item -LiteralPath $Backup -Recurse -Force", commit)
+    rollback = rebuild.find("Move-Item -LiteralPath $Backup -Destination $Destination")
+    if commit < 0 or cleanup < commit or rollback < 0 or rollback >= commit:
+        problems.append("rebuild_kronos_envs.ps1: cleanup must be outside the rollback region")
+
+    interpreter = (
+        ROOT
+        / "_training"
+        / "kronos_ashare"
+        / "runtime"
+        / "venvs"
+        / "kronos-ashare"
+        / "Scripts"
+        / "python.exe"
+    )
+    if not interpreter.is_file():
+        interpreter = ROOT / ".venv_kronos" / "Scripts" / "python.exe"
+    if not interpreter.is_file():
+        interpreter = Path(sys.executable)
+    code, stdout, stderr = run_cmd(
+        [str(interpreter), "-B", str(cli_path), "--help"],
+        timeout=30,
+    )
+    if code != 0:
+        problems.append(f"run_kronos_a_share.py --help failed: {stderr or stdout}")
+    else:
+        command_groups = [
+            {item.strip() for item in match.split(",")}
+            for match in re.findall(r"\{([a-z][a-z,-]+)\}", stdout)
+            if "snapshot" in match.split(",")
+        ]
+        if not command_groups:
+            problems.append("run_kronos_a_share.py --help: subcommand list not found")
+        elif command_groups[0] != EXPECTED_KRONOS_A_SHARE_COMMANDS:
+            missing = sorted(EXPECTED_KRONOS_A_SHARE_COMMANDS - command_groups[0])
+            extra = sorted(command_groups[0] - EXPECTED_KRONOS_A_SHARE_COMMANDS)
+            problems.append(f"A-share CLI commands mismatch: missing={missing}, extra={extra}")
+
+    return result("kronos_a_share_skill_contract", not problems, problems)
 
 
 def check_tungsten_report_only() -> CheckResult:
@@ -420,6 +669,7 @@ def run_checks(skip_slow: bool) -> list[CheckResult]:
         check_archived_default_references(),
         check_py_compile(),
         check_kronos_runner_contract(),
+        check_kronos_a_share_skill_contract(),
         check_tungsten_report_only(),
         check_ht_inspect_help(),
         skipped("earnings_guardrail_dry_run", "--skip-slow") if skip_slow else check_earnings_guardrail(),

@@ -1,0 +1,35 @@
+{
+  "dfcf_only": true,
+  "exchange_requests": 0,
+  "source_name": "东方财富Choice数据",
+  "source_url": "https://datacenter-web.eastmoney.com/api/data/v1/get",
+  "report_name": "RPTA_WEB_RZRQ_LSSH",
+  "market_codes": {
+    "SH": "007",
+    "SZ": "001"
+  },
+  "requested_start": "2011-08-03",
+  "backfill_start": "2011-08-03",
+  "requested_end": "2026-08-03",
+  "network_requests": 16,
+  "sh_rows": 3641,
+  "sz_rows": 3641,
+  "common_rows": 3641,
+  "sh_latest": "2026-07-31",
+  "sz_latest": "2026-07-31",
+  "latest_common_date": "2026-07-31",
+  "sh_only_dates": [],
+  "sz_only_dates": [],
+  "changed_rows": {
+    "SH": 1072,
+    "SZ": 1072
+  },
+  "new_common_dates": 0,
+  "table_updated": true,
+  "sample_status": "dfcf_vendor_only_unverified_by_exchange",
+  "vendor_warning": "DFCF vendor data only; not validated against exchange official aggregates.",
+  "dfcf_sse_margin_sha256": "9d665c146705f123a52c2650f0c1c96d2b8c7e4df8dcce2ff7907fa8af368ca5",
+  "dfcf_szse_margin_sha256": "64959fb19410c343da75b24ad7692adc30af29f88d2dde0789375ec3bb6e8583",
+  "dfcf_margin_balances_sha256": "283c885a3124cfe055c5f6fdf7740169b8f291e203de156554fd45602648c196",
+  "updated_at_utc": "2026-08-03T09:11:17+00:00"
+}

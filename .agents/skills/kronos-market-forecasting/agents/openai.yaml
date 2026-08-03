@@ -1,6 +1,6 @@
 interface:
-  display_name: "Kronos K 线预测"
-  short_description: "运行本地 Kronos-base K 线预测并核验输入与输出"
-  default_prompt: "Use $kronos-market-forecasting to validate this OHLCV input, run the local Kronos-base forecast, and report model_output with limitations."
+  display_name: "Kronos A股预测与微调"
+  short_description: "运行Kronos-base预测、A股LoRA微调和样本外准出"
+  default_prompt: "Use $kronos-market-forecasting to validate the local runtime and PIT data gate, run or evaluate the requested Kronos-base A-share forecast or fine-tuning stage, and report only model_output with limitations."
 policy:
   allow_implicit_invocation: true

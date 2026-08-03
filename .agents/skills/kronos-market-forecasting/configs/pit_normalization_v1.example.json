@@ -1,0 +1,146 @@
+{
+  "schema_version": "kronos-a-share-pit-normalization-v1",
+  "coverage_start": "2018-01-02",
+  "coverage_end": "2026-07-31",
+  "source_priority": [
+    "official_primary",
+    "public_secondary",
+    "tdx_mechanical"
+  ],
+  "datasets": {
+    "security_master": {
+      "sources": [
+        {
+          "source_id": "reviewed-security-master",
+          "source_class": "official_primary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v1\\snapshot_manifest.json",
+          "format": "csv",
+          "encoding": "utf-8-sig",
+          "mapping": {
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "exchange": {"column": "exchange", "transform": "upper"},
+            "board": {"column": "board", "transform": "lower"},
+            "security_type": "security_type",
+            "list_date": "list_date",
+            "delist_date": "delist_date"
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "st_status": {
+      "sources": [
+        {
+          "source_id": "reviewed-st-status",
+          "source_class": "public_secondary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v1\\snapshot_manifest.json",
+          "format": "csv",
+          "encoding": "utf-8-sig",
+          "mapping": {
+            "ticker": {"column": "code", "transform": "ticker"},
+            "effective_from": "effective_from",
+            "effective_to": "effective_to",
+            "is_st": {"column": "isST", "transform": "bool_01"}
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "suspensions": {
+      "sources": [
+        {
+          "source_id": "reviewed-suspensions",
+          "source_class": "official_primary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v1\\snapshot_manifest.json",
+          "format": "csv",
+          "encoding": "utf-8-sig",
+          "mapping": {
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "trade_date": "trade_date",
+            "is_suspended": {"column": "is_suspended", "transform": "bool_01"}
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "price_limits": {
+      "sources": [
+        {
+          "source_id": "reviewed-price-limits",
+          "source_class": "official_primary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v1\\snapshot_manifest.json",
+          "format": "csv",
+          "encoding": "utf-8-sig",
+          "mapping": {
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "trade_date": "trade_date",
+            "up_limit": "up_limit",
+            "down_limit": "down_limit",
+            "rule_version": "rule_version",
+            "no_limit_reason": "no_limit_reason"
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "index_membership": {
+      "sources": [
+        {
+          "source_id": "reviewed-index-membership",
+          "source_class": "official_primary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v1\\snapshot_manifest.json",
+          "format": "csv",
+          "encoding": "utf-8-sig",
+          "mapping": {
+            "index_code": {"column": "index_code", "transform": "upper"},
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "effective_from": "effective_from",
+            "effective_to": "effective_to"
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "corporate_actions": {
+      "sources": [
+        {
+          "source_id": "reviewed-corporate-actions",
+          "source_class": "official_primary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v1\\snapshot_manifest.json",
+          "format": "csv",
+          "encoding": "utf-8-sig",
+          "mapping": {
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "announcement_date": "announcement_date",
+            "ex_date": "ex_date",
+            "cash_div": "cash_div",
+            "bonus_ratio": "bonus_ratio",
+            "rights_ratio": "rights_ratio",
+            "rights_price": "rights_price"
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "trading_calendar": {
+      "sources": [
+        {
+          "source_id": "official-trading-calendar",
+          "source_class": "official_primary",
+          "artifact_role": "trading_calendar",
+          "artifact_schema_version": "kronos-a-share-trading-calendar-v1",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v1\\snapshot_manifest.json",
+          "format": "csv",
+          "encoding": "utf-8-sig",
+          "mapping": {
+            "trade_date": "timestamps"
+          },
+          "constants": {
+            "is_open": true
+          }
+        }
+      ],
+      "expected_keys": null
+    }
+  }
+}

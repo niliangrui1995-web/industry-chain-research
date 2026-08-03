@@ -25,6 +25,7 @@ artifacts/**/.venv*/
 
 # Generated research and capture artifacts
 _downloads/
+_training/
 artifacts/*
 !artifacts/weekly_chain_tracking/
 !artifacts/weekly_chain_tracking/**
