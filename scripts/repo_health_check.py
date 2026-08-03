@@ -29,6 +29,7 @@ EXPECTED_PROJECT_SKILLS = {
     "financial-evidence-audit",
     "ht-local-market-data",
     "income-investment",
+    "kronos-market-forecasting",
     "research-industry-chain",
     "research-listed-company",
     "user-investment-discipline",
@@ -55,6 +56,7 @@ PYTHON_FILES = [
     SKILL_ROOT / "a-share-leverage-capitulation-analyst" / "scripts" / "leverage_capitulation_backtest.py",
     SKILL_ROOT / "financial-evidence-audit" / "scripts" / "financial_evidence_audit.py",
     SKILL_ROOT / "research-industry-chain" / "scripts" / "validate_bottleneck_evidence.py",
+    SKILL_ROOT / "kronos-market-forecasting" / "scripts" / "run_kronos_forecast.py",
 ]
 SECRET_PATTERNS = [
     ("openai_key", re.compile(r"\b(?:sk-proj-[A-Za-z0-9_-]{40,}|sk-[A-Za-z0-9]{32,})\b")),
@@ -134,6 +136,7 @@ def check_routing_consistency() -> CheckResult:
     income = read_text(SKILL_ROOT / "income-investment" / "SKILL.md")
     discipline = read_text(SKILL_ROOT / "user-investment-discipline" / "SKILL.md")
     audit = read_text(SKILL_ROOT / "financial-evidence-audit" / "SKILL.md")
+    kronos = read_text(SKILL_ROOT / "kronos-market-forecasting" / "SKILL.md")
 
     problems: list[str] = []
     required_pairs = [
@@ -145,6 +148,7 @@ def check_routing_consistency() -> CheckResult:
         ("income-investment/SKILL.md", income, "不得对所有行业机械使用 EPS payout"),
         ("user-investment-discipline/SKILL.md", discipline, "每一次都一样！！！"),
         ("financial-evidence-audit/SKILL.md", audit, "投资数字的强制准出门"),
+        ("kronos-market-forecasting/SKILL.md", kronos, "evidence_class=model_output"),
     ]
     for path, text, needle in required_pairs:
         if needle not in text:
@@ -263,6 +267,15 @@ def check_py_compile() -> CheckResult:
             except py_compile.PyCompileError as exc:
                 problems.append(f"{rel(path)}: {exc.msg}")
     return result("py_compile", not problems, problems)
+
+
+def check_kronos_runner_contract() -> CheckResult:
+    code, stdout, stderr = run_cmd(
+        [sys.executable, "-m", "unittest", "tests.test_kronos_market_forecasting", "-v"],
+        timeout=60,
+    )
+    details = [item for item in [stdout, stderr] if item]
+    return result("kronos_runner_contract", code == 0, details)
 
 
 def check_tungsten_report_only() -> CheckResult:
@@ -406,6 +419,7 @@ def run_checks(skip_slow: bool) -> list[CheckResult]:
         check_skill_library_layout(),
         check_archived_default_references(),
         check_py_compile(),
+        check_kronos_runner_contract(),
         check_tungsten_report_only(),
         check_ht_inspect_help(),
         skipped("earnings_guardrail_dry_run", "--skip-slow") if skip_slow else check_earnings_guardrail(),

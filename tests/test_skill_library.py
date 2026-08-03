@@ -16,6 +16,7 @@ EXPECTED_SKILLS = {
     "financial-evidence-audit",
     "ht-local-market-data",
     "income-investment",
+    "kronos-market-forecasting",
     "research-industry-chain",
     "research-listed-company",
     "user-investment-discipline",
@@ -109,6 +110,25 @@ class SkillLibraryTests(unittest.TestCase):
         ]:
             with self.subTest(route=route):
                 self.assertIn(route, agents)
+
+    def test_kronos_route_is_model_output_only(self) -> None:
+        agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        skill = (SKILL_ROOT / "kronos-market-forecasting" / "SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        reference = (
+            SKILL_ROOT
+            / "kronos-market-forecasting"
+            / "references"
+            / "usage-and-capabilities.md"
+        ).read_text(encoding="utf-8")
+
+        for needle in ["kronos-market-forecasting", "model_output"]:
+            self.assertIn(needle, agents)
+        for needle in ["evidence_class=model_output", "不是未来事实", "样本外"]:
+            self.assertIn(needle, skill)
+        for needle in ["max_context", "sm_61", "未来时间戳", "MIT License"]:
+            self.assertIn(needle, reference)
 
     def test_listed_company_research_requires_pre_event_expectation_check(self) -> None:
         company = (SKILL_ROOT / "research-listed-company" / "SKILL.md").read_text(

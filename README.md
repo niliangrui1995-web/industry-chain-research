@@ -1,6 +1,6 @@
 # 产业链投研
 
-Last verified: 2026-07-27
+Last verified: 2026-08-03
 
 这是一个面向产业链、公司、全球龙头、技术壁垒、国产替代、基本面与交易弹性研究的 Codex 本地工作区。研究主线是：
 
@@ -10,7 +10,7 @@ Last verified: 2026-07-27
 
 ## 技能架构
 
-项目技能位于 Codex 标准仓库路径 `.agents/skills/`，自动发现。项目保留 11 个具有独立研究问题、证据合同或确定性脚本的工作流：
+项目技能位于 Codex 标准仓库路径 `.agents/skills/`，自动发现。项目保留 12 个具有独立研究问题、证据合同或确定性脚本的工作流：
 
 | Skill | 用途 |
 |---|---|
@@ -25,6 +25,7 @@ Last verified: 2026-07-27
 | `a-share-leverage-capitulation-analyst` | 两融去杠杆、市场压力、拥挤与顶部/见底证据 |
 | `earnings-call-investment-analyst` | 财报、指引、电话会、前季比较、需求与瓶颈抽取 |
 | `ht-local-market-data` | 只读检查 `D:\HT` 盘后本地行情文件 |
+| `kronos-market-forecasting` | 离线运行本地 Kronos-base，校验 OHLCV/时间戳并保存带 provenance 的 `model_output` |
 
 普通文档、Excel、PDF、PPT、搜索、行情、金融数据和统计任务直接使用当前会话已安装的全局技能、插件或原生工具，不在仓库重复 vendoring。
 

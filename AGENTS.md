@@ -10,9 +10,9 @@
 - 每次回答或任务执行前，先检查可用的技能库并选择合适的技能或技能组合。
 - 如果任务明确匹配某个技能，在回答或编辑文件前，必须阅读并遵循相关 `SKILL.md` 指引。
 - 仓库技能位于 `.agents/skills/`，由 Codex/Antigravity 自动发现；技能查找与路由仅查询本项目技能，无需查询全局或外部技能仓库（如 `C:\Users\Administrator\.codex\skill-routing`）。
-- 按问题语义选择唯一领域入口：上市公司深研用 `research-listed-company`，产业链用 `research-industry-chain`，财报/电话会用 `earnings-call-investment-analyst`，收益安全用 `income-investment`，持续跟踪用 `a-share-company-tracking`，两融压力/顶部共振用 `a-share-leverage-capitulation-analyst`，个人市场周期/过热纪律用 `user-investment-discipline`，最近 AI 消息核验用 `ai-chain-research-orchestrator`；公告、行情和本地数据技能只作相应证据伴侣。简单、常识性或非实时问题允许直接回答。
+- 按问题语义选择唯一领域入口：上市公司深研用 `research-listed-company`，产业链用 `research-industry-chain`，财报/电话会用 `earnings-call-investment-analyst`，收益安全用 `income-investment`，持续跟踪用 `a-share-company-tracking`，两融压力/顶部共振用 `a-share-leverage-capitulation-analyst`，个人市场周期/过热纪律用 `user-investment-discipline`，最近 AI 消息核验用 `ai-chain-research-orchestrator`；Kronos-base 本地 K 线安装、输入、推理和模型评估用 `kronos-market-forecasting`，其结果只作 `model_output`；公告、行情和本地数据技能只作相应证据伴侣。简单、常识性或非实时问题允许直接回答。
 - 决策关键的市值、预期差、估值、覆盖率、单位换算或派生数字，必须附加 `financial-evidence-audit`；核验失败或口径冲突时不得准出确定性结论。
-- 默认最多加载 1 个领域技能和 1 个数据、文件或状态技能；命中决策关键数字时，`financial-evidence-audit` 作为额外强制准出门，不计作第二领域技能。不要使用固定技能栈，也不要为展示流程调用重复的通用推理技能。
+- 默认最多加载 1 个领域技能和 1 个数据、模型、文件或状态技能；命中决策关键数字时，`financial-evidence-audit` 作为额外强制准出门，不计作第二领域技能。不要使用固定技能栈，也不要为展示流程调用重复的通用推理技能。
 - 非投研任务不要加载投研框架；按任务使用当前会话的全局技能、插件或原生工具。
 
 ## 投研硬边界
