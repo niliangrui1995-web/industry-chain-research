@@ -21,7 +21,7 @@ import pandas as pd
 
 
 DAY_RECORD = struct.Struct("<IIIIIfII")
-WINDOW_SCHEMA = "kronos-a-share-window-index-v1"
+WINDOW_SCHEMA = "kronos-a-share-window-index-v2"
 TOKEN_SCHEMA = "kronos-a-share-token-cache-v1"
 FEATURE_COLUMNS = ["open", "high", "low", "close", "volume", "amount"]
 PRICE_COLUMN_COUNT = 4
@@ -113,6 +113,78 @@ def normalize_ticker(value: str) -> str:
     if match:
         return f"{match.group(2)}{match.group(1)}"
     raise DatasetBuildError(f"ticker 格式无效：{value}")
+
+
+def ticker_market_board(ticker: str) -> tuple[str, str]:
+    """Return stable market/board strata for deterministic smoke sampling."""
+
+    normalized = normalize_ticker(ticker)
+    if normalized.startswith("bj"):
+        return "BJ", "BSE"
+    code = normalized[2:]
+    if normalized.startswith("sh") and code.startswith(("688", "689")):
+        return "SH", "STAR"
+    if normalized.startswith("sz") and code.startswith(("300", "301")):
+        return "SZ", "CHINEXT"
+    return ("SH", "MAIN") if normalized.startswith("sh") else ("SZ", "MAIN")
+
+
+def _stable_seed(seed: int, value: str) -> int:
+    digest = hashlib.sha256(f"{seed}:{value}".encode("utf-8")).digest()
+    return int.from_bytes(digest[:8], byteorder="big", signed=False)
+
+
+def _stratified_ticker_items(
+    files: Mapping[str, Path], seed: int
+) -> list[tuple[str, Path]]:
+    """Round-robin markets/boards instead of consuming sorted BJ tickers first."""
+
+    groups: dict[tuple[str, str], list[tuple[str, Path]]] = {}
+    for ticker, path in files.items():
+        if A_SHARE_PATTERN.fullmatch(ticker):
+            groups.setdefault(ticker_market_board(ticker), []).append((ticker, path))
+    for stratum, items in groups.items():
+        rng = np.random.default_rng(_stable_seed(seed, ":".join(stratum)))
+        order = rng.permutation(len(items))
+        groups[stratum] = [items[int(index)] for index in order]
+    ordered: list[tuple[str, Path]] = []
+    strata = sorted(groups)
+    for offset in range(max((len(groups[key]) for key in strata), default=0)):
+        for key in strata:
+            if offset < len(groups[key]):
+                ordered.append(groups[key][offset])
+    return ordered
+
+
+def _stratified_start_indices(count: int, *, ticker: str, seed: int) -> Iterator[int]:
+    """Interleave equal history buckets so smoke dates are not always earliest."""
+
+    if count <= 0:
+        return
+    rng = np.random.default_rng(_stable_seed(seed, ticker))
+    buckets = [
+        rng.permutation(bucket).tolist()
+        for bucket in np.array_split(np.arange(count, dtype=np.int64), min(8, count))
+        if len(bucket)
+    ]
+    bucket_order = rng.permutation(len(buckets)).tolist()
+    for offset in range(max(len(bucket) for bucket in buckets)):
+        for bucket_index in bucket_order:
+            bucket = buckets[int(bucket_index)]
+            if offset < len(bucket):
+                yield int(bucket[offset])
+
+
+def active_membership_count(
+    membership: pd.DataFrame | None, origin: pd.Timestamp
+) -> int:
+    if membership is None:
+        return 0
+    active = membership[
+        (membership["effective_from"] <= origin)
+        & (origin <= membership["effective_to"])
+    ]
+    return int(active["ticker"].nunique())
 
 
 def discover_day_files(snapshot_root: Path) -> dict[str, Path]:
@@ -483,6 +555,34 @@ def realized_total_log_return(
     return float(math.log(end_close / start_close))
 
 
+def future_action_window_audit(
+    corporate_actions: pd.DataFrame | None,
+    *,
+    ticker: str,
+    origin: pd.Timestamp,
+    target: pd.Timestamp,
+) -> dict[str, int]:
+    """Classify actions effective in the prediction horizon by origin-time knowledge."""
+
+    if corporate_actions is None:
+        return {
+            "candidate_event_count": 0,
+            "known_at_origin_event_count": 0,
+            "unannounced_at_origin_event_count": 0,
+        }
+    events = corporate_actions[
+        (corporate_actions["ticker"] == normalize_ticker(ticker))
+        & (corporate_actions["ex_date"] > origin)
+        & (corporate_actions["ex_date"] <= target)
+    ]
+    known = events["announcement_date"] <= origin
+    return {
+        "candidate_event_count": int(len(events)),
+        "known_at_origin_event_count": int(known.sum()),
+        "unannounced_at_origin_event_count": int((~known).sum()),
+    }
+
+
 def build_sample_index(
     snapshot_root: Path,
     output_directory: Path,
@@ -496,7 +596,10 @@ def build_sample_index(
     spec: WindowSpec | None = None,
     max_samples_per_split: int | None = None,
     seed: int = 100,
-    trade_state_checker: Callable[[str, pd.Timestamp, float], Mapping[str, Any]] | None = None,
+    trade_state_checker: Callable[
+        [str, pd.Timestamp, float, float], Mapping[str, Any]
+    ]
+    | None = None,
     require_complete_membership_coverage: bool = False,
 ) -> dict[str, Any]:
     """Create a deterministic sample index; it does not tokenize or load Kronos."""
@@ -566,8 +669,22 @@ def build_sample_index(
         "outside_split": 0,
         "unconfirmed_trade_state": 0,
         "ineligible_trade_state": 0,
+        "unannounced_future_action": 0,
     }
-    for ticker, path in sorted(files.items()):
+    future_action_audit = {
+        "candidate_event_count": 0,
+        "known_at_origin_event_count": 0,
+        "unannounced_at_origin_event_count": 0,
+        "excluded_sample_count": 0,
+        "future_action_use_count": 0,
+    }
+    ticker_items = (
+        _stratified_ticker_items(files, seed)
+        if max_samples_per_split is not None
+        else sorted(files.items())
+    )
+    active_counts: dict[pd.Timestamp, int] = {}
+    for ticker, path in ticker_items:
         if max_samples_per_split is not None and all(
             selected_split_counts[name] >= max_samples_per_split
             for name in SPLIT_NAMES
@@ -583,7 +700,13 @@ def build_sample_index(
         if len(frame) < window.total_bars:
             skipped["invalid_or_short"] += 1
             continue
-        for start_index in range(0, len(frame) - window.total_bars + 1):
+        start_count = len(frame) - window.total_bars + 1
+        start_indices: Iterator[int] = (
+            _stratified_start_indices(start_count, ticker=ticker, seed=seed)
+            if max_samples_per_split is not None
+            else iter(range(start_count))
+        )
+        for start_index in start_indices:
             if max_samples_per_split is not None and all(
                 selected_split_counts[name] >= max_samples_per_split
                 or selected_ticker_split_counts.get((ticker, name), 0) >= 1
@@ -641,11 +764,28 @@ def build_sample_index(
             if not membership_contains(membership, ticker, origin):
                 skipped["not_member"] += 1
                 continue
+            action_audit = future_action_window_audit(
+                corporate_actions,
+                ticker=ticker,
+                origin=origin,
+                target=target,
+            )
+            for key in (
+                "candidate_event_count",
+                "known_at_origin_event_count",
+                "unannounced_at_origin_event_count",
+            ):
+                future_action_audit[key] += action_audit[key]
+            if action_audit["unannounced_at_origin_event_count"]:
+                skipped["unannounced_future_action"] += 1
+                future_action_audit["excluded_sample_count"] += 1
+                continue
             if trade_state_checker is not None:
                 trade_state = trade_state_checker(
                     ticker,
                     origin,
                     float(frame.iloc[origin_index]["close"]),
+                    float(frame.iloc[origin_index - 1]["close"]),
                 )
                 if trade_state.get("state_confirmed") is not True:
                     skipped["unconfirmed_trade_state"] += 1
@@ -665,14 +805,20 @@ def build_sample_index(
                 ticker=ticker,
             )
             label = stock_return - benchmark_return
+            if origin not in active_counts:
+                active_counts[origin] = active_membership_count(membership, origin)
+            market, board = ticker_market_board(ticker)
             rows.append(
                 {
                     "ticker": ticker,
+                    "market": market,
+                    "board": board,
                     "day_file": str(path),
                     "start_index": start_index,
                     "origin_date": origin_date_i,
                     "target_date": target_date_i,
                     "split": split,
+                    "active_member_count": active_counts[origin],
                     "label_excess_10d": label,
                 }
             )
@@ -730,11 +876,27 @@ def build_sample_index(
         ),
         "benchmark_ticker": benchmark_ticker,
         "sample_trade_state_checked": trade_state_checker is not None,
+        "future_action_audit": {
+            **future_action_audit,
+            "verified": (
+                corporate_actions is not None
+                and future_action_audit["future_action_use_count"] == 0
+            ),
+        },
         "survivorship_bias_audit": survivorship_audit,
         "selection": {
-            "mode": "deterministic_bounded_smoke" if max_samples_per_split else "full",
+            "mode": (
+                "deterministic_stratified_bounded_smoke"
+                if max_samples_per_split
+                else "pit_historical_membership_full"
+            ),
             "max_samples_per_split": max_samples_per_split,
             "max_samples_per_ticker_per_split": 1 if max_samples_per_split else None,
+            "strata": (
+                ["market", "board", "eight_equal_history_date_buckets"]
+                if max_samples_per_split
+                else ["origin_date", "pit_index_membership"]
+            ),
             "seed": seed,
         },
         "window": {"lookback": window.lookback, "horizon": window.horizon, "purge_days": window.purge_days},
@@ -746,7 +908,9 @@ def build_sample_index(
             ),
             "benchmark_price_mode": "csi800_close_to_close",
         },
-        "estimated_token_cache_bytes": int(len(index_frame) * (window.total_bars * 9 + 12)),
+        "estimated_token_cache_bytes": int(
+            len(index_frame) * (window.total_bars * 9 + 16)
+        ),
         "skipped": skipped,
     }
     manifest_path = output / "sample_manifest.json"
@@ -765,10 +929,10 @@ def causal_adjusted_price_window(
 ) -> tuple[np.ndarray, int]:
     """Return the raw-scale window after point-in-time causal adjustment.
 
-    Only corporate actions both announced and effective by ``origin_date`` may
-    alter the historical price columns.  Keeping this raw-scale representation
-    separate lets the scorer and the autoregressive forecast path consume the
-    exact same adjusted history before each applies its own normalization.
+    Only corporate actions announced by ``origin_date`` may alter the window.
+    Past actions use backward adjustment.  Known actions effective in the
+    prediction horizon use forward adjustment only on target bars at/after the
+    ex-date, so a future previous close can never alter any historical token.
     """
 
     values = frame.iloc[start_index : start_index + spec.total_bars][FEATURE_COLUMNS].to_numpy(
@@ -780,10 +944,14 @@ def causal_adjusted_price_window(
     applied_event_count = 0
     if corporate_actions is not None:
         origin = pd.to_datetime(str(int(origin_date)), format="%Y%m%d")
+        target = pd.to_datetime(
+            str(int(frame.iloc[start_index + spec.total_bars - 1]["date"])),
+            format="%Y%m%d",
+        )
         events = corporate_actions[
             (corporate_actions["ticker"] == normalize_ticker(ticker))
             & (corporate_actions["announcement_date"] <= origin)
-            & (corporate_actions["ex_date"] <= origin)
+            & (corporate_actions["ex_date"] <= target)
         ]
         all_dates = frame["date"].to_numpy(dtype=np.int64)
         window_dates = frame.iloc[
@@ -791,11 +959,17 @@ def causal_adjusted_price_window(
         ]["date"].to_numpy(dtype=np.int64)
         for event in events.itertuples(index=False):
             ex_date_i = int(event.ex_date.strftime("%Y%m%d"))
-            affected = window_dates < ex_date_i
+            is_future_action = event.ex_date > origin
+            affected = (
+                window_dates >= ex_date_i
+                if is_future_action
+                else window_dates < ex_date_i
+            )
             if not bool(affected.any()):
                 continue
             factor = _event_adjustment_factor(frame, event, ticker)
-            values[affected, :PRICE_COLUMN_COUNT] *= np.float32(factor)
+            applied_factor = (1.0 / factor) if is_future_action else factor
+            values[affected, :PRICE_COLUMN_COUNT] *= np.float32(applied_factor)
             applied_event_count += 1
     return values, applied_event_count
 
@@ -909,13 +1083,48 @@ def tokenize_sample_index(
     ) != sha256_file(corporate_actions_path):
         raise DatasetBuildError("corporate_actions SHA256 与 sample_manifest 不匹配")
     corporate_actions = load_corporate_actions(corporate_actions_path)
-    required = {"sample_id", "ticker", "day_file", "start_index", "origin_date", "split", "label_excess_10d"}
+    sample_future_action_audit = sample_manifest.get("future_action_audit", {})
+    if (
+        sample_manifest.get("status") == "production_candidate"
+        and (
+            sample_future_action_audit.get("verified") is not True
+            or sample_future_action_audit.get("future_action_use_count") != 0
+        )
+    ):
+        raise DatasetBuildError("production sample_manifest 未通过未来公司行动审计")
+    required = {
+        "sample_id",
+        "ticker",
+        "day_file",
+        "start_index",
+        "origin_date",
+        "target_date",
+        "split",
+        "label_excess_10d",
+    }
     missing = sorted(required - set(index_frame.columns))
     if missing:
         raise DatasetBuildError(f"sample_index 缺少字段：{missing}")
     sample_ids = pd.to_numeric(index_frame["sample_id"], errors="raise").astype(int)
     if sorted(sample_ids.tolist()) != list(range(len(index_frame))):
         raise DatasetBuildError("sample_id 必须从0连续递增")
+    if "active_member_count" not in index_frame:
+        if sample_manifest.get("status") == "production_candidate":
+            raise DatasetBuildError("production sample_index 缺少 active_member_count")
+        index_frame["active_member_count"] = 0
+    active_member_counts = pd.to_numeric(
+        index_frame["active_member_count"], errors="raise"
+    )
+    if (
+        (active_member_counts < 0).any()
+        or (active_member_counts % 1 != 0).any()
+        or (
+            sample_manifest.get("status") == "production_candidate"
+            and (active_member_counts < 1).any()
+        )
+    ):
+        raise DatasetBuildError("active_member_count 必须为非负整数")
+    index_frame["active_member_count"] = active_member_counts.astype(np.int32)
     pending = output.with_name(f".{output.name}.pending-{os.getpid()}")
     if pending.exists():
         shutil.rmtree(pending)
@@ -928,6 +1137,7 @@ def tokenize_sample_index(
         "label.npy": np.lib.format.open_memmap(pending / "label.npy", mode="w+", dtype=np.float32, shape=(count,)),
         "trade_date.npy": np.lib.format.open_memmap(pending / "trade_date.npy", mode="w+", dtype=np.int32, shape=(count,)),
         "instrument_id.npy": np.lib.format.open_memmap(pending / "instrument_id.npy", mode="w+", dtype=np.int32, shape=(count,)),
+        "active_member_count.npy": np.lib.format.open_memmap(pending / "active_member_count.npy", mode="w+", dtype=np.int32, shape=(count,)),
         "split.npy": np.lib.format.open_memmap(pending / "split.npy", mode="w+", dtype=np.uint8, shape=(count,)),
     }
     instruments = {ticker: index for index, ticker in enumerate(sorted(index_frame["ticker"].unique()))}
@@ -936,6 +1146,8 @@ def tokenize_sample_index(
     cache_path: str | None = None
     cache_frame: pd.DataFrame | None = None
     applied_event_count = 0
+    known_future_action_count = 0
+    future_action_use_count = 0
 
     def flush() -> None:
         if not batch_values:
@@ -954,6 +1166,22 @@ def tokenize_sample_index(
             assert cache_frame is not None
             start = int(row.start_index)
             destination = int(row.sample_id)
+            action_audit = future_action_window_audit(
+                corporate_actions,
+                ticker=str(row.ticker),
+                origin=pd.to_datetime(str(int(row.origin_date)), format="%Y%m%d"),
+                target=pd.to_datetime(str(int(row.target_date)), format="%Y%m%d"),
+            )
+            future_action_use_count += action_audit[
+                "unannounced_at_origin_event_count"
+            ]
+            if action_audit["unannounced_at_origin_event_count"]:
+                raise DatasetBuildError(
+                    "sample_index 包含 origin_date 时尚未公告的窗口内公司行动"
+                )
+            known_future_action_count += action_audit[
+                "known_at_origin_event_count"
+            ]
             adjusted, applied = causal_adjusted_normalized_window(
                 cache_frame,
                 start,
@@ -970,6 +1198,9 @@ def tokenize_sample_index(
             arrays["label.npy"][destination] = np.float32(row.label_excess_10d)
             arrays["trade_date.npy"][destination] = np.int32(row.origin_date)
             arrays["instrument_id.npy"][destination] = np.int32(instruments[row.ticker])
+            arrays["active_member_count.npy"][destination] = np.int32(
+                row.active_member_count
+            )
             arrays["split.npy"][destination] = np.uint8(SPLIT_CODES[row.split])
             if len(batch_values) >= batch_size:
                 flush()
@@ -991,7 +1222,13 @@ def tokenize_sample_index(
             "corporate_actions_sha256": sample_manifest.get("corporate_actions_sha256"),
             "tokenizer_sha256": tokenizer_sha256,
             "window": {"lookback": window.lookback, "horizon": window.horizon},
-            "dtype": {"s1": "uint16", "s2": "uint16", "stamp": "uint8", "label": "float32"},
+            "dtype": {
+                "s1": "uint16",
+                "s2": "uint16",
+                "stamp": "uint8",
+                "label": "float32",
+                "active_member_count": "int32",
+            },
             "instruments": instruments,
             "split_codes": SPLIT_CODES,
             "adjustment": {
@@ -1000,7 +1237,9 @@ def tokenize_sample_index(
                 "trade_price_raw": True,
                 "model_price_adjusted": corporate_actions is not None,
                 "cutoff_field": "origin_date",
-                "future_action_use_count": 0,
+                "future_action_use_count": future_action_use_count,
+                "known_future_action_count": known_future_action_count,
+                "future_action_audit_verified": future_action_use_count == 0,
                 "applied_event_count": applied_event_count,
                 "corporate_actions_path": (
                     str(corporate_actions_path) if corporate_actions_path else None
@@ -1018,7 +1257,12 @@ def tokenize_sample_index(
         raise
 
 
-def load_token_cache(directory: Path, *, mmap_mode: str = "r") -> dict[str, Any]:
+def load_token_cache(
+    directory: Path,
+    *,
+    mmap_mode: str | None = "r",
+    diagnostic_legacy_read_only: bool = False,
+) -> dict[str, Any]:
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
     if manifest.get("schema_version") != TOKEN_SCHEMA:
         raise DatasetBuildError("token cache schema_version 无效")
@@ -1029,10 +1273,17 @@ def load_token_cache(directory: Path, *, mmap_mode: str = "r") -> dict[str, Any]
         "label.npy": (np.dtype("float32"), (int(manifest["sample_count"]),)),
         "trade_date.npy": (np.dtype("int32"), (int(manifest["sample_count"]),)),
         "instrument_id.npy": (np.dtype("int32"), (int(manifest["sample_count"]),)),
+        "active_member_count.npy": (np.dtype("int32"), (int(manifest["sample_count"]),)),
         "split.npy": (np.dtype("uint8"), (int(manifest["sample_count"]),)),
     }
     file_contract = manifest.get("files")
-    if not isinstance(file_contract, dict) or set(file_contract) != set(required_layout):
+    legacy_missing_active_members = (
+        isinstance(file_contract, dict)
+        and set(file_contract) == set(required_layout) - {"active_member_count.npy"}
+    )
+    if legacy_missing_active_members and diagnostic_legacy_read_only:
+        required_layout.pop("active_member_count.npy")
+    elif not isinstance(file_contract, dict) or set(file_contract) != set(required_layout):
         raise DatasetBuildError("token cache files 合同不完整")
     arrays: dict[str, Any] = {}
     for filename, (expected_dtype, expected_shape) in required_layout.items():
@@ -1054,4 +1305,8 @@ def load_token_cache(directory: Path, *, mmap_mode: str = "r") -> dict[str, Any]
     for name, array in arrays.items():
         if len(array) != expected:
             raise DatasetBuildError(f"token cache {name} 行数与 manifest 不一致")
-    return {"manifest": manifest, "arrays": arrays}
+    return {
+        "manifest": manifest,
+        "arrays": arrays,
+        "diagnostic_legacy_read_only": legacy_missing_active_members,
+    }

@@ -138,11 +138,89 @@ class LoadedCheckpoint:
     extra_state: dict[str, Any]
 
 
+@dataclass(frozen=True)
+class AdapterSelection:
+    """Release decision derived only from checkpoints with live causal CE."""
+
+    best_step: int | None
+    best_validation_ce: float
+    improvement: float
+    zero_shot_fallback: bool
+    selection_reason: str
+    stale_validations: int
+
+
 def _canonical_json(value: Any) -> bytes:
     return (
         json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         + "\n"
     ).encode("utf-8")
+
+
+def select_validated_adapter(
+    validation_history: Sequence[Mapping[str, Any]],
+    *,
+    zero_shot_validation_ce: float,
+    minimum_improvement: float = 0.01,
+) -> AdapterSelection:
+    """Select the lowest causal validation CE and fail closed to zero-shot.
+
+    Training loss, the last checkpoint, and entries without a finite
+    ``validation_ce`` are deliberately ineligible.  Ties select the earlier
+    step so a longer, equivalent run cannot silently replace a simpler one.
+    """
+
+    if (
+        not math.isfinite(zero_shot_validation_ce)
+        or zero_shot_validation_ce <= 0
+        or not math.isfinite(minimum_improvement)
+        or not 0 <= minimum_improvement < 1
+    ):
+        raise TrainingContractError("zero-shot CE/adapter improvement 合同无效")
+    validated: list[tuple[float, int]] = []
+    seen_steps: set[int] = set()
+    for entry in validation_history:
+        try:
+            step = int(entry["step"])
+            value = float(entry["validation_ce"])
+        except (KeyError, TypeError, ValueError) as exc:
+            raise TrainingContractError("验证历史缺少 step/validation_ce") from exc
+        if step < 1 or step in seen_steps or not math.isfinite(value) or value <= 0:
+            raise TrainingContractError("验证历史步数重复或 CE 无效")
+        seen_steps.add(step)
+        validated.append((value, step))
+    if not validated:
+        return AdapterSelection(
+            best_step=None,
+            best_validation_ce=math.inf,
+            improvement=0.0,
+            zero_shot_fallback=True,
+            selection_reason="no_causal_validation_checkpoint",
+            stale_validations=0,
+        )
+    best_validation_ce, best_step = min(validated, key=lambda item: (item[0], item[1]))
+    improvement = (
+        zero_shot_validation_ce - best_validation_ce
+    ) / zero_shot_validation_ce
+    best_index = next(
+        index
+        for index, item in enumerate(validated)
+        if item == (best_validation_ce, best_step)
+    )
+    stale_validations = len(validated) - best_index - 1
+    fallback = improvement < minimum_improvement
+    return AdapterSelection(
+        best_step=best_step,
+        best_validation_ce=best_validation_ce,
+        improvement=improvement,
+        zero_shot_fallback=fallback,
+        selection_reason=(
+            "minimum_causal_validation_ce_meets_release_threshold"
+            if not fallback
+            else "best_adapter_below_minimum_ce_improvement"
+        ),
+        stale_validations=stale_validations,
+    )
 
 
 def _sha256_bytes(payload: bytes) -> str:
@@ -582,93 +660,132 @@ class CheckpointStore:
         scoring_head: KronosScoringHead | None = None,
         restore_rng: bool = True,
         map_location: str | torch.device = "cpu",
+        read_only: bool = False,
     ) -> LoadedCheckpoint:
-        self.root.mkdir(parents=True, exist_ok=True)
-        with CheckpointFileLock(self.lock_path):
-            self._recover_unlocked()
+        if read_only:
+            if not self.root.is_dir():
+                raise CheckpointIntegrityError(
+                    f"checkpoint 根目录不存在：{self.root}"
+                )
             checkpoint_path = self._resolve_reference_unlocked(reference)
             manifest = self._validate_checkpoint_unlocked(checkpoint_path)
-            state_path = checkpoint_path / "state.pt"
-            try:
-                state = torch.load(
-                    state_path, map_location=map_location, weights_only=True
-                )
-            except TypeError:  # pragma: no cover - PyTorch <2.6 compatibility
-                state = torch.load(state_path, map_location=map_location)
-            if not isinstance(state, dict) or state.get("protocol") != CHECKPOINT_PROTOCOL:
-                raise CheckpointIntegrityError("state.pt 协议不匹配")
-            if state.get("stage") != manifest["stage"] or state.get("step") != manifest["step"]:
-                raise CheckpointIntegrityError("state.pt 与 manifest 的阶段或步数不匹配")
-            lora_config = manifest["lora"]
-            try:
-                first_target = model.get_submodule(KRONOS_LORA_TARGETS[0])
-            except AttributeError as exc:
-                raise LoRAContractError("待加载模型不是兼容的 Kronos-base") from exc
-            if isinstance(first_target, nn.Linear):
-                inject_kronos_lora(
-                    model,
-                    rank=int(lora_config["rank"]),
-                    alpha=float(lora_config["alpha"]),
-                    dropout=float(lora_config["dropout"]),
-                    strict=True,
-                )
-            elif isinstance(first_target, LoRALinear):
-                inject_kronos_lora(
-                    model,
-                    rank=int(lora_config["rank"]),
-                    alpha=float(lora_config["alpha"]),
-                    dropout=float(lora_config["dropout"]),
-                    strict=True,
-                )
-            else:
-                raise LoRAContractError("LoRA 首目标类型不兼容")
-            load_lora_state_dict(model, state["lora_state"], strict=True)
+        else:
+            self.root.mkdir(parents=True, exist_ok=True)
+            with CheckpointFileLock(self.lock_path):
+                self._recover_unlocked()
+                checkpoint_path = self._resolve_reference_unlocked(reference)
+                manifest = self._validate_checkpoint_unlocked(checkpoint_path)
+        return self._load_validated_checkpoint(
+            checkpoint_path,
+            manifest,
+            model=model,
+            optimizer=optimizer,
+            scoring_head=scoring_head,
+            restore_rng=restore_rng,
+            map_location=map_location,
+        )
 
-            stage = manifest["stage"]
-            saved_head_state = state.get("scoring_head_state")
-            if stage == "scorer":
-                if scoring_head is None:
-                    raise TrainingContractError("加载 scorer checkpoint 必须提供 scoring_head")
-                if saved_head_state is None:
-                    raise CheckpointIntegrityError("scorer checkpoint 缺少评分头")
-                scoring_head.load_state_dict(saved_head_state, strict=True)
-            elif scoring_head is not None and saved_head_state is not None:
-                scoring_head.load_state_dict(saved_head_state, strict=True)
-
-            # Restore the stage's trainable-parameter contract as well as values.
-            set_lora_trainable(model, stage == "adapter")
-
-            saved_optimizer = state.get("optimizer_state")
-            if optimizer is not None:
-                if saved_optimizer is None:
-                    raise TrainingContractError("checkpoint 未保存 optimizer state")
-                optimizer.load_state_dict(saved_optimizer)
-                expected_parameters = (
-                    [parameter for parameter in model.parameters() if parameter.requires_grad]
-                    if stage == "adapter"
-                    else list(scoring_head.parameters()) if scoring_head is not None else []
-                )
-                optimizer_parameters = [
-                    parameter
-                    for group in optimizer.param_groups
-                    for parameter in group["params"]
-                ]
-                if {id(parameter) for parameter in optimizer_parameters} != {
-                    id(parameter) for parameter in expected_parameters
-                }:
-                    raise TrainingContractError(
-                        "optimizer 参数组与当前训练阶段不匹配；请在 LoRA 注入后创建 optimizer"
-                    )
-            if restore_rng:
-                restore_rng_state(state["rng_state"])
-            return LoadedCheckpoint(
-                path=checkpoint_path,
-                stage=stage,
-                step=int(manifest["step"]),
-                metric=manifest["metric"],
-                manifest=manifest,
-                extra_state=dict(state.get("extra_state") or {}),
+    def _load_validated_checkpoint(
+        self,
+        checkpoint_path: Path,
+        manifest: Mapping[str, Any],
+        *,
+        model: nn.Module,
+        optimizer: torch.optim.Optimizer | None,
+        scoring_head: KronosScoringHead | None,
+        restore_rng: bool,
+        map_location: str | torch.device,
+    ) -> LoadedCheckpoint:
+        state_path = checkpoint_path / "state.pt"
+        try:
+            state = torch.load(
+                state_path, map_location=map_location, weights_only=True
             )
+        except TypeError:  # pragma: no cover - PyTorch <2.6 compatibility
+            state = torch.load(state_path, map_location=map_location)
+        if not isinstance(state, dict) or state.get("protocol") != CHECKPOINT_PROTOCOL:
+            raise CheckpointIntegrityError("state.pt 协议不匹配")
+        if state.get("stage") != manifest["stage"] or state.get("step") != manifest["step"]:
+            raise CheckpointIntegrityError("state.pt 与 manifest 的阶段或步数不匹配")
+        lora_config = manifest["lora"]
+        try:
+            first_target = model.get_submodule(KRONOS_LORA_TARGETS[0])
+        except AttributeError as exc:
+            raise LoRAContractError("待加载模型不是兼容的 Kronos-base") from exc
+        if isinstance(first_target, nn.Linear):
+            inject_kronos_lora(
+                model,
+                rank=int(lora_config["rank"]),
+                alpha=float(lora_config["alpha"]),
+                dropout=float(lora_config["dropout"]),
+                strict=True,
+            )
+        elif isinstance(first_target, LoRALinear):
+            inject_kronos_lora(
+                model,
+                rank=int(lora_config["rank"]),
+                alpha=float(lora_config["alpha"]),
+                dropout=float(lora_config["dropout"]),
+                strict=True,
+            )
+        else:
+            raise LoRAContractError("LoRA 首目标类型不兼容")
+        load_lora_state_dict(model, state["lora_state"], strict=True)
+
+        stage = manifest["stage"]
+        saved_head_state = state.get("scoring_head_state")
+        if stage == "scorer":
+            if scoring_head is None:
+                raise TrainingContractError("加载 scorer checkpoint 必须提供 scoring_head")
+            if saved_head_state is None:
+                raise CheckpointIntegrityError("scorer checkpoint 缺少评分头")
+            scoring_head.load_state_dict(saved_head_state, strict=True)
+        elif scoring_head is not None and saved_head_state is not None:
+            scoring_head.load_state_dict(saved_head_state, strict=True)
+
+        # Restore the stage's trainable-parameter contract as well as values.
+        set_lora_trainable(model, stage == "adapter")
+
+        saved_optimizer = state.get("optimizer_state")
+        if optimizer is not None:
+            if saved_optimizer is None:
+                raise TrainingContractError("checkpoint 未保存 optimizer state")
+            optimizer.load_state_dict(saved_optimizer)
+            expected_parameters = (
+                [parameter for parameter in model.parameters() if parameter.requires_grad]
+                if stage == "adapter"
+                else list(scoring_head.parameters()) if scoring_head is not None else []
+            )
+            optimizer_parameters = [
+                parameter
+                for group in optimizer.param_groups
+                for parameter in group["params"]
+            ]
+            if {id(parameter) for parameter in optimizer_parameters} != {
+                id(parameter) for parameter in expected_parameters
+            }:
+                raise TrainingContractError(
+                    "optimizer 参数组与当前训练阶段不匹配；请在 LoRA 注入后创建 optimizer"
+                )
+        if restore_rng:
+            restore_rng_state(state["rng_state"])
+        return LoadedCheckpoint(
+            path=checkpoint_path,
+            stage=stage,
+            step=int(manifest["step"]),
+            metric=manifest["metric"],
+            manifest=manifest,
+            extra_state=dict(state.get("extra_state") or {}),
+        )
+
+    def inspect_read_only(self, reference: str = "latest") -> dict[str, Any]:
+        """Validate an existing checkpoint without locks, recovery, or writes."""
+
+        if not self.root.is_dir():
+            raise CheckpointIntegrityError(f"checkpoint 根目录不存在：{self.root}")
+        return self._validate_checkpoint_unlocked(
+            self._resolve_reference_unlocked(reference)
+        )
 
     def inspect(self, reference: str = "latest") -> dict[str, Any]:
         self.root.mkdir(parents=True, exist_ok=True)

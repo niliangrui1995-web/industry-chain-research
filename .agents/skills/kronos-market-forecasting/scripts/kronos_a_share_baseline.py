@@ -22,14 +22,15 @@ from kronos_a_share_dataset import (
     DatasetBuildError,
     _event_adjustment_factor,
     load_corporate_actions,
+    load_membership,
     realized_total_log_return,
 )
 
 
-BASELINE_SCHEMA = "kronos-a-share-alpha158-lightgbm-v3"
-PROVIDER_SCHEMA = "kronos-a-share-qlib-provider-v3"
-COMPARISON_SCHEMA = "kronos-a-share-baseline-comparison-v1"
-EVALUATION_COMPANION_SCHEMA = "kronos-a-share-baseline-bundle-v2"
+BASELINE_SCHEMA = "kronos-a-share-alpha158-lightgbm-v4"
+PROVIDER_SCHEMA = "kronos-a-share-qlib-provider-v4"
+COMPARISON_SCHEMA = "kronos-a-share-baseline-comparison-v2"
+EVALUATION_COMPANION_SCHEMA = "kronos-a-share-baseline-bundle-v3"
 EXECUTION_AUDIT_SCHEMA = "kronos-a-share-execution-audit-v2"
 LABEL_EXPRESSION = "$label_excess_10d"
 LABEL_COLUMN = "label_excess_10d"
@@ -60,6 +61,8 @@ EXTERNAL_SCORE_COLUMNS = ("zero_shot_score", "head_only_score", "alpha158_score"
 DAY_RECORD = struct.Struct("<IIIIIfII")
 FEATURE_COLUMNS = ("open", "high", "low", "close", "vwap", "volume")
 TICKER_PATTERN = re.compile(r"^(?:sh|sz|bj)\d{6}$")
+FORMAL_MIN_CROSS_SECTION = 100
+FORMAL_MIN_COVERAGE_RATIO = 0.95
 
 
 class BaselineError(RuntimeError):
@@ -82,6 +85,18 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _canonical_json_sha256(value: Mapping[str, Any]) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+    ).hexdigest()
 
 
 def atomic_write(path: Path, payload: bytes) -> None:
@@ -485,19 +500,25 @@ def _audit_labels_and_build_naive_scores(
             float(adjusted_stock.iloc[stock_origin]["close"])
             / float(adjusted_stock.iloc[stock_origin - momentum_lookback]["close"])
         )
-        records.append(
-            {
-                "sample_id": int(row.sample_id),
-                "ticker": ticker,
-                "trade_date": origin.strftime("%Y-%m-%d"),
-                "target_date": target.strftime("%Y-%m-%d"),
-                "split": str(row.split),
-                LABEL_COLUMN: float(row.label_excess_10d),
-                "last_value_score": 0.0,
-                "momentum_score": momentum,
-                "reversal_score": -momentum,
-            }
-        )
+        record = {
+            "sample_id": int(row.sample_id),
+            "ticker": ticker,
+            "trade_date": origin.strftime("%Y-%m-%d"),
+            "target_date": target.strftime("%Y-%m-%d"),
+            "split": str(row.split),
+            LABEL_COLUMN: float(row.label_excess_10d),
+            "last_value_score": 0.0,
+            "momentum_score": momentum,
+            "reversal_score": -momentum,
+        }
+        if hasattr(row, "active_member_count"):
+            active_member_count = int(row.active_member_count)
+            if active_member_count < 1:
+                raise BaselineError(
+                    f"active_member_count 无效：{ticker} {origin.date()}"
+                )
+            record["active_member_count"] = active_member_count
+        records.append(record)
     result = pd.DataFrame(records).sort_values("sample_id").reset_index(drop=True)
     observed_ids = result["sample_id"].to_numpy(dtype=np.int64)
     expected_ids = sample_index["sample_id"].to_numpy(dtype=np.int64)
@@ -519,11 +540,58 @@ def _write_feature_bin(path: Path, calendar: pd.DatetimeIndex, series: pd.Series
     payload.tofile(path)
 
 
+def _pit_instrument_intervals(
+    membership: pd.DataFrame,
+    sample_index: pd.DataFrame,
+    model_market: pd.DataFrame,
+) -> dict[str, list[tuple[pd.Timestamp, pd.Timestamp]]]:
+    """Build the Qlib universe from PIT CSI300/500 spans, never quote envelopes."""
+
+    intervals: dict[str, list[tuple[pd.Timestamp, pd.Timestamp]]] = {}
+    for ticker in sorted(sample_index["ticker"].unique()):
+        stock = model_market[model_market["ticker"] == ticker]
+        if stock.empty:
+            raise BaselineError(f"Qlib provider 缺少证券数据：{ticker}")
+        quote_start = pd.Timestamp(stock["trade_date"].min()).normalize()
+        quote_end = pd.Timestamp(stock["trade_date"].max()).normalize()
+        rows = membership[membership["ticker"] == ticker].sort_values(
+            ["effective_from", "effective_to", "index_code"]
+        )
+        spans: list[tuple[pd.Timestamp, pd.Timestamp]] = []
+        for row in rows.itertuples(index=False):
+            start = max(pd.Timestamp(row.effective_from).normalize(), quote_start)
+            end = min(pd.Timestamp(row.effective_to).normalize(), quote_end)
+            if start > end:
+                continue
+            if spans and start <= spans[-1][1]:
+                spans[-1] = (spans[-1][0], max(spans[-1][1], end))
+            else:
+                spans.append((start, end))
+        if not spans:
+            raise BaselineError(f"PIT index_membership 未覆盖样本证券：{ticker}")
+        origins = pd.to_datetime(
+            sample_index.loc[sample_index["ticker"] == ticker, "origin_date"],
+            errors="raise",
+        ).dt.normalize()
+        uncovered = [
+            value
+            for value in origins
+            if not any(start <= value <= end for start, end in spans)
+        ]
+        if uncovered:
+            raise BaselineError(
+                f"PIT index_membership 未覆盖样本日期：{ticker} {uncovered[0].date()}"
+            )
+        intervals[ticker] = spans
+    return intervals
+
+
 def build_project_qlib_provider(
     *,
     source_path: Path,
     sample_index_path: Path,
     corporate_actions_path: Path,
+    index_membership_path: Path | None = None,
     provider_uri: Path,
     training_root: Path,
     segments: Mapping[str, list[str]],
@@ -558,6 +626,22 @@ def build_project_qlib_provider(
         raise BaselineError("corporate_actions_path 必须显式提供")
     if sha256_file(actions_path) != actions_hash_before:
         raise BaselineError("corporate_actions_hash_drift: 读取期间文件发生变化")
+    membership_path: Path | None = None
+    membership_hash_before: str | None = None
+    membership: pd.DataFrame | None = None
+    if index_membership_path is not None:
+        membership_path = ensure_within(index_membership_path, root)
+        if not membership_path.is_file():
+            raise BaselineError(f"index_membership 不存在：{membership_path}")
+        membership_hash_before = sha256_file(membership_path)
+        try:
+            membership = load_membership(membership_path)
+        except (DatasetBuildError, OSError, ValueError) as exc:
+            raise BaselineError(f"index_membership 合同无效：{exc}") from exc
+        if membership is None or membership.empty:
+            raise BaselineError("index_membership_path 必须包含 CSI300/CSI500 区间")
+        if sha256_file(membership_path) != membership_hash_before:
+            raise BaselineError("index_membership_hash_drift: 读取期间文件发生变化")
     market_frame, source_files, source_kind, source_hashes_before = _load_market_source(
         source_path, sample_index, root, benchmark_ticker
     )
@@ -597,13 +681,24 @@ def build_project_qlib_provider(
         label_map = baseline_inputs.set_index(["ticker", "trade_date"])[LABEL_COLUMN]
         instrument_lines: list[str] = []
         sample_tickers = sorted(sample_index["ticker"].unique())
+        pit_intervals = (
+            _pit_instrument_intervals(membership, sample_index, model_market)
+            if membership is not None
+            else None
+        )
         for ticker in sample_tickers:
             stock = model_market[model_market["ticker"] == ticker].set_index("trade_date")
             if stock.empty:
                 raise BaselineError(f"Qlib provider 缺少证券数据：{ticker}")
-            instrument_lines.append(
-                f"{ticker.upper()}\t{stock.index.min():%Y-%m-%d}\t{stock.index.max():%Y-%m-%d}"
-            )
+            if pit_intervals is None:
+                instrument_lines.append(
+                    f"{ticker.upper()}\t{stock.index.min():%Y-%m-%d}\t{stock.index.max():%Y-%m-%d}"
+                )
+            else:
+                instrument_lines.extend(
+                    f"{ticker.upper()}\t{start:%Y-%m-%d}\t{end:%Y-%m-%d}"
+                    for start, end in pit_intervals[ticker]
+                )
             feature_dir = pending / "features" / ticker
             for feature in FEATURE_COLUMNS:
                 _write_feature_bin(feature_dir / f"{feature}.day.bin", calendar, stock[feature])
@@ -629,6 +724,10 @@ def build_project_qlib_provider(
         actions_hash_after = sha256_file(actions_path)
         if actions_hash_after != actions_hash_before:
             raise BaselineError("corporate_actions_hash_drift: provider 构建期间文件发生变化")
+        if membership_path is not None and (
+            sha256_file(membership_path) != membership_hash_before
+        ):
+            raise BaselineError("index_membership_hash_drift: provider 构建期间文件发生变化")
         provider_files = {
             path.relative_to(pending).as_posix(): {
                 "bytes": path.stat().st_size,
@@ -650,6 +749,17 @@ def build_project_qlib_provider(
             ),
             "corporate_actions_path": str(actions_path),
             "corporate_actions_sha256": actions_hash_after,
+            "index_membership_path": (
+                str(membership_path) if membership_path is not None else None
+            ),
+            "index_membership_sha256": membership_hash_before,
+            "pit_membership_verified": membership is not None,
+            "instrument_membership_contract": (
+                "pit_csi300_union_csi500_effective_intervals"
+                if membership is not None
+                else "quote_envelope_provisional_only"
+            ),
+            "instrument_interval_count": len(instrument_lines),
             "feature_price_basis": "causal_forward_total_return_equivalent",
             "adjusted_price_columns": ["open", "high", "low", "close", "vwap"],
             "unadjusted_feature_columns": ["volume"],
@@ -728,6 +838,33 @@ def inspect_project_qlib_provider(provider_uri: Path, training_root: Path) -> di
     actions_path = ensure_within(Path(actions_text), training_root)
     if not actions_path.is_file() or sha256_file(actions_path) != actions_hash:
         raise BaselineError("Qlib provider corporate_actions SHA256 漂移")
+    membership_text = manifest.get("index_membership_path")
+    membership_hash = manifest.get("index_membership_sha256")
+    membership_verified = manifest.get("pit_membership_verified")
+    membership_contract = manifest.get("instrument_membership_contract")
+    if membership_verified is True:
+        if (
+            not isinstance(membership_text, str)
+            or not isinstance(membership_hash, str)
+            or membership_contract != "pit_csi300_union_csi500_effective_intervals"
+        ):
+            raise BaselineError("Qlib provider PIT membership 合同缺失")
+        membership_path = ensure_within(Path(membership_text), training_root)
+        if (
+            not membership_path.is_file()
+            or sha256_file(membership_path) != membership_hash
+        ):
+            raise BaselineError("Qlib provider index_membership SHA256 漂移")
+    elif not (
+        membership_verified is False
+        and membership_text is None
+        and membership_hash is None
+        and membership_contract == "quote_envelope_provisional_only"
+    ):
+        raise BaselineError("Qlib provider membership 准出状态无效")
+    interval_count = manifest.get("instrument_interval_count")
+    if not isinstance(interval_count, int) or interval_count < 1:
+        raise BaselineError("Qlib provider instrument_interval_count 无效")
     for source_text, expected_hash in manifest.get("source_files", {}).items():
         source = ensure_within(Path(source_text), training_root)
         if not source.is_file() or sha256_file(source) != expected_hash:
@@ -917,6 +1054,11 @@ def run_alpha158_lightgbm(
     expected_ids = expected["sample_id"].to_numpy(dtype=np.int64)
     seed_scores: list[np.ndarray] = []
     seed_metrics: list[dict[str, Any]] = []
+    seed_artifacts: list[dict[str, Any]] = []
+    seed_root = ensure_within(
+        output.parent / f"{output.name}.seed-evidence", training_root
+    )
+    seed_root.mkdir(parents=True, exist_ok=True)
     for seed in normalized_seeds:
         seed_task = build_task_config(
             provider_uri=Path(provider_manifest["provider_uri"]),
@@ -948,7 +1090,30 @@ def run_alpha158_lightgbm(
         if not np.isfinite(scores).all():
             raise BaselineError(f"Alpha158 seed={seed} prediction 含 NaN/Inf")
         seed_scores.append(scores)
-        rank_ic, rank_ic_days = _mean_daily_rankic(seed_frame)
+        rank_ic, rank_ic_days = _mean_daily_rankic(
+            seed_frame,
+            min_instruments=FORMAL_MIN_CROSS_SECTION,
+            active_member_count_column="active_member_count",
+            min_coverage_ratio=FORMAL_MIN_COVERAGE_RATIO,
+            require_eligible_cross_section=True,
+        )
+        seed_artifact = seed_frame[["sample_id", "raw_score"]].copy()
+        seed_artifact_path = seed_root / f"seed-{seed}.csv"
+        seed_payload = seed_artifact.to_csv(index=False, lineterminator="\n").encode(
+            "utf-8"
+        )
+        atomic_write(seed_artifact_path, seed_payload)
+        seed_artifacts.append(
+            {
+                "seed": seed,
+                "path": str(seed_artifact_path.resolve()),
+                "sha256": hashlib.sha256(seed_payload).hexdigest(),
+                "row_count": int(len(seed_artifact)),
+                "sample_id_sha256": _sample_id_sha256(observed_ids),
+                "mean_daily_rank_ic": rank_ic,
+                "rank_ic_day_count": rank_ic_days,
+            }
+        )
         seed_metrics.append(
             {
                 "seed": seed,
@@ -1002,6 +1167,16 @@ def run_alpha158_lightgbm(
         "seed_count": len(normalized_seeds),
         "aggregate_method": "arithmetic_mean_prediction",
         "seed_metrics": seed_metrics,
+        "formal_cross_section": {
+            "min_instruments": FORMAL_MIN_CROSS_SECTION,
+            "active_member_count_column": "active_member_count",
+            "min_coverage_ratio": FORMAL_MIN_COVERAGE_RATIO,
+            "require_eligible_cross_section": True,
+        },
+        "seed_artifacts": seed_artifacts,
+        "seed_artifacts_sha256": _canonical_json_sha256(
+            {"artifacts": seed_artifacts}
+        ),
         "mean_daily_rank_ic_mean": (
             float(np.mean(finite_rank_ic)) if finite_rank_ic.size else None
         ),
@@ -1015,6 +1190,139 @@ def run_alpha158_lightgbm(
         (json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode("utf-8"),
     )
     return report
+
+
+def inspect_alpha158_lightgbm_evidence(
+    output_path: Path,
+    training_root: Path,
+    *,
+    provider_manifest_sha256: str,
+    evaluate_split: str,
+    seeds: Sequence[int],
+    expected_ids: np.ndarray,
+) -> dict[str, Any]:
+    """Revalidate the aggregate against all per-seed prediction commitments."""
+
+    root = training_root.resolve()
+    output = ensure_within(output_path, root)
+    metadata_path = output.with_suffix(output.suffix + ".metadata.json")
+    if not output.is_file() or not metadata_path.is_file():
+        raise BaselineError("Alpha158 aggregate 或 metadata 缺失")
+    try:
+        report = json.loads(metadata_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise BaselineError("Alpha158 metadata 无法解析") from exc
+    normalized_seeds = list(seeds)
+    expected_ids = np.asarray(expected_ids, dtype=np.int64)
+    formal_contract = {
+        "min_instruments": FORMAL_MIN_CROSS_SECTION,
+        "active_member_count_column": "active_member_count",
+        "min_coverage_ratio": FORMAL_MIN_COVERAGE_RATIO,
+        "require_eligible_cross_section": True,
+    }
+    artifacts = report.get("seed_artifacts")
+    if (
+        report.get("schema_version") != BASELINE_SCHEMA
+        or report.get("status") != "ok"
+        or report.get("provider_manifest_sha256") != provider_manifest_sha256
+        or report.get("evaluate_split") != evaluate_split
+        or report.get("seeds") != normalized_seeds
+        or report.get("seed_count") != len(normalized_seeds)
+        or report.get("aggregate_method") != "arithmetic_mean_prediction"
+        or report.get("formal_cross_section") != formal_contract
+        or report.get("output_sha256") != sha256_file(output)
+        or report.get("row_count") != len(expected_ids)
+        or report.get("sample_id_sha256") != _sample_id_sha256(expected_ids)
+        or not isinstance(artifacts, list)
+        or len(artifacts) != len(normalized_seeds)
+        or report.get("seed_artifacts_sha256")
+        != _canonical_json_sha256({"artifacts": artifacts})
+    ):
+        raise BaselineError("Alpha158 20-seed aggregate/provenance 合同无效")
+
+    provider = inspect_project_qlib_provider(
+        Path(str(report.get("provider_uri", ""))), root
+    )
+    if provider.get("manifest_sha256") != provider_manifest_sha256:
+        raise BaselineError("Alpha158 provider manifest 已漂移")
+    baseline_inputs = pd.read_csv(Path(provider["provider_uri"]) / "baseline_inputs.csv")
+    expected = baseline_inputs[baseline_inputs["split"] == evaluate_split].copy()
+    observed_expected_ids = pd.to_numeric(
+        expected["sample_id"], errors="raise"
+    ).to_numpy(dtype=np.int64)
+    if not np.array_equal(observed_expected_ids, expected_ids):
+        raise BaselineError("Alpha158 evaluation sample_id 与 provider 不一致")
+
+    aggregate = pd.read_csv(output)
+    aggregate_ids = pd.to_numeric(
+        aggregate["sample_id"], errors="raise"
+    ).to_numpy(dtype=np.int64)
+    aggregate_scores = pd.to_numeric(
+        aggregate["raw_score"], errors="coerce"
+    ).to_numpy(dtype=float)
+    if not np.array_equal(aggregate_ids, expected_ids) or not np.isfinite(
+        aggregate_scores
+    ).all():
+        raise BaselineError("Alpha158 aggregate sample/score 无效")
+
+    seed_metrics = report.get("seed_metrics")
+    if not isinstance(seed_metrics, list) or len(seed_metrics) != len(normalized_seeds):
+        raise BaselineError("Alpha158 seed_metrics 不完整")
+    score_vectors: list[np.ndarray] = []
+    for position, (seed, artifact, metric) in enumerate(
+        zip(normalized_seeds, artifacts, seed_metrics, strict=True)
+    ):
+        if (
+            not isinstance(artifact, Mapping)
+            or not isinstance(metric, Mapping)
+            or artifact.get("seed") != seed
+            or metric.get("seed") != seed
+        ):
+            raise BaselineError(f"Alpha158 seed evidence 顺序/身份无效：{position}")
+        path = ensure_within(Path(str(artifact.get("path", ""))), root)
+        if not path.is_file() or artifact.get("sha256") != sha256_file(path):
+            raise BaselineError(f"Alpha158 seed={seed} prediction hash 漂移")
+        frame = pd.read_csv(path)
+        if list(frame.columns) != ["sample_id", "raw_score"]:
+            raise BaselineError(f"Alpha158 seed={seed} prediction 列合同无效")
+        ids = pd.to_numeric(frame["sample_id"], errors="raise").to_numpy(dtype=np.int64)
+        scores = pd.to_numeric(frame["raw_score"], errors="coerce").to_numpy(dtype=float)
+        if (
+            not np.array_equal(ids, expected_ids)
+            or not np.isfinite(scores).all()
+            or artifact.get("row_count") != len(expected_ids)
+            or artifact.get("sample_id_sha256") != _sample_id_sha256(expected_ids)
+        ):
+            raise BaselineError(f"Alpha158 seed={seed} 未绑定 evaluation 全样本")
+        audited = expected.copy()
+        audited["raw_score"] = scores
+        rank_ic, rank_ic_days = _mean_daily_rankic(
+            audited,
+            min_instruments=FORMAL_MIN_CROSS_SECTION,
+            active_member_count_column="active_member_count",
+            min_coverage_ratio=FORMAL_MIN_COVERAGE_RATIO,
+            require_eligible_cross_section=True,
+        )
+        for source in (artifact, metric):
+            declared_rank = source.get("mean_daily_rank_ic")
+            if rank_ic is None:
+                if declared_rank is not None:
+                    raise BaselineError(f"Alpha158 seed={seed} RankIC 证据不一致")
+            elif not math.isclose(
+                float(declared_rank), rank_ic, rel_tol=0, abs_tol=1e-12
+            ):
+                raise BaselineError(f"Alpha158 seed={seed} RankIC 证据不一致")
+            if source.get("rank_ic_day_count") != rank_ic_days:
+                raise BaselineError(f"Alpha158 seed={seed} RankIC 日数不一致")
+        score_vectors.append(scores)
+    if not np.allclose(
+        np.mean(np.stack(score_vectors, axis=0), axis=0),
+        aggregate_scores,
+        rtol=0,
+        atol=1e-12,
+    ):
+        raise BaselineError("Alpha158 aggregate 不是20-seed逐样本算术均值")
+    return dict(report)
 
 
 def _load_score_frame(
@@ -1060,10 +1368,44 @@ def _load_score_frame(
     return frame[["sample_id", "ticker", "trade_date", "raw_score"]]
 
 
-def _mean_daily_rankic(frame: pd.DataFrame) -> tuple[float | None, int]:
+def _mean_daily_rankic(
+    frame: pd.DataFrame,
+    *,
+    min_instruments: int = 2,
+    active_member_count_column: str | None = None,
+    min_coverage_ratio: float | None = None,
+    require_eligible_cross_section: bool = False,
+) -> tuple[float | None, int]:
+    if min_instruments < 2:
+        raise BaselineError("min_instruments 必须至少为2")
+    if require_eligible_cross_section:
+        if not active_member_count_column or active_member_count_column not in frame:
+            raise BaselineError("formal RankIC 缺少 active_member_count")
+        if min_coverage_ratio is None or not 0 < min_coverage_ratio <= 1:
+            raise BaselineError("formal RankIC min_coverage_ratio 必须位于(0,1]")
     values: list[float] = []
-    for _, group in frame.groupby("trade_date"):
-        if len(group) < 2 or group["raw_score"].nunique() < 2 or group[LABEL_COLUMN].nunique() < 2:
+    for trade_date, group in frame.groupby("trade_date"):
+        if require_eligible_cross_section:
+            counts = pd.to_numeric(
+                group[active_member_count_column], errors="coerce"
+            ).dropna().unique()
+            if len(counts) != 1 or counts[0] <= 0 or not float(counts[0]).is_integer():
+                raise BaselineError(
+                    f"formal RankIC active_member_count 无效或不一致：{trade_date}"
+                )
+            active_member_count = int(counts[0])
+            coverage_ratio = len(group) / active_member_count
+            if len(group) < min_instruments or coverage_ratio < float(min_coverage_ratio):
+                raise BaselineError(
+                    "formal RankIC 横截面未达标："
+                    f"{trade_date} eligible_count={len(group)} "
+                    f"active_member_count={active_member_count} coverage_ratio={coverage_ratio:.6f}"
+                )
+        if (
+            len(group) < min_instruments
+            or group["raw_score"].nunique() < 2
+            or group[LABEL_COLUMN].nunique() < 2
+        ):
             continue
         value = group["raw_score"].rank().corr(group[LABEL_COLUMN].rank())
         if pd.notna(value):
@@ -1086,6 +1428,19 @@ def validate_baseline_comparison(report: Mapping[str, Any]) -> dict[str, Any]:
     sample_count = report.get("sample_count")
     if not isinstance(sample_count, int) or sample_count < 1:
         raise BaselineError("baseline comparison sample_count 无效")
+    cross_section = report.get("cross_section_contract")
+    if not isinstance(cross_section, dict):
+        raise BaselineError("baseline comparison 缺少 cross_section_contract")
+    if not isinstance(cross_section.get("min_instruments"), int) or cross_section[
+        "min_instruments"
+    ] < 2:
+        raise BaselineError("baseline comparison min_instruments 无效")
+    if cross_section.get("require_eligible_cross_section"):
+        if cross_section.get("active_member_count_column") != "active_member_count":
+            raise BaselineError("formal baseline comparison active_member_count 合同无效")
+        ratio = cross_section.get("min_coverage_ratio")
+        if not isinstance(ratio, (int, float)) or not 0 < float(ratio) <= 1:
+            raise BaselineError("formal baseline comparison min_coverage_ratio 无效")
     for name in REQUIRED_BASELINES:
         contract = baselines[name]
         if contract.get("row_count") != sample_count:
@@ -1118,6 +1473,10 @@ def build_baseline_comparison(
     evaluate_split: str,
     training_root: Path | None = None,
     output_path: Path | None = None,
+    min_instruments: int = 2,
+    active_member_count_column: str | None = None,
+    min_coverage_ratio: float | None = None,
+    require_eligible_cross_section: bool = False,
 ) -> dict[str, Any]:
     """Create and validate one structured comparison for all mandatory baselines."""
 
@@ -1147,6 +1506,13 @@ def build_baseline_comparison(
     missing = sorted(required - set(inputs.columns))
     if missing:
         raise BaselineError(f"baseline_inputs 缺少字段：{missing}")
+    if require_eligible_cross_section:
+        if active_member_count_column != "active_member_count":
+            raise BaselineError(
+                "formal baseline comparison 必须使用 active_member_count"
+            )
+        if active_member_count_column not in inputs:
+            raise BaselineError("formal baseline comparison 缺少 active_member_count")
     if evaluate_split not in REQUIRED_SPLITS:
         raise BaselineError(f"evaluate_split 无效：{evaluate_split}")
     sample_ids = pd.to_numeric(inputs["sample_id"], errors="coerce")
@@ -1168,6 +1534,9 @@ def build_baseline_comparison(
         inputs[LABEL_COLUMN].to_numpy(dtype=float)
     ).all():
         raise BaselineError("baseline_inputs 键或 label 无效")
+    contract_columns = ["sample_id", "ticker", "trade_date", LABEL_COLUMN]
+    if require_eligible_cross_section:
+        contract_columns.append("active_member_count")
     long_frames: list[pd.DataFrame] = []
     score_columns = {
         "last_value": "last_value_score",
@@ -1175,14 +1544,12 @@ def build_baseline_comparison(
         "reversal": "reversal_score",
     }
     for name, column in score_columns.items():
-        part = inputs[
-            ["sample_id", "ticker", "trade_date", LABEL_COLUMN, column]
-        ].rename(
+        part = inputs[contract_columns + [column]].rename(
             columns={column: "raw_score"}
         )
         part.insert(0, "baseline", name)
         long_frames.append(part)
-    keys = inputs[["sample_id", "ticker", "trade_date", LABEL_COLUMN]]
+    keys = inputs[contract_columns]
     for name in EXTERNAL_BASELINES:
         scores = _load_score_frame(external_scores[name], training_root=training_root, name=name)
         part = keys.merge(
@@ -1200,7 +1567,13 @@ def build_baseline_comparison(
         raise BaselineError("baseline comparison 包含 NaN/Inf")
     metrics: dict[str, Any] = {}
     for name, group in records.groupby("baseline", sort=False):
-        rank_ic, rank_ic_days = _mean_daily_rankic(group)
+        rank_ic, rank_ic_days = _mean_daily_rankic(
+            group,
+            min_instruments=min_instruments,
+            active_member_count_column=active_member_count_column,
+            min_coverage_ratio=min_coverage_ratio,
+            require_eligible_cross_section=require_eligible_cross_section,
+        )
         score_is_constant = group["raw_score"].nunique(dropna=False) < 2
         metrics[name] = {
             "row_count": int(len(group)),
@@ -1223,6 +1596,12 @@ def build_baseline_comparison(
         "label_contract": LABEL_CONTRACT,
         "label_unit": LABEL_UNIT,
         "required_baselines": list(REQUIRED_BASELINES),
+        "cross_section_contract": {
+            "min_instruments": min_instruments,
+            "active_member_count_column": active_member_count_column,
+            "min_coverage_ratio": min_coverage_ratio,
+            "require_eligible_cross_section": require_eligible_cross_section,
+        },
         "baselines": metrics,
         "generated_at": datetime.now(timezone.utc).isoformat(),
     }
@@ -1557,6 +1936,7 @@ def inspect_evaluation_companion(
     frame = pd.read_csv(output)
     required_columns = {
         "sample_id",
+        "active_member_count",
         "entry_date",
         "exit_date",
         "entry_price_raw",
@@ -1581,6 +1961,7 @@ def inspect_evaluation_companion(
     if len(frame) != metadata.get("row_count"):
         raise BaselineError("evaluation companion row_count 漂移")
     numeric = [
+        "active_member_count",
         "entry_price_raw",
         "exit_price_raw",
         "stamp_duty_rate",
@@ -1592,6 +1973,15 @@ def inspect_evaluation_companion(
         raise BaselineError("evaluation companion 数值包含 NaN/Inf")
     if not (pd.to_numeric(frame["holding_period_sessions"], errors="coerce") == 10).all():
         raise BaselineError("evaluation companion holding_period_sessions 必须为10")
+    active_members = pd.to_numeric(
+        frame["active_member_count"], errors="coerce"
+    ).to_numpy(dtype=float)
+    if (
+        not np.isfinite(active_members).all()
+        or (active_members < 1).any()
+        or not np.equal(active_members, np.floor(active_members)).all()
+    ):
+        raise BaselineError("evaluation companion active_member_count 合同无效")
     factors = pd.to_numeric(frame["corporate_action_factor"], errors="coerce")
     action_counts = pd.to_numeric(frame["corporate_action_event_count"], errors="coerce")
     if (factors <= 0).any() or (action_counts < 0).any() or not np.equal(
@@ -1712,9 +2102,17 @@ def build_evaluation_companion(
     ]
     if baseline_inputs.duplicated(["ticker", "trade_date"]).any():
         raise BaselineError("provider baseline_inputs 存在重复键")
+    if "active_member_count" not in samples or "active_member_count" not in baseline_inputs:
+        raise BaselineError("evaluation companion 缺少 active_member_count 来源绑定")
     sample_keys = samples[
-        ["sample_id", "ticker", "origin_date", LABEL_COLUMN]
-    ].rename(columns={"origin_date": "trade_date", LABEL_COLUMN: "sample_label"})
+        ["sample_id", "ticker", "origin_date", LABEL_COLUMN, "active_member_count"]
+    ].rename(
+        columns={
+            "origin_date": "trade_date",
+            LABEL_COLUMN: "sample_label",
+            "active_member_count": "sample_active_member_count",
+        }
+    )
     naive = sample_keys.merge(
         baseline_inputs[
             [
@@ -1722,6 +2120,7 @@ def build_evaluation_companion(
                 "ticker",
                 "trade_date",
                 LABEL_COLUMN,
+                "active_member_count",
                 "last_value_score",
                 "momentum_score",
                 "reversal_score",
@@ -1737,9 +2136,25 @@ def build_evaluation_companion(
         naive["sample_label"], naive[LABEL_COLUMN], rtol=0, atol=1e-8
     ):
         raise BaselineError("provider baseline_inputs label 与 sample_index 不一致")
+    sample_active = pd.to_numeric(
+        naive["sample_active_member_count"], errors="coerce"
+    ).to_numpy(dtype=float)
+    provider_active = pd.to_numeric(
+        naive["active_member_count"], errors="coerce"
+    ).to_numpy(dtype=float)
+    if (
+        not np.isfinite(sample_active).all()
+        or (sample_active < 1).any()
+        or not np.equal(sample_active, np.floor(sample_active)).all()
+        or not np.array_equal(sample_active, provider_active)
+    ):
+        raise BaselineError(
+            "provider baseline_inputs active_member_count 与 sample_index 不一致"
+        )
     if not np.array_equal(naive["sample_id"].to_numpy(dtype=np.int64), sample_ids):
         raise BaselineError("provider baseline_inputs 未与 sample_id 同序")
     result = execution.copy()
+    result["active_member_count"] = sample_active.astype(np.int32)
     for column in ("last_value_score", "momentum_score", "reversal_score"):
         result[column] = pd.to_numeric(naive[column], errors="coerce").to_numpy(dtype=float)
     result["drift_score"] = result["momentum_score"] / 20.0 * 10.0
@@ -1759,6 +2174,7 @@ def build_evaluation_companion(
         source_artifacts[name] = dict(naive_record)
     ordered_columns = [
         "sample_id",
+        "active_member_count",
         "entry_date",
         "exit_date",
         "entry_price_raw",

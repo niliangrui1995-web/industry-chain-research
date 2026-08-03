@@ -173,6 +173,14 @@ MANDATORY_PIT_TABLES = tuple(
 REQUIRED_INDEX_CODES = ("000300.SH", "000905.SH")
 PIT_COVERAGE_BINDING_SCHEMA = "kronos-a-share-pit-coverage-v1"
 PIT_PROVENANCE_SCHEMA = "kronos-a-share-pit-provenance-v1"
+PIT_NORMALIZATION_SCHEMA_V1 = "kronos-a-share-pit-normalization-v1"
+PIT_NORMALIZATION_SCHEMA_V2 = "kronos-a-share-pit-normalization-v2"
+PIT_PUBLICATION_SCHEMA_V1 = "kronos-a-share-pit-publication-v1"
+PIT_PUBLICATION_SCHEMA_V2 = "kronos-a-share-pit-publication-v2"
+PIT_REVIEWED_OVERLAY_SCHEMA = "kronos-a-share-reviewed-overlay-v1"
+PIT_ROW_AUDIT_SCHEMA = "kronos-a-share-row-audit-v1"
+PIT_CSI_MEMBERSHIP_RECEIPT_SCHEMA = "kronos-a-share-csi-membership-receipt-v1"
+PIT_CNINFO_PAGINATION_RECEIPT_SCHEMA = "kronos-a-share-cninfo-pagination-receipt-v1"
 MINIMUM_LISTING_DAYS = 120
 PIT_PROVENANCE_DATASETS = (
     "security_master",
@@ -202,8 +210,27 @@ REQUIRED_CAPABILITIES = (
     "csi500_history",
     "sample_trade_state_history",
     "trading_calendar_history",
+    "normalization_release_contract",
 )
-MODEL_ADJUSTMENT_SCHEMA = "kronos-a-share-token-cache-v1"
+V2_COVERAGE_KEY_CONTRACTS = {
+    "security_master": "derived",
+    "st_status": "derived",
+    "suspensions": "derived",
+    "price_limits": "derived",
+    "index_membership": "source_bound",
+    "corporate_actions": "source_bound",
+    TRADING_CALENDAR_TABLE: "source_bound",
+}
+PIT_DATASET_KEYS = {
+    "security_master": ("ticker", "list_date"),
+    "st_status": ("ticker", "effective_from"),
+    "suspensions": ("ticker", "trade_date"),
+    "price_limits": ("ticker", "trade_date"),
+    "index_membership": ("index_code", "ticker", "effective_from"),
+    "corporate_actions": ("ticker", "announcement_date", "ex_date"),
+    TRADING_CALENDAR_TABLE: ("trade_date",),
+}
+MODEL_ADJUSTMENT_SCHEMA = "kronos-a-share-token-cache-v2"
 INFERENCE_SNAPSHOT_SCHEMA = "kronos-a-share-inference-snapshot-v1"
 INFERENCE_INPUT_BINDING_SCHEMA = "kronos-a-share-inference-input-v1"
 SHANGHAI_TZ = ZoneInfo("Asia/Shanghai")
@@ -1017,6 +1044,572 @@ def _date_intervals_cover(
     return cursor > end
 
 
+def _strict_manifest_keys(
+    payload: Mapping[str, Any],
+    allowed: set[str],
+    *,
+    label: str,
+) -> None:
+    unknown = sorted(set(payload) - allowed)
+    if unknown:
+        raise PitContractError(f"{label} 包含未知字段: {unknown}")
+
+
+def _load_bound_normalization_for_replay(root: Path) -> dict[str, Any] | None:
+    publication_path = root / "publication_manifest.json"
+    if not publication_path.is_file():
+        return None
+    try:
+        publication = json.loads(publication_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise PitContractError("publication_manifest 无法为变换重放读取") from exc
+    if not isinstance(publication, Mapping):
+        raise PitContractError("publication_manifest 必须是 JSON object")
+    if publication.get("schema_version") != PIT_PUBLICATION_SCHEMA_V2:
+        return None
+    if publication.get("normalization_schema_version") != PIT_NORMALIZATION_SCHEMA_V2:
+        raise PitContractError("publication v2 未绑定 normalization v2")
+    binding = _validate_bound_normalization_manifest(
+        publication.get("normalization_manifest"),
+        expected_sha256=publication.get("normalization_manifest_sha256"),
+        expected_schema=PIT_NORMALIZATION_SCHEMA_V2,
+    )
+    path = Path(binding["path"])
+    try:
+        import kronos_a_share_public_data as public_data
+
+        payload, observed_hash = public_data._normalization_manifest(path)
+    except Exception as exc:
+        raise PitContractError(f"publication normalization manifest 无法现场解析：{exc}") from exc
+    if observed_hash != binding["sha256"]:
+        raise PitContractError("publication normalization manifest 现场哈希不一致")
+    return {
+        "path": str(path),
+        "sha256": observed_hash,
+        "payload": payload,
+    }
+
+
+def _replay_normalization_mapping(
+    root: Path,
+    *,
+    dataset: str,
+    normalization_source: Mapping[str, Any],
+    provenance_source: Mapping[str, Any],
+    extracted_frame: pd.DataFrame,
+    overlay_path: Path | None,
+) -> tuple[pd.DataFrame, pd.DataFrame, bytes]:
+    try:
+        import kronos_a_share_public_data as public_data
+    except Exception as exc:
+        raise PitContractError(f"{dataset}: 无法加载固定 normalization 实现：{exc}") from exc
+    mapping = normalization_source.get("mapping")
+    constants = normalization_source.get("constants", {})
+    if not isinstance(mapping, Mapping) or not mapping:
+        raise PitContractError(f"{dataset}: normalization mapping 必须为非空 object")
+    if not isinstance(constants, Mapping) or set(mapping) & set(constants):
+        raise PitContractError(f"{dataset}: normalization constants 合同无效")
+    role = str(normalization_source.get("role", "authoritative"))
+    spec = PIT_TABLE_SPECS[dataset]
+    configured_targets = set(mapping) | set(constants)
+    allowed_targets = set(spec.required_columns) | set(spec.optional_columns)
+    if not configured_targets <= allowed_targets:
+        raise PitContractError(f"{dataset}: normalization 映射包含未知目标列")
+    required = (
+        set(PIT_DATASET_KEYS[dataset])
+        if role in {"mechanical_cross_check", "expected_keys"}
+        else set(spec.required_columns)
+    )
+    if not required <= configured_targets:
+        raise PitContractError(f"{dataset}: normalization 映射缺少必需目标列")
+    output = pd.DataFrame(index=extracted_frame.index)
+    try:
+        for target, source_mapping in mapping.items():
+            output[target] = public_data._mapping_value(
+                extracted_frame,
+                source_mapping,
+                label=f"consumer.{dataset}.{normalization_source.get('source_id')}.{target}",
+            )
+        for target, value in constants.items():
+            if value is None:
+                raise PitContractError(f"{dataset}: constants.{target} 不得为 null")
+            output[target] = value
+    except PitContractError:
+        raise
+    except Exception as exc:
+        raise PitContractError(f"{dataset}: mapping/constants 现场重放失败：{exc}") from exc
+
+    configured_overlay = normalization_source.get("reviewed_overlay")
+    published_overlay = provenance_source.get("reviewed_overlay")
+    if (configured_overlay is None) != (published_overlay is None):
+        raise PitContractError(f"{dataset}: reviewed_overlay 与 normalization 合同不一致")
+    if configured_overlay is not None:
+        if not isinstance(configured_overlay, Mapping) or not isinstance(
+            published_overlay, Mapping
+        ):
+            raise PitContractError(f"{dataset}: reviewed_overlay 必须是 object")
+        for field in set(configured_overlay) - {"path"}:
+            if configured_overlay.get(field) != published_overlay.get(field):
+                raise PitContractError(
+                    f"{dataset}: reviewed_overlay.{field} 与 normalization 合同不一致"
+                )
+        if overlay_path is None:
+            raise PitContractError(f"{dataset}: reviewed_overlay 发布工件缺失")
+        replay_contract = {
+            "source_id": str(normalization_source.get("source_id", "")),
+            "sha256": str(provenance_source.get("sha256", "")),
+            "extracted_sha256": normalization_source.get("extracted_sha256"),
+            "extractor_id": normalization_source.get("extractor_id"),
+            "extractor_version": str(normalization_source.get("extractor_version", "")),
+            "extractor_config_sha256": normalization_source.get(
+                "extractor_config_sha256"
+            ),
+            "normalization_schema": PIT_NORMALIZATION_SCHEMA_V2,
+            "reviewed_overlay": {**dict(configured_overlay), "path": str(overlay_path)},
+            "_training_root": root,
+            "_output": root / ".consumer-replay-output",
+        }
+        try:
+            output = public_data._apply_reviewed_overlay(
+                output, replay_contract, dataset=dataset
+            )
+        except Exception as exc:
+            raise PitContractError(f"{dataset}: reviewed_overlay 现场重放失败：{exc}") from exc
+
+    canonical_bytes = public_data._canonical_extracted_bytes(output)
+    if role == "expected_keys":
+        key_columns = list(PIT_DATASET_KEYS[dataset])
+        if output[key_columns].isna().any().any() or (
+            output[key_columns]
+            .astype(str)
+            .apply(lambda column: column.str.strip().eq(""))
+        ).any().any():
+            raise PitContractError(f"{dataset}: expected_keys 现场重放包含空键")
+        normalized = output[key_columns].drop_duplicates().reset_index(drop=True)
+    elif role == "mechanical_cross_check":
+        normalized = output.reset_index(drop=True)
+    else:
+        normalized = validate_pit_table(dataset, output)
+    return output, normalized, canonical_bytes
+
+
+def _verify_extraction_provenance(
+    root: Path,
+    *,
+    label: str,
+    source: Mapping[str, Any],
+    raw_path: Path,
+    raw_sha256: str,
+    table_path: Path,
+    manifest_path: Path,
+    normalization_source: Mapping[str, Any] | None = None,
+    keys_only: bool = False,
+) -> dict[str, Any]:
+    canonical_dataset = label.split(".", 1)[0]
+    configured_role = str(source.get("role", "authoritative"))
+    if normalization_source is not None:
+        normalization_role = str(
+            normalization_source.get("role", "authoritative")
+        )
+        for field, expected in (
+            ("source_id", normalization_source.get("source_id")),
+            ("source_class", normalization_source.get("source_class")),
+            ("role", normalization_role),
+        ):
+            observed = configured_role if field == "role" else source.get(field)
+            if observed != expected:
+                raise PitContractError(
+                    f"{label}.{field} 与 publication 绑定 normalization source 不一致"
+                )
+        for field in ("artifact_role", "artifact_schema_version"):
+            if source.get(field) != normalization_source.get(field):
+                raise PitContractError(
+                    f"{label}.{field} 与 publication 绑定 normalization source 不一致"
+                )
+        configured_audit = normalization_source.get("row_audit")
+        if not isinstance(configured_audit, Mapping):
+            raise PitContractError(f"{label}: normalization source 缺少 row_audit")
+        configured_raw_hash = (
+            normalization_source.get("sha256")
+            if normalization_role == "mechanical_cross_check"
+            else configured_audit.get("source_sha256")
+        )
+        if configured_raw_hash != raw_sha256:
+            raise PitContractError(
+                f"{label}: raw SHA256 与 publication 绑定 normalization source 不一致"
+            )
+        if source.get("source_class") != "tdx_mechanical":
+            try:
+                import kronos_a_share_public_data as public_data
+
+                public_data._validate_fixed_source_identity(
+                    str(source.get("url", "")),
+                    source_class=str(source.get("source_class", "")),
+                    dataset=canonical_dataset,
+                )
+            except Exception as exc:
+                raise PitContractError(f"{label}: 固定来源身份校验失败：{exc}") from exc
+    extraction = source.get("extraction")
+    if not isinstance(extraction, Mapping):
+        raise PitContractError(f"{label}.extraction 必须是 object")
+    allowed = {
+        "raw_sha256",
+        "extractor_id",
+        "extractor_version",
+        "extractor_config",
+        "extractor_config_sha256",
+        "extracted_sha256",
+        "extracted_row_count",
+        "row_audit_status",
+        "row_audit_sha256",
+        "binding_sha256",
+        "bytes",
+        "source_format",
+        "path",
+        "sha256",
+        "canonical_source_path",
+        "canonical_source_sha256",
+        "canonical_source_row_count",
+        "canonical_source_bytes",
+        "pagination_metadata",
+    }
+    _strict_manifest_keys(extraction, allowed, label=f"{label}.extraction")
+    if extraction.get("raw_sha256") != raw_sha256:
+        raise PitContractError(f"{label}.extraction.raw_sha256 绑定不匹配")
+    if extraction.get("source_format") not in {"csv", "json", "html", "pdf"}:
+        raise PitContractError(f"{label}.extraction.source_format 无效")
+    expected_extractor = {
+        "csv": ("csv-table-v1", "1"),
+        "json": ("json-records-v1", "1"),
+        "html": ("html-table-v1", "1"),
+        "pdf": ("pdf-table-v1", "1"),
+    }[str(extraction.get("source_format"))]
+    if (
+        extraction.get("extractor_id"),
+        extraction.get("extractor_version"),
+    ) != expected_extractor:
+        raise PitContractError(f"{label}.extraction extractor 不在固定 allowlist")
+    for field in (
+        "extractor_config_sha256",
+        "extracted_sha256",
+        "binding_sha256",
+        "sha256",
+        "row_audit_sha256",
+    ):
+        if not re.fullmatch(r"[0-9a-f]{64}", str(extraction.get(field, ""))):
+            raise PitContractError(f"{label}.extraction.{field} 必须为小写 SHA256")
+    if extraction.get("sha256") != extraction.get("extracted_sha256"):
+        raise PitContractError(f"{label}.extraction extracted SHA256 自相矛盾")
+    if extraction.get("row_audit_status") != "passed":
+        raise PitContractError(f"{label}.extraction.row_audit_status 必须为 passed")
+    extractor_config = extraction.get("extractor_config")
+    if not isinstance(extractor_config, Mapping):
+        raise PitContractError(f"{label}.extraction.extractor_config 必须为 object")
+    if _canonical_json_sha256(extractor_config) != extraction.get(
+        "extractor_config_sha256"
+    ):
+        raise PitContractError(f"{label}.extraction.extractor_config_sha256 不匹配")
+    if normalization_source is not None:
+        for field, observed in (
+            ("format", extraction.get("source_format")),
+            ("extractor_id", extraction.get("extractor_id")),
+            ("extractor_version", extraction.get("extractor_version")),
+            ("extractor_config", extractor_config),
+            ("extractor_config_sha256", extraction.get("extractor_config_sha256")),
+            ("extracted_sha256", extraction.get("extracted_sha256")),
+            ("extracted_row_count", extraction.get("extracted_row_count")),
+        ):
+            if normalization_source.get(field) != observed:
+                raise PitContractError(
+                    f"{label}.extraction.{field} 与 publication 绑定变换合同不一致"
+                )
+    for field in ("extracted_row_count", "bytes"):
+        value = extraction.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+            raise PitContractError(f"{label}.extraction.{field} 必须为正整数")
+    for field in ("canonical_source_row_count", "canonical_source_bytes"):
+        value = extraction.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+            raise PitContractError(f"{label}.extraction.{field} 必须为正整数")
+    extracted_path = _resolve_pit_artifact(
+        root, extraction.get("path"), field=f"{label}.extraction.path"
+    )
+    if extracted_path in {raw_path, table_path.resolve(), manifest_path}:
+        raise PitContractError(f"{label}.extraction.path 必须指向独立解析结果")
+    if _sha256_file(extracted_path) != extraction["sha256"]:
+        raise PitContractError(f"{label}.extraction 解析结果 SHA256 不匹配")
+    if extracted_path.stat().st_size != extraction["bytes"]:
+        raise PitContractError(f"{label}.extraction 解析结果字节数不匹配")
+    try:
+        import kronos_a_share_public_data as public_data
+
+        replayed_frame, replayed_bytes = public_data._extract_tabular_source(
+            {
+                "source_id": str(source.get("source_id", label)),
+                "raw_path": raw_path,
+                "source_format": extraction["source_format"],
+                "extractor_config": dict(extractor_config),
+                "extracted_sha256": extraction["extracted_sha256"],
+                "extracted_row_count": extraction["extracted_row_count"],
+            }
+        )
+    except Exception as exc:
+        raise PitContractError(f"{label}.extraction 确定性重放失败: {exc}") from exc
+    if replayed_bytes != extracted_path.read_bytes():
+        raise PitContractError(f"{label}.extraction 解析结果无法由原文重放")
+    replayed_pagination = replayed_frame.attrs.get("pagination_metadata")
+    if extraction.get("pagination_metadata") != replayed_pagination:
+        raise PitContractError(f"{label}.extraction pagination metadata 重放不一致")
+    canonical_source_path = _resolve_pit_artifact(
+        root,
+        extraction.get("canonical_source_path"),
+        field=f"{label}.extraction.canonical_source_path",
+    )
+    if canonical_source_path in {
+        raw_path,
+        extracted_path,
+        table_path.resolve(),
+        manifest_path,
+    }:
+        raise PitContractError(f"{label}.extraction canonical source 必须独立")
+    if (
+        _sha256_file(canonical_source_path)
+        != extraction.get("canonical_source_sha256")
+        or canonical_source_path.stat().st_size
+        != extraction.get("canonical_source_bytes")
+    ):
+        raise PitContractError(f"{label}.extraction canonical source 漂移")
+    if configured_role in {"expected_keys", "mechanical_cross_check"}:
+        canonical_source_frame = _read_table(canonical_source_path)
+        if configured_role == "expected_keys" and tuple(
+            canonical_source_frame.columns
+        ) != PIT_DATASET_KEYS[canonical_dataset]:
+            raise PitContractError(f"{label}.extraction expected_keys canonical 列合同无效")
+    else:
+        canonical_source_frame = validate_pit_table(
+            canonical_dataset,
+            canonical_source_path,
+        )
+    if len(canonical_source_frame) != extraction.get("canonical_source_row_count"):
+        raise PitContractError(f"{label}.extraction canonical source row_count 漂移")
+
+    audit = source.get("row_audit")
+    if not isinstance(audit, Mapping):
+        raise PitContractError(f"{label}.row_audit 缺失，拒绝标量自证")
+    audit_allowed = {
+        "schema_version",
+        "path",
+        "sha256",
+        "bytes",
+        "row_count",
+        "source_sha256",
+        "extracted_sha256",
+        "audit_status",
+        "audited_at",
+        "auditor",
+    }
+    _strict_manifest_keys(audit, audit_allowed, label=f"{label}.row_audit")
+    if audit.get("schema_version") != PIT_ROW_AUDIT_SCHEMA:
+        raise PitContractError(f"{label}.row_audit.schema_version 无效")
+    if (
+        audit.get("source_sha256") != raw_sha256
+        or audit.get("extracted_sha256") != extraction["extracted_sha256"]
+        or audit.get("sha256") != extraction["row_audit_sha256"]
+        or audit.get("audit_status") != "passed"
+    ):
+        raise PitContractError(f"{label}.row_audit 哈希/状态绑定不匹配")
+    if normalization_source is not None:
+        configured_audit = normalization_source["row_audit"]
+        for field in audit_allowed - {"path"}:
+            if audit.get(field) != configured_audit.get(field):
+                raise PitContractError(
+                    f"{label}.row_audit.{field} 与 publication 绑定审计合同不一致"
+                )
+    audit_path = _resolve_pit_artifact(
+        root, audit.get("path"), field=f"{label}.row_audit.path"
+    )
+    if audit_path in {
+        raw_path,
+        extracted_path,
+        table_path.resolve(),
+        manifest_path,
+    }:
+        raise PitContractError(f"{label}.row_audit.path 必须指向独立审计工件")
+    if (
+        _sha256_file(audit_path) != audit.get("sha256")
+        or audit_path.stat().st_size != audit.get("bytes")
+    ):
+        raise PitContractError(f"{label}.row_audit 工件漂移")
+    try:
+        audit_frame = pd.read_csv(
+            audit_path, dtype=str, keep_default_na=False, encoding="utf-8-sig"
+        )
+    except Exception as exc:
+        raise PitContractError(f"{label}.row_audit 无法读取") from exc
+    if set(audit_frame.columns) != {
+        "source_row_number",
+        "raw_locator",
+        "extracted_row_sha256",
+        "audit_status",
+    }:
+        raise PitContractError(f"{label}.row_audit 列合同无效")
+    expected_numbers = [str(index) for index in range(1, len(replayed_frame) + 1)]
+    expected_locators = list(replayed_frame.attrs.get("raw_locators", ()))
+    expected_row_hashes = [
+        public_data._canonical_extracted_row_sha256(
+            row, list(replayed_frame.columns)
+        )
+        for row in replayed_frame.to_dict(orient="records")
+    ]
+    if (
+        audit.get("row_count") != len(replayed_frame)
+        or audit_frame["source_row_number"].tolist() != expected_numbers
+        or audit_frame["raw_locator"].tolist() != expected_locators
+        or audit_frame["extracted_row_sha256"].tolist() != expected_row_hashes
+        or not audit_frame["audit_status"].eq("passed").all()
+    ):
+        raise PitContractError(f"{label}.row_audit 逐行定位/哈希/状态未闭合")
+    try:
+        audited_at = datetime.fromisoformat(
+            str(audit.get("audited_at", "")).replace("Z", "+00:00")
+        )
+    except ValueError as exc:
+        raise PitContractError(f"{label}.row_audit.audited_at 无效") from exc
+    if audited_at.tzinfo is None or not str(audit.get("auditor", "")).strip():
+        raise PitContractError(f"{label}.row_audit 审核身份/时点无效")
+    binding_payload = {
+        "raw_sha256": raw_sha256,
+        "extractor_id": extraction["extractor_id"],
+        "extractor_version": extraction["extractor_version"],
+        "extractor_config_sha256": extraction["extractor_config_sha256"],
+        "extracted_sha256": extraction["extracted_sha256"],
+        "extracted_row_count": extraction["extracted_row_count"],
+        "row_audit_status": extraction["row_audit_status"],
+        "row_audit_sha256": extraction["row_audit_sha256"],
+        "canonical_source_sha256": extraction["canonical_source_sha256"],
+        "canonical_source_row_count": extraction["canonical_source_row_count"],
+    }
+    if extraction.get("pagination_metadata") is not None:
+        binding_payload["pagination_metadata"] = extraction["pagination_metadata"]
+    if _canonical_json_sha256(binding_payload) != extraction["binding_sha256"]:
+        raise PitContractError(f"{label}.extraction raw/extracted binding SHA256 不匹配")
+
+    overlay_report: dict[str, Any] | None = None
+    overlay_path: Path | None = None
+    overlay = source.get("reviewed_overlay")
+    if overlay is not None:
+        if not isinstance(overlay, Mapping):
+            raise PitContractError(f"{label}.reviewed_overlay 必须是 object")
+        overlay_allowed = {
+            "schema_version",
+            "path",
+            "sha256",
+            "bytes",
+            "row_count",
+            "raw_sha256",
+            "extracted_sha256",
+            "extractor_id",
+            "extractor_version",
+            "extractor_config_sha256",
+            "review_status",
+            "reviewed_at",
+            "reviewer",
+            "reason",
+        }
+        _strict_manifest_keys(
+            overlay, overlay_allowed, label=f"{label}.reviewed_overlay"
+        )
+        if overlay.get("schema_version") != PIT_REVIEWED_OVERLAY_SCHEMA:
+            raise PitContractError(f"{label}.reviewed_overlay.schema_version 无效")
+        overlay_path = _resolve_pit_artifact(
+            root, overlay.get("path"), field=f"{label}.reviewed_overlay.path"
+        )
+        if overlay_path in {raw_path, extracted_path, table_path.resolve(), manifest_path}:
+            raise PitContractError(f"{label}.reviewed_overlay.path 必须指向独立审核文件")
+        if _sha256_file(overlay_path) != str(overlay.get("sha256", "")):
+            raise PitContractError(f"{label}.reviewed_overlay SHA256 不匹配")
+        if overlay_path.stat().st_size != int(overlay.get("bytes", -1)):
+            raise PitContractError(f"{label}.reviewed_overlay 字节数不匹配")
+        for field, expected in (
+            ("raw_sha256", raw_sha256),
+            ("extracted_sha256", extraction["extracted_sha256"]),
+            ("extractor_id", extraction["extractor_id"]),
+            ("extractor_version", extraction["extractor_version"]),
+            ("extractor_config_sha256", extraction["extractor_config_sha256"]),
+        ):
+            if overlay.get(field) != expected:
+                raise PitContractError(f"{label}.reviewed_overlay.{field} 绑定不匹配")
+        if overlay.get("review_status") != "approved":
+            raise PitContractError(f"{label}.reviewed_overlay.review_status 无效")
+        try:
+            reviewed_at = datetime.fromisoformat(
+                str(overlay.get("reviewed_at", "")).replace("Z", "+00:00")
+            )
+        except ValueError as exc:
+            raise PitContractError(f"{label}.reviewed_overlay.reviewed_at 无效") from exc
+        if reviewed_at.tzinfo is None:
+            raise PitContractError(f"{label}.reviewed_overlay.reviewed_at 必须带时区")
+        for field in ("reviewer", "reason"):
+            if not isinstance(overlay.get(field), str) or not overlay[field].strip():
+                raise PitContractError(f"{label}.reviewed_overlay.{field} 不能为空")
+        row_count = overlay.get("row_count")
+        if not isinstance(row_count, int) or isinstance(row_count, bool) or row_count < 1:
+            raise PitContractError(f"{label}.reviewed_overlay.row_count 必须为正整数")
+        overlay_report = {
+            "verified": True,
+            "path": str(overlay_path),
+            "sha256": overlay["sha256"],
+            "row_count": row_count,
+        }
+    replayed_canonical_frame = canonical_source_frame
+    if normalization_source is not None:
+        _, replayed_canonical_frame, replayed_canonical_bytes = (
+            _replay_normalization_mapping(
+                root,
+                dataset=canonical_dataset,
+                normalization_source=normalization_source,
+                provenance_source=source,
+                extracted_frame=replayed_frame,
+                overlay_path=overlay_path,
+            )
+        )
+        if replayed_canonical_bytes != canonical_source_path.read_bytes():
+            raise PitContractError(
+                f"{label}.extraction canonical source 无法由 publication 绑定变换合同重建"
+            )
+        if (
+            _sha256_bytes(replayed_canonical_bytes)
+            != extraction.get("canonical_source_sha256")
+            or len(replayed_canonical_bytes)
+            != extraction.get("canonical_source_bytes")
+            or len(replayed_canonical_frame)
+            != extraction.get("canonical_source_row_count")
+        ):
+            raise PitContractError(
+                f"{label}.extraction canonical source 重放哈希/行数/字节数不一致"
+            )
+    return {
+        "verified": True,
+        "source_format": extraction["source_format"],
+        "path": str(extracted_path),
+        "sha256": extraction["sha256"],
+        "row_count": extraction["extracted_row_count"],
+        "binding_sha256": extraction["binding_sha256"],
+        "canonical_source_path": str(canonical_source_path),
+        "pagination_metadata": extraction.get("pagination_metadata"),
+        "reviewed_overlay": overlay_report,
+        "row_audit": {
+            "verified": True,
+            "path": str(audit_path),
+            "sha256": audit["sha256"],
+            "row_count": len(audit_frame),
+        },
+        "_canonical_frame": replayed_canonical_frame,
+        "_extracted_frame": replayed_frame,
+        "_overlay_path": overlay_path,
+    }
+
+
 def _verify_source_provenance(
     root: Path,
     *,
@@ -1026,6 +1619,7 @@ def _verify_source_provenance(
     expected_manifest_sha256: str,
     start: date,
     end: date,
+    bound_normalization: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     manifest_path = _resolve_pit_artifact(
         root, manifest_reference, field=f"{dataset}.source_manifest"
@@ -1055,25 +1649,212 @@ def _verify_source_provenance(
     )
     if manifest_start > start or manifest_end < end:
         raise PitContractError(f"{dataset}: provenance 有效期覆盖不足")
+    normalization = manifest.get("normalization")
+    normalization_report: dict[str, Any] | None = None
+    if normalization is not None:
+        if not isinstance(normalization, Mapping):
+            raise PitContractError(f"{dataset}: provenance normalization 必须是 object")
+        normalization_schema = normalization.get("schema_version")
+        if normalization_schema not in {
+            PIT_NORMALIZATION_SCHEMA_V1,
+            PIT_NORMALIZATION_SCHEMA_V2,
+        }:
+            raise PitContractError(f"{dataset}: normalization schema_version 无效")
+        if normalization_schema == PIT_NORMALIZATION_SCHEMA_V2:
+            _strict_manifest_keys(
+                manifest,
+                {
+                    "schema_version",
+                    "dataset",
+                    "coverage_start",
+                    "coverage_end",
+                    "sources",
+                    "cross_checks",
+                    "normalization",
+                },
+                label=f"{dataset}.provenance",
+            )
+            allowed_normalization = {
+                "schema_version",
+                "manifest_sha256",
+                "source_priority",
+                "coverage_key_contract",
+                "equal_priority_conflict_keys_excluded",
+                "mechanical_conflict_keys_excluded",
+                "lower_priority_disagreements",
+                "expected_key_count",
+                "missing_expected_key_count",
+                "outside_fixed_key_space_count",
+                "derived_contract_issues",
+                "exclusion_report",
+                "exclusion_report_sha256",
+                "model_coverage_start",
+                "model_coverage_end",
+                "evidence_lookback_start",
+                "completeness_receipt",
+            }
+            _strict_manifest_keys(
+                normalization,
+                allowed_normalization,
+                label=f"{dataset}.normalization",
+            )
+            if normalization.get("source_priority") != [
+                "official_primary",
+                "public_secondary",
+                "tdx_mechanical",
+            ]:
+                raise PitContractError(f"{dataset}: normalization source_priority 无效")
+            if normalization.get("coverage_key_contract") != V2_COVERAGE_KEY_CONTRACTS[dataset]:
+                raise PitContractError(f"{dataset}: coverage_key_contract 不符合固定合同")
+            normalization_manifest_sha256 = str(
+                normalization.get("manifest_sha256", "")
+            )
+            if not re.fullmatch(r"[0-9a-f]{64}", normalization_manifest_sha256):
+                raise PitContractError(
+                    f"{dataset}: normalization manifest_sha256 无效"
+                )
+            model_start = _parse_manifest_date(
+                normalization.get("model_coverage_start"),
+                field=f"{dataset}.model_coverage_start",
+            )
+            model_end = _parse_manifest_date(
+                normalization.get("model_coverage_end"),
+                field=f"{dataset}.model_coverage_end",
+            )
+            evidence_start = _parse_manifest_date(
+                normalization.get("evidence_lookback_start"),
+                field=f"{dataset}.evidence_lookback_start",
+            )
+            if model_start != PIT_START or model_end != PIT_END or evidence_start >= model_start:
+                raise PitContractError(f"{dataset}: v2 model/evidence coverage 合同无效")
+            normalization_report = {
+                "schema_version": normalization_schema,
+                "model_coverage_start": model_start.isoformat(),
+                "model_coverage_end": model_end.isoformat(),
+                "evidence_lookback_start": evidence_start.isoformat(),
+                "coverage_key_contract": normalization["coverage_key_contract"],
+                "manifest_sha256": normalization_manifest_sha256,
+            }
+        else:
+            normalization_report = {"schema_version": normalization_schema}
+    normalization_dataset_config: Mapping[str, Any] | None = None
+    configured_sources: dict[tuple[str, str], Mapping[str, Any]] = {}
+    expected_key_config: Mapping[str, Any] | None = None
+    if (
+        normalization_report is not None
+        and normalization_report["schema_version"] == PIT_NORMALIZATION_SCHEMA_V2
+        and bound_normalization is not None
+    ):
+        if normalization_report["manifest_sha256"] != bound_normalization.get("sha256"):
+            raise PitContractError(
+                f"{dataset}: provenance normalization hash 与 publication 绑定不一致"
+            )
+        bound_payload = bound_normalization.get("payload")
+        if not isinstance(bound_payload, Mapping):
+            raise PitContractError(f"{dataset}: publication normalization payload 缺失")
+        candidate = bound_payload.get("datasets", {}).get(dataset)
+        if not isinstance(candidate, Mapping):
+            raise PitContractError(f"{dataset}: publication normalization dataset 合同缺失")
+        normalization_dataset_config = candidate
+        raw_configs = candidate.get("sources")
+        if not isinstance(raw_configs, list) or not raw_configs:
+            raise PitContractError(f"{dataset}: publication normalization sources 缺失")
+        for config_index, configured in enumerate(raw_configs):
+            if not isinstance(configured, Mapping):
+                raise PitContractError(
+                    f"{dataset}: publication normalization sources[{config_index}] 无效"
+                )
+            identity = (
+                str(configured.get("source_id", "")),
+                str(configured.get("role", "authoritative")),
+            )
+            if not identity[0] or identity in configured_sources:
+                raise PitContractError(
+                    f"{dataset}: publication normalization source_id/role 重复"
+                )
+            configured_sources[identity] = configured
+        configured_expected = candidate.get("expected_keys")
+        if configured_expected is not None:
+            if not isinstance(configured_expected, Mapping):
+                raise PitContractError(f"{dataset}: expected_keys normalization 合同无效")
+            expected_key_config = configured_expected
+            expected_identity = (
+                str(configured_expected.get("source_id", "")),
+                "expected_keys",
+            )
+            if expected_identity[0] not in {
+                identity[0] for identity in configured_sources
+            }:
+                configured_sources[expected_identity] = configured_expected
+
     sources = manifest.get("sources")
     if not isinstance(sources, list) or not sources:
         raise PitContractError(f"{dataset}: provenance sources 必须为非空数组")
+    cross_checks = manifest.get("cross_checks", [])
+    if not isinstance(cross_checks, list):
+        raise PitContractError(f"{dataset}: provenance cross_checks 必须为数组")
 
     intervals: list[tuple[date, date]] = []
     source_reports: list[dict[str, Any]] = []
-    for index, source in enumerate(sources):
-        label = f"{dataset}.sources[{index}]"
+    published_records = [
+        *(('sources', index, source) for index, source in enumerate(sources)),
+        *(('cross_checks', index, source) for index, source in enumerate(cross_checks)),
+    ]
+    observed_configured_sources: set[tuple[str, str]] = set()
+    for collection, index, source in published_records:
+        label = f"{dataset}.{collection}[{index}]"
         if not isinstance(source, Mapping):
             raise PitContractError(f"{label} 必须是 object")
+        if normalization_report is not None and normalization_report["schema_version"] == PIT_NORMALIZATION_SCHEMA_V2:
+            _strict_manifest_keys(
+                source,
+                {
+                    "source_id",
+                    "source_class",
+                    "url",
+                    "retrieved_at",
+                    "valid_from",
+                    "valid_to",
+                    "path",
+                    "sha256",
+                    "bytes",
+                    "role",
+                    "artifact_role",
+                    "artifact_schema_version",
+                    "extraction",
+                    "row_audit",
+                    "reviewed_overlay",
+                },
+                label=label,
+            )
         source_id = str(source.get("source_id", "")).strip()
         if not source_id:
             raise PitContractError(f"{label}.source_id 不能为空")
+        role = str(source.get("role", "authoritative"))
         source_class = source.get("source_class")
-        if source_class not in {"official_primary", "public_secondary"}:
-            raise PitContractError(f"{label}.source_class 不属于允许证据等级")
-        url = str(source.get("url", "")).strip()
-        if not re.fullmatch(r"https://[^\s]+", url, flags=re.IGNORECASE):
-            raise PitContractError(f"{label}.url 必须为 HTTPS")
+        if collection == "cross_checks":
+            if role != "mechanical_cross_check" or source_class != "tdx_mechanical":
+                raise PitContractError(f"{label} 必须为 tdx_mechanical 机械核验")
+            if source.get("url") is not None:
+                raise PitContractError(f"{label}.url 不允许用于机械核验")
+            url = ""
+        else:
+            if role == "mechanical_cross_check" or source_class not in {
+                "official_primary",
+                "public_secondary",
+            }:
+                raise PitContractError(f"{label}.source_class/role 不属于允许证据等级")
+            url = str(source.get("url", "")).strip()
+            if not re.fullmatch(r"https://[^\s]+", url, flags=re.IGNORECASE):
+                raise PitContractError(f"{label}.url 必须为 HTTPS")
+        configured_source = None
+        if configured_sources:
+            configured_source = configured_sources.get((source_id, role))
+            if configured_source is None:
+                raise PitContractError(
+                    f"{label} 未在 publication 绑定 normalization manifest 中声明"
+                )
+            observed_configured_sources.add((source_id, role))
         try:
             retrieved_at = datetime.fromisoformat(
                 str(source.get("retrieved_at", "")).replace("Z", "+00:00")
@@ -1100,7 +1881,20 @@ def _verify_source_provenance(
             raise PitContractError(f"{label}: 原始响应 SHA256 不匹配")
         if source.get("bytes") is not None and int(source["bytes"]) != raw_path.stat().st_size:
             raise PitContractError(f"{label}: 原始响应字节数不匹配")
-        intervals.append((valid_from, valid_to))
+        extraction_report = None
+        if normalization_report is not None and normalization_report["schema_version"] == PIT_NORMALIZATION_SCHEMA_V2:
+            extraction_report = _verify_extraction_provenance(
+                root,
+                label=label,
+                source=source,
+                raw_path=raw_path,
+                raw_sha256=expected_hash,
+                table_path=table_path,
+                manifest_path=manifest_path,
+                normalization_source=configured_source,
+            )
+        if role == "authoritative":
+            intervals.append((valid_from, valid_to))
         source_reports.append(
             {
                 "source_id": source_id,
@@ -1110,16 +1904,238 @@ def _verify_source_provenance(
                 "valid_to": valid_to.isoformat(),
                 "path": str(raw_path),
                 "sha256": expected_hash,
+                "role": role,
+                "extraction": extraction_report,
+                "_provenance_source": source,
             }
+        )
+    if configured_sources and observed_configured_sources != set(configured_sources):
+        missing_sources = sorted(set(configured_sources) - observed_configured_sources)
+        extra_sources = sorted(observed_configured_sources - set(configured_sources))
+        raise PitContractError(
+            f"{dataset}: normalization source 与 provenance 未逐项闭合："
+            f"missing={missing_sources}, extra={extra_sources}"
         )
     if not _date_intervals_cover(intervals, start=start, end=end):
         raise PitContractError(f"{dataset}: 原始响应有效期存在缺口")
+    replay_report: dict[str, Any] | None = None
+    if configured_sources:
+        try:
+            import kronos_a_share_public_data as public_data
+
+            authoritative_frames: list[tuple[Mapping[str, Any], pd.DataFrame]] = []
+            mechanical_frames: list[tuple[Mapping[str, Any], pd.DataFrame]] = []
+            report_by_id = {
+                str(item["source_id"]): item for item in source_reports
+            }
+            for item in source_reports:
+                role = str(item["role"])
+                config = configured_sources[(str(item["source_id"]), role)]
+                frame = item["extraction"]["_canonical_frame"]
+                if role == "authoritative":
+                    authoritative_frames.append((config, frame))
+                elif role == "mechanical_cross_check":
+                    mechanical_frames.append((config, frame))
+            if not authoritative_frames:
+                raise PitContractError(f"{dataset}: normalization 重放缺少 authoritative")
+            merged, equal_conflicts, lower_disagreements = (
+                public_data._merge_authoritative_sources(dataset, authoritative_frames)
+            )
+            merged, mechanical_conflicts = public_data._apply_mechanical_cross_checks(
+                dataset, merged, mechanical_frames
+            )
+            expected_frame = None
+            if expected_key_config is not None:
+                expected_id = str(expected_key_config.get("source_id", ""))
+                expected_report = next(
+                    (
+                        item
+                        for item in source_reports
+                        if item["source_id"] == expected_id
+                        and item["role"] == "expected_keys"
+                    ),
+                    None,
+                )
+                if expected_report is not None:
+                    expected_frame = expected_report["extraction"]["_canonical_frame"]
+                    expected_frame = expected_frame[
+                        list(PIT_DATASET_KEYS[dataset])
+                    ].drop_duplicates().reset_index(drop=True)
+                else:
+                    alias = report_by_id.get(expected_id)
+                    if alias is None:
+                        raise PitContractError(
+                            f"{dataset}: expected_keys source 未在 provenance 中绑定"
+                        )
+                    alias_source = alias["_provenance_source"]
+                    alias_extraction = alias_source.get("extraction", {})
+                    expected_audit = expected_key_config.get("row_audit")
+                    alias_audit = alias_source.get("row_audit")
+                    if (
+                        expected_key_config.get("source_class")
+                        != alias_source.get("source_class")
+                        or expected_key_config.get("artifact_role")
+                        != alias_source.get("artifact_role")
+                        or expected_key_config.get("artifact_schema_version")
+                        != alias_source.get("artifact_schema_version")
+                        or not isinstance(expected_audit, Mapping)
+                        or not isinstance(alias_audit, Mapping)
+                        or any(
+                            expected_key_config.get(field)
+                            != alias_extraction.get(
+                                "source_format" if field == "format" else field
+                            )
+                            for field in (
+                                "format",
+                                "extractor_id",
+                                "extractor_version",
+                                "extractor_config",
+                                "extractor_config_sha256",
+                                "extracted_sha256",
+                                "extracted_row_count",
+                            )
+                        )
+                        or any(
+                            expected_audit.get(field) != alias_audit.get(field)
+                            for field in set(expected_audit) - {"path"}
+                        )
+                    ):
+                        raise PitContractError(
+                            f"{dataset}: expected_keys alias 与发布 source 绑定不一致"
+                        )
+                    _, expected_frame, _ = _replay_normalization_mapping(
+                        root,
+                        dataset=dataset,
+                        normalization_source={
+                            **dict(expected_key_config),
+                            "role": "expected_keys",
+                        },
+                        provenance_source=alias_source,
+                        extracted_frame=alias["extraction"]["_extracted_frame"],
+                        overlay_path=alias["extraction"]["_overlay_path"],
+                    )
+            replay_report = {
+                "verified": True,
+                "_merged_frame": validate_pit_table(dataset, merged),
+                "_expected_frame": expected_frame,
+                "_declared_normalization": dict(normalization),
+                "equal_priority_conflicts": equal_conflicts,
+                "mechanical_conflicts": mechanical_conflicts,
+                "lower_priority_disagreements": lower_disagreements,
+            }
+        except PitContractError:
+            raise
+        except Exception as exc:
+            raise PitContractError(f"{dataset}: normalization 合并重放失败：{exc}") from exc
+    completeness_report = None
+    if normalization_report is not None and normalization_report["schema_version"] == PIT_NORMALIZATION_SCHEMA_V2:
+        receipt = normalization.get("completeness_receipt")
+        if dataset in {"index_membership", "corporate_actions"}:
+            if not isinstance(receipt, Mapping):
+                raise PitContractError(f"{dataset}: completeness_receipt 缺失")
+            _strict_manifest_keys(
+                receipt,
+                {
+                    "schema_version",
+                    "path",
+                    "sha256",
+                    "bytes",
+                    "status",
+                    "formal_complete",
+                },
+                label=f"{dataset}.completeness_receipt",
+            )
+            expected_schema = (
+                PIT_CSI_MEMBERSHIP_RECEIPT_SCHEMA
+                if dataset == "index_membership"
+                else PIT_CNINFO_PAGINATION_RECEIPT_SCHEMA
+            )
+            if (
+                receipt.get("schema_version") != expected_schema
+                or receipt.get("status") != "passed"
+                or not isinstance(receipt.get("formal_complete"), bool)
+            ):
+                raise PitContractError(f"{dataset}: completeness_receipt schema/status 无效")
+            receipt_path = _resolve_pit_artifact(
+                root,
+                receipt.get("path"),
+                field=f"{dataset}.completeness_receipt.path",
+            )
+            if (
+                _sha256_file(receipt_path) != receipt.get("sha256")
+                or receipt_path.stat().st_size != receipt.get("bytes")
+            ):
+                raise PitContractError(f"{dataset}: completeness_receipt 漂移")
+            try:
+                receipt_payload = json.loads(receipt_path.read_text(encoding="utf-8"))
+                import kronos_a_share_public_data as public_data
+
+                expected_frame = validate_pit_table(dataset, table_path)
+                authoritative_reports = [
+                    item
+                    for item in source_reports
+                    if item.get("role") == "authoritative"
+                ]
+                source_hashes = {str(item["sha256"]) for item in authoritative_reports}
+                source_frames = {
+                    str(item["sha256"]): validate_pit_table(
+                        dataset, item["extraction"]["canonical_source_path"]
+                    )
+                    for item in authoritative_reports
+                }
+                raw_source_frames = {}
+                for item in authoritative_reports:
+                    raw_source_frame = _read_table(Path(item["extraction"]["path"]))
+                    if item["extraction"].get("pagination_metadata") is not None:
+                        raw_source_frame.attrs["pagination_metadata"] = item[
+                            "extraction"
+                        ]["pagination_metadata"]
+                    raw_source_frames[str(item["sha256"])] = raw_source_frame
+                if dataset == "index_membership":
+                    public_data._validate_csi_membership_receipt(
+                        receipt_payload,
+                        expected_frame,
+                        start=start,
+                        end=end,
+                        authoritative_sha256s=source_hashes,
+                        source_frames=source_frames,
+                    )
+                    formal_complete = True
+                else:
+                    formal_complete = public_data._validate_cninfo_pagination_receipt(
+                        receipt_payload,
+                        expected_frame,
+                        start=start,
+                        end=end,
+                        authoritative_sha256s=source_hashes,
+                        source_frames=source_frames,
+                        raw_source_frames=raw_source_frames,
+                    )
+                if receipt.get("formal_complete") is not formal_complete:
+                    raise PitContractError(
+                        f"{dataset}: completeness_receipt formal_complete 自报不一致"
+                    )
+            except Exception as exc:
+                raise PitContractError(
+                    f"{dataset}: completeness_receipt 重放失败: {exc}"
+                ) from exc
+            completeness_report = {
+                "verified": True,
+                "schema_version": expected_schema,
+                "path": str(receipt_path),
+                "sha256": receipt["sha256"],
+            }
+            normalization_report["completeness_receipt"] = completeness_report
+        elif receipt is not None:
+            raise PitContractError(f"{dataset}: 不允许 completeness_receipt")
     return {
         "verified": True,
         "manifest_path": str(manifest_path),
         "manifest_sha256": actual_manifest_sha256,
         "source_count": len(source_reports),
         "sources": source_reports,
+        "normalization": normalization_report,
+        "_normalization_replay": replay_report,
     }
 
 
@@ -1132,6 +2148,7 @@ def _verify_coverage_binding(
     coverage: pd.DataFrame | None,
     start: date,
     end: date,
+    bound_normalization: Mapping[str, Any] | None = None,
 ) -> tuple[bool, dict[str, Any]]:
     if coverage is None:
         return False, {"verified": False, "reason": "missing_coverage"}
@@ -1167,6 +2184,7 @@ def _verify_coverage_binding(
         expected_manifest_sha256=str(row["source_manifest_sha256"]),
         start=start,
         end=end,
+        bound_normalization=bound_normalization,
     )
     return True, {
         "verified": True,
@@ -1879,11 +2897,561 @@ def assess_sample_trade_state(
     }
 
 
+def _validate_bound_normalization_manifest(
+    reference: Any,
+    *,
+    expected_sha256: Any,
+    expected_schema: str,
+) -> dict[str, Any]:
+    if not isinstance(reference, str) or not Path(reference).is_absolute():
+        raise PitContractError("publication normalization_manifest 必须是绝对路径")
+    path = Path(reference).resolve()
+    if not path.is_file():
+        raise PitContractError("publication normalization_manifest 不存在")
+    expected_hash = str(expected_sha256)
+    if not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
+        raise PitContractError("publication normalization_manifest_sha256 无效")
+    if _sha256_file(path) != expected_hash:
+        raise PitContractError("publication normalization_manifest SHA256 漂移")
+    try:
+        import kronos_a_share_public_data as public_data
+
+        payload, observed_hash = public_data._normalization_manifest(path)
+        if observed_hash != expected_hash:
+            raise PitContractError("publication normalization manifest 重放哈希不一致")
+        if payload.get("schema_version") != expected_schema:
+            raise PitContractError("publication normalization schema 绑定不一致")
+        if expected_schema == PIT_NORMALIZATION_SCHEMA_V2:
+            completeness_receipts: dict[str, str] = {}
+            for dataset in PIT_PROVENANCE_DATASETS:
+                config = payload["datasets"][dataset]
+                public_data._strict_keys(
+                    config,
+                    {
+                        "coverage_key_contract",
+                        "sources",
+                        "expected_keys",
+                        "completeness_receipt",
+                    },
+                    label=f"datasets.{dataset}",
+                )
+                expected_contract = V2_COVERAGE_KEY_CONTRACTS[dataset]
+                if config.get("coverage_key_contract") != expected_contract:
+                    raise PitContractError(
+                        f"publication datasets.{dataset}.coverage_key_contract 无效"
+                    )
+                sources = config.get("sources")
+                if not isinstance(sources, list) or not sources:
+                    raise PitContractError(
+                        f"publication datasets.{dataset}.sources 不能为空"
+                    )
+                for index, source in enumerate(sources):
+                    if not isinstance(source, Mapping):
+                        raise PitContractError(
+                            f"publication datasets.{dataset}.sources[{index}] 无效"
+                        )
+                    public_data._validate_extractor_config(
+                        source,
+                        label=f"datasets.{dataset}.sources[{index}]",
+                    )
+                expected_keys = config.get("expected_keys")
+                if expected_contract == "derived":
+                    if expected_keys is not None:
+                        raise PitContractError(
+                            f"publication datasets.{dataset}.expected_keys 必须由代码派生"
+                        )
+                else:
+                    if not isinstance(expected_keys, Mapping):
+                        raise PitContractError(
+                            f"publication datasets.{dataset}.expected_keys 缺少官方绑定"
+                        )
+                    public_data._validate_extractor_config(
+                        expected_keys,
+                        label=f"datasets.{dataset}.expected_keys",
+                    )
+                receipt = config.get("completeness_receipt")
+                if dataset in {"index_membership", "corporate_actions"}:
+                    if not isinstance(receipt, Mapping):
+                        raise PitContractError(
+                            f"publication datasets.{dataset}.completeness_receipt 缺失"
+                        )
+                    public_data._strict_keys(
+                        receipt,
+                        {"path", "sha256", "bytes"},
+                        label=f"datasets.{dataset}.completeness_receipt",
+                    )
+                    receipt_hash = str(receipt.get("sha256", ""))
+                    receipt_bytes = receipt.get("bytes")
+                    if (
+                        not re.fullmatch(r"[0-9a-f]{64}", receipt_hash)
+                        or not isinstance(receipt_bytes, int)
+                        or isinstance(receipt_bytes, bool)
+                        or receipt_bytes < 1
+                    ):
+                        raise PitContractError(
+                            f"publication datasets.{dataset}.completeness_receipt 绑定无效"
+                        )
+                    completeness_receipts[dataset] = receipt_hash
+                elif receipt is not None:
+                    raise PitContractError(
+                        f"publication datasets.{dataset} 不允许 completeness_receipt"
+                    )
+    except PitContractError:
+        raise
+    except Exception as exc:
+        raise PitContractError(f"publication normalization manifest 重放失败：{exc}") from exc
+    return {
+        "path": str(path),
+        "sha256": expected_hash,
+        "schema_version": expected_schema,
+        "completeness_receipts": (
+            completeness_receipts
+            if expected_schema == PIT_NORMALIZATION_SCHEMA_V2
+            else {}
+        ),
+    }
+
+
+def _validate_publication_artifact_inventory(
+    root: Path,
+    declared: Any,
+) -> dict[str, Any]:
+    if not isinstance(declared, list):
+        raise PitContractError("publication artifact_inventory 必须是数组")
+    records: dict[str, tuple[int, str]] = {}
+    for index, item in enumerate(declared):
+        if not isinstance(item, Mapping) or set(item) != {"path", "bytes", "sha256"}:
+            raise PitContractError(f"publication artifact_inventory[{index}] 合同无效")
+        relative = str(item.get("path", ""))
+        if not relative or relative in records:
+            raise PitContractError("publication artifact_inventory path 为空或重复")
+        path = _resolve_pit_artifact(
+            root, relative, field=f"artifact_inventory[{index}].path"
+        )
+        expected_hash = str(item.get("sha256", ""))
+        expected_bytes = item.get("bytes")
+        if (
+            not isinstance(expected_bytes, int)
+            or isinstance(expected_bytes, bool)
+            or expected_bytes < 0
+            or not re.fullmatch(r"[0-9a-f]{64}", expected_hash)
+            or path.stat().st_size != expected_bytes
+            or _sha256_file(path) != expected_hash
+        ):
+            raise PitContractError(f"publication artifact_inventory 漂移：{relative}")
+        records[relative] = (expected_bytes, expected_hash)
+    actual = {
+        path.relative_to(root).as_posix()
+        for path in root.rglob("*")
+        if path.is_file()
+        and path.name not in {"publication_manifest.json", "publication_manifest.sha256"}
+    }
+    if set(records) != actual:
+        missing = sorted(actual - set(records))
+        extra = sorted(set(records) - actual)
+        raise PitContractError(
+            f"publication artifact_inventory 键空间漂移：missing={missing}, extra={extra}"
+        )
+    return {"artifact_count": len(records), "verified": True}
+
+
+def _validate_publication_table_bindings(
+    declared: Any,
+    table_reports: Mapping[str, Mapping[str, Any]] | None,
+    *,
+    normalization_schema: str,
+) -> dict[str, Any]:
+    if not isinstance(declared, Mapping) or set(declared) != set(PIT_PROVENANCE_DATASETS):
+        raise PitContractError("publication tables 必须精确覆盖七张业务表")
+    if table_reports is None:
+        raise PitContractError("publication tables 缺少现场表报告")
+    for dataset in PIT_PROVENANCE_DATASETS:
+        contract = declared[dataset]
+        live = table_reports.get(dataset)
+        if not isinstance(contract, Mapping) or not isinstance(live, Mapping):
+            raise PitContractError(f"publication tables.{dataset} 缺失")
+        expected: dict[str, Any] = {
+            "rows": live.get("rows"),
+            "sha256": live.get("sha256"),
+            "schema_sha256": live.get("schema_sha256"),
+            "is_complete": bool(
+                live.get("coverage_binding", {}).get("verified", False)
+            ),
+        }
+        if normalization_schema == PIT_NORMALIZATION_SCHEMA_V2:
+            expected["coverage_key_contract"] = V2_COVERAGE_KEY_CONTRACTS[dataset]
+        for field, value in expected.items():
+            if contract.get(field) != value:
+                raise PitContractError(
+                    f"publication tables.{dataset}.{field} 与现场工件不一致"
+                )
+    return {"table_count": len(PIT_PROVENANCE_DATASETS), "verified": True}
+
+
+def _validate_publication_manifest(
+    root: Path,
+    *,
+    coverage_start: date,
+    coverage_end: date,
+    calendar: pd.DataFrame | None,
+    table_reports: Mapping[str, Mapping[str, Any]] | None = None,
+) -> dict[str, Any]:
+    path = root / "publication_manifest.json"
+    if not path.is_file():
+        return {
+            "present": False,
+            "formal_release_allowed": False,
+            "reason": "publication_manifest_absent",
+        }
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise PitContractError("publication_manifest 无法读取") from exc
+    if not isinstance(payload, Mapping):
+        raise PitContractError("publication_manifest 必须是 JSON object")
+    schema = payload.get("schema_version")
+    common = {
+        "schema_version",
+        "status",
+        "formal_release_allowed",
+        "normalization_schema_version",
+        "normalization_manifest",
+        "normalization_manifest_sha256",
+        "source_priority",
+        "generated_at",
+        "tables",
+        "artifact_inventory",
+        "pit_validation",
+    }
+    if schema == PIT_PUBLICATION_SCHEMA_V1:
+        _strict_manifest_keys(
+            payload,
+            common
+            | {
+                "coverage_start",
+                "coverage_end",
+                "release_cap_reason",
+            },
+            label="publication_manifest",
+        )
+        if (
+            payload.get("normalization_schema_version") != PIT_NORMALIZATION_SCHEMA_V1
+            or payload.get("formal_release_allowed") is not False
+        ):
+            raise PitContractError("v1 publication 必须显式禁止正式准出")
+        formal_release_allowed = False
+        reason = "normalization_v1_local_provisional_only"
+        model_start = _parse_manifest_date(
+            payload.get("coverage_start"), field="publication.coverage_start"
+        )
+        model_end = _parse_manifest_date(
+            payload.get("coverage_end"), field="publication.coverage_end"
+        )
+        evidence_start = None
+    elif schema == PIT_PUBLICATION_SCHEMA_V2:
+        _strict_manifest_keys(
+            payload,
+            common
+            | {
+                "model_coverage_start",
+                "model_coverage_end",
+                "evidence_lookback_start",
+            },
+            label="publication_manifest",
+        )
+        if (
+            payload.get("normalization_schema_version") != PIT_NORMALIZATION_SCHEMA_V2
+            or payload.get("formal_release_allowed") is not True
+        ):
+            raise PitContractError("v2 publication 正式准出声明无效")
+        model_start = _parse_manifest_date(
+            payload.get("model_coverage_start"), field="publication.model_coverage_start"
+        )
+        model_end = _parse_manifest_date(
+            payload.get("model_coverage_end"), field="publication.model_coverage_end"
+        )
+        evidence_start = _parse_manifest_date(
+            payload.get("evidence_lookback_start"),
+            field="publication.evidence_lookback_start",
+        )
+        if model_start != PIT_START or model_end != PIT_END:
+            raise PitContractError("v2 publication model coverage 必须使用固定区间")
+        earlier = (
+            sorted(
+                row.trade_date.date()
+                for row in calendar.itertuples(index=False)
+                if bool(row.is_open) and row.trade_date.date() < model_start
+            )
+            if calendar is not None
+            else []
+        )
+        if not earlier or earlier[-1] != evidence_start:
+            raise PitContractError("v2 publication evidence_lookback_start 不是前一开放交易日")
+        formal_release_allowed = True
+        reason = "v2_contract_verified"
+    else:
+        raise PitContractError("publication_manifest schema_version 无效")
+    if model_start != coverage_start or model_end != coverage_end:
+        raise PitContractError("publication model coverage 与验证区间不一致")
+    if payload.get("source_priority") != [
+        "official_primary",
+        "public_secondary",
+        "tdx_mechanical",
+    ]:
+        raise PitContractError("publication source_priority 无效")
+    normalization_binding = _validate_bound_normalization_manifest(
+        payload.get("normalization_manifest"),
+        expected_sha256=payload.get("normalization_manifest_sha256"),
+        expected_schema=str(payload.get("normalization_schema_version")),
+    )
+    table_binding = _validate_publication_table_bindings(
+        payload.get("tables"),
+        table_reports,
+        normalization_schema=str(payload.get("normalization_schema_version")),
+    )
+    inventory_binding = _validate_publication_artifact_inventory(
+        root, payload.get("artifact_inventory")
+    )
+    if schema == PIT_PUBLICATION_SCHEMA_V2:
+        for dataset, expected_receipt_hash in normalization_binding.get(
+            "completeness_receipts", {}
+        ).items():
+            live_receipt = (
+                (table_reports or {})
+                .get(dataset, {})
+                .get("coverage_binding", {})
+                .get("provenance", {})
+                .get("normalization", {})
+                .get("completeness_receipt", {})
+            )
+            if (
+                not isinstance(live_receipt, Mapping)
+                or live_receipt.get("verified") is not True
+                or live_receipt.get("sha256") != expected_receipt_hash
+            ):
+                raise PitContractError(
+                    f"publication datasets.{dataset}.completeness_receipt 与 provenance 不一致"
+                )
+    declared_validation = payload.get("pit_validation")
+    if not isinstance(declared_validation, Mapping):
+        raise PitContractError("publication pit_validation 必须是 object")
+    declared_ready = declared_validation.get("production_ready")
+    if not isinstance(declared_ready, bool):
+        raise PitContractError("publication pit_validation.production_ready 无效")
+    expected_ready = payload.get("status") == "production_ready"
+    if declared_ready != expected_ready:
+        raise PitContractError("publication status 与 pit_validation 不一致")
+    if payload.get("status") not in {"production_ready", "local_provisional"}:
+        raise PitContractError("publication status 无效")
+    expected_hash = _sha256_file(path)
+    sidecar = root / "publication_manifest.sha256"
+    if not sidecar.is_file():
+        raise PitContractError("publication_manifest 缺少 SHA256 sidecar")
+    sidecar_value = sidecar.read_text(encoding="ascii").strip()
+    if sidecar_value != f"{expected_hash}  publication_manifest.json":
+        raise PitContractError("publication_manifest SHA256 sidecar 不匹配")
+    return {
+        "present": True,
+        "schema_version": schema,
+        "manifest_path": str(path),
+        "manifest_sha256": expected_hash,
+        "formal_release_allowed": formal_release_allowed,
+        "reason": reason,
+        "model_coverage_start": model_start.isoformat(),
+        "model_coverage_end": model_end.isoformat(),
+        "evidence_lookback_start": (
+            evidence_start.isoformat() if evidence_start is not None else None
+        ),
+        "normalization_binding": normalization_binding,
+        "table_binding": table_binding,
+        "artifact_inventory_binding": inventory_binding,
+    }
+
+
+def _verify_bound_normalized_table_replays(
+    root: Path,
+    *,
+    reports: Mapping[str, Mapping[str, Any]],
+    paths: Mapping[str, Path],
+    coverage_start: date,
+    coverage_end: date,
+    bound_normalization: Mapping[str, Any] | None,
+) -> dict[str, dict[str, Any]]:
+    if bound_normalization is None:
+        return {}
+    try:
+        import kronos_a_share_public_data as public_data
+    except Exception as exc:
+        raise PitContractError(f"normalization table 重放实现不可用：{exc}") from exc
+    replays: dict[str, Mapping[str, Any]] = {}
+    frames: dict[str, pd.DataFrame] = {}
+    for dataset in PIT_PROVENANCE_DATASETS:
+        replay = (
+            reports.get(dataset, {})
+            .get("coverage_binding", {})
+            .get("provenance", {})
+            .get("_normalization_replay")
+        )
+        if not isinstance(replay, Mapping) or replay.get("verified") is not True:
+            raise PitContractError(f"{dataset}: 缺少 publication 绑定 normalization 现场重放")
+        merged = replay.get("_merged_frame")
+        if not isinstance(merged, pd.DataFrame):
+            raise PitContractError(f"{dataset}: normalization 现场重放表缺失")
+        replays[dataset] = replay
+        frames[dataset] = merged.copy()
+
+    clean_reports: dict[str, dict[str, Any]] = {}
+    for dataset in PIT_PROVENANCE_DATASETS:
+        replay = replays[dataset]
+        merged = frames[dataset]
+        provenance_normalization = replay.get("_declared_normalization")
+        if not isinstance(provenance_normalization, Mapping):
+            raise PitContractError(f"{dataset}: provenance normalization 声明缺失")
+        contract_type = str(provenance_normalization.get("coverage_key_contract", ""))
+        if contract_type == "derived":
+            expected_keys, _, derived_issues = public_data._derive_key_contract(
+                dataset,
+                frames,
+                start=coverage_start,
+                end=coverage_end,
+            )
+        elif contract_type == "source_bound":
+            expected_frame = replay.get("_expected_frame")
+            if not isinstance(expected_frame, pd.DataFrame):
+                raise PitContractError(f"{dataset}: source_bound expected_keys 重放缺失")
+            expected_keys = {
+                public_data._key_tuple(row, PIT_DATASET_KEYS[dataset])
+                for row in expected_frame.to_dict(orient="records")
+            }
+            derived_issues = []
+        else:
+            raise PitContractError(f"{dataset}: coverage_key_contract 无效")
+        selected_keys = {
+            public_data._key_tuple(row, PIT_DATASET_KEYS[dataset])
+            for row in merged.to_dict(orient="records")
+        }
+        missing_expected = expected_keys - selected_keys
+        outside_key_space = selected_keys - expected_keys
+        if outside_key_space:
+            merged = merged[
+                ~merged.apply(
+                    lambda row: public_data._key_tuple(
+                        row, PIT_DATASET_KEYS[dataset]
+                    )
+                    in outside_key_space,
+                    axis=1,
+                )
+            ].reset_index(drop=True)
+            if merged.empty:
+                raise PitContractError(f"{dataset}: keyspace 现场重放过滤后为空")
+            merged = validate_pit_table(dataset, merged)
+            frames[dataset] = merged
+
+        expected_bytes = merged.to_csv(
+            index=False,
+            lineterminator="\n",
+            date_format="%Y-%m-%d",
+        ).encode("utf-8")
+        published_path = paths.get(dataset)
+        if published_path is None or published_path.read_bytes() != expected_bytes:
+            raise PitContractError(
+                f"{dataset}: published normalized table 无法由绑定 source/变换/合并/keyspace 重建"
+            )
+
+        expected_counters = {
+            "equal_priority_conflict_keys_excluded": len(
+                replay["equal_priority_conflicts"]
+            ),
+            "mechanical_conflict_keys_excluded": len(
+                replay["mechanical_conflicts"]
+            ),
+            "lower_priority_disagreements": replay[
+                "lower_priority_disagreements"
+            ],
+            "expected_key_count": len(expected_keys),
+            "missing_expected_key_count": len(missing_expected),
+            "outside_fixed_key_space_count": len(outside_key_space),
+            "derived_contract_issues": derived_issues,
+        }
+        for field, expected in expected_counters.items():
+            if provenance_normalization.get(field) != expected:
+                raise PitContractError(
+                    f"{dataset}: normalization.{field} 与现场重放不一致"
+                )
+
+        exclusion_rows = [
+            {**dict(zip(PIT_DATASET_KEYS[dataset], key)), "reason": reason}
+            for reason, keys in (
+                ("equal_priority_conflict", replay["equal_priority_conflicts"]),
+                ("tdx_mechanical_conflict", replay["mechanical_conflicts"]),
+                ("missing_expected_key", missing_expected),
+                ("outside_fixed_key_space", outside_key_space),
+            )
+            for key in sorted(keys)
+        ]
+        exclusions = pd.DataFrame(
+            exclusion_rows, columns=[*PIT_DATASET_KEYS[dataset], "reason"]
+        )
+        exclusion_bytes = exclusions.to_csv(
+            index=False,
+            lineterminator="\n",
+            date_format="%Y-%m-%d",
+        ).encode("utf-8")
+        exclusion_path = _resolve_pit_artifact(
+            root,
+            provenance_normalization.get("exclusion_report"),
+            field=f"{dataset}.normalization.exclusion_report",
+        )
+        if (
+            exclusion_path.read_bytes() != exclusion_bytes
+            or _sha256_bytes(exclusion_bytes)
+            != provenance_normalization.get("exclusion_report_sha256")
+        ):
+            raise PitContractError(
+                f"{dataset}: normalization exclusion report 无法由现场重放重建"
+            )
+        clean_reports[dataset] = {
+            "verified": True,
+            "canonical_source_contracts_replayed": True,
+            "merge_and_keyspace_replayed": True,
+            "sha256": _sha256_bytes(expected_bytes),
+            "rows": len(merged),
+        }
+    return clean_reports
+
+
+def _strip_private_replay_state(reports: Mapping[str, Mapping[str, Any]]) -> None:
+    for dataset in PIT_PROVENANCE_DATASETS:
+        provenance = (
+            reports.get(dataset, {})
+            .get("coverage_binding", {})
+            .get("provenance", {})
+        )
+        if not isinstance(provenance, dict):
+            continue
+        provenance.pop("_normalization_replay", None)
+        sources = provenance.get("sources", [])
+        if isinstance(sources, list):
+            for source in sources:
+                if not isinstance(source, dict):
+                    continue
+                source.pop("_provenance_source", None)
+                extraction = source.get("extraction")
+                if isinstance(extraction, dict):
+                    for field in (
+                        "_canonical_frame",
+                        "_extracted_frame",
+                        "_overlay_path",
+                    ):
+                        extraction.pop(field, None)
+
+
 def validate_pit_bundle(
     pit_root: str | os.PathLike[str],
     *,
     coverage_start: date = PIT_START,
     coverage_end: date = PIT_END,
+    allow_unpublished_staging: bool = False,
 ) -> PitBundleValidation:
     root = _resolved(pit_root)
     frames: dict[str, pd.DataFrame] = {}
@@ -1959,6 +3527,11 @@ def validate_pit_bundle(
     previous_session_start = (
         earlier_calendar_dates[-1] if earlier_calendar_dates else coverage_start
     )
+    try:
+        bound_normalization = _load_bound_normalization_for_replay(root)
+    except (OSError, ValueError, KeyError, TypeError, PitContractError) as exc:
+        bound_normalization = None
+        errors.append(f"publication_normalization_binding: {exc}")
     for name in PIT_PROVENANCE_DATASETS:
         if name not in frames or name not in paths:
             continue
@@ -1975,6 +3548,7 @@ def validate_pit_bundle(
                     else coverage_start
                 ),
                 end=coverage_end,
+                bound_normalization=bound_normalization,
             )
             if name == TRADING_CALENDAR_TABLE and verified:
                 sources = binding_report.get("provenance", {}).get("sources", [])
@@ -2000,6 +3574,159 @@ def validate_pit_bundle(
                 "error": str(exc),
             }
             errors.append(f"{name}.coverage_binding: {exc}")
+
+    try:
+        replay_reports = _verify_bound_normalized_table_replays(
+            root,
+            reports=reports,
+            paths=paths,
+            coverage_start=coverage_start,
+            coverage_end=coverage_end,
+            bound_normalization=bound_normalization,
+        )
+        for name, replay_report in replay_reports.items():
+            normalization_report = (
+                reports[name]["coverage_binding"]["provenance"].get(
+                    "normalization"
+                )
+            )
+            if isinstance(normalization_report, dict):
+                normalization_report["contract_replay"] = replay_report
+    except (OSError, ValueError, KeyError, TypeError, PitContractError) as exc:
+        errors.append(f"normalization_contract_replay: {exc}")
+        for name in PIT_PROVENANCE_DATASETS:
+            binding_ok[name] = False
+    finally:
+        _strip_private_replay_state(reports)
+
+    normalization_reports = {
+        name: reports.get(name, {})
+        .get("coverage_binding", {})
+        .get("provenance", {})
+        .get("normalization")
+        for name in PIT_PROVENANCE_DATASETS
+    }
+    present_normalizations = {
+        name: report
+        for name, report in normalization_reports.items()
+        if isinstance(report, Mapping)
+    }
+    normalization_release_ok = False
+    normalization_release_reason = "normalization_provenance_absent"
+    normalization_manifest_hashes: set[str] = set()
+    if present_normalizations:
+        versions = {
+            str(report.get("schema_version"))
+            for report in present_normalizations.values()
+        }
+        if (
+            set(present_normalizations) == set(PIT_PROVENANCE_DATASETS)
+            and versions == {PIT_NORMALIZATION_SCHEMA_V2}
+        ):
+            model_starts = {
+                str(report.get("model_coverage_start"))
+                for report in present_normalizations.values()
+            }
+            model_ends = {
+                str(report.get("model_coverage_end"))
+                for report in present_normalizations.values()
+            }
+            evidence_starts = {
+                str(report.get("evidence_lookback_start"))
+                for report in present_normalizations.values()
+            }
+            normalization_manifest_hashes = {
+                str(report.get("manifest_sha256"))
+                for report in present_normalizations.values()
+            }
+            normalization_release_ok = (
+                model_starts == {coverage_start.isoformat()}
+                and model_ends == {coverage_end.isoformat()}
+                and len(evidence_starts) == 1
+                and bool(earlier_calendar_dates)
+                and evidence_starts == {earlier_calendar_dates[-1].isoformat()}
+                and len(normalization_manifest_hashes) == 1
+                and all(
+                    re.fullmatch(r"[0-9a-f]{64}", value)
+                    for value in normalization_manifest_hashes
+                )
+            )
+            normalization_release_reason = (
+                "normalization_v2_verified"
+                if normalization_release_ok
+                else "normalization_v2_model_evidence_mismatch"
+            )
+        else:
+            normalization_release_ok = False
+            normalization_release_reason = (
+                "normalization_v1_local_provisional_only"
+                if PIT_NORMALIZATION_SCHEMA_V1 in versions
+                else "mixed_or_incomplete_normalization_contract"
+            )
+    try:
+        publication_report = _validate_publication_manifest(
+            root,
+            coverage_start=coverage_start,
+            coverage_end=coverage_end,
+            calendar=calendar_frame,
+            table_reports=reports,
+        )
+    except (OSError, ValueError, KeyError, TypeError, PitContractError) as exc:
+        publication_report = {
+            "present": True,
+            "formal_release_allowed": False,
+            "reason": "invalid_publication_manifest",
+            "error": str(exc),
+        }
+        normalization_release_ok = False
+        normalization_release_reason = "invalid_publication_manifest"
+        errors.append(f"publication_manifest: {exc}")
+    else:
+        if (
+            publication_report.get("formal_release_allowed") is False
+            and (
+                normalization_release_ok
+                or publication_report.get("present") is True
+            )
+        ):
+            normalization_release_ok = False
+            normalization_release_reason = str(publication_report.get("reason"))
+        elif (
+            publication_report.get("formal_release_allowed") is True
+            and normalization_release_reason != "normalization_v2_verified"
+        ):
+            normalization_release_ok = False
+            normalization_release_reason = "publication_and_provenance_contract_mismatch"
+        elif publication_report.get("formal_release_allowed") is True:
+            publication_manifest_hash = str(
+                publication_report.get("normalization_binding", {}).get("sha256", "")
+            )
+            if normalization_manifest_hashes != {publication_manifest_hash}:
+                normalization_release_ok = False
+                normalization_release_reason = (
+                    "publication_and_provenance_manifest_sha256_mismatch"
+                )
+    reports["normalization_release_contract"] = {
+        "verified": normalization_release_ok,
+        "reason": normalization_release_reason,
+        "normalization_versions": sorted(
+            {
+                str(report.get("schema_version"))
+                for report in present_normalizations.values()
+            }
+        ),
+        "normalization_manifest_sha256": (
+            next(iter(normalization_manifest_hashes))
+            if len(normalization_manifest_hashes) == 1
+            else None
+        ),
+        "publication": publication_report,
+        "unpublished_staging_only": bool(
+            allow_unpublished_staging and not publication_report.get("present")
+        ),
+    }
+    if not normalization_release_ok:
+        warnings.append(f"PIT 正式准出合同未通过: {normalization_release_reason}")
 
     daily_state_audit = _audit_daily_trade_state_coverage(
         frames,
@@ -2053,6 +3780,7 @@ def validate_pit_bundle(
         frames.get("corporate_actions"), security_master
     )
     capabilities = {
+        "normalization_release_contract": normalization_release_ok,
         "trading_calendar_history": (
             TRADING_CALENDAR_TABLE in frames
             and declared_coverage_ok[TRADING_CALENDAR_TABLE]
@@ -2137,6 +3865,21 @@ def validate_pit_bundle(
             "trading_calendar_history",
         )
     ) and bool(daily_state_audit.get("verified"))
+    staging_candidate_ready = (
+        allow_unpublished_staging
+        and not publication_report.get("present")
+        and not errors
+        and not missing
+        and all(
+            capabilities.get(name, False)
+            for name in REQUIRED_CAPABILITIES
+            if name != "normalization_release_contract"
+        )
+        and normalization_release_reason == "publication_manifest_absent"
+    )
+    reports["normalization_release_contract"]["staging_candidate_ready"] = bool(
+        staging_candidate_ready
+    )
     if "coverage" in missing:
         warnings.append("缺少 coverage 表，无法证明外部 PIT 数据覆盖完整性")
     for capability, available in capabilities.items():
@@ -3105,6 +4848,9 @@ def build_data_quality_report(
                 "model_price_adjusted": bool(adjustment.get("model_price_adjusted")),
                 "cutoff_field": adjustment.get("cutoff_field"),
                 "future_action_use_count": adjustment.get("future_action_use_count"),
+                "future_action_audit_verified": adjustment.get(
+                    "future_action_audit_verified"
+                ),
             }
             expected = {
                 "schema_version": MODEL_ADJUSTMENT_SCHEMA,
@@ -3114,6 +4860,7 @@ def build_data_quality_report(
                 "model_price_adjusted": True,
                 "cutoff_field": "origin_date",
                 "future_action_use_count": 0,
+                "future_action_audit_verified": True,
             }
             for key, expected_value in expected.items():
                 actual = adjustment_summary.get(key)
@@ -3159,6 +4906,13 @@ def _verify_model_adjustment_artifact(
     sample_count = int(manifest.get("sample_count", -1))
     if sample_count < 1:
         raise PitContractError("model adjustment sample_count 无效")
+    adjustment = manifest.get("adjustment")
+    if (
+        not isinstance(adjustment, Mapping)
+        or adjustment.get("future_action_use_count") != 0
+        or adjustment.get("future_action_audit_verified") is not True
+    ):
+        raise PitContractError("model adjustment future action 现场审计未通过")
     required_layout = {
         "s1.npy": (np.dtype("uint16"), (sample_count, 100)),
         "s2.npy": (np.dtype("uint16"), (sample_count, 100)),
@@ -3166,6 +4920,7 @@ def _verify_model_adjustment_artifact(
         "label.npy": (np.dtype("float32"), (sample_count,)),
         "trade_date.npy": (np.dtype("int32"), (sample_count,)),
         "instrument_id.npy": (np.dtype("int32"), (sample_count,)),
+        "active_member_count.npy": (np.dtype("int32"), (sample_count,)),
         "split.npy": (np.dtype("uint8"), (sample_count,)),
     }
     files = manifest.get("files")

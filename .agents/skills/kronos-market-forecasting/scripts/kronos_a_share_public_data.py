@@ -5,13 +5,14 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import io
 import json
 import os
 import re
 import shutil
 import urllib.parse
 import urllib.request
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 from uuid import uuid4
@@ -19,11 +20,23 @@ from uuid import uuid4
 
 SOURCE_SCHEMA = "kronos-public-pit-sources-v1"
 BAOSTOCK_SCHEMA = "kronos-baostock-trade-status-v1"
-NORMALIZATION_SCHEMA = "kronos-a-share-pit-normalization-v1"
-PUBLICATION_SCHEMA = "kronos-a-share-pit-publication-v1"
+NORMALIZATION_SCHEMA_V1 = "kronos-a-share-pit-normalization-v1"
+NORMALIZATION_SCHEMA_V2 = "kronos-a-share-pit-normalization-v2"
+NORMALIZATION_SCHEMA = NORMALIZATION_SCHEMA_V1
+PUBLICATION_SCHEMA_V1 = "kronos-a-share-pit-publication-v1"
+PUBLICATION_SCHEMA_V2 = "kronos-a-share-pit-publication-v2"
+PUBLICATION_SCHEMA = PUBLICATION_SCHEMA_V1
+REVIEWED_OVERLAY_SCHEMA = "kronos-a-share-reviewed-overlay-v1"
+ROW_AUDIT_SCHEMA = "kronos-a-share-row-audit-v1"
+CSI_MEMBERSHIP_RECEIPT_SCHEMA = "kronos-a-share-csi-membership-receipt-v1"
+CNINFO_PAGINATION_RECEIPT_SCHEMA = "kronos-a-share-cninfo-pagination-receipt-v1"
 TRADING_CALENDAR_DATASET = "trading_calendar"
 TRADING_CALENDAR_ARTIFACT_ROLE = "trading_calendar"
 TRADING_CALENDAR_ARTIFACT_SCHEMA = "kronos-a-share-trading-calendar-v1"
+INDEX_MEMBERSHIP_ARTIFACT_ROLE = "index_membership_anchor_and_adjustments"
+INDEX_MEMBERSHIP_ARTIFACT_SCHEMA = "kronos-a-share-index-membership-evidence-v1"
+CORPORATE_ACTIONS_ARTIFACT_ROLE = "cninfo_complete_pagination_receipt"
+CORPORATE_ACTIONS_ARTIFACT_SCHEMA = "kronos-a-share-corporate-actions-evidence-v1"
 BAOSTOCK_FIELDS = "date,code,tradestatus,isST"
 SYMBOL_PATTERN = re.compile(r"^(?:sh|sz|bj)\.\d{6}$")
 SOURCE_ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
@@ -54,6 +67,60 @@ DATASET_KEYS = {
     "index_membership": ("index_code", "ticker", "effective_from"),
     "corporate_actions": ("ticker", "announcement_date", "ex_date"),
     TRADING_CALENDAR_DATASET: ("trade_date",),
+}
+EVIDENCE_ARTIFACT_SCHEMAS = {
+    TRADING_CALENDAR_ARTIFACT_ROLE: TRADING_CALENDAR_ARTIFACT_SCHEMA,
+    INDEX_MEMBERSHIP_ARTIFACT_ROLE: INDEX_MEMBERSHIP_ARTIFACT_SCHEMA,
+    CORPORATE_ACTIONS_ARTIFACT_ROLE: CORPORATE_ACTIONS_ARTIFACT_SCHEMA,
+}
+SOURCE_BOUND_ARTIFACTS = {
+    "index_membership": (
+        INDEX_MEMBERSHIP_ARTIFACT_ROLE,
+        INDEX_MEMBERSHIP_ARTIFACT_SCHEMA,
+    ),
+    "corporate_actions": (
+        CORPORATE_ACTIONS_ARTIFACT_ROLE,
+        CORPORATE_ACTIONS_ARTIFACT_SCHEMA,
+    ),
+    TRADING_CALENDAR_DATASET: (
+        TRADING_CALENDAR_ARTIFACT_ROLE,
+        TRADING_CALENDAR_ARTIFACT_SCHEMA,
+    ),
+}
+V2_COVERAGE_KEY_CONTRACTS = {
+    "security_master": "derived",
+    "st_status": "derived",
+    "suspensions": "derived",
+    "price_limits": "derived",
+    "index_membership": "source_bound",
+    "corporate_actions": "source_bound",
+    TRADING_CALENDAR_DATASET: "source_bound",
+}
+EXTRACTOR_BY_FORMAT = {
+    "csv": ("csv-table-v1", "1"),
+    "json": ("json-records-v1", "1"),
+    "html": ("html-table-v1", "1"),
+    "pdf": ("pdf-table-v1", "1"),
+}
+SUPPORTED_ENCODINGS = {"utf-8", "utf-8-sig", "gb18030"}
+SOURCE_CLASS_DOMAIN_ALLOWLIST = {
+    "official_primary": (
+        "sse.com.cn",
+        "szse.cn",
+        "csindex.com.cn",
+        "cninfo.com.cn",
+        "bse.cn",
+    ),
+    "public_secondary": ("baostock.com",),
+}
+OFFICIAL_DATASET_DOMAIN_ALLOWLIST = {
+    "security_master": ("sse.com.cn", "szse.cn", "bse.cn"),
+    "st_status": ("sse.com.cn", "szse.cn", "bse.cn"),
+    "suspensions": ("sse.com.cn", "szse.cn", "bse.cn"),
+    "price_limits": ("sse.com.cn", "szse.cn", "bse.cn"),
+    "index_membership": ("csindex.com.cn",),
+    "corporate_actions": ("cninfo.com.cn",),
+    TRADING_CALENDAR_DATASET: ("sse.com.cn", "szse.cn", "bse.cn"),
 }
 
 
@@ -111,7 +178,45 @@ def _https_host(url: str) -> str:
     return parsed.hostname.lower().rstrip(".")
 
 
+def _fixed_source_domains(
+    source_class: str,
+    *,
+    dataset: str | None = None,
+) -> tuple[str, ...]:
+    fixed = SOURCE_CLASS_DOMAIN_ALLOWLIST.get(source_class)
+    if fixed is None:
+        raise PublicDataError("source_class 不属于代码固定来源等级")
+    if source_class == "official_primary" and dataset is not None:
+        fixed = OFFICIAL_DATASET_DOMAIN_ALLOWLIST.get(dataset)
+        if fixed is None:
+            raise PublicDataError(f"{dataset}: 缺少代码固定官方域名合同")
+    return tuple(fixed)
+
+
+def _validate_fixed_source_identity(
+    url: str,
+    *,
+    source_class: str,
+    dataset: str | None = None,
+) -> str:
+    host = _https_host(url)
+    fixed = _fixed_source_domains(source_class, dataset=dataset)
+    if not _host_is_allowed(host, fixed):
+        scope = f"dataset={dataset}, " if dataset is not None else ""
+        raise PublicDataError(
+            f"来源域名不在代码固定白名单：{scope}source_class={source_class}, "
+            f"host={host}, fixed={list(fixed)}"
+        )
+    return host
+
+
 def _normalize_allowed_domains(item: dict[str, Any], request_host: str) -> tuple[str, ...]:
+    source_class = str(item.get("source_class", ""))
+    fixed = _fixed_source_domains(source_class)
+    if not _host_is_allowed(request_host, fixed):
+        raise PublicDataError(
+            f"原始 URL 域名不在代码固定白名单：host={request_host}, fixed={list(fixed)}"
+        )
     configured = item.get("allowed_domains")
     if configured is None:
         return (request_host,)
@@ -126,6 +231,11 @@ def _normalize_allowed_domains(item: dict[str, Any], request_host: str) -> tuple
             raise PublicDataError(f"allowed_domains 包含无效域名：{raw_domain!r}")
         if _https_host(f"https://{domain}") != domain:
             raise PublicDataError(f"allowed_domains 包含无效域名：{raw_domain!r}")
+        if not _host_is_allowed(domain, fixed):
+            raise PublicDataError(
+                f"allowed_domains 只能收窄代码固定白名单：domain={domain}, "
+                f"fixed={list(fixed)}"
+            )
         normalized.append(domain)
     return tuple(sorted(set(normalized)))
 
@@ -166,14 +276,46 @@ def _validate_source(item: dict[str, Any]) -> tuple[str, ...]:
     if not SOURCE_ID_PATTERN.fullmatch(str(item["source_id"])):
         raise PublicDataError("source_id 只能包含字母、数字、点、下划线和连字符")
     request_host = _https_host(str(item["url"]))
+    _validate_fixed_source_identity(
+        str(item["url"]), source_class=str(item["source_class"])
+    )
     allowed_domains = _normalize_allowed_domains(item, request_host)
     if not _host_is_allowed(request_host, allowed_domains):
         raise PublicDataError("原始 URL 域名不在 allowed_domains 中")
     expected_hash = item.get("sha256")
     if expected_hash is not None and not SHA256_PATTERN.fullmatch(str(expected_hash)):
         raise PublicDataError("公开源 sha256 必须为64位十六进制")
-    _calendar_artifact_metadata(item, label=f"sources.{item['source_id']}")
+    _evidence_artifact_metadata(item, label=f"sources.{item['source_id']}")
     return allowed_domains
+
+
+def _evidence_artifact_metadata(
+    source: Mapping[str, Any],
+    *,
+    label: str,
+    required_role: str | None = None,
+) -> dict[str, str]:
+    artifact_role = source.get("artifact_role")
+    artifact_schema = source.get("artifact_schema_version")
+    if artifact_role is None and artifact_schema is None and required_role is None:
+        return {}
+    role = required_role if required_role is not None else artifact_role
+    expected_schema = EVIDENCE_ARTIFACT_SCHEMAS.get(str(role))
+    if (
+        expected_schema is None
+        or artifact_role != role
+        or artifact_schema != expected_schema
+    ):
+        raise PublicDataError(
+            f"{label} 证据工件身份无效：artifact_role={artifact_role!r}, "
+            f"artifact_schema_version={artifact_schema!r}"
+        )
+    if source.get("source_class") != "official_primary":
+        raise PublicDataError(f"{label} 证据工件必须为 official_primary")
+    return {
+        "artifact_role": str(role),
+        "artifact_schema_version": expected_schema,
+    }
 
 
 def _calendar_artifact_metadata(
@@ -182,25 +324,24 @@ def _calendar_artifact_metadata(
     label: str,
     required: bool = False,
 ) -> dict[str, str]:
-    artifact_role = source.get("artifact_role")
-    artifact_schema = source.get("artifact_schema_version")
-    if artifact_role is None and artifact_schema is None and not required:
-        return {}
     if (
-        artifact_role != TRADING_CALENDAR_ARTIFACT_ROLE
-        or artifact_schema != TRADING_CALENDAR_ARTIFACT_SCHEMA
+        source.get("artifact_role") is None
+        and source.get("artifact_schema_version") is None
+        and not required
     ):
+        return {}
+    try:
+        return _evidence_artifact_metadata(
+            source,
+            label=label,
+            required_role=TRADING_CALENDAR_ARTIFACT_ROLE,
+        )
+    except PublicDataError as exc:
         raise PublicDataError(
             f"{label} 日历工件必须固定为 artifact_role="
             f"{TRADING_CALENDAR_ARTIFACT_ROLE!r}, artifact_schema_version="
-            f"{TRADING_CALENDAR_ARTIFACT_SCHEMA!r}"
-        )
-    if source.get("source_class") != "official_primary":
-        raise PublicDataError(f"{label} trading_calendar 必须为 official_primary")
-    return {
-        "artifact_role": TRADING_CALENDAR_ARTIFACT_ROLE,
-        "artifact_schema_version": TRADING_CALENDAR_ARTIFACT_SCHEMA,
-    }
+            f"{TRADING_CALENDAR_ARTIFACT_SCHEMA!r}，且为 official_primary"
+        ) from exc
 
 
 def _new_staging_directory(output: Path, training_root: Path) -> Path:
@@ -671,28 +812,60 @@ def _normalization_manifest(path: Path) -> tuple[dict[str, Any], str]:
         raise PublicDataError(f"归一化 manifest 无法读取：{path}") from exc
     if not isinstance(payload, dict):
         raise PublicDataError("归一化 manifest 必须是 JSON object")
-    _strict_keys(
-        payload,
-        {
-            "schema_version",
-            "coverage_start",
-            "coverage_end",
-            "source_priority",
-            "datasets",
-        },
-        label="normalization manifest",
-    )
-    if payload.get("schema_version") != NORMALIZATION_SCHEMA:
-        raise PublicDataError(f"schema_version 必须为 {NORMALIZATION_SCHEMA}")
+    schema_version = payload.get("schema_version")
+    if schema_version == NORMALIZATION_SCHEMA_V1:
+        _strict_keys(
+            payload,
+            {
+                "schema_version",
+                "coverage_start",
+                "coverage_end",
+                "source_priority",
+                "datasets",
+            },
+            label="normalization manifest",
+        )
+        lower = _parse_iso_date(payload.get("coverage_start"), "coverage_start")
+        upper = _parse_iso_date(payload.get("coverage_end"), "coverage_end")
+    elif schema_version == NORMALIZATION_SCHEMA_V2:
+        _strict_keys(
+            payload,
+            {
+                "schema_version",
+                "model_coverage_start",
+                "model_coverage_end",
+                "evidence_lookback_start",
+                "source_priority",
+                "datasets",
+            },
+            label="normalization manifest",
+        )
+        lower = _parse_iso_date(
+            payload.get("model_coverage_start"), "model_coverage_start"
+        )
+        upper = _parse_iso_date(
+            payload.get("model_coverage_end"), "model_coverage_end"
+        )
+        evidence_start = _parse_iso_date(
+            payload.get("evidence_lookback_start"), "evidence_lookback_start"
+        )
+        if lower != date(2018, 1, 2) or upper != date(2026, 7, 31):
+            raise PublicDataError(
+                "v2 model_coverage_start/end 固定为 2018-01-02—2026-07-31"
+            )
+        if evidence_start >= lower:
+            raise PublicDataError("evidence_lookback_start 必须早于 model_coverage_start")
+    else:
+        raise PublicDataError(
+            f"schema_version 必须为 {NORMALIZATION_SCHEMA_V1} 或 {NORMALIZATION_SCHEMA_V2}"
+        )
     if payload.get("source_priority") != list(SOURCE_PRIORITY):
         raise PublicDataError(
             "source_priority 必须固定为 official_primary > "
             "public_secondary > tdx_mechanical"
         )
-    lower = _parse_iso_date(payload.get("coverage_start"), "coverage_start")
-    upper = _parse_iso_date(payload.get("coverage_end"), "coverage_end")
     if lower > upper:
-        raise PublicDataError("coverage_start 不得晚于 coverage_end")
+        raise PublicDataError("model/coverage start 不得晚于 end")
     datasets = payload.get("datasets")
     if not isinstance(datasets, dict) or set(datasets) != set(NORMALIZED_DATASETS):
         raise PublicDataError(
@@ -707,6 +880,7 @@ def _resolve_snapshot_source(
     training_root: Path,
     output: Path,
     label: str,
+    dataset: str | None = None,
 ) -> dict[str, Any]:
     manifest_reference = source.get("snapshot_manifest")
     if not isinstance(manifest_reference, str) or not manifest_reference.strip():
@@ -738,8 +912,10 @@ def _resolve_snapshot_source(
         raise PublicDataError(f"{label}.source_class 不可作为规范表供值源")
     if record.get("source_class") != source_class:
         raise PublicDataError(f"{label}.source_class 与已抓取 manifest 不一致")
-    configured_artifact = _calendar_artifact_metadata(source, label=label)
-    recorded_artifact = _calendar_artifact_metadata(record, label=f"{label}.snapshot_record")
+    configured_artifact = _evidence_artifact_metadata(source, label=label)
+    recorded_artifact = _evidence_artifact_metadata(
+        record, label=f"{label}.snapshot_record"
+    )
     if configured_artifact and configured_artifact != recorded_artifact:
         raise PublicDataError(f"{label} 日历工件元数据与已抓取 manifest 不一致")
     raw_reference = record.get("local_path")
@@ -761,7 +937,11 @@ def _resolve_snapshot_source(
     if valid_to < valid_from:
         raise PublicDataError(f"{label}.valid_to 早于 valid_from")
     url = str(record.get("resolved_url") or record.get("url") or "")
-    _https_host(url)
+    _validate_fixed_source_identity(
+        url,
+        source_class=source_class,
+        dataset=dataset,
+    )
     return {
         "source_id": source_id,
         "source_class": source_class,
@@ -816,6 +996,182 @@ def _resolve_mechanical_source(
     }
 
 
+def _canonical_json_sha256(payload: Mapping[str, Any]) -> str:
+    try:
+        raw = json.dumps(
+            dict(payload),
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+    except (TypeError, ValueError) as exc:
+        raise PublicDataError("extractor_config 必须可确定性 JSON 序列化") from exc
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _validate_extractor_config(
+    source: Mapping[str, Any],
+    *,
+    label: str,
+) -> dict[str, Any]:
+    source_format = str(source.get("format", ""))
+    expected = EXTRACTOR_BY_FORMAT.get(source_format)
+    if expected is None:
+        raise PublicDataError(f"{label}.format 必须为 csv/json/html/pdf")
+    extractor_id = source.get("extractor_id")
+    extractor_version = str(source.get("extractor_version", ""))
+    if (extractor_id, extractor_version) != expected:
+        raise PublicDataError(
+            f"{label} extractor 固定为 id={expected[0]!r}, version={expected[1]!r}"
+        )
+    config = source.get("extractor_config")
+    if not isinstance(config, dict):
+        raise PublicDataError(f"{label}.extractor_config 必须是 object")
+    if source_format == "csv":
+        _strict_keys(config, {"encoding", "delimiter"}, label=f"{label}.extractor_config")
+        encoding = str(config.get("encoding", "utf-8-sig")).lower().replace("_", "-")
+        delimiter = str(config.get("delimiter", ","))
+        if encoding not in SUPPORTED_ENCODINGS:
+            raise PublicDataError(f"{label}.extractor_config.encoding 不在允许列表")
+        if len(delimiter) != 1 or delimiter in {"\r", "\n", "\0"}:
+            raise PublicDataError(f"{label}.extractor_config.delimiter 必须是单个可见字符")
+        normalized_config: dict[str, Any] = {
+            "encoding": encoding,
+            "delimiter": delimiter,
+        }
+    elif source_format == "json":
+        _strict_keys(
+            config,
+            {"encoding", "records_path", "pagination_metadata"},
+            label=f"{label}.extractor_config",
+        )
+        encoding = str(config.get("encoding", "utf-8")).lower().replace("_", "-")
+        records_path = config.get("records_path", [])
+        if encoding not in SUPPORTED_ENCODINGS:
+            raise PublicDataError(f"{label}.extractor_config.encoding 不在允许列表")
+        if not isinstance(records_path, list) or any(
+            not isinstance(item, (str, int)) or isinstance(item, bool)
+            for item in records_path
+        ):
+            raise PublicDataError(f"{label}.extractor_config.records_path 必须为字符串/整数数组")
+        normalized_config = {"encoding": encoding, "records_path": records_path}
+        pagination_metadata = config.get("pagination_metadata")
+        if pagination_metadata is not None:
+            if not isinstance(pagination_metadata, Mapping):
+                raise PublicDataError(
+                    f"{label}.extractor_config.pagination_metadata 必须是 object"
+                )
+            _strict_keys(
+                pagination_metadata,
+                {"total_records_path", "total_pages_path", "page_number_path"},
+                label=f"{label}.extractor_config.pagination_metadata",
+            )
+            normalized_metadata: dict[str, list[str | int]] = {}
+            for field in (
+                "total_records_path",
+                "total_pages_path",
+                "page_number_path",
+            ):
+                path_components = pagination_metadata.get(field)
+                if (
+                    not isinstance(path_components, list)
+                    or not path_components
+                    or any(
+                        not isinstance(component, (str, int))
+                        or isinstance(component, bool)
+                        for component in path_components
+                    )
+                ):
+                    raise PublicDataError(
+                        f"{label}.extractor_config.pagination_metadata.{field} 无效"
+                    )
+                normalized_metadata[field] = list(path_components)
+            normalized_config["pagination_metadata"] = normalized_metadata
+    elif source_format == "html":
+        _strict_keys(config, {"encoding", "table_index"}, label=f"{label}.extractor_config")
+        encoding = str(config.get("encoding", "utf-8")).lower().replace("_", "-")
+        table_index = config.get("table_index", 0)
+        if encoding not in SUPPORTED_ENCODINGS:
+            raise PublicDataError(f"{label}.extractor_config.encoding 不在允许列表")
+        if not isinstance(table_index, int) or isinstance(table_index, bool) or table_index < 0:
+            raise PublicDataError(f"{label}.extractor_config.table_index 必须为非负整数")
+        normalized_config = {"encoding": encoding, "table_index": table_index}
+    else:
+        _strict_keys(config, {"pages", "table_index"}, label=f"{label}.extractor_config")
+        pages = config.get("pages")
+        table_index = config.get("table_index", 0)
+        if (
+            not isinstance(pages, list)
+            or not pages
+            or any(not isinstance(item, int) or isinstance(item, bool) or item < 0 for item in pages)
+            or pages != sorted(set(pages))
+        ):
+            raise PublicDataError(f"{label}.extractor_config.pages 必须为递增、唯一的非负整数数组")
+        if not isinstance(table_index, int) or isinstance(table_index, bool) or table_index < 0:
+            raise PublicDataError(f"{label}.extractor_config.table_index 必须为非负整数")
+        normalized_config = {"pages": pages, "table_index": table_index}
+
+    configured_hash = str(source.get("extractor_config_sha256", "")).lower()
+    observed_hash = _canonical_json_sha256(normalized_config)
+    if not SHA256_PATTERN.fullmatch(configured_hash) or configured_hash != observed_hash:
+        raise PublicDataError(f"{label}.extractor_config_sha256 不匹配")
+    extracted_hash = str(source.get("extracted_sha256", "")).lower()
+    if not SHA256_PATTERN.fullmatch(extracted_hash):
+        raise PublicDataError(f"{label}.extracted_sha256 必须为小写 SHA256")
+    row_count = source.get("extracted_row_count")
+    if not isinstance(row_count, int) or isinstance(row_count, bool) or row_count < 1:
+        raise PublicDataError(f"{label}.extracted_row_count 必须为正整数")
+    if source.get("row_audit_status") not in (None, "passed"):
+        raise PublicDataError(f"{label}.row_audit_status 只能作为 passed 冗余声明")
+    row_audit = source.get("row_audit")
+    if not isinstance(row_audit, dict):
+        raise PublicDataError(
+            f"{label}.row_audit 必须提供逐行审计工件；不接受 row_audit_status 标量自证"
+        )
+    _strict_keys(
+        row_audit,
+        {
+            "schema_version",
+            "path",
+            "sha256",
+            "bytes",
+            "row_count",
+            "source_sha256",
+            "extracted_sha256",
+            "audit_status",
+            "audited_at",
+            "auditor",
+        },
+        label=f"{label}.row_audit",
+    )
+    if row_audit.get("schema_version") != ROW_AUDIT_SCHEMA:
+        raise PublicDataError(f"{label}.row_audit.schema_version 无效")
+    if row_audit.get("audit_status") != "passed":
+        raise PublicDataError(f"{label}.row_audit.audit_status 必须为 passed")
+    for field in ("sha256", "source_sha256", "extracted_sha256"):
+        if not SHA256_PATTERN.fullmatch(str(row_audit.get(field, ""))):
+            raise PublicDataError(f"{label}.row_audit.{field} 必须为 SHA256")
+    for field in ("bytes", "row_count"):
+        value = row_audit.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+            raise PublicDataError(f"{label}.row_audit.{field} 必须为正整数")
+    _parse_aware_timestamp(row_audit.get("audited_at"), field=f"{label}.row_audit.audited_at")
+    if not isinstance(row_audit.get("auditor"), str) or not row_audit["auditor"].strip():
+        raise PublicDataError(f"{label}.row_audit.auditor 不得为空")
+    return {
+        "source_format": source_format,
+        "extractor_id": expected[0],
+        "extractor_version": expected[1],
+        "extractor_config": normalized_config,
+        "extractor_config_sha256": observed_hash,
+        "extracted_sha256": extracted_hash,
+        "extracted_row_count": row_count,
+        "row_audit_status": "passed",
+        "row_audit": dict(row_audit),
+    }
+
+
 def _source_contract(
     source: Any,
     *,
@@ -823,6 +1179,8 @@ def _source_contract(
     output: Path,
     label: str,
     expected_role: str | None = None,
+    normalization_schema: str = NORMALIZATION_SCHEMA_V1,
+    dataset: str | None = None,
 ) -> dict[str, Any]:
     if not isinstance(source, dict):
         raise PublicDataError(f"{label} 必须是 object")
@@ -844,6 +1202,18 @@ def _source_contract(
         "artifact_role",
         "artifact_schema_version",
     }
+    if normalization_schema == NORMALIZATION_SCHEMA_V2:
+        allowed |= {
+            "extractor_id",
+            "extractor_version",
+            "extractor_config",
+            "extractor_config_sha256",
+            "extracted_sha256",
+            "extracted_row_count",
+            "row_audit_status",
+            "row_audit",
+            "reviewed_overlay",
+        }
     _strict_keys(source, allowed, label=label)
     source_id = str(source.get("source_id", ""))
     if not SOURCE_ID_PATTERN.fullmatch(source_id):
@@ -855,14 +1225,26 @@ def _source_contract(
         role = expected_role
     if role not in {"authoritative", "mechanical_cross_check", "expected_keys"}:
         raise PublicDataError(f"{label}.role 无效")
-    if source.get("format") != "csv":
-        raise PublicDataError(f"{label}.format 当前只允许显式 csv")
-    encoding = str(source.get("encoding", "utf-8-sig"))
-    if encoding.lower().replace("_", "-") not in {"utf-8", "utf-8-sig", "gb18030"}:
-        raise PublicDataError(f"{label}.encoding 不在允许列表")
-    delimiter = str(source.get("delimiter", ","))
-    if len(delimiter) != 1 or delimiter in {"\r", "\n", "\0"}:
-        raise PublicDataError(f"{label}.delimiter 必须是单个可见分隔符")
+    if normalization_schema == NORMALIZATION_SCHEMA_V1:
+        if source.get("format") != "csv":
+            raise PublicDataError(f"{label}.format 当前只允许显式 csv")
+        encoding = str(source.get("encoding", "utf-8-sig"))
+        if encoding.lower().replace("_", "-") not in SUPPORTED_ENCODINGS:
+            raise PublicDataError(f"{label}.encoding 不在允许列表")
+        delimiter = str(source.get("delimiter", ","))
+        if len(delimiter) != 1 or delimiter in {"\r", "\n", "\0"}:
+            raise PublicDataError(f"{label}.delimiter 必须是单个可见分隔符")
+        extraction: dict[str, Any] = {}
+    elif normalization_schema == NORMALIZATION_SCHEMA_V2:
+        if source.get("encoding") is not None or source.get("delimiter") is not None:
+            raise PublicDataError(
+                f"{label} v2 的 encoding/delimiter 必须只写入 extractor_config"
+            )
+        extraction = _validate_extractor_config(source, label=label)
+        encoding = str(extraction["extractor_config"].get("encoding", "utf-8"))
+        delimiter = str(extraction["extractor_config"].get("delimiter", ","))
+    else:
+        raise PublicDataError(f"{label} normalization_schema 无效")
     mapping = source.get("mapping")
     constants = source.get("constants", {})
     if not isinstance(mapping, dict) or not mapping:
@@ -891,7 +1273,11 @@ def _source_contract(
                 f"{sorted(forbidden_direct)}"
             )
         resolved = _resolve_snapshot_source(
-            source, training_root=training_root, output=output, label=label
+            source,
+            training_root=training_root,
+            output=output,
+            label=label,
+            dataset=dataset,
         )
     return {
         **resolved,
@@ -901,6 +1287,11 @@ def _source_contract(
         "delimiter": delimiter,
         "mapping": mapping,
         "constants": constants,
+        "normalization_schema": normalization_schema,
+        "reviewed_overlay": source.get("reviewed_overlay"),
+        "_training_root": training_root.resolve(),
+        "_output": output.resolve(),
+        **extraction,
     }
 
 
@@ -959,6 +1350,381 @@ def _mapping_value(series: Any, spec: Any, *, label: str) -> Any:
         raise PublicDataError(f"{label} 转换失败：{exc}") from exc
 
 
+def _canonical_extracted_bytes(frame: Any) -> bytes:
+    return frame.to_csv(index=False, lineterminator="\n", na_rep="").encode("utf-8")
+
+
+def _canonical_extracted_row_sha256(row: Mapping[str, Any], columns: Sequence[str]) -> str:
+    import pandas as pd
+
+    payload = [
+        [str(column), "" if pd.isna(row[column]) else str(row[column])]
+        for column in columns
+    ]
+    return hashlib.sha256(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def _json_pointer_component(value: Any) -> str:
+    return str(value).replace("~", "~0").replace("/", "~1")
+
+
+def _extract_tabular_source(contract: Mapping[str, Any]) -> tuple[Any, bytes]:
+    import pandas as pd
+
+    raw_path = Path(contract["raw_path"])
+    source_format = contract.get("source_format")
+    config = contract.get("extractor_config")
+    try:
+        if source_format == "csv":
+            frame = pd.read_csv(
+                raw_path,
+                dtype=str,
+                encoding=config["encoding"],
+                sep=config["delimiter"],
+                keep_default_na=False,
+            )
+            raw_locators = [f"csv:data-row:{index}" for index in range(1, len(frame) + 1)]
+        elif source_format == "json":
+            payload = json.loads(raw_path.read_text(encoding=config["encoding"]))
+            pagination_values = None
+            if config.get("pagination_metadata") is not None:
+                pagination_values = {}
+                for field, path_components in config["pagination_metadata"].items():
+                    current: Any = payload
+                    for component in path_components:
+                        if isinstance(component, int):
+                            if not isinstance(current, list) or not 0 <= component < len(current):
+                                raise PublicDataError(
+                                    f"JSON pagination_metadata.{field} 越界"
+                                )
+                        elif not isinstance(current, Mapping) or component not in current:
+                            raise PublicDataError(
+                                f"JSON pagination_metadata.{field} 不存在"
+                            )
+                        current = current[component]
+                    if isinstance(current, bool) or not str(current).strip().isdigit():
+                        raise PublicDataError(
+                            f"JSON pagination_metadata.{field} 必须为非负整数"
+                        )
+                    pagination_values[field] = int(current)
+            records: Any = payload
+            for component in config["records_path"]:
+                if isinstance(component, int):
+                    if not isinstance(records, list) or component >= len(records):
+                        raise PublicDataError("JSON records_path 越界")
+                elif not isinstance(records, Mapping) or component not in records:
+                    raise PublicDataError("JSON records_path 不存在")
+                records = records[component]
+            if not isinstance(records, list) or not records or not all(
+                isinstance(row, Mapping) for row in records
+            ):
+                raise PublicDataError("JSON extractor 结果必须为非空 object 数组")
+            frame = pd.DataFrame([dict(row) for row in records])
+            if pagination_values is not None:
+                frame.attrs["pagination_metadata"] = pagination_values
+            pointer_prefix = "".join(
+                f"/{_json_pointer_component(component)}"
+                for component in config["records_path"]
+            )
+            raw_locators = [
+                f"json:{pointer_prefix}/{index}" for index in range(len(frame))
+            ]
+        elif source_format == "html":
+            try:
+                from bs4 import BeautifulSoup
+            except ImportError as exc:
+                raise PublicDataError("missing_dependency:beautifulsoup4") from exc
+            document = BeautifulSoup(
+                raw_path.read_text(encoding=config["encoding"]), "html.parser"
+            )
+            tables = document.find_all("table")
+            table_index = config["table_index"]
+            if table_index >= len(tables):
+                raise PublicDataError("HTML table_index 越界")
+            rows: list[list[str]] = []
+            for tr in tables[table_index].find_all("tr"):
+                cells = tr.find_all(["th", "td"])
+                if not cells:
+                    continue
+                if any(
+                    str(cell.get("rowspan", "1")) != "1"
+                    or str(cell.get("colspan", "1")) != "1"
+                    for cell in cells
+                ):
+                    raise PublicDataError("HTML extractor 不允许 rowspan/colspan")
+                rows.append([cell.get_text(" ", strip=True) for cell in cells])
+            if len(rows) < 2:
+                raise PublicDataError("HTML table 必须包含表头和至少一条记录")
+            header = rows[0]
+            if any(not value for value in header) or len(header) != len(set(header)):
+                raise PublicDataError("HTML table 表头必须非空且唯一")
+            if any(len(row) != len(header) for row in rows[1:]):
+                raise PublicDataError("HTML table 行列数不一致")
+            frame = pd.DataFrame(rows[1:], columns=header)
+            raw_locators = [
+                f"html:table:{table_index}:data-row:{index}"
+                for index in range(1, len(frame) + 1)
+            ]
+        elif source_format == "pdf":
+            try:
+                import pdfplumber
+            except ImportError as exc:
+                raise PublicDataError("missing_dependency:pdfplumber") from exc
+            extracted_rows: list[list[Any]] = []
+            raw_locators = []
+            header: list[str] | None = None
+            with pdfplumber.open(io.BytesIO(raw_path.read_bytes())) as document:
+                for page_number in config["pages"]:
+                    if page_number >= len(document.pages):
+                        raise PublicDataError("PDF pages 越界")
+                    tables = document.pages[page_number].extract_tables()
+                    if config["table_index"] >= len(tables):
+                        raise PublicDataError("PDF table_index 越界")
+                    table = tables[config["table_index"]]
+                    if not table or len(table) < 2:
+                        raise PublicDataError("PDF table 必须包含表头和记录")
+                    current_header = [str(value or "").strip() for value in table[0]]
+                    if any(not value for value in current_header) or len(current_header) != len(
+                        set(current_header)
+                    ):
+                        raise PublicDataError("PDF table 表头必须非空且唯一")
+                    if header is None:
+                        header = current_header
+                    elif current_header != header:
+                        raise PublicDataError("PDF 跨页表头不一致")
+                    for row_number, row in enumerate(table[1:], start=1):
+                        if len(row) != len(header):
+                            raise PublicDataError("PDF table 行列数不一致")
+                        extracted_rows.append([str(value or "").strip() for value in row])
+                        raw_locators.append(
+                            f"pdf:page:{page_number}:table:{config['table_index']}:data-row:{row_number}"
+                        )
+            if header is None or not extracted_rows:
+                raise PublicDataError("PDF extractor 未产生记录")
+            frame = pd.DataFrame(extracted_rows, columns=header)
+        else:
+            raise PublicDataError(f"不支持的 extractor format：{source_format!r}")
+    except PublicDataError:
+        raise
+    except Exception as exc:
+        raise PublicDataError(
+            f"{contract['source_id']} {source_format} 确定性抽取失败：{exc}"
+        ) from exc
+    if frame.empty:
+        raise PublicDataError(f"{contract['source_id']} 抽取结果为空")
+    frame.columns = [str(column).strip() for column in frame.columns]
+    if any(not column for column in frame.columns) or len(frame.columns) != len(set(frame.columns)):
+        raise PublicDataError(f"{contract['source_id']} 抽取结果列名必须非空且唯一")
+    if len(raw_locators) != len(frame) or len(set(raw_locators)) != len(raw_locators):
+        raise PublicDataError(f"{contract['source_id']} 原始行定位无法闭合")
+    frame.attrs["raw_locators"] = tuple(raw_locators)
+    extracted = _canonical_extracted_bytes(frame)
+    observed_hash = hashlib.sha256(extracted).hexdigest()
+    if observed_hash != contract["extracted_sha256"]:
+        raise PublicDataError(f"{contract['source_id']} extracted SHA256 不匹配")
+    if len(frame) != contract["extracted_row_count"]:
+        raise PublicDataError(f"{contract['source_id']} extracted_row_count 不匹配")
+    return frame, extracted
+
+
+def _validate_row_audit_artifact(
+    frame: Any,
+    contract: Mapping[str, Any],
+    *,
+    label: str,
+) -> dict[str, Any]:
+    import pandas as pd
+
+    audit = contract.get("row_audit")
+    if not isinstance(audit, Mapping):
+        raise PublicDataError(f"{label}.row_audit 缺失")
+    if audit.get("source_sha256") != contract.get("sha256"):
+        raise PublicDataError(f"{label}.row_audit.source_sha256 绑定不匹配")
+    if audit.get("extracted_sha256") != contract.get("extracted_sha256"):
+        raise PublicDataError(f"{label}.row_audit.extracted_sha256 绑定不匹配")
+    if int(audit.get("row_count", -1)) != len(frame):
+        raise PublicDataError(f"{label}.row_audit.row_count 与抽取行数不匹配")
+    reference = audit.get("path")
+    if not isinstance(reference, str) or not Path(reference).is_absolute():
+        raise PublicDataError(f"{label}.row_audit.path 必须是 training_root 内绝对路径")
+    audit_path = ensure_within(Path(reference), Path(contract["_training_root"]))
+    if (
+        not audit_path.is_file()
+        or audit_path == contract["_output"]
+        or contract["_output"] in audit_path.parents
+    ):
+        raise PublicDataError(f"{label}.row_audit.path 不存在或位于待发布目录内")
+    if sha256_file(audit_path) != str(audit.get("sha256", "")).lower():
+        raise PublicDataError(f"{label}.row_audit.sha256 漂移")
+    if audit_path.stat().st_size != int(audit.get("bytes", -1)):
+        raise PublicDataError(f"{label}.row_audit.bytes 漂移")
+    try:
+        rows = pd.read_csv(
+            audit_path,
+            dtype=str,
+            keep_default_na=False,
+            encoding="utf-8-sig",
+        )
+    except Exception as exc:
+        raise PublicDataError(f"{label}.row_audit 无法读取：{exc}") from exc
+    required = {
+        "source_row_number",
+        "raw_locator",
+        "extracted_row_sha256",
+        "audit_status",
+    }
+    if set(rows.columns) != required:
+        raise PublicDataError(f"{label}.row_audit 列合同无效")
+    expected_numbers = [str(index) for index in range(1, len(frame) + 1)]
+    if rows["source_row_number"].tolist() != expected_numbers:
+        raise PublicDataError(f"{label}.row_audit.source_row_number 必须逐行连续闭合")
+    expected_locators = list(frame.attrs.get("raw_locators", ()))
+    if rows["raw_locator"].tolist() != expected_locators:
+        raise PublicDataError(f"{label}.row_audit.raw_locator 与确定性抽取定位不匹配")
+    expected_hashes = [
+        _canonical_extracted_row_sha256(row, list(frame.columns))
+        for row in frame.to_dict(orient="records")
+    ]
+    if rows["extracted_row_sha256"].tolist() != expected_hashes:
+        raise PublicDataError(f"{label}.row_audit.extracted_row_sha256 不匹配")
+    if not rows["audit_status"].eq("passed").all():
+        raise PublicDataError(f"{label}.row_audit 存在未通过行")
+    return {
+        "schema_version": ROW_AUDIT_SCHEMA,
+        "path": audit_path,
+        "sha256": str(audit["sha256"]).lower(),
+        "bytes": audit_path.stat().st_size,
+        "row_count": len(rows),
+        "source_sha256": str(contract["sha256"]),
+        "extracted_sha256": str(contract["extracted_sha256"]),
+        "audit_status": "passed",
+        "audited_at": _parse_aware_timestamp(
+            audit.get("audited_at"), field=f"{label}.row_audit.audited_at"
+        ),
+        "auditor": str(audit["auditor"]).strip(),
+    }
+
+
+def _apply_reviewed_overlay(
+    frame: Any,
+    contract: dict[str, Any],
+    *,
+    dataset: str,
+) -> Any:
+    import pandas as pd
+
+    overlay = contract.get("reviewed_overlay")
+    if overlay is None:
+        return frame
+    if contract.get("normalization_schema") != NORMALIZATION_SCHEMA_V2:
+        raise PublicDataError("reviewed_overlay 只允许用于 v2")
+    if not isinstance(overlay, dict):
+        raise PublicDataError(f"{dataset}/{contract['source_id']}.reviewed_overlay 必须是 object")
+    allowed = {
+        "schema_version",
+        "path",
+        "sha256",
+        "row_count",
+        "raw_sha256",
+        "extracted_sha256",
+        "extractor_id",
+        "extractor_version",
+        "extractor_config_sha256",
+        "review_status",
+        "reviewed_at",
+        "reviewer",
+        "reason",
+    }
+    label = f"{dataset}/{contract['source_id']}.reviewed_overlay"
+    _strict_keys(overlay, allowed, label=label)
+    if overlay.get("schema_version") != REVIEWED_OVERLAY_SCHEMA:
+        raise PublicDataError(f"{label}.schema_version 无效")
+    for key, expected in (
+        ("raw_sha256", contract["sha256"]),
+        ("extracted_sha256", contract["extracted_sha256"]),
+        ("extractor_id", contract["extractor_id"]),
+        ("extractor_version", contract["extractor_version"]),
+        ("extractor_config_sha256", contract["extractor_config_sha256"]),
+    ):
+        if overlay.get(key) != expected:
+            raise PublicDataError(f"{label}.{key} 与原始抽取合同不匹配")
+    if overlay.get("review_status") != "approved":
+        raise PublicDataError(f"{label}.review_status 必须为 approved")
+    _parse_aware_timestamp(overlay.get("reviewed_at"), field=f"{label}.reviewed_at")
+    for field in ("reviewer", "reason"):
+        if not isinstance(overlay.get(field), str) or not overlay[field].strip():
+            raise PublicDataError(f"{label}.{field} 不得为空")
+    overlay_reference = overlay.get("path")
+    if not isinstance(overlay_reference, str) or not Path(overlay_reference).is_absolute():
+        raise PublicDataError(f"{label}.path 必须是 training_root 内绝对路径")
+    overlay_path = ensure_within(Path(overlay_reference), contract["_training_root"])
+    if (
+        not overlay_path.is_file()
+        or overlay_path == contract["_output"]
+        or contract["_output"] in overlay_path.parents
+    ):
+        raise PublicDataError(f"{label}.path 不存在或位于待发布目录内")
+    expected_hash = str(overlay.get("sha256", "")).lower()
+    if not SHA256_PATTERN.fullmatch(expected_hash) or sha256_file(overlay_path) != expected_hash:
+        raise PublicDataError(f"{label}.sha256 不匹配")
+    try:
+        corrections = pd.read_csv(
+            overlay_path, dtype=str, keep_default_na=False, encoding="utf-8-sig"
+        )
+    except Exception as exc:
+        raise PublicDataError(f"{label} 无法读取：{exc}") from exc
+    row_count = overlay.get("row_count")
+    if not isinstance(row_count, int) or isinstance(row_count, bool) or row_count < 1:
+        raise PublicDataError(f"{label}.row_count 必须为正整数")
+    if len(corrections) != row_count:
+        raise PublicDataError(f"{label}.row_count 不匹配")
+    required = {"source_row_number", "correction_reason", *frame.columns}
+    if set(corrections.columns) != required:
+        raise PublicDataError(f"{label} 列必须精确包含 source_row_number/correction_reason 和规范列")
+    numbers = pd.to_numeric(corrections["source_row_number"], errors="coerce")
+    if (
+        numbers.isna().any()
+        or (numbers % 1 != 0).any()
+        or (numbers < 1).any()
+        or (numbers > len(frame)).any()
+        or numbers.duplicated().any()
+    ):
+        raise PublicDataError(f"{label}.source_row_number 必须唯一且位于抽取行范围")
+    if corrections["correction_reason"].astype(str).str.strip().eq("").any():
+        raise PublicDataError(f"{label}.correction_reason 不得为空")
+    corrected = frame.copy()
+    for row in corrections.itertuples(index=False):
+        target_index = int(row.source_row_number) - 1
+        for column in frame.columns:
+            corrected.at[target_index, column] = getattr(row, column)
+    contract["_overlay_report"] = {
+        "schema_version": REVIEWED_OVERLAY_SCHEMA,
+        "path": overlay_path,
+        "sha256": expected_hash,
+        "bytes": overlay_path.stat().st_size,
+        "row_count": row_count,
+        "raw_sha256": contract["sha256"],
+        "extracted_sha256": contract["extracted_sha256"],
+        "extractor_id": contract["extractor_id"],
+        "extractor_version": contract["extractor_version"],
+        "extractor_config_sha256": contract["extractor_config_sha256"],
+        "review_status": "approved",
+        "reviewed_at": _parse_aware_timestamp(
+            overlay["reviewed_at"], field=f"{label}.reviewed_at"
+        ),
+        "reviewer": overlay["reviewer"].strip(),
+        "reason": overlay["reason"].strip(),
+    }
+    return corrected
+
+
 def _read_mapped_source(
     contract: Mapping[str, Any],
     *,
@@ -978,20 +1744,52 @@ def _read_mapped_source(
     missing = sorted(required - configured_targets)
     if missing:
         raise PublicDataError(f"{dataset}/{contract['source_id']} 缺少显式目标映射：{missing}")
-    try:
-        source_frame = pd.read_csv(
-            contract["raw_path"],
-            dtype=str,
-            encoding=contract["encoding"],
-            sep=contract["delimiter"],
-            keep_default_na=False,
+    if contract.get("normalization_schema") == NORMALIZATION_SCHEMA_V2:
+        source_frame, extracted_bytes = _extract_tabular_source(contract)
+        row_audit_report = _validate_row_audit_artifact(
+            source_frame,
+            contract,
+            label=f"{dataset}/{contract['source_id']}",
         )
-    except Exception as exc:
-        raise PublicDataError(
-            f"{dataset}/{contract['source_id']} 原始 CSV 无法读取：{exc}"
-        ) from exc
+        binding_payload = {
+            "raw_sha256": contract["sha256"],
+            "extractor_id": contract["extractor_id"],
+            "extractor_version": contract["extractor_version"],
+            "extractor_config_sha256": contract["extractor_config_sha256"],
+            "extracted_sha256": contract["extracted_sha256"],
+            "extracted_row_count": contract["extracted_row_count"],
+            "row_audit_status": contract["row_audit_status"],
+            "row_audit_sha256": row_audit_report["sha256"],
+        }
+        contract["_extracted_bytes"] = extracted_bytes
+        contract["_row_audit_report"] = row_audit_report
+        contract["_extraction_report"] = {
+            **binding_payload,
+            "binding_sha256": _canonical_json_sha256(binding_payload),
+            "bytes": len(extracted_bytes),
+            "extractor_config": dict(contract["extractor_config"]),
+        }
+        if source_frame.attrs.get("pagination_metadata") is not None:
+            contract["_extraction_report"]["pagination_metadata"] = dict(
+                source_frame.attrs["pagination_metadata"]
+            )
+    else:
+        try:
+            source_frame = pd.read_csv(
+                contract["raw_path"],
+                dtype=str,
+                encoding=contract["encoding"],
+                sep=contract["delimiter"],
+                keep_default_na=False,
+            )
+        except Exception as exc:
+            raise PublicDataError(
+                f"{dataset}/{contract['source_id']} 原始 CSV 无法读取：{exc}"
+            ) from exc
     if source_frame.empty:
         raise PublicDataError(f"{dataset}/{contract['source_id']} 原始 CSV 无记录")
+    if isinstance(contract, dict):
+        contract["_source_frame"] = source_frame.copy()
     output = pd.DataFrame(index=source_frame.index)
     for target, mapping in contract["mapping"].items():
         output[target] = _mapping_value(
@@ -1003,6 +1801,40 @@ def _read_mapped_source(
         if value is None:
             raise PublicDataError(f"{dataset}/{contract['source_id']}.constants.{target} 不得为 null")
         output[target] = value
+    output = _apply_reviewed_overlay(output, contract, dataset=dataset)
+    if contract.get("normalization_schema") == NORMALIZATION_SCHEMA_V2:
+        canonical_source_bytes = _canonical_extracted_bytes(output)
+        canonical_source_sha256 = hashlib.sha256(canonical_source_bytes).hexdigest()
+        contract["_canonical_source_bytes"] = canonical_source_bytes
+        contract["_extraction_report"]["canonical_source_sha256"] = (
+            canonical_source_sha256
+        )
+        contract["_extraction_report"]["canonical_source_row_count"] = len(output)
+        contract["_extraction_report"]["canonical_source_bytes"] = len(
+            canonical_source_bytes
+        )
+        binding_payload = {
+            key: contract["_extraction_report"][key]
+            for key in (
+                "raw_sha256",
+                "extractor_id",
+                "extractor_version",
+                "extractor_config_sha256",
+                "extracted_sha256",
+                "extracted_row_count",
+                "row_audit_status",
+                "row_audit_sha256",
+                "canonical_source_sha256",
+                "canonical_source_row_count",
+            )
+        }
+        if contract["_extraction_report"].get("pagination_metadata") is not None:
+            binding_payload["pagination_metadata"] = contract["_extraction_report"][
+                "pagination_metadata"
+            ]
+        contract["_extraction_report"]["binding_sha256"] = _canonical_json_sha256(
+            binding_payload
+        )
     if keys_only:
         key_columns = list(DATASET_KEYS[dataset])
         if output[key_columns].isna().any().any() or (
@@ -1147,6 +1979,557 @@ def _write_normalized_csv(path: Path, frame: Any, training_root: Path) -> None:
     atomic_write(ensure_within(path, training_root), payload)
 
 
+def _active_member_dates(
+    membership: Any,
+    calendar: Any,
+    *,
+    start: date,
+    end: date,
+) -> set[tuple[str, str]]:
+    import pandas as pd
+
+    events: dict[date, list[tuple[str, int]]] = {}
+    for row in membership.itertuples(index=False):
+        if str(row.index_code) not in {"000300.SH", "000905.SH"}:
+            continue
+        lower = max(row.effective_from.date(), start)
+        upper = min(row.effective_to.date(), end) if not pd.isna(row.effective_to) else end
+        if lower > upper:
+            continue
+        events.setdefault(lower, []).append((str(row.ticker), 1))
+        if upper < end:
+            events.setdefault(upper + timedelta(days=1), []).append(
+                (str(row.ticker), -1)
+            )
+    open_dates = sorted(
+        row.trade_date.date()
+        for row in calendar.itertuples(index=False)
+        if bool(row.is_open) and start <= row.trade_date.date() <= end
+    )
+    event_dates = sorted(events)
+    event_index = 0
+    active_counts: dict[str, int] = {}
+    keys: set[tuple[str, str]] = set()
+    for trade_date in open_dates:
+        while event_index < len(event_dates) and event_dates[event_index] <= trade_date:
+            for ticker, delta in events[event_dates[event_index]]:
+                value = active_counts.get(ticker, 0) + delta
+                if value <= 0:
+                    active_counts.pop(ticker, None)
+                else:
+                    active_counts[ticker] = value
+            event_index += 1
+        keys.update((ticker, trade_date.isoformat()) for ticker in active_counts)
+    return keys
+
+
+def _derive_key_contract(
+    dataset: str,
+    frames: Mapping[str, Any],
+    *,
+    start: date,
+    end: date,
+) -> tuple[set[tuple[str, ...]], bool, list[str]]:
+    import pandas as pd
+
+    membership = frames["index_membership"]
+    member_tickers = set(
+        membership.loc[
+            membership["index_code"].astype(str).isin({"000300.SH", "000905.SH"}),
+            "ticker",
+        ].astype(str)
+    )
+    selected = frames[dataset]
+    issues: list[str] = []
+    if dataset == "security_master":
+        expected: set[tuple[str, ...]] = set()
+        rows_by_ticker = {
+            ticker: group for ticker, group in selected.groupby(selected["ticker"].astype(str))
+        }
+        for ticker in sorted(member_tickers):
+            rows = rows_by_ticker.get(ticker)
+            if rows is None:
+                expected.add((ticker, "<MISSING>"))
+                issues.append(f"missing_security_master:{ticker}")
+            else:
+                expected.update(
+                    _key_tuple(row, DATASET_KEYS[dataset])
+                    for row in rows.to_dict(orient="records")
+                )
+        return expected, not issues, issues
+    if dataset == "st_status":
+        expected = {
+            _key_tuple(row, DATASET_KEYS[dataset])
+            for row in selected[
+                selected["ticker"].astype(str).isin(member_tickers)
+            ].to_dict(orient="records")
+        }
+        status_ok = _load_data_contract()._status_intervals_cover_membership(
+            selected,
+            membership,
+            start=start,
+            end=end,
+        )
+        if not status_ok:
+            issues.append("st_intervals_do_not_cover_active_membership")
+        return expected, bool(status_ok), issues
+    if dataset in {"suspensions", "price_limits"}:
+        expected = _active_member_dates(
+            membership,
+            frames[TRADING_CALENDAR_DATASET],
+            start=start,
+            end=end,
+        )
+        if not expected:
+            issues.append("active_membership_x_open_calendar_empty")
+        return expected, bool(expected), issues
+    raise PublicDataError(f"{dataset}: 不支持 derived coverage_key_contract")
+
+
+def _receipt_file(
+    config: Any,
+    *,
+    training_root: Path,
+    output: Path,
+    label: str,
+) -> tuple[dict[str, Any], Path, str]:
+    if not isinstance(config, Mapping):
+        raise PublicDataError(f"{label} 必须是 object")
+    _strict_keys(config, {"path", "sha256", "bytes"}, label=label)
+    reference = config.get("path")
+    if not isinstance(reference, str) or not Path(reference).is_absolute():
+        raise PublicDataError(f"{label}.path 必须是 training_root 内绝对路径")
+    path = ensure_within(Path(reference), training_root)
+    if not path.is_file() or path == output or output in path.parents:
+        raise PublicDataError(f"{label}.path 不存在或位于待发布目录内")
+    expected_hash = str(config.get("sha256", "")).lower()
+    if not SHA256_PATTERN.fullmatch(expected_hash) or sha256_file(path) != expected_hash:
+        raise PublicDataError(f"{label}.sha256 漂移")
+    expected_bytes = config.get("bytes")
+    if (
+        not isinstance(expected_bytes, int)
+        or isinstance(expected_bytes, bool)
+        or expected_bytes < 1
+        or path.stat().st_size != expected_bytes
+    ):
+        raise PublicDataError(f"{label}.bytes 漂移")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise PublicDataError(f"{label} 无法读取") from exc
+    if not isinstance(payload, dict):
+        raise PublicDataError(f"{label} 必须是 JSON object")
+    return payload, path, expected_hash
+
+
+def _membership_expected_events(
+    frame: Any,
+    *,
+    index_code: str,
+    start: date,
+    end: date,
+) -> tuple[set[str], dict[date, tuple[set[str], set[str]]]]:
+    import pandas as pd
+
+    subset = frame[frame["index_code"].astype(str) == index_code].copy()
+    subset["effective_from"] = pd.to_datetime(
+        subset["effective_from"], errors="coerce"
+    ).dt.normalize()
+    if "effective_to" not in subset.columns:
+        subset["effective_to"] = pd.NaT
+    else:
+        subset["effective_to"] = pd.to_datetime(
+            subset["effective_to"], errors="coerce"
+        ).dt.normalize()
+    if subset["effective_from"].isna().any():
+        raise PublicDataError(f"{index_code}: expected_keys effective_from 无效")
+    anchor = {
+        str(row.ticker)
+        for row in subset.itertuples(index=False)
+        if row.effective_from.date() <= start
+        and (pd.isna(row.effective_to) or row.effective_to.date() >= start)
+    }
+    mutable: dict[date, dict[str, set[str]]] = {}
+    for row in subset.itertuples(index=False):
+        effective_from = row.effective_from.date()
+        if start < effective_from <= end:
+            mutable.setdefault(effective_from, {"added": set(), "removed": set()})[
+                "added"
+            ].add(str(row.ticker))
+        if pd.notna(row.effective_to):
+            removal_date = row.effective_to.date() + timedelta(days=1)
+            if start < removal_date <= end:
+                mutable.setdefault(removal_date, {"added": set(), "removed": set()})[
+                    "removed"
+                ].add(str(row.ticker))
+    return anchor, {
+        event_date: (values["added"], values["removed"])
+        for event_date, values in mutable.items()
+    }
+
+
+def _validate_csi_membership_receipt(
+    payload: Mapping[str, Any],
+    expected_frame: Any,
+    *,
+    start: date,
+    end: date,
+    authoritative_sha256s: set[str],
+    source_frames: Mapping[str, Any] | None = None,
+) -> None:
+    _strict_keys(
+        payload,
+        {
+            "schema_version",
+            "dataset",
+            "coverage_start",
+            "coverage_end",
+            "status",
+            "indexes",
+        },
+        label="index_membership.completeness_receipt",
+    )
+    if (
+        payload.get("schema_version") != CSI_MEMBERSHIP_RECEIPT_SCHEMA
+        or payload.get("dataset") != "index_membership"
+        or payload.get("status") != "passed"
+        or _parse_iso_date(payload.get("coverage_start"), "receipt.coverage_start") != start
+        or _parse_iso_date(payload.get("coverage_end"), "receipt.coverage_end") != end
+    ):
+        raise PublicDataError("index_membership completeness receipt 顶层合同无效")
+    indexes = payload.get("indexes")
+    expected_codes = set(expected_frame["index_code"].astype(str))
+    if not isinstance(indexes, list) or {
+        str(item.get("index_code")) for item in indexes if isinstance(item, Mapping)
+    } != expected_codes:
+        raise PublicDataError("index_membership receipt 未精确覆盖全部 index_code")
+    referenced_hashes: set[str] = set()
+    for item in indexes:
+        if not isinstance(item, Mapping):
+            raise PublicDataError("index_membership receipt index item 无效")
+        _strict_keys(
+            item,
+            {
+                "index_code",
+                "anchor_date",
+                "anchor_members",
+                "anchor_source_sha256",
+                "adjustments",
+                "final_members_sha256",
+            },
+            label=f"index_membership.receipt.{item.get('index_code')}",
+        )
+        index_code = str(item["index_code"])
+        if _parse_iso_date(item.get("anchor_date"), "receipt.anchor_date") != start:
+            raise PublicDataError(f"{index_code}: anchor_date 必须等于 model_coverage_start")
+        anchor_members = item.get("anchor_members")
+        if (
+            not isinstance(anchor_members, list)
+            or anchor_members != sorted(set(map(str, anchor_members)))
+            or any(not re.fullmatch(r"\d{6}\.(?:SH|SZ|BJ)", value) for value in anchor_members)
+        ):
+            raise PublicDataError(f"{index_code}: anchor_members 必须排序、唯一且 ticker 合法")
+        expected_anchor, expected_events = _membership_expected_events(
+            expected_frame,
+            index_code=index_code,
+            start=start,
+            end=end,
+        )
+        if set(anchor_members) != expected_anchor:
+            raise PublicDataError(f"{index_code}: anchor_members 与 expected_keys 不闭合")
+        anchor_source = str(item.get("anchor_source_sha256", ""))
+        if anchor_source not in authoritative_sha256s:
+            raise PublicDataError(f"{index_code}: anchor_source_sha256 未绑定 authoritative 原文")
+        referenced_hashes.add(anchor_source)
+        if source_frames is not None:
+            source_anchor, _ = _membership_expected_events(
+                source_frames[anchor_source],
+                index_code=index_code,
+                start=start,
+                end=end,
+            )
+            if not set(anchor_members).issubset(source_anchor):
+                raise PublicDataError(f"{index_code}: anchor 事件不在所称原文中")
+        active = set(anchor_members)
+        previous_hash = _canonical_json_sha256(
+            {
+                "index_code": index_code,
+                "anchor_date": start.isoformat(),
+                "anchor_members": anchor_members,
+                "source_sha256": anchor_source,
+            }
+        )
+        adjustments = item.get("adjustments")
+        if not isinstance(adjustments, list):
+            raise PublicDataError(f"{index_code}: adjustments 必须是数组")
+        observed_events: dict[date, tuple[set[str], set[str]]] = {}
+        for expected_sequence, adjustment in enumerate(adjustments, start=1):
+            if not isinstance(adjustment, Mapping):
+                raise PublicDataError(f"{index_code}: adjustment 无效")
+            allowed = {
+                "sequence",
+                "effective_date",
+                "added",
+                "removed",
+                "source_sha256",
+                "previous_receipt_sha256",
+                "receipt_sha256",
+            }
+            _strict_keys(adjustment, allowed, label=f"{index_code}.adjustment")
+            if adjustment.get("sequence") != expected_sequence:
+                raise PublicDataError(f"{index_code}: adjustment sequence 断链")
+            event_date = _parse_iso_date(
+                adjustment.get("effective_date"), "receipt.adjustment.effective_date"
+            )
+            if not start < event_date <= end or event_date in observed_events:
+                raise PublicDataError(f"{index_code}: adjustment 日期越界或重复")
+            added = adjustment.get("added")
+            removed = adjustment.get("removed")
+            if (
+                not isinstance(added, list)
+                or not isinstance(removed, list)
+                or added != sorted(set(map(str, added)))
+                or removed != sorted(set(map(str, removed)))
+                or set(added) & set(removed)
+            ):
+                raise PublicDataError(f"{index_code}: adjustment added/removed 不闭合")
+            source_hash = str(adjustment.get("source_sha256", ""))
+            if source_hash not in authoritative_sha256s:
+                raise PublicDataError(f"{index_code}: adjustment 未绑定 authoritative 原文")
+            if source_frames is not None:
+                _, source_events = _membership_expected_events(
+                    source_frames[source_hash],
+                    index_code=index_code,
+                    start=start,
+                    end=end,
+                )
+                if source_events.get(event_date) != (set(added), set(removed)):
+                    raise PublicDataError(f"{index_code}: adjustment 事件不在所称原文中")
+            if adjustment.get("previous_receipt_sha256") != previous_hash:
+                raise PublicDataError(f"{index_code}: adjustment previous_receipt_sha256 断链")
+            receipt_payload = {key: adjustment[key] for key in sorted(allowed - {"receipt_sha256"})}
+            observed_hash = _canonical_json_sha256(receipt_payload)
+            if adjustment.get("receipt_sha256") != observed_hash:
+                raise PublicDataError(f"{index_code}: adjustment receipt_sha256 漂移")
+            if not set(removed).issubset(active) or set(added) & active:
+                raise PublicDataError(f"{index_code}: adjustment 无法从前态应用")
+            active.difference_update(removed)
+            active.update(added)
+            observed_events[event_date] = (set(added), set(removed))
+            referenced_hashes.add(source_hash)
+            previous_hash = observed_hash
+        if observed_events != expected_events:
+            raise PublicDataError(f"{index_code}: receipt 未覆盖 expected_keys 全部调样事件")
+        final_hash = _canonical_json_sha256({"members": sorted(active)})
+        if item.get("final_members_sha256") != final_hash:
+            raise PublicDataError(f"{index_code}: final_members_sha256 不匹配")
+    if referenced_hashes != authoritative_sha256s:
+        raise PublicDataError("index_membership receipt 未闭合全部 authoritative 原文")
+
+
+def _validate_cninfo_pagination_receipt(
+    payload: Mapping[str, Any],
+    expected_frame: Any,
+    *,
+    start: date,
+    end: date,
+    authoritative_sha256s: set[str],
+    source_frames: Mapping[str, Any] | None = None,
+    raw_source_frames: Mapping[str, Any] | None = None,
+) -> bool:
+    _strict_keys(
+        payload,
+        {
+            "schema_version",
+            "dataset",
+            "coverage_start",
+            "coverage_end",
+            "status",
+            "page_size",
+            "total_records",
+            "total_pages",
+            "pages",
+        },
+        label="corporate_actions.completeness_receipt",
+    )
+    if (
+        payload.get("schema_version") != CNINFO_PAGINATION_RECEIPT_SCHEMA
+        or payload.get("dataset") != "corporate_actions"
+        or payload.get("status") != "passed"
+        or _parse_iso_date(payload.get("coverage_start"), "receipt.coverage_start") != start
+        or _parse_iso_date(payload.get("coverage_end"), "receipt.coverage_end") != end
+    ):
+        raise PublicDataError("corporate_actions pagination receipt 顶层合同无效")
+    page_size = payload.get("page_size")
+    total_records = payload.get("total_records")
+    total_pages = payload.get("total_pages")
+    pages = payload.get("pages")
+    if (
+        not isinstance(page_size, int)
+        or isinstance(page_size, bool)
+        or page_size < 1
+        or not isinstance(total_records, int)
+        or isinstance(total_records, bool)
+        or total_records != len(expected_frame)
+        or not isinstance(total_pages, int)
+        or isinstance(total_pages, bool)
+        or total_pages < 1
+        or not isinstance(pages, list)
+        or len(pages) != total_pages
+    ):
+        raise PublicDataError("corporate_actions pagination 数量合同无效")
+    expected_keys = {
+        _key_tuple(row, DATASET_KEYS["corporate_actions"])
+        for row in expected_frame.to_dict(orient="records")
+    }
+    observed_keys: set[tuple[str, ...]] = set()
+    referenced_hashes: set[str] = set()
+    official_totals_verified = source_frames is not None and raw_source_frames is not None
+    for page_number, page in enumerate(pages, start=1):
+        if not isinstance(page, Mapping):
+            raise PublicDataError("corporate_actions pagination page 无效")
+        _strict_keys(
+            page,
+            {"page_number", "row_count", "source_sha256", "keys_sha256"},
+            label=f"corporate_actions.pages[{page_number}]",
+        )
+        row_count = page.get("row_count")
+        if (
+            page.get("page_number") != page_number
+            or not isinstance(row_count, int)
+            or isinstance(row_count, bool)
+            or row_count < 1
+            or (page_number < total_pages and row_count != page_size)
+            or (page_number == total_pages and row_count > page_size)
+        ):
+            raise PublicDataError("corporate_actions pagination 缺页或页大小不闭合")
+        source_hash = str(page.get("source_sha256", ""))
+        if source_hash not in authoritative_sha256s:
+            raise PublicDataError("corporate_actions page 未绑定 authoritative 原文")
+        if source_hash in referenced_hashes:
+            raise PublicDataError("corporate_actions pagination 同一页原文重复使用")
+        if source_frames is None:
+            page_keys = []
+            official_totals_verified = False
+        else:
+            page_keys = sorted(
+                {
+                    _key_tuple(row, DATASET_KEYS["corporate_actions"])
+                    for row in source_frames[source_hash].to_dict(orient="records")
+                }
+            )
+        if len(page_keys) != row_count:
+            raise PublicDataError("corporate_actions page row_count 与所称原文不匹配")
+        if page.get("keys_sha256") != _canonical_json_sha256(
+            {"keys": [list(key) for key in page_keys]}
+        ):
+            raise PublicDataError("corporate_actions pagination keys_sha256 漂移")
+        if observed_keys & set(page_keys):
+            raise PublicDataError("corporate_actions pagination 跨页键重复")
+        observed_keys.update(page_keys)
+        referenced_hashes.add(source_hash)
+        raw_frame = raw_source_frames.get(source_hash) if raw_source_frames is not None else None
+        bound_metadata = (
+            raw_frame.attrs.get("pagination_metadata")
+            if raw_frame is not None
+            else None
+        )
+        if isinstance(bound_metadata, Mapping):
+            if dict(bound_metadata) != {
+                "total_records_path": total_records,
+                "total_pages_path": total_pages,
+                "page_number_path": page_number,
+            }:
+                raise PublicDataError("corporate_actions receipt 与官方 JSON 分页元数据不一致")
+            continue
+        required_meta = {
+            "receipt_total_records",
+            "receipt_total_pages",
+            "receipt_page_number",
+        }
+        if raw_frame is None or not required_meta.issubset(raw_frame.columns):
+            official_totals_verified = False
+        else:
+            values = {}
+            for column in required_meta:
+                unique = {
+                    str(value).strip()
+                    for value in raw_frame[column]
+                    if str(value).strip()
+                }
+                if len(unique) != 1 or not next(iter(unique)).isdigit():
+                    raise PublicDataError("corporate_actions 官方分页元数据不闭合")
+                values[column] = int(next(iter(unique)))
+            if values != {
+                "receipt_total_records": total_records,
+                "receipt_total_pages": total_pages,
+                "receipt_page_number": page_number,
+            }:
+                raise PublicDataError("corporate_actions receipt 与官方分页元数据不一致")
+    if observed_keys != expected_keys or referenced_hashes != authoritative_sha256s:
+        raise PublicDataError("corporate_actions pagination 未闭合全部页或 authoritative 原文")
+    return bool(official_totals_verified)
+
+
+def _validate_completeness_receipt(
+    dataset: str,
+    config: Any,
+    expected_frame: Any,
+    authoritative: Sequence[tuple[Mapping[str, Any], Any]],
+    *,
+    training_root: Path,
+    output: Path,
+    start: date,
+    end: date,
+) -> dict[str, Any]:
+    payload, path, receipt_sha256 = _receipt_file(
+        config,
+        training_root=training_root,
+        output=output,
+        label=f"datasets.{dataset}.completeness_receipt",
+    )
+    source_hashes = {str(contract["sha256"]) for contract, _ in authoritative}
+    source_frames = {
+        str(contract["sha256"]): frame for contract, frame in authoritative
+    }
+    raw_source_frames = {
+        str(contract["sha256"]): contract.get("_source_frame")
+        for contract, _ in authoritative
+    }
+    if dataset == "index_membership":
+        _validate_csi_membership_receipt(
+            payload,
+            expected_frame,
+            start=start,
+            end=end,
+            authoritative_sha256s=source_hashes,
+            source_frames=source_frames,
+        )
+        schema = CSI_MEMBERSHIP_RECEIPT_SCHEMA
+        formal_complete = True
+    elif dataset == "corporate_actions":
+        formal_complete = _validate_cninfo_pagination_receipt(
+            payload,
+            expected_frame,
+            start=start,
+            end=end,
+            authoritative_sha256s=source_hashes,
+            source_frames=source_frames,
+            raw_source_frames=raw_source_frames,
+        )
+        schema = CNINFO_PAGINATION_RECEIPT_SCHEMA
+    else:
+        raise PublicDataError(f"{dataset}: 不支持 completeness_receipt")
+    return {
+        "schema_version": schema,
+        "path": path,
+        "sha256": receipt_sha256,
+        "bytes": path.stat().st_size,
+        "status": "passed",
+        "formal_complete": formal_complete,
+    }
+
+
 def publish_normalized_pit_bundle(
     manifest_path: Path,
     output_directory: Path,
@@ -1168,18 +2551,43 @@ def publish_normalized_pit_bundle(
     if output.exists():
         raise PublicDataError("目标 PIT version_root 已存在；请使用新版本目录")
     payload, normalization_sha256 = _normalization_manifest(manifest_path)
-    coverage_start = _parse_iso_date(payload["coverage_start"], "coverage_start")
-    coverage_end = _parse_iso_date(payload["coverage_end"], "coverage_end")
+    normalization_schema = str(payload["schema_version"])
+    if normalization_schema == NORMALIZATION_SCHEMA_V2:
+        model_start = _parse_iso_date(payload["model_coverage_start"], "model_coverage_start")
+        model_end = _parse_iso_date(payload["model_coverage_end"], "model_coverage_end")
+        evidence_start = _parse_iso_date(
+            payload["evidence_lookback_start"], "evidence_lookback_start"
+        )
+    else:
+        model_start = _parse_iso_date(payload["coverage_start"], "coverage_start")
+        model_end = _parse_iso_date(payload["coverage_end"], "coverage_end")
+        evidence_start = model_start
     data_contract = _load_data_contract()
     staging: Path | None = _new_staging_directory(output, training_root)
     table_reports: dict[str, dict[str, Any]] = {}
     coverage_rows: list[dict[str, Any]] = []
+    prepared: dict[str, dict[str, Any]] = {}
     try:
         for dataset in NORMALIZED_DATASETS:
             config = payload["datasets"][dataset]
             if not isinstance(config, dict):
                 raise PublicDataError(f"datasets.{dataset} 必须是 object")
-            _strict_keys(config, {"sources", "expected_keys"}, label=f"datasets.{dataset}")
+            allowed_config = {"sources", "expected_keys"}
+            if normalization_schema == NORMALIZATION_SCHEMA_V2:
+                allowed_config |= {"coverage_key_contract", "completeness_receipt"}
+            _strict_keys(config, allowed_config, label=f"datasets.{dataset}")
+            coverage_key_contract = (
+                str(config.get("coverage_key_contract", ""))
+                if normalization_schema == NORMALIZATION_SCHEMA_V2
+                else "source_bound"
+            )
+            if normalization_schema == NORMALIZATION_SCHEMA_V2:
+                expected_contract_type = V2_COVERAGE_KEY_CONTRACTS[dataset]
+                if coverage_key_contract != expected_contract_type:
+                    raise PublicDataError(
+                        f"datasets.{dataset}.coverage_key_contract 固定为 "
+                        f"{expected_contract_type!r}"
+                    )
             configured_sources = config.get("sources")
             if not isinstance(configured_sources, list) or not configured_sources:
                 raise PublicDataError(f"datasets.{dataset}.sources 必须是非空数组")
@@ -1191,6 +2599,8 @@ def publish_normalized_pit_bundle(
                     training_root=training_root,
                     output=output,
                     label=f"datasets.{dataset}.sources[{index}]",
+                    normalization_schema=normalization_schema,
+                    dataset=dataset,
                 )
                 if contract["source_id"] in ids:
                     raise PublicDataError(f"{dataset}: source_id 重复：{contract['source_id']}")
@@ -1207,15 +2617,39 @@ def publish_normalized_pit_bundle(
                         label=f"datasets.{dataset}.sources[{index}]",
                         required=True,
                     )
-            elif any(
-                contract.get("artifact_role") is not None
-                or contract.get("artifact_schema_version") is not None
-                for contract in contracts
-            ):
-                raise PublicDataError(
-                    f"{dataset}: trading_calendar 工件元数据不得用于其他数据集"
-                )
+            else:
+                for index, contract in enumerate(contracts):
+                    if contract.get("artifact_role") is None:
+                        continue
+                    allowed_artifact = SOURCE_BOUND_ARTIFACTS.get(dataset)
+                    if (
+                        normalization_schema != NORMALIZATION_SCHEMA_V2
+                        or allowed_artifact is None
+                    ):
+                        raise PublicDataError(f"{dataset}: 不允许此证据工件元数据")
+                    _evidence_artifact_metadata(
+                        contract,
+                        label=f"datasets.{dataset}.sources[{index}]",
+                        required_role=allowed_artifact[0],
+                    )
+
             expected_config = config.get("expected_keys")
+            if normalization_schema == NORMALIZATION_SCHEMA_V2:
+                if coverage_key_contract == "source_bound" and expected_config is None:
+                    raise PublicDataError(f"datasets.{dataset}.expected_keys 不得为空")
+                if coverage_key_contract == "derived" and expected_config is not None:
+                    raise PublicDataError(
+                        f"datasets.{dataset}.expected_keys 在 derived 合同下必须为 null"
+                    )
+                if dataset in {"index_membership", "corporate_actions"}:
+                    if not isinstance(config.get("completeness_receipt"), Mapping):
+                        raise PublicDataError(
+                            f"datasets.{dataset}.completeness_receipt 缺失"
+                        )
+                elif config.get("completeness_receipt") is not None:
+                    raise PublicDataError(
+                        f"datasets.{dataset} 不允许 completeness_receipt"
+                    )
             expected_contract: dict[str, Any] | None = None
             expected_frame = None
             if expected_config is not None:
@@ -1225,20 +2659,24 @@ def publish_normalized_pit_bundle(
                     output=output,
                     label=f"datasets.{dataset}.expected_keys",
                     expected_role="expected_keys",
+                    normalization_schema=normalization_schema,
+                    dataset=dataset,
                 )
-                if dataset == TRADING_CALENDAR_DATASET:
+                if normalization_schema == NORMALIZATION_SCHEMA_V2:
+                    required_artifact = SOURCE_BOUND_ARTIFACTS[dataset]
+                    _evidence_artifact_metadata(
+                        expected_contract,
+                        label=f"datasets.{dataset}.expected_keys",
+                        required_role=required_artifact[0],
+                    )
+                elif dataset == TRADING_CALENDAR_DATASET:
                     _calendar_artifact_metadata(
                         expected_contract,
                         label=f"datasets.{dataset}.expected_keys",
                         required=True,
                     )
-                elif (
-                    expected_contract.get("artifact_role") is not None
-                    or expected_contract.get("artifact_schema_version") is not None
-                ):
-                    raise PublicDataError(
-                        f"{dataset}: trading_calendar 工件元数据不得用于其他数据集"
-                    )
+                elif expected_contract.get("artifact_role") is not None:
+                    raise PublicDataError(f"{dataset}: 不允许证据工件元数据")
                 expected_frame = _read_mapped_source(
                     expected_contract, dataset=dataset, keys_only=True
                 )
@@ -1249,8 +2687,9 @@ def publish_normalized_pit_bundle(
                 keys_only = contract["role"] == "mechanical_cross_check"
                 frame = _read_mapped_source(contract, dataset=dataset, keys_only=keys_only)
                 if keys_only:
-                    # A cross-check containing only keys cannot verify a value and is rejected.
-                    if set(contract["mapping"]) | set(contract["constants"]) <= set(DATASET_KEYS[dataset]):
+                    if set(contract["mapping"]) | set(contract["constants"]) <= set(
+                        DATASET_KEYS[dataset]
+                    ):
                         raise PublicDataError(f"{dataset}/{contract['source_id']} 机械核验缺少值列")
                     mechanical.append((contract, frame))
                 else:
@@ -1263,67 +2702,157 @@ def publish_normalized_pit_bundle(
             merged, mechanical_conflicts = _apply_mechanical_cross_checks(
                 dataset, merged, mechanical
             )
-            merged = data_contract.validate_pit_table(dataset, merged)
+            completeness_receipt = None
+            if (
+                normalization_schema == NORMALIZATION_SCHEMA_V2
+                and dataset in {"index_membership", "corporate_actions"}
+            ):
+                completeness_receipt = _validate_completeness_receipt(
+                    dataset,
+                    config.get("completeness_receipt"),
+                    merged,
+                    authoritative,
+                    training_root=training_root,
+                    output=output,
+                    start=model_start,
+                    end=model_end,
+                )
+            prepared[dataset] = {
+                "config": config,
+                "coverage_key_contract": coverage_key_contract,
+                "contracts": contracts,
+                "expected_contract": expected_contract,
+                "expected_frame": expected_frame,
+                "authoritative": authoritative,
+                "merged": data_contract.validate_pit_table(dataset, merged),
+                "equal_priority_conflicts": equal_priority_conflicts,
+                "mechanical_conflicts": mechanical_conflicts,
+                "lower_disagreements": lower_disagreements,
+                "completeness_receipt": completeness_receipt,
+            }
+
+        frames = {dataset: item["merged"] for dataset, item in prepared.items()}
+        if normalization_schema == NORMALIZATION_SCHEMA_V2:
+            earlier_open_dates = sorted(
+                row.trade_date.date()
+                for row in frames[TRADING_CALENDAR_DATASET].itertuples(index=False)
+                if bool(row.is_open) and row.trade_date.date() < model_start
+            )
+            if not earlier_open_dates or earlier_open_dates[-1] != evidence_start:
+                raise PublicDataError(
+                    "evidence_lookback_start 必须等于官方日历中 model_coverage_start 的前一开放交易日"
+                )
+
+        for dataset in NORMALIZED_DATASETS:
+            item = prepared[dataset]
+            merged = item["merged"]
             selected_keys = {
                 _key_tuple(row, DATASET_KEYS[dataset])
                 for row in merged.to_dict(orient="records")
             }
-            expected_keys = (
-                {
-                    _key_tuple(row, DATASET_KEYS[dataset])
-                    for row in expected_frame.to_dict(orient="records")
-                }
-                if expected_frame is not None
-                else set()
-            )
+            derived_complete = True
+            derived_issues: list[str] = []
+            if item["coverage_key_contract"] == "derived":
+                expected_keys, derived_complete, derived_issues = _derive_key_contract(
+                    dataset,
+                    frames,
+                    start=model_start,
+                    end=model_end,
+                )
+            else:
+                expected_frame = item["expected_frame"]
+                expected_keys = (
+                    {
+                        _key_tuple(row, DATASET_KEYS[dataset])
+                        for row in expected_frame.to_dict(orient="records")
+                    }
+                    if expected_frame is not None
+                    else set()
+                )
             missing_expected = expected_keys - selected_keys
+            outside_key_space: set[tuple[str, ...]] = set()
+            if normalization_schema == NORMALIZATION_SCHEMA_V2:
+                outside_key_space = selected_keys - expected_keys
+                if outside_key_space:
+                    merged = merged[
+                        ~merged.apply(
+                            lambda row: _key_tuple(row, DATASET_KEYS[dataset])
+                            in outside_key_space,
+                            axis=1,
+                        )
+                    ].reset_index(drop=True)
+                    if merged.empty:
+                        raise PublicDataError(f"{dataset}: 固定 coverage key space 过滤后为空")
+                    merged = data_contract.validate_pit_table(dataset, merged)
+                    frames[dataset] = merged
             exclusion_rows = [
                 {**dict(zip(DATASET_KEYS[dataset], key)), "reason": reason}
                 for reason, keys in (
-                    ("equal_priority_conflict", equal_priority_conflicts),
-                    ("tdx_mechanical_conflict", mechanical_conflicts),
+                    ("equal_priority_conflict", item["equal_priority_conflicts"]),
+                    ("tdx_mechanical_conflict", item["mechanical_conflicts"]),
                     ("missing_expected_key", missing_expected),
+                    ("outside_fixed_key_space", outside_key_space),
                 )
                 for key in sorted(keys)
             ]
             exclusions = pd.DataFrame(
-                exclusion_rows,
-                columns=[*DATASET_KEYS[dataset], "reason"],
+                exclusion_rows, columns=[*DATASET_KEYS[dataset], "reason"]
             )
             exclusion_relative = Path("exclusions") / f"{dataset}.csv"
             exclusion_path = ensure_within(staging / exclusion_relative, training_root)
             _write_normalized_csv(exclusion_path, exclusions, training_root)
             exclusion_sha256 = sha256_file(exclusion_path)
+            required_start = (
+                evidence_start
+                if normalization_schema == NORMALIZATION_SCHEMA_V2
+                and dataset in {"price_limits", TRADING_CALENDAR_DATASET}
+                else model_start
+            )
             authoritative_intervals = [
                 (contract["valid_from"], contract["valid_to"])
-                for contract, _ in authoritative
+                for contract, _ in item["authoritative"]
             ]
             source_period_complete = _intervals_cover(
-                authoritative_intervals, coverage_start, coverage_end
+                authoritative_intervals, required_start, model_end
+            )
+            expected_evidence_present = (
+                item["expected_contract"] is not None
+                if item["coverage_key_contract"] == "source_bound"
+                else derived_complete
             )
             is_complete = bool(
-                expected_contract is not None
+                expected_evidence_present
                 and source_period_complete
                 and not missing_expected
-                and not equal_priority_conflicts
-                and not mechanical_conflicts
+                and not item["equal_priority_conflicts"]
+                and not item["mechanical_conflicts"]
+                and (
+                    item.get("completeness_receipt") is None
+                    or item["completeness_receipt"].get("formal_complete") is True
+                )
             )
 
             table_path = ensure_within(staging / f"{dataset}.csv", training_root)
             _write_normalized_csv(table_path, merged, training_root)
             copied_sources: list[dict[str, Any]] = []
             cross_checks: list[dict[str, Any]] = []
-            copy_contracts = [*contracts]
-            if expected_contract is not None:
-                copy_contracts.append(expected_contract)
-            copied_by_id: dict[str, tuple[str, str]] = {}
+            copy_contracts = [*item["contracts"]]
+            if item["expected_contract"] is not None:
+                copy_contracts.append(item["expected_contract"])
+            copied_by_id: dict[str, tuple[str, ...]] = {}
             for contract in copy_contracts:
+                extraction_hash = str(contract.get("extracted_sha256", ""))
+                identity = (
+                    contract["sha256"],
+                    contract["source_class"],
+                    extraction_hash,
+                    str(contract.get("_row_audit_report", {}).get("sha256", "")),
+                )
                 previous = copied_by_id.get(contract["source_id"])
-                identity = (contract["sha256"], contract["source_class"])
                 if previous is not None:
                     if previous != identity:
                         raise PublicDataError(
-                            f"{dataset}: source_id {contract['source_id']} 绑定多个原始文件"
+                            f"{dataset}: source_id {contract['source_id']} 绑定多个原始/抽取文件"
                         )
                     continue
                 copied_by_id[contract["source_id"]] = identity
@@ -1332,8 +2861,10 @@ def publish_normalized_pit_bundle(
                 copied_path = ensure_within(staging / relative_raw, training_root)
                 atomic_write(copied_path, contract["raw_path"].read_bytes())
                 if sha256_file(copied_path) != contract["sha256"]:
-                    raise PublicDataError(f"{dataset}/{contract['source_id']} 原始响应复制后 SHA256 漂移")
-                record = {
+                    raise PublicDataError(
+                        f"{dataset}/{contract['source_id']} 原始响应复制后 SHA256 漂移"
+                    )
+                record: dict[str, Any] = {
                     "source_id": contract["source_id"],
                     "source_class": contract["source_class"],
                     "retrieved_at": contract["retrieved_at"],
@@ -1347,22 +2878,128 @@ def publish_normalized_pit_bundle(
                 for field in ("artifact_role", "artifact_schema_version"):
                     if contract.get(field) is not None:
                         record[field] = contract[field]
+                if normalization_schema == NORMALIZATION_SCHEMA_V2:
+                    extracted_relative = (
+                        Path("extracted") / dataset / f"{contract['source_id']}.csv"
+                    )
+                    extracted_path = ensure_within(
+                        staging / extracted_relative, training_root
+                    )
+                    atomic_write(extracted_path, contract["_extracted_bytes"])
+                    extraction = {
+                        **contract["_extraction_report"],
+                        "source_format": contract["source_format"],
+                        "path": extracted_relative.as_posix(),
+                        "sha256": sha256_file(extracted_path),
+                    }
+                    canonical_relative = (
+                        Path("canonical_sources")
+                        / dataset
+                        / f"{contract['source_id']}.csv"
+                    )
+                    canonical_path = ensure_within(
+                        staging / canonical_relative, training_root
+                    )
+                    atomic_write(canonical_path, contract["_canonical_source_bytes"])
+                    extraction["canonical_source_path"] = canonical_relative.as_posix()
+                    record["extraction"] = extraction
+                    row_audit_report = contract["_row_audit_report"]
+                    row_audit_relative = (
+                        Path("row_audits") / dataset / f"{contract['source_id']}.csv"
+                    )
+                    row_audit_path = ensure_within(
+                        staging / row_audit_relative, training_root
+                    )
+                    atomic_write(
+                        row_audit_path,
+                        Path(row_audit_report["path"]).read_bytes(),
+                    )
+                    record["row_audit"] = {
+                        **{
+                            key: value
+                            for key, value in row_audit_report.items()
+                            if key != "path"
+                        },
+                        "path": row_audit_relative.as_posix(),
+                    }
+                    overlay_report = contract.get("_overlay_report")
+                    if overlay_report is not None:
+                        overlay_relative = (
+                            Path("overlays") / dataset / f"{contract['source_id']}.csv"
+                        )
+                        overlay_path = ensure_within(
+                            staging / overlay_relative, training_root
+                        )
+                        atomic_write(overlay_path, overlay_report["path"].read_bytes())
+                        record["reviewed_overlay"] = {
+                            **{
+                                key: value
+                                for key, value in overlay_report.items()
+                                if key != "path"
+                            },
+                            "path": overlay_relative.as_posix(),
+                        }
                 if contract["source_class"] == "tdx_mechanical":
                     cross_checks.append(record)
                 else:
                     copied_sources.append({**record, "url": contract["url"]})
-            copied_sources.sort(key=lambda item: (item["source_id"], item["role"]))
-            cross_checks.sort(key=lambda item: item["source_id"])
+            copied_sources.sort(key=lambda value: (value["source_id"], value["role"]))
+            cross_checks.sort(key=lambda value: value["source_id"])
             observed_start = max(
-                coverage_start, min(contract["valid_from"] for contract, _ in authoritative)
+                required_start,
+                min(contract["valid_from"] for contract, _ in item["authoritative"]),
             )
             observed_end = min(
-                coverage_end, max(contract["valid_to"] for contract, _ in authoritative)
+                model_end,
+                max(contract["valid_to"] for contract, _ in item["authoritative"]),
             )
             if observed_end < observed_start:
                 raise PublicDataError(f"{dataset}: 实际来源与请求 coverage 无交集")
-            declared_start = coverage_start if is_complete else observed_start
-            declared_end = coverage_end if is_complete else observed_end
+            declared_start = required_start if is_complete else observed_start
+            declared_end = model_end if is_complete else observed_end
+            published_receipt = None
+            receipt_report = item.get("completeness_receipt")
+            if receipt_report is not None:
+                receipt_relative = Path("receipts") / f"{dataset}.json"
+                receipt_path = ensure_within(staging / receipt_relative, training_root)
+                atomic_write(receipt_path, Path(receipt_report["path"]).read_bytes())
+                if sha256_file(receipt_path) != receipt_report["sha256"]:
+                    raise PublicDataError(f"{dataset}: completeness receipt 复制后漂移")
+                published_receipt = {
+                    **{
+                        key: value
+                        for key, value in receipt_report.items()
+                        if key != "path"
+                    },
+                    "path": receipt_relative.as_posix(),
+                }
+            normalization_record: dict[str, Any] = {
+                "schema_version": normalization_schema,
+                "manifest_sha256": normalization_sha256,
+                "source_priority": list(SOURCE_PRIORITY),
+                "coverage_key_contract": item["coverage_key_contract"],
+                "equal_priority_conflict_keys_excluded": len(
+                    item["equal_priority_conflicts"]
+                ),
+                "mechanical_conflict_keys_excluded": len(item["mechanical_conflicts"]),
+                "lower_priority_disagreements": item["lower_disagreements"],
+                "expected_key_count": len(expected_keys),
+                "missing_expected_key_count": len(missing_expected),
+                "outside_fixed_key_space_count": len(outside_key_space),
+                "derived_contract_issues": derived_issues,
+                "exclusion_report": exclusion_relative.as_posix(),
+                "exclusion_report_sha256": exclusion_sha256,
+            }
+            if published_receipt is not None:
+                normalization_record["completeness_receipt"] = published_receipt
+            if normalization_schema == NORMALIZATION_SCHEMA_V2:
+                normalization_record.update(
+                    {
+                        "model_coverage_start": model_start.isoformat(),
+                        "model_coverage_end": model_end.isoformat(),
+                        "evidence_lookback_start": evidence_start.isoformat(),
+                    }
+                )
             provenance = {
                 "schema_version": data_contract.PIT_PROVENANCE_SCHEMA,
                 "dataset": dataset,
@@ -1370,24 +3007,15 @@ def publish_normalized_pit_bundle(
                 "coverage_end": declared_end.isoformat(),
                 "sources": copied_sources,
                 "cross_checks": cross_checks,
-                "normalization": {
-                    "schema_version": NORMALIZATION_SCHEMA,
-                    "manifest_sha256": normalization_sha256,
-                    "source_priority": list(SOURCE_PRIORITY),
-                    "equal_priority_conflict_keys_excluded": len(equal_priority_conflicts),
-                    "mechanical_conflict_keys_excluded": len(mechanical_conflicts),
-                    "lower_priority_disagreements": lower_disagreements,
-                    "expected_key_count": len(expected_keys),
-                    "missing_expected_key_count": len(missing_expected),
-                    "exclusion_report": exclusion_relative.as_posix(),
-                    "exclusion_report_sha256": exclusion_sha256,
-                },
+                "normalization": normalization_record,
             }
             provenance_relative = Path("provenance") / f"{dataset}.json"
             provenance_path = ensure_within(staging / provenance_relative, training_root)
             atomic_write(
                 provenance_path,
-                (json.dumps(provenance, ensure_ascii=False, indent=2) + "\n").encode("utf-8"),
+                (json.dumps(provenance, ensure_ascii=False, indent=2) + "\n").encode(
+                    "utf-8"
+                ),
             )
             file_hash = sha256_file(table_path)
             schema_hash = data_contract.pit_table_schema_sha256(dataset, merged)
@@ -1414,30 +3042,48 @@ def publish_normalized_pit_bundle(
                 "sha256": file_hash,
                 "schema_sha256": schema_hash,
                 "is_complete": is_complete,
-                "source_count": len(authoritative),
+                "coverage_key_contract": item["coverage_key_contract"],
+                "source_count": len(item["authoritative"]),
                 "expected_key_count": len(expected_keys),
                 "missing_expected_key_count": len(missing_expected),
-                "equal_priority_conflict_keys_excluded": len(equal_priority_conflicts),
-                "mechanical_conflict_keys_excluded": len(mechanical_conflicts),
-                "lower_priority_disagreements": lower_disagreements,
+                "outside_fixed_key_space_count": len(outside_key_space),
+                "derived_contract_issues": derived_issues,
+                "equal_priority_conflict_keys_excluded": len(
+                    item["equal_priority_conflicts"]
+                ),
+                "mechanical_conflict_keys_excluded": len(item["mechanical_conflicts"]),
+                "lower_priority_disagreements": item["lower_disagreements"],
                 "exclusion_count": len(exclusions),
                 "exclusion_report": exclusion_relative.as_posix(),
                 "exclusion_report_sha256": exclusion_sha256,
             }
 
-        coverage = data_contract.validate_pit_table(
-            "coverage", pd.DataFrame(coverage_rows)
-        )
+        coverage = data_contract.validate_pit_table("coverage", pd.DataFrame(coverage_rows))
         _write_normalized_csv(staging / "coverage.csv", coverage, training_root)
         validation = data_contract.validate_pit_bundle(
-            staging, coverage_start=coverage_start, coverage_end=coverage_end
+            staging,
+            coverage_start=model_start,
+            coverage_end=model_end,
+            allow_unpublished_staging=True,
         )
         if validation.missing_tables or validation.errors:
             raise PublicDataError(
                 "规范 PIT bundle 未通过结构/哈希合同："
                 + "; ".join([*validation.missing_tables, *validation.errors])
             )
-        status = "production_ready" if validation.production_ready else "local_provisional"
+        formal_release_allowed = normalization_schema == NORMALIZATION_SCHEMA_V2
+        staging_candidate_ready = bool(
+            validation.table_reports.get("normalization_release_contract", {}).get(
+                "staging_candidate_ready"
+            )
+        )
+        status = (
+            "production_ready"
+            if formal_release_allowed and staging_candidate_ready
+            else "local_provisional"
+        )
+        publication_validation = validation.to_report()
+        publication_validation["production_ready"] = status == "production_ready"
         artifact_inventory = [
             {
                 "path": artifact.relative_to(staging).as_posix(),
@@ -1449,19 +3095,39 @@ def publish_normalized_pit_bundle(
                 key=lambda path: path.relative_to(staging).as_posix(),
             )
         ]
-        publication = {
-            "schema_version": PUBLICATION_SCHEMA,
+        publication: dict[str, Any] = {
+            "schema_version": (
+                PUBLICATION_SCHEMA_V2
+                if normalization_schema == NORMALIZATION_SCHEMA_V2
+                else PUBLICATION_SCHEMA_V1
+            ),
             "status": status,
+            "formal_release_allowed": formal_release_allowed,
+            "normalization_schema_version": normalization_schema,
             "normalization_manifest": str(manifest_path.resolve()),
             "normalization_manifest_sha256": normalization_sha256,
-            "coverage_start": coverage_start.isoformat(),
-            "coverage_end": coverage_end.isoformat(),
             "source_priority": list(SOURCE_PRIORITY),
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "tables": table_reports,
             "artifact_inventory": artifact_inventory,
-            "pit_validation": validation.to_report(),
+            "pit_validation": publication_validation,
         }
+        if normalization_schema == NORMALIZATION_SCHEMA_V2:
+            publication.update(
+                {
+                    "model_coverage_start": model_start.isoformat(),
+                    "model_coverage_end": model_end.isoformat(),
+                    "evidence_lookback_start": evidence_start.isoformat(),
+                }
+            )
+        else:
+            publication.update(
+                {
+                    "coverage_start": model_start.isoformat(),
+                    "coverage_end": model_end.isoformat(),
+                    "release_cap_reason": "normalization_v1_local_provisional_only",
+                }
+            )
         publication_path = ensure_within(
             staging / "publication_manifest.json", training_root
         )
@@ -1474,6 +3140,24 @@ def publish_normalized_pit_bundle(
             ensure_within(staging / "publication_manifest.sha256", training_root),
             f"{publication_sha256}  publication_manifest.json\n".encode("ascii"),
         )
+        final_validation = data_contract.validate_pit_bundle(
+            staging,
+            coverage_start=model_start,
+            coverage_end=model_end,
+        )
+        if status == "production_ready" and not final_validation.production_ready:
+            raise PublicDataError(
+                "PIT publication 写入后未通过正式准出复验："
+                + "; ".join(
+                    [
+                        *final_validation.missing_tables,
+                        *final_validation.errors,
+                        *final_validation.warnings,
+                    ]
+                )
+            )
+        if status != "production_ready" and final_validation.production_ready:
+            raise PublicDataError("local_provisional publication 不得复验为 production_ready")
         _promote_directory(staging, output, training_root)
         staging = None
         return {**publication, "publication_manifest_sha256": publication_sha256}

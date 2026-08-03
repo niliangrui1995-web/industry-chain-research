@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import math
@@ -36,6 +37,21 @@ GATE_HEAD_SCHEMA_VERSION = "kronos-a-share-gate-head-v1"
 HORIZON = 10
 LOOKBACK = 90
 PURGE_DAYS = 11
+SMOKE_NAMESPACE_SUFFIX = "-smoke-v5"
+SMOKE_MAX_STEPS = 400
+SMOKE_CHECKPOINT_INTERVAL = 50
+FULL_MAX_STEPS = 10_000
+FULL_CHECKPOINT_INTERVAL = 1_000
+ADAPTER_EARLY_STOPPING_PATIENCE = 3
+FORMAL_MIN_CROSS_SECTION = 100
+FORMAL_MIN_COVERAGE_RATIO = 0.95
+FORMAL_SCORER_SEEDS = tuple(range(100, 120))
+FORMAL_ADAPTER_DIAGNOSTIC_LRS = (1e-5, 3e-5, 1e-4)
+FORMAL_ADAPTER_DIAGNOSTIC_SEEDS = (100, 101, 102)
+ADAPTER_DIAGNOSTIC_CE_CEILING = 2.637683
+ADAPTER_DIAGNOSTIC_TIE_TOLERANCE = 1e-4
+ADAPTER_DIAGNOSTIC_MATRIX_SCHEMA = "kronos-a-share-adapter-diagnostic-matrix-v1"
+ADAPTER_DIAGNOSTIC_RECEIPT_SCHEMA = "kronos-a-share-adapter-diagnostic-receipt-v1"
 PUBLIC_PIT_TABLES = (
     "security_master",
     "st_status",
@@ -76,6 +92,7 @@ from kronos_a_share_dataset import (  # noqa: E402
     DatasetBuildError,
     FEATURE_COLUMNS,
     SPLIT_CODES,
+    WINDOW_SCHEMA,
     WindowSpec,
     build_sample_index,
     causal_adjusted_normalized_window,
@@ -197,6 +214,7 @@ CONFIG_KEYS: dict[str, Any] = {
             "smoke_steps": None,
             "checkpoint_interval": None,
             "validation_interval": None,
+            "early_stopping_patience": None,
             "gradient_clip": None,
             "validation_contract": None,
         },
@@ -229,6 +247,7 @@ class WorkflowContext:
     config_path: Path
     config: dict[str, Any]
     config_sha256: str
+    training_config_sha256: str
     layout: TrainingLayout
     dataset_id: str
     run_id: str
@@ -257,6 +276,56 @@ def _canonical_json_sha256(payload: Mapping[str, Any]) -> str:
             separators=(",", ":"),
             allow_nan=False,
         ).encode("utf-8")
+    )
+
+
+def _data_config_sha256(config: Mapping[str, Any]) -> str:
+    return _canonical_json_sha256(
+        {
+            "schema_version": "kronos-a-share-data-config-v1",
+            "data": config["data"],
+            "model_identity": {
+                "model_sha256": config["model"]["model_sha256"],
+                "tokenizer_sha256": config["model"]["tokenizer_sha256"],
+            },
+        }
+    )
+
+
+def _validated_adapter_stop_after(
+    *, engineering_smoke: bool, requested: int | None, max_allowed_steps: int
+) -> int:
+    stop_after = int(requested or max_allowed_steps)
+    if engineering_smoke and stop_after % SMOKE_CHECKPOINT_INTERVAL != 0:
+        raise CliContractError(
+            "engineering smoke --stop-after 必须落在50步验证/检查点边界"
+        )
+    if (
+        not engineering_smoke
+        and stop_after != max_allowed_steps
+        and stop_after % FULL_CHECKPOINT_INTERVAL != 0
+    ):
+        raise CliContractError(
+            "formal adapter --stop-after 仅允许落在 1000 步验证/恢复边界或完整 10000 步"
+        )
+    if stop_after < 1 or stop_after > max_allowed_steps:
+        raise CliContractError(f"stop-after 必须位于 1..{max_allowed_steps}")
+    return stop_after
+
+
+def _validated_formal_scorer_epochs(
+    *, engineering_smoke: bool, requested: int | None, configured: int
+) -> int:
+    if not engineering_smoke and requested is not None and int(requested) != configured:
+        raise CliContractError("formal scorer 不允许用 --max-epochs 缩短固定训练合同")
+    return min(int(requested or configured), configured) if engineering_smoke else configured
+
+
+def _is_explicit_adapter_diagnostic(args: argparse.Namespace) -> bool:
+    return bool(
+        getattr(args, "engineering_smoke", False)
+        and getattr(args, "learning_rate", None) is not None
+        and getattr(args, "seed", None) is not None
     )
 
 
@@ -436,7 +505,11 @@ def _validate_config(payload: dict[str, Any]) -> None:
     training = payload["training"]
     if training["precision"] != "fp32" or runtime["num_workers"] != 0:
         raise CliContractError("本机合同固定为 FP32、num_workers=0")
+    if int(training["seed"]) != 100:
+        raise CliContractError("正式训练 seed 必须固定为100")
     adapter = training["adapter"]
+    if int(adapter["checkpoint_interval"]) != int(adapter["validation_interval"]):
+        raise CliContractError("checkpoint_interval 必须与 validation_interval 严格对齐")
     if (
         int(adapter["batch_size"]),
         int(adapter["gradient_accumulation"]),
@@ -444,7 +517,8 @@ def _validate_config(payload: dict[str, Any]) -> None:
         int(adapter["smoke_steps"]),
         int(adapter["checkpoint_interval"]),
         int(adapter["validation_interval"]),
-    ) != (16, 2, 10_000, 1_000, 100, 1_000):
+        int(adapter["early_stopping_patience"]),
+    ) != (16, 2, 10_000, SMOKE_MAX_STEPS, FULL_CHECKPOINT_INTERVAL, FULL_CHECKPOINT_INTERVAL, ADAPTER_EARLY_STOPPING_PATIENCE):
         raise CliContractError("Adapter 本机训练合同不得弱化或改写")
     if adapter["validation_contract"] != "causal-dependency-cross-attention-v1":
         raise CliContractError("Adapter validation_contract 必须锁定因果 s2 验证语义")
@@ -491,13 +565,77 @@ def load_config(path: Path) -> tuple[dict[str, Any], str]:
     return payload, _sha256_bytes(raw)
 
 
+def _resolve_training_profile(
+    config: Mapping[str, Any],
+    *,
+    base_config_sha256: str,
+    profile: str | None,
+    learning_rate_override: float | None = None,
+    seed_override: int | None = None,
+) -> tuple[dict[str, Any], str, str]:
+    """Resolve immutable training values and return config/hash/run suffix."""
+
+    if profile not in {None, "engineering_smoke", "full"}:
+        raise CliContractError("training profile 仅允许 engineering_smoke/full")
+    if profile != "engineering_smoke" and (
+        learning_rate_override is not None or seed_override is not None
+    ):
+        raise CliContractError(
+            "--learning-rate/--seed 仅允许与 --engineering-smoke 同时使用"
+        )
+    resolved = copy.deepcopy(dict(config))
+    adapter = resolved["training"]["adapter"]
+    if profile == "engineering_smoke":
+        adapter["smoke_steps"] = SMOKE_MAX_STEPS
+        adapter["checkpoint_interval"] = SMOKE_CHECKPOINT_INTERVAL
+        adapter["validation_interval"] = SMOKE_CHECKPOINT_INTERVAL
+        adapter["early_stopping_patience"] = ADAPTER_EARLY_STOPPING_PATIENCE
+        if learning_rate_override is not None:
+            value = float(learning_rate_override)
+            if not math.isfinite(value) or value <= 0:
+                raise CliContractError("--learning-rate 必须为有限正数")
+            adapter["learning_rate"] = value
+        if seed_override is not None:
+            if isinstance(seed_override, bool) or int(seed_override) < 0:
+                raise CliContractError("--seed 必须为非负整数")
+            resolved["training"]["seed"] = int(seed_override)
+    if int(adapter["checkpoint_interval"]) != int(adapter["validation_interval"]):
+        raise CliContractError("checkpoint_interval 必须与 validation_interval 严格对齐")
+    changed = resolved != config
+    resolved_hash = (
+        _canonical_json_sha256(
+            {
+                "schema_version": "kronos-a-share-resolved-training-v1",
+                "base_config_sha256": base_config_sha256,
+                "profile": profile,
+                "config": resolved,
+            }
+        )
+        if changed
+        else base_config_sha256
+    )
+    explicit_override = learning_rate_override is not None or seed_override is not None
+    suffix = f"-trial-{resolved_hash[:10]}" if explicit_override else ""
+    return resolved, resolved_hash, suffix
+
+
 def build_context(
     config_path: Path,
     *,
     create: bool,
     variant: str | None = None,
+    training_profile: str | None = None,
+    learning_rate_override: float | None = None,
+    seed_override: int | None = None,
 ) -> WorkflowContext:
-    config, config_hash = load_config(config_path)
+    base_config, config_hash = load_config(config_path)
+    config, training_config_hash, run_suffix = _resolve_training_profile(
+        base_config,
+        base_config_sha256=config_hash,
+        profile=training_profile,
+        learning_rate_override=learning_rate_override,
+        seed_override=seed_override,
+    )
     layout = get_training_layout(config["runtime"]["training_root"], create=create)
     # Environment routing is a process-safety contract, independent of whether
     # this command creates artifacts. In particular, `check --load-model` must
@@ -505,11 +643,13 @@ def build_context(
     apply_environment_mapping(layout)
     if variant not in {None, "smoke"}:
         raise CliContractError("variant 仅允许 smoke 或省略")
-    suffix = "-smoke-v4" if variant == "smoke" else ""
+    suffix = SMOKE_NAMESPACE_SUFFIX if variant == "smoke" else ""
     dataset_id = validate_identifier(
         f"{config['data']['dataset_id']}{suffix}", "dataset_id"
     )
-    run_id = validate_identifier(f"{config['output']['run_id']}{suffix}", "run_id")
+    run_id = validate_identifier(
+        f"{config['output']['run_id']}{suffix}{run_suffix}", "run_id"
+    )
     dataset_dir = resolve_under(layout.data, Path("datasets") / dataset_id)
     token_dir = resolve_under(layout.data, Path("tokens") / dataset_id)
     run_dir = run_directory(run_id, layout, create=create)
@@ -523,6 +663,7 @@ def build_context(
         config_path=config_path.resolve(),
         config=config,
         config_sha256=config_hash,
+        training_config_sha256=training_config_hash,
         layout=layout,
         dataset_id=dataset_id,
         run_id=run_id,
@@ -654,7 +795,7 @@ def _expected_prepare_contract(
     return {
         "schema_version": "kronos-a-share-prepare-contract-v1",
         "dataset_id": context.dataset_id,
-        "config_sha256": context.config_sha256,
+        "config_sha256": _data_config_sha256(context.config),
         "snapshot_id": context.config["data"]["snapshot_id"],
         "snapshot_manifest_sha256": sha256_file(snapshot_manifest),
         "pit_root": str(pit_root.resolve()),
@@ -711,6 +852,18 @@ def _validate_prepared_index(
     ):
         raise CliBlocked("production 样本未逐证券消费 PIT 交易状态审计")
     if expected.get("data_status") == "production_ready":
+        if sample_manifest.get("schema_version") != WINDOW_SCHEMA:
+            raise CliBlocked(
+                "production 样本索引不是当前 PIT 分层样本合同；请使用新的 dataset_id 重建"
+            )
+        try:
+            index_columns = set(pd.read_csv(sample_index_path, nrows=0).columns)
+        except (OSError, ValueError, pd.errors.ParserError) as exc:
+            raise CliBlocked("production sample_index.csv 无法读取") from exc
+        if "active_member_count" not in index_columns:
+            raise CliBlocked(
+                "production 样本索引缺少 active_member_count；请使用新的 dataset_id 重建"
+            )
         if not _has_verified_survivorship_audit(sample_manifest):
             raise CliBlocked(
                 "production 样本未通过历史成分行情覆盖/幸存者偏差审计"
@@ -752,6 +905,12 @@ def _verify_token_cache(context: WorkflowContext) -> dict[str, Any]:
     files = manifest.get("files")
     if not isinstance(files, dict) or not files:
         raise CliBlocked("token cache manifest.files 不完整")
+    if (
+        report_path.is_file()
+        and _json_file(report_path).get("status") == "production_ready"
+        and "active_member_count.npy" not in files
+    ):
+        raise CliBlocked("production token cache 缺少 active_member_count.npy")
     for name, metadata in files.items():
         path = resolve_under(context.token_dir, name)
         if (
@@ -831,7 +990,7 @@ def _binding(context: WorkflowContext):
     return CheckpointBinding(
         base_model_sha256=context.config["model"]["model_sha256"],
         tokenizer_sha256=context.config["model"]["tokenizer_sha256"],
-        config_sha256=context.config_sha256,
+        config_sha256=context.training_config_sha256,
         dataset_sha256=_dataset_hash(context),
     )
 
@@ -969,6 +1128,13 @@ def _prepare_index(
         existing = _json_file(manifest_path)
         if (
             pit_validation.production_ready
+            and existing.get("schema_version") != WINDOW_SCHEMA
+        ):
+            raise CliBlocked(
+                "旧样本不是当前 PIT 分层样本合同；请使用新的 dataset_id 重建"
+            )
+        if (
+            pit_validation.production_ready
             and not _has_verified_survivorship_audit(existing)
         ):
             raise CliBlocked(
@@ -981,6 +1147,7 @@ def _prepare_index(
             ticker: str,
             signal_date: pd.Timestamp,
             raw_close: float,
+            previous_raw_close: float,
         ) -> Mapping[str, Any]:
             external_ticker = f"{ticker[2:]}.{ticker[:2].upper()}"
             return assess_sample_trade_state(
@@ -988,6 +1155,7 @@ def _prepare_index(
                 external_ticker,
                 signal_date,
                 trade_price_raw=raw_close,
+                previous_close_raw=previous_raw_close,
                 minimum_listing_days=int(
                     context.config["data"]["minimum_listing_days"]
                 ),
@@ -1355,7 +1523,13 @@ def _stage_reference(store: Any, *, stage: str, kind: str) -> str:
         return manifest["checkpoint_name"]
     manifests = _stage_manifests(store, stage)
     if kind == "best":
-        manifests = [item for item in manifests if item.get("is_best") is True]
+        manifests = [
+            item
+            for item in manifests
+            if item.get("is_best") is True
+            and item.get("metric") is not None
+            and math.isfinite(float(item["metric"]))
+        ]
     if not manifests:
         raise FileNotFoundError(f"不存在 {stage} {kind} checkpoint")
     return manifests[-1]["checkpoint_name"]
@@ -1433,6 +1607,136 @@ def _scorer_checkpoint_hashes(
     return adapter_reference, adapter_hash, scorer_hash
 
 
+def _scorer_stability_evidence(
+    context: WorkflowContext,
+    *,
+    checkpoint_reference: str,
+    scorer_checkpoint_hash: str,
+) -> dict[str, Any]:
+    path = context.metrics_dir / "scorer_summary.json"
+    if not path.is_file():
+        raise CliContractError("formal gate 缺少 scorer_summary.json")
+    summary = _json_file(path)
+    evidence = summary.get("scorer_seed_stability")
+    if (
+        summary.get("status") != "ok"
+        or summary.get("evaluated_checkpoint") != checkpoint_reference
+        or summary.get("scorer_checkpoint_hash") != scorer_checkpoint_hash
+        or not isinstance(evidence, Mapping)
+        or evidence.get("seeds") != list(FORMAL_SCORER_SEEDS)
+        or evidence.get("production_seed") != 100
+        or evidence.get("selection_policy")
+        != "seed100_checkpoint_fixed_no_seed_selection"
+        or evidence.get("schema_version")
+        != "kronos-a-share-scorer-seed-stability-v2"
+        or evidence.get("binding") != _gate_binding(_binding(context))
+        or evidence.get("evaluated_checkpoint") != checkpoint_reference
+        or evidence.get("scorer_checkpoint_hash") != scorer_checkpoint_hash
+        or evidence.get("training_max_epochs")
+        != int(context.config["training"]["scorer"]["max_epochs"])
+        or evidence.get("early_stopping_patience")
+        != int(context.config["training"]["scorer"]["early_stopping_patience"])
+        or not isinstance(evidence.get("per_seed"), list)
+        or len(evidence["per_seed"]) != len(FORMAL_SCORER_SEEDS)
+        or summary.get("scorer_seed_stability_sha256")
+        != _canonical_json_sha256(evidence)
+    ):
+        raise CliContractError("formal gate scorer 20-seed stability 证据不完整")
+    observed_seeds = [int(item.get("seed", -1)) for item in evidence["per_seed"]]
+    values = np.asarray(
+        [item.get("best_validation_rank_ic") for item in evidence["per_seed"]],
+        dtype=np.float64,
+    )
+    published = [
+        int(item["seed"])
+        for item in evidence["per_seed"]
+        if item.get("published_checkpoint") is True
+    ]
+    arrays = _load_cache(context)["arrays"]
+    expected_ids = _members_for_split(arrays, "validation")
+    expected_sample_hash = _sha256_bytes(expected_ids.tobytes())
+    observed_artifacts: list[dict[str, Any]] = []
+    prediction_columns = ["sample_id", "raw_score"]
+    for item in evidence["per_seed"]:
+        if not isinstance(item, Mapping):
+            raise CliContractError("formal gate scorer per-seed 证据格式无效")
+        try:
+            path = resolve_under(
+                context.layout.root,
+                Path(str(item.get("prediction_path", ""))).resolve(strict=True),
+            )
+        except (OSError, RuntimeError, ValueError) as exc:
+            raise CliContractError("formal gate scorer per-seed prediction 路径无效") from exc
+        frame = pd.read_csv(path)
+        if list(frame.columns) != prediction_columns:
+            raise CliContractError("formal gate scorer per-seed prediction 列合同无效")
+        ids = pd.to_numeric(frame["sample_id"], errors="raise").to_numpy(dtype=np.int64)
+        scores = pd.to_numeric(frame["raw_score"], errors="coerce").to_numpy(dtype=float)
+        if (
+            not np.array_equal(ids, expected_ids)
+            or not np.isfinite(scores).all()
+            or item.get("row_count") != len(expected_ids)
+            or item.get("sample_id_sha256") != expected_sample_hash
+            or item.get("prediction_sha256") != sha256_file(path)
+        ):
+            raise CliContractError("formal gate scorer per-seed prediction/hash 未绑定 validation 全样本")
+        reconstructed = pd.DataFrame(
+            {
+                "sample_id": ids,
+                "trade_date": pd.to_datetime(
+                    np.asarray(arrays["trade_date"])[ids].astype(str),
+                    format="%Y%m%d",
+                ).strftime("%Y-%m-%d"),
+                "instrument_id": np.asarray(arrays["instrument_id"])[ids],
+                "active_member_count": np.asarray(arrays["active_member_count"])[ids],
+                "raw_score": scores,
+                "label_excess_10d": np.asarray(arrays["label"])[ids],
+            }
+        )
+        live_rank_ic = _mean_rank_ic(reconstructed, formal_cross_section=True)
+        if not math.isclose(
+            live_rank_ic,
+            float(item.get("best_validation_rank_ic", math.nan)),
+            rel_tol=0,
+            abs_tol=1e-12,
+        ):
+            raise CliContractError("formal gate scorer per-seed RankIC 与预测工件不一致")
+        observed_artifacts.append(
+            {
+                "seed": int(item["seed"]),
+                "prediction_sha256": item["prediction_sha256"],
+                "sample_id_sha256": item["sample_id_sha256"],
+                "row_count": item["row_count"],
+                "best_validation_rank_ic": item["best_validation_rank_ic"],
+                "best_epoch": item["best_epoch"],
+                "completed_epoch": item["completed_epoch"],
+                "published_checkpoint": item["published_checkpoint"],
+            }
+        )
+    if (
+        observed_seeds != list(FORMAL_SCORER_SEEDS)
+        or not np.isfinite(values).all()
+        or published != [100]
+        or not math.isclose(
+            float(evidence.get("rank_ic_mean", math.nan)),
+            float(values.mean()),
+            rel_tol=0,
+            abs_tol=1e-12,
+        )
+        or not math.isclose(
+            float(evidence.get("rank_ic_std", math.nan)),
+            float(values.std(ddof=1)),
+            rel_tol=0,
+            abs_tol=1e-12,
+        )
+        or evidence.get("validation_sample_id_sha256") != expected_sample_hash
+        or evidence.get("seed_artifacts_sha256")
+        != _canonical_json_sha256({"artifacts": observed_artifacts})
+    ):
+        raise CliContractError("formal gate scorer 种子聚合或不择优合同无效")
+    return dict(evidence)
+
+
 def _global_training_lock_path(context: WorkflowContext) -> Path:
     """One machine-local lock shared by full, smoke and baseline training."""
 
@@ -1442,12 +1746,47 @@ def _global_training_lock_path(context: WorkflowContext) -> Path:
     )
 
 
+def _adapter_context(args: argparse.Namespace, *, create: bool) -> WorkflowContext:
+    engineering_smoke = bool(getattr(args, "engineering_smoke", False))
+    variant = getattr(args, "_variant", None)
+    if engineering_smoke:
+        variant = "smoke"
+    return build_context(
+        args.config,
+        create=create,
+        variant=variant,
+        training_profile="engineering_smoke" if engineering_smoke else "full",
+        learning_rate_override=getattr(args, "learning_rate", None),
+        seed_override=getattr(args, "seed", None),
+    )
+
+
+def _write_resolved_training_config(
+    context: WorkflowContext, *, engineering_smoke: bool
+) -> Path:
+    path = context.metrics_dir / "resolved_training_config.json"
+    payload = {
+        "schema_version": "kronos-a-share-resolved-training-v1",
+        "run_id": context.run_id,
+        "dataset_id": context.dataset_id,
+        "profile": "engineering_smoke" if engineering_smoke else "full",
+        "base_config_sha256": context.config_sha256,
+        "resolved_config_sha256": context.training_config_sha256,
+        "seed": int(context.config["training"]["seed"]),
+        "adapter": dict(context.config["training"]["adapter"]),
+    }
+    if path.is_file():
+        if _json_file(path) != payload:
+            raise CliBlocked("resolved training config 漂移，拒绝混合恢复")
+    else:
+        atomic_write_json(path, payload, allowed_root=context.layout.root)
+    return path
+
+
 def command_train_adapter(args: argparse.Namespace) -> dict[str, Any]:
     from kronos_a_share_training import CheckpointFileLock
 
-    lock_context = build_context(
-        args.config, create=True, variant=getattr(args, "_variant", None)
-    )
+    lock_context = _adapter_context(args, create=True)
     # Acquire before importing/loading Torch or Kronos components so a second
     # full/smoke/evaluation process cannot consume GPU memory while waiting.
     with CheckpointFileLock(_global_training_lock_path(lock_context)):
@@ -1462,14 +1801,23 @@ def _command_train_adapter_impl(args: argparse.Namespace) -> dict[str, Any]:
         CheckpointStore,
         adapter_forward_loss,
         prepare_adapter_stage,
+        select_validated_adapter,
         set_deterministic_seed,
     )
 
-    context = build_context(
-        args.config, create=True, variant=getattr(args, "_variant", None)
-    )
+    context = _adapter_context(args, create=True)
     data_report = _load_data_status(context)
-    _assert_data_allowed(data_report["status"], engineering_smoke=args.engineering_smoke)
+    engineering_smoke = bool(args.engineering_smoke)
+    _assert_data_allowed(data_report["status"], engineering_smoke=engineering_smoke)
+    if not engineering_smoke:
+        diagnostic_evidence = _materialize_adapter_diagnostic_from_registry(context)
+        if diagnostic_evidence is None:
+            raise CliBlocked(
+                "formal adapter 必须先完成固定5-run smoke诊断、选中LR复核并更新正式配置"
+            )
+    resolved_config_path = _write_resolved_training_config(
+        context, engineering_smoke=engineering_smoke
+    )
     cache = _load_cache(context)
     arrays = cache["arrays"]
     train_members = np.flatnonzero(np.asarray(arrays["split"]) == SPLIT_CODES["train"])
@@ -1500,13 +1848,30 @@ def _command_train_adapter_impl(args: argparse.Namespace) -> dict[str, Any]:
     )
     binding = _binding(context)
     store = CheckpointStore(context.checkpoint_dir, binding)
-    stop_after = int(args.stop_after or settings["max_steps"])
-    if stop_after < 1 or stop_after > int(settings["max_steps"]):
-        raise CliContractError("stop-after 必须位于 1..max_steps")
+    max_allowed_steps = int(
+        settings["smoke_steps"] if engineering_smoke else settings["max_steps"]
+    )
+    stop_after = _validated_adapter_stop_after(
+        engineering_smoke=engineering_smoke,
+        requested=args.stop_after,
+        max_allowed_steps=max_allowed_steps,
+    )
+    if (
+        not engineering_smoke
+        and stop_after != max_allowed_steps
+        and stop_after % FULL_CHECKPOINT_INTERVAL != 0
+    ):
+        raise CliContractError(
+            "formal adapter --stop-after 仅允许落在1000步验证/恢复边界或完整10000步"
+        )
+    if stop_after < 1 or stop_after > max_allowed_steps:
+        raise CliContractError(f"stop-after 必须位于 1..{max_allowed_steps}")
     resume = _resume_reference(store, args.resume, "adapter")
     start_step = 0
     best_validation = math.inf
     zero_shot_validation = math.nan
+    validation_history: list[dict[str, Any]] = []
+    stale_validations = 0
     if resume is not None:
         loaded = store.load(
             resume,
@@ -1520,6 +1885,11 @@ def _command_train_adapter_impl(args: argparse.Namespace) -> dict[str, Any]:
         zero_shot_validation = float(
             loaded.extra_state.get("zero_shot_validation_ce", math.nan)
         )
+        history = loaded.extra_state.get("validation_history", [])
+        if not isinstance(history, list):
+            raise CliContractError("adapter checkpoint validation_history 无效")
+        validation_history = [dict(item) for item in history]
+        stale_validations = int(loaded.extra_state.get("stale_validations", 0))
         scheduler_state = loaded.extra_state.get("scheduler_state")
         if scheduler_state:
             scheduler.load_state_dict(scheduler_state)
@@ -1527,11 +1897,35 @@ def _command_train_adapter_impl(args: argparse.Namespace) -> dict[str, Any]:
         existing_summary = context.metrics_dir / "adapter_summary.json"
         summary = _json_file(existing_summary) if existing_summary.is_file() else {
             "schema_version": "kronos-a-share-adapter-train-v1",
-            "status": "unverified" if args.engineering_smoke else "ok",
+            "status": "unverified" if engineering_smoke else "ok",
             "run_id": context.run_id,
             "completed_step": start_step,
             "checkpoint": str(store.root / store.inspect(resume)["checkpoint_name"]),
         }
+        if (
+            not engineering_smoke
+            and summary.get("formal_training_complete") is True
+            and summary.get("zero_shot_fallback") is False
+            and summary.get("checkpoint_name")
+            and summary.get("adapter_hash")
+        ):
+            try:
+                diagnostic_evidence = _adapter_diagnostic_matrix_evidence(
+                    context,
+                    production_reference=str(summary["checkpoint_name"]),
+                    production_hash=str(summary["adapter_hash"]),
+                )
+            except CliContractError:
+                summary["status"] = "unverified"
+                summary.pop("adapter_diagnostic_matrix_evidence", None)
+            else:
+                summary["status"] = "ok"
+                summary["adapter_diagnostic_matrix_evidence"] = diagnostic_evidence
+            atomic_write_json(
+                existing_summary,
+                summary,
+                allowed_root=context.layout.root,
+            )
         return _envelope(
             "train-adapter",
             status=summary.get("status", "unverified"),
@@ -1552,8 +1946,16 @@ def _command_train_adapter_impl(args: argparse.Namespace) -> dict[str, Any]:
     accumulation = int(settings["gradient_accumulation"])
     checkpoint_interval = int(settings["checkpoint_interval"])
     validation_interval = int(settings["validation_interval"])
+    if checkpoint_interval != validation_interval:
+        raise CliContractError("checkpoint_interval 必须与 validation_interval 严格对齐")
+    patience = int(settings["early_stopping_patience"])
+    minimum_improvement = float(
+        context.config["evaluation"]["adapter_ce_improvement_min"]
+    )
     last_metrics: dict[str, float] = {}
     saved_path: Path | None = None
+    completed_step = start_step
+    early_stopped = False
     if components.device.startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
     with CheckpointFileLock(context.checkpoint_dir / ".training.lock"):
@@ -1595,10 +1997,48 @@ def _command_train_adapter_impl(args: argparse.Namespace) -> dict[str, Any]:
                     batch_size=batch_size,
                     device=components.device,
                 )
-                if validation_ce < best_validation:
-                    best_validation = validation_ce
-                    is_best = True
+                validation_history.append(
+                    {
+                        "step": step,
+                        "validation_ce": validation_ce,
+                        "train_loss": float(aggregate["loss"]),
+                        "ce_s1": float(aggregate["ce_s1"]),
+                        "ce_s2": float(aggregate["ce_s2"]),
+                        "learning_rate": float(aggregate["learning_rate"]),
+                    }
+                )
+                selection = select_validated_adapter(
+                    validation_history,
+                    zero_shot_validation_ce=zero_shot_validation,
+                    minimum_improvement=minimum_improvement,
+                )
+                best_validation = selection.best_validation_ce
+                stale_validations = selection.stale_validations
+                is_best = bool(
+                    not selection.zero_shot_fallback
+                    and selection.best_step == step
+                )
             if step % checkpoint_interval == 0 or step == stop_after:
+                if validation_ce is None:
+                    raise CliContractError("拒绝保存缺少因果 CE 的 adapter checkpoint")
+                selection = select_validated_adapter(
+                    validation_history,
+                    zero_shot_validation_ce=zero_shot_validation,
+                    minimum_improvement=minimum_improvement,
+                )
+                best_entry = next(
+                    (
+                        item
+                        for item in validation_history
+                        if int(item["step"]) == selection.best_step
+                    ),
+                    None,
+                )
+                train_validation_gap = (
+                    float(selection.best_validation_ce - float(best_entry["train_loss"]))
+                    if best_entry is not None
+                    else None
+                )
                 saved_path = store.save(
                     stage="adapter",
                     step=step,
@@ -1610,6 +2050,12 @@ def _command_train_adapter_impl(args: argparse.Namespace) -> dict[str, Any]:
                         "run_id": context.run_id,
                         "zero_shot_validation_ce": zero_shot_validation,
                         "best_validation_ce": best_validation,
+                        "best_step": selection.best_step,
+                        "selection_reason": selection.selection_reason,
+                        "zero_shot_fallback": selection.zero_shot_fallback,
+                        "validation_history": validation_history,
+                        "stale_validations": stale_validations,
+                        "train_validation_gap": train_validation_gap,
                         "validation_contract": settings["validation_contract"],
                         "peak_gpu_memory_bytes": (
                             int(torch.cuda.max_memory_allocated())
@@ -1618,47 +2064,120 @@ def _command_train_adapter_impl(args: argparse.Namespace) -> dict[str, Any]:
                         ),
                         "gpu_memory_limit_bytes": 3 * 1024**3,
                         "scheduler_state": scheduler.state_dict(),
-                        "engineering_smoke": bool(args.engineering_smoke),
+                        "engineering_smoke": engineering_smoke,
+                        "resolved_config_sha256": context.training_config_sha256,
+                        "checkpoint_interval": checkpoint_interval,
+                        "validation_interval": validation_interval,
+                        "early_stopping_patience": patience,
+                        "max_allowed_steps": max_allowed_steps,
                     },
                 )
-    best_adapter_reference = _stage_reference(store, stage="adapter", kind="best")
-    best_adapter_manifest = store.inspect(best_adapter_reference)
-    best_adapter_hash = best_adapter_manifest["files"]["state.pt"]["sha256"]
+            completed_step = step
+            if validation_ce is not None and stale_validations >= patience:
+                early_stopped = True
+                break
+    selection = select_validated_adapter(
+        validation_history,
+        zero_shot_validation_ce=zero_shot_validation,
+        minimum_improvement=minimum_improvement,
+    )
+    best_validation = selection.best_validation_ce
+    diagnostic_best_entry = min(
+        validation_history, key=lambda item: float(item["validation_ce"])
+    )
+    diagnostic_best_validation = float(diagnostic_best_entry["validation_ce"])
+    diagnostic_improvement = (
+        zero_shot_validation - diagnostic_best_validation
+    ) / zero_shot_validation
+    best_entry = next(
+        (
+            item
+            for item in validation_history
+            if int(item["step"]) == selection.best_step
+        ),
+        None,
+    )
+    train_validation_gap = (
+        float(best_validation - float(best_entry["train_loss"]))
+        if best_entry is not None
+        else None
+    )
+    best_adapter_reference: str | None = None
+    best_adapter_hash: str | None = None
+    if not selection.zero_shot_fallback:
+        best_adapter_reference = _stage_reference(store, stage="adapter", kind="best")
+        best_adapter_manifest = store.inspect(best_adapter_reference)
+        if (
+            not math.isfinite(float(best_adapter_manifest.get("metric", math.nan)))
+            or int(best_adapter_manifest["step"]) != selection.best_step
+        ):
+            raise CliContractError("best adapter 未绑定最优现场因果 CE")
+        best_adapter_hash = best_adapter_manifest["files"]["state.pt"]["sha256"]
+    diagnostic_checkpoint_reference = best_adapter_reference
+    diagnostic_checkpoint_hash = best_adapter_hash
+    if engineering_smoke and validation_history:
+        diagnostic_checkpoint_reference = (
+            f"adapter-step-{int(diagnostic_best_entry['step']):08d}"
+        )
+        diagnostic_manifest = store.inspect(diagnostic_checkpoint_reference)
+        diagnostic_checkpoint_hash = diagnostic_manifest["files"]["state.pt"][
+            "sha256"
+        ]
     peak_bytes = (
         int(torch.cuda.max_memory_allocated())
         if components.device.startswith("cuda")
         else 0
     )
-    improvement = (
-        (zero_shot_validation - best_validation) / zero_shot_validation
-        if zero_shot_validation > 0 and math.isfinite(best_validation)
-        else float("nan")
-    )
+    improvement = selection.improvement
     gpu_memory_limit_bytes = int(
         float(context.config["runtime"]["max_gpu_memory_gb"]) * 1024**3
     )
     peak_within_limit = peak_bytes <= gpu_memory_limit_bytes
+    formal_training_complete = bool(
+        not engineering_smoke
+        and (completed_step == max_allowed_steps or early_stopped)
+        and completed_step % FULL_CHECKPOINT_INTERVAL == 0
+    )
     summary = {
         "schema_version": "kronos-a-share-adapter-train-v1",
         "status": (
-            "unverified"
-            if args.engineering_smoke and peak_within_limit
-            else "ok" if peak_within_limit else "blocked"
+            "blocked"
+            if selection.zero_shot_fallback or not peak_within_limit
+            else "unverified"
         ),
         "data_status": data_report["status"],
         "run_id": context.run_id,
         "binding": _gate_binding(binding),
         "start_step": start_step,
-        "completed_step": stop_after,
+        "completed_step": completed_step,
+        "early_stopped": early_stopped,
+        "max_allowed_steps": max_allowed_steps,
+        "formal_training_complete": formal_training_complete,
         "zero_shot_validation_ce": zero_shot_validation,
         "best_validation_ce": best_validation,
+        "best_step": selection.best_step,
         "adapter_ce_improvement": improvement,
+        "diagnostic_best_validation_ce": diagnostic_best_validation,
+        "diagnostic_best_step": int(diagnostic_best_entry["step"]),
+        "diagnostic_ce_improvement": diagnostic_improvement,
+        "selection_reason": selection.selection_reason,
+        "zero_shot_fallback": selection.zero_shot_fallback,
+        "validation_history": validation_history,
+        "train_validation_gap": train_validation_gap,
         "last_train_metrics": last_metrics,
         "peak_gpu_memory_bytes": peak_bytes,
         "gpu_memory_limit_bytes": gpu_memory_limit_bytes,
-        "checkpoint": str(context.checkpoint_dir / best_adapter_reference),
+        "checkpoint": (
+            str(context.checkpoint_dir / best_adapter_reference)
+            if best_adapter_reference is not None
+            else None
+        ),
         "checkpoint_name": best_adapter_reference,
         "adapter_hash": best_adapter_hash,
+        "diagnostic_checkpoint_name": diagnostic_checkpoint_reference,
+        "diagnostic_checkpoint_hash": diagnostic_checkpoint_hash,
+        "resolved_training_config": str(resolved_config_path),
+        "resolved_config_sha256": context.training_config_sha256,
         "generated_at": _utc_now(),
     }
     atomic_write_json(
@@ -1666,6 +2185,32 @@ def _command_train_adapter_impl(args: argparse.Namespace) -> dict[str, Any]:
         summary,
         allowed_root=context.layout.root,
     )
+    if _is_explicit_adapter_diagnostic(args):
+        _register_adapter_diagnostic_trial(context, summary)
+    if (
+        not engineering_smoke
+        and formal_training_complete
+        and not selection.zero_shot_fallback
+        and peak_within_limit
+        and best_adapter_reference is not None
+        and best_adapter_hash is not None
+    ):
+        try:
+            diagnostic_evidence = _adapter_diagnostic_matrix_evidence(
+                context,
+                production_reference=best_adapter_reference,
+                production_hash=best_adapter_hash,
+            )
+        except CliContractError:
+            pass
+        else:
+            summary["status"] = "ok"
+            summary["adapter_diagnostic_matrix_evidence"] = diagnostic_evidence
+            atomic_write_json(
+                context.metrics_dir / "adapter_summary.json",
+                summary,
+                allowed_root=context.layout.root,
+            )
     if not peak_within_limit:
         raise CliBlocked("峰值显存超过配置的3 GiB准入上限")
     return _envelope(
@@ -1742,10 +2287,40 @@ def _scorer_loss_for_date(
     ), scores
 
 
-def _date_index_groups(arrays: Mapping[str, Any], members: np.ndarray) -> list[np.ndarray]:
+def _date_index_groups(
+    arrays: Mapping[str, Any],
+    members: np.ndarray,
+    *,
+    formal_cross_section: bool = False,
+) -> list[np.ndarray]:
     dates = np.asarray(arrays["trade_date"][members])
     groups = [members[dates == value] for value in np.unique(dates)]
-    return [group for group in groups if len(group) >= 2]
+    groups = [group for group in groups if len(group) >= 2]
+    if not formal_cross_section:
+        return groups
+    if "active_member_count" not in arrays:
+        raise CliContractError("formal scorer 缺少 active_member_count token 合同")
+    for group in groups:
+        active_values = np.unique(
+            np.asarray(arrays["active_member_count"][group], dtype=np.int64)
+        )
+        eligible_count = int(
+            np.unique(np.asarray(arrays["instrument_id"][group])).size
+        )
+        if len(active_values) != 1 or int(active_values[0]) < 1:
+            raise CliContractError("formal scorer 同日 active_member_count 不唯一")
+        coverage = eligible_count / int(active_values[0])
+        if (
+            eligible_count < FORMAL_MIN_CROSS_SECTION
+            or coverage < FORMAL_MIN_COVERAGE_RATIO
+        ):
+            trade_date = int(np.asarray(arrays["trade_date"])[int(group[0])])
+            raise CliContractError(
+                "formal scorer 横截面覆盖不足："
+                f"trade_date={trade_date}, eligible_count={eligible_count}, "
+                f"active_member_count={int(active_values[0])}, coverage={coverage:.6f}"
+            )
+    return groups
 
 
 def _score_members(
@@ -1756,13 +2331,21 @@ def _score_members(
     *,
     device: str,
     chunk_size: int,
+    formal_cross_section: bool = False,
 ) -> pd.DataFrame:
     import torch
 
     rows: list[pd.DataFrame] = []
+    active_member_counts = (
+        arrays["active_member_count"]
+        if "active_member_count" in arrays
+        else np.zeros(len(np.asarray(arrays["trade_date"])), dtype=np.int32)
+    )
     head.eval()
     with torch.no_grad():
-        for group in _date_index_groups(arrays, members):
+        for group in _date_index_groups(
+            arrays, members, formal_cross_section=formal_cross_section
+        ):
             states = _last_context_states(
                 model, arrays, group, device=device, chunk_size=chunk_size
             )
@@ -1776,6 +2359,9 @@ def _score_members(
                             format="%Y%m%d",
                         ).strftime("%Y-%m-%d"),
                         "instrument_id": np.asarray(arrays["instrument_id"][group]),
+                        "active_member_count": np.asarray(
+                            active_member_counts[group]
+                        ),
                         "raw_score": scores,
                         "label_excess_10d": np.asarray(arrays["label"][group]),
                     }
@@ -1787,13 +2373,242 @@ def _score_members(
     return pd.concat(rows, ignore_index=True)
 
 
-def _mean_rank_ic(frame: pd.DataFrame) -> float:
-    daily = daily_rank_ic(frame)
+def _mean_rank_ic(frame: pd.DataFrame, *, formal_cross_section: bool = False) -> float:
+    daily = daily_rank_ic(
+        frame,
+        min_instruments=(FORMAL_MIN_CROSS_SECTION if formal_cross_section else 2),
+        active_member_count_column=(
+            "active_member_count" if formal_cross_section else None
+        ),
+        min_coverage_ratio=(
+            FORMAL_MIN_COVERAGE_RATIO if formal_cross_section else None
+        ),
+        require_eligible_cross_section=formal_cross_section,
+    )
     values = pd.to_numeric(daily["rank_ic"], errors="coerce")
     finite = values[np.isfinite(values)]
     if finite.empty:
         raise CliContractError("验证集 RankIC 全部不可计算")
     return float(finite.mean())
+
+
+def _train_ephemeral_scorer_seed(
+    model: Any,
+    arrays: Mapping[str, Any],
+    train_members: np.ndarray,
+    valid_members: np.ndarray,
+    *,
+    seed: int,
+    settings: Mapping[str, Any],
+    max_epochs: int,
+    device: str,
+    chunk_size: int,
+) -> dict[str, Any]:
+    """Train one non-published scorer seed for stability evidence only."""
+
+    import torch
+    from kronos_a_share_model import KronosScoringHead
+    from kronos_a_share_training import prepare_scorer_stage, set_deterministic_seed
+
+    set_deterministic_seed(seed)
+    head = KronosScoringHead(d_model=832).to(device)
+    prepare_scorer_stage(model, head)
+    optimizer = torch.optim.AdamW(
+        head.parameters(),
+        lr=float(settings["learning_rate"]),
+        weight_decay=float(settings["weight_decay"]),
+    )
+    train_groups = _date_index_groups(
+        arrays, train_members, formal_cross_section=True
+    )
+    if not train_groups:
+        raise CliContractError("scorer stability 没有可比较的正式横截面")
+    best_rank_ic = -math.inf
+    best_epoch = 0
+    best_predictions: pd.DataFrame | None = None
+    stale = 0
+    completed_epoch = 0
+    for epoch in range(1, max_epochs + 1):
+        order = np.random.default_rng(seed + epoch).permutation(len(train_groups))
+        for group_index in order:
+            group = train_groups[int(group_index)]
+            head.train()
+            optimizer.zero_grad(set_to_none=True)
+            scorer_loss, _ = _scorer_loss_for_date(
+                model,
+                head,
+                arrays,
+                group,
+                device=device,
+                chunk_size=chunk_size,
+                smooth_l1_weight=float(settings["smooth_l1_weight"]),
+                ranknet_weight=float(settings["ranknet_weight"]),
+            )
+            if not bool(torch.isfinite(scorer_loss.total)):
+                raise CliBlocked(f"scorer seed={seed} loss 出现 NaN/Inf")
+            scorer_loss.total.backward()
+            torch.nn.utils.clip_grad_norm_(head.parameters(), 3.0)
+            optimizer.step()
+        validation = _score_members(
+            model,
+            head,
+            arrays,
+            valid_members,
+            device=device,
+            chunk_size=chunk_size,
+            formal_cross_section=True,
+        )
+        rank_ic = _mean_rank_ic(validation, formal_cross_section=True)
+        completed_epoch = epoch
+        if rank_ic > best_rank_ic:
+            best_rank_ic = rank_ic
+            best_epoch = epoch
+            best_predictions = validation[["sample_id", "raw_score"]].copy()
+            stale = 0
+        else:
+            stale += 1
+        if stale >= int(settings["early_stopping_patience"]):
+            break
+    if best_predictions is None:
+        raise CliContractError(f"scorer seed={seed} 未产生可审计 validation prediction")
+    return {
+        "seed": seed,
+        "best_validation_rank_ic": float(best_rank_ic),
+        "best_epoch": best_epoch,
+        "completed_epoch": completed_epoch,
+        "_best_predictions": best_predictions,
+    }
+
+
+def _scorer_seed_stability(
+    context: WorkflowContext,
+    model: Any,
+    arrays: Mapping[str, Any],
+    train_members: np.ndarray,
+    valid_members: np.ndarray,
+    *,
+    primary_validation_frame: pd.DataFrame,
+    binding: Any,
+    adapter_checkpoint: str,
+    adapter_hash: str,
+    evaluated_checkpoint: str,
+    scorer_checkpoint_hash: str,
+    settings: Mapping[str, Any],
+    max_epochs: int,
+    device: str,
+    chunk_size: int,
+) -> dict[str, Any]:
+    from kronos_a_share_training import CheckpointStore
+
+    evidence_root = resolve_under(
+        context.layout.root,
+        context.predictions_dir / "scorer-seed-stability" / scorer_checkpoint_hash,
+    )
+    evidence_root.mkdir(parents=True, exist_ok=True)
+    expected_ids = _members_for_split(arrays, "validation")
+    sample_hash = _sha256_bytes(expected_ids.tobytes())
+
+    def persist(seed: int, frame: pd.DataFrame, details: Mapping[str, Any]) -> dict[str, Any]:
+        ordered = frame[["sample_id", "raw_score"]].copy()
+        ordered["sample_id"] = pd.to_numeric(ordered["sample_id"], errors="raise").astype(
+            np.int64
+        )
+        ordered["raw_score"] = pd.to_numeric(ordered["raw_score"], errors="coerce")
+        ordered = ordered.sort_values("sample_id").reset_index(drop=True)
+        ids = ordered["sample_id"].to_numpy(dtype=np.int64)
+        if not np.array_equal(ids, expected_ids) or not np.isfinite(
+            ordered["raw_score"].to_numpy(dtype=float)
+        ).all():
+            raise CliContractError(f"scorer seed={seed} validation prediction 未全量绑定")
+        path = evidence_root / f"seed-{seed}.csv"
+        prediction_hash = _atomic_csv(path, ordered, context.layout.root)
+        return {
+            "seed": seed,
+            **dict(details),
+            "prediction_path": str(path.resolve()),
+            "prediction_sha256": prediction_hash,
+            "sample_id_sha256": sample_hash,
+            "row_count": int(len(ordered)),
+        }
+
+    primary_rank_ic = _mean_rank_ic(
+        primary_validation_frame, formal_cross_section=True
+    )
+    primary_manifest = CheckpointStore(context.checkpoint_dir, binding).inspect(
+        evaluated_checkpoint
+    )
+    primary_extra = _checkpoint_extra_state(
+        CheckpointStore(context.checkpoint_dir, binding), evaluated_checkpoint
+    )
+    per_seed = [
+        persist(
+            100,
+            primary_validation_frame,
+            {
+                "best_validation_rank_ic": float(primary_rank_ic),
+                "best_epoch": int(primary_extra.get("best_epoch", primary_manifest["step"])),
+                "completed_epoch": int(primary_extra.get("scorer_epoch", primary_manifest["step"])),
+                "published_checkpoint": True,
+            },
+        )
+    ]
+    for seed in FORMAL_SCORER_SEEDS[1:]:
+        result = _train_ephemeral_scorer_seed(
+            model,
+            arrays,
+            train_members,
+            valid_members,
+            seed=seed,
+            settings=settings,
+            max_epochs=max_epochs,
+            device=device,
+            chunk_size=chunk_size,
+        )
+        predictions = result.pop("_best_predictions")
+        result["published_checkpoint"] = False
+        per_seed.append(persist(seed, predictions, result))
+    values = np.asarray(
+        [item["best_validation_rank_ic"] for item in per_seed], dtype=np.float64
+    )
+    if len(per_seed) != 20 or not np.isfinite(values).all():
+        raise CliContractError("scorer 20-seed stability 证据不完整")
+    artifact_commitments = [
+        {
+            key: item[key]
+            for key in (
+                "seed",
+                "prediction_sha256",
+                "sample_id_sha256",
+                "row_count",
+                "best_validation_rank_ic",
+                "best_epoch",
+                "completed_epoch",
+                "published_checkpoint",
+            )
+        }
+        for item in per_seed
+    ]
+    return {
+        "schema_version": "kronos-a-share-scorer-seed-stability-v2",
+        "binding": _gate_binding(binding),
+        "adapter_checkpoint": adapter_checkpoint,
+        "adapter_hash": adapter_hash,
+        "evaluated_checkpoint": evaluated_checkpoint,
+        "scorer_checkpoint_hash": scorer_checkpoint_hash,
+        "seeds": list(FORMAL_SCORER_SEEDS),
+        "production_seed": 100,
+        "selection_policy": "seed100_checkpoint_fixed_no_seed_selection",
+        "aggregate_method": "mean_and_sample_std_over_20_fixed_seeds",
+        "training_max_epochs": int(settings["max_epochs"]),
+        "early_stopping_patience": int(settings["early_stopping_patience"]),
+        "validation_sample_id_sha256": sample_hash,
+        "seed_artifacts_sha256": _canonical_json_sha256(
+            {"artifacts": artifact_commitments}
+        ),
+        "rank_ic_mean": float(values.mean()),
+        "rank_ic_std": float(values.std(ddof=1)),
+        "per_seed": per_seed,
+    }
 
 
 def _atomic_csv(path: Path, frame: pd.DataFrame, root: Path) -> str:
@@ -2074,7 +2889,9 @@ def _ensure_head_only_scores(
         lr=float(settings["learning_rate"]),
         weight_decay=float(settings["weight_decay"]),
     )
-    groups = _date_index_groups(arrays, train_members)
+    groups = _date_index_groups(
+        arrays, train_members, formal_cross_section=True
+    )
     if not groups:
         raise CliContractError("head-only 训练集没有同日横截面")
     best_rank_ic = -math.inf
@@ -2109,8 +2926,9 @@ def _ensure_head_only_scores(
             valid_members,
             device=components.device,
             chunk_size=chunk_size,
+            formal_cross_section=True,
         )
-        rank_ic = _mean_rank_ic(validation)
+        rank_ic = _mean_rank_ic(validation, formal_cross_section=True)
         completed_epoch = epoch
         if rank_ic > best_rank_ic:
             best_rank_ic = rank_ic
@@ -2133,6 +2951,7 @@ def _ensure_head_only_scores(
         target_members,
         device=components.device,
         chunk_size=chunk_size,
+        formal_cross_section=True,
     ).sort_values("sample_id")
     return _write_score_artifact(
         context,
@@ -2150,6 +2969,24 @@ def _ensure_head_only_scores(
     )
 
 
+def _require_formal_provider_membership(
+    provider_manifest: Mapping[str, Any],
+    index_membership_path: Path,
+) -> None:
+    if (
+        provider_manifest.get("pit_membership_verified") is not True
+        or provider_manifest.get("instrument_membership_contract")
+        != "pit_csi300_union_csi500_effective_intervals"
+        or Path(str(provider_manifest.get("index_membership_path"))).resolve()
+        != index_membership_path.resolve()
+        or provider_manifest.get("index_membership_sha256")
+        != sha256_file(index_membership_path)
+    ):
+        raise CliContractError(
+            "正式评估拒绝缺少当前 PIT index_membership 绑定的 Qlib provider"
+        )
+
+
 def _ensure_evaluation_companion(
     context: WorkflowContext,
     *,
@@ -2163,8 +3000,10 @@ def _ensure_evaluation_companion(
     """Build every mandatory baseline and execution artifact inside the full pipeline."""
 
     from kronos_a_share_baseline import (
+        build_baseline_comparison,
         build_evaluation_companion,
         build_project_qlib_provider,
+        inspect_alpha158_lightgbm_evidence,
         inspect_evaluation_companion,
         inspect_project_qlib_provider,
         run_alpha158_lightgbm,
@@ -2184,18 +3023,19 @@ def _ensure_evaluation_companion(
             return output
         arrays = _load_cache(context)["arrays"]
         members = _members_for_split(arrays, evaluate_split)
-        corporate_actions_path = _pit_table_path(
-            _pit_root(context), "corporate_actions"
-        )
-        suspensions_path = _pit_table_path(_pit_root(context), "suspensions")
-        price_limits_path = _pit_table_path(_pit_root(context), "price_limits")
+        pit_root = _pit_root(context)
+        corporate_actions_path = _pit_table_path(pit_root, "corporate_actions")
+        suspensions_path = _pit_table_path(pit_root, "suspensions")
+        price_limits_path = _pit_table_path(pit_root, "price_limits")
+        index_membership_path = _pit_table_path(pit_root, "index_membership")
         if (
             corporate_actions_path is None
             or suspensions_path is None
             or price_limits_path is None
+            or index_membership_path is None
         ):
             raise CliContractError(
-                "自动评估 companion 缺少 corporate_actions/suspensions/price_limits"
+                "自动评估 companion 缺少 corporate_actions/suspensions/price_limits/index_membership"
             )
         artifact_root = (
             output.parent / "formal-recomputed-sources"
@@ -2222,10 +3062,15 @@ def _ensure_evaluation_companion(
                 source_path=_snapshot_directory(context),
                 sample_index_path=context.dataset_dir / "sample_index.csv",
                 corporate_actions_path=corporate_actions_path,
+                index_membership_path=index_membership_path,
                 provider_uri=provider,
                 training_root=context.layout.root,
                 segments=context.config["data"]["splits"],
             )
+        _require_formal_provider_membership(
+            provider_manifest,
+            index_membership_path,
+        )
         zero_shot = _ensure_zero_shot_scores(
             context,
             binding=binding,
@@ -2264,7 +3109,25 @@ def _ensure_evaluation_companion(
                 else f"{evaluate_split}_alpha158_scores.csv"
             )
         )
+        alpha_raw = (
+            artifact_root / "alpha158_lightgbm_raw.csv"
+            if force_recompute_baselines
+            else context.predictions_dir
+            / (
+                "alpha158_lightgbm_raw.csv"
+                if evaluate_split == "validation"
+                else f"{evaluate_split}_alpha158_lightgbm_raw.csv"
+            )
+        )
         if alpha_standard.is_file() and not force_recompute_baselines:
+            inspect_alpha158_lightgbm_evidence(
+                alpha_raw,
+                context.layout.root,
+                provider_manifest_sha256=provider_manifest["manifest_sha256"],
+                evaluate_split=evaluate_split,
+                seeds=FORMAL_SCORER_SEEDS,
+                expected_ids=members,
+            )
             alpha158 = _score_artifact_record(
                 context,
                 path=alpha_standard,
@@ -2273,25 +3136,18 @@ def _ensure_evaluation_companion(
                 expected_ids=members,
             )
         else:
-            alpha_raw = (
-                artifact_root / "alpha158_lightgbm_raw.csv"
-                if force_recompute_baselines
-                else context.predictions_dir
-                / (
-                    "alpha158_lightgbm_raw.csv"
-                    if evaluate_split == "validation"
-                    else f"{evaluate_split}_alpha158_lightgbm_raw.csv"
-                )
-            )
             if alpha_raw.is_file() and not force_recompute_baselines:
                 alpha_metadata = _json_file(
                     alpha_raw.with_suffix(alpha_raw.suffix + ".metadata.json")
                 )
                 expected_alpha = {
-                    "schema_version": "kronos-a-share-alpha158-lightgbm-v2",
+                    "schema_version": "kronos-a-share-alpha158-lightgbm-v4",
                     "provider_manifest_sha256": provider_manifest["manifest_sha256"],
                     "output_sha256": sha256_file(alpha_raw),
                     "evaluate_split": evaluate_split,
+                    "seeds": list(FORMAL_SCORER_SEEDS),
+                    "seed_count": len(FORMAL_SCORER_SEEDS),
+                    "aggregate_method": "arithmetic_mean_prediction",
                 }
                 for key, value in expected_alpha.items():
                     if alpha_metadata.get(key) != value:
@@ -2303,7 +3159,16 @@ def _ensure_evaluation_companion(
                     output_path=alpha_raw,
                     segments=context.config["data"]["splits"],
                     evaluate_split=evaluate_split,
+                    seeds=FORMAL_SCORER_SEEDS,
                 )
+            inspect_alpha158_lightgbm_evidence(
+                alpha_raw,
+                context.layout.root,
+                provider_manifest_sha256=provider_manifest["manifest_sha256"],
+                evaluate_split=evaluate_split,
+                seeds=FORMAL_SCORER_SEEDS,
+                expected_ids=members,
+            )
             alpha_frame = pd.read_csv(alpha_raw)
             alpha158 = _write_score_artifact(
                 context,
@@ -2320,6 +3185,34 @@ def _ensure_evaluation_companion(
                     "evaluate_split": evaluate_split,
                 },
             )
+        sample_keys = pd.read_csv(context.dataset_dir / "sample_index.csv")[
+            ["sample_id", "ticker", "origin_date"]
+        ].rename(columns={"origin_date": "trade_date"})
+
+        def comparison_scores(record: Mapping[str, str]) -> pd.DataFrame:
+            score_frame = pd.read_csv(Path(record["path"]))
+            return sample_keys.merge(
+                score_frame,
+                on="sample_id",
+                how="inner",
+                validate="one_to_one",
+            )
+
+        build_baseline_comparison(
+            baseline_inputs=provider / "baseline_inputs.csv",
+            external_scores={
+                "zero_shot_kronos": comparison_scores(zero_shot),
+                "head_only": comparison_scores(head_only),
+                "alpha158_lightgbm": comparison_scores(alpha158),
+            },
+            evaluate_split=evaluate_split,
+            training_root=context.layout.root,
+            output_path=artifact_root / "baseline_comparison.json",
+            min_instruments=FORMAL_MIN_CROSS_SECTION,
+            active_member_count_column="active_member_count",
+            min_coverage_ratio=FORMAL_MIN_COVERAGE_RATIO,
+            require_eligible_cross_section=True,
+        )
         build_evaluation_companion(
             training_root=context.layout.root,
             sample_index_path=context.dataset_dir / "sample_index.csv",
@@ -2409,6 +3302,7 @@ def _assert_rebuilt_companion_matches(
         "evaluate_split",
         "sample_id_sha256",
         "binding",
+        "diagnostic_dataset_sha256",
         "holding_period_sessions",
         "execution_contract",
         "drift_contract",
@@ -2485,6 +3379,10 @@ def _formal_rebuilt_companion(
 def command_train_scorer(args: argparse.Namespace) -> dict[str, Any]:
     from kronos_a_share_training import CheckpointFileLock
 
+    if bool(getattr(args, "engineering_smoke", False)):
+        raise CliBlocked(
+            "engineering smoke 只验证 adapter 工程链路，不训练 scorer 或输出 RankIC"
+        )
     lock_context = build_context(
         args.config, create=True, variant=getattr(args, "_variant", None)
     )
@@ -2514,6 +3412,8 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
         np.asarray(arrays["split"]) == SPLIT_CODES["validation"]
     )
     seed = int(context.config["training"]["seed"])
+    if seed != 100:
+        raise CliContractError("正式 scorer checkpoint 必须固定使用 seed100")
     set_deterministic_seed(seed)
     components = _load_kronos_components(context, args.device)
     model = components.model
@@ -2551,6 +3451,7 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
         default=0,
     )
     best_rank_ic = -math.inf
+    best_epoch = 0
     stale_epochs = 0
     adapter_checkpoint: str
     if resume is not None:
@@ -2565,6 +3466,7 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
         start_epoch = int(loaded.extra_state.get("scorer_epoch", loaded.step))
         checkpoint_step_base = loaded.step - start_epoch
         best_rank_ic = float(loaded.extra_state.get("best_validation_rank_ic", -math.inf))
+        best_epoch = int(loaded.extra_state.get("best_epoch", 0))
         stale_epochs = int(loaded.extra_state.get("stale_epochs", 0))
         adapter_checkpoint = str(loaded.extra_state.get("adapter_checkpoint", ""))
     else:
@@ -2585,7 +3487,16 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
     adapter_state_hash = str(
         bound_adapter_manifest["files"]["state.pt"]["sha256"]
     )
-    max_epochs = int(args.max_epochs or settings["max_epochs"])
+    configured_max_epochs = int(settings["max_epochs"])
+    if args.max_epochs is not None and int(args.max_epochs) != configured_max_epochs:
+        raise CliContractError(
+            "formal scorer --max-epochs 不得偏离固定配置；20-seed 必须使用同一完整训练合同"
+        )
+    max_epochs = _validated_formal_scorer_epochs(
+        engineering_smoke=bool(args.engineering_smoke),
+        requested=args.max_epochs,
+        configured=configured_max_epochs,
+    )
     if max_epochs < 1 or max_epochs > int(settings["max_epochs"]):
         raise CliContractError("max-epochs 必须位于 1..配置上限")
     if start_epoch >= max_epochs:
@@ -2596,15 +3507,34 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
             "run_id": context.run_id,
             "completed_epoch": start_epoch,
         }
-        return _envelope(
-            "train-scorer",
-            status=summary.get("status", "unverified"),
-            message="scorer checkpoint 已达到 max-epochs，本次未重复训练。",
-            training=summary,
-            evidence_class="model_output",
-            output_type="N/A",
+        best_reference = _stage_reference(store, stage="scorer", kind="best")
+        best_manifest = store.inspect(best_reference)
+        observed_adapter, _, scorer_hash = _scorer_checkpoint_hashes(store, best_manifest)
+        if observed_adapter != adapter_checkpoint:
+            raise CliBlocked("scorer 复用证据绑定到不同 adapter checkpoint")
+        _scorer_stability_evidence(
+            context,
+            checkpoint_reference=best_reference,
+            scorer_checkpoint_hash=scorer_hash,
         )
-    train_groups = _date_index_groups(arrays, train_members)
+        stability = summary.get("scorer_seed_stability")
+        if (
+            isinstance(stability, Mapping)
+            and stability.get("seeds") == list(FORMAL_SCORER_SEEDS)
+            and isinstance(stability.get("per_seed"), list)
+            and len(stability["per_seed"]) == len(FORMAL_SCORER_SEEDS)
+        ):
+            return _envelope(
+                "train-scorer",
+                status=summary.get("status", "unverified"),
+                message="scorer checkpoint 与20种子审计已完成，本次未重复训练。",
+                training=summary,
+                evidence_class="model_output",
+                output_type="N/A",
+            )
+    train_groups = _date_index_groups(
+        arrays, train_members, formal_cross_section=True
+    )
     if not train_groups:
         raise CliContractError("训练集没有可比较的同日横截面")
     patience = int(settings["early_stopping_patience"])
@@ -2641,11 +3571,15 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
                 valid_members,
                 device=components.device,
                 chunk_size=chunk_size,
+                formal_cross_section=True,
             )
-            validation_rank_ic = _mean_rank_ic(validation_frame)
+            validation_rank_ic = _mean_rank_ic(
+                validation_frame, formal_cross_section=True
+            )
             is_best = validation_rank_ic > best_rank_ic
             if is_best:
                 best_rank_ic = validation_rank_ic
+                best_epoch = epoch
                 stale_epochs = 0
             else:
                 stale_epochs += 1
@@ -2664,8 +3598,11 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
                     "adapter_hash": adapter_state_hash,
                     "scorer_epoch": epoch,
                     "best_validation_rank_ic": best_rank_ic,
+                    "best_epoch": best_epoch,
                     "stale_epochs": stale_epochs,
                     "engineering_smoke": bool(args.engineering_smoke),
+                    "training_max_epochs": configured_max_epochs,
+                    "early_stopping_patience": patience,
                 },
             )
             if stale_epochs >= patience:
@@ -2686,12 +3623,33 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
         valid_members,
         device=components.device,
         chunk_size=chunk_size,
+        formal_cross_section=True,
+    )
+    scorer_state_hash = best_manifest["files"]["state.pt"]["sha256"]
+    scorer_seed_stability = _scorer_seed_stability(
+        context,
+        model,
+        arrays,
+        train_members,
+        valid_members,
+        primary_validation_frame=validation_frame,
+        binding=binding,
+        adapter_checkpoint=adapter_checkpoint,
+        adapter_hash=adapter_state_hash,
+        evaluated_checkpoint=best_manifest["checkpoint_name"],
+        scorer_checkpoint_hash=scorer_state_hash,
+        settings=settings,
+        max_epochs=max_epochs,
+        device=components.device,
+        chunk_size=chunk_size,
+    )
+    scorer_seed_stability_sha256 = _canonical_json_sha256(
+        scorer_seed_stability
     )
     prediction_path = context.predictions_dir / "validation_predictions.csv"
     prediction_hash = _atomic_csv(
         prediction_path, validation_frame, context.layout.root
     )
-    scorer_state_hash = best_manifest["files"]["state.pt"]["sha256"]
     prediction_metadata_path = prediction_path.with_suffix(
         prediction_path.suffix + ".metadata.json"
     )
@@ -2705,6 +3663,7 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
         "evaluated_checkpoint": best_manifest["checkpoint_name"],
         "adapter_hash": adapter_state_hash,
         "scorer_checkpoint_hash": scorer_state_hash,
+        "scorer_seed_stability_sha256": scorer_seed_stability_sha256,
         "prediction_sha256": prediction_hash,
         "row_count": int(len(validation_frame)),
         "sample_id_sha256": _sha256_bytes(
@@ -2724,6 +3683,8 @@ def _command_train_scorer_impl(args: argparse.Namespace) -> dict[str, Any]:
         "run_id": context.run_id,
         "completed_epoch": int(best_manifest["step"]),
         "best_validation_rank_ic": best_rank_ic,
+        "scorer_seed_stability": scorer_seed_stability,
+        "scorer_seed_stability_sha256": scorer_seed_stability_sha256,
         "last_train_loss": last_train_loss,
         "adapter_checkpoint": adapter_checkpoint,
         "evaluated_checkpoint": best_manifest["checkpoint_name"],
@@ -3048,6 +4009,7 @@ def _recompute_scorer_predictions(
         members,
         device=components.device,
         chunk_size=chunk_size,
+        formal_cross_section=True,
     )
 
 
@@ -3131,6 +4093,7 @@ def _controlled_evaluation_frame(
         "sample_id",
         "trade_date",
         "instrument_id",
+        "active_member_count",
         "raw_score",
         "label_excess_10d",
     }
@@ -3168,13 +4131,20 @@ def _controlled_evaluation_frame(
         np.asarray(arrays["instrument_id"][ids]),
     ):
         raise CliContractError("受控 predictions instrument_id 与 token cache 不一致")
+    if not np.array_equal(
+        pd.to_numeric(controlled["active_member_count"], errors="raise").to_numpy(
+            dtype=np.int32
+        ),
+        np.asarray(arrays["active_member_count"][ids]),
+    ):
+        raise CliContractError("受控 predictions active_member_count 与 token cache 不一致")
     live = live_predictions.copy()
     if set(live.columns) != required_controlled or len(live) != len(controlled):
         raise CliContractError("实时 checkpoint 重算 predictions 列/行合同不匹配")
     live_ids = pd.to_numeric(live["sample_id"], errors="raise").to_numpy(dtype=np.int64)
     if not np.array_equal(live_ids, ids):
         raise CliContractError("受控 predictions 与 checkpoint 重算 sample_id 不一致")
-    for column in ("trade_date", "instrument_id"):
+    for column in ("trade_date", "instrument_id", "active_member_count"):
         left = controlled[column].astype(str).to_numpy()
         right = live[column].astype(str).to_numpy()
         if not np.array_equal(left, right):
@@ -3200,7 +4170,7 @@ def _controlled_evaluation_frame(
     if not companion_metadata_path.is_file():
         raise CliContractError("基线/成交 companion 缺少 metadata.json")
     companion_metadata = _json_file(companion_metadata_path)
-    if companion_metadata.get("schema_version") != "kronos-a-share-baseline-bundle-v2":
+    if companion_metadata.get("schema_version") != "kronos-a-share-baseline-bundle-v3":
         raise CliContractError("基线 companion schema_version 不匹配")
     if companion_metadata.get("input_sha256") != sha256_file(companion):
         raise CliContractError("基线 companion 输入哈希不匹配")
@@ -3244,10 +4214,13 @@ def _controlled_evaluation_frame(
         "corporate_action_factor",
         "corporate_action_event_count",
         "holding_period_sessions",
+        "active_member_count",
         *BASELINE_SCORE_COLUMNS,
     }
     missing = sorted(required_supplemental - set(supplemental.columns))
-    forbidden = (required_controlled - {"sample_id"}) & set(supplemental.columns)
+    forbidden = (
+        required_controlled - {"sample_id", "active_member_count"}
+    ) & set(supplemental.columns)
     if missing or forbidden or supplemental["sample_id"].duplicated().any():
         raise CliContractError(
             f"基线 companion 字段无效：missing={missing}, forbidden={sorted(forbidden)}"
@@ -3257,6 +4230,16 @@ def _controlled_evaluation_frame(
     ).to_numpy(dtype=np.int64)
     if not np.array_equal(supplemental_ids, ids):
         raise CliContractError("基线 companion 必须与受控 predictions 同序、全量一一对应")
+    if not np.array_equal(
+        pd.to_numeric(supplemental["active_member_count"], errors="raise").to_numpy(
+            dtype=np.int32
+        ),
+        pd.to_numeric(controlled["active_member_count"], errors="raise").to_numpy(
+            dtype=np.int32
+        ),
+    ):
+        raise CliContractError("companion active_member_count 与受控 predictions 不一致")
+    supplemental = supplemental.drop(columns=["active_member_count"])
     return controlled.merge(supplemental, on="sample_id", how="inner", validate="one_to_one")
 
 
@@ -3270,6 +4253,7 @@ def _evaluation_metrics(
 ) -> dict[str, Any]:
     required = {
         "trade_date",
+        "active_member_count",
         "raw_score",
         "label_excess_10d",
         "entry_price_raw",
@@ -3279,12 +4263,18 @@ def _evaluation_metrics(
     missing = sorted(required - set(frame.columns))
     if missing:
         raise CliContractError(f"正式评估输入缺少字段：{missing}")
-    model_daily = daily_rank_ic(frame)
-    validation_rank_ic = _mean_rank_ic(frame)
+    rank_ic_kwargs = {
+        "min_instruments": FORMAL_MIN_CROSS_SECTION,
+        "active_member_count_column": "active_member_count",
+        "min_coverage_ratio": FORMAL_MIN_COVERAGE_RATIO,
+        "require_eligible_cross_section": True,
+    }
+    model_daily = daily_rank_ic(frame, **rank_ic_kwargs)
+    validation_rank_ic = _mean_rank_ic(frame, formal_cross_section=True)
     baseline_daily: dict[str, pd.DataFrame] = {}
     baseline_means: dict[str, float] = {}
     for column in BASELINE_SCORE_COLUMNS:
-        daily = daily_rank_ic(frame, score_column=column)
+        daily = daily_rank_ic(frame, score_column=column, **rank_ic_kwargs)
         values = pd.to_numeric(daily["rank_ic"], errors="coerce")
         finite = values[np.isfinite(values)]
         if finite.empty:
@@ -3299,6 +4289,7 @@ def _evaluation_metrics(
         baseline_daily[column] = daily
         baseline_means[column] = float(finite.mean())
     strongest_name = max(baseline_means, key=baseline_means.get)
+    strongest_rank_ic = baseline_means[strongest_name]
     bootstrap = monthly_block_bootstrap_difference(
         model_daily,
         baseline_daily[strongest_name],
@@ -3330,6 +4321,8 @@ def _evaluation_metrics(
         "base_after_cost_return": float(base_cost["mean_return_after_cost"]),
         "stress_after_cost_return": float(stress_cost["mean_return_after_cost"]),
         "strongest_baseline": strongest_name,
+        "strongest_baseline_rank_ic": strongest_rank_ic,
+        "strongest_baseline_lift": validation_rank_ic - strongest_rank_ic,
         "baseline_rank_ic": baseline_means,
         "quarterly": quarterly,
         "bootstrap": bootstrap,
@@ -3337,6 +4330,726 @@ def _evaluation_metrics(
         "stress_cost": stress_cost,
         "adapter_checkpoint_evidence": adapter_evidence,
     }
+
+
+def _adapter_diagnostic_matrix_evidence(
+    context: WorkflowContext,
+    *,
+    production_reference: str,
+    production_hash: str,
+) -> dict[str, Any]:
+    """Verify the fixed LR x seed adapter diagnostic and its immutable receipt."""
+
+    release_bound = bool(production_reference or production_hash)
+    if bool(production_reference) != bool(production_hash):
+        raise CliContractError("adapter diagnostic release binding 必须同时提供 checkpoint 与哈希")
+    if release_bound and (
+        not str(production_reference).startswith("adapter-step-")
+        or len(str(production_hash)) != 64
+    ):
+        raise CliContractError("adapter diagnostic release binding 的正式 checkpoint 无效")
+    matrix_path = context.metrics_dir / "adapter_diagnostic_matrix.json"
+    receipt_path = context.metrics_dir / "adapter_diagnostic_matrix.receipt.json"
+    if not matrix_path.is_file() or not receipt_path.is_file():
+        raise CliContractError("adapter formal release 缺少 LR×seed 诊断矩阵或收据")
+    matrix = _json_file(matrix_path)
+    receipt = _json_file(receipt_path)
+    matrix_fields = {
+        "schema_version",
+        "binding",
+        "diagnostic_dataset_sha256",
+        "learning_rates",
+        "seeds",
+        "selection_policy",
+        "minimum_mean_ce_improvement",
+        "maximum_single_run_ce_regression",
+        "selected_learning_rate",
+        "production_seed",
+        "runs",
+        "payload_sha256",
+    }
+    receipt_fields = {
+        "schema_version",
+        "matrix_sha256",
+        "matrix_payload_sha256",
+        "binding",
+        "diagnostic_dataset_sha256",
+        "selected_learning_rate",
+        "production_seed",
+        "payload_sha256",
+    }
+    if set(matrix) != matrix_fields or set(receipt) != receipt_fields:
+        raise CliContractError("adapter LR×seed 诊断矩阵或收据字段不符合固定合同")
+    matrix_unsigned = {key: value for key, value in matrix.items() if key != "payload_sha256"}
+    receipt_unsigned = {
+        key: value for key, value in receipt.items() if key != "payload_sha256"
+    }
+    matrix_payload_sha256 = _canonical_json_sha256(matrix_unsigned)
+    if matrix.get("payload_sha256") != matrix_payload_sha256:
+        raise CliContractError("adapter LR×seed 诊断矩阵 payload 哈希漂移")
+    if receipt.get("payload_sha256") != _canonical_json_sha256(receipt_unsigned):
+        raise CliContractError("adapter LR×seed 诊断收据 payload 哈希漂移")
+    current_binding = _gate_binding(_binding(context))
+    smoke_dataset_id = validate_identifier(
+        f"{context.config['data']['dataset_id']}{SMOKE_NAMESPACE_SUFFIX}",
+        "dataset_id",
+    )
+    smoke_context = SimpleNamespace(
+        config=context.config,
+        layout=context.layout,
+        dataset_id=smoke_dataset_id,
+        dataset_dir=resolve_under(
+            context.layout.data, Path("datasets") / smoke_dataset_id
+        ),
+        token_dir=resolve_under(
+            context.layout.data, Path("tokens") / smoke_dataset_id
+        ),
+    )
+    live_diagnostic_dataset_sha256 = _dataset_hash(smoke_context)
+    production_lr = float(context.config["training"]["adapter"]["learning_rate"])
+    production_seed = int(context.config["training"]["seed"])
+    expected_lrs = list(FORMAL_ADAPTER_DIAGNOSTIC_LRS)
+    expected_seeds = list(FORMAL_ADAPTER_DIAGNOSTIC_SEEDS)
+    matrix_sha256 = sha256_file(matrix_path)
+    if (
+        matrix.get("schema_version") != ADAPTER_DIAGNOSTIC_MATRIX_SCHEMA
+        or matrix.get("binding") != current_binding
+        or not isinstance(matrix.get("diagnostic_dataset_sha256"), str)
+        or len(matrix.get("diagnostic_dataset_sha256", "")) != 64
+        or matrix.get("diagnostic_dataset_sha256")
+        != live_diagnostic_dataset_sha256
+        or matrix.get("learning_rates") != expected_lrs
+        or matrix.get("seeds") != expected_seeds
+        or matrix.get("selection_policy")
+        != "seed100_min_best_ce_with_1e-4_lower_lr_tiebreak"
+        or not math.isclose(
+            float(matrix.get("minimum_mean_ce_improvement", math.nan)),
+            0.01,
+            rel_tol=0,
+            abs_tol=1e-12,
+        )
+        or not math.isclose(
+            float(matrix.get("maximum_single_run_ce_regression", math.nan)),
+            0.01,
+            rel_tol=0,
+            abs_tol=1e-12,
+        )
+        or not math.isclose(
+            float(matrix.get("selected_learning_rate", math.nan)),
+            production_lr,
+            rel_tol=0,
+            abs_tol=1e-15,
+        )
+        or int(matrix.get("production_seed", -1)) != production_seed
+        or receipt.get("schema_version") != ADAPTER_DIAGNOSTIC_RECEIPT_SCHEMA
+        or receipt.get("matrix_sha256") != matrix_sha256
+        or receipt.get("matrix_payload_sha256") != matrix_payload_sha256
+        or receipt.get("binding") != current_binding
+        or receipt.get("diagnostic_dataset_sha256")
+        != matrix.get("diagnostic_dataset_sha256")
+        or not math.isclose(
+            float(receipt.get("selected_learning_rate", math.nan)),
+            production_lr,
+            rel_tol=0,
+            abs_tol=1e-15,
+        )
+        or int(receipt.get("production_seed", -1)) != production_seed
+    ):
+        raise CliContractError("adapter LR×seed 诊断矩阵未绑定当前生产 adapter")
+
+    run_fields = {
+        "learning_rate",
+        "seed",
+        "resolved_config_path",
+        "resolved_config_file_sha256",
+        "resolved_config_sha256",
+        "checkpoint_path",
+        "checkpoint_manifest_sha256",
+        "checkpoint_state_sha256",
+        "summary_path",
+        "summary_sha256",
+        "sample_manifest_path",
+        "sample_manifest_sha256",
+        "total_sample_count",
+        "zero_shot_validation_ce",
+        "best_validation_ce",
+        "adapter_ce_improvement",
+        "completed_step",
+        "early_stopped",
+    }
+    runs = matrix.get("runs")
+    if not isinstance(runs, list) or len(runs) != 5:
+        raise CliContractError("adapter LR×seed 诊断矩阵必须包含唯一 5 次运行")
+    seen: set[tuple[float, int]] = set()
+    improvements: dict[float, list[float]] = {lr: [] for lr in expected_lrs}
+    artifact_commitments: list[dict[str, Any]] = []
+    binding_values = _binding(context).as_dict()
+    for run in runs:
+        if not isinstance(run, Mapping) or set(run) != run_fields:
+            raise CliContractError("adapter LR×seed 单次运行字段不符合固定合同")
+        lr = float(run.get("learning_rate", math.nan))
+        seed = int(run.get("seed", -1))
+        key = (lr, seed)
+        if lr not in expected_lrs or seed not in expected_seeds or key in seen:
+            raise CliContractError("adapter LR×seed 诊断矩阵组合缺失、重复或越界")
+        seen.add(key)
+        config_path = resolve_under(
+            context.layout.root, str(run["resolved_config_path"]), must_exist=True
+        )
+        checkpoint_path = resolve_under(
+            context.layout.root, str(run["checkpoint_path"]), must_exist=True
+        )
+        if not config_path.is_file() or not checkpoint_path.is_dir():
+            raise CliContractError("adapter LR×seed 运行工件类型无效")
+        resolved = _json_file(config_path)
+        resolved_hash = str(run["resolved_config_sha256"])
+        if (
+            sha256_file(config_path) != run["resolved_config_file_sha256"]
+            or resolved.get("schema_version")
+            != "kronos-a-share-resolved-training-v1"
+            or resolved.get("profile") != "engineering_smoke"
+            or resolved.get("resolved_config_sha256") != resolved_hash
+            or int(resolved.get("seed", -1)) != seed
+            or not math.isclose(
+                float(resolved.get("adapter", {}).get("learning_rate", math.nan)),
+                lr,
+                rel_tol=0,
+                abs_tol=1e-15,
+            )
+        ):
+            raise CliContractError("adapter LR×seed resolved config 证据不一致")
+        manifest_path = checkpoint_path / "manifest.json"
+        committed_path = checkpoint_path / "COMMITTED"
+        state_path = checkpoint_path / "state.pt"
+        summary_path = resolve_under(
+            context.layout.root, str(run["summary_path"]), must_exist=True
+        )
+        sample_manifest_path = resolve_under(
+            context.layout.root, str(run["sample_manifest_path"]), must_exist=True
+        )
+        if not all(path.is_file() for path in (manifest_path, committed_path, state_path)):
+            raise CliContractError("adapter LR×seed checkpoint 工件不完整")
+        if not summary_path.is_file() or sha256_file(summary_path) != run["summary_sha256"]:
+            raise CliContractError("adapter LR×seed summary 哈希不一致")
+        trial_summary = _json_file(summary_path)
+        sample_manifest = _json_file(sample_manifest_path)
+        manifest = _json_file(manifest_path)
+        committed = _json_file(committed_path)
+        manifest_sha256 = sha256_file(manifest_path)
+        state_sha256 = sha256_file(state_path)
+        trial_binding = manifest.get("binding", {})
+        if (
+            manifest_sha256 != run["checkpoint_manifest_sha256"]
+            or state_sha256 != run["checkpoint_state_sha256"]
+            or committed.get("manifest_sha256") != manifest_sha256
+            or committed.get("checkpoint_name") != checkpoint_path.name
+            or manifest.get("checkpoint_name") != checkpoint_path.name
+            or manifest.get("stage") != "adapter"
+            or manifest.get("files", {}).get("state.pt", {}).get("sha256")
+            != state_sha256
+            or trial_binding.get("base_model_sha256")
+            != binding_values["base_model_sha256"]
+            or trial_binding.get("tokenizer_sha256")
+            != binding_values["tokenizer_sha256"]
+            or trial_binding.get("dataset_sha256")
+            != matrix.get("diagnostic_dataset_sha256")
+            or trial_binding.get("config_sha256") != resolved_hash
+        ):
+            raise CliContractError("adapter LR×seed checkpoint 哈希或绑定不一致")
+        zero = float(run.get("zero_shot_validation_ce", math.nan))
+        best = float(run.get("best_validation_ce", math.nan))
+        improvement = float(run.get("adapter_ce_improvement", math.nan))
+        completed_step = int(run.get("completed_step", -1))
+        early_stopped = run.get("early_stopped")
+        trial_history = trial_summary.get("validation_history")
+        if not isinstance(trial_history, list) or not trial_history:
+            raise CliContractError("adapter LR×seed summary 缺少 validation_history")
+        history_rows = sorted(
+            trial_history, key=lambda value: int(value.get("step", -1))
+        )
+        history_best = min(
+            history_rows, key=lambda value: float(value.get("validation_ce", math.inf))
+        )
+        if (
+            not all(math.isfinite(value) and value > 0 for value in (zero, best))
+            or not math.isfinite(improvement)
+            or not math.isclose(improvement, (zero - best) / zero, rel_tol=0, abs_tol=1e-12)
+            or not isinstance(early_stopped, bool)
+            or completed_step < SMOKE_CHECKPOINT_INTERVAL
+            or completed_step > SMOKE_MAX_STEPS
+            or completed_step % SMOKE_CHECKPOINT_INTERVAL != 0
+            or int(trial_summary.get("completed_step", -1)) != completed_step
+            or trial_summary.get("data_status") != "production_ready"
+            or sample_manifest_path
+            != smoke_context.dataset_dir / "sample_manifest.json"
+            or not sample_manifest_path.is_file()
+            or sha256_file(sample_manifest_path) != run["sample_manifest_sha256"]
+            or int(sample_manifest.get("sample_count", -1))
+            != int(run.get("total_sample_count", -2))
+            or int(run.get("total_sample_count", -1)) < 512
+            or not _has_verified_survivorship_audit(sample_manifest)
+            or (completed_step < SMOKE_MAX_STEPS and early_stopped is not True)
+            or trial_summary.get("diagnostic_checkpoint_name")
+            != checkpoint_path.name
+            or trial_summary.get("diagnostic_checkpoint_hash") != state_sha256
+            or any(
+                not isinstance(item, Mapping)
+                or int(item.get("step", -1)) % SMOKE_CHECKPOINT_INTERVAL != 0
+                or int(item.get("step", -1)) > SMOKE_MAX_STEPS
+                or not math.isfinite(float(item.get("validation_ce", math.nan)))
+                for item in history_rows
+            )
+            or int(trial_summary.get("diagnostic_best_step", -1))
+            != int(history_best.get("step", -2))
+            or not math.isclose(
+                float(history_best.get("validation_ce", math.nan)),
+                best,
+                rel_tol=0,
+                abs_tol=1e-12,
+            )
+            or not math.isclose(
+                float(trial_summary.get("zero_shot_validation_ce", math.nan)),
+                zero,
+                rel_tol=0,
+                abs_tol=1e-12,
+            )
+            or not math.isclose(
+                float(trial_summary.get("diagnostic_best_validation_ce", math.nan)),
+                best,
+                rel_tol=0,
+                abs_tol=1e-12,
+            )
+        ):
+            raise CliContractError("adapter LR×seed 运行未满足完整训练或 CE 稳定性合同")
+        improvements[lr].append(improvement)
+        artifact_commitments.append(
+            {
+                "learning_rate": lr,
+                "seed": seed,
+                "resolved_config_file_sha256": run["resolved_config_file_sha256"],
+                "checkpoint_manifest_sha256": manifest_sha256,
+                "checkpoint_state_sha256": state_sha256,
+                "summary_sha256": run["summary_sha256"],
+                "sample_manifest_sha256": run["sample_manifest_sha256"],
+            }
+        )
+    sweep = {(lr, 100) for lr in expected_lrs}
+    if not sweep.issubset(seen):
+        raise CliContractError("adapter LR sweep 缺少固定 seed=100 的三条运行")
+    run_by_key = {(float(item["learning_rate"]), int(item["seed"])): item for item in runs}
+    eligible: list[tuple[float, float]] = []
+    for lr in expected_lrs:
+        item = run_by_key[(lr, 100)]
+        summary = _json_file(
+            resolve_under(context.layout.root, str(item["summary_path"]), must_exist=True)
+        )
+        history = summary.get("validation_history")
+        best_step = int(summary.get("diagnostic_best_step", -1))
+        if not isinstance(history, list):
+            continue
+        ordered = sorted(history, key=lambda value: int(value.get("step", -1)))
+        indices = [
+            index
+            for index, value in enumerate(ordered)
+            if int(value.get("step", -1)) == best_step
+        ]
+        if len(indices) != 1 or indices[0] == 0 or indices[0] == len(ordered) - 1:
+            continue
+        index = indices[0]
+        best_ce = float(item["best_validation_ce"])
+        zero = float(item["zero_shot_validation_ce"])
+        if (
+            best_ce <= ADAPTER_DIAGNOSTIC_CE_CEILING
+            and math.isclose(
+                best_ce,
+                min(float(value["validation_ce"]) for value in ordered),
+                rel_tol=0,
+                abs_tol=1e-12,
+            )
+            and float(ordered[index - 1]["validation_ce"]) <= zero
+            and float(ordered[index + 1]["validation_ce"]) <= zero
+        ):
+            eligible.append((lr, best_ce))
+    if not eligible:
+        raise CliContractError("adapter LR sweep 没有满足 CE 上限和相邻点稳定性的候选")
+    minimum_ce = min(value for _, value in eligible)
+    selected_lr = min(
+        lr for lr, value in eligible if value <= minimum_ce + ADAPTER_DIAGNOSTIC_TIE_TOLERANCE
+    )
+    expected_seen = sweep | {(selected_lr, 101), (selected_lr, 102)}
+    if seen != expected_seen:
+        raise CliContractError("adapter LR×seed 唯一 5 次运行不符合 sweep 后复核合同")
+    selected_improvements = improvements[selected_lr]
+    if (
+        len(selected_improvements) != 3
+        or any(value <= 0 for value in selected_improvements)
+        or float(np.mean(selected_improvements)) < 0.01
+        or any(value < -0.01 for value in selected_improvements)
+    ):
+        raise CliContractError("adapter selected LR 三 seed 稳定性未通过")
+    if not math.isclose(selected_lr, production_lr, rel_tol=0, abs_tol=1e-15):
+        raise CliContractError("adapter 生产学习率不是固定规则选出的 LR×seed 最优值")
+    return {
+        "schema_version": ADAPTER_DIAGNOSTIC_RECEIPT_SCHEMA,
+        "matrix_sha256": matrix_sha256,
+        "matrix_payload_sha256": matrix_payload_sha256,
+        "receipt_sha256": sha256_file(receipt_path),
+        "binding": current_binding,
+        "selected_learning_rate": selected_lr,
+        "production_seed": production_seed,
+        "run_count": len(runs),
+        "run_artifact_root_sha256": _canonical_json_sha256(
+            {"artifacts": sorted(artifact_commitments, key=lambda item: (item["learning_rate"], item["seed"]))}
+        ),
+        "release_bound": release_bound,
+        "production_checkpoint_name": production_reference if release_bound else None,
+        "production_adapter_hash": production_hash if release_bound else None,
+    }
+
+
+def _adapter_diagnostic_trial_path(
+    context: WorkflowContext, *, learning_rate: float, seed: int
+) -> Path:
+    family_config = copy.deepcopy(
+        load_config(context.config_path)[0]
+        if getattr(context, "config_path", None) is not None
+        else context.config
+    )
+    family_config["training"]["seed"] = None
+    family_config["training"]["adapter"]["learning_rate"] = None
+    family_sha256 = _canonical_json_sha256(
+        {
+            "schema_version": "kronos-a-share-adapter-diagnostic-family-v1",
+            "config": family_config,
+        }
+    )
+    return resolve_under(
+        context.layout.registry,
+        Path("adapter-diagnostic-v1")
+        / family_sha256
+        / f"lr-{learning_rate:.0e}-seed-{seed}.json",
+    )
+
+
+def _write_append_only_json(
+    path: Path, payload: Mapping[str, Any], *, allowed_root: Path
+) -> None:
+    path = resolve_under(allowed_root, path)
+    if path.is_file():
+        if _json_file(path) != dict(payload):
+            raise CliBlocked("append-only ledger 已有冲突条目，拒绝覆盖")
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    encoded = (
+        json.dumps(
+            dict(payload), ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False
+        )
+        + "\n"
+    ).encode("utf-8")
+    try:
+        with path.open("xb") as handle:
+            handle.write(encoded)
+            handle.flush()
+            os.fsync(handle.fileno())
+    except FileExistsError:
+        if _json_file(path) != dict(payload):
+            raise CliBlocked("append-only ledger 并发登记冲突，拒绝覆盖")
+
+
+def _register_adapter_diagnostic_trial(
+    context: WorkflowContext, summary: Mapping[str, Any]
+) -> dict[str, Any] | None:
+    """Atomically register a smoke trial and emit the fixed five-run receipt."""
+
+    lr = float(context.config["training"]["adapter"]["learning_rate"])
+    seed = int(context.config["training"]["seed"])
+    if lr not in FORMAL_ADAPTER_DIAGNOSTIC_LRS or seed not in FORMAL_ADAPTER_DIAGNOSTIC_SEEDS:
+        return None
+    checkpoint_name = str(summary.get("diagnostic_checkpoint_name", ""))
+    checkpoint_path = context.checkpoint_dir / checkpoint_name
+    resolved_path = context.metrics_dir / "resolved_training_config.json"
+    summary_path = context.metrics_dir / "adapter_summary.json"
+    manifest_path = checkpoint_path / "manifest.json"
+    state_path = checkpoint_path / "state.pt"
+    sample_manifest_path = context.dataset_dir / "sample_manifest.json"
+    if not all(
+        path.is_file()
+        for path in (
+            resolved_path,
+            summary_path,
+            manifest_path,
+            state_path,
+            sample_manifest_path,
+        )
+    ):
+        raise CliContractError("adapter diagnostic trial 工件不完整，无法登记")
+    sample_manifest = _json_file(sample_manifest_path)
+    if (
+        summary.get("data_status") != "production_ready"
+        or int(sample_manifest.get("sample_count", -1)) < 512
+        or not _has_verified_survivorship_audit(sample_manifest)
+    ):
+        raise CliBlocked(
+            "adapter diagnostic 仅允许 production_ready 且分层样本总数不少于512的数据集"
+        )
+    entry = {
+        "learning_rate": lr,
+        "seed": seed,
+        "resolved_config_path": str(resolved_path.relative_to(context.layout.root)),
+        "resolved_config_file_sha256": sha256_file(resolved_path),
+        "resolved_config_sha256": context.training_config_sha256,
+        "checkpoint_path": str(checkpoint_path.relative_to(context.layout.root)),
+        "checkpoint_manifest_sha256": sha256_file(manifest_path),
+        "checkpoint_state_sha256": sha256_file(state_path),
+        "summary_path": str(summary_path.relative_to(context.layout.root)),
+        "summary_sha256": sha256_file(summary_path),
+        "sample_manifest_path": str(
+            sample_manifest_path.relative_to(context.layout.root)
+        ),
+        "sample_manifest_sha256": sha256_file(sample_manifest_path),
+        "total_sample_count": int(sample_manifest["sample_count"]),
+        "zero_shot_validation_ce": float(summary["zero_shot_validation_ce"]),
+        "best_validation_ce": float(summary["diagnostic_best_validation_ce"]),
+        "adapter_ce_improvement": float(summary["diagnostic_ce_improvement"]),
+        "completed_step": int(summary["completed_step"]),
+        "early_stopped": bool(summary["early_stopped"]),
+    }
+    trial_path = _adapter_diagnostic_trial_path(
+        context, learning_rate=lr, seed=seed
+    )
+    _write_append_only_json(
+        trial_path, entry, allowed_root=context.layout.root
+    )
+
+    def read_trial(candidate_lr: float, candidate_seed: int) -> dict[str, Any] | None:
+        path = _adapter_diagnostic_trial_path(
+            context, learning_rate=candidate_lr, seed=candidate_seed
+        )
+        return _json_file(path) if path.is_file() else None
+
+    sweep = [read_trial(candidate_lr, 100) for candidate_lr in FORMAL_ADAPTER_DIAGNOSTIC_LRS]
+    if any(item is None for item in sweep):
+        return None
+    eligible: list[tuple[float, float]] = []
+    for item in sweep:
+        assert item is not None
+        trial_summary = _json_file(
+            resolve_under(context.layout.root, str(item["summary_path"]), must_exist=True)
+        )
+        history = sorted(
+            trial_summary.get("validation_history", []),
+            key=lambda value: int(value.get("step", -1)),
+        )
+        best_step = int(trial_summary.get("diagnostic_best_step", -1))
+        indices = [
+            index
+            for index, value in enumerate(history)
+            if int(value.get("step", -1)) == best_step
+        ]
+        if len(indices) != 1 or indices[0] == 0 or indices[0] == len(history) - 1:
+            continue
+        index = indices[0]
+        zero = float(item["zero_shot_validation_ce"])
+        best = float(item["best_validation_ce"])
+        if (
+            best <= ADAPTER_DIAGNOSTIC_CE_CEILING
+            and float(history[index - 1]["validation_ce"]) <= zero
+            and float(history[index + 1]["validation_ce"]) <= zero
+        ):
+            eligible.append((float(item["learning_rate"]), best))
+    if not eligible:
+        return None
+    minimum_ce = min(value for _, value in eligible)
+    selected_lr = min(
+        candidate_lr
+        for candidate_lr, value in eligible
+        if value <= minimum_ce + ADAPTER_DIAGNOSTIC_TIE_TOLERANCE
+    )
+    selected_extra = [read_trial(selected_lr, value) for value in (101, 102)]
+    if any(item is None for item in selected_extra):
+        return None
+    runs = [item for item in sweep if item is not None] + [
+        item for item in selected_extra if item is not None
+    ]
+    base_config, _ = load_config(context.config_path)
+    if not math.isclose(
+        float(base_config["training"]["adapter"]["learning_rate"]),
+        selected_lr,
+        rel_tol=0,
+        abs_tol=1e-15,
+    ):
+        selection_path = trial_path.parent / "selected_learning_rate.json"
+        atomic_write_json(
+            selection_path,
+            {
+                "schema_version": "kronos-a-share-adapter-diagnostic-selection-v1",
+                "selected_learning_rate": selected_lr,
+                "selection_policy": "seed100_min_best_ce_with_1e-4_lower_lr_tiebreak",
+            },
+            allowed_root=context.layout.root,
+        )
+        return None
+    production_context = build_context(
+        context.config_path,
+        create=True,
+        training_profile="full",
+    )
+    diagnostic_dataset_hashes = {
+        _json_file(
+            resolve_under(context.layout.root, str(item["checkpoint_path"]), must_exist=True)
+            / "manifest.json"
+        ).get("binding", {}).get("dataset_sha256")
+        for item in runs
+    }
+    if len(diagnostic_dataset_hashes) != 1:
+        raise CliBlocked("adapter diagnostic 五次运行的数据集绑定不一致")
+    diagnostic_dataset_sha256 = str(next(iter(diagnostic_dataset_hashes)))
+    matrix = {
+        "schema_version": ADAPTER_DIAGNOSTIC_MATRIX_SCHEMA,
+        "binding": _gate_binding(_binding(production_context)),
+        "diagnostic_dataset_sha256": diagnostic_dataset_sha256,
+        "learning_rates": list(FORMAL_ADAPTER_DIAGNOSTIC_LRS),
+        "seeds": list(FORMAL_ADAPTER_DIAGNOSTIC_SEEDS),
+        "selection_policy": "seed100_min_best_ce_with_1e-4_lower_lr_tiebreak",
+        "minimum_mean_ce_improvement": 0.01,
+        "maximum_single_run_ce_regression": 0.01,
+        "selected_learning_rate": selected_lr,
+        "production_seed": 100,
+        "runs": runs,
+    }
+    matrix["payload_sha256"] = _canonical_json_sha256(matrix)
+    matrix_path = production_context.metrics_dir / "adapter_diagnostic_matrix.json"
+    atomic_write_json(matrix_path, matrix, allowed_root=context.layout.root)
+    receipt = {
+        "schema_version": ADAPTER_DIAGNOSTIC_RECEIPT_SCHEMA,
+        "matrix_sha256": sha256_file(matrix_path),
+        "matrix_payload_sha256": matrix["payload_sha256"],
+        "binding": matrix["binding"],
+        "diagnostic_dataset_sha256": diagnostic_dataset_sha256,
+        "selected_learning_rate": selected_lr,
+        "production_seed": 100,
+    }
+    receipt["payload_sha256"] = _canonical_json_sha256(receipt)
+    atomic_write_json(
+        production_context.metrics_dir / "adapter_diagnostic_matrix.receipt.json",
+        receipt,
+        allowed_root=context.layout.root,
+    )
+    return _adapter_diagnostic_matrix_evidence(
+        production_context,
+        production_reference="",
+        production_hash="",
+    )
+
+
+def _materialize_adapter_diagnostic_from_registry(
+    context: WorkflowContext,
+) -> dict[str, Any] | None:
+    """Materialize the five already-finished smoke trials for the current full config."""
+
+    def read_trial(lr: float, seed: int) -> dict[str, Any] | None:
+        path = _adapter_diagnostic_trial_path(
+            context, learning_rate=lr, seed=seed
+        )
+        return _json_file(path) if path.is_file() else None
+
+    sweep = [read_trial(lr, 100) for lr in FORMAL_ADAPTER_DIAGNOSTIC_LRS]
+    if any(item is None for item in sweep):
+        return None
+    eligible: list[tuple[float, float]] = []
+    for item in sweep:
+        assert item is not None
+        summary = _json_file(
+            resolve_under(context.layout.root, str(item["summary_path"]), must_exist=True)
+        )
+        history = sorted(
+            summary.get("validation_history", []),
+            key=lambda value: int(value.get("step", -1)),
+        )
+        best_step = int(summary.get("diagnostic_best_step", -1))
+        indices = [
+            index
+            for index, value in enumerate(history)
+            if int(value.get("step", -1)) == best_step
+        ]
+        if len(indices) != 1 or indices[0] == 0 or indices[0] == len(history) - 1:
+            continue
+        index = indices[0]
+        zero = float(item["zero_shot_validation_ce"])
+        best = float(item["best_validation_ce"])
+        if (
+            best <= ADAPTER_DIAGNOSTIC_CE_CEILING
+            and float(history[index - 1]["validation_ce"]) <= zero
+            and float(history[index + 1]["validation_ce"]) <= zero
+        ):
+            eligible.append((float(item["learning_rate"]), best))
+    if not eligible:
+        return None
+    minimum_ce = min(value for _, value in eligible)
+    selected_lr = min(
+        lr
+        for lr, value in eligible
+        if value <= minimum_ce + ADAPTER_DIAGNOSTIC_TIE_TOLERANCE
+    )
+    if not math.isclose(
+        float(context.config["training"]["adapter"]["learning_rate"]),
+        selected_lr,
+        rel_tol=0,
+        abs_tol=1e-15,
+    ):
+        return None
+    extras = [read_trial(selected_lr, seed) for seed in (101, 102)]
+    if any(item is None for item in extras):
+        return None
+    runs = [item for item in sweep if item is not None] + [
+        item for item in extras if item is not None
+    ]
+    diagnostic_dataset_hashes = {
+        _json_file(
+            resolve_under(context.layout.root, str(item["checkpoint_path"]), must_exist=True)
+            / "manifest.json"
+        ).get("binding", {}).get("dataset_sha256")
+        for item in runs
+    }
+    if len(diagnostic_dataset_hashes) != 1:
+        raise CliBlocked("adapter diagnostic 五次运行的数据集绑定不一致")
+    diagnostic_dataset_sha256 = str(next(iter(diagnostic_dataset_hashes)))
+    matrix = {
+        "schema_version": ADAPTER_DIAGNOSTIC_MATRIX_SCHEMA,
+        "binding": _gate_binding(_binding(context)),
+        "diagnostic_dataset_sha256": diagnostic_dataset_sha256,
+        "learning_rates": list(FORMAL_ADAPTER_DIAGNOSTIC_LRS),
+        "seeds": list(FORMAL_ADAPTER_DIAGNOSTIC_SEEDS),
+        "selection_policy": "seed100_min_best_ce_with_1e-4_lower_lr_tiebreak",
+        "minimum_mean_ce_improvement": 0.01,
+        "maximum_single_run_ce_regression": 0.01,
+        "selected_learning_rate": selected_lr,
+        "production_seed": 100,
+        "runs": runs,
+    }
+    matrix["payload_sha256"] = _canonical_json_sha256(matrix)
+    matrix_path = context.metrics_dir / "adapter_diagnostic_matrix.json"
+    atomic_write_json(matrix_path, matrix, allowed_root=context.layout.root)
+    receipt = {
+        "schema_version": ADAPTER_DIAGNOSTIC_RECEIPT_SCHEMA,
+        "matrix_sha256": sha256_file(matrix_path),
+        "matrix_payload_sha256": matrix["payload_sha256"],
+        "binding": matrix["binding"],
+        "diagnostic_dataset_sha256": diagnostic_dataset_sha256,
+        "selected_learning_rate": selected_lr,
+        "production_seed": 100,
+    }
+    receipt["payload_sha256"] = _canonical_json_sha256(receipt)
+    atomic_write_json(
+        context.metrics_dir / "adapter_diagnostic_matrix.receipt.json",
+        receipt,
+        allowed_root=context.layout.root,
+    )
+    return _adapter_diagnostic_matrix_evidence(
+        context,
+        production_reference="",
+        production_hash="",
+    )
 
 
 def _adapter_checkpoint_release_metrics(
@@ -3359,15 +5072,73 @@ def _adapter_checkpoint_release_metrics(
     ):
         raise CliContractError("adapter checkpoint 身份/哈希不匹配")
     extra = _checkpoint_extra_state(store, reference)
+    summary_path = context.metrics_dir / "adapter_summary.json"
+    if not summary_path.is_file():
+        raise CliContractError("adapter checkpoint 缺少正式训练完成 summary")
+    summary = _json_file(summary_path)
+    diagnostic_evidence = _adapter_diagnostic_matrix_evidence(
+        context,
+        production_reference=reference,
+        production_hash=expected_hash,
+    )
     zero = float(extra.get("zero_shot_validation_ce", math.nan))
     best = float(extra.get("best_validation_ce", math.nan))
     metric = float(manifest.get("metric", math.nan))
+    history = extra.get("validation_history")
+    history_entry = (
+        next(
+            (
+                item
+                for item in history
+                if isinstance(item, Mapping)
+                and int(item.get("step", -1)) == int(manifest.get("step", -2))
+            ),
+            None,
+        )
+        if isinstance(history, list)
+        else None
+    )
     if (
         extra.get("validation_contract")
         != context.config["training"]["adapter"]["validation_contract"]
         or extra.get("engineering_smoke") is not False
         or not all(math.isfinite(value) and value > 0 for value in (zero, best, metric))
         or not math.isclose(best, metric, rel_tol=0, abs_tol=1e-12)
+        or extra.get("zero_shot_fallback") is not False
+        or int(extra.get("best_step", -1)) != int(manifest.get("step", -2))
+        or extra.get("selection_reason")
+        != "minimum_causal_validation_ce_meets_release_threshold"
+        or not isinstance(history_entry, Mapping)
+        or not math.isclose(
+            float(history_entry.get("validation_ce", math.nan)),
+            metric,
+            rel_tol=0,
+            abs_tol=1e-12,
+        )
+        or extra.get("resolved_config_sha256") != context.training_config_sha256
+        or int(extra.get("checkpoint_interval", -1)) != FULL_CHECKPOINT_INTERVAL
+        or int(extra.get("validation_interval", -1)) != FULL_CHECKPOINT_INTERVAL
+        or int(extra.get("early_stopping_patience", -1))
+        != ADAPTER_EARLY_STOPPING_PATIENCE
+        or int(extra.get("max_allowed_steps", -1)) != FULL_MAX_STEPS
+        or int(manifest.get("step", -1)) % FULL_CHECKPOINT_INTERVAL != 0
+        or any(
+            not isinstance(item, Mapping)
+            or int(item.get("step", -1)) % FULL_CHECKPOINT_INTERVAL != 0
+            for item in history
+        )
+        or summary.get("status") != "ok"
+        or summary.get("formal_training_complete") is not True
+        or int(summary.get("max_allowed_steps", -1)) != FULL_MAX_STEPS
+        or summary.get("checkpoint_name") != reference
+        or summary.get("adapter_hash") != expected_hash
+        or summary.get("adapter_diagnostic_matrix_evidence") != diagnostic_evidence
+        or int(summary.get("best_step", -1)) != int(manifest.get("step", -2))
+        or (
+            int(summary.get("completed_step", -1)) != FULL_MAX_STEPS
+            and summary.get("early_stopped") is not True
+        )
+        or int(summary.get("completed_step", -1)) % FULL_CHECKPOINT_INTERVAL != 0
     ):
         raise CliContractError("adapter checkpoint CE 因果验证证据不完整")
     peak = extra.get("peak_gpu_memory_bytes")
@@ -3391,6 +5162,7 @@ def _adapter_checkpoint_release_metrics(
         "adapter_ce_improvement": (zero - best) / zero,
         "peak_gpu_memory_bytes": peak,
         "gpu_memory_limit_bytes": limit,
+        "adapter_diagnostic_matrix_evidence": diagnostic_evidence,
     }
 
 
@@ -3473,7 +5245,66 @@ def _live_adapter_checkpoint_release_metrics(
     }
 
 
-def command_evaluate(args: argparse.Namespace) -> dict[str, Any]:
+def _evaluation_commitment_path(
+    context: WorkflowContext,
+    *,
+    binding: Any,
+    adapter_hash: str,
+    scorer_hash: str,
+    split: str,
+) -> Path:
+    identity = {
+        "schema_version": "kronos-a-share-evaluation-identity-v1",
+        "binding": _gate_binding(binding),
+        "adapter_hash": adapter_hash,
+        "scorer_checkpoint_hash": scorer_hash,
+        "split": split,
+    }
+    return resolve_under(
+        context.layout.registry,
+        Path("evaluation-commitments")
+        / split
+        / f"{_canonical_json_sha256(identity)}.json",
+    )
+
+
+def _write_evaluation_commitment(
+    path: Path,
+    *,
+    context: WorkflowContext,
+    binding: Any,
+    adapter_hash: str,
+    scorer_hash: str,
+    split: str,
+    report_path: Path,
+) -> dict[str, Any]:
+    payload = {
+        "schema_version": "kronos-a-share-evaluation-commitment-v1",
+        "binding": _gate_binding(binding),
+        "adapter_hash": adapter_hash,
+        "scorer_checkpoint_hash": scorer_hash,
+        "split": split,
+        "audit_only": split == "locked_retrospective",
+        "report_path": str(report_path.relative_to(context.layout.root)),
+        "report_sha256": sha256_file(report_path),
+    }
+    payload["payload_sha256"] = _canonical_json_sha256(payload)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    encoded = (
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False)
+        + "\n"
+    ).encode("utf-8")
+    try:
+        with path.open("xb") as handle:
+            handle.write(encoded)
+            handle.flush()
+            os.fsync(handle.fileno())
+    except FileExistsError as exc:
+        raise CliBlocked(f"{split} 冻结绑定已存在成功 evaluation commitment，拒绝重复执行") from exc
+    return payload
+
+
+def _command_evaluate_impl(args: argparse.Namespace) -> dict[str, Any]:
     from kronos_a_share_training import CheckpointFileLock, CheckpointStore
 
     context = build_context(
@@ -3486,6 +5317,7 @@ def command_evaluate(args: argparse.Namespace) -> dict[str, Any]:
     adapter_reference: str | None = None
     adapter_hash: str | None = None
     scorer_checkpoint_hash: str | None = None
+    scorer_stability_evidence: dict[str, Any] | None = None
     checkpoint: dict[str, Any] | None = None
     try:
         checkpoint_reference = _stage_reference(
@@ -3496,8 +5328,42 @@ def command_evaluate(args: argparse.Namespace) -> dict[str, Any]:
         adapter_reference, adapter_hash, scorer_checkpoint_hash = _scorer_checkpoint_hashes(
             store, checkpoint
         )
+        if args.split in {"development_test", "locked_retrospective"}:
+            preliminary_commitment = _evaluation_commitment_path(
+                context,
+                binding=binding,
+                adapter_hash=adapter_hash,
+                scorer_hash=scorer_checkpoint_hash,
+                split=args.split,
+            )
+            if preliminary_commitment.is_file():
+                raise CliBlocked(
+                    f"{args.split} 冻结绑定已存在成功 commitment，拒绝重复执行"
+                )
+        scorer_stability_evidence = _scorer_stability_evidence(
+            context,
+            checkpoint_reference=evaluated_checkpoint,
+            scorer_checkpoint_hash=scorer_checkpoint_hash,
+        )
+    except CliBlocked:
+        raise
     except (FileNotFoundError, RuntimeError, ValueError) as exc:
         reasons.append(f"checkpoint_unavailable:{exc}")
+    evaluation_commitment_path: Path | None = None
+    if (
+        args.split in {"development_test", "locked_retrospective"}
+        and adapter_hash is not None
+        and scorer_checkpoint_hash is not None
+    ):
+        evaluation_commitment_path = _evaluation_commitment_path(
+            context,
+            binding=binding,
+            adapter_hash=adapter_hash,
+            scorer_hash=scorer_checkpoint_hash,
+            split=args.split,
+        )
+        if evaluation_commitment_path.is_file():
+            raise CliBlocked(f"{args.split} 冻结绑定已存在成功 commitment，拒绝重复执行")
     data_report = _load_data_status(context)
     if data_report["status"] != "production_ready":
         reasons.append(f"data_status={data_report['status']}，未达到 production_ready")
@@ -3606,6 +5472,7 @@ def command_evaluate(args: argparse.Namespace) -> dict[str, Any]:
                 expected_adapter_hash=adapter_hash,
                 adapter_evidence=adapter_evidence,
             )
+            metrics["scorer_seed_stability"] = scorer_stability_evidence
             if (
                 args.split == "validation"
                 and adapter_evidence is not None
@@ -3615,22 +5482,69 @@ def command_evaluate(args: argparse.Namespace) -> dict[str, Any]:
         except (OSError, RuntimeError, TypeError, ValueError, KeyError) as exc:
             reasons.append(f"evaluation_incomplete:{exc}")
     if args.split != "validation":
+        audit_only = args.split == "locked_retrospective"
         report = {
             "schema_version": "kronos-a-share-evaluation-v1",
             "input": str(input_path),
             "split": args.split,
             "data_status": data_report["status"],
             "formal_gate_eligible": False,
+            "audit_only": audit_only,
+            "configuration_selection_allowed": False,
             "gate": None,
             "metrics": metrics,
             "reasons": reasons,
             "generated_at": _utc_now(),
         }
-        atomic_write_json(
-            context.metrics_dir / f"evaluation_report_{args.split}.json",
-            report,
-            allowed_root=context.layout.root,
-        )
+        report_path = context.metrics_dir / f"evaluation_report_{args.split}.json"
+        commitment = None
+        if (
+            not reasons
+            and evaluation_commitment_path is not None
+            and adapter_hash is not None
+            and scorer_checkpoint_hash is not None
+        ):
+            report_path = evaluation_commitment_path.with_name(
+                f"{evaluation_commitment_path.stem}.report.json"
+            )
+            if not getattr(args, "_evaluation_identity_lock_held", False):
+                raise CliContractError(
+                    "development/locked evaluation 必须在 identity 锁内执行"
+                )
+            if evaluation_commitment_path.is_file() or report_path.is_file():
+                raise CliBlocked(
+                    f"{args.split} 冻结绑定已存在成功/进行中的 commitment"
+                )
+            report_path.parent.mkdir(parents=True, exist_ok=True)
+            report_bytes = (
+                json.dumps(
+                    report,
+                    ensure_ascii=False,
+                    indent=2,
+                    sort_keys=True,
+                    allow_nan=False,
+                )
+                + "\n"
+            ).encode("utf-8")
+            with report_path.open("xb") as handle:
+                handle.write(report_bytes)
+                handle.flush()
+                os.fsync(handle.fileno())
+            commitment = _write_evaluation_commitment(
+                evaluation_commitment_path,
+                context=context,
+                binding=binding,
+                adapter_hash=adapter_hash,
+                scorer_hash=scorer_checkpoint_hash,
+                split=args.split,
+                report_path=report_path,
+            )
+        else:
+            atomic_write_json(
+                report_path,
+                report,
+                allowed_root=context.layout.root,
+            )
         return _envelope(
             "evaluate",
             status="ok" if not reasons else "unverified",
@@ -3640,6 +5554,7 @@ def command_evaluate(args: argparse.Namespace) -> dict[str, Any]:
                 else f"{args.split} 受控评估未完整，输出固定为 N/A。"
             ),
             report=report,
+            evaluation_commitment=commitment,
             evidence_class="model_output",
             output_type="model_output" if not reasons else "N/A",
         )
@@ -3677,6 +5592,13 @@ def command_evaluate(args: argparse.Namespace) -> dict[str, Any]:
                 )
             },
         )
+        if metrics["strongest_baseline_lift"] < thresholds.baseline_rank_ic_lift_min:
+            gate_result["gate_status"] = "blocked"
+            gate_result["publishable"] = False
+            gate_result["output_type"] = "N/A"
+            gate_result["reasons"].append(
+                "相对全部候选中的最强基线 RankIC 提升不足 0.005"
+            )
         reasons.extend(gate_result["reasons"])
     evaluation = context.config["evaluation"]
     forward_observation = inspect_forward_registry(
@@ -3744,6 +5666,44 @@ def command_evaluate(args: argparse.Namespace) -> dict[str, Any]:
     )
 
 
+def command_evaluate(args: argparse.Namespace) -> dict[str, Any]:
+    if args.split not in {"development_test", "locked_retrospective"}:
+        return _command_evaluate_impl(args)
+
+    from kronos_a_share_training import CheckpointFileLock, CheckpointStore
+
+    context = build_context(
+        args.config, create=True, variant=getattr(args, "_variant", None)
+    )
+    binding = _binding(context)
+    try:
+        store = CheckpointStore(context.checkpoint_dir, binding)
+        reference = _stage_reference(store, stage="scorer", kind=args.checkpoint)
+        checkpoint = store.inspect(reference)
+        _, adapter_hash, scorer_hash = _scorer_checkpoint_hashes(store, checkpoint)
+    except (FileNotFoundError, RuntimeError, ValueError):
+        return _command_evaluate_impl(args)
+    commitment_path = _evaluation_commitment_path(
+        context,
+        binding=binding,
+        adapter_hash=adapter_hash,
+        scorer_hash=scorer_hash,
+        split=args.split,
+    )
+    report_path = commitment_path.with_name(f"{commitment_path.stem}.report.json")
+    lock_path = commitment_path.with_name(f"{commitment_path.stem}.lock")
+    with CheckpointFileLock(lock_path):
+        if commitment_path.is_file() or report_path.is_file():
+            raise CliBlocked(
+                f"{args.split} 冻结绑定已存在成功/进行中的 commitment"
+            )
+        setattr(args, "_evaluation_identity_lock_held", True)
+        try:
+            return _command_evaluate_impl(args)
+        finally:
+            delattr(args, "_evaluation_identity_lock_held")
+
+
 def _blocked_score_record(
     context: WorkflowContext,
     *,
@@ -3767,6 +5727,30 @@ def _blocked_score_record(
         "constraint_flags": list(flags),
         "evidence_class": "model_output",
         "output_type": "N/A",
+    }
+
+
+def _validate_score_cross_section(*, eligible_count: int, active_count: int) -> float:
+    if active_count < 1 or eligible_count < 0 or eligible_count > active_count:
+        raise CliBlocked("score-as-of 正式横截面计数无效")
+    coverage_ratio = eligible_count / active_count
+    if (
+        eligible_count < FORMAL_MIN_CROSS_SECTION
+        or coverage_ratio < FORMAL_MIN_COVERAGE_RATIO
+    ):
+        raise CliBlocked(
+            "score-as-of 正式横截面覆盖不足："
+            f"eligible_count={eligible_count}, active_member_count={active_count}, "
+            f"coverage_ratio={coverage_ratio:.6f}"
+        )
+    return coverage_ratio
+
+
+def _public_forward_commitment(record: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        "status": record.get("status"),
+        "payload_sha256": record.get("payload_sha256"),
+        "internal_blind_store": True,
     }
 
 
@@ -3841,9 +5825,41 @@ def _validate_scoring_gate_semantics(
         "bootstrap_ci95_lower",
         "base_after_cost_return",
         "stress_after_cost_return",
+        "strongest_baseline_rank_ic",
+        "strongest_baseline_lift",
     }
     if not isinstance(metrics, Mapping) or not required_metrics.issubset(metrics):
         raise CliBlocked("可评分 gate 缺少完整历史准出 metrics")
+    cached_adapter_evidence = metrics.get("adapter_checkpoint_evidence")
+    if not isinstance(cached_adapter_evidence, Mapping):
+        raise CliBlocked("可评分 gate 缺少 adapter 完整训练证据")
+    try:
+        live_adapter_evidence = _adapter_checkpoint_release_metrics(
+            context,
+            reference=str(cached_adapter_evidence.get("checkpoint_name", "")),
+            expected_hash=str(gate["adapter_hash"]),
+        )
+    except (OSError, RuntimeError, TypeError, ValueError, KeyError) as exc:
+        raise CliBlocked("adapter 完整训练证据无法现场重验") from exc
+    if _canonical_json_sha256(cached_adapter_evidence) != _canonical_json_sha256(
+        live_adapter_evidence
+    ):
+        raise CliBlocked("gate adapter 证据与现场完整训练证据不一致")
+    cached_stability = metrics.get("scorer_seed_stability")
+    if not isinstance(cached_stability, Mapping):
+        raise CliBlocked("可评分 gate 缺少 scorer 20-seed stability")
+    try:
+        live_stability = _scorer_stability_evidence(
+            context,
+            checkpoint_reference=str(gate["evaluated_checkpoint"]),
+            scorer_checkpoint_hash=str(gate["scorer_checkpoint_hash"]),
+        )
+    except (OSError, RuntimeError, TypeError, ValueError, KeyError) as exc:
+        raise CliBlocked("scorer 20-seed stability 无法现场重验") from exc
+    if _canonical_json_sha256(cached_stability) != _canonical_json_sha256(
+        live_stability
+    ):
+        raise CliBlocked("gate scorer 20-seed stability 与现场证据不一致")
     evaluation = context.config["evaluation"]
     thresholds = GateThresholds(
         adapter_ce_improvement_min=float(evaluation["adapter_ce_improvement_min"]),
@@ -3866,12 +5882,55 @@ def _validate_scoring_gate_semantics(
         recomputed = evaluate_gate(
             data_status="production_ready",
             thresholds=thresholds,
-            **numeric_metrics,
+            **{
+                name: numeric_metrics[name]
+                for name in required_metrics
+                if name
+                not in {"strongest_baseline_rank_ic", "strongest_baseline_lift"}
+            },
         )
     except (ArithmeticError, TypeError, ValueError, KeyError) as exc:
         raise CliBlocked("gate metrics 无法重算") from exc
     if recomputed.get("gate_status") != "passed":
         raise CliBlocked("gate metrics 重算未通过历史准出")
+
+    if numeric_metrics["strongest_baseline_lift"] < float(
+        evaluation["baseline_rank_ic_lift_min"]
+    ):
+        raise CliBlocked("gate 未通过相对全部候选最强基线的 RankIC 提升门")
+
+    baseline_rank_ic = metrics.get("baseline_rank_ic")
+    if not isinstance(baseline_rank_ic, Mapping) or not baseline_rank_ic:
+        raise CliBlocked("gate 缺少可现场重算的 baseline_rank_ic 全集合")
+    try:
+        baseline_values = {
+            str(name): float(value) for name, value in baseline_rank_ic.items()
+        }
+    except (TypeError, ValueError) as exc:
+        raise CliBlocked("gate baseline_rank_ic 全集合不可解析") from exc
+    if not all(math.isfinite(value) for value in baseline_values.values()):
+        raise CliBlocked("gate baseline_rank_ic 全集合包含 NaN/Inf")
+    live_strongest_name = max(baseline_values, key=baseline_values.get)
+    live_strongest_rank_ic = baseline_values[live_strongest_name]
+    live_strongest_lift = (
+        numeric_metrics["validation_rank_ic"] - live_strongest_rank_ic
+    )
+    if (
+        metrics.get("strongest_baseline") != live_strongest_name
+        or not math.isclose(
+            numeric_metrics["strongest_baseline_rank_ic"],
+            live_strongest_rank_ic,
+            rel_tol=0,
+            abs_tol=1e-12,
+        )
+        or not math.isclose(
+            numeric_metrics["strongest_baseline_lift"],
+            live_strongest_lift,
+            rel_tol=0,
+            abs_tol=1e-12,
+        )
+    ):
+        raise CliBlocked("gate strongest baseline 或 lift 与全基线集合现场重算不一致")
 
     forward = gate.get("forward_observation")
     if not isinstance(forward, Mapping):
@@ -4097,6 +6156,7 @@ def _history_as_of(
     normalized_ticker: str,
     as_of: pd.Timestamp,
     corporate_actions: pd.DataFrame,
+    required_open_dates: pd.DatetimeIndex,
 ) -> tuple[pd.DataFrame, pd.DataFrame, np.ndarray]:
     market = normalized_ticker[:2]
     path = market_root / "tdx_day" / market / f"{normalized_ticker}.day"
@@ -4114,6 +6174,15 @@ def _history_as_of(
     last_date = pd.to_datetime(str(int(frame.iloc[-1]["date"])), format="%Y%m%d")
     if last_date != _local_naive(as_of).normalize():
         raise CliContractError(f"{normalized_ticker} 在 as_of 无可成交日线（停牌或数据缺口）")
+    observed_dates = pd.DatetimeIndex(
+        pd.to_datetime(frame["date"].astype(str), format="%Y%m%d")
+    ).normalize()
+    if len(required_open_dates) != LOOKBACK or not observed_dates.equals(
+        required_open_dates
+    ):
+        raise CliContractError(
+            f"{normalized_ticker} official_open_sessions_mismatch:停牌或中间缺日不得拼接为连续90日输入"
+        )
     window = WindowSpec(lookback=LOOKBACK, horizon=0, purge_days=PURGE_DAYS)
     adjusted_raw, _ = causal_adjusted_price_window(
         source_frame,
@@ -4133,6 +6202,33 @@ def _history_as_of(
     )
     adjusted_frame = pd.DataFrame(adjusted_raw, columns=FEATURE_COLUMNS)
     return frame, adjusted_frame, normalized
+
+
+def _official_open_sessions_as_of(
+    trading_calendar_path: Path, as_of: pd.Timestamp
+) -> pd.DatetimeIndex:
+    frame = (
+        pd.read_parquet(trading_calendar_path)
+        if trading_calendar_path.suffix.lower() in {".parquet", ".pq"}
+        else pd.read_csv(trading_calendar_path)
+    )
+    if not {"trade_date", "is_open"}.issubset(frame.columns):
+        raise CliBlocked("inference PIT trading_calendar 缺少 trade_date/is_open")
+    open_mask = frame["is_open"].map(
+        lambda value: value is True
+        or value == 1
+        or str(value).strip().lower() in {"true", "1", "yes", "y"}
+    )
+    dates = pd.DatetimeIndex(
+        pd.to_datetime(frame.loc[open_mask, "trade_date"], errors="coerce")
+    ).normalize()
+    dates = dates[~dates.isna()]
+    dates = dates[
+        dates <= _local_naive(as_of).normalize()
+    ].drop_duplicates().sort_values()
+    if len(dates) < LOOKBACK or dates[-1] != _local_naive(as_of).normalize():
+        raise CliBlocked("inference PIT trading_calendar 不足最近90个官方开放日或 as_of 非开放日")
+    return dates[-LOOKBACK:]
 
 
 def _forecast_path_samples(
@@ -4447,6 +6543,14 @@ def _command_score_as_of_impl(args: argparse.Namespace) -> dict[str, Any]:
     if corporate_actions_path is None:
         raise CliBlocked("production score 缺少点时公司行动表")
     corporate_actions = load_corporate_actions(corporate_actions_path)
+    trading_calendar_path = _pit_table_path(
+        inference_pit_root, "trading_calendar"
+    )
+    if trading_calendar_path is None:
+        raise CliBlocked("production score 缺少 inference PIT trading_calendar")
+    required_open_dates = _official_open_sessions_as_of(
+        trading_calendar_path, as_of
+    )
     histories: dict[str, pd.DataFrame] = {}
     adjusted_histories: dict[str, pd.DataFrame] = {}
     normalized_values: list[np.ndarray] = []
@@ -4456,7 +6560,11 @@ def _command_score_as_of_impl(args: argparse.Namespace) -> dict[str, Any]:
     for ticker in universe:
         try:
             history, adjusted_history, normalized = _history_as_of(
-                inference_market_root, ticker, as_of, corporate_actions
+                inference_market_root,
+                ticker,
+                as_of,
+                corporate_actions,
+                required_open_dates,
             )
         except (OSError, ValueError, CliContractError) as exc:
             failures[ticker] = str(exc)
@@ -4466,6 +6574,11 @@ def _command_score_as_of_impl(args: argparse.Namespace) -> dict[str, Any]:
         normalized_values.append(normalized)
         stamps.append(time_stamps(history["date"].to_numpy(dtype=np.int64)))
         eligible.append(ticker)
+    active_count = len(universe)
+    eligible_count = len(eligible)
+    _validate_score_cross_section(
+        eligible_count=eligible_count, active_count=active_count
+    )
     if len(eligible) < 2:
         raise CliBlocked("点时股票池可评分证券不足2只")
     scores: list[np.ndarray] = []
@@ -4561,6 +6674,7 @@ def _command_score_as_of_impl(args: argparse.Namespace) -> dict[str, Any]:
         else "N/A"
     )
     forward_registry = None
+    forward_commitment = None
     if internal_output_type == "model_output" and research_scoring:
         forward_registry = record_forward_batch(
             training_root=context.layout.root,
@@ -4597,6 +6711,7 @@ def _command_score_as_of_impl(args: argparse.Namespace) -> dict[str, Any]:
                 ]
             ),
         )
+        forward_commitment = _public_forward_commitment(forward_registry)
     if research_scoring and internal_output_type == "model_output":
         records = [
             _blocked_score_record(
@@ -4624,7 +6739,7 @@ def _command_score_as_of_impl(args: argparse.Namespace) -> dict[str, Any]:
         excluded_universe_count=len(failures),
         inference_snapshot_id=inference_manifest["snapshot_id"],
         inference_input_sha256=inference_manifest["input_sha256"],
-        forward_registry=forward_registry,
+        forward_registry=forward_commitment,
         evidence_class="model_output",
         output_type=output_type,
     )
@@ -4684,21 +6799,292 @@ def command_score_as_of(args: argparse.Namespace) -> dict[str, Any]:
         )
 
 
+def _read_only_checkpoint_store(
+    checkpoint_root: Path,
+    reference: str,
+    context: WorkflowContext,
+):
+    from kronos_a_share_training import CheckpointBinding, CheckpointStore
+
+    checkpoint_root = resolve_under(
+        context.layout.root,
+        checkpoint_root,
+        must_exist=True,
+    )
+    resolved_reference = reference
+    if reference in {"latest", "best"}:
+        pointer = _json_file(
+            resolve_under(checkpoint_root, f"{reference}.json", must_exist=True)
+        )
+        resolved_reference = str(pointer.get("checkpoint_name", ""))
+    manifest_path = resolve_under(
+        checkpoint_root,
+        Path(resolved_reference) / "manifest.json",
+        must_exist=True,
+    )
+    manifest = _json_file(manifest_path)
+    binding = CheckpointBinding.from_mapping(manifest.get("binding", {}))
+    if binding.base_model_sha256 != context.config["model"]["model_sha256"]:
+        raise CliBlocked("只读诊断 checkpoint 的 Base 哈希与当前固定模型不一致")
+    if binding.tokenizer_sha256 != context.config["model"]["tokenizer_sha256"]:
+        raise CliBlocked("只读诊断 checkpoint 的 Tokenizer 哈希与当前固定模型不一致")
+    return CheckpointStore(checkpoint_root, binding)
+
+
+def _read_only_adapter_replay_diagnostic(
+    context: WorkflowContext,
+    *,
+    store: Any,
+    checkpoint_references: Sequence[str],
+    token_dir: Path,
+    repeats: int,
+    batch_size: int,
+    device: str,
+) -> dict[str, Any]:
+    from kronos_a_share_model import validate_kronos_base_adapter_parameter_count
+    from kronos_a_share_training import (
+        prepare_adapter_stage,
+        select_validated_adapter,
+        set_deterministic_seed,
+    )
+
+    if repeats < 2 or repeats > 10:
+        raise CliContractError("diagnostic-repeats 必须位于 2..10")
+    if batch_size < 1:
+        raise CliContractError("diagnostic-batch-size 必须为正整数")
+    token_dir = resolve_under(
+        context.layout.root,
+        token_dir,
+        must_exist=True,
+    )
+    cache = load_token_cache(
+        token_dir,
+        mmap_mode=None,
+        diagnostic_legacy_read_only=True,
+    )
+    if cache.get("diagnostic_legacy_read_only") is not True:
+        raise CliContractError(
+            "只读重放仅用于缺少 active_member_count 的 legacy smoke token cache"
+        )
+    manifest = cache["manifest"]
+    adjustment = manifest.get("adjustment")
+    if not isinstance(adjustment, Mapping) or adjustment.get("materialized") is not False:
+        raise CliContractError("legacy 诊断 token 状态与已知 local_provisional 合同不符")
+    for path_field, hash_field in (
+        ("sample_index_path", "sample_index_sha256"),
+        ("sample_manifest_path", "sample_manifest_sha256"),
+    ):
+        source_path = resolve_under(
+            context.layout.root,
+            manifest.get(path_field, ""),
+            must_exist=True,
+        )
+        if sha256_file(source_path) != manifest.get(hash_field):
+            raise CliBlocked(f"legacy 诊断 {path_field} 哈希漂移")
+
+    arrays = cache["arrays"]
+    valid_members = np.flatnonzero(
+        np.asarray(arrays["split"]) == SPLIT_CODES["validation"]
+    )
+    if len(valid_members) < 1:
+        raise CliContractError("legacy 诊断 validation split 没有样本")
+    if not checkpoint_references:
+        raise CliContractError("只读 CE 重放至少需要一个 adapter checkpoint")
+    checkpoint_manifests: list[tuple[str, dict[str, Any]]] = []
+    observed_steps: set[int] = set()
+    for reference in checkpoint_references:
+        checkpoint_manifest = store.inspect_read_only(reference)
+        step = int(checkpoint_manifest.get("step", -1))
+        if checkpoint_manifest.get("stage") != "adapter" or step < 1:
+            raise CliContractError("只读 CE 重放只接受 adapter checkpoint")
+        if step in observed_steps:
+            raise CliContractError("只读 CE 重放 checkpoint step 不得重复")
+        observed_steps.add(step)
+        checkpoint_manifests.append((reference, checkpoint_manifest))
+
+    results: list[dict[str, Any]] = []
+    replay_targets: list[tuple[str, dict[str, Any] | None]] = [
+        ("step0_zero_shot", None),
+        *checkpoint_manifests,
+    ]
+    for label, checkpoint_manifest in replay_targets:
+        values: list[float] = []
+        for repeat_index in range(repeats):
+            set_deterministic_seed(int(context.config["training"]["seed"]))
+            components = _load_kronos_components(context, device)
+            model = components.model
+            if checkpoint_manifest is None:
+                lora = checkpoint_manifests[0][1]["lora"]
+                prepare_adapter_stage(
+                    model,
+                    rank=int(lora["rank"]),
+                    alpha=float(lora["alpha"]),
+                    dropout=float(lora["dropout"]),
+                )
+            else:
+                store.load(
+                    label,
+                    model=model,
+                    restore_rng=False,
+                    map_location=components.device,
+                    read_only=True,
+                )
+            validate_kronos_base_adapter_parameter_count(model)
+            values.append(
+                _validation_adapter_ce(
+                    model,
+                    arrays,
+                    valid_members,
+                    batch_size=batch_size,
+                    device=components.device,
+                )
+            )
+            del model, components
+        spread = max(values) - min(values)
+        results.append(
+            {
+                "reference": label,
+                "step": (
+                    0
+                    if checkpoint_manifest is None
+                    else int(checkpoint_manifest["step"])
+                ),
+                "causal_validation_ce": values,
+                "mean_causal_validation_ce": float(np.mean(values)),
+                "ce_spread": spread,
+                "deterministic_within_1e_5": spread <= 1e-5,
+            }
+        )
+
+    selection = select_validated_adapter(
+        [
+            {
+                "step": item["step"],
+                "validation_ce": item["mean_causal_validation_ce"],
+            }
+            for item in results[1:]
+        ],
+        zero_shot_validation_ce=results[0]["mean_causal_validation_ce"],
+        minimum_improvement=float(
+            context.config["evaluation"]["adapter_ce_improvement_min"]
+        ),
+    )
+    deterministic = all(item["deterministic_within_1e_5"] for item in results)
+    return {
+        "schema_version": "kronos-a-share-read-only-adapter-replay-v1",
+        "diagnostic_only": True,
+        "data_status": "local_provisional",
+        "token_cache": str(token_dir),
+        "token_cache_schema_version": manifest.get("schema_version"),
+        "checkpoint_references": [item[0] for item in checkpoint_manifests],
+        "repeats": repeats,
+        "sample_count": int(len(valid_members)),
+        "results": results,
+        "live_validation_history": [
+            {
+                "step": item["step"],
+                "validation_ce": item["mean_causal_validation_ce"],
+            }
+            for item in results[1:]
+        ],
+        "deterministic_replay_passed": deterministic,
+        "selector": {
+            "best_step": selection.best_step,
+            "best_validation_ce": selection.best_validation_ce,
+            "improvement": selection.improvement,
+            "zero_shot_fallback": selection.zero_shot_fallback,
+            "selection_reason": selection.selection_reason,
+        },
+        "formal_gate_eligible": False,
+        "output_type": "N/A",
+    }
+
+
 def command_inspect_checkpoint(args: argparse.Namespace) -> dict[str, Any]:
     from kronos_a_share_training import CheckpointStore
 
     requested_variant = getattr(args, "_variant", None)
     if requested_variant is None and getattr(args, "mode", "full") == "smoke":
         requested_variant = "smoke"
-    context = build_context(args.config, create=False, variant=requested_variant)
-    store = CheckpointStore(context.checkpoint_dir, _binding(context))
-    recovery = store.recover() if args.recover else None
-    manifest = store.inspect(args.checkpoint)
+    context = build_context(
+        args.config,
+        create=False,
+        variant=requested_variant,
+        training_profile=(
+            "engineering_smoke"
+            if getattr(args, "mode", "full") == "smoke"
+            else "full"
+        ),
+    )
+    diagnostic_root = getattr(args, "read_only_checkpoint_dir", None)
+    if diagnostic_root is not None:
+        if args.recover:
+            raise CliContractError("只读 checkpoint 诊断不得执行 --recover")
+        store = _read_only_checkpoint_store(
+            diagnostic_root,
+            args.checkpoint,
+            context,
+        )
+        recovery = None
+        manifest = store.inspect_read_only(args.checkpoint)
+    else:
+        store = CheckpointStore(context.checkpoint_dir, _binding(context))
+        recovery = store.recover() if args.recover else None
+        manifest = store.inspect(args.checkpoint)
+    diagnostic = None
+    diagnostic_artifact = None
+    diagnostic_token_dir = getattr(args, "diagnostic_token_dir", None)
+    if diagnostic_token_dir is not None:
+        if diagnostic_root is None:
+            raise CliContractError(
+                "--diagnostic-token-dir 必须配合 --read-only-checkpoint-dir"
+            )
+        diagnostic = _read_only_adapter_replay_diagnostic(
+            context,
+            store=store,
+            checkpoint_references=(
+                args.diagnostic_checkpoints
+                if args.diagnostic_checkpoints is not None
+                else [args.checkpoint]
+            ),
+            token_dir=diagnostic_token_dir,
+            repeats=int(args.diagnostic_repeats),
+            batch_size=int(args.diagnostic_batch_size),
+            device=args.device,
+        )
+    diagnostic_output = getattr(args, "diagnostic_output", None)
+    if diagnostic_output is not None:
+        if diagnostic is None or diagnostic_root is None:
+            raise CliContractError(
+                "--diagnostic-output 只允许持久化只读 adapter CE 重放"
+            )
+        output_path = resolve_under(context.layout.root, diagnostic_output)
+        if output_path.exists():
+            raise CliContractError("diagnostic-output 已存在，拒绝覆盖审计工件")
+        artifact_payload = {
+            "schema_version": "kronos-a-share-read-only-diagnostic-artifact-v1",
+            "generated_at": _utc_now(),
+            "checkpoint_root": str(
+                resolve_under(context.layout.root, diagnostic_root, must_exist=True)
+            ),
+            "checkpoint_manifest": manifest,
+            "diagnostic": diagnostic,
+        }
+        atomic_write_json(
+            output_path,
+            artifact_payload,
+            allowed_root=context.layout.root,
+        )
+        diagnostic_artifact = {
+            "path": str(output_path),
+            "bytes": output_path.stat().st_size,
+            "sha256": sha256_file(output_path),
+        }
     gate_path = context.checkpoint_dir / "gate.json"
     gate: dict[str, Any] | None = None
     gate_integrity = "missing"
     gate_error: str | None = None
-    if gate_path.is_file():
+    if diagnostic_root is None and gate_path.is_file():
         try:
             gate = _validate_gate(context, _binding(context))
             gate_integrity = "verified"
@@ -4719,7 +7105,11 @@ def command_inspect_checkpoint(args: argparse.Namespace) -> dict[str, Any]:
         gate_integrity=gate_integrity,
         gate_error=gate_error,
         recovery=recovery,
+        read_only=diagnostic_root is not None,
+        diagnostic=diagnostic,
+        diagnostic_artifact=diagnostic_artifact,
         evidence_class="model_output_checkpoint",
+        output_type="N/A" if diagnostic is not None else "model_output",
     )
 
 
@@ -4767,32 +7157,70 @@ def command_pipeline(args: argparse.Namespace) -> dict[str, Any]:
     if not smoke and prepared_status != "production_ready":
         raise CliBlocked("full pipeline 只接受 production_ready，未启动训练")
     adapter_settings = context.config["training"]["adapter"]
-    steps.append(
-        command_train_adapter(
-            SimpleNamespace(
-                config=args.config,
-                engineering_smoke=smoke,
-                device=args.device,
-                resume="auto",
-                stop_after=(
-                    int(adapter_settings["smoke_steps"])
-                    if smoke
-                    else int(adapter_settings["max_steps"])
-                ),
-                _variant=variant,
-            )
+    adapter_step = command_train_adapter(
+        SimpleNamespace(
+            config=args.config,
+            engineering_smoke=smoke,
+            device=args.device,
+            resume="auto",
+            stop_after=(
+                SMOKE_MAX_STEPS
+                if smoke
+                else int(adapter_settings["max_steps"])
+            ),
+            learning_rate=None,
+            seed=None,
+            _variant=variant,
         )
     )
-    scorer_settings = context.config["training"]["scorer"]
+    steps.append(adapter_step)
+    if smoke:
+        steps.append(
+            command_inspect_checkpoint(
+                SimpleNamespace(
+                    config=args.config,
+                    checkpoint="latest",
+                    recover=True,
+                    mode="smoke",
+                    _variant=variant,
+                )
+            )
+        )
+        return _envelope(
+            "pipeline",
+            status="unverified",
+            message=(
+                "smoke 仅完成显存、NaN、因果 CE、checkpoint "
+                "与恢复验证；未训练 scorer，未产生质量 RankIC。"
+            ),
+            mode="smoke",
+            data_status=prepared_status,
+            gate_status="blocked",
+            steps=steps,
+            evidence_class="model_output",
+            output_type="N/A",
+        )
+    if adapter_step["training"].get("zero_shot_fallback") is True:
+        return _envelope(
+            "pipeline",
+            status="blocked",
+            message="Adapter 未达到 zero-shot CE 改善门槛，已停止 scorer 与正式评估。",
+            mode="full",
+            data_status=prepared_status,
+            gate_status="blocked",
+            steps=steps,
+            evidence_class="model_output",
+            output_type="N/A",
+        )
     steps.append(
         command_train_scorer(
             SimpleNamespace(
                 config=args.config,
-                engineering_smoke=smoke,
+                engineering_smoke=False,
                 device=args.device,
                 adapter="best",
                 resume="auto",
-                max_epochs=(min(3, int(scorer_settings["max_epochs"])) if smoke else None),
+                max_epochs=None,
                 chunk_size=args.chunk_size,
                 _variant=variant,
             )
@@ -4868,6 +7296,8 @@ def build_parser() -> argparse.ArgumentParser:
     adapter.add_argument("--resume", default="auto")
     adapter.add_argument("--stop-after", type=int)
     adapter.add_argument("--engineering-smoke", action="store_true")
+    adapter.add_argument("--learning-rate", type=float)
+    adapter.add_argument("--seed", type=int)
     adapter.add_argument("--device", choices=["auto", "cpu", "cuda"], default="auto")
 
     scorer = commands.add_parser("train-scorer", help="训练同日横截面评分头")
@@ -4909,6 +7339,13 @@ def build_parser() -> argparse.ArgumentParser:
     inspect.add_argument("--checkpoint", default="latest")
     inspect.add_argument("--recover", action="store_true")
     inspect.add_argument("--mode", choices=["full", "smoke"], default="full")
+    inspect.add_argument("--read-only-checkpoint-dir", type=Path)
+    inspect.add_argument("--diagnostic-token-dir", type=Path)
+    inspect.add_argument("--diagnostic-checkpoints", nargs="+")
+    inspect.add_argument("--diagnostic-output", type=Path)
+    inspect.add_argument("--diagnostic-repeats", type=int, default=3)
+    inspect.add_argument("--diagnostic-batch-size", type=int, default=16)
+    inspect.add_argument("--device", choices=["auto", "cpu", "cuda"], default="auto")
 
     pipeline = commands.add_parser("pipeline", help="运行 smoke 或 full 受控流水线")
     _add_config(pipeline)

@@ -310,3 +310,12 @@ Open-web fallback：通过普通公开网页搜索核对近一周公司消息，
 - 公告确认三日异常下跌但经营正常；新增龙虎榜和平价大宗交易，未见特种电子布经营硬证据。下一步看半年报、黄石扩产、H股与减持执行。
 - announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
 - thesis_effect=unchanged。
+
+## 2026-08-03 日更
+
+- 独立任务块：`ticker=603256.SH`，`name=宏和科技`，`collection_scope=controller_open_web_only`；已读取基线、关键假设、管理账本、状态与近期事件。
+- 公告窗口：北京时间 20:00 后完成公告日期 `2026-08-03` 与 `2026-08-04` 检查，并回扫 `2026-08-02`；CNINFO、上交所披露与公司 IR 未发现新增正式公告或记录，`announcement_window_checked=T_and_T_plus_1`。
+- 龙虎榜：东方财富数据中心 `RPT_DAILYBILLBOARD_DETAILSNEW` 显示，8 月 3 日因日收盘价格跌幅偏离值达到 7% 上榜；收盘 115.32 元、跌幅 9.9977%、换手率 2.8212%、成交额约 29.51 亿元，公开席位买入约 7.45 亿元、卖出约 8.60 亿元、净卖出约 1.15 亿元。上交所日榜接口本轮未返回可消费的单券记录，故按 `confirmed_secondary` 交易数据入账。
+- 大宗交易：8 月 3 日未发现新增记录。open-web 近 24 小时搜索未发现可升级为 Low CTE/T-glass 客户认证、订单、价格、收入、毛利率、扩产审批或 H 股审核硬事实的结果。
+- 五维归因：公司、监管、同行和行业维度均无可验证新增催化；市场维度可确认高波动与资金净卖出，但缺乏可识别的单一因果。因此 `primary_attribution=unknown`，`thesis_effect=unchanged`。
+- 状态变化：交易分歧与拥挤退潮风险上升；高端电子布基本面仍以半年度正式报告、特种产品销量/ASP/毛利率、黄石扩产与客户导入的硬证据为准。

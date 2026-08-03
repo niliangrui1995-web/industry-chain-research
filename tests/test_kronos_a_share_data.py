@@ -288,7 +288,7 @@ def _valid_manifest(*, dry_run: bool = False) -> dict[str, object]:
 
 def _valid_adjustment_manifest() -> dict[str, object]:
     return {
-        "schema_version": "kronos-a-share-token-cache-v1",
+        "schema_version": data.MODEL_ADJUSTMENT_SCHEMA,
         "adjustment": {
             "mode": "causal_backward_total_return",
             "materialized": True,
@@ -296,6 +296,7 @@ def _valid_adjustment_manifest() -> dict[str, object]:
             "model_price_adjusted": True,
             "cutoff_field": "origin_date",
             "future_action_use_count": 0,
+            "future_action_audit_verified": True,
         },
     }
 
@@ -334,6 +335,7 @@ def _write_verified_adjustment_artifact(
         "label.npy": np.zeros((1,), dtype=np.float32),
         "trade_date.npy": np.zeros((1,), dtype=np.int32),
         "instrument_id.npy": np.zeros((1,), dtype=np.int32),
+        "active_member_count.npy": np.ones((1,), dtype=np.int32),
         "split.npy": np.zeros((1,), dtype=np.uint8),
     }
     files = {}
@@ -1060,6 +1062,231 @@ def test_complete_pit_without_materialized_adjusted_prices_is_provisional(tmp_pa
 
     assert report["status"] == "local_provisional"
     assert "model_price_adjusted_not_materialized" in report["provisional_issues"]
+
+
+def test_future_action_zero_count_without_verified_audit_is_blocked(tmp_path: Path) -> None:
+    pit_root = _make_valid_pit_bundle(tmp_path / "pit")
+    validation = data.validate_pit_bundle(pit_root)
+    adjustment = _valid_adjustment_manifest()
+    adjustment["adjustment"]["future_action_audit_verified"] = False
+
+    report = data.build_data_quality_report(
+        _valid_manifest(),
+        validation,
+        adjustment,
+        model_adjustment_verified=True,
+    )
+
+    assert report["status"] == "blocked"
+    assert any(
+        issue == "invalid_model_adjustment_manifest:future_action_audit_verified=False"
+        for issue in report["blocking_issues"]
+    )
+
+
+def test_v1_normalization_is_cryptographically_valid_but_formally_capped(
+    tmp_path: Path,
+) -> None:
+    pit_root = _add_verified_coverage_bindings(_make_valid_pit_bundle(tmp_path / "pit"))
+    coverage = pd.read_csv(pit_root / "coverage.csv")
+    for dataset in data.PIT_PROVENANCE_DATASETS:
+        manifest_path = pit_root / "provenance" / f"{dataset}.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["normalization"] = {
+            "schema_version": data.PIT_NORMALIZATION_SCHEMA_V1
+        }
+        manifest_path.write_text(
+            json.dumps(manifest, ensure_ascii=False), encoding="utf-8"
+        )
+        coverage.loc[
+            coverage["dataset"] == dataset, "source_manifest_sha256"
+        ] = _sha256(manifest_path)
+    coverage.to_csv(pit_root / "coverage.csv", index=False)
+
+    validation = data.validate_pit_bundle(pit_root)
+    contract = validation.table_reports["normalization_release_contract"]
+    assert contract["verified"] is False
+    assert contract["reason"] == "normalization_v1_local_provisional_only"
+    assert validation.capabilities["normalization_release_contract"] is False
+    assert validation.production_ready is False
+
+
+def test_unversioned_pit_bundle_cannot_enter_formal_release(tmp_path: Path) -> None:
+    pit_root = _add_verified_coverage_bindings(_make_valid_pit_bundle(tmp_path / "pit"))
+
+    validation = data.validate_pit_bundle(pit_root)
+
+    contract = validation.table_reports["normalization_release_contract"]
+    assert contract["verified"] is False
+    assert contract["reason"] == "normalization_provenance_absent"
+    assert contract["publication"]["present"] is False
+    assert validation.capabilities["normalization_release_contract"] is False
+    assert validation.production_ready is False
+
+
+def test_v2_publication_requires_exact_previous_open_session(tmp_path: Path) -> None:
+    root = tmp_path / "pit"
+    root.mkdir()
+    calendar = pd.DataFrame(
+        {
+            "trade_date": pd.to_datetime(["2017-12-29", "2018-01-02"]),
+            "is_open": [True, True],
+        }
+    )
+    extractor_config = {"encoding": "utf-8", "delimiter": ","}
+    extractor_config_sha256 = hashlib.sha256(
+        json.dumps(
+            extractor_config,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+
+    def source(source_id: str) -> dict[str, object]:
+        return {
+            "source_id": source_id,
+            "source_class": "official_primary",
+            "snapshot_manifest": str(tmp_path / "snapshot.json"),
+            "format": "csv",
+            "extractor_id": "csv-table-v1",
+            "extractor_version": "1",
+            "extractor_config": extractor_config,
+            "extractor_config_sha256": extractor_config_sha256,
+            "extracted_sha256": "1" * 64,
+            "extracted_row_count": 1,
+            "row_audit_status": "passed",
+            "row_audit": {
+                "schema_version": data.PIT_ROW_AUDIT_SCHEMA,
+                "path": str(tmp_path / f"{source_id}-row-audit.csv"),
+                "sha256": "4" * 64,
+                "bytes": 1,
+                "row_count": 1,
+                "source_sha256": "5" * 64,
+                "extracted_sha256": "1" * 64,
+                "audit_status": "passed",
+                "audited_at": "2026-08-03T00:00:00+00:00",
+                "auditor": "unit-test-reviewer",
+            },
+            "mapping": {"ticker": "ticker"},
+        }
+
+    normalization = {
+        "schema_version": data.PIT_NORMALIZATION_SCHEMA_V2,
+        "model_coverage_start": "2018-01-02",
+        "model_coverage_end": "2026-07-31",
+        "evidence_lookback_start": "2017-12-29",
+        "source_priority": [
+            "official_primary",
+            "public_secondary",
+            "tdx_mechanical",
+        ],
+        "datasets": {},
+    }
+    for dataset, contract in data.V2_COVERAGE_KEY_CONTRACTS.items():
+        normalization["datasets"][dataset] = {
+            "coverage_key_contract": contract,
+            "sources": [source(f"{dataset}-source")],
+            "expected_keys": (
+                source(f"{dataset}-keys") if contract == "source_bound" else None
+            ),
+        }
+        if dataset in {"index_membership", "corporate_actions"}:
+            normalization["datasets"][dataset]["completeness_receipt"] = {
+                "path": str(tmp_path / f"{dataset}-receipt.json"),
+                "sha256": "6" * 64,
+                "bytes": 1,
+            }
+    normalization_path = tmp_path / "reviewed.json"
+    normalization_path.write_text(json.dumps(normalization), encoding="utf-8")
+    normalization_hash = _sha256(normalization_path)
+    tables = {
+        dataset: {
+            "rows": 1,
+            "sha256": "2" * 64,
+            "schema_sha256": "3" * 64,
+            "is_complete": True,
+            "coverage_key_contract": contract,
+        }
+        for dataset, contract in data.V2_COVERAGE_KEY_CONTRACTS.items()
+    }
+    live_tables = {
+        dataset: {
+            "rows": 1,
+            "sha256": "2" * 64,
+            "schema_sha256": "3" * 64,
+            "coverage_binding": {"verified": True},
+        }
+        for dataset in data.PIT_PROVENANCE_DATASETS
+    }
+    for dataset in ("index_membership", "corporate_actions"):
+        live_tables[dataset]["coverage_binding"] = {
+            "verified": True,
+            "provenance": {
+                "normalization": {
+                    "completeness_receipt": {
+                        "verified": True,
+                        "sha256": "6" * 64,
+                    }
+                }
+            },
+        }
+    payload = {
+        "schema_version": data.PIT_PUBLICATION_SCHEMA_V2,
+        "status": "local_provisional",
+        "formal_release_allowed": True,
+        "normalization_schema_version": data.PIT_NORMALIZATION_SCHEMA_V2,
+        "normalization_manifest": str(normalization_path.resolve()),
+        "normalization_manifest_sha256": normalization_hash,
+        "source_priority": [
+            "official_primary",
+            "public_secondary",
+            "tdx_mechanical",
+        ],
+        "generated_at": "2026-08-03T00:00:00+00:00",
+        "tables": tables,
+        "artifact_inventory": [],
+        "pit_validation": {"production_ready": False},
+        "model_coverage_start": "2018-01-02",
+        "model_coverage_end": "2026-07-31",
+        "evidence_lookback_start": "2018-01-01",
+    }
+    publication = root / "publication_manifest.json"
+    publication.write_text(json.dumps(payload), encoding="utf-8")
+    (root / "publication_manifest.sha256").write_text(
+        f"{_sha256(publication)}  publication_manifest.json\n", encoding="ascii"
+    )
+    with pytest.raises(data.PitContractError, match="前一开放交易日"):
+        data._validate_publication_manifest(
+            root,
+            coverage_start=data.PIT_START,
+            coverage_end=data.PIT_END,
+            calendar=calendar,
+            table_reports=live_tables,
+        )
+
+    payload["evidence_lookback_start"] = "2017-12-29"
+    publication.write_text(json.dumps(payload), encoding="utf-8")
+    (root / "publication_manifest.sha256").write_text(
+        f"{_sha256(publication)}  publication_manifest.json\n", encoding="ascii"
+    )
+    report = data._validate_publication_manifest(
+        root,
+        coverage_start=data.PIT_START,
+        coverage_end=data.PIT_END,
+        calendar=calendar,
+        table_reports=live_tables,
+    )
+    assert report["formal_release_allowed"] is True
+    assert report["evidence_lookback_start"] == "2017-12-29"
+    normalization_path.write_text("{}", encoding="utf-8")
+    with pytest.raises(data.PitContractError, match="SHA256 漂移"):
+        data._validate_publication_manifest(
+            root,
+            coverage_start=data.PIT_START,
+            coverage_end=data.PIT_END,
+            calendar=calendar,
+            table_reports=live_tables,
+        )
 
 
 def test_missing_st_suspension_and_csi500_remains_provisional(tmp_path: Path) -> None:

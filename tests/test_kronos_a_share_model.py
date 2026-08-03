@@ -47,6 +47,7 @@ from kronos_a_share_training import (  # noqa: E402
     prepare_scorer_stage,
     restore_rng_state,
     scorer_forward_loss,
+    select_validated_adapter,
     set_deterministic_seed,
 )
 
@@ -339,6 +340,30 @@ class CheckpointTests(unittest.TestCase):
             self.assertTrue((root / "latest.json").is_file())
             self.assertEqual(report["valid"], ["adapter-step-00000001"])
 
+    def test_read_only_checkpoint_load_never_recovers_or_rewrites(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "checkpoints"
+            source_model = self._injected_model()
+            store = CheckpointStore(root, binding("a"))
+            store.save(stage="adapter", step=1, model=source_model)
+            pointer_before = (root / "latest.json").read_bytes()
+            pending = root / ".adapter-step-00000002.pending-diagnostic"
+            pending.mkdir()
+
+            target_model = self._injected_model()
+            manifest = store.inspect_read_only("adapter-step-00000001")
+            loaded = store.load(
+                "adapter-step-00000001",
+                model=target_model,
+                restore_rng=False,
+                read_only=True,
+            )
+
+            self.assertEqual(manifest["step"], 1)
+            self.assertEqual(loaded.step, 1)
+            self.assertTrue(pending.is_dir())
+            self.assertEqual((root / "latest.json").read_bytes(), pointer_before)
+
     def test_scorer_checkpoint_roundtrip_restores_head_and_keeps_lora_frozen(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             model = self._injected_model()
@@ -363,6 +388,46 @@ class CheckpointTests(unittest.TestCase):
                 with self.assertRaises(CheckpointBusyError):
                     with CheckpointFileLock(lock_path):
                         self.fail("第二个 writer 不应获得 OS lock")
+
+
+class AdapterSelectionTests(unittest.TestCase):
+    def test_selects_step200_from_live_causal_history_not_last_checkpoint(self) -> None:
+        selection = select_validated_adapter(
+            [
+                {"step": 100, "validation_ce": 2.660604},
+                {"step": 200, "validation_ce": 2.634986},
+                {"step": 1000, "validation_ce": 4.442699},
+            ],
+            zero_shot_validation_ce=2.6643258333,
+            minimum_improvement=0.01,
+        )
+        self.assertEqual(selection.best_step, 200)
+        self.assertFalse(selection.zero_shot_fallback)
+        self.assertGreaterEqual(selection.improvement, 0.01)
+        self.assertEqual(selection.stale_validations, 1)
+
+    def test_falls_back_to_zero_shot_when_best_gain_is_below_one_percent(self) -> None:
+        selection = select_validated_adapter(
+            [{"step": 50, "validation_ce": 0.995}],
+            zero_shot_validation_ce=1.0,
+            minimum_improvement=0.01,
+        )
+        self.assertTrue(selection.zero_shot_fallback)
+        self.assertEqual(
+            selection.selection_reason,
+            "best_adapter_below_minimum_ce_improvement",
+        )
+
+    def test_equal_validation_ce_keeps_earlier_checkpoint(self) -> None:
+        selection = select_validated_adapter(
+            [
+                {"step": 50, "validation_ce": 0.98},
+                {"step": 100, "validation_ce": 0.98},
+            ],
+            zero_shot_validation_ce=1.0,
+        )
+        self.assertEqual(selection.best_step, 50)
+        self.assertEqual(selection.stale_validations, 1)
 
 
 class RngStateTests(unittest.TestCase):

@@ -57,6 +57,175 @@ class UnifiedCliContractTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.cli = load_cli()
 
+    def _write_adapter_diagnostic_fixture(
+        self,
+        root: Path,
+        context,
+        *,
+        selected_lr_wins: bool = True,
+        incomplete_run: bool = False,
+    ) -> tuple[Path, Path]:
+        runs = []
+        binding = FakeBinding().as_dict()
+        diagnostic_dataset_sha256 = "9" * 64
+        sample_manifest_path = (
+            root
+            / "data"
+            / "datasets"
+            / f"{context.config['data']['dataset_id']}{self.cli.SMOKE_NAMESPACE_SUFFIX}"
+            / "sample_manifest.json"
+        )
+        sample_manifest_path.parent.mkdir(parents=True)
+        sample_manifest_path.write_text(
+            json.dumps(
+                {
+                    "sample_count": 512,
+                    "survivorship_bias_audit": {
+                        "schema_version": "kronos-a-share-survivorship-audit-v1",
+                        "verified": True,
+                        "checked_member_dates": 1,
+                        "missing_historical_day_file_count": 0,
+                        "missing_suspension_state_member_dates": 0,
+                        "unexplained_missing_quote_member_dates": 0,
+                    },
+                }
+            ),
+            encoding="utf-8",
+        )
+        selected_lr = 1e-4 if selected_lr_wins else 3e-5
+        combinations = [(lr, 100) for lr in self.cli.FORMAL_ADAPTER_DIAGNOSTIC_LRS]
+        combinations.extend((selected_lr, seed) for seed in (101, 102))
+        for lr, seed in combinations:
+                logical_hash = hashlib.sha256(f"{lr}:{seed}".encode()).hexdigest()
+                run_root = root / "trials" / f"lr-{lr}-seed-{seed}"
+                checkpoint = run_root / "checkpoints" / "adapter-step-00000100"
+                checkpoint.mkdir(parents=True)
+                resolved_path = run_root / "metrics" / "resolved_training_config.json"
+                resolved_path.parent.mkdir(parents=True)
+                resolved = {
+                    "schema_version": "kronos-a-share-resolved-training-v1",
+                    "profile": "engineering_smoke",
+                    "resolved_config_sha256": logical_hash,
+                    "seed": seed,
+                    "adapter": {"learning_rate": lr},
+                }
+                resolved_path.write_text(json.dumps(resolved), encoding="utf-8")
+                state_path = checkpoint / "state.pt"
+                state_path.write_bytes(f"state:{lr}:{seed}".encode())
+                state_hash = self.cli.sha256_file(state_path)
+                trial_binding = dict(binding)
+                trial_binding["config_sha256"] = logical_hash
+                trial_binding["dataset_sha256"] = diagnostic_dataset_sha256
+                manifest = {
+                    "checkpoint_name": checkpoint.name,
+                    "stage": "adapter",
+                    "step": 100,
+                    "binding": trial_binding,
+                    "files": {"state.pt": {"sha256": state_hash}},
+                }
+                manifest_path = checkpoint / "manifest.json"
+                manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+                manifest_hash = self.cli.sha256_file(manifest_path)
+                (checkpoint / "COMMITTED").write_text(
+                    json.dumps(
+                        {
+                            "checkpoint_name": checkpoint.name,
+                            "manifest_sha256": manifest_hash,
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                best_ce = (
+                    {1e-5: 2.68, 3e-5: 2.62, 1e-4: 2.60}[lr]
+                    if selected_lr_wins
+                    else {1e-5: 2.68, 3e-5: 2.59, 1e-4: 2.60}[lr]
+                )
+                zero_ce = 2.70
+                improvement = (zero_ce - best_ce) / zero_ce
+                completed_step = (
+                    350 if incomplete_run and lr == 1e-5 and seed == 100 else 400
+                )
+                summary = {
+                    "data_status": "production_ready",
+                    "completed_step": completed_step,
+                    "early_stopped": False,
+                    "checkpoint_name": None if lr == 1e-5 else checkpoint.name,
+                    "adapter_hash": None if lr == 1e-5 else state_hash,
+                    "zero_shot_fallback": lr == 1e-5,
+                    "diagnostic_checkpoint_name": checkpoint.name,
+                    "diagnostic_checkpoint_hash": state_hash,
+                    "zero_shot_validation_ce": zero_ce,
+                    "best_validation_ce": best_ce,
+                    "adapter_ce_improvement": improvement,
+                    "best_step": 100,
+                    "diagnostic_best_validation_ce": best_ce,
+                    "diagnostic_best_step": 100,
+                    "diagnostic_ce_improvement": improvement,
+                    "validation_history": [
+                        {"step": 50, "validation_ce": zero_ce - 0.01},
+                        {"step": 100, "validation_ce": best_ce},
+                        {"step": 150, "validation_ce": zero_ce - 0.02},
+                    ],
+                }
+                summary_path = run_root / "metrics" / "adapter_summary.json"
+                summary_path.write_text(json.dumps(summary), encoding="utf-8")
+                runs.append(
+                    {
+                        "learning_rate": lr,
+                        "seed": seed,
+                        "resolved_config_path": str(resolved_path.relative_to(root)),
+                        "resolved_config_file_sha256": self.cli.sha256_file(resolved_path),
+                        "resolved_config_sha256": logical_hash,
+                        "checkpoint_path": str(checkpoint.relative_to(root)),
+                        "checkpoint_manifest_sha256": manifest_hash,
+                        "checkpoint_state_sha256": state_hash,
+                        "summary_path": str(summary_path.relative_to(root)),
+                        "summary_sha256": self.cli.sha256_file(summary_path),
+                        "sample_manifest_path": str(
+                            sample_manifest_path.relative_to(root)
+                        ),
+                        "sample_manifest_sha256": self.cli.sha256_file(
+                            sample_manifest_path
+                        ),
+                        "total_sample_count": 512,
+                        "zero_shot_validation_ce": zero_ce,
+                        "best_validation_ce": best_ce,
+                        "adapter_ce_improvement": improvement,
+                        "completed_step": completed_step,
+                        "early_stopped": False,
+                    }
+                )
+        matrix = {
+            "schema_version": self.cli.ADAPTER_DIAGNOSTIC_MATRIX_SCHEMA,
+            "binding": self.cli._gate_binding(FakeBinding()),
+            "diagnostic_dataset_sha256": diagnostic_dataset_sha256,
+            "learning_rates": list(self.cli.FORMAL_ADAPTER_DIAGNOSTIC_LRS),
+            "seeds": list(self.cli.FORMAL_ADAPTER_DIAGNOSTIC_SEEDS),
+            "selection_policy": "seed100_min_best_ce_with_1e-4_lower_lr_tiebreak",
+            "minimum_mean_ce_improvement": 0.01,
+            "maximum_single_run_ce_regression": 0.01,
+            "selected_learning_rate": 1e-4,
+            "production_seed": 100,
+            "runs": runs,
+        }
+        matrix["payload_sha256"] = self.cli._canonical_json_sha256(matrix)
+        matrix_path = context.metrics_dir / "adapter_diagnostic_matrix.json"
+        matrix_path.parent.mkdir(parents=True, exist_ok=True)
+        matrix_path.write_text(json.dumps(matrix), encoding="utf-8")
+        receipt = {
+            "schema_version": self.cli.ADAPTER_DIAGNOSTIC_RECEIPT_SCHEMA,
+            "matrix_sha256": self.cli.sha256_file(matrix_path),
+            "matrix_payload_sha256": matrix["payload_sha256"],
+            "binding": self.cli._gate_binding(FakeBinding()),
+            "diagnostic_dataset_sha256": diagnostic_dataset_sha256,
+            "selected_learning_rate": 1e-4,
+            "production_seed": 100,
+        }
+        receipt["payload_sha256"] = self.cli._canonical_json_sha256(receipt)
+        receipt_path = context.metrics_dir / "adapter_diagnostic_matrix.receipt.json"
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+        return matrix_path, receipt_path
+
     def _write_minimal_companion(
         self,
         root: Path,
@@ -89,6 +258,7 @@ class UnifiedCliContractTests(unittest.TestCase):
         output = root / f"{name}.csv"
         row = {
             "sample_id": 0,
+            "active_member_count": 100,
             "entry_date": "2023-01-04",
             "exit_date": "2023-01-17",
             "entry_price_raw": entry_price,
@@ -153,6 +323,381 @@ class UnifiedCliContractTests(unittest.TestCase):
             },
         )
 
+    def test_prepare_index_passes_previous_raw_close_to_trade_state(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            config, _ = self.cli.load_config(CONFIG_PATH)
+            context = SimpleNamespace(
+                config=config,
+                dataset_dir=root / "datasets" / "fixture",
+                layout=SimpleNamespace(root=root, data=root / "data"),
+            )
+            context.dataset_dir.mkdir(parents=True)
+            context.layout.data.mkdir()
+            pit_validation = SimpleNamespace(production_ready=True)
+
+            def build_index(*_args, **kwargs):
+                checker = kwargs["trade_state_checker"]
+                checker(
+                    "sh600000",
+                    pd.Timestamp("2026-08-03"),
+                    10.0,
+                    9.0,
+                )
+                return {"schema_version": self.cli.WINDOW_SCHEMA}
+
+            with (
+                mock.patch.object(
+                    self.cli, "validate_pit_bundle", return_value=pit_validation
+                ),
+                mock.patch.object(self.cli, "_snapshot_directory", return_value=root),
+                mock.patch.object(self.cli, "_membership_path", return_value=None),
+                mock.patch.object(self.cli, "_pit_table_path", return_value=None),
+                mock.patch.object(
+                    self.cli, "build_sample_index", side_effect=build_index
+                ),
+                mock.patch.object(
+                    self.cli,
+                    "assess_sample_trade_state",
+                    return_value={"tradable": True},
+                ) as assess,
+            ):
+                self.cli._prepare_index(
+                    context,
+                    pit_root=root / "pit",
+                    max_samples_per_split=None,
+                    force=False,
+                )
+            self.assertEqual(assess.call_args.kwargs["trade_price_raw"], 10.0)
+            self.assertEqual(assess.call_args.kwargs["previous_close_raw"], 9.0)
+
+    def test_adapter_diagnostic_matrix_is_hash_bound_and_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            config, _ = self.cli.load_config(CONFIG_PATH)
+            context = SimpleNamespace(
+                config=config,
+                metrics_dir=root / "runs" / "production" / "metrics",
+                layout=SimpleNamespace(root=root, data=root / "data"),
+            )
+            with (
+                mock.patch.object(self.cli, "_binding", return_value=FakeBinding()),
+                mock.patch.object(self.cli, "_dataset_hash", return_value="9" * 64),
+            ):
+                matrix_path, receipt_path = self._write_adapter_diagnostic_fixture(
+                    root, context
+                )
+                evidence = self.cli._adapter_diagnostic_matrix_evidence(
+                    context,
+                    production_reference="adapter-step-00001000",
+                    production_hash="a" * 64,
+                )
+                self.assertEqual(evidence["run_count"], 5)
+                self.assertEqual(evidence["selected_learning_rate"], 1e-4)
+
+                state_path = next((root / "trials").rglob("state.pt"))
+                state_path.write_bytes(b"drift")
+                with self.assertRaisesRegex(self.cli.CliContractError, "checkpoint"):
+                    self.cli._adapter_diagnostic_matrix_evidence(
+                        context,
+                        production_reference="adapter-step-00001000",
+                        production_hash="a" * 64,
+                    )
+                self.assertTrue(matrix_path.is_file())
+                self.assertTrue(receipt_path.is_file())
+
+    def test_adapter_diagnostic_matrix_rejects_short_run_and_wrong_lr(self) -> None:
+        for incomplete, selected_wins, message in (
+            (True, True, "完整训练"),
+            (False, False, "生产学习率"),
+        ):
+            with self.subTest(incomplete=incomplete, selected_wins=selected_wins):
+                with tempfile.TemporaryDirectory() as temporary:
+                    root = Path(temporary).resolve()
+                    config, _ = self.cli.load_config(CONFIG_PATH)
+                    context = SimpleNamespace(
+                        config=config,
+                        metrics_dir=root / "runs" / "production" / "metrics",
+                        layout=SimpleNamespace(root=root, data=root / "data"),
+                    )
+                    with (
+                        mock.patch.object(
+                            self.cli, "_binding", return_value=FakeBinding()
+                        ),
+                        mock.patch.object(
+                            self.cli, "_dataset_hash", return_value="9" * 64
+                        ),
+                    ):
+                        self._write_adapter_diagnostic_fixture(
+                            root,
+                            context,
+                            selected_lr_wins=selected_wins,
+                            incomplete_run=incomplete,
+                        )
+                        with self.assertRaisesRegex(self.cli.CliContractError, message):
+                            self.cli._adapter_diagnostic_matrix_evidence(
+                                context,
+                                production_reference="adapter-step-00001000",
+                                production_hash="a" * 64,
+                            )
+
+    def test_formal_training_shortcuts_are_rejected_before_training(self) -> None:
+        with self.assertRaisesRegex(self.cli.CliContractError, "50"):
+            self.cli._validated_adapter_stop_after(
+                engineering_smoke=True,
+                requested=37,
+                max_allowed_steps=400,
+            )
+
+    def test_plain_smoke_does_not_register_diagnostic(self) -> None:
+        self.assertFalse(
+            self.cli._is_explicit_adapter_diagnostic(
+                SimpleNamespace(
+                    engineering_smoke=True,
+                    learning_rate=None,
+                    seed=None,
+                )
+            )
+        )
+        self.assertTrue(
+            self.cli._is_explicit_adapter_diagnostic(
+                SimpleNamespace(
+                    engineering_smoke=True,
+                    learning_rate=1e-5,
+                    seed=100,
+                )
+            )
+        )
+
+    def test_full_adapter_blocks_before_model_load_without_five_runs(self) -> None:
+        config, _ = self.cli.load_config(CONFIG_PATH)
+        context = SimpleNamespace(config=config)
+        args = SimpleNamespace(engineering_smoke=False)
+        with (
+            mock.patch.object(self.cli, "_adapter_context", return_value=context),
+            mock.patch.object(
+                self.cli,
+                "_load_data_status",
+                return_value={"status": "production_ready"},
+            ),
+            mock.patch.object(
+                self.cli,
+                "_materialize_adapter_diagnostic_from_registry",
+                return_value=None,
+            ),
+            mock.patch.object(self.cli, "_load_kronos_components") as load_model,
+        ):
+            with self.assertRaisesRegex(self.cli.CliBlocked, "5-run"):
+                self.cli._command_train_adapter_impl(args)
+        load_model.assert_not_called()
+        with self.assertRaisesRegex(self.cli.CliContractError, "1000"):
+            self.cli._validated_adapter_stop_after(
+                engineering_smoke=False,
+                requested=1500,
+                max_allowed_steps=10000,
+            )
+
+    def test_adapter_diagnostic_family_survives_selected_lr_config_change(self) -> None:
+        config, _ = self.cli.load_config(CONFIG_PATH)
+        first = copy.deepcopy(config)
+        selected = copy.deepcopy(config)
+        first["training"]["adapter"]["learning_rate"] = 1e-5
+        first["training"]["seed"] = 100
+        selected["training"]["adapter"]["learning_rate"] = 3e-5
+        selected["training"]["seed"] = 102
+        layout = SimpleNamespace(root=Path("D:/fixture"), registry=Path("D:/fixture/registry"))
+        first_context = SimpleNamespace(config=first, layout=layout)
+        selected_context = SimpleNamespace(config=selected, layout=layout)
+        first_path = self.cli._adapter_diagnostic_trial_path(
+            first_context, learning_rate=1e-5, seed=100
+        )
+        selected_path = self.cli._adapter_diagnostic_trial_path(
+            selected_context, learning_rate=3e-5, seed=102
+        )
+        self.assertEqual(first_path.parent, selected_path.parent)
+        self.assertEqual(
+            self.cli._data_config_sha256(first),
+            self.cli._data_config_sha256(selected),
+        )
+        self.assertNotEqual(
+            self.cli._canonical_json_sha256(first),
+            self.cli._canonical_json_sha256(selected),
+        )
+
+    def test_full_entry_materializes_existing_five_trial_registry(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            config, _ = self.cli.load_config(CONFIG_PATH)
+            context = SimpleNamespace(
+                config=config,
+                metrics_dir=root / "runs" / "production" / "metrics",
+                layout=SimpleNamespace(
+                    root=root, registry=root / "registry", data=root / "data"
+                ),
+            )
+            with (
+                mock.patch.object(self.cli, "_binding", return_value=FakeBinding()),
+                mock.patch.object(self.cli, "_dataset_hash", return_value="9" * 64),
+            ):
+                matrix_path, receipt_path = self._write_adapter_diagnostic_fixture(
+                    root, context
+                )
+                runs = json.loads(matrix_path.read_text(encoding="utf-8"))["runs"]
+                for run in runs:
+                    registry_path = self.cli._adapter_diagnostic_trial_path(
+                        context,
+                        learning_rate=float(run["learning_rate"]),
+                        seed=int(run["seed"]),
+                    )
+                    self.cli.atomic_write_json(
+                        registry_path, run, allowed_root=root
+                    )
+                matrix_path.unlink()
+                receipt_path.unlink()
+                evidence = self.cli._materialize_adapter_diagnostic_from_registry(
+                    context
+                )
+            self.assertEqual(evidence["run_count"], 5)
+            self.assertTrue(matrix_path.is_file())
+            self.assertTrue(receipt_path.is_file())
+        self.assertEqual(
+            self.cli._validated_adapter_stop_after(
+                engineering_smoke=False,
+                requested=3000,
+                max_allowed_steps=10000,
+            ),
+            3000,
+        )
+        with self.assertRaisesRegex(self.cli.CliContractError, "max-epochs"):
+            self.cli._validated_formal_scorer_epochs(
+                engineering_smoke=False,
+                requested=20,
+                configured=100,
+            )
+
+    def test_score_cross_section_and_public_forward_payload_fail_closed(self) -> None:
+        self.assertAlmostEqual(
+            self.cli._validate_score_cross_section(
+                eligible_count=100, active_count=105
+            ),
+            100 / 105,
+        )
+        with self.assertRaises(self.cli.CliBlocked):
+            self.cli._validate_score_cross_section(
+                eligible_count=99, active_count=100
+            )
+        with self.assertRaises(self.cli.CliBlocked):
+            self.cli._validate_score_cross_section(
+                eligible_count=100, active_count=106
+            )
+        public = self.cli._public_forward_commitment(
+            {
+                "status": "recorded",
+                "payload_sha256": "f" * 64,
+                "batch_path": "secret.csv",
+                "raw_score": 0.4,
+                "percentile": 0.9,
+            }
+        )
+        self.assertEqual(
+            public,
+            {
+                "status": "recorded",
+                "payload_sha256": "f" * 64,
+                "internal_blind_store": True,
+            },
+        )
+
+    def test_development_commitment_is_append_only_and_locked_is_audit_only(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            registry = root / "registry"
+            report = root / "runs" / "r" / "metrics" / "report.json"
+            report.parent.mkdir(parents=True)
+            report.write_text("{}", encoding="utf-8")
+            context = SimpleNamespace(layout=SimpleNamespace(root=root, registry=registry))
+            path = self.cli._evaluation_commitment_path(
+                context,
+                binding=FakeBinding(),
+                adapter_hash="a" * 64,
+                scorer_hash="b" * 64,
+                split="development_test",
+            )
+            first = self.cli._write_evaluation_commitment(
+                path,
+                context=context,
+                binding=FakeBinding(),
+                adapter_hash="a" * 64,
+                scorer_hash="b" * 64,
+                split="development_test",
+                report_path=report,
+            )
+            self.assertFalse(first["audit_only"])
+            with self.assertRaises(self.cli.CliBlocked):
+                self.cli._write_evaluation_commitment(
+                    path,
+                    context=context,
+                    binding=FakeBinding(),
+                    adapter_hash="a" * 64,
+                    scorer_hash="b" * 64,
+                    split="development_test",
+                    report_path=report,
+                )
+            locked_path = self.cli._evaluation_commitment_path(
+                context,
+                binding=FakeBinding(),
+                adapter_hash="a" * 64,
+                scorer_hash="b" * 64,
+                split="locked_retrospective",
+            )
+            locked = self.cli._write_evaluation_commitment(
+                locked_path,
+                context=context,
+                binding=FakeBinding(),
+                adapter_hash="a" * 64,
+                scorer_hash="b" * 64,
+                split="locked_retrospective",
+                report_path=report,
+            )
+            self.assertTrue(locked["audit_only"])
+
+    def test_diagnostic_trial_ledger_is_idempotent_but_rejects_conflict(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            path = root / "registry" / "trial.json"
+            self.cli._write_append_only_json(path, {"hash": "a"}, allowed_root=root)
+            self.cli._write_append_only_json(path, {"hash": "a"}, allowed_root=root)
+            with self.assertRaises(self.cli.CliBlocked):
+                self.cli._write_append_only_json(
+                    path, {"hash": "b"}, allowed_root=root
+                )
+
+    def test_history_rejects_suspension_gap_even_after_resumption(self) -> None:
+        dates = pd.bdate_range("2026-03-31", periods=self.cli.LOOKBACK)
+        required = dates.copy()
+        observed = dates.delete(40).append(
+            pd.DatetimeIndex([dates[-1] + pd.offsets.BDay(1)])
+        ).sort_values()
+        as_of = observed[-1]
+        frame = pd.DataFrame(
+            {"date": observed.strftime("%Y%m%d").astype(int)}
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            day_path = root / "tdx_day" / "sh" / "sh600000.day"
+            day_path.parent.mkdir(parents=True)
+            day_path.write_bytes(b"fixture")
+            with mock.patch.object(self.cli, "read_day_file", return_value=frame):
+                with self.assertRaisesRegex(
+                    self.cli.CliContractError, "official_open_sessions_mismatch"
+                ):
+                    self.cli._history_as_of(
+                        root,
+                        "sh600000",
+                        as_of,
+                        pd.DataFrame(),
+                        required,
+                    )
     def test_causal_validation_mode_blocks_future_s2_leakage(self) -> None:
         upstream_path = ROOT / "_downloads" / "Kronos" / "source" / "model" / "module.py"
         spec = importlib.util.spec_from_file_location("kronos_upstream_module_test", upstream_path)
@@ -223,10 +768,215 @@ class UnifiedCliContractTests(unittest.TestCase):
         parsed = self.cli.build_parser().parse_args(["pipeline", "--mode", "smoke"])
         self.assertEqual(parsed.mode, "smoke")
         inspect = self.cli.build_parser().parse_args(
-            ["inspect-checkpoint", "--mode", "smoke", "--recover"]
+            [
+                "inspect-checkpoint",
+                "--mode",
+                "smoke",
+                "--recover",
+                "--diagnostic-repeats",
+                "3",
+            ]
         )
         self.assertEqual(inspect.mode, "smoke")
         self.assertTrue(inspect.recover)
+        self.assertEqual(inspect.diagnostic_repeats, 3)
+
+    def test_read_only_store_uses_model_sha256_config_key(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            checkpoint_root = root / "runs" / "legacy" / "checkpoints"
+            checkpoint = checkpoint_root / "adapter-step-00000200"
+            checkpoint.mkdir(parents=True)
+            config, _ = self.cli.load_config(CONFIG_PATH)
+            binding = {
+                "base_model_sha256": config["model"]["model_sha256"],
+                "tokenizer_sha256": config["model"]["tokenizer_sha256"],
+                "config_sha256": "c" * 64,
+                "dataset_sha256": "d" * 64,
+            }
+            (checkpoint / "manifest.json").write_text(
+                json.dumps({"binding": binding}), encoding="utf-8"
+            )
+            context = SimpleNamespace(
+                layout=SimpleNamespace(root=root),
+                config=config,
+            )
+
+            store = self.cli._read_only_checkpoint_store(
+                checkpoint_root,
+                checkpoint.name,
+                context,
+            )
+
+            self.assertEqual(store.binding.base_model_sha256, config["model"]["model_sha256"])
+
+    def test_read_only_replay_compares_step200_with_degraded_step1000(self) -> None:
+        import kronos_a_share_model
+        import kronos_a_share_training
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            token_dir = root / "data" / "tokens" / "legacy"
+            token_dir.mkdir(parents=True)
+            sample_index = root / "data" / "datasets" / "legacy" / "sample_index.csv"
+            sample_index.parent.mkdir(parents=True)
+            sample_index.write_text("sample_id\n0\n", encoding="utf-8")
+            sample_manifest = sample_index.parent / "sample_manifest.json"
+            sample_manifest.write_text("{}\n", encoding="utf-8")
+            manifest = {
+                "schema_version": "kronos-a-share-token-cache-v1",
+                "sample_index_path": str(sample_index),
+                "sample_index_sha256": self.cli.sha256_file(sample_index),
+                "sample_manifest_path": str(sample_manifest),
+                "sample_manifest_sha256": self.cli.sha256_file(sample_manifest),
+                "adjustment": {"materialized": False},
+            }
+            arrays = {"split": np.asarray([self.cli.SPLIT_CODES["validation"]])}
+            config, _ = self.cli.load_config(CONFIG_PATH)
+            context = SimpleNamespace(
+                layout=SimpleNamespace(root=root),
+                config=config,
+            )
+
+            class Store:
+                def __init__(self):
+                    self.loaded = []
+
+                def inspect_read_only(self, reference):
+                    step = 200 if reference.endswith("00200") else 1000
+                    return {
+                        "stage": "adapter",
+                        "step": step,
+                        "lora": {"rank": 8, "alpha": 16.0, "dropout": 0.05},
+                    }
+
+                def load(self, reference, **_kwargs):
+                    self.loaded.append(reference)
+
+            store = Store()
+            causal_ce = [
+                *([2.664326] * 3),
+                *([2.634986] * 3),
+                *([4.442699] * 3),
+            ]
+            with (
+                mock.patch.object(
+                    self.cli,
+                    "load_token_cache",
+                    return_value={
+                        "manifest": manifest,
+                        "arrays": arrays,
+                        "diagnostic_legacy_read_only": True,
+                    },
+                ),
+                mock.patch.object(
+                    self.cli,
+                    "_load_kronos_components",
+                    return_value=SimpleNamespace(model=object(), device="cpu"),
+                ),
+                mock.patch.object(
+                    self.cli,
+                    "_validation_adapter_ce",
+                    side_effect=causal_ce,
+                ),
+                mock.patch.object(kronos_a_share_training, "prepare_adapter_stage"),
+                mock.patch.object(
+                    kronos_a_share_model,
+                    "validate_kronos_base_adapter_parameter_count",
+                ),
+            ):
+                report = self.cli._read_only_adapter_replay_diagnostic(
+                    context,
+                    store=store,
+                    checkpoint_references=[
+                        "adapter-step-00000200",
+                        "adapter-step-00001000",
+                    ],
+                    token_dir=token_dir,
+                    repeats=3,
+                    batch_size=16,
+                    device="cpu",
+                )
+
+            self.assertEqual(report["selector"]["best_step"], 200)
+            self.assertFalse(report["selector"]["zero_shot_fallback"])
+            self.assertEqual(
+                [item["step"] for item in report["live_validation_history"]],
+                [200, 1000],
+            )
+            self.assertTrue(report["deterministic_replay_passed"])
+            self.assertEqual(
+                store.loaded,
+                ["adapter-step-00000200"] * 3
+                + ["adapter-step-00001000"] * 3,
+            )
+
+    def test_inspect_persists_diagnostic_as_atomic_bound_json(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            checkpoint_root = root / "runs" / "legacy" / "checkpoints"
+            token_dir = root / "data" / "tokens" / "legacy"
+            checkpoint_root.mkdir(parents=True)
+            token_dir.mkdir(parents=True)
+            output = root / "runs" / "legacy" / "metrics" / "diagnostic.json"
+            config, _ = self.cli.load_config(CONFIG_PATH)
+            context = SimpleNamespace(
+                layout=SimpleNamespace(root=root),
+                checkpoint_dir=root / "runs" / "current" / "checkpoints",
+                config=config,
+            )
+
+            class Store:
+                def inspect_read_only(self, _reference):
+                    return {
+                        "stage": "adapter",
+                        "step": 200,
+                        "files": {"state.pt": {"sha256": "a" * 64}},
+                    }
+
+            diagnostic = {
+                "schema_version": "kronos-a-share-read-only-adapter-replay-v1",
+                "diagnostic_only": True,
+                "formal_gate_eligible": False,
+                "output_type": "N/A",
+            }
+            args = SimpleNamespace(
+                config=CONFIG_PATH,
+                _variant=None,
+                mode="smoke",
+                recover=False,
+                checkpoint="adapter-step-00000200",
+                read_only_checkpoint_dir=checkpoint_root,
+                diagnostic_token_dir=token_dir,
+                diagnostic_checkpoints=["adapter-step-00000200"],
+                diagnostic_repeats=3,
+                diagnostic_batch_size=16,
+                diagnostic_output=output,
+                device="cpu",
+            )
+            with (
+                mock.patch.object(self.cli, "build_context", return_value=context),
+                mock.patch.object(
+                    self.cli,
+                    "_read_only_checkpoint_store",
+                    return_value=Store(),
+                ),
+                mock.patch.object(
+                    self.cli,
+                    "_read_only_adapter_replay_diagnostic",
+                    return_value=diagnostic,
+                ),
+            ):
+                result = self.cli.command_inspect_checkpoint(args)
+
+            persisted = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(persisted["diagnostic"], diagnostic)
+            self.assertEqual(persisted["checkpoint_root"], str(checkpoint_root))
+            self.assertEqual(result["diagnostic_artifact"]["path"], str(output))
+            self.assertEqual(
+                result["diagnostic_artifact"]["sha256"],
+                self.cli.sha256_file(output),
+            )
 
     def test_prepare_routes_optional_raw_pit_normalization_without_tenth_command(self) -> None:
         manifest = ROOT / "_training" / "kronos_ashare" / "data" / "raw" / "normalize.json"
@@ -405,15 +1155,141 @@ class UnifiedCliContractTests(unittest.TestCase):
         np.testing.assert_array_equal(first, resumed)
         self.assertTrue(set(first).issubset(set(members)))
 
+    def test_formal_date_groups_enforce_100_names_and_95_percent_coverage(self) -> None:
+        arrays = {
+            "trade_date": np.full(100, 20240102, dtype=np.int32),
+            "instrument_id": np.arange(100, dtype=np.int32),
+            "active_member_count": np.full(100, 105, dtype=np.int32),
+        }
+        groups = self.cli._date_index_groups(
+            arrays,
+            np.arange(100, dtype=np.int64),
+            formal_cross_section=True,
+        )
+        self.assertEqual(len(groups), 1)
+        arrays["active_member_count"][:] = 106
+        with self.assertRaisesRegex(self.cli.CliContractError, "覆盖不足"):
+            self.cli._date_index_groups(
+                arrays,
+                np.arange(100, dtype=np.int64),
+                formal_cross_section=True,
+            )
+
+    def test_pipeline_smoke_skips_scorer_and_formal_evaluation(self) -> None:
+        context = SimpleNamespace(
+            config={"training": {"adapter": {"max_steps": 10_000}}}
+        )
+        args = SimpleNamespace(
+            mode="smoke",
+            config=CONFIG_PATH,
+            device="cpu",
+            pit_root=None,
+            smoke_samples_per_split=64,
+            chunk_size=16,
+            evaluation_input=None,
+        )
+        with (
+            mock.patch.object(self.cli, "build_context", return_value=context),
+            mock.patch.object(
+                self.cli, "command_check", return_value={"status": "ok"}
+            ),
+            mock.patch.object(
+                self.cli, "command_snapshot", return_value={"status": "ok"}
+            ),
+            mock.patch.object(
+                self.cli,
+                "command_prepare",
+                return_value={"status": "unverified", "data_status": "local_provisional"},
+            ),
+            mock.patch.object(
+                self.cli,
+                "command_train_adapter",
+                return_value={
+                    "status": "unverified",
+                    "training": {"zero_shot_fallback": False},
+                },
+            ),
+            mock.patch.object(
+                self.cli, "command_inspect_checkpoint", return_value={"status": "ok"}
+            ),
+            mock.patch.object(self.cli, "command_train_scorer") as scorer,
+            mock.patch.object(self.cli, "command_evaluate") as evaluate,
+        ):
+            result = self.cli.command_pipeline(args)
+        self.assertEqual(result["gate_status"], "blocked")
+        self.assertEqual(result["output_type"], "N/A")
+        scorer.assert_not_called()
+        evaluate.assert_not_called()
+
+    def test_engineering_smoke_refuses_scorer_training(self) -> None:
+        with self.assertRaisesRegex(self.cli.CliBlocked, "不训练 scorer"):
+            self.cli.command_train_scorer(
+                SimpleNamespace(engineering_smoke=True, config=CONFIG_PATH)
+            )
+
     def test_smoke_uses_separate_dataset_and_run_namespaces(self) -> None:
         full = self.cli.build_context(CONFIG_PATH, create=False)
         smoke = self.cli.build_context(CONFIG_PATH, create=False, variant="smoke")
         self.assertNotEqual(full.dataset_id, smoke.dataset_id)
         self.assertNotEqual(full.run_id, smoke.run_id)
-        self.assertTrue(smoke.dataset_id.endswith("-smoke-v4"))
-        self.assertTrue(smoke.run_id.endswith("-smoke-v4"))
+        self.assertTrue(smoke.dataset_id.endswith("-smoke-v5"))
+        self.assertTrue(smoke.run_id.endswith("-smoke-v5"))
         self.assertNotEqual(full.token_dir, smoke.token_dir)
         self.assertNotEqual(full.checkpoint_dir, smoke.checkpoint_dir)
+
+    def test_training_profiles_align_intervals_and_bind_smoke_overrides(self) -> None:
+        full = self.cli.build_context(
+            CONFIG_PATH, create=False, training_profile="full"
+        )
+        smoke = self.cli.build_context(
+            CONFIG_PATH,
+            create=False,
+            variant="smoke",
+            training_profile="engineering_smoke",
+        )
+        trial = self.cli.build_context(
+            CONFIG_PATH,
+            create=False,
+            variant="smoke",
+            training_profile="engineering_smoke",
+            learning_rate_override=0.00003,
+            seed_override=101,
+        )
+        self.assertEqual(
+            full.config["training"]["adapter"]["checkpoint_interval"], 1000
+        )
+        self.assertEqual(
+            full.config["training"]["adapter"]["validation_interval"], 1000
+        )
+        self.assertEqual(
+            smoke.config["training"]["adapter"]["checkpoint_interval"], 50
+        )
+        self.assertEqual(
+            smoke.config["training"]["adapter"]["validation_interval"], 50
+        )
+        self.assertEqual(smoke.config["training"]["adapter"]["smoke_steps"], 400)
+        self.assertEqual(smoke.config["training"]["adapter"]["early_stopping_patience"], 3)
+        self.assertEqual(trial.config["training"]["seed"], 101)
+        self.assertEqual(trial.config["training"]["adapter"]["learning_rate"], 0.00003)
+        self.assertNotEqual(trial.training_config_sha256, smoke.training_config_sha256)
+        self.assertNotEqual(trial.run_id, smoke.run_id)
+        self.assertEqual(trial.dataset_id, smoke.dataset_id)
+
+    def test_training_override_is_rejected_without_engineering_smoke_profile(self) -> None:
+        with self.assertRaisesRegex(self.cli.CliContractError, "engineering-smoke"):
+            self.cli.build_context(
+                CONFIG_PATH,
+                create=False,
+                training_profile="full",
+                learning_rate_override=0.00003,
+            )
+
+    def test_config_rejects_checkpoint_validation_interval_drift(self) -> None:
+        payload, _ = self.cli.load_config(CONFIG_PATH)
+        drifted = copy.deepcopy(payload)
+        drifted["training"]["adapter"]["checkpoint_interval"] = 50
+        with self.assertRaisesRegex(self.cli.CliContractError, "严格对齐"):
+            self.cli._validate_config(drifted)
 
     def test_full_and_smoke_training_share_one_preload_global_lock(self) -> None:
         full = self.cli.build_context(CONFIG_PATH, create=False)
@@ -563,12 +1439,14 @@ class UnifiedCliContractTests(unittest.TestCase):
             dataset_dir.mkdir()
             sample_index = dataset_dir / "sample_index.csv"
             sample_index.write_text(
-                "sample_id,ticker\n0,sh600000\n", encoding="utf-8"
+                "sample_id,ticker,active_member_count\n0,sh600000,800\n",
+                encoding="utf-8",
             )
             sample_manifest = dataset_dir / "sample_manifest.json"
             sample_manifest.write_text(
                 json.dumps(
                     {
+                        "schema_version": self.cli.WINDOW_SCHEMA,
                         "sample_trade_state_checked": True,
                         "sample_index_sha256": self.cli.sha256_file(sample_index),
                     }
@@ -601,12 +1479,14 @@ class UnifiedCliContractTests(unittest.TestCase):
             dataset_dir.mkdir()
             sample_index = dataset_dir / "sample_index.csv"
             sample_index.write_text(
-                "sample_id,ticker\n0,sh600000\n", encoding="utf-8"
+                "sample_id,ticker,active_member_count\n0,sh600000,800\n",
+                encoding="utf-8",
             )
             sample_manifest = dataset_dir / "sample_manifest.json"
             sample_manifest.write_text(
                 json.dumps(
                     {
+                        "schema_version": self.cli.WINDOW_SCHEMA,
                         "sample_trade_state_checked": True,
                         "sample_index_sha256": self.cli.sha256_file(sample_index),
                         "survivorship_bias_audit": {
@@ -646,6 +1526,7 @@ class UnifiedCliContractTests(unittest.TestCase):
                 "step": 10,
                 "created_at_ns": 1,
                 "is_best": True,
+                "metric": 0.9,
             },
             "scorer-step-00000002": {
                 "stage": "scorer",
@@ -653,6 +1534,7 @@ class UnifiedCliContractTests(unittest.TestCase):
                 "step": 2,
                 "created_at_ns": 2,
                 "is_best": True,
+                "metric": 0.1,
             },
         }
 
@@ -928,6 +1810,7 @@ class UnifiedCliContractTests(unittest.TestCase):
                     "sample_id": [0],
                     "trade_date": ["2023-01-03"],
                     "instrument_id": [7],
+                    "active_member_count": [1],
                     "raw_score": [99.0],
                     "label_excess_10d": [0.1],
                 }
@@ -965,6 +1848,7 @@ class UnifiedCliContractTests(unittest.TestCase):
                 "label": np.asarray([0.1], dtype=np.float32),
                 "trade_date": np.asarray([20230103], dtype=np.int32),
                 "instrument_id": np.asarray([7], dtype=np.int32),
+                "active_member_count": np.asarray([1], dtype=np.int32),
             }
             with (
                 mock.patch.object(self.cli, "_load_cache", return_value={"arrays": arrays}),
@@ -1042,7 +1926,19 @@ class UnifiedCliContractTests(unittest.TestCase):
             pit = root / "pit"
             for path in (predictions, data_root, dataset_dir, snapshot, pit):
                 path.mkdir(parents=True)
-            for name in ("corporate_actions", "suspensions", "price_limits"):
+            pd.DataFrame(
+                {
+                    "sample_id": [0],
+                    "ticker": ["sh600000"],
+                    "origin_date": [20230103],
+                }
+            ).to_csv(dataset_dir / "sample_index.csv", index=False)
+            for name in (
+                "corporate_actions",
+                "suspensions",
+                "price_limits",
+                "index_membership",
+            ):
                 (pit / f"{name}.csv").write_text("fixture\n", encoding="utf-8")
             for name in (
                 "zero_shot_scores.csv",
@@ -1070,6 +1966,14 @@ class UnifiedCliContractTests(unittest.TestCase):
                 kwargs["output_path"].parent.mkdir(parents=True, exist_ok=True)
                 kwargs["output_path"].write_text("sample_id\n0\n", encoding="utf-8")
 
+            def build_score(*_args, **kwargs):
+                path = kwargs["output_path"]
+                path.parent.mkdir(parents=True, exist_ok=True)
+                pd.DataFrame({"sample_id": [0], "raw_score": [0.1]}).to_csv(
+                    path, index=False
+                )
+                return {"path": str(path), "sha256": self.cli.sha256_file(path)}
+
             import kronos_a_share_baseline as baseline
 
             with (
@@ -1096,24 +2000,38 @@ class UnifiedCliContractTests(unittest.TestCase):
                 mock.patch.object(
                     self.cli,
                     "_ensure_zero_shot_scores",
-                    return_value={"path": "zero", "sha256": "a" * 64},
+                    side_effect=build_score,
                 ) as zero,
                 mock.patch.object(
                     self.cli,
                     "_ensure_head_only_scores",
-                    return_value={"path": "head", "sha256": "b" * 64},
+                    side_effect=build_score,
                 ) as head,
                 mock.patch.object(
                     baseline,
                     "build_project_qlib_provider",
-                    return_value={"manifest_sha256": "c" * 64},
+                    return_value={
+                        "manifest_sha256": "c" * 64,
+                        "pit_membership_verified": True,
+                        "instrument_membership_contract": (
+                            "pit_csi300_union_csi500_effective_intervals"
+                        ),
+                        "index_membership_path": str(
+                            pit / "index_membership.csv"
+                        ),
+                        "index_membership_sha256": self.cli.sha256_file(
+                            pit / "index_membership.csv"
+                        ),
+                    },
                 ) as provider,
                 mock.patch.object(
                     baseline, "run_alpha158_lightgbm", side_effect=run_alpha
                 ) as alpha,
+                mock.patch.object(baseline, "inspect_alpha158_lightgbm_evidence"),
                 mock.patch.object(
                     baseline, "build_evaluation_companion", side_effect=build_companion
                 ),
+                mock.patch.object(baseline, "build_baseline_comparison"),
                 mock.patch.object(baseline, "inspect_evaluation_companion"),
             ):
                 actual = self.cli._ensure_evaluation_companion(
@@ -1133,7 +2051,31 @@ class UnifiedCliContractTests(unittest.TestCase):
                 predictions / "zero_shot_scores.csv",
             )
             self.assertIn("formal-recomputed-sources", str(provider.call_args.kwargs["provider_uri"]))
+            self.assertEqual(
+                provider.call_args.kwargs["index_membership_path"],
+                pit / "index_membership.csv",
+            )
             self.assertIn("formal-recomputed-sources", str(alpha.call_args.kwargs["output_path"]))
+
+    def test_formal_provider_rejects_quote_envelope_membership(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            membership = Path(temporary).resolve() / "index_membership.csv"
+            membership.write_text("ticker,start_date,end_date\n", encoding="utf-8")
+            with self.assertRaisesRegex(
+                self.cli.CliContractError,
+                "PIT index_membership",
+            ):
+                self.cli._require_formal_provider_membership(
+                    {
+                        "pit_membership_verified": False,
+                        "instrument_membership_contract": (
+                            "quote_envelope_provisional_only"
+                        ),
+                        "index_membership_path": None,
+                        "index_membership_sha256": None,
+                    },
+                    membership,
+                )
 
     def test_cross_split_companion_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -1155,7 +2097,9 @@ class UnifiedCliContractTests(unittest.TestCase):
         config, _ = self.cli.load_config(CONFIG_PATH)
         context = SimpleNamespace(
             checkpoint_dir=Path("D:/fixture/checkpoints"),
+            metrics_dir=Path("D:/fixture/metrics"),
             config=config,
+            training_config_sha256="c" * 64,
         )
 
         class FakeStore:
@@ -1166,6 +2110,7 @@ class UnifiedCliContractTests(unittest.TestCase):
                 return {
                     "stage": "adapter",
                     "checkpoint_name": reference,
+                    "step": 1000,
                     "metric": 0.9,
                     "files": {"state.pt": {"sha256": "a" * 64}},
                 }
@@ -1175,19 +2120,48 @@ class UnifiedCliContractTests(unittest.TestCase):
             "best_validation_ce": 0.9,
             "validation_contract": "causal-dependency-cross-attention-v1",
             "engineering_smoke": False,
+            "zero_shot_fallback": False,
+            "best_step": 1000,
+            "selection_reason": "minimum_causal_validation_ce_meets_release_threshold",
+            "validation_history": [{"step": 1000, "validation_ce": 0.9}],
+            "resolved_config_sha256": "c" * 64,
+            "checkpoint_interval": 1000,
+            "validation_interval": 1000,
+            "early_stopping_patience": 3,
+            "max_allowed_steps": 10000,
             "peak_gpu_memory_bytes": 1024,
             "gpu_memory_limit_bytes": 3 * 1024**3,
         }
         import kronos_a_share_training
 
+        summary = {
+            "status": "ok",
+            "formal_training_complete": True,
+            "max_allowed_steps": 10000,
+            "checkpoint_name": "adapter-step-00001000",
+            "adapter_hash": "a" * 64,
+            "best_step": 1000,
+            "completed_step": 10000,
+            "early_stopped": False,
+            "adapter_diagnostic_matrix_evidence": {"matrix_sha256": "m" * 64},
+        }
+        diagnostic_evidence = {"matrix_sha256": "m" * 64}
+
         with (
             mock.patch.object(self.cli, "_binding", return_value=FakeBinding()),
             mock.patch.object(kronos_a_share_training, "CheckpointStore", FakeStore),
             mock.patch.object(self.cli, "_checkpoint_extra_state", return_value=extra),
+            mock.patch.object(
+                self.cli,
+                "_adapter_diagnostic_matrix_evidence",
+                return_value=diagnostic_evidence,
+            ),
+            mock.patch.object(Path, "is_file", return_value=True),
+            mock.patch.object(self.cli, "_json_file", return_value=summary),
         ):
             evidence = self.cli._adapter_checkpoint_release_metrics(
                 context,
-                reference="adapter-step-00000001",
+                reference="adapter-step-00001000",
                 expected_hash="a" * 64,
             )
         self.assertAlmostEqual(evidence["adapter_ce_improvement"], 0.1)
@@ -1460,7 +2434,21 @@ class UnifiedCliContractTests(unittest.TestCase):
                 "bootstrap_ci95_lower": 0.01,
                 "base_after_cost_return": 0.01,
                 "stress_after_cost_return": 0.001,
+                "strongest_baseline_rank_ic": 0.02,
+                "strongest_baseline_lift": 0.06,
+                "strongest_baseline": "head_only_score",
+                "baseline_rank_ic": {
+                    "zero_shot_score": 0.01,
+                    "head_only_score": 0.02,
+                },
             }
+            adapter_evidence = {
+                "checkpoint_name": "adapter-step-00000001",
+                "adapter_hash": "a" * 64,
+            }
+            metrics["adapter_checkpoint_evidence"] = adapter_evidence
+            stability = {"seeds": list(range(100, 120))}
+            metrics["scorer_seed_stability"] = stability
             self.cli._write_gate(
                 context,
                 binding=FakeBinding(),
@@ -1480,10 +2468,22 @@ class UnifiedCliContractTests(unittest.TestCase):
                 },
                 metrics=metrics,
             )
-            with mock.patch.object(
-                self.cli,
-                "_load_data_status",
-                return_value={"status": "production_ready"},
+            with (
+                mock.patch.object(
+                    self.cli,
+                    "_load_data_status",
+                    return_value={"status": "production_ready"},
+                ),
+                mock.patch.object(
+                    self.cli,
+                    "_scorer_stability_evidence",
+                    return_value=stability,
+                ),
+                mock.patch.object(
+                    self.cli,
+                    "_adapter_checkpoint_release_metrics",
+                    return_value=adapter_evidence,
+                ),
             ):
                 with self.assertRaisesRegex(
                     self.cli.CliBlocked, "删除、重排或改写"
@@ -1521,6 +2521,7 @@ class UnifiedCliContractTests(unittest.TestCase):
                         "created_at_ns": 1,
                         "step": 1,
                         "is_best": True,
+                        "metric": 0.1,
                         "files": {"state.pt": {"sha256": "e" * 64}},
                     }
 
@@ -1536,6 +2537,12 @@ class UnifiedCliContractTests(unittest.TestCase):
                 "bootstrap_ci95_lower": 0.01,
                 "base_after_cost_return": 0.01,
                 "stress_after_cost_return": 0.001,
+                "strongest_baseline_rank_ic": 0.02,
+                "strongest_baseline_lift": 0.06,
+                "adapter_checkpoint_evidence": {
+                    "checkpoint_name": "adapter-step-00000001",
+                    "adapter_hash": "a" * 64,
+                },
             }
             import kronos_a_share_training
 
@@ -1609,9 +2616,10 @@ class UnifiedCliContractTests(unittest.TestCase):
             )
             rows = []
             for date in ("2023-01-31", "2023-02-28"):
-                for position in range(3):
+                for position in range(100):
                     row = {
                         "trade_date": date,
+                        "active_member_count": 100,
                         "raw_score": float(position),
                         "label_excess_10d": float(position),
                         "entry_price_raw": 10.0,
@@ -1681,6 +2689,7 @@ class UnifiedCliContractTests(unittest.TestCase):
                         "created_at_ns": 1,
                         "step": 1,
                         "is_best": True,
+                        "metric": 0.1,
                         "files": {"state.pt": {"sha256": "e" * 64}},
                     }
 
@@ -1696,8 +2705,19 @@ class UnifiedCliContractTests(unittest.TestCase):
                 "bootstrap_ci95_lower": 0.01,
                 "base_after_cost_return": 0.01,
                 "stress_after_cost_return": 0.001,
+                "strongest_baseline_rank_ic": 0.02,
+                "strongest_baseline_lift": 0.06,
             }
             companion = predictions_dir / "validation_baselines.csv"
+            perfect["adapter_checkpoint_evidence"] = {
+                "checkpoint_name": "adapter-step-00000001",
+                "adapter_hash": "a" * 64,
+            }
+            perfect["strongest_baseline"] = "head_only_score"
+            perfect["baseline_rank_ic"] = {
+                "zero_shot_score": 0.01,
+                "head_only_score": 0.02,
+            }
 
             def build_companion(*_args, **_kwargs):
                 companion.write_text("sample_id\n0\n", encoding="utf-8")
@@ -1723,6 +2743,11 @@ class UnifiedCliContractTests(unittest.TestCase):
                     self.cli,
                     "_scorer_checkpoint_hashes",
                     return_value=("adapter-step-00000001", "a" * 64, "e" * 64),
+                ),
+                mock.patch.object(
+                    self.cli,
+                    "_scorer_stability_evidence",
+                    return_value={"seeds": list(range(100, 120))},
                 ),
                 mock.patch.object(
                     self.cli,
@@ -1783,10 +2808,22 @@ class UnifiedCliContractTests(unittest.TestCase):
                 "forward_observation_days=0<60", result["gate"]["reasons"]
             )
             self.assertEqual(result["output_type"], "N/A")
-            with mock.patch.object(
-                self.cli,
-                "_load_data_status",
-                return_value={"status": "production_ready"},
+            with (
+                mock.patch.object(
+                    self.cli,
+                    "_load_data_status",
+                    return_value={"status": "production_ready"},
+                ),
+                mock.patch.object(
+                    self.cli,
+                    "_scorer_stability_evidence",
+                    return_value={"seeds": list(range(100, 120))},
+                ),
+                mock.patch.object(
+                    self.cli,
+                    "_adapter_checkpoint_release_metrics",
+                    return_value=perfect["adapter_checkpoint_evidence"],
+                ),
             ):
                 validated = self.cli._validate_gate(context, FakeBinding())
             self.assertTrue(validated["research_scoring_allowed"])
@@ -1831,6 +2868,7 @@ class UnifiedCliContractTests(unittest.TestCase):
                             "created_at_ns": 1,
                             "step": 1,
                             "is_best": True,
+                            "metric": 0.1,
                             "files": {"state.pt": {"sha256": "e" * 64}},
                         }
 
@@ -1844,6 +2882,11 @@ class UnifiedCliContractTests(unittest.TestCase):
                         self.cli,
                         "_scorer_checkpoint_hashes",
                         return_value=("adapter-step-00000001", "a" * 64, "e" * 64),
+                    ),
+                    mock.patch.object(
+                        self.cli,
+                        "_scorer_stability_evidence",
+                        return_value={"seeds": list(range(100, 120))},
                     ),
                     mock.patch.object(
                         self.cli,

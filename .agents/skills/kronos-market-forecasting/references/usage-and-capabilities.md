@@ -20,10 +20,12 @@ Kronos 把连续 OHLCV K 线先量化为分层离散 token，再由自回归 Tra
 | 单序列零样本预测 | 本 Skill 已封装 | 输入历史 K 线，输出未来 OHLCV/amount |
 | 多样本生成并平均 | 上游支持 | `sample_count` 增大显存和耗时；5GB 显存从 1 开始 |
 | 批量序列预测 | 上游 `predict_batch` 支持 | 本 Skill CLI 暂不封装，序列长度需一致 |
-| Tokenizer/Predictor 微调 | 项目已封装 A股两阶段训练 | 仅 D盘隔离训练环境；必须通过 PIT、样本外和成本准出门 |
+| Tokenizer/Predictor 微调 | 项目已封装 A股两阶段训练 | 仅 D盘隔离训练环境；PIT v1 最高 `local_provisional`，只有 v2 和模型准出门全部通过才可发布 adapter |
 | 回测 | 上游有演示代码 | 演示不是生产交易系统，必须另做样本外评估和成本建模 |
 
-模型不读取财报、新闻、订单、估值、宏观变量或公司身份；它不能单独证明基本面、因果关系或投资价值。输出不是上涨概率，也不是确定目标价。
+模型不读取财报、新闻、订单、估值、宏观变量或公司身份；它不能单独证明基本面、因果关系或投资价值。输出不是上涨概率，也不是确定目标价。未全部通过正式门槛时，对外合同固定为 `gate_status=blocked`、`output_type=N/A`、`evidence_class=model_output`。
+
+A股正式数据必须使用 `kronos-a-share-pit-normalization-v2`，其模型覆盖期为 `2018-01-02..2026-07-31`，证据回看从前一开放日 `2017-12-29` 开始。v2 将 CSV/JSON/HTML/PDF 官方原文、版本化 allowlist 解析器、canonical CSV、固定派生键空间和 reviewed overlay 分层并受 SHA256 绑定。详见 [a-share-finetuning.md](a-share-finetuning.md)。
 
 ## 2. 本地版本与文件
 
@@ -158,9 +160,11 @@ pred_df = predictor.predict(
 
 1. 按时间滚动切分训练前可见历史与未来持有区间，禁止随机打乱造成未来泄漏。
 2. 每个 cutoff 只向模型提供 cutoff 之前的 K 线；未来真实值只用于事后评分。
-3. 至少比较 last-value、历史漂移或简单移动平均基线。
-4. 分别报告价格误差、方向命中、不同波动环境稳定性；若转为策略，再计点差、手续费、滑点、停牌和涨跌停。
-5. 分开记录模型选择期与最终测试期；不要以同一测试集反复调参后仍称其为样本外。
+3. 工程 smoke 最多400步，checkpoint/验证均每50步、早停 `patience=3`；full 最多10000步，两个 interval 均为1000、早停同为3。非 `production_ready` 的 smoke 只验证工程合同，不训练 scorer，不报告 RankIC。
+4. `best` 只能由现场因果 CE 选出；若相对 zero-shot 没有至少1%改善，回退 `zero_shot_fallback=true` 并不发布 adapter。LR/seed 覆盖只允许用于 `--engineering-smoke`，且必须进入 run/checkpoint 绑定。正式训练前固定执行5次诊断：三个LR的 seed100，加上入选LR的 seed101/102；D盘 registry 中的逐运行工件、matrix 和 receipt 必须完整受哈希绑定。
+5. 正式日横截面要求至少100只且覆盖当日有效成分至少95%，RankIC 按日计算后取均值。scorer 和 Alpha158+LightGBM 均用20个固定种子报告均值/标准差，不得择优种子。
+6. 至少比较 last-value、历史漂移、动量/反转、zero-shot、Base+head、LoRA+head 和 Alpha158+LightGBM；分别报告价格误差、方向、不同波动环境稳定性，策略另计点差、手续费、滑点、停牌和涨跌停。
+7. 分开记录模型选择期与最终测试期；`development_test` 只在配置冻结后运行一次，`locked_retrospective` 只审计不调参，真正前瞻从2026-08-03累计60/120个交易日。
 
 ## 7. 故障处理
 

@@ -1,0 +1,272 @@
+{
+  "schema_version": "kronos-a-share-pit-normalization-v2",
+  "model_coverage_start": "2018-01-02",
+  "model_coverage_end": "2026-07-31",
+  "evidence_lookback_start": "2017-12-29",
+  "source_priority": [
+    "official_primary",
+    "public_secondary",
+    "tdx_mechanical"
+  ],
+  "datasets": {
+    "security_master": {
+      "coverage_key_contract": "derived",
+      "sources": [
+        {
+          "source_id": "official-security-master-v2",
+          "source_class": "official_primary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+          "format": "csv",
+          "extractor_id": "csv-table-v1",
+          "extractor_version": "1",
+          "extractor_config": {"encoding": "utf-8", "delimiter": ","},
+          "extractor_config_sha256": "371faeb3b97f8e45f92398da4506d56bb7b9a174acdf3c729f3c8064198c1764",
+          "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "extracted_row_count": 1,
+          "row_audit_status": "passed",
+          "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\official-security-master-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+          "mapping": {
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "exchange": {"column": "exchange", "transform": "upper"},
+            "board": {"column": "board", "transform": "lower"},
+            "security_type": "security_type",
+            "list_date": "list_date",
+            "delist_date": "delist_date"
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "st_status": {
+      "coverage_key_contract": "derived",
+      "sources": [
+        {
+          "source_id": "reviewed-st-status-v2",
+          "source_class": "public_secondary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+          "format": "json",
+          "extractor_id": "json-records-v1",
+          "extractor_version": "1",
+          "extractor_config": {"encoding": "utf-8", "records_path": ["data"]},
+          "extractor_config_sha256": "f49e8a8412ea52976e0ccdb693c930cc5acc536fdce41ceb25f5bd4d9cf78fd6",
+          "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "extracted_row_count": 1,
+          "row_audit_status": "passed",
+          "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\reviewed-st-status-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+          "mapping": {
+            "ticker": {"column": "code", "transform": "ticker"},
+            "effective_from": "effective_from",
+            "effective_to": "effective_to",
+            "is_st": {"column": "isST", "transform": "bool_01"}
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "suspensions": {
+      "coverage_key_contract": "derived",
+      "sources": [
+        {
+          "source_id": "official-suspensions-v2",
+          "source_class": "official_primary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+          "format": "html",
+          "extractor_id": "html-table-v1",
+          "extractor_version": "1",
+          "extractor_config": {"encoding": "utf-8", "table_index": 0},
+          "extractor_config_sha256": "583f6efc20aeb182f2d53ec6617ae3d02b21d58e5e8c09fddb6892b099624dcd",
+          "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "extracted_row_count": 1,
+          "row_audit_status": "passed",
+          "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\official-suspensions-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+          "mapping": {
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "trade_date": "trade_date",
+            "is_suspended": {"column": "is_suspended", "transform": "bool_01"}
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "price_limits": {
+      "coverage_key_contract": "derived",
+      "sources": [
+        {
+          "source_id": "official-price-limits-v2",
+          "source_class": "official_primary",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+          "format": "csv",
+          "extractor_id": "csv-table-v1",
+          "extractor_version": "1",
+          "extractor_config": {"encoding": "utf-8", "delimiter": ","},
+          "extractor_config_sha256": "371faeb3b97f8e45f92398da4506d56bb7b9a174acdf3c729f3c8064198c1764",
+          "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "extracted_row_count": 1,
+          "row_audit_status": "passed",
+          "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\official-price-limits-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+          "mapping": {
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "trade_date": "trade_date",
+            "up_limit": "up_limit",
+            "down_limit": "down_limit",
+            "rule_version": "rule_version",
+            "no_limit_reason": "no_limit_reason",
+            "previous_trade_date": "previous_trade_date",
+            "previous_close_raw": "previous_close_raw"
+          }
+        }
+      ],
+      "expected_keys": null
+    },
+    "index_membership": {
+      "coverage_key_contract": "source_bound",
+      "sources": [
+        {
+          "source_id": "official-index-membership-v2",
+          "source_class": "official_primary",
+          "artifact_role": "index_membership_anchor_and_adjustments",
+          "artifact_schema_version": "kronos-a-share-index-membership-evidence-v1",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+          "format": "pdf",
+          "extractor_id": "pdf-table-v1",
+          "extractor_version": "1",
+          "extractor_config": {"pages": [0], "table_index": 0},
+          "extractor_config_sha256": "ce3d1a5575b03000dec4ec160914116f6bbfc1e76ceeee7ad88dcff06ed4d8b0",
+          "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "extracted_row_count": 1,
+          "row_audit_status": "passed",
+          "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\official-index-membership-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+          "mapping": {
+            "index_code": {"column": "index_code", "transform": "upper"},
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "effective_from": "effective_from",
+            "effective_to": "effective_to"
+          }
+        }
+      ],
+      "expected_keys": {
+        "source_id": "official-index-membership-v2",
+        "source_class": "official_primary",
+        "artifact_role": "index_membership_anchor_and_adjustments",
+        "artifact_schema_version": "kronos-a-share-index-membership-evidence-v1",
+        "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+        "format": "pdf",
+        "extractor_id": "pdf-table-v1",
+        "extractor_version": "1",
+        "extractor_config": {"pages": [0], "table_index": 0},
+        "extractor_config_sha256": "ce3d1a5575b03000dec4ec160914116f6bbfc1e76ceeee7ad88dcff06ed4d8b0",
+        "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "extracted_row_count": 1,
+        "row_audit_status": "passed",
+        "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\official-index-membership-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+        "mapping": {
+          "index_code": {"column": "index_code", "transform": "upper"},
+          "ticker": {"column": "ticker", "transform": "ticker"},
+          "effective_from": "effective_from"
+        }
+      },
+      "completeness_receipt": {
+        "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\receipts\\index_membership.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "bytes": 1
+      }
+    },
+    "corporate_actions": {
+      "coverage_key_contract": "source_bound",
+      "sources": [
+        {
+          "source_id": "official-corporate-actions-v2",
+          "source_class": "official_primary",
+          "artifact_role": "cninfo_complete_pagination_receipt",
+          "artifact_schema_version": "kronos-a-share-corporate-actions-evidence-v1",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+          "format": "json",
+          "extractor_id": "json-records-v1",
+          "extractor_version": "1",
+          "extractor_config": {"encoding": "utf-8", "records_path": ["announcements"], "pagination_metadata": {"total_records_path": ["totalRecordNum"], "total_pages_path": ["totalpages"], "page_number_path": ["pageNum"]}},
+          "extractor_config_sha256": "06f2e911a647f79d96f1f5e5098fb54fd52d2f10f91e67c705fa9cfc3da1e7c7",
+          "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "extracted_row_count": 1,
+          "row_audit_status": "passed",
+          "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\official-corporate-actions-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+          "mapping": {
+            "ticker": {"column": "ticker", "transform": "ticker"},
+            "announcement_date": "announcement_date",
+            "ex_date": "ex_date",
+            "cash_div": "cash_div",
+            "bonus_ratio": "bonus_ratio",
+            "rights_ratio": "rights_ratio",
+            "rights_price": "rights_price"
+          }
+        }
+      ],
+      "expected_keys": {
+        "source_id": "official-corporate-actions-v2",
+        "source_class": "official_primary",
+        "artifact_role": "cninfo_complete_pagination_receipt",
+        "artifact_schema_version": "kronos-a-share-corporate-actions-evidence-v1",
+        "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+        "format": "json",
+        "extractor_id": "json-records-v1",
+        "extractor_version": "1",
+        "extractor_config": {"encoding": "utf-8", "records_path": ["announcements"], "pagination_metadata": {"total_records_path": ["totalRecordNum"], "total_pages_path": ["totalpages"], "page_number_path": ["pageNum"]}},
+        "extractor_config_sha256": "06f2e911a647f79d96f1f5e5098fb54fd52d2f10f91e67c705fa9cfc3da1e7c7",
+        "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "extracted_row_count": 1,
+        "row_audit_status": "passed",
+        "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\official-corporate-actions-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+        "mapping": {
+          "ticker": {"column": "ticker", "transform": "ticker"},
+          "announcement_date": "announcement_date",
+          "ex_date": "ex_date"
+        }
+      },
+      "completeness_receipt": {
+        "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\receipts\\corporate_actions.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "bytes": 1
+      }
+    },
+    "trading_calendar": {
+      "coverage_key_contract": "source_bound",
+      "sources": [
+        {
+          "source_id": "official-trading-calendar-v2",
+          "source_class": "official_primary",
+          "artifact_role": "trading_calendar",
+          "artifact_schema_version": "kronos-a-share-trading-calendar-v1",
+          "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+          "format": "csv",
+          "extractor_id": "csv-table-v1",
+          "extractor_version": "1",
+          "extractor_config": {"encoding": "utf-8", "delimiter": ","},
+          "extractor_config_sha256": "371faeb3b97f8e45f92398da4506d56bb7b9a174acdf3c729f3c8064198c1764",
+          "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "extracted_row_count": 1,
+          "row_audit_status": "passed",
+          "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\official-trading-calendar-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+          "mapping": {"trade_date": "timestamps"},
+          "constants": {"is_open": true}
+        }
+      ],
+      "expected_keys": {
+        "source_id": "official-trading-calendar-v2",
+        "source_class": "official_primary",
+        "artifact_role": "trading_calendar",
+        "artifact_schema_version": "kronos-a-share-trading-calendar-v1",
+        "snapshot_manifest": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\snapshot_manifest.json",
+        "format": "csv",
+        "extractor_id": "csv-table-v1",
+        "extractor_version": "1",
+        "extractor_config": {"encoding": "utf-8", "delimiter": ","},
+        "extractor_config_sha256": "371faeb3b97f8e45f92398da4506d56bb7b9a174acdf3c729f3c8064198c1764",
+        "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "extracted_row_count": 1,
+        "row_audit_status": "passed",
+        "row_audit": {"schema_version": "kronos-a-share-row-audit-v1", "path": "D:\\vcp_hunter\\产业链投研\\_training\\kronos_ashare\\data\\raw\\public-pit-v2\\row-audits\\official-trading-calendar-v2.csv", "sha256": "0000000000000000000000000000000000000000000000000000000000000000", "bytes": 1, "row_count": 1, "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "extracted_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "audit_status": "passed", "audited_at": "REPLACE_WITH_TIMEZONE_AWARE_ISO8601", "auditor": "REPLACE_WITH_REVIEWER"},
+        "mapping": {"trade_date": "timestamps"},
+        "constants": {"is_open": true}
+      }
+    }
+  }
+}

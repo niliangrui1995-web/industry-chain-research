@@ -43,12 +43,13 @@ description: Run, validate, adapt, and evaluate the project-local Kronos-base fi
 
 1. 先运行存储审计；训练进程的 `UV_CACHE_DIR`、`HF_HOME`、`TORCH_HOME`、`TEMP/TMP` 和 Qlib provider 不得落到 C 盘。迁移脚本不带 `-Apply` 时只审计，首次迁移先审计再执行；迁移和双环境重建命令见下文。
 2. `snapshot` 只读复制 `D:\HT` 的 `.day`、`gbbq`、`base.dbf`，复制前后校验活动源哈希；训练不直接读取活动中的 TDX 目录。
-3. `prepare` 要求90日历史、未来10日标签、11日 purge；原始成交价与因果复权模型价分栏。已抓公开原始响应需要归一化时，使用 `prepare --pit-normalization-manifest <reviewed.json>`；它固定官方>公开补充>TDX机械核验的优先级，无受哈希绑定的 `expected_keys` 不得声称 coverage 完整。正式数据还必须具备专用、官方且受哈希绑定的 `trading_calendar`，以及可由上一交易日原始收盘复算的逐日涨跌停上下限；缺历史 CSI300/CSI500 成分、ST、停复牌、日历或涨跌停状态时只能是 `local_provisional` 或 `blocked`。
+3. `prepare` 要求90日历史、未来10日标签、11日 purge；`trade_price_raw` 与按每个 `origin_date` 因果重建的 `model_price_adjusted` 必须分栏。已抓公开原始响应需要归一化时，仍使用统一入口 `prepare --pit-normalization-manifest <reviewed.json>`。正式准出只接受 `kronos-a-share-pit-normalization-v2`：模型覆盖期为 `2018-01-02..2026-07-31`，证据回看从前一开放交易日 `2017-12-29` 开始；原文、版本化 allowlist 解析器、canonical CSV、逐行 row-audit、CSI锚点/调样回执、CNINFO分页回执、固定代码派生键空间及 reviewed overlay 全部受 SHA256 绑定。已公告的未来公司行动只前复权目标段，不得改变90日历史 token；未公告事件整窗排除。v1 仅保持兼容，最高为 `local_provisional`。缺历史 CSI300/CSI500 成分、ST、停复牌、日历、涨跌停或首日前驱收盘证据时只能是 `local_provisional` 或 `blocked`。
 4. 第一阶段冻结 Tokenizer/Base，只训练26个 `q_proj/v_proj` LoRA；第二阶段冻结 LoRA，只训练 `LayerNorm(832) -> Linear(832,1)` 横截面评分头。
-5. 先跑 `pipeline --mode smoke`；通过1000步显存、NaN、checkpoint和因果验证合同后，才允许 `pipeline --mode full` 续训。验证时仅 dependency cross-attention 保持 causal mask，LoRA dropout 仍为 eval；禁止用普通 `model.eval()` 产生可见未来 token 的 CE。
-6. `evaluate --split validation` 必须现场重算 checkpoint CE、scorer 预测、LoRA 摘要、zero-shot、head-only、朴素基线、Alpha158+LightGBM 和真实成交 companion；旧 CSV、metadata 或 checkpoint 自报指标不能单独准出。`development_test` 与 `locked_retrospective` 只写分段报告，绝不签发或改写 gate。未同时通过数据门、RankIC、bootstrap和成本压力门时，`score-as-of` 输出 `N/A`。
-7. 每日评分先在15:00收盘后用 `snapshot --inference-as-of <交易日零点+08:00> --inference-pit-root <production_ready PIT>` 固化独立输入；`score-as-of` 必须显式传该快照和其中受哈希绑定的官方未来交易日原始响应，禁止读取训练快照或活动 `D:\HT`。
-8. 前瞻观察期内允许内部写入不可变账本，但对话与正式文件仍返回 `N/A`。Gate、receipt、active head、lineage 和当前 forward registry 任一断链、回滚或漂移都必须阻断。
+5. 先跑 `pipeline --mode smoke`：smoke 最多400步，checkpoint/验证均每50步，早停 `patience=3`；full 最多10000步，两个 interval 均为1000，早停 `patience=3`。两个 interval 不等时配置直接拒绝。数据非 `production_ready` 时，smoke 只验证显存、NaN、未来损失因果性、checkpoint 和恢复，不运行 scorer，不报告 RankIC 或模型质量。验证时仅 dependency cross-attention 保持 causal mask，LoRA dropout 仍为 eval；禁止用普通 `model.eval()` 产生可见未来 token 的 CE。
+6. `best` 只能指向已现场因果验证的 checkpoint，不得因训练结束自动选末步；无 checkpoint 相对 zero-shot CE 改善至少1%时，必须 `zero_shot_fallback=true` 且不发布 adapter。`--learning-rate` 和 `--seed` 仅允许与 `--engineering-smoke` 同用，并必须进入 resolved config、run_id、checkpoint binding 和哈希。诊断矩阵固定为5次 smoke：三个LR各跑 seed100，再对入选LR补 seed101/102；LR/seed、完整 validation history、resolved config、summary、checkpoint 与哈希必须登记到D盘 registry并形成不可变 matrix/receipt，正式 seed100 full checkpoint 必须绑定该收据，不能用单跑或手工摘要绕过。
+7. `evaluate --split validation` 必须现场重算 checkpoint CE、scorer 预测、LoRA 摘要、zero-shot、head-only、朴素基线、Alpha158+LightGBM 和真实成交 companion；正式横截面每日 `eligible_count >= 100` 且覆盖当日有效成分至少95%，RankIC 必须按日计算后取均值。scorer 和 LightGBM 均运行固定20个种子并报均值/标准差，生产 checkpoint 固定 seed100，不得择优种子。旧 CSV、metadata 或 checkpoint 自报指标不能单独准出。`development_test` 与 `locked_retrospective` 只写分段报告，绝不签发或改写 gate。未同时通过数据门、RankIC、bootstrap和成本压力门时，固定输出 `gate_status=blocked`、`output_type=N/A`、`evidence_class=model_output`。
+8. 每日评分先在15:00收盘后用 `snapshot --inference-as-of <交易日零点+08:00> --inference-pit-root <production_ready PIT>` 固化独立输入；`score-as-of` 必须显式传该快照和其中受哈希绑定的官方未来交易日原始响应，禁止读取训练快照或活动 `D:\HT`。
+9. 前瞻观察期内允许内部写入不可变账本，但对话与正式文件仍返回 `N/A`。Gate、receipt、active head、lineage 和当前 forward registry 任一断链、回滚或漂移都必须阻断。
 
 训练依赖由互不重叠的 `requirements-training.lock` 与 `requirements-torch-cu118.lock` 固定并要求哈希：前者从官方 PyPI 提供全部运行依赖，后者只含 `torch==2.7.1+cu118`，从官方 PyTorch CU118 索引以 `--no-deps` 安装。`requirements-lock-contract.json` 绑定两个 input/lock 的 SHA256。重建脚本先做一致性预检，再运行 `uv pip check`、`-I -B` 精确包清单、实际 D盘 runtime path 和清单 SHA256 验证；验证前失败回滚当前环境，验证后的备份清理失败只返回 `cleanup_pending` 并保留已验证环境。`kronos_a_share_public_data.py` 负责公开原始响应的原子快照，`kronos_a_share_baseline.py` 负责项目内 Qlib Provider、Alpha158+LightGBM 和评估 companion。它们的工件必须位于训练根并被 SHA256 provenance 绑定，不能用手工 CSV 绕过。
 
@@ -89,6 +90,8 @@ A股预检与工程冒烟：
 $AsharePython = 'D:\vcp_hunter\产业链投研\_training\kronos_ashare\runtime\venvs\kronos-ashare\Scripts\python.exe'
 & $AsharePython .agents\skills\kronos-market-forecasting\scripts\run_kronos_a_share.py check --config .agents\skills\kronos-market-forecasting\configs\a_share_daily_v1.yaml --load-model
 & $AsharePython .agents\skills\kronos-market-forecasting\scripts\run_kronos_a_share.py pipeline --config .agents\skills\kronos-market-forecasting\configs\a_share_daily_v1.yaml --mode smoke
+# 仅工程诊断允许覆盖 LR/seed，最多400步；不产生可解读 RankIC
+& $AsharePython .agents\skills\kronos-market-forecasting\scripts\run_kronos_a_share.py train-adapter --config .agents\skills\kronos-market-forecasting\configs\a_share_daily_v1.yaml --engineering-smoke --learning-rate 0.00003 --seed 100 --stop-after 400
 ```
 
 每日独立快照与评分（`future-timestamps` 必须是该快照 `pit_files` 中的官方 `raw_response`）：

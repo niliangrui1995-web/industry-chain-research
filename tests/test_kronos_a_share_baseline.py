@@ -178,6 +178,7 @@ class KronosAshareBaselineTests(unittest.TestCase):
                     "target_date": int(target.strftime("%Y%m%d")),
                     "split": "validation",
                     "label_excess_10d": (0.001 - 0.0002) * 10,
+                    "active_member_count": 2,
                 }
             )
         sample = training / "data" / "datasets" / "companion_sample_index.csv"
@@ -405,6 +406,77 @@ class KronosAshareBaselineTests(unittest.TestCase):
             self.assertAlmostEqual(float(label_bin[1]), expected_label, places=6)
             inspected = self.module.inspect_project_qlib_provider(provider, training)
             self.assertEqual(inspected["sample_count"], 1)
+
+    def test_formal_provider_uses_pit_membership_intervals_not_quote_envelope(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            training = Path(tmp) / "training"
+            training.mkdir()
+            source, sample, actions, _, origin = self._normalized_fixture(training)
+            membership = training / "data" / "normalized" / "index_membership.csv"
+            membership_start = origin - pd.Timedelta(days=7)
+            membership_end = origin + pd.Timedelta(days=7)
+            pd.DataFrame(
+                [
+                    {
+                        "index_code": "000300.SH",
+                        "ticker": "600000.SH",
+                        "effective_from": membership_start.strftime("%Y-%m-%d"),
+                        "effective_to": membership_end.strftime("%Y-%m-%d"),
+                    }
+                ]
+            ).to_csv(membership, index=False)
+            provider = training / "data" / "qlib" / "provider"
+
+            report = self.module.build_project_qlib_provider(
+                source_path=source,
+                sample_index_path=sample,
+                corporate_actions_path=actions,
+                index_membership_path=membership,
+                provider_uri=provider,
+                training_root=training,
+                segments=self.segments,
+            )
+
+            instruments = (provider / "instruments" / "csi800.txt").read_text(
+                encoding="utf-8"
+            ).strip()
+            self.assertEqual(
+                instruments,
+                "SH600000\t"
+                f"{membership_start:%Y-%m-%d}\t{membership_end:%Y-%m-%d}",
+            )
+            self.assertTrue(report["pit_membership_verified"])
+            self.assertEqual(
+                report["instrument_membership_contract"],
+                "pit_csi300_union_csi500_effective_intervals",
+            )
+            self.assertEqual(report["instrument_interval_count"], 1)
+
+            missing = training / "data" / "normalized" / "missing_membership.csv"
+            pd.DataFrame(
+                [
+                    {
+                        "index_code": "000300.SH",
+                        "ticker": "600000.SH",
+                        "effective_from": (origin + pd.Timedelta(days=1)).strftime(
+                            "%Y-%m-%d"
+                        ),
+                        "effective_to": (origin + pd.Timedelta(days=30)).strftime(
+                            "%Y-%m-%d"
+                        ),
+                    }
+                ]
+            ).to_csv(missing, index=False)
+            with self.assertRaisesRegex(self.module.BaselineError, "未覆盖样本日期"):
+                self.module.build_project_qlib_provider(
+                    source_path=source,
+                    sample_index_path=sample,
+                    corporate_actions_path=actions,
+                    index_membership_path=missing,
+                    provider_uri=training / "data" / "qlib" / "missing-provider",
+                    training_root=training,
+                    segments=self.segments,
+                )
 
     def test_label_mismatch_is_fail_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -636,7 +708,12 @@ class KronosAshareBaselineTests(unittest.TestCase):
                 "qlib.data.dataset": dataset,
             }
             output = training / "runs" / "fixture" / "alpha158.csv"
-            with mock.patch.dict(sys.modules, fake_modules):
+            with (
+                mock.patch.dict(sys.modules, fake_modules),
+                mock.patch.object(
+                    self.module, "_mean_daily_rankic", return_value=(0.1, 1)
+                ),
+            ):
                 report = self.module.run_alpha158_lightgbm(
                     provider_uri=provider,
                     training_root=training,
@@ -650,6 +727,10 @@ class KronosAshareBaselineTests(unittest.TestCase):
             self.assertEqual(report["seed_count"], 2)
             self.assertEqual(report["seeds"], [100, 101])
             self.assertEqual(report["aggregate_method"], "arithmetic_mean_prediction")
+            self.assertEqual(len(report["seed_artifacts"]), 2)
+            self.assertTrue(
+                all(Path(item["path"]).is_file() for item in report["seed_artifacts"])
+            )
             self.assertAlmostEqual(prediction.loc[0, "raw_score"], 1.005)
             qlib_init.assert_called_once()
             init_kwargs = qlib_init.call_args.kwargs
@@ -730,6 +811,51 @@ class KronosAshareBaselineTests(unittest.TestCase):
                 evaluate_split="validation",
             )
 
+    def test_formal_comparison_requires_complete_eligible_cross_section(self) -> None:
+        tickers = [f"sh{600000 + index:06d}" for index in range(100)]
+        inputs = pd.DataFrame(
+            {
+                "sample_id": np.arange(100, dtype=np.int64),
+                "ticker": tickers,
+                "trade_date": ["2023-02-01"] * 100,
+                "split": ["validation"] * 100,
+                "label_excess_10d": np.linspace(-0.02, 0.02, 100),
+                "last_value_score": np.zeros(100),
+                "momentum_score": np.linspace(-1.0, 1.0, 100),
+                "reversal_score": np.linspace(1.0, -1.0, 100),
+                "active_member_count": np.full(100, 105),
+            }
+        )
+        keys = inputs[["sample_id", "ticker", "trade_date"]]
+        external = {
+            name: keys.assign(raw_score=np.linspace(-0.5, 0.5, 100))
+            for name in self.module.EXTERNAL_BASELINES
+        }
+        report = self.module.build_baseline_comparison(
+            baseline_inputs=inputs,
+            external_scores=external,
+            evaluate_split="validation",
+            min_instruments=100,
+            active_member_count_column="active_member_count",
+            min_coverage_ratio=0.95,
+            require_eligible_cross_section=True,
+        )
+        self.assertTrue(
+            report["cross_section_contract"]["require_eligible_cross_section"]
+        )
+        incomplete = inputs.copy()
+        incomplete["active_member_count"] = 106
+        with self.assertRaisesRegex(self.module.BaselineError, "横截面未达标"):
+            self.module.build_baseline_comparison(
+                baseline_inputs=incomplete,
+                external_scores=external,
+                evaluate_split="validation",
+                min_instruments=100,
+                active_member_count_column="active_member_count",
+                min_coverage_ratio=0.95,
+                require_eligible_cross_section=True,
+            )
+
     def test_evaluation_companion_execution_flags_tax_and_tamper(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             training = Path(tmp) / "training"
@@ -749,6 +875,7 @@ class KronosAshareBaselineTests(unittest.TestCase):
             )
             frame = pd.read_csv(output)
             self.assertEqual(frame["sample_id"].tolist(), [0, 1])
+            self.assertEqual(frame["active_member_count"].tolist(), [2, 2])
             self.assertEqual(
                 frame["entry_date"].tolist(),
                 [date.strftime("%Y-%m-%d") for date in fixture["expected_entries"]],

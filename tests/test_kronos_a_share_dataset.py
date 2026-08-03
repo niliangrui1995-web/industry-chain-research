@@ -125,10 +125,58 @@ class KronosAshareDatasetTests(unittest.TestCase):
                 max_samples_per_split=2,
             )
             self.assertEqual(report["split_counts"]["train"], 2)
-            self.assertEqual(report["selection"]["mode"], "deterministic_bounded_smoke")
+            self.assertEqual(
+                report["selection"]["mode"],
+                "deterministic_stratified_bounded_smoke",
+            )
             index = pd.read_csv(report["sample_index"])
             self.assertEqual(index.groupby(["ticker", "split"]).size().max(), 1)
-            self.assertGreaterEqual(index.groupby("origin_date").size().max(), 2)
+            self.assertGreater(index["origin_date"].nunique(), 1)
+
+    def test_smoke_sampler_round_robins_market_board_and_date_strata(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            training = Path(tmp) / "training"
+            snapshot = training / "raw"
+            dates = pd.bdate_range("2020-01-01", periods=180)
+            for ticker in (
+                "bj430001",
+                "sh600000",
+                "sh688001",
+                "sz000001",
+                "sz300001",
+            ):
+                write_day(snapshot / f"{ticker}.day", dates)
+            write_day(snapshot / "sh000906.day", dates, start=100.0)
+            splits = {
+                "train": [dates[0].strftime("%Y-%m-%d"), dates[-1].strftime("%Y-%m-%d")],
+                "validation": ["2021-01-01", "2021-02-01"],
+                "development_test": ["2021-02-02", "2021-03-01"],
+                "locked_retrospective": ["2021-03-02", "2021-04-01"],
+            }
+            first = self.module.build_sample_index(
+                snapshot,
+                training / "dataset-a",
+                training,
+                splits=splits,
+                max_samples_per_split=5,
+                seed=100,
+            )
+            second = self.module.build_sample_index(
+                snapshot,
+                training / "dataset-b",
+                training,
+                splits=splits,
+                max_samples_per_split=5,
+                seed=100,
+            )
+            left = pd.read_csv(first["sample_index"])
+            right = pd.read_csv(second["sample_index"])
+            pd.testing.assert_frame_equal(left, right)
+            self.assertEqual(set(left["market"]), {"BJ", "SH", "SZ"})
+            self.assertEqual(
+                set(left["board"]), {"BSE", "MAIN", "STAR", "CHINEXT"}
+            )
+            self.assertGreater(left["origin_date"].nunique(), 1)
 
     def test_membership_filters_non_members(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -162,6 +210,7 @@ class KronosAshareDatasetTests(unittest.TestCase):
             )
             index = pd.read_csv(report["sample_index"])
             self.assertEqual(set(index["ticker"]), {"sh600000"})
+            self.assertTrue((index["active_member_count"] == 1).all())
 
     def test_formal_coverage_blocks_missing_historical_constituent_day_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -288,8 +337,8 @@ class KronosAshareDatasetTests(unittest.TestCase):
             write_day(snapshot / "sh000906.day", dates, start=100.0)
             calls = []
 
-            def checker(ticker, signal_date, raw_close):
-                calls.append((ticker, signal_date, raw_close))
+            def checker(ticker, signal_date, raw_close, previous_raw_close):
+                calls.append((ticker, signal_date, raw_close, previous_raw_close))
                 allowed = ticker == "sh600000"
                 return {
                     "state_confirmed": allowed,
@@ -314,8 +363,9 @@ class KronosAshareDatasetTests(unittest.TestCase):
             self.assertTrue(report["sample_trade_state_checked"])
             self.assertGreater(report["skipped"]["unconfirmed_trade_state"], 0)
             self.assertGreater(len(calls), 0)
+            self.assertTrue(all(call[3] < call[2] for call in calls))
 
-    def test_causal_adjustment_uses_only_actions_known_and_effective_by_origin(self) -> None:
+    def test_causal_adjustment_applies_known_future_action_but_not_unknown_action(self) -> None:
         dates = pd.bdate_range("2020-01-01", periods=12)
         frame = pd.DataFrame(
             {
@@ -330,13 +380,13 @@ class KronosAshareDatasetTests(unittest.TestCase):
         )
         actions = pd.DataFrame(
             {
-                "ticker": ["sh600000", "sh600000"],
-                "announcement_date": [dates[2], dates[8]],
-                "ex_date": [dates[5], dates[10]],
-                "cash_div": [0.5, 0.5],
-                "bonus_ratio": [0.0, 0.0],
-                "rights_ratio": [0.0, 0.0],
-                "rights_price": [0.0, 0.0],
+                "ticker": ["sh600000", "sh600000", "sh600000"],
+                "announcement_date": [dates[2], dates[2], dates[8]],
+                "ex_date": [dates[5], dates[9], dates[10]],
+                "cash_div": [0.5, 0.5, 0.5],
+                "bonus_ratio": [0.0, 0.0, 0.0],
+                "rights_ratio": [0.0, 0.0, 0.0],
+                "rights_price": [0.0, 0.0, 0.0],
             }
         )
         spec = self.module.WindowSpec(lookback=8, horizon=2)
@@ -357,9 +407,37 @@ class KronosAshareDatasetTests(unittest.TestCase):
             origin_date=int(dates[7].strftime("%Y%m%d")),
         )
         raw = self.module.normalized_window(frame, 0, spec)
-        self.assertEqual(raw_applied, 1)
-        self.assertEqual(applied, 1)
+        past_only_raw, _ = self.module.causal_adjusted_price_window(
+            frame,
+            0,
+            spec,
+            corporate_actions=actions.iloc[[0]].copy(),
+            ticker="sh600000",
+            origin_date=int(dates[7].strftime("%Y%m%d")),
+        )
+        past_only_normalized, _ = self.module.causal_adjusted_normalized_window(
+            frame,
+            0,
+            spec,
+            corporate_actions=actions.iloc[[0]].copy(),
+            ticker="sh600000",
+            origin_date=int(dates[7].strftime("%Y%m%d")),
+        )
+        self.assertEqual(raw_applied, 2)
+        self.assertEqual(applied, 2)
         self.assertEqual(adjusted_raw.shape, (10, 6))
+        np.testing.assert_array_equal(
+            adjusted_raw[: spec.lookback], past_only_raw[: spec.lookback]
+        )
+        np.testing.assert_array_equal(
+            adjusted[: spec.lookback], past_only_normalized[: spec.lookback]
+        )
+        self.assertFalse(
+            np.allclose(
+                adjusted_raw[spec.lookback :, :4],
+                past_only_raw[spec.lookback :, :4],
+            )
+        )
         self.assertFalse(
             np.allclose(
                 adjusted_raw[:, :4],
@@ -368,7 +446,87 @@ class KronosAshareDatasetTests(unittest.TestCase):
         )
         self.assertFalse(np.allclose(adjusted[:, :4], raw[:, :4]))
 
+    def test_sample_index_excludes_action_not_announced_at_origin(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            training = Path(tmp) / "training"
+            snapshot = training / "raw"
+            dates = pd.bdate_range("2020-01-01", periods=150)
+            write_day(snapshot / "sh600000.day", dates)
+            write_day(snapshot / "sh000906.day", dates, start=100.0)
+            actions_path = training / "corporate_actions.csv"
+            pd.DataFrame(
+                {
+                    "ticker": ["sh600000"],
+                    "announcement_date": [dates[104]],
+                    "ex_date": [dates[105]],
+                    "cash_div": [0.5],
+                    "bonus_ratio": [0.0],
+                    "rights_ratio": [0.0],
+                    "rights_price": [0.0],
+                }
+            ).to_csv(actions_path, index=False)
+            splits = {
+                "train": [dates[0].strftime("%Y-%m-%d"), dates[-1].strftime("%Y-%m-%d")],
+                "validation": ["2021-01-01", "2021-02-01"],
+                "development_test": ["2021-02-02", "2021-03-01"],
+                "locked_retrospective": ["2021-03-02", "2021-04-01"],
+            }
+            report = self.module.build_sample_index(
+                snapshot,
+                training / "dataset",
+                training,
+                splits=splits,
+                corporate_actions_path=actions_path,
+            )
+            index = pd.read_csv(report["sample_index"])
+            event_ex_date = int(dates[105].strftime("%Y%m%d"))
+            event_announcement_date = int(dates[104].strftime("%Y%m%d"))
+            leaked = index[
+                (index["origin_date"] < event_announcement_date)
+                & (index["target_date"] >= event_ex_date)
+            ]
+            self.assertTrue(leaked.empty)
+            self.assertGreater(report["skipped"]["unannounced_future_action"], 0)
+            self.assertEqual(report["future_action_audit"]["future_action_use_count"], 0)
+
     def test_load_token_cache_rejects_array_tampering(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            arrays = {
+                "s1.npy": np.zeros((1, 100), dtype=np.uint16),
+                "s2.npy": np.zeros((1, 100), dtype=np.uint16),
+                "stamp.npy": np.zeros((1, 100, 5), dtype=np.uint8),
+                "label.npy": np.zeros((1,), dtype=np.float32),
+                "trade_date.npy": np.zeros((1,), dtype=np.int32),
+                "instrument_id.npy": np.zeros((1,), dtype=np.int32),
+                "active_member_count.npy": np.ones((1,), dtype=np.int32),
+                "split.npy": np.zeros((1,), dtype=np.uint8),
+            }
+            files = {}
+            for name, array in arrays.items():
+                path = directory / name
+                np.save(path, array)
+                files[name] = {
+                    "bytes": path.stat().st_size,
+                    "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                }
+            (directory / "manifest.json").write_text(
+                json.dumps(
+                    {
+                        "schema_version": "kronos-a-share-token-cache-v1",
+                        "sample_count": 1,
+                        "files": files,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            self.module.load_token_cache(directory)
+            with (directory / "s1.npy").open("ab") as handle:
+                handle.write(b"tampered")
+            with self.assertRaisesRegex(self.module.DatasetBuildError, "字节数不匹配"):
+                self.module.load_token_cache(directory)
+
+    def test_legacy_token_cache_is_read_only_diagnostic_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             directory = Path(tmp)
             arrays = {
@@ -398,11 +556,17 @@ class KronosAshareDatasetTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            self.module.load_token_cache(directory)
-            with (directory / "s1.npy").open("ab") as handle:
-                handle.write(b"tampered")
-            with self.assertRaisesRegex(self.module.DatasetBuildError, "字节数不匹配"):
+            with self.assertRaisesRegex(
+                self.module.DatasetBuildError, "files 合同不完整"
+            ):
                 self.module.load_token_cache(directory)
+            loaded = self.module.load_token_cache(
+                directory,
+                diagnostic_legacy_read_only=True,
+            )
+            self.assertTrue(loaded["diagnostic_legacy_read_only"])
+            self.assertNotIn("active_member_count", loaded["arrays"])
+            self.module._close_token_memmaps(loaded["arrays"])
 
     def test_token_memmaps_are_closed_before_windows_atomic_publish(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
