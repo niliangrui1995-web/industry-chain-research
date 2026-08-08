@@ -289,3 +289,10 @@ grok_status: not_used_by_policy
 - 拟收购长飞上海剩余25%股权、增加6.5亿元关联交易额度，均待交割或实际发生额验证；三日龙虎榜只更新交易风险。
 - announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
 - thesis_effect=unchanged。
+
+## 2026-08-08 日更
+
+- 公告窗口：回扫公告日期 `2026-08-04` 至 `2026-08-08`；本轮在北京时间 20:00 前运行，`announcement_window_checked=pending_evening_rescan`。
+- 资本配置：全资子公司长飞资本拟以自有资金认缴基金 1.70 亿元，占基金认缴规模 34%；基金仍待募集和备案，尚无可确认的投资收益或主营协同。
+- 交易：8 月 7 日异动公告确认 8 月 4—6 日连续三日涨幅偏离累计超过 20%；上交所公开信息确认 8 月 5 日振幅、8 月 6 日三日涨幅偏离上榜。
+- 相对基线：基金认缴和交易异动均不改变光纤光缆订单、交付、ASP、毛利率和收入确认仍待验证的判断，`thesis_effect=unchanged`。

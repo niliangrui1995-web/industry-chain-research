@@ -159,3 +159,10 @@ multi_agent_status: used_by_explicit_user_permission
 - 8月6日5.15%限售股解禁、双向龙虎榜及折价大宗交易提高供给和交易分歧观察；AIDC thesis 未变。
 - announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
 - thesis_effect=unchanged。
+
+## 2026-08-08 日更
+
+- 公告窗口：回扫公告日期 `2026-08-04` 至 `2026-08-08`；本轮在北京时间 20:00 前运行，`announcement_window_checked=pending_evening_rescan`。
+- 官方担保：公司为控股子公司苏州直为提供 5,000 万元担保，公告披露其截至一季度末资产负债率较高；另有例行现金管理公告。
+- 龙虎榜：深交所确认 8 月 5 日因日价格振幅达到 16.32% 上榜，成交金额 43.67 亿元。
+- 相对基线：担保与交易波动不构成 AIDC 客户、订单、收入或毛利率新证据，`thesis_effect=unchanged`。

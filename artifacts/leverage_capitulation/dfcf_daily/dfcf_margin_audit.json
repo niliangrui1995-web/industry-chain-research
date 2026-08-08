@@ -8,28 +8,30 @@
     "SH": "007",
     "SZ": "001"
   },
-  "requested_start": "2011-08-03",
-  "backfill_start": "2011-08-03",
-  "requested_end": "2026-08-03",
-  "network_requests": 16,
-  "sh_rows": 3641,
-  "sz_rows": 3641,
-  "common_rows": 3641,
-  "sh_latest": "2026-07-31",
-  "sz_latest": "2026-07-31",
-  "latest_common_date": "2026-07-31",
-  "sh_only_dates": [],
+  "requested_start": "2026-07-20",
+  "backfill_start": null,
+  "requested_end": "2026-08-08",
+  "network_requests": 2,
+  "sh_rows": 3646,
+  "sz_rows": 3645,
+  "common_rows": 3645,
+  "sh_latest": "2026-08-07",
+  "sz_latest": "2026-08-06",
+  "latest_common_date": "2026-08-06",
+  "sh_only_dates": [
+    "2026-08-07"
+  ],
   "sz_only_dates": [],
   "changed_rows": {
-    "SH": 1072,
-    "SZ": 1072
+    "SH": 4,
+    "SZ": 3
   },
-  "new_common_dates": 0,
+  "new_common_dates": 3,
   "table_updated": true,
   "sample_status": "dfcf_vendor_only_unverified_by_exchange",
   "vendor_warning": "DFCF vendor data only; not validated against exchange official aggregates.",
-  "dfcf_sse_margin_sha256": "9d665c146705f123a52c2650f0c1c96d2b8c7e4df8dcce2ff7907fa8af368ca5",
-  "dfcf_szse_margin_sha256": "64959fb19410c343da75b24ad7692adc30af29f88d2dde0789375ec3bb6e8583",
-  "dfcf_margin_balances_sha256": "283c885a3124cfe055c5f6fdf7740169b8f291e203de156554fd45602648c196",
-  "updated_at_utc": "2026-08-03T09:11:17+00:00"
+  "dfcf_sse_margin_sha256": "9f0b7459e9f290132eae1604061d91892d6e449becc330d00499f826691d80a6",
+  "dfcf_szse_margin_sha256": "1f5400b76e532dd5ad0e9db84b872f15b7a8520e6810b7b52b81af8892ed0e06",
+  "dfcf_margin_balances_sha256": "ee25ec1acd6feb1f1c9c288f1c881d52a5aed84fe910a2a138da98a2f6514ae9",
+  "updated_at_utc": "2026-08-08T05:42:37+00:00"
 }

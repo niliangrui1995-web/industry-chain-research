@@ -7,9 +7,7 @@ from pathlib import Path
 import pytest
 
 
-PYTEST_TEMP_ROOT = Path(
-    r"D:\vcp_hunter\产业链投研\_training\kronos_ashare\runtime\tmp\pytest-runs"
-).resolve()
+PYTEST_TEMP_ROOT = (Path(__file__).resolve().parents[1] / ".pytest_cache" / "pytest-runs").resolve()
 
 
 def _apply_process_temp_contract() -> Path:

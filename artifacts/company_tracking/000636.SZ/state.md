@@ -132,3 +132,10 @@ multi_agent_status: not_used_by_policy
 - 新增三笔平价机构大宗交易；不构成AI算力MLCC客户、认证、订单或盈利兑现。
 - announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
 - thesis_effect=unchanged。
+
+## 2026-08-08 日更
+
+- 公告窗口：回扫公告日期 `2026-08-04` 至 `2026-08-08`；本轮在北京时间 20:00 前运行，`announcement_window_checked=pending_evening_rescan`。
+- 治理：公司聘任潘锋为副总裁；该管理职责调整未伴随高端 MLCC 客户、订单、收入或毛利率披露。
+- 龙虎榜：深交所确认 8 月 4 日因日价格振幅达到 15.83% 上榜，成交金额 104.22 亿元。
+- 相对基线：治理与交易层发生变化，AI 算力 MLCC 经营证据仍无新增，`thesis_effect=unchanged`。

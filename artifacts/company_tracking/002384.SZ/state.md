@@ -341,3 +341,9 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 回购累计49,994,780元，7月30日龙虎榜更新交易风险；索尔思、保险和客户交付的证据边界不变。
 - announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
 - thesis_effect=unchanged。
+
+## 2026-08-08 日更
+
+- 公告窗口：回扫公告日期 `2026-08-04` 至 `2026-08-08`，未见新增发行人公告或 IR；本轮在北京时间 20:00 前运行，`announcement_window_checked=pending_evening_rescan`。
+- 龙虎榜：深交所确认 8 月 4 日因日价格涨幅偏离值 7.27% 上榜、成交金额 153.29 亿元；8 月 5 日因日价格振幅 19.68% 上榜、成交金额 244.40 亿元。
+- 相对基线：高波动交易事件不构成索尔思整合、客户交付、收入或利润的新证据，`thesis_effect=unchanged`。

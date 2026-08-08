@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "company-tracking-688668-2026-08-08",
+  "as_of": "2026-08-08T13:45:58+08:00",
+  "sources": [
+    {
+      "id": "S_REPORT",
+      "source_type": "report_under_audit",
+      "origin_id": "report:company-tracking:2026-08-08",
+      "locator": "artifacts/company_tracking/2026-08-08.md",
+      "source_date": "2026-08-08",
+      "checked_at": "2026-08-08T13:45:58+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_OFFICIAL",
+      "source_type": "official_filing",
+      "origin_id": "issuer:688668:2026H1:1225457964",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-05/1225457964.PDF#pages=1-11",
+      "source_date": "2026-08-05",
+      "checked_at": "2026-08-08T13:45:58+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_REPORT_REVENUE",
+      "metric": "revenue",
+      "value": "1029145854.96",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_OFFICIAL_REVENUE",
+      "metric": "revenue",
+      "value": "1029145854.96",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "consolidated_prc_gaap",
+      "source_refs": ["S_OFFICIAL"]
+    },
+    {
+      "id": "F_REPORT_ATTRIBUTABLE",
+      "metric": "attributable_net_profit",
+      "value": "183763471.96",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_OFFICIAL_ATTRIBUTABLE",
+      "metric": "attributable_net_profit",
+      "value": "183763471.96",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "consolidated_prc_gaap",
+      "source_refs": ["S_OFFICIAL"]
+    },
+    {
+      "id": "F_REPORT_DEDUCTED",
+      "metric": "deducted_attributable_net_profit",
+      "value": "174800278.21",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_OFFICIAL_DEDUCTED",
+      "metric": "deducted_attributable_net_profit",
+      "value": "174800278.21",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "consolidated_prc_gaap",
+      "source_refs": ["S_OFFICIAL"]
+    }
+  ],
+  "checks": [
+    {"id": "C_REVENUE", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_REVENUE"}, "references": [{"fact_id": "F_OFFICIAL_REVENUE"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_ATTRIBUTABLE", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_ATTRIBUTABLE"}, "references": [{"fact_id": "F_OFFICIAL_ATTRIBUTABLE"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_DEDUCTED", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_DEDUCTED"}, "references": [{"fact_id": "F_OFFICIAL_DEDUCTED"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}}
+  ]
+}

@@ -1,6 +1,0 @@
-interface:
-  display_name: "Kronos A股预测与微调"
-  short_description: "运行Kronos-base、A股PIT v2、LoRA诊断和正式准出"
-  default_prompt: "Use $kronos-market-forecasting to validate the local runtime and PIT normalization v2 evidence gate, run only the eligible engineering-smoke or formal Kronos-base A-share stage, and fail closed as gate_status=blocked, output_type=N/A, evidence_class=model_output until every data and model gate passes."
-policy:
-  allow_implicit_invocation: true

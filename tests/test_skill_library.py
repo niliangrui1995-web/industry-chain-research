@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import re
-import subprocess
-import sys
 import unittest
 from pathlib import Path
 
@@ -18,7 +16,6 @@ EXPECTED_SKILLS = {
     "financial-evidence-audit",
     "ht-local-market-data",
     "income-investment",
-    "kronos-market-forecasting",
     "research-industry-chain",
     "research-listed-company",
     "user-investment-discipline",
@@ -29,24 +26,11 @@ REMOVED_ROUTES = {
     "semiconductor-ai-chain-investment-researcher",
     "user-investment-framework",
 }
-EXPECTED_KRONOS_A_SHARE_COMMANDS = {
-    "snapshot",
-    "prepare",
-    "check",
-    "train-adapter",
-    "train-scorer",
-    "evaluate",
-    "score-as-of",
-    "inspect-checkpoint",
-    "pipeline",
-}
-
-
 class SkillLibraryTests(unittest.TestCase):
     def test_repository_uses_standard_skill_root(self) -> None:
         self.assertFalse((ROOT / "skills").exists())
         actual = {path.name for path in SKILL_ROOT.iterdir() if path.is_dir()}
-        self.assertEqual(len(actual), 12)
+        self.assertEqual(len(actual), 11)
         self.assertEqual(actual, EXPECTED_SKILLS)
 
     def test_skill_metadata_and_entrypoints_are_compact(self) -> None:
@@ -124,134 +108,6 @@ class SkillLibraryTests(unittest.TestCase):
         ]:
             with self.subTest(route=route):
                 self.assertIn(route, agents)
-
-    def test_kronos_route_is_model_output_only(self) -> None:
-        agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
-        skill = (SKILL_ROOT / "kronos-market-forecasting" / "SKILL.md").read_text(
-            encoding="utf-8"
-        )
-        reference = (
-            SKILL_ROOT
-            / "kronos-market-forecasting"
-            / "references"
-            / "usage-and-capabilities.md"
-        ).read_text(encoding="utf-8")
-
-        for needle in ["kronos-market-forecasting", "model_output"]:
-            self.assertIn(needle, agents)
-        for needle in ["evidence_class=model_output", "不是未来事实", "样本外"]:
-            self.assertIn(needle, skill)
-        for needle in ["max_context", "sm_61", "未来时间戳", "MIT License"]:
-            self.assertIn(needle, reference)
-
-    def test_kronos_a_share_skill_contract_and_health_coverage(self) -> None:
-        skill_dir = SKILL_ROOT / "kronos-market-forecasting"
-        cli_path = skill_dir / "scripts" / "run_kronos_a_share.py"
-        migration_path = skill_dir / "scripts" / "migrate_kronos_storage.ps1"
-        rebuild_path = skill_dir / "scripts" / "rebuild_kronos_envs.ps1"
-        config_path = skill_dir / "configs" / "a_share_daily_v1.yaml"
-        pit_normalization_example_path = (
-            skill_dir / "configs" / "pit_normalization_v1.example.json"
-        )
-        reference_path = skill_dir / "references" / "a-share-finetuning.md"
-        requirements_path = skill_dir / "requirements-training.in"
-        training_lock_path = skill_dir / "requirements-training.lock"
-        torch_input_path = skill_dir / "requirements-torch-cu118.txt"
-        torch_lock_path = skill_dir / "requirements-torch-cu118.lock"
-        for path in [
-            cli_path,
-            migration_path,
-            rebuild_path,
-            config_path,
-            pit_normalization_example_path,
-            reference_path,
-            requirements_path,
-            training_lock_path,
-            torch_input_path,
-            torch_lock_path,
-        ]:
-            with self.subTest(artifact=path.name):
-                self.assertTrue(path.is_file())
-
-        skill = (skill_dir / "SKILL.md").read_text(encoding="utf-8")
-        cli = cli_path.read_text(encoding="utf-8")
-        migration = migration_path.read_text(encoding="utf-8")
-        rebuild = rebuild_path.read_text(encoding="utf-8")
-        config = config_path.read_text(encoding="utf-8")
-        reference = reference_path.read_text(encoding="utf-8")
-        manifest = (ROOT / "SKILL_PACK_MANIFEST.md").read_text(encoding="utf-8")
-        training_root = r"D:\vcp_hunter\产业链投研\_training\kronos_ashare"
-
-        self.assertIn(r"_training\kronos_ashare", skill)
-        self.assertIn(f"training_root: '{training_root}'", config)
-        self.assertIn(r"D:\vcp_hunter\产业链投研", reference)
-        self.assertIn(r"_training\kronos_ashare", reference)
-        self.assertIn("schema_version: kronos-a-share-v1", config)
-        self.assertIn("evidence_class=model_output", skill)
-        self.assertIn("evidence_class=model_output", reference)
-        self.assertIn("output_type=N/A", reference)
-        self.assertIn('evidence_class="model_output"', cli)
-        self.assertIn('output_type="N/A"', cli)
-        self.assertIn(f"$TrainingRoot = '{training_root}'", migration)
-        for variable in ["UV_CACHE_DIR", "UV_PYTHON_INSTALL_DIR", "PIP_CACHE_DIR"]:
-            self.assertIn(variable, migration)
-        self.assertIn("-ItemType Junction", migration)
-        self.assertIn("requirements-training.lock", rebuild)
-        self.assertIn("requirements-torch-cu118.lock", rebuild)
-        self.assertIn("--require-hashes", rebuild)
-        self.assertIn("migrate_kronos_storage.ps1 -Apply", reference)
-        self.assertIn("rebuild_kronos_envs.ps1", reference)
-        self.assertIn("build_project_qlib_provider()", reference)
-        self.assertIn("build_evaluation_companion()", reference)
-        self.assertIn("gate-head.json", reference)
-        self.assertIn("registry_root_sha256", reference)
-        self.assertIn("--inference-snapshot", reference)
-        self.assertIn(".research-only.csv", reference)
-        self.assertIn("`model_output`", manifest)
-        self.assertIn("`N/A`", manifest)
-        self.assertIn(
-            "_training/",
-            {line.strip() for line in (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()},
-        )
-
-        interpreter = ROOT / ".venv_kronos" / "Scripts" / "python.exe"
-        if not interpreter.is_file():
-            interpreter = Path(sys.executable)
-        completed = subprocess.run(
-            [str(interpreter), "-B", str(cli_path), "--help"],
-            cwd=ROOT,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            capture_output=True,
-            timeout=30,
-            check=False,
-        )
-        self.assertEqual(completed.returncode, 0, completed.stderr)
-        command_groups = [
-            {item.strip() for item in match.split(",")}
-            for match in re.findall(r"\{([a-z][a-z,-]+)\}", completed.stdout)
-            if "snapshot" in match.split(",")
-        ]
-        self.assertTrue(command_groups, completed.stdout)
-        self.assertEqual(command_groups[0], EXPECTED_KRONOS_A_SHARE_COMMANDS)
-
-        health = (ROOT / "scripts" / "repo_health_check.py").read_text(encoding="utf-8")
-        for filename in [
-            "kronos_a_share_baseline.py",
-            "kronos_a_share_data.py",
-            "kronos_a_share_dataset.py",
-            "kronos_a_share_evaluation.py",
-            "kronos_a_share_forward.py",
-            "kronos_a_share_model.py",
-            "kronos_a_share_public_data.py",
-            "kronos_a_share_runtime.py",
-            "kronos_a_share_training.py",
-            "run_kronos_a_share.py",
-        ]:
-            with self.subTest(health_file=filename):
-                self.assertIn(filename, health)
-        self.assertIn("check_kronos_a_share_skill_contract()", health)
 
     def test_listed_company_research_requires_pre_event_expectation_check(self) -> None:
         company = (SKILL_ROOT / "research-listed-company" / "SKILL.md").read_text(

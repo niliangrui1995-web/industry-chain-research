@@ -435,3 +435,9 @@ CNINFO 2026-05-10 至 2026-05-14 无新增公告，龙虎榜为空。新增 1 �
 - H股挂牌、股东持股变动和两笔大宗交易更新资本/交易结构；800G/1.6T经营证据未变。
 - announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
 - thesis_effect=unchanged。
+
+## 2026-08-08 日更
+
+- 公告窗口：回扫公告日期 `2026-08-04` 至 `2026-08-08`，仅见 H 股月度申报表等例行文件；本轮在北京时间 20:00 前运行，`announcement_window_checked=pending_evening_rescan`。
+- 大宗交易：东方财富二级数据记录 8 月 6 日一笔机构对机构交易，成交 18.99 万股、约 1.8254 亿元、成交价 961.04 元，较收盘价溢价约 0.63%；未取得该笔交易所原始公开记录。
+- 相对基线：该交易仅作资金结构观察，不构成 800G/1.6T 客户、订单、收入或毛利率新增证据，`thesis_effect=unchanged`。

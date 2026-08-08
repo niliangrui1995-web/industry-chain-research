@@ -447,3 +447,9 @@ open_web_fallback_status: no_signal_2026-07-20
 - 新增5,100万元子公司担保；不改变HVLP/RTF商业化判断。下一步看担保余额、现金流和分代数据。
 - announcement_window_checked=T_and_T_plus_1；open_web_search_status=searched_no_new_operating_signal。
 - thesis_effect=unchanged。
+
+## 2026-08-08 日更
+
+- 公告窗口：回扫公告日期 `2026-08-04` 至 `2026-08-08`；本轮在北京时间 20:00 前运行，`announcement_window_checked=pending_evening_rescan`。
+- 官方担保：公司为全资子公司琥珀新材在进口代理合同项下提供最高本金 3.165 亿元日元连带责任担保，期限为主债务履行期届满后三年。
+- 相对基线：此为资金支持与或有负债观察项，不是 HVLP/RTF 客户、分代收入、毛利率或现金回款证据；需继续看担保余额与子公司现金流，`thesis_effect=unchanged`。
