@@ -1,0 +1,292 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "688668-2026h1-liquid-cooling-evidence-2026-08-08",
+  "input_sha256": "e4181b5ff7fea6717c38b2d02e4b81638a2fa0dcf2b505e60be53e87cc774717",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 6,
+    "verified_count": 6,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_H1_SSE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "sse:688668:2026H1:20260805:CJQC"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "1029145854.96",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "S_H1_SSE",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_ATTRIBUTABLE_NET_PROFIT",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_H1_SSE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "sse:688668:2026H1:20260805:CJQC"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "183763471.96",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "S_H1_SSE",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_DEDUCTED_ATTRIBUTABLE_NET_PROFIT",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_H1_SSE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "sse:688668:2026H1:20260805:CJQC"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "174800278.21",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "S_H1_SSE",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_TOTAL_SHARES",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_H1_SSE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "sse:688668:2026H1:20260805:CJQC"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "139270606",
+          "metric": "total_shares_outstanding",
+          "unit": "share",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "total_shares_outstanding",
+          "source_ids": [
+            "S_H1_SSE",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_CONVERTIBLE_PRINCIPAL",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_H1_SSE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "sse:688668:2026H1:20260805:CJQC"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "930000000",
+          "metric": "convertible_bond_principal",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "outstanding_convertible_principal",
+          "source_ids": [
+            "S_H1_SSE",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_EFFECTIVE_CONVERSION_PRICE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_DOWNWARD_SSE"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "sse:688668:convertible-downward-price:20260807:42I2"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "246",
+          "metric": "conversion_price",
+          "unit": "currency_per_share",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-08-07T00:00:00+08:00"
+          },
+          "basis": "effective_conversion_price",
+          "source_ids": [
+            "S_DOWNWARD_SSE",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    }
+  ]
+}

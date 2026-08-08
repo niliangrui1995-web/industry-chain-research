@@ -1,0 +1,188 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "688668-2026h1-liquid-cooling-evidence-2026-08-08",
+  "as_of": "2026-08-08T23:55:09+08:00",
+  "sources": [
+    {
+      "id": "S_REPORT",
+      "source_type": "report_under_audit",
+      "origin_id": "report:688668:2026h1-liquid-cooling-evidence:2026-08-08",
+      "locator": "artifacts/company_tracking/688668.SH/2026H1_liquid_cooling_evidence_report_2026-08-08.md",
+      "source_date": "2026-08-08",
+      "checked_at": "2026-08-08T23:55:09+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_H1_SSE",
+      "source_type": "exchange",
+      "origin_id": "sse:688668:2026H1:20260805:CJQC",
+      "locator": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-05/688668_20260805_CJQC.pdf",
+      "source_date": "2026-08-05",
+      "checked_at": "2026-08-08T23:55:09+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_DOWNWARD_SSE",
+      "source_type": "exchange",
+      "origin_id": "sse:688668:convertible-downward-price:20260807:42I2",
+      "locator": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-07/688668_20260807_42I2.pdf",
+      "source_date": "2026-08-07",
+      "checked_at": "2026-08-08T23:55:09+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_REPORT_REVENUE",
+      "metric": "revenue",
+      "value": "1029145854.96",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_H1_REVENUE",
+      "metric": "revenue",
+      "value": "1029145854.96",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_H1_SSE"]
+    },
+    {
+      "id": "F_REPORT_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "attributable_net_profit",
+      "value": "183763471.96",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_H1_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "attributable_net_profit",
+      "value": "183763471.96",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_H1_SSE"]
+    },
+    {
+      "id": "F_REPORT_DEDUCTED_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "deducted_attributable_net_profit",
+      "value": "174800278.21",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_H1_DEDUCTED_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "deducted_attributable_net_profit",
+      "value": "174800278.21",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-05",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_H1_SSE"]
+    },
+    {
+      "id": "F_REPORT_TOTAL_SHARES",
+      "metric": "total_shares_outstanding",
+      "value": "139270606",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-06-30T23:59:59+08:00"},
+      "available_at": "2026-08-05",
+      "basis": "total_shares_outstanding",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_H1_TOTAL_SHARES",
+      "metric": "total_shares_outstanding",
+      "value": "139270606",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-06-30T23:59:59+08:00"},
+      "available_at": "2026-08-05",
+      "basis": "total_shares_outstanding",
+      "source_refs": ["S_H1_SSE"]
+    },
+    {
+      "id": "F_REPORT_CONVERTIBLE_PRINCIPAL",
+      "metric": "convertible_bond_principal",
+      "value": "930000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-06-30T23:59:59+08:00"},
+      "available_at": "2026-08-05",
+      "basis": "outstanding_convertible_principal",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_H1_CONVERTIBLE_PRINCIPAL",
+      "metric": "convertible_bond_principal",
+      "value": "930000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-06-30T23:59:59+08:00"},
+      "available_at": "2026-08-05",
+      "basis": "outstanding_convertible_principal",
+      "source_refs": ["S_H1_SSE"]
+    },
+    {
+      "id": "F_REPORT_EFFECTIVE_CONVERSION_PRICE",
+      "metric": "conversion_price",
+      "value": "246.00",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-08-07T00:00:00+08:00"},
+      "available_at": "2026-08-07",
+      "basis": "effective_conversion_price",
+      "source_refs": ["S_REPORT"]
+    },
+    {
+      "id": "F_DOWNWARD_EFFECTIVE_CONVERSION_PRICE",
+      "metric": "conversion_price",
+      "value": "246.00",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-08-07T00:00:00+08:00"},
+      "available_at": "2026-08-07",
+      "basis": "effective_conversion_price",
+      "source_refs": ["S_DOWNWARD_SSE"]
+    }
+  ],
+  "checks": [
+    {"id": "C_REVENUE", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_REVENUE"}, "references": [{"fact_id": "F_H1_REVENUE"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_ATTRIBUTABLE_NET_PROFIT", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_ATTRIBUTABLE_NET_PROFIT"}, "references": [{"fact_id": "F_H1_ATTRIBUTABLE_NET_PROFIT"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_DEDUCTED_ATTRIBUTABLE_NET_PROFIT", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_DEDUCTED_ATTRIBUTABLE_NET_PROFIT"}, "references": [{"fact_id": "F_H1_DEDUCTED_ATTRIBUTABLE_NET_PROFIT"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_TOTAL_SHARES", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_TOTAL_SHARES"}, "references": [{"fact_id": "F_H1_TOTAL_SHARES"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_CONVERTIBLE_PRINCIPAL", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_CONVERTIBLE_PRINCIPAL"}, "references": [{"fact_id": "F_H1_CONVERTIBLE_PRINCIPAL"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}},
+    {"id": "C_EFFECTIVE_CONVERSION_PRICE", "kind": "cross_source", "materiality": "material", "target": {"fact_id": "F_REPORT_EFFECTIVE_CONVERSION_PRICE"}, "references": [{"fact_id": "F_DOWNWARD_EFFECTIVE_CONVERSION_PRICE"}], "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"}, "tolerance": {"relative_pct": "0", "absolute_base": "0"}}
+  ]
+}
