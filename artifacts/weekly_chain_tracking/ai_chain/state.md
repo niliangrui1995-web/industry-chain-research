@@ -1,5 +1,51 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
+## 2026-08-09 最新运行状态
+
+更新时间：2026-08-09（北京时间；第十三期全链雷达）
+研究截止日（as_of）：2026-08-09
+最新报告：[2026-08-09.md](2026-08-09.md)；结构化证据包：[2026-08-09_research_inputs.json](2026-08-09_research_inputs.json)；规范化产物：[2026-08-09.normalized.json](2026-08-09.normalized.json)；证据检查：[2026-08-09.bottleneck_evidence_checks.csv](2026-08-09.bottleneck_evidence_checks.csv)。
+
+### 运行合同元数据
+
+| 字段 | 本轮实际值 |
+|---|---|
+| captured_at_beijing | 2026-08-09T19:02:44+08:00 |
+| skill_revision | git:d02fac57d10911d2937cadd349fd096b46596ec8 |
+| prompt_contract_version | 2026-07-27.1 |
+| skill_content_sha256 | 656fd6486cebe6403278246e6d7424d8f25c1ae6894787f172b244eeec2bb5e0 |
+| skill_tree_status | clean |
+| skills | ai-chain-research-orchestrator；research-industry-chain |
+| status | ok |
+
+本轮在业务读取前完成合同预检；本期需要近周增量核验，故按两项实际Skill重跑元数据。normalizer 使用同一 as_of=2026-08-09 的严格模式，issues=0；validate_bottleneck_evidence.py 使用同一 as_of，返回 reviewable、eligible_count=5、incomplete_count=0、ineligible_count=0。eligible_for_bottleneck_review 仅表示包可供人工复核，不自动授予卡点结论。
+
+### 当前主台账（2026-08-09）
+
+| 节点 | check_id | 结论/时段 | 证据状态与边界 | 变化/反转指标 |
+|---|---|---|---|---|
+| Azure AI云有效算力容量 | ai-chain-20260809-azure-capacity-01 | 限Microsoft/Azure的hard_bottleneck；2026H2 | 三腿均为2026-07-29 company_original Microsoft FY26 Q4；需求持续超过可用容量、当季新增容量迅速变现。 | unchanged；可用容量增速持续超过需求且新增容量不再快速吸收时降级。 |
+| AI服务器内存组合（HBM、server DRAM、eSSD） | ai-chain-20260809-memory-01 | hard_bottleneck；2026H2 | 三腿均为2026-07-30 company_original Samsung 2026Q2；SK hynix作交叉验证。仅为组合级结论。 | unchanged；三类产品同时供需平衡、库存回补或原厂撤回约束表述时降级。 |
+| 领先逻辑与后端先进封装/测试有效产能 | ai-chain-20260809-leading-edge-backend-01 | 限TSMC披露范围的hard_bottleneck；2026H2 | 需求为2026Q2；供给为2026Q1 N3当前产能紧张及2026Q2后端shortage mode/测试机短缺；缺口由两期official披露闭环。 | unchanged；后端平衡、测试机短缺解除和外部替代稳定批供时降级。 |
+| 1.6T高速光模块有效交付 | ai-chain-20260809-1p6t-delivery-01 | hard_bottleneck；2026H2 | 三腿均为2026-07-28 company_original 中际旭创；核心料、认证和大规模交付共同受限。 | unchanged；物料改善、交期常态化和多家认证供应商稳定批交时降级。 |
+| M8/M9/M10 CCL/prepreg材料组合 | ai-chain-20260809-pcb-ccl-01 | soft_bottleneck；2026H2 | 需求为2026-07-22沪电，供给/缺口为2026-07-09南亚；南亚口径混列ABF，故不升hard。 | unchanged；分级报价/交期常态化、停止锁料且二供进入AVL时降级。 |
+
+所有当前hard/soft行的 claim_as_of=2026-08-09、time_horizon一致，并用 evidence_check_id 唯一关联同包检查；没有使用匿名、social、lead_only或陈旧来源。专项中的200G/lane EML+合格InP仍为公司级soft、改善中，不并入全链主账；PCB铜箔与板级电子布留在专项跟踪，主账仅保留材料组合。
+
+### 专项吸收与未来队列
+
+- 光模块专项（2026-08-09）：1.6T维持hard；NPO/2.4T维持2027H2-2028的medium likely_future_bottleneck。AXT锁产能、扩产、CPO量产和连接器交付只能说明保供/需求或缓解路径。
+- AI PCB专项（2026-08-09）：铜箔、板级电子布、CCL/prepreg均为soft；广义HVLP不能写成HVLP4/5，ABF/BT的T-glass/Low CTE不得混入板级PCB。
+- HBM final/package test、probe card、Cube Prober；HVLP5/Q cloth/M10与板级良率；数据中心电力/液冷设施集成；网络交换与高速互连；玻璃基板/CoPoS均为low-confidence watch，future_max_age_days=365。
+
+### 公司映射与下次动作
+
+Microsoft、Samsung、TSMC、中际旭创、沪电股份、南亚塑胶均为 revenue/current/watch_only；阶段日期、来源类型和定位见本期报告。未复用任何专项行情、估值、市值或预期差，未标记main_candidate，也没有形成交易弹性排名。
+
+下期优先核验：内存原厂allocation/交期/库存；Azure新增容量吸收；TSMC后端和tester；1.6T/200G EML/InP的物料与认证；以及PCB、电力、液冷、网络能否出现行业级同节点三腿闭环。
+
+> 下方2026-08-02及更早内容为历史基线，不具有本期check_id、claim_as_of或normalizer资格，不能直接作为当前hard/soft准出依据。
+
 ## 2026-08-02 最新运行状态
 
 更新时间：2026-08-02（北京时间；第十二期全链雷达）

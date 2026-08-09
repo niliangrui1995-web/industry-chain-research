@@ -1,0 +1,327 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "optical-module-market-snapshot-20260809",
+  "input_sha256": "0e04a8762ef2488d86f6801c06dcfb45515a44e7295e7046709def9e092df5bd",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 7,
+    "verified_count": 7,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_300757_CLOSE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_300757"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "tencent-quote:sz300757:2026-08-07"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "510",
+          "metric": "close_price",
+          "unit": "currency_per_share",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-08-07T15:00:00+08:00"
+          },
+          "basis": "unadjusted_close",
+          "source_ids": [
+            "S_300757",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_002428_CLOSE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_002428"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "tencent-quote:sz002428:2026-08-07"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "100.08",
+          "metric": "close_price",
+          "unit": "currency_per_share",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-08-07T15:00:00+08:00"
+          },
+          "basis": "unadjusted_close",
+          "source_ids": [
+            "S_002428",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_688048_CLOSE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_688048"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "tencent-quote:sh688048:2026-08-07"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "285.52",
+          "metric": "close_price",
+          "unit": "currency_per_share",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-08-07T15:00:00+08:00"
+          },
+          "basis": "unadjusted_close",
+          "source_ids": [
+            "S_688048",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_688498_CLOSE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_688498"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "tencent-quote:sh688498:2026-08-07"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "1355.5",
+          "metric": "close_price",
+          "unit": "currency_per_share",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-08-07T15:00:00+08:00"
+          },
+          "basis": "unadjusted_close",
+          "source_ids": [
+            "S_688498",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_300394_CLOSE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_300394"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "tencent-quote:sz300394:2026-08-07"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "230.68",
+          "metric": "close_price",
+          "unit": "currency_per_share",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-08-07T15:00:00+08:00"
+          },
+          "basis": "unadjusted_close",
+          "source_ids": [
+            "S_300394",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_300308_CLOSE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_300308"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "tencent-quote:sz300308:2026-08-07"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "919.87",
+          "metric": "close_price",
+          "unit": "currency_per_share",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-08-07T15:00:00+08:00"
+          },
+          "basis": "unadjusted_close",
+          "source_ids": [
+            "S_300308",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_300502_CLOSE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_300502"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "tencent-quote:sz300502:2026-08-07"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "420.95",
+          "metric": "close_price",
+          "unit": "currency_per_share",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-08-07T15:00:00+08:00"
+          },
+          "basis": "unadjusted_close",
+          "source_ids": [
+            "S_300502",
+            "S_REPORT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    }
+  ]
+}
