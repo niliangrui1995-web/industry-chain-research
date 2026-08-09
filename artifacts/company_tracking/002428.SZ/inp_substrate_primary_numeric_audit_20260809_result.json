@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "inp-substrate-primary-numeric-20260809",
+  "input_sha256": "039c8e09ba9b319322bf628a36b6b34bed4f23f0d3445358dbe6895ca7b33fc8",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 2,
+    "verified_count": 2,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_INP_CAPACITY_CROSS_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_YG_IR_20260511"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:002428:2026-05-11:1225291589"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "150000",
+          "metric": "inp_substrate_annual_capacity",
+          "unit": "count",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2025-12-31T23:59:59+08:00"
+          },
+          "basis": "reported_inp_substrate_2_to_4_inch",
+          "source_ids": [
+            "S_YG_IR_20260507",
+            "S_YG_IR_20260511"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_INP_PRODUCTION_CROSS_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_YG_IR_20260511"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:002428:2026-05-11:1225291589"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "100100",
+          "metric": "inp_substrate_production",
+          "unit": "count",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2025-01-01",
+            "end": "2025-12-31",
+            "frequency": "year",
+            "label": "FY2025"
+          },
+          "basis": "reported_inp_substrate_2_to_4_inch",
+          "source_ids": [
+            "S_YG_IR_20260507",
+            "S_YG_IR_20260511"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    }
+  ]
+}

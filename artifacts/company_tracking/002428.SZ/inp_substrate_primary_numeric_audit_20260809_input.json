@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "inp-substrate-primary-numeric-20260809",
+  "as_of": "2026-08-09T20:30:00+08:00",
+  "sources": [
+    {
+      "id": "S_YG_IR_20260507",
+      "source_type": "company_ir",
+      "origin_id": "cninfo:002428:2026-05-07:1225282546",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-05-07/1225282546.PDF#page=1",
+      "source_date": "2026-05-07",
+      "checked_at": "2026-08-09T20:30:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_YG_IR_20260511",
+      "source_type": "company_ir",
+      "origin_id": "cninfo:002428:2026-05-11:1225291589",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-05-11/1225291589.PDF#page=1",
+      "source_date": "2026-05-11",
+      "checked_at": "2026-08-09T20:30:00+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_CAPACITY_20260507",
+      "metric": "inp_substrate_annual_capacity",
+      "value": "15",
+      "unit": "count",
+      "currency": null,
+      "scale": "10000",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-05-07",
+      "basis": "reported_inp_substrate_2_to_4_inch",
+      "source_refs": ["S_YG_IR_20260507"]
+    },
+    {
+      "id": "F_CAPACITY_20260511",
+      "metric": "inp_substrate_annual_capacity",
+      "value": "15",
+      "unit": "count",
+      "currency": null,
+      "scale": "10000",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-05-11",
+      "basis": "reported_inp_substrate_2_to_4_inch",
+      "source_refs": ["S_YG_IR_20260511"]
+    },
+    {
+      "id": "F_PRODUCTION_20260507",
+      "metric": "inp_substrate_production",
+      "value": "10.01",
+      "unit": "count",
+      "currency": null,
+      "scale": "10000",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "frequency": "year",
+        "label": "FY2025"
+      },
+      "available_at": "2026-05-07",
+      "basis": "reported_inp_substrate_2_to_4_inch",
+      "source_refs": ["S_YG_IR_20260507"]
+    },
+    {
+      "id": "F_PRODUCTION_20260511",
+      "metric": "inp_substrate_production",
+      "value": "10.01",
+      "unit": "count",
+      "currency": null,
+      "scale": "10000",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "frequency": "year",
+        "label": "FY2025"
+      },
+      "available_at": "2026-05-11",
+      "basis": "reported_inp_substrate_2_to_4_inch",
+      "source_refs": ["S_YG_IR_20260511"]
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_INP_CAPACITY_CROSS_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {"fact_id": "F_CAPACITY_20260507"},
+      "references": [{"fact_id": "F_CAPACITY_20260511"}],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {"relative_pct": "0", "absolute_base": "0"}
+    },
+    {
+      "id": "C_INP_PRODUCTION_CROSS_SOURCE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {"fact_id": "F_PRODUCTION_20260507"},
+      "references": [{"fact_id": "F_PRODUCTION_20260511"}],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {"relative_pct": "0", "absolute_base": "0"}
+    }
+  ]
+}
