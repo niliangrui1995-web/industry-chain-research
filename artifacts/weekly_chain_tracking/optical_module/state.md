@@ -1,5 +1,12 @@
 # 周度跟踪：光模块及上游细分环节 - 滚动状态
 
+## 2026-08-12 财报增量（LITE FY2026 Q4；非周报重跑）
+
+- **新增（产品与管理层进展）**：Lumentum Q4 官方材料披露创纪录 EML 出货，1.6T 云收发器已开始初始出货，部分使用内部 CW laser。管理层称 OCS ramp 仍在轨道、需求增强；ELS 初始订单、NPO engagements 与 CPO laser 需求仍属早期导入/路线图信号。
+- **未改变（当前台账）**：不改变 `2026-08-09` 的 `as_of`、证据检查 ID 或等级：1.6T 高速光模块有效交付仍为 `hard_bottleneck`，200G/lane EML 及合格 InP 输入仍为改善中的公司级 `soft_bottleneck`，OCS/CPO 仍为 `watch`。上述不构成客户订单、收入覆盖、规模收入、客户认证完成或上游瓶颈已解除的证据。
+- **仍待验证**：Q4 完整官方 Q&A；Q1 FY2027 指引的合同/订单覆盖、库存、取消与拉货；以及 InP/substrate/wafer/epitaxy/EML/pump 的当前供给、良率与合格产能。OCS 协议的实际收入、可取消性及转化节奏仍为 `evidence_absent`。
+- **审计边界**：本增量不写入未经审计的 EML 产品份额、协议金额或收入覆盖率；依据：[LITE FY2026 Q4 财报复盘](../../earnings/LITE/FY2026-Q4/analysis/earnings_review.md)。
+
 更新时间：2026-08-09 18:50 CST
 最新周报：`artifacts/weekly_chain_tracking/optical_module/2026-08-09.md`
 本周窗口：2026-08-03 至 2026-08-09
