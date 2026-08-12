@@ -4600,9 +4600,9 @@
     },
     "000636.SZ": {
       "exists": true,
-      "byte_length": 28630,
-      "sha256": "84315c6db117b05f0aeee59d66f04458bd0157abc4cfceade0912e31b5d012af",
-      "record_count": 18
+      "byte_length": 31960,
+      "sha256": "df060a7f3e009c38f2caf03c998c63835248a4efccc10b282564e80d9f15991d",
+      "record_count": 19
     },
     "688048.SH": {
       "exists": true,
