@@ -37,7 +37,7 @@
 | 麦格米特 2025 年报摘要：https://static.cninfo.com.cn/finalpage/2026-04-29/1225238055.PDF | 公司披露 800VDC/SST/Sidecar/Power Shelf 产品体系、NVIDIA 推荐提供商、送测/试产和部分北美项目线索 | A |
 | TrendForce/商业时报 800VDC 报道：https://www.trendforce.com/news/2026/06/15/news-nvidia-google-may-be-first-to-adopt-800v-hvdc-initial-3q26-shipments-may-boost-delta-and-infrastructure-suppliers/ | NVIDIA/Google 可能 Q3 2026 小批量出货的供应链口径 | B/C，非官方确认 |
 | 2026-06-16 08:48 邮箱《AI产业链战报》；英诺赛科官网 2026-06-12；ip fray 2026-06-16；Infineon/ITC 2026-05 | Infineon 部分 GaN 产品在华禁售、Infineon 程序/范围反向口径、GaN/800VDC 生态边界和国产替代事件催化 | 事件 A-/B；战报股票映射 C |
-| 本地用户文件 `vr-nvl72.md` | VR compute tray / switch tray / CX9 module / BMC-HMC-BF4 等细分 BOM | 用户给定资料，按待核验 A-/B+ 使用 |
+| 本地用户文件 `docs/reference_materials/vr-nvl72.md` | VR compute tray / switch tray / CX9 module / BMC-HMC-BF4 等细分 BOM | 用户给定资料，按待核验 A-/B+ 使用 |
 | `docs/rubin_价值量拆解_逐页梳理_20260522.md` | Rubin rack BOM 价值量拆分，尤其 PCB/MLCC/ABF/电源/液冷增幅 | B，卖方测算/本地整理 |
 | `artifacts/weekly_chain_tracking/ai_pcb/2026-05-31.md` | PCB/CCL/电子布/HVLP 铜箔当前堵点账本 | A/B 混合，本地已整理 |
 | `artifacts/weekly_chain_tracking/optical_module/2026-05-31.md` | 光模块、EML/CW/InP、CPO/FAU 旁线判断 | A/B 混合，本地已整理 |

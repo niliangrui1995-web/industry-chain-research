@@ -40,7 +40,7 @@ md_content = f"""# AI产业链个股 0730 至今（2026-08-05/06）涨幅排名�
 
 ## 一、 整体表现统计概览
 
-- **统计对象**：`AI产业链.xlsx` 表格中去除“暂无”后的 **375 只** 核心 A 股标的（实际有效获取行情数据 **{total_count} 只**）。
+- **统计对象**：`watchlists/AI产业链.xlsx` 表格中去除“暂无”后的 **375 只** 核心 A 股标的（实际有效获取行情数据 **{total_count} 只**）。
 - **时间跨度**：以 **2026年7月30日（0730）收盘价** 为基准，至 **至今（最近交易日 2026-08-05/08-06）收盘价**。
 - **总体涨跌比**：上涨 **{pos_count}** 家（占比 {pos_count/total_count*100:.1f}%），平盘 {zero_count} 家，下跌 **{neg_count}** 家（占比 {neg_count/total_count*100:.1f}%）。
 - **全样本平均涨幅**：**+{avg_pct}%**
@@ -108,7 +108,7 @@ md_content += """
 
 ---
 
-> **数据说明**：以上数据严格基于 `AI产业链.xlsx` 表格名单，对比 2026年7月30日 收盘价与 2026年8月5日/6日 最新收盘价。完整 375 只标的的数据文件保存在 [artifacts/ai_stocks_performance_0730_to_now.csv](file:///d:/vcp_hunter/%E4%BA%A7%E4%B8%9A%E9%93%BE%E6%8A%95%E7%A0%94/artifacts/ai_stocks_performance_0730_to_now.csv)。
+> **数据说明**：以上数据严格基于 `watchlists/AI产业链.xlsx` 表格名单，对比 2026年7月30日 收盘价与 2026年8月5日/6日 最新收盘价。完整 375 只标的的数据文件保存在 [artifacts/ai_stocks_performance_0730_to_now.csv](file:///d:/vcp_hunter/%E4%BA%A7%E4%B8%9A%E9%93%BE%E6%8A%95%E7%A0%94/artifacts/ai_stocks_performance_0730_to_now.csv)。
 """
 
 with open('artifacts/ai_chain_performance_report.md', 'w', encoding='utf-8') as f:

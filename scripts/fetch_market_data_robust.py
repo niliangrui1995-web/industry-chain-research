@@ -3,8 +3,9 @@ import urllib.request
 import json
 import time
 import os
+from pathlib import Path
 
-excel_path = 'AI产业链.xlsx'
+excel_path = Path(__file__).resolve().parents[1] / 'watchlists' / 'AI产业链.xlsx'
 df = pd.read_excel(excel_path, sheet_name='AI产业链')
 valid_df = df[df['代码'].astype(str).str.contains(r'^\d{6}$')]
 
