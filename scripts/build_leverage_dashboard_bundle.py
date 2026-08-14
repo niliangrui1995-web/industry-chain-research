@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+from io import BytesIO
 import json
 import os
 import re
 import struct
+import sys
 from dataclasses import dataclass
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP, localcontext
@@ -16,16 +18,50 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 
+_SCRIPT_DIRECTORY = Path(__file__).resolve().parent
+if str(_SCRIPT_DIRECTORY) not in sys.path:
+    sys.path.insert(0, str(_SCRIPT_DIRECTORY))
+from official_pre2017_contract import (
+    parse_sse_cal_date,
+    parse_sse_stockday_mapping_evidence,
+    parse_sse_tx_num,
+)
+
+
 DAY_STRUCT = struct.Struct("<IIIIIfII")
 DFCF_STATUS = "dfcf_vendor_only_unverified_by_exchange"
 RATIO_QUANTUM = Decimal("0.00000001")
 PRE2017_END = date(2016, 12, 30)
 POST2017_START = date(2017, 1, 3)
+PRE2017_REQUIRED_START = "2011-08-03"
+PRE2017_REQUIRED_END = "2016-12-30"
+PRE2017_REQUIRED_DATE_COUNT = 1316
 OUTPUT_DIRECTORY = Path("artifacts/leverage_capitulation/dashboard_bundle")
 PUBLISH_DIRECTORY = Path(r"D:\vcp_hunter\基金持仓\public\data")
 VENDOR_OUTPUT_DIRECTORY = Path(
     "artifacts/leverage_capitulation/eastmoney_post2017_market_cap_vendor"
 )
+OFFICIAL_PRE2017_OUTPUT_DIRECTORY = Path(
+    "artifacts/leverage_capitulation/official_pre2017_market_cap"
+)
+OFFICIAL_PRE2017_TABLE_FILENAME = "official_pre2017_market_cap.csv"
+OFFICIAL_PRE2017_MANIFEST_FILENAME = "official_pre2017_market_cap_manifest.json"
+OFFICIAL_PRE2017_AUDIT_FILENAME = "official_pre2017_market_cap_audit.json"
+OFFICIAL_PRE2017_SOURCE = "official_exchange_pre2017_raw_chain_audited"
+OFFICIAL_PRE2017_UNAVAILABLE_SOURCE = "pre2017_official_unavailable"
+OFFICIAL_PRE2017_REVIEW_STATUS = "official_exchange_pre2017_raw_chain_audited"
+OFFICIAL_PRE2017_SSE_URL = "https://query.sse.com.cn/commonQuery.do"
+OFFICIAL_PRE2017_SSE_MAPPING_URL = (
+    "https://www.sse.com.cn/xhtml/home/public/querySearch/search_addhsl.js"
+)
+OFFICIAL_PRE2017_SZSE_URL = "https://www.szse.cn/api/report/ShowReport"
+OFFICIAL_PRE2017_SSE_SCHEMA_VERSION = "legacy_product_type"
+OFFICIAL_PRE2017_MAPPING_SCHEMA_VERSION = "search_addhsl_product_type_mapping_v1"
+OFFICIAL_PRE2017_SZSE_SCHEMA_VERSION = "show_report_xlsx"
+OFFICIAL_PRE2017_SZSE_GAP_DATE = "2015-06-11"
+OFFICIAL_PRE2017_SSE_TOTAL_TOLERANCE = Decimal("0.00000001")
+OFFICIAL_PRE2017_TX_NUM_TOLERANCE = Decimal("0")
+OFFICIAL_PRE2017_SZSE_TOTAL_TOLERANCE_YUAN = Decimal("0.10")
 VENDOR_TABLE_FILENAME = "eastmoney_post2017_market_cap_vendor.csv"
 VENDOR_MANIFEST_FILENAME = "eastmoney_post2017_market_cap_vendor_manifest.json"
 EASTMONEY_URL = "https://datacenter-web.eastmoney.com/api/data/v1/get"
@@ -39,8 +75,8 @@ VENDOR_SCOPE_WARNING = (
     "A/B、CDR、基金等资产范围未核验，分子可能含非 A 股融资标的。"
 )
 PRE2017_REASON = (
-    "2017-01-03 前交易所市值分段尚未通过：SSE PRODUCT_TYPE=12 无官方日度分类映射，"
-    "且 2015-06-11 缺少 SZSE 原始文件；此前比例为 N/A。"
+    "2011-08-03 至 2016-12-30 官方市值原始链尚未完整通过 manifest、哈希、"
+    "DFCF 日期绑定和独立审计；此前比例为 N/A。"
 )
 INDEX_PATHS = {
     "000001": Path(r"D:\HT\vipdoc\sh\lday\sh000001.day"),
@@ -74,6 +110,14 @@ class MarginInput:
 class VendorMarketCapInput:
     frame: pd.DataFrame
     manifest: dict[str, object]
+    paths: dict[str, Path]
+
+
+@dataclass(frozen=True)
+class OfficialPre2017Input:
+    frame: pd.DataFrame
+    manifest: dict[str, object]
+    audit: dict[str, object]
     paths: dict[str, Path]
 
 
@@ -132,6 +176,17 @@ def _positive_decimal(value: object, name: str) -> Decimal:
     if not result.is_finite() or result <= 0:
         raise ValueError(f"{name} 必须为正数")
     return result
+
+
+def _positive_szse_market_cap_decimal(value: object) -> Decimal:
+    name = "SZSE 总市值"
+    if isinstance(value, str):
+        normalized = value.strip()
+        if "," in normalized:
+            if re.fullmatch(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?", normalized) is None:
+                raise ValueError(f"{name} 必须为正数")
+            value = normalized.replace(",", "")
+    return _positive_decimal(value, name)
 
 
 def _integer(value: object, name: str, minimum: int) -> int:
@@ -417,6 +472,395 @@ def verify_post2017_vendor_inputs(
     return VendorMarketCapInput(frame=frame, manifest=manifest, paths=paths), None
 
 
+def _official_pre2017_paths(project_root: Path) -> dict[str, Path]:
+    directory = project_root / OFFICIAL_PRE2017_OUTPUT_DIRECTORY
+    return {
+        "directory": directory,
+        "table": directory / OFFICIAL_PRE2017_TABLE_FILENAME,
+        "manifest": directory / OFFICIAL_PRE2017_MANIFEST_FILENAME,
+        "audit": directory / OFFICIAL_PRE2017_AUDIT_FILENAME,
+    }
+
+
+def _official_mapping_contract() -> dict[str, object]:
+    return {
+        "schema_version": OFFICIAL_PRE2017_MAPPING_SCHEMA_VERSION,
+        "header_order": ["股票", "主板A", "主板B", "科创板", "股票回购"],
+        "product_type_order": ["40", "1", "2", "48", "43"],
+        "product_type_mapping": {
+            "40": "股票",
+            "1": "主板A",
+            "2": "主板B",
+            "48": "科创板",
+            "43": "股票回购",
+        },
+    }
+
+
+def _normalise_official_text(value: object) -> str:
+    return re.sub(r"\s+", "", str(value))
+
+
+def _validate_official_mapping_payload(payload: bytes) -> dict[str, object]:
+    expected = _official_mapping_contract()
+    parsed = parse_sse_stockday_mapping_evidence(payload)
+    if parsed != expected:
+        raise ValueError("SSE 映射证据解析结果不符合既定契约")
+    return parsed
+
+
+def _validated_bound_file(
+    root: Path, relative_path: object, sha256: object, byte_count: object, name: str
+) -> tuple[Path, bytes]:
+    if not isinstance(relative_path, str) or not relative_path:
+        raise ValueError(f"{name} relative_path 无效")
+    expected_sha = _require_sha256(sha256, f"{name} sha256")
+    expected_bytes = _integer(byte_count, f"{name} bytes", 1)
+    resolved_root = root.resolve()
+    path = (root / relative_path).resolve()
+    try:
+        path.relative_to(resolved_root)
+    except ValueError as exc:
+        raise ValueError(f"{name} raw 路径越界") from exc
+    if not path.is_file():
+        raise ValueError(f"{name} raw 文件不存在")
+    payload = path.read_bytes()
+    if len(payload) != expected_bytes or sha256_file(path) != expected_sha:
+        raise ValueError(f"{name} raw SHA-256 或字节数不匹配")
+    return path, payload
+
+
+def _validate_official_sse_payload(payload: bytes, day: str) -> Decimal:
+    def reject_constant(value: str) -> None:
+        raise ValueError(f"SSE JSON 包含非有限值: {value}")
+
+    try:
+        decoded = json.loads(
+            payload.decode("utf-8"),
+            parse_float=Decimal,
+            parse_int=Decimal,
+            parse_constant=reject_constant,
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+        raise ValueError("SSE 原始响应不是有效 JSON") from exc
+    rows = decoded.get("result") if isinstance(decoded, dict) else None
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("SSE 原始响应缺少 result 列表")
+    values: dict[str, Decimal] = {}
+    tx_numbers: dict[str, Decimal] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError("SSE 原始响应行不是对象")
+        if parse_sse_cal_date(row.get("CAL_DATE")).isoformat() != day:
+            raise ValueError("SSE CAL_DATE 与 DFCF 日期不一致")
+        product_type = _normalise_official_text(row.get("PRODUCT_TYPE", ""))
+        if product_type not in {"1", "2", "12"}:
+            raise ValueError("SSE PRODUCT_TYPE 不在 1/2/12 严格集合")
+        if product_type in values:
+            raise ValueError("SSE PRODUCT_TYPE 重复")
+        values[product_type] = _positive_decimal(
+            row.get("MKT_VALUE_FULL"), "SSE MKT_VALUE_FULL"
+        )
+        tx_numbers[product_type] = parse_sse_tx_num(row.get("TX_NUM"))
+    if set(values) != {"1", "2", "12"}:
+        raise ValueError("SSE PRODUCT_TYPE 必须精确为 1、2、12")
+    if abs(values["12"] - values["1"] - values["2"]) > OFFICIAL_PRE2017_SSE_TOTAL_TOLERANCE:
+        raise ValueError("SSE PRODUCT_TYPE=12 市值不等于 1+2")
+    if set(tx_numbers) != {"1", "2", "12"}:
+        raise ValueError("SSE TX_NUM 必须在 1/2/12 同时存在")
+    if abs(tx_numbers["12"] - tx_numbers["1"] - tx_numbers["2"]) > OFFICIAL_PRE2017_TX_NUM_TOLERANCE:
+        raise ValueError("SSE PRODUCT_TYPE=12 TX_NUM 不等于 1+2")
+    return values["1"]
+
+
+def _validate_official_szse_workbook(payload: bytes) -> Decimal:
+    try:
+        frame = pd.read_excel(BytesIO(payload), header=0, dtype=object)
+    except Exception as exc:
+        raise ValueError("SZSE 原始工作簿不能解析") from exc
+    expected_headers = ("证券类别", "数量(只)", "成交金额(元)", "总市值(元)", "流通市值(元)")
+    headers = tuple(_normalise_official_text(value) for value in frame.columns)
+    if headers[: len(expected_headers)] != expected_headers:
+        raise ValueError("SZSE 工作簿表头不符合历史契约")
+    category_map = {
+        "股票": "stock_total",
+        "主板A股": "main_a",
+        "主板B股": "main_b",
+        "中小板": "sme_a",
+        "中小板A股": "sme_a",
+        "创业板": "chinext_a",
+        "创业板A股": "chinext_a",
+    }
+    values: dict[str, Decimal] = {}
+    category_column = frame.columns[0]
+    market_cap_column = frame.columns[3]
+    for _, row in frame.iterrows():
+        category = category_map.get(_normalise_official_text(row[category_column]))
+        if category is None:
+            continue
+        if category in values:
+            raise ValueError("SZSE 五个市值类别存在重复")
+        values[category] = _positive_szse_market_cap_decimal(row[market_cap_column])
+    required = {"stock_total", "main_a", "main_b", "sme_a", "chinext_a"}
+    if set(values) != required:
+        raise ValueError("SZSE 五个必需市值类别不完整")
+    a_value = values["main_a"] + values["sme_a"] + values["chinext_a"]
+    if abs(values["stock_total"] - a_value - values["main_b"]) > OFFICIAL_PRE2017_SZSE_TOTAL_TOLERANCE_YUAN:
+        raise ValueError("SZSE 股票总市值不等于 A+B")
+    return a_value / Decimal("100000000")
+
+
+def _require_exact_dates(values: object, expected: list[str], name: str) -> None:
+    if values != expected:
+        raise ValueError(f"{name} 与 DFCF 前段共同日期不精确一致")
+
+
+def verify_pre2017_official_inputs(
+    project_root: Path, margin: MarginInput
+) -> tuple[OfficialPre2017Input | None, str | None]:
+    """独立复核前段官方原始链；任一门失败时只禁用前段比例。"""
+
+    paths = _official_pre2017_paths(project_root)
+    try:
+        pre_dates = [
+            str(value)
+            for value in margin.frame["date"].tolist()
+            if date.fromisoformat(str(value)) < POST2017_START
+        ]
+        if (
+            len(pre_dates) != PRE2017_REQUIRED_DATE_COUNT
+            or not pre_dates
+            or pre_dates[0] != PRE2017_REQUIRED_START
+            or pre_dates[-1] != PRE2017_REQUIRED_END
+        ):
+            raise ValueError(
+                "DFCF 前段共同日期不满足 2011-08-03 至 2016-12-30 的 1316 日合同"
+            )
+        manifest = _load_json_bytes(paths["manifest"], "前段官方市值 manifest")
+        audit = _load_json_bytes(paths["audit"], "前段官方市值 audit")
+        if manifest.get("schema_version") != "2":
+            raise ValueError("前段官方市值 manifest schema_version 不匹配")
+        if manifest.get("source_segment") != "official_exchange_pre_2017":
+            raise ValueError("前段官方市值 manifest source_segment 不匹配")
+        if manifest.get("finalized") is not True or manifest.get("final_output_ready") is not True:
+            raise ValueError("前段官方市值 manifest 未最终准出")
+        if manifest.get("reporting_eligible") is not True:
+            raise ValueError("前段官方市值 manifest reporting_eligible 不为 true")
+        dfcf_input = manifest.get("dfcf_input")
+        if not isinstance(dfcf_input, dict):
+            raise ValueError("前段官方市值 manifest 缺少 dfcf_input")
+        if dfcf_input.get("relative_path") != "artifacts/leverage_capitulation/dfcf_daily/dfcf_margin_balances.csv":
+            raise ValueError("前段官方市值 manifest DFCF 路径不匹配")
+        if dfcf_input.get("sha256") != sha256_file(margin.paths["balances"]):
+            raise ValueError("前段官方市值 manifest DFCF SHA-256 不匹配")
+        contract = manifest.get("dfcf_date_contract")
+        if not isinstance(contract, dict):
+            raise ValueError("前段官方市值 manifest 缺少 DFCF 日期合同")
+        expected_contract = {
+            "required_start": PRE2017_REQUIRED_START,
+            "required_end": PRE2017_REQUIRED_END,
+            "required_common_date_count": PRE2017_REQUIRED_DATE_COUNT,
+            "available_common_date_count": PRE2017_REQUIRED_DATE_COUNT,
+            "available_common_date_first": PRE2017_REQUIRED_START,
+            "available_common_date_last": PRE2017_REQUIRED_END,
+            "requested_is_full_contract": True,
+        }
+        for field, value in expected_contract.items():
+            if contract.get(field) != value:
+                raise ValueError(f"前段官方市值 DFCF 日期合同 {field} 不匹配")
+        _require_exact_dates(manifest.get("requested_dates"), pre_dates, "manifest requested_dates")
+        _require_exact_dates(manifest.get("completed_dates"), pre_dates, "manifest completed_dates")
+        if manifest.get("missing_dates") != []:
+            raise ValueError("前段官方市值 manifest 存在缺失日期")
+        if _require_sha256(manifest.get("csv_sha256"), "前段官方市值 CSV SHA-256") != sha256_file(paths["table"]):
+            raise ValueError("前段官方市值 CSV SHA-256 不匹配")
+
+        mapping_entry = manifest.get("sse_mapping_evidence")
+        if not isinstance(mapping_entry, dict):
+            raise ValueError("前段官方市值缺少 SSE 映射证据")
+        expected_mapping_fields = {
+            "source_url": OFFICIAL_PRE2017_SSE_MAPPING_URL,
+            "relative_path": "raw/sse_mapping/search_addhsl.js",
+            "schema_version": OFFICIAL_PRE2017_MAPPING_SCHEMA_VERSION,
+        }
+        for field, value in expected_mapping_fields.items():
+            if mapping_entry.get(field) != value:
+                raise ValueError(f"SSE 映射证据 {field} 不匹配")
+        _, mapping_payload = _validated_bound_file(
+            paths["directory"],
+            mapping_entry.get("relative_path"),
+            mapping_entry.get("sha256"),
+            mapping_entry.get("bytes"),
+            "SSE 映射证据",
+        )
+        if mapping_entry.get("parsed") != _validate_official_mapping_payload(mapping_payload):
+            raise ValueError("SSE 映射证据解析快照不匹配")
+
+        sse_entries = manifest.get("sse_raw_entries")
+        szse_entries = manifest.get("szse_raw_entries")
+        if not isinstance(sse_entries, list) or not isinstance(szse_entries, list):
+            raise ValueError("前段官方市值原始条目不是列表")
+        if len(sse_entries) != len(pre_dates) or len(szse_entries) != len(pre_dates):
+            raise ValueError("前段官方市值原始条目数量不等于 DFCF 共同日数量")
+        sse_by_day: dict[str, tuple[str, Decimal]] = {}
+        for entry in sse_entries:
+            if not isinstance(entry, dict):
+                raise ValueError("SSE 原始条目不是对象")
+            day = entry.get("date")
+            if not isinstance(day, str) or day not in pre_dates or day in sse_by_day:
+                raise ValueError("SSE 原始条目日期缺失、越界或重复")
+            expected_parameters = {
+                "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_DAYCJGK_C",
+                "stockType": "90",
+                "searchDate": day,
+            }
+            if (
+                entry.get("source_url") != OFFICIAL_PRE2017_SSE_URL
+                or entry.get("request_parameters") != expected_parameters
+                or entry.get("relative_path") != f"raw/sse/{day}.json"
+                or entry.get("schema_version") != OFFICIAL_PRE2017_SSE_SCHEMA_VERSION
+            ):
+                raise ValueError("SSE 原始条目来源或请求参数不匹配")
+            _, payload = _validated_bound_file(
+                paths["directory"],
+                entry.get("relative_path"),
+                entry.get("sha256"),
+                entry.get("bytes"),
+                "SSE 原始条目",
+            )
+            sse_by_day[day] = (_require_sha256(entry.get("sha256"), "SSE 条目 SHA-256"), _validate_official_sse_payload(payload, day))
+        if set(sse_by_day) != set(pre_dates):
+            raise ValueError("SSE 原始条目未覆盖全部 DFCF 前段共同日")
+
+        legacy_root_raw = manifest.get("legacy_raw_root")
+        if not isinstance(legacy_root_raw, str) or not legacy_root_raw:
+            raise ValueError("前段官方市值缺少 legacy_raw_root")
+        legacy_root = Path(legacy_root_raw).resolve()
+        expected_legacy_root = (
+            project_root / "artifacts/leverage_capitulation/sh_sz_a_share_market_cap_daily"
+        ).resolve()
+        if legacy_root != expected_legacy_root:
+            raise ValueError("legacy_raw_root 不是受控旧 SZSE 原始目录")
+        legacy_manifest_path = legacy_root / "raw_response_manifest.json"
+        if _require_sha256(manifest.get("legacy_raw_manifest_sha256"), "旧 SZSE manifest SHA-256") != sha256_file(legacy_manifest_path):
+            raise ValueError("旧 SZSE manifest SHA-256 不匹配")
+        legacy_manifest = json.loads(legacy_manifest_path.read_text(encoding="utf-8"))
+        if not isinstance(legacy_manifest, list):
+            raise ValueError("旧 SZSE manifest 不是列表")
+        szse_by_day: dict[str, tuple[str, Decimal]] = {}
+        for entry in szse_entries:
+            if not isinstance(entry, dict):
+                raise ValueError("SZSE 原始条目不是对象")
+            day = entry.get("date")
+            if not isinstance(day, str) or day not in pre_dates or day in szse_by_day:
+                raise ValueError("SZSE 原始条目日期缺失、越界或重复")
+            expected_parameters = {
+                "SHOWTYPE": "xlsx",
+                "CATALOGID": "1803_sczm",
+                "TABKEY": "tab1",
+                "txtQueryDate": day,
+            }
+            storage = entry.get("storage")
+            if (
+                entry.get("market") != "SZSE"
+                or entry.get("source_url") != OFFICIAL_PRE2017_SZSE_URL
+                or entry.get("request_parameters") != expected_parameters
+                or entry.get("schema_version") != OFFICIAL_PRE2017_SZSE_SCHEMA_VERSION
+                or storage not in {"legacy_read_only", "official_pre2017_output"}
+            ):
+                raise ValueError("SZSE 原始条目来源或请求参数不匹配")
+            if storage == "legacy_read_only":
+                if entry.get("relative_path") != f"raw/{day}_szse.xlsx":
+                    raise ValueError("旧 SZSE 原始条目路径不匹配")
+                legacy_matches = [
+                    item for item in legacy_manifest
+                    if isinstance(item, dict)
+                    and {key: value for key, value in entry.items() if key != "storage"} == item
+                ]
+                if len(legacy_matches) != 1:
+                    raise ValueError("SZSE 输出条目未精确绑定旧 manifest")
+                raw_root = legacy_root
+            else:
+                if day != OFFICIAL_PRE2017_SZSE_GAP_DATE or entry.get("relative_path") != f"raw/szse/{day}.xlsx":
+                    raise ValueError("新 SZSE 原始条目仅允许 2015-06-11 缺口")
+                raw_root = paths["directory"]
+            _, payload = _validated_bound_file(
+                raw_root,
+                entry.get("relative_path"),
+                entry.get("sha256"),
+                entry.get("bytes"),
+                "SZSE 原始条目",
+            )
+            szse_by_day[day] = (_require_sha256(entry.get("sha256"), "SZSE 条目 SHA-256"), _validate_official_szse_workbook(payload))
+        if set(szse_by_day) != set(pre_dates):
+            raise ValueError("SZSE 原始条目未覆盖全部 DFCF 前段共同日")
+
+        frame = _read_csv(paths["table"])
+        expected_columns = {
+            "date", "sh_a_market_cap_yi", "sz_a_market_cap_yi", "market_cap_yi",
+            "source_segment", "status", "sse_raw_sha256", "szse_raw_sha256",
+        }
+        if set(frame.columns) != expected_columns:
+            raise ValueError("前段官方市值 CSV 列集合不符合契约")
+        _require_exact_dates(_validate_dates(frame, "前段官方市值 CSV"), pre_dates, "前段官方市值 CSV")
+        for row in frame.itertuples(index=False):
+            if row.source_segment != "official_exchange_pre_2017" or row.status != "pass":
+                raise ValueError("前段官方市值 CSV source_segment 或 status 异常")
+            sh = _positive_decimal(row.sh_a_market_cap_yi, "前段官方市值沪市")
+            sz = _positive_decimal(row.sz_a_market_cap_yi, "前段官方市值深市")
+            total = _positive_decimal(row.market_cap_yi, "前段官方市值合计")
+            if sh + sz != total:
+                raise ValueError("前段官方市值 CSV 沪深加总不一致")
+            if sh != sse_by_day[row.date][1] or sz != szse_by_day[row.date][1]:
+                raise ValueError("前段官方市值 CSV 数值与原始链不一致")
+            if row.sse_raw_sha256 != sse_by_day[row.date][0] or row.szse_raw_sha256 != szse_by_day[row.date][0]:
+                raise ValueError("前段官方市值 CSV 原始 SHA-256 关联不一致")
+
+        expected_financial_audit = {
+            "applicable": False,
+            "status": "N/A",
+            "reason_code": "UNSUPPORTED_RATIO_CONTRACT",
+        }
+        raw_chain = manifest.get("raw_chain_audit")
+        if not isinstance(raw_chain, dict):
+            raise ValueError("前段官方市值 manifest 缺少 raw_chain_audit")
+        for field, expected in {
+            "official_raw_chain_status": "pass",
+            "scope_mapping_status": "pass",
+            "date_linkage_status": "pass",
+            "decimal_calculation_status": "pass",
+            "ratio_reporting_eligible": True,
+        }.items():
+            if raw_chain.get(field) != expected:
+                raise ValueError(f"前段官方市值 raw_chain_audit {field} 不通过")
+        if manifest.get("financial_evidence_audit") != expected_financial_audit:
+            raise ValueError("前段官方市值 financial_evidence_audit 不符合非正式比例合同")
+        if "audit_sha256" in audit:
+            raise ValueError("前段官方市值 audit 不得自引用 SHA-256")
+        for field, expected in {
+            "source_segment": "official_exchange_pre_2017",
+            "official_raw_chain_status": "pass",
+            "scope_mapping_status": "pass",
+            "date_linkage_status": "pass",
+            "decimal_calculation_status": "pass",
+            "ratio_reporting_eligible": True,
+            "csv_sha256": manifest["csv_sha256"],
+            "dfcf_input": manifest["dfcf_input"],
+            "requested_dates": pre_dates,
+            "completed_dates": pre_dates,
+            "missing_dates": [],
+            "sse_mapping_evidence": mapping_entry,
+            "sse_raw_entry_count": len(pre_dates),
+            "szse_raw_entry_count": len(pre_dates),
+            "financial_evidence_audit": expected_financial_audit,
+        }.items():
+            if audit.get(field) != expected:
+                raise ValueError(f"前段官方市值 audit {field} 不匹配")
+    except (OSError, UnicodeError, ValueError, TypeError, KeyError, json.JSONDecodeError, pd.errors.ParserError, pd.errors.EmptyDataError) as exc:
+        return None, f"2011–2016 官方市值原始链不可安全读取，前段比例为 N/A：{exc}"
+    return OfficialPre2017Input(frame=frame, manifest=manifest, audit=audit, paths=paths), None
+
+
 def parse_day_bytes(payload: bytes) -> pd.DataFrame:
     if not payload or len(payload) % DAY_STRUCT.size:
         raise ValueError("TDX .day 文件为空或长度不是 32 字节的整数倍")
@@ -456,12 +900,22 @@ def build_dashboard_records(
     vendor: VendorMarketCapInput | None,
     indices: dict[str, pd.DataFrame],
     vendor_reason: str | None,
+    *,
+    official_pre2017: OfficialPre2017Input | None = None,
+    official_pre2017_reason: str | None = None,
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
     _validate_dates(margin, "DFCF 输出表")
     vendor_by_date: dict[str, object] = {}
+    official_by_date: dict[str, object] = {}
     if vendor is not None:
         _validate_dates(vendor.frame, "东方财富市值输出表")
         vendor_by_date = {str(row.date): row for row in vendor.frame.itertuples(index=False)}
+    if official_pre2017 is not None:
+        _validate_dates(official_pre2017.frame, "前段官方市值输出表")
+        official_by_date = {
+            str(row.date): row
+            for row in official_pre2017.frame.itertuples(index=False)
+        }
     for ticker in INDEX_PATHS:
         if ticker not in indices:
             raise ValueError(f"缺少指数 {ticker}")
@@ -473,8 +927,20 @@ def build_dashboard_records(
         denominator: float | None = None
         ratio: float | None = None
         if date.fromisoformat(day) < POST2017_START:
-            source = "pre2017_official_pending"
+            source = OFFICIAL_PRE2017_UNAVAILABLE_SOURCE
             review_status = "unavailable"
+            official_row = official_by_date.get(day)
+            if official_row is not None:
+                denominator_decimal = _positive_decimal(
+                    official_row.market_cap_yi, "official_pre2017 market_cap_yi"
+                )
+                denominator = float(denominator_decimal)
+                ratio = _ratio(
+                    _positive_decimal(row.total_margin_y, "total_margin_y"),
+                    denominator_decimal,
+                )
+                source = OFFICIAL_PRE2017_SOURCE
+                review_status = OFFICIAL_PRE2017_REVIEW_STATUS
         else:
             source = "eastmoney_post2017_vendor_unverified"
             review_status = "unavailable"
@@ -504,18 +970,31 @@ def build_dashboard_records(
     ratio_available = ratio_data_range["start"] is not None
     if ratio_available:
         unavailable_reason = None
-        scope_warning = vendor.manifest["scope_warning"] if vendor is not None else VENDOR_SCOPE_WARNING
+        scope_warning = (
+            "2011-08-03 至 2016-12-30 分母已通过交易所原始链准出；"
+            "但分子为 DFCF 厂商两融余额，financial-evidence-audit 对该聚合比值为 "
+            "UNSUPPORTED_RATIO_CONTRACT，不能称为正式财务比例或严格证券类别匹配。"
+            if official_pre2017 is not None
+            else (vendor.manifest["scope_warning"] if vendor is not None else VENDOR_SCOPE_WARNING)
+        )
     else:
-        unavailable_reason = vendor_reason or (
+        unavailable_reason = official_pre2017_reason or vendor_reason or (
             "没有与 DFCF 日期精确匹配且通过校验的 2017-01-03 后东方财富市值记录，比例为 N/A。"
         )
-        scope_warning = VENDOR_SCOPE_WARNING
+        scope_warning = (
+            "2011-08-03 至 2016-12-30 官方原始链未通过读取门，前段比例为 N/A；"
+            + VENDOR_SCOPE_WARNING
+        )
     provenance = {
         "ratio_available": ratio_available,
         "ratio_unavailable_reason": unavailable_reason,
         "ratio_scope_warning": scope_warning,
         "ratio_data_range": ratio_data_range,
         "source_switch_date": POST2017_START.isoformat(),
+        "official_pre2017_chain_status": (
+            "available" if official_pre2017 is not None else "unavailable"
+        ),
+        "official_pre2017_unavailable_reason": official_pre2017_reason,
     }
     return records, provenance
 
@@ -549,19 +1028,46 @@ def build_payload(records: list[dict[str, object]], provenance: dict[str, object
     }
 
 
-def _source_segments(records: list[dict[str, object]], vendor_reason: str | None) -> list[dict[str, object]]:
-    pre_records = [record for record in records if record["market_cap_source"] == "pre2017_official_pending"]
+def _source_segments(
+    records: list[dict[str, object]],
+    vendor_reason: str | None,
+    official_pre2017_reason: str | None,
+) -> list[dict[str, object]]:
+    official_pre_records = [
+        record
+        for record in records
+        if record["market_cap_source"] == OFFICIAL_PRE2017_SOURCE
+    ]
+    unavailable_pre_records = [
+        record
+        for record in records
+        if record["market_cap_source"] == OFFICIAL_PRE2017_UNAVAILABLE_SOURCE
+    ]
     post_records = [record for record in records if record["market_cap_source"] == "eastmoney_post2017_vendor_unverified"]
     segments: list[dict[str, object]] = []
-    if pre_records:
+    if official_pre_records:
         segments.append(
             {
-                "start": pre_records[0]["date"],
-                "end": pre_records[-1]["date"],
-                "market_cap_source": "pre2017_official_pending",
+                "start": official_pre_records[0]["date"],
+                "end": official_pre_records[-1]["date"],
+                "market_cap_source": OFFICIAL_PRE2017_SOURCE,
+                "market_cap_review_status": OFFICIAL_PRE2017_REVIEW_STATUS,
+                "ratio_available": True,
+                "reason": (
+                    "分母原始链通过交易所哈希、日期和 Decimal 校验；"
+                    "聚合比例仍为 UNSUPPORTED_RATIO_CONTRACT，非正式财务比例。"
+                ),
+            }
+        )
+    if unavailable_pre_records:
+        segments.append(
+            {
+                "start": unavailable_pre_records[0]["date"],
+                "end": unavailable_pre_records[-1]["date"],
+                "market_cap_source": OFFICIAL_PRE2017_UNAVAILABLE_SOURCE,
                 "market_cap_review_status": "unavailable",
                 "ratio_available": False,
-                "reason": PRE2017_REASON,
+                "reason": official_pre2017_reason or PRE2017_REASON,
             }
         )
     if post_records:
@@ -578,12 +1084,25 @@ def _source_segments(records: list[dict[str, object]], vendor_reason: str | None
     return segments
 
 
-def _manifest_reason(provenance: dict[str, object], vendor_reason: str | None) -> str:
+def _manifest_reason(
+    provenance: dict[str, object],
+    vendor_reason: str | None,
+    official_pre2017_reason: str | None,
+) -> str:
     if vendor_reason:
-        return f"{PRE2017_REASON} 后 2017 厂商分母亦不可用：{vendor_reason}"
+        return (
+            f"2011–2016 前段状态：{official_pre2017_reason or PRE2017_REASON}；"
+            f"2017 后厂商分母亦不可用：{vendor_reason}"
+        )
     if provenance["ratio_available"] is True:
-        return f"{PRE2017_REASON} 2017-01-03 起比例仅为东方财富 Choice 厂商口径，未经交易所复核或完整审计。"
-    return f"{PRE2017_REASON} 2017-01-03 起没有可精确匹配 DFCF 日期的合格厂商分母。"
+        return (
+            "前段分母使用交易所原始链；后段分母仅为东方财富 Choice 厂商口径，"
+            "未经交易所复核或完整审计。全段聚合比例不是正式 financial-evidence-audit 准出指标。"
+        )
+    return (
+        f"2011–2016 前段状态：{official_pre2017_reason or PRE2017_REASON}；"
+        "2017-01-03 起没有可精确匹配 DFCF 日期的合格厂商分母。"
+    )
 
 
 def build_manifest(
@@ -593,6 +1112,9 @@ def build_manifest(
     vendor: VendorMarketCapInput | None,
     vendor_reason: str | None,
     index_metadata: dict[str, object],
+    *,
+    official_pre2017: OfficialPre2017Input | None = None,
+    official_pre2017_reason: str | None = None,
 ) -> dict[str, object]:
     missing_records = sum(record["ratio_pct"] is None for record in records)
     dfcf_inputs = {
@@ -603,19 +1125,45 @@ def build_manifest(
     market_cap = {
         "reporting_eligible": False,
         "ratio_available": provenance["ratio_available"] is True,
-        "ratio_review_status": "mixed_pre2017_pending_eastmoney_vendor_unverified",
-        "reason": _manifest_reason(provenance, vendor_reason),
+        "ratio_review_status": "mixed_official_pre2017_raw_chain_audited_eastmoney_vendor_unverified",
+        "reason": _manifest_reason(provenance, vendor_reason, official_pre2017_reason),
         "ratio_data_range": provenance["ratio_data_range"],
         "ratio_missing_records": missing_records,
         "source_switch_date": POST2017_START.isoformat(),
-        "source_segments": _source_segments(records, vendor_reason),
+        "source_segments": _source_segments(
+            records, vendor_reason, official_pre2017_reason
+        ),
         "scope_definition": (
-            "分子为 DFCF 两市融资余额厂商口径；2011-08-03 至 2016-12-30 的交易所市值分段待定，"
-            "比例为 N/A；2017-01-03 起分母为东方财富 Choice RPT_VALUEMARKET / "
-            "TRADE_MARKET_CODE=000300，未经交易所复核和完整审计，不能称为严格沪深 A 股市值。"
+            "分子为 DFCF 两市融资余额厂商口径，可能含非 A 股融资标的；"
+            "2011-08-03 至 2016-12-30 的分母仅在官方原始链、DFCF 日期绑定和独立审计均通过时启用；"
+            "2017-01-03 起分母为东方财富 Choice RPT_VALUEMARKET / TRADE_MARKET_CODE=000300，"
+            "未经交易所复核和完整审计。全段均不能称为严格证券类别匹配或正式财务比例。"
         ),
         "source_url": vendor.manifest["source_url"] if vendor is not None else None,
         "csv_sha256": vendor.manifest["csv_sha256"] if vendor is not None else None,
+        "official_pre2017": {
+            "available": official_pre2017 is not None,
+            "reason": official_pre2017_reason,
+            "table_sha256": (
+                official_pre2017.manifest["csv_sha256"]
+                if official_pre2017 is not None
+                else None
+            ),
+            "raw_chain_status": (
+                official_pre2017.audit["official_raw_chain_status"]
+                if official_pre2017 is not None
+                else "blocked"
+            ),
+            "financial_evidence_audit": (
+                official_pre2017.audit["financial_evidence_audit"]
+                if official_pre2017 is not None
+                else {
+                    "applicable": False,
+                    "status": "N/A",
+                    "reason_code": "UNSUPPORTED_RATIO_CONTRACT",
+                }
+            ),
+        },
     }
     return {
         "schema_version": "1",
@@ -758,11 +1306,30 @@ def main() -> None:
     project_root = resolve_project_root(args.project_root)
     output_dir = project_root / OUTPUT_DIRECTORY
     margin = verify_dfcf_inputs(project_root)
+    official_pre2017, official_pre2017_reason = verify_pre2017_official_inputs(
+        project_root, margin
+    )
     vendor, vendor_reason = verify_post2017_vendor_inputs(project_root)
     indices, index_metadata = _load_indices()
-    records, provenance = build_dashboard_records(margin.frame, vendor, indices, vendor_reason)
+    records, provenance = build_dashboard_records(
+        margin.frame,
+        vendor,
+        indices,
+        vendor_reason,
+        official_pre2017=official_pre2017,
+        official_pre2017_reason=official_pre2017_reason,
+    )
     payload = build_payload(records, provenance)
-    manifest = build_manifest(records, provenance, margin, vendor, vendor_reason, index_metadata)
+    manifest = build_manifest(
+        records,
+        provenance,
+        margin,
+        vendor,
+        vendor_reason,
+        index_metadata,
+        official_pre2017=official_pre2017,
+        official_pre2017_reason=official_pre2017_reason,
+    )
     payload_path, manifest_path = write_bundle(output_dir, payload, manifest)
     if args.publish_dir:
         publish_bundle_atomically(payload_path, manifest_path, Path(args.publish_dir).expanduser().resolve())

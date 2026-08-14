@@ -1,12 +1,15 @@
 import importlib.util
+import hashlib
 import json
 import re
 import sys
 from decimal import Decimal
+from io import BytesIO
 from pathlib import Path
 
 import pandas as pd
 import pytest
+from openpyxl import Workbook
 
 
 SCRIPT_PATH = Path(__file__).resolve().parents[1] / "scripts" / "build_leverage_dashboard_bundle.py"
@@ -184,6 +187,284 @@ def index_frames(days: list[str]) -> dict[str, pd.DataFrame]:
     }
 
 
+def official_mapping_evidence_bytes() -> bytes:
+    return """
+        if ($stockday.length > 0) {
+            var stockDay = {
+                parms: {
+                    searchDate: init ? '' : day,
+                    sqlId: 'COMMON_SSE_SJ_GPSJ_CJGK_DAYCJGK_C',
+                    stockType: '90'
+                },
+                fnCallBack: function(data) {
+                    var item = data.result;
+                    var header = [
+                        ["", "<div class='th_div_center'>单日情况</div>"],
+                        ["", "<div class='th_div_center'>股票</div>"],
+                        ["", "<div class='th_div_center'>主板A</div>"],
+                        ["", "<div class='th_div_center'>主板B</div>"],
+                        ["", "<div class='th_div_center'>科创板</div>"],
+                        ["", "<div class='th_div_center'>股票回购</div>"]
+                    ];
+                    for (var i = 0; i < item.length; i++) {
+                        var result = item[i];
+                        if (result.PRODUCT_TYPE == "40") { arrA = createArr(result); }
+                        else if (result.PRODUCT_TYPE == "1") { arrB = createArr(result); }
+                        else if (result.PRODUCT_TYPE == "2") { arrC = createArr(result); }
+                        else if (result.PRODUCT_TYPE == "43") { arrF = createArr(result); }
+                        else if (result.PRODUCT_TYPE == "48") { arrG = createArr(result); }
+                    }
+                    var list = [
+                        ['市价总值(亿元)', arrA[5], arrB[5], arrC[5], arrG[5], arrF[5]]
+                    ];
+                }
+            };
+        }
+        if ($fundday_new.length > 0) {
+            var fundDay = {parms: {sqlId: 'COMMON_SSE_SJ_GPSJ_CJGK_DAYCJGK_C', fundType: '47'}};
+        }
+    """.encode("utf-8")
+
+
+def official_sse_payload(day: str) -> bytes:
+    return json.dumps(
+        {
+            "result": [
+                {"CAL_DATE": day, "PRODUCT_TYPE": "1", "MKT_VALUE_FULL": "100", "TX_NUM": "10"},
+                {"CAL_DATE": day, "PRODUCT_TYPE": "2", "MKT_VALUE_FULL": "10", "TX_NUM": "1"},
+                {"CAL_DATE": day, "PRODUCT_TYPE": "12", "MKT_VALUE_FULL": "110", "TX_NUM": "11"},
+            ]
+        },
+        ensure_ascii=False,
+    ).encode("utf-8")
+
+
+def test_official_sse_validator_rejects_nonzero_time_and_missing_tx_num() -> None:
+    payload = json.loads(official_sse_payload("2011-08-03").decode("utf-8"))
+    payload["result"][0]["CAL_DATE"] = "2011-08-03 12:00:00"
+    with pytest.raises(ValueError, match="CAL_DATE"):
+        MODULE._validate_official_sse_payload(
+            json.dumps(payload, ensure_ascii=False).encode("utf-8"), "2011-08-03"
+        )
+
+    payload = json.loads(official_sse_payload("2011-08-03").decode("utf-8"))
+    for row in payload["result"]:
+        row.pop("TX_NUM")
+    with pytest.raises(ValueError, match="TX_NUM"):
+        MODULE._validate_official_sse_payload(
+            json.dumps(payload, ensure_ascii=False).encode("utf-8"), "2011-08-03"
+        )
+
+    payload = json.loads(official_sse_payload("2011-08-03").decode("utf-8"))
+    payload["result"][0]["TX_NUM"] = "10.5"
+    payload["result"][2]["TX_NUM"] = "11.5"
+    with pytest.raises(ValueError, match="TX_NUM"):
+        MODULE._validate_official_sse_payload(
+            json.dumps(payload, ensure_ascii=False).encode("utf-8"), "2011-08-03"
+        )
+
+
+@pytest.mark.parametrize("invalid_market_cap", ["1,2", "1,,2", ",1"])
+def test_official_sse_validator_rejects_malformed_grouped_market_cap_text(
+    invalid_market_cap: str,
+) -> None:
+    payload = json.loads(official_sse_payload("2011-08-03").decode("utf-8"))
+    payload["result"][0]["MKT_VALUE_FULL"] = invalid_market_cap
+
+    with pytest.raises(ValueError, match="SSE MKT_VALUE_FULL"):
+        MODULE._validate_official_sse_payload(
+            json.dumps(payload, ensure_ascii=False).encode("utf-8"), "2011-08-03"
+        )
+
+
+def official_szse_workbook_bytes(
+    *, grouped_market_caps: bool = False, main_a_market_cap: str | None = None
+) -> bytes:
+    def market_cap(value: str) -> str:
+        return f"{int(value):,.2f}" if grouped_market_caps else value
+
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.append(["证券类别", "数量(只)", "成交金额(元)", "总市值(元)", "流通市值(元)"])
+    sheet.append(["股票", 5, 0, market_cap("11400000000"), 0])
+    sheet.append(
+        [
+            "主板A股",
+            1,
+            0,
+            main_a_market_cap or market_cap("10000000000"),
+            0,
+        ]
+    )
+    sheet.append(["主板B股", 1, 0, market_cap("900000000"), 0])
+    sheet.append(["中小板", 1, 0, market_cap("200000000"), 0])
+    sheet.append(["创业板", 1, 0, market_cap("300000000"), 0])
+    buffer = BytesIO()
+    workbook.save(buffer)
+    return buffer.getvalue()
+
+
+@pytest.mark.parametrize("invalid_market_cap", ["1,2", "1,,2", ",1"])
+def test_official_szse_validator_rejects_malformed_grouped_market_cap_text(
+    invalid_market_cap: str,
+) -> None:
+    with pytest.raises(ValueError, match="SZSE 总市值"):
+        MODULE._validate_official_szse_workbook(
+            official_szse_workbook_bytes(main_a_market_cap=invalid_market_cap)
+        )
+
+
+def write_official_pre2017_fixture(
+    root: Path, day: str, *, grouped_szse_market_caps: bool = False
+) -> Path:
+    output = root / "artifacts/leverage_capitulation/official_pre2017_market_cap"
+    legacy_root = root / "artifacts/leverage_capitulation/sh_sz_a_share_market_cap_daily"
+    mapping_payload = official_mapping_evidence_bytes()
+    sse_payload = official_sse_payload(day)
+    szse_payload = official_szse_workbook_bytes(
+        grouped_market_caps=grouped_szse_market_caps
+    )
+    mapping_path = output / "raw/sse_mapping/search_addhsl.js"
+    sse_path = output / f"raw/sse/{day}.json"
+    szse_path = legacy_root / f"raw/{day}_szse.xlsx"
+    for path, payload in (
+        (mapping_path, mapping_payload),
+        (sse_path, sse_payload),
+        (szse_path, szse_payload),
+    ):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(payload)
+    szse_entry = {
+        "date": day,
+        "market": "SZSE",
+        "source_url": "https://www.szse.cn/api/report/ShowReport",
+        "request_parameters": {
+            "SHOWTYPE": "xlsx",
+            "CATALOGID": "1803_sczm",
+            "TABKEY": "tab1",
+            "txtQueryDate": day,
+        },
+        "relative_path": f"raw/{day}_szse.xlsx",
+        "sha256": hashlib.sha256(szse_payload).hexdigest(),
+        "bytes": len(szse_payload),
+        "retrieved_at_utc": "2026-08-14T00:00:00+00:00",
+        "schema_version": "show_report_xlsx",
+    }
+    legacy_manifest_path = legacy_root / "raw_response_manifest.json"
+    legacy_manifest_path.write_text(
+        json.dumps([szse_entry], ensure_ascii=False), encoding="utf-8"
+    )
+    csv_path = output / "official_pre2017_market_cap.csv"
+    write_csv(
+        csv_path,
+        "date,sh_a_market_cap_yi,sz_a_market_cap_yi,market_cap_yi,source_segment,status,sse_raw_sha256,szse_raw_sha256\n"
+        f"{day},100,105,205,official_exchange_pre_2017,pass,{hashlib.sha256(sse_payload).hexdigest()},{hashlib.sha256(szse_payload).hexdigest()}\n",
+    )
+    dfcf_path = root / "artifacts/leverage_capitulation/dfcf_daily/dfcf_margin_balances.csv"
+    parsed_mapping = {
+        "schema_version": "search_addhsl_product_type_mapping_v1",
+        "header_order": ["股票", "主板A", "主板B", "科创板", "股票回购"],
+        "product_type_order": ["40", "1", "2", "48", "43"],
+        "product_type_mapping": {
+            "40": "股票",
+            "1": "主板A",
+            "2": "主板B",
+            "48": "科创板",
+            "43": "股票回购",
+        },
+    }
+    mapping_entry = {
+        "source_url": "https://www.sse.com.cn/xhtml/home/public/querySearch/search_addhsl.js",
+        "relative_path": "raw/sse_mapping/search_addhsl.js",
+        "sha256": hashlib.sha256(mapping_payload).hexdigest(),
+        "bytes": len(mapping_payload),
+        "schema_version": "search_addhsl_product_type_mapping_v1",
+        "parsed": parsed_mapping,
+    }
+    sse_entry = {
+        "date": day,
+        "source_url": "https://query.sse.com.cn/commonQuery.do",
+        "request_parameters": {
+            "sqlId": "COMMON_SSE_SJ_GPSJ_CJGK_DAYCJGK_C",
+            "stockType": "90",
+            "searchDate": day,
+        },
+        "relative_path": f"raw/sse/{day}.json",
+        "sha256": hashlib.sha256(sse_payload).hexdigest(),
+        "bytes": len(sse_payload),
+        "schema_version": "legacy_product_type",
+    }
+    output_szse_entry = {**szse_entry, "storage": "legacy_read_only"}
+    manifest = {
+        "schema_version": "2",
+        "source_segment": "official_exchange_pre_2017",
+        "finalized": True,
+        "final_output_ready": True,
+        "reporting_eligible": True,
+        "dfcf_input": {
+            "relative_path": "artifacts/leverage_capitulation/dfcf_daily/dfcf_margin_balances.csv",
+            "sha256": hashlib.sha256(dfcf_path.read_bytes()).hexdigest(),
+        },
+        "dfcf_date_contract": {
+            "required_start": day,
+            "required_end": day,
+            "required_common_date_count": 1,
+            "available_common_date_count": 1,
+            "available_common_date_first": day,
+            "available_common_date_last": day,
+            "requested_is_full_contract": True,
+        },
+        "legacy_raw_root": str(legacy_root.resolve()),
+        "legacy_raw_manifest_sha256": hashlib.sha256(
+            legacy_manifest_path.read_bytes()
+        ).hexdigest(),
+        "requested_dates": [day],
+        "completed_dates": [day],
+        "missing_dates": [],
+        "csv_sha256": hashlib.sha256(csv_path.read_bytes()).hexdigest(),
+        "sse_mapping_evidence": mapping_entry,
+        "sse_raw_entries": [sse_entry],
+        "szse_raw_entries": [output_szse_entry],
+        "raw_chain_audit": {
+            "official_raw_chain_status": "pass",
+            "scope_mapping_status": "pass",
+            "date_linkage_status": "pass",
+            "decimal_calculation_status": "pass",
+            "ratio_reporting_eligible": True,
+        },
+        "financial_evidence_audit": {
+            "applicable": False,
+            "status": "N/A",
+            "reason_code": "UNSUPPORTED_RATIO_CONTRACT",
+        },
+    }
+    audit = {
+        "schema_version": "1",
+        "source_segment": "official_exchange_pre_2017",
+        "official_raw_chain_status": "pass",
+        "scope_mapping_status": "pass",
+        "date_linkage_status": "pass",
+        "decimal_calculation_status": "pass",
+        "ratio_reporting_eligible": True,
+        "financial_evidence_audit": manifest["financial_evidence_audit"],
+        "csv_sha256": manifest["csv_sha256"],
+        "dfcf_input": manifest["dfcf_input"],
+        "requested_dates": [day],
+        "completed_dates": [day],
+        "missing_dates": [],
+        "sse_mapping_evidence": mapping_entry,
+        "sse_raw_entry_count": 1,
+        "szse_raw_entry_count": 1,
+    }
+    (output / "official_pre2017_market_cap_manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False), encoding="utf-8"
+    )
+    (output / "official_pre2017_market_cap_audit.json").write_text(
+        json.dumps(audit, ensure_ascii=False), encoding="utf-8"
+    )
+    return output
+
+
 def build_from_fixture(root: Path, days: list[str]) -> tuple[list[dict[str, object]], dict[str, object], object, object, str | None]:
     margin = MODULE.verify_dfcf_inputs(root)
     vendor, vendor_reason = MODULE.verify_post2017_vendor_inputs(root)
@@ -341,7 +622,7 @@ def test_records_force_pre2017_na_and_exact_post2017_vendor_join_only(tmp_path: 
     assert set(records[0]) == expected_fields
     assert not {"sh_a_market_cap_yi", "sz_a_market_cap_yi", "sh_sz_a_market_cap_yi"} & set(records[0])
     assert records[0]["denominator_market_cap_yi"] is None
-    assert records[0]["market_cap_source"] == "pre2017_official_pending"
+    assert records[0]["market_cap_source"] == "pre2017_official_unavailable"
     assert records[0]["market_cap_review_status"] == "unavailable"
     assert records[0]["ratio_pct"] is None
     assert records[1]["denominator_market_cap_yi"] == 12000.0
@@ -355,6 +636,86 @@ def test_records_force_pre2017_na_and_exact_post2017_vendor_join_only(tmp_path: 
     assert provenance["ratio_available"] is True
     assert provenance["ratio_data_range"] == {"start": "2017-01-03", "end": "2017-01-03"}
     assert provenance["source_switch_date"] == "2017-01-03"
+
+
+def test_verified_official_pre2017_chain_supplies_ratio_and_hash_failure_falls_back_to_na(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    days = ["2011-08-03", "2017-01-03"]
+    write_valid_dfcf_fixture(tmp_path, days)
+    write_vendor_fixture(tmp_path, [vendor_raw_row("2017-01-03")])
+    official_dir = write_official_pre2017_fixture(tmp_path, "2011-08-03")
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_DATE_COUNT", 1, raising=False)
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_END", "2011-08-03", raising=False)
+    margin = MODULE.verify_dfcf_inputs(tmp_path)
+    vendor, vendor_reason = MODULE.verify_post2017_vendor_inputs(tmp_path)
+
+    official, official_reason = MODULE.verify_pre2017_official_inputs(tmp_path, margin)
+
+    assert official is not None and official_reason is None, official_reason
+    records, provenance = MODULE.build_dashboard_records(
+        margin.frame,
+        vendor,
+        index_frames(days),
+        vendor_reason,
+        official_pre2017=official,
+        official_pre2017_reason=official_reason,
+    )
+    assert records[0]["market_cap_source"] == "official_exchange_pre2017_raw_chain_audited"
+    assert records[0]["market_cap_review_status"] == "official_exchange_pre2017_raw_chain_audited"
+    assert records[0]["denominator_market_cap_yi"] == 205.0
+    assert Decimal(str(records[0]["ratio_pct"])) == Decimal("87.80487805")
+    assert provenance["ratio_data_range"] == {"start": "2011-08-03", "end": "2017-01-03"}
+
+    mapping_path = official_dir / "raw/sse_mapping/search_addhsl.js"
+    mapping_path.write_bytes(mapping_path.read_bytes() + b"\ncorruption")
+    official, official_reason = MODULE.verify_pre2017_official_inputs(tmp_path, margin)
+    records, _, = MODULE.build_dashboard_records(
+        margin.frame,
+        vendor,
+        index_frames(days),
+        vendor_reason,
+        official_pre2017=official,
+        official_pre2017_reason=official_reason,
+    )
+    assert official is None and isinstance(official_reason, str)
+    assert records[0]["ratio_pct"] is None
+    assert records[0]["denominator_market_cap_yi"] is None
+    assert records[0]["market_cap_source"] == "pre2017_official_unavailable"
+    assert records[1]["ratio_pct"] is not None
+
+
+def test_pre2017_reader_accepts_grouped_szse_market_cap_text(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    day = "2011-08-03"
+    write_valid_dfcf_fixture(tmp_path, [day])
+    write_official_pre2017_fixture(
+        tmp_path, day, grouped_szse_market_caps=True
+    )
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_DATE_COUNT", 1, raising=False)
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_END", day, raising=False)
+
+    official, reason = MODULE.verify_pre2017_official_inputs(
+        tmp_path, MODULE.verify_dfcf_inputs(tmp_path)
+    )
+
+    assert official is not None, reason
+    assert reason is None
+
+
+def test_pre2017_reader_rejects_partial_chain_when_full_1316_contract_is_required(
+    tmp_path: Path
+) -> None:
+    days = ["2011-08-03", "2017-01-03"]
+    write_valid_dfcf_fixture(tmp_path, days)
+    write_official_pre2017_fixture(tmp_path, "2011-08-03")
+    margin = MODULE.verify_dfcf_inputs(tmp_path)
+
+    official, reason = MODULE.verify_pre2017_official_inputs(tmp_path, margin)
+
+    assert official is None
+    assert isinstance(reason, str) and "1316" in reason
 
 
 def test_vendor_dates_outside_dfcf_backbone_never_create_output_record(tmp_path: Path) -> None:
@@ -416,7 +777,7 @@ def test_payload_manifest_schema_hash_and_atomic_publish_are_consistent(
     assert parsed_manifest["dfcf"]["exchange_requests"] == 0
     assert parsed_manifest["market_cap"]["reporting_eligible"] is False
     assert parsed_manifest["market_cap"]["ratio_review_status"] == (
-        "mixed_pre2017_pending_eastmoney_vendor_unverified"
+        "mixed_official_pre2017_raw_chain_audited_eastmoney_vendor_unverified"
     )
     assert parsed_manifest["market_cap"]["ratio_missing_records"] == 2
     assert len(parsed_manifest["market_cap"]["source_segments"]) == 2
