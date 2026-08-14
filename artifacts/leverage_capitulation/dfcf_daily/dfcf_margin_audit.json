@@ -8,7 +8,7 @@
     "SH": "007",
     "SZ": "001"
   },
-  "requested_start": "2026-07-29",
+  "requested_start": "2026-07-30",
   "backfill_start": null,
   "requested_end": "2026-08-14",
   "network_requests": 2,
@@ -21,15 +21,15 @@
   "sh_only_dates": [],
   "sz_only_dates": [],
   "changed_rows": {
-    "SH": 1,
-    "SZ": 1
+    "SH": 0,
+    "SZ": 0
   },
-  "new_common_dates": 1,
-  "table_updated": true,
+  "new_common_dates": 0,
+  "table_updated": false,
   "sample_status": "dfcf_vendor_only_unverified_by_exchange",
   "vendor_warning": "DFCF vendor data only; not validated against exchange official aggregates.",
   "dfcf_sse_margin_sha256": "19c01ab686475439cd5214cd20b154068590a6c7b87c3bb84fd3c4085c4cce43",
   "dfcf_szse_margin_sha256": "d21ae1275b416cbededc5ba21e3256884bf21449219933503ca85526bdbbfb9a",
   "dfcf_margin_balances_sha256": "3417605c052d49cb24b86119e124bde725db5b0bd0fc0afe4d5b171fa3f8f173",
-  "updated_at_utc": "2026-08-14T01:03:53+00:00"
+  "updated_at_utc": "2026-08-14T05:00:19+00:00"
 }
