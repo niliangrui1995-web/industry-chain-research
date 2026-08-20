@@ -50,6 +50,12 @@ OFFICIAL_PRE2017_AUDIT_FILENAME = "official_pre2017_market_cap_audit.json"
 OFFICIAL_PRE2017_SOURCE = "official_exchange_pre2017_raw_chain_audited"
 OFFICIAL_PRE2017_UNAVAILABLE_SOURCE = "pre2017_official_unavailable"
 OFFICIAL_PRE2017_REVIEW_STATUS = "official_exchange_pre2017_raw_chain_audited"
+MIXED_AUDITED_REVIEW_STATUS = (
+    "mixed_official_pre2017_raw_chain_audited_eastmoney_vendor_unverified"
+)
+MIXED_OFFICIAL_UNAVAILABLE_REVIEW_STATUS = (
+    "mixed_official_pre2017_unavailable_eastmoney_vendor_unverified"
+)
 OFFICIAL_PRE2017_SSE_URL = "https://query.sse.com.cn/commonQuery.do"
 OFFICIAL_PRE2017_SSE_MAPPING_URL = (
     "https://www.sse.com.cn/xhtml/home/public/querySearch/search_addhsl.js"
@@ -1088,6 +1094,8 @@ def _manifest_reason(
     provenance: dict[str, object],
     vendor_reason: str | None,
     official_pre2017_reason: str | None,
+    *,
+    official_pre2017: OfficialPre2017Input | None,
 ) -> str:
     if vendor_reason:
         return (
@@ -1095,6 +1103,12 @@ def _manifest_reason(
             f"2017 后厂商分母亦不可用：{vendor_reason}"
         )
     if provenance["ratio_available"] is True:
+        if official_pre2017 is None:
+            return (
+                f"2011–2016 前段状态：{(official_pre2017_reason or PRE2017_REASON).rstrip('。')}；"
+                "2017-01-03 起分母仅为东方财富 Choice 厂商口径，"
+                "未经交易所复核或完整审计。全段聚合比例不是正式 financial-evidence-audit 准出指标。"
+            )
         return (
             "前段分母使用交易所原始链；后段分母仅为东方财富 Choice 厂商口径，"
             "未经交易所复核或完整审计。全段聚合比例不是正式 financial-evidence-audit 准出指标。"
@@ -1125,8 +1139,17 @@ def build_manifest(
     market_cap = {
         "reporting_eligible": False,
         "ratio_available": provenance["ratio_available"] is True,
-        "ratio_review_status": "mixed_official_pre2017_raw_chain_audited_eastmoney_vendor_unverified",
-        "reason": _manifest_reason(provenance, vendor_reason, official_pre2017_reason),
+        "ratio_review_status": (
+            MIXED_AUDITED_REVIEW_STATUS
+            if official_pre2017 is not None
+            else MIXED_OFFICIAL_UNAVAILABLE_REVIEW_STATUS
+        ),
+        "reason": _manifest_reason(
+            provenance,
+            vendor_reason,
+            official_pre2017_reason,
+            official_pre2017=official_pre2017,
+        ),
         "ratio_data_range": provenance["ratio_data_range"],
         "ratio_missing_records": missing_records,
         "source_switch_date": POST2017_START.isoformat(),

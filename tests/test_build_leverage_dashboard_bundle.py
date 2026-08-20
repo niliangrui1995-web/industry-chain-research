@@ -777,8 +777,10 @@ def test_payload_manifest_schema_hash_and_atomic_publish_are_consistent(
     assert parsed_manifest["dfcf"]["exchange_requests"] == 0
     assert parsed_manifest["market_cap"]["reporting_eligible"] is False
     assert parsed_manifest["market_cap"]["ratio_review_status"] == (
-        "mixed_official_pre2017_raw_chain_audited_eastmoney_vendor_unverified"
+        "mixed_official_pre2017_unavailable_eastmoney_vendor_unverified"
     )
+    assert "比例为 N/A" in parsed_manifest["market_cap"]["reason"]
+    assert "前段分母使用交易所原始链" not in parsed_manifest["market_cap"]["reason"]
     assert parsed_manifest["market_cap"]["ratio_missing_records"] == 2
     assert len(parsed_manifest["market_cap"]["source_segments"]) == 2
 
@@ -787,6 +789,56 @@ def test_payload_manifest_schema_hash_and_atomic_publish_are_consistent(
     MODULE.publish_bundle_atomically(payload_path, manifest_path, publish_dir)
     assert (publish_dir / payload_path.name).read_bytes() == payload_path.read_bytes()
     assert (publish_dir / manifest_path.name).read_bytes() == manifest_path.read_bytes()
+
+
+def test_manifest_marks_verified_pre2017_chain_as_audited(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    days = ["2016-12-30", "2017-01-03"]
+    write_valid_dfcf_fixture(tmp_path, days)
+    write_vendor_fixture(tmp_path, [vendor_raw_row("2017-01-03")])
+    write_official_pre2017_fixture(tmp_path, "2016-12-30")
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_DATE_COUNT", 1, raising=False)
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_START", "2016-12-30", raising=False)
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_END", "2016-12-30", raising=False)
+
+    margin = MODULE.verify_dfcf_inputs(tmp_path)
+    vendor, vendor_reason = MODULE.verify_post2017_vendor_inputs(tmp_path)
+    official, official_reason = MODULE.verify_pre2017_official_inputs(tmp_path, margin)
+    assert vendor is not None and vendor_reason is None
+    assert official is not None and official_reason is None
+
+    records, provenance = MODULE.build_dashboard_records(
+        margin.frame,
+        vendor,
+        index_frames(days),
+        vendor_reason,
+        official_pre2017=official,
+        official_pre2017_reason=official_reason,
+    )
+    manifest = MODULE.build_manifest(
+        records,
+        provenance,
+        margin,
+        vendor,
+        vendor_reason,
+        {
+            ticker: {
+                "source": "本地TDX厂商日线",
+                "path": f"fixture/{ticker}.day",
+                "sha256": "a" * 64,
+                "first_date": days[0],
+                "last_date": days[-1],
+            }
+            for ticker in MODULE.INDEX_PATHS
+        },
+        official_pre2017=official,
+        official_pre2017_reason=official_reason,
+    )
+
+    assert manifest["market_cap"]["ratio_review_status"] == (
+        "mixed_official_pre2017_raw_chain_audited_eastmoney_vendor_unverified"
+    )
 
 
 def test_publish_rolls_back_payload_if_manifest_commit_fails(
