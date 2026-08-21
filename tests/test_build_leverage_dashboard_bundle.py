@@ -160,6 +160,107 @@ def write_vendor_fixture(root: Path, raw_rows: list[dict[str, object]] | None = 
     return vendor_dir
 
 
+def write_incremental_vendor_fixture(root: Path) -> Path:
+    baseline_rows = [
+        vendor_raw_row("2017-01-03", "120000000"),
+        vendor_raw_row("2017-01-04", "121000000"),
+    ]
+    refreshed_rows = [vendor_raw_row("2017-01-04", "122000000")]
+    vendor_dir = root / MODULE.VENDOR_OUTPUT_DIRECTORY
+    baseline_raw = vendor_dir / "raw/page-0001.json"
+    refreshed_raw = vendor_dir / "raw/batches/run-2/page-0001.json"
+    baseline_raw.parent.mkdir(parents=True)
+    refreshed_raw.parent.mkdir(parents=True)
+    baseline_raw.write_bytes(raw_page_payload(baseline_rows))
+    refreshed_raw.write_bytes(raw_page_payload(refreshed_rows))
+    table_path = vendor_dir / MODULE.VENDOR_TABLE_FILENAME
+    write_csv(
+        table_path,
+        "date,market_cap_yi,source,source_market_code,source_trade_date,raw_total_market_cap,unit_conversion,status\n"
+        + "\n".join(
+            [
+                _csv_row_from_raw(baseline_rows[0]),
+                _csv_row_from_raw(refreshed_rows[0]),
+            ]
+        )
+        + "\n",
+    )
+
+    def page_entry(raw_path: Path, raw_directory: str, rows: list[dict[str, object]]) -> dict[str, object]:
+        return {
+            "page_number": 1,
+            "relative_path": f"{raw_directory}/page-0001.json",
+            "sha256": MODULE.sha256_file(raw_path),
+            "bytes": raw_path.stat().st_size,
+            "returned_rows": len(rows),
+            "reported_count": len(rows),
+            "reported_pages": 1,
+            "request": {
+                "parameters": {
+                    "reportName": MODULE.EASTMONEY_REPORT_NAME,
+                    "columns": "ALL",
+                    "filter": (
+                        f'(TRADE_MARKET_CODE="{MODULE.EASTMONEY_MARKET_CODE}")'
+                        f"(TRADE_DATE>='{str(rows[0]['TRADE_DATE'])[:10]}')"
+                        f"(TRADE_DATE<='{str(rows[-1]['TRADE_DATE'])[:10]}')"
+                    ),
+                    "source": "WEB",
+                    "client": "WEB",
+                    "pageNumber": 1,
+                    "pageSize": 500,
+                    "sortColumns": "TRADE_DATE",
+                    "sortTypes": "1",
+                },
+                "attempts": 1,
+            },
+        }
+
+    manifest = {
+        "manifest_version": 2,
+        "source": MODULE.EASTMONEY_SOURCE,
+        "source_url": MODULE.EASTMONEY_URL,
+        "report_name": MODULE.EASTMONEY_REPORT_NAME,
+        "source_market_code": MODULE.EASTMONEY_MARKET_CODE,
+        "csv_sha256": MODULE.sha256_file(table_path),
+        "reporting_eligible": False,
+        "ratio_review_status": MODULE.EASTMONEY_REVIEW_STATUS,
+        "scope_warning": MODULE.VENDOR_SCOPE_WARNING,
+        "requested_start": "2017-01-04",
+        "requested_end": "2017-01-04",
+        "requested_dfcf_common_dates": 1,
+        "output_records": 2,
+        "data_range": {"start_date": "2017-01-03", "end_date": "2017-01-04"},
+        "missing_dfcf_common_dates": [],
+        "active_missing_dfcf_common_dates": [],
+        "batches": [
+            {
+                "batch_id": "legacy-full-snapshot",
+                "sequence": 1,
+                "raw_directory": "raw",
+                "requested_start": "2017-01-03",
+                "requested_end": "2017-01-04",
+                "pages": [page_entry(baseline_raw, "raw", baseline_rows)],
+            },
+            {
+                "batch_id": "run-2",
+                "sequence": 2,
+                "raw_directory": "raw/batches/run-2",
+                "requested_start": "2017-01-04",
+                "requested_end": "2017-01-04",
+                "pages": [
+                    page_entry(refreshed_raw, "raw/batches/run-2", refreshed_rows)
+                ],
+            },
+        ],
+        "revision_summary": {
+            "revised_dates": ["2017-01-04"],
+            "withdrawn_dfcf_dates": [],
+        },
+    }
+    write_vendor_manifest(vendor_dir, manifest)
+    return vendor_dir
+
+
 def vendor_manifest_path(vendor_dir: Path) -> Path:
     return vendor_dir / MODULE.VENDOR_MANIFEST_FILENAME
 
@@ -488,6 +589,19 @@ def test_verify_post2017_vendor_requires_hashes_raw_pages_and_unreviewed_contrac
     assert vendor.frame["date"].tolist() == ["2017-01-03"]
     assert vendor.frame["market_cap_yi"].tolist() == ["12000"]
     assert vendor.manifest["reporting_eligible"] is False
+
+
+def test_verify_post2017_vendor_uses_latest_incremental_batch_for_overlapping_date(
+    tmp_path: Path,
+) -> None:
+    write_incremental_vendor_fixture(tmp_path)
+
+    vendor, reason = MODULE.verify_post2017_vendor_inputs(tmp_path)
+
+    assert reason is None
+    assert vendor is not None
+    assert vendor.frame["date"].tolist() == ["2017-01-03", "2017-01-04"]
+    assert vendor.frame["raw_total_market_cap"].tolist() == ["120000000", "122000000"]
 
 
 @pytest.mark.parametrize(

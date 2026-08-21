@@ -284,7 +284,7 @@ def _vendor_paths(project_root: Path) -> dict[str, Path]:
     }
 
 
-def _validate_vendor_manifest(manifest: dict[str, object]) -> tuple[list[dict[str, object]], str, str]:
+def _validate_vendor_manifest(manifest: dict[str, object]) -> list[dict[str, object]]:
     if manifest.get("source") != EASTMONEY_SOURCE:
         raise ValueError("东方财富 manifest source 不匹配")
     if manifest.get("source_url") != EASTMONEY_URL:
@@ -303,14 +303,83 @@ def _validate_vendor_manifest(manifest: dict[str, object]) -> tuple[list[dict[st
         raise ValueError("东方财富 manifest 缺少中文范围警示")
     if not all(term in scope_warning for term in ("未经交易所复核", "未经完整审计", "非 A 股")):
         raise ValueError("东方财富 manifest 范围警示不完整")
-    pages = manifest.get("pages")
-    if not isinstance(pages, list) or not pages:
-        raise ValueError("东方财富 manifest pages 缺失")
-    requested_start = _strict_date(manifest.get("requested_start"), "东方财富 manifest requested_start")
-    requested_end = _strict_date(manifest.get("requested_end"), "东方财富 manifest requested_end")
-    if requested_start > requested_end:
-        raise ValueError("东方财富 manifest requested 日期范围倒序")
-    return pages, requested_start, requested_end
+    manifest_version = manifest.get("manifest_version")
+    if manifest_version is None:
+        pages = manifest.get("pages")
+        if not isinstance(pages, list) or not pages:
+            raise ValueError("东方财富 manifest pages 缺失")
+        requested_start = _strict_date(
+            manifest.get("requested_start"), "东方财富 manifest requested_start"
+        )
+        requested_end = _strict_date(
+            manifest.get("requested_end"), "东方财富 manifest requested_end"
+        )
+        if requested_start > requested_end:
+            raise ValueError("东方财富 manifest requested 日期范围倒序")
+        return [
+            {
+                "batch_id": "legacy-full-snapshot",
+                "sequence": 1,
+                "raw_directory": "raw",
+                "requested_start": requested_start,
+                "requested_end": requested_end,
+                "pages": pages,
+            }
+        ]
+    if manifest_version != 2:
+        raise ValueError("东方财富 manifest_version 不受支持")
+    batches = manifest.get("batches")
+    if not isinstance(batches, list) or not batches:
+        raise ValueError("东方财富增量 manifest batches 缺失")
+    normalized: list[dict[str, object]] = []
+    for sequence, batch in enumerate(batches, start=1):
+        if not isinstance(batch, dict):
+            raise ValueError("东方财富增量 manifest batch 不是对象")
+        batch_id = batch.get("batch_id")
+        if not isinstance(batch_id, str) or re.fullmatch(r"[a-z0-9][a-z0-9-]{0,127}", batch_id) is None:
+            raise ValueError("东方财富增量 manifest batch_id 不符合固定契约")
+        if _integer(batch.get("sequence"), "东方财富增量 batch sequence", 1) != sequence:
+            raise ValueError("东方财富增量 manifest batch sequence 必须连续")
+        raw_directory = batch.get("raw_directory")
+        if not isinstance(raw_directory, str):
+            raise ValueError("东方财富增量 manifest raw_directory 缺失")
+        expected_directory = (
+            "raw"
+            if batch_id == "legacy-full-snapshot" and sequence == 1
+            else f"raw/batches/{batch_id}"
+        )
+        if raw_directory != expected_directory:
+            raise ValueError("东方财富增量 manifest raw_directory 不符合固定契约")
+        requested_start = _strict_date(
+            batch.get("requested_start"), "东方财富增量 batch requested_start"
+        )
+        requested_end = _strict_date(
+            batch.get("requested_end"), "东方财富增量 batch requested_end"
+        )
+        if requested_start > requested_end:
+            raise ValueError("东方财富增量 batch 请求区间倒序")
+        pages = batch.get("pages")
+        if not isinstance(pages, list) or not pages:
+            raise ValueError("东方财富增量 batch pages 缺失")
+        normalized.append(
+            {
+                "batch_id": batch_id,
+                "raw_directory": raw_directory,
+                "requested_start": requested_start,
+                "requested_end": requested_end,
+                "pages": pages,
+            }
+        )
+    active_missing_dates = manifest.get("active_missing_dfcf_common_dates")
+    if not isinstance(active_missing_dates, list):
+        raise ValueError("东方财富增量 manifest active_missing_dfcf_common_dates 缺失")
+    parsed_missing_dates = [
+        _strict_date(value, "东方财富增量 active_missing_dfcf_common_dates")
+        for value in active_missing_dates
+    ]
+    if len(parsed_missing_dates) != len(set(parsed_missing_dates)) or parsed_missing_dates != sorted(parsed_missing_dates):
+        raise ValueError("东方财富增量 active_missing_dfcf_common_dates 必须唯一且升序")
+    return normalized
 
 
 def _validate_vendor_page_request(
@@ -346,76 +415,98 @@ def _validate_vendor_page_request(
 
 
 def _validated_vendor_raw_records(
-    paths: dict[str, Path], pages: list[dict[str, object]], requested_start: str, requested_end: str
+    paths: dict[str, Path], batches: list[dict[str, object]]
 ) -> dict[str, tuple[str, Decimal]]:
     raw_root = paths["raw"].resolve()
-    records: list[tuple[str, str, Decimal]] = []
-    reported_count: int | None = None
-    reported_pages: int | None = None
-    for expected_page_number, page in enumerate(pages, start=1):
-        if not isinstance(page, dict):
-            raise ValueError("东方财富 manifest page 不是对象")
-        if _integer(page.get("page_number"), "东方财富 page_number", 1) != expected_page_number:
-            raise ValueError("东方财富 manifest pages 必须从 1 连续编号")
-        _validate_vendor_page_request(page, expected_page_number, requested_start, requested_end)
-        expected_relative = Path("raw") / f"page-{expected_page_number:04d}.json"
-        if page.get("relative_path") != expected_relative.as_posix():
-            raise ValueError("东方财富 raw 相对路径不符合固定契约")
-        raw_path = (paths["directory"] / expected_relative).resolve()
+    active_by_date: dict[str, tuple[str, Decimal]] = {}
+    for batch in batches:
+        requested_start = str(batch["requested_start"])
+        requested_end = str(batch["requested_end"])
+        raw_directory = Path(str(batch["raw_directory"]))
+        raw_directory_path = (paths["directory"] / raw_directory).resolve()
         try:
-            raw_path.relative_to(raw_root)
+            raw_directory_path.relative_to(raw_root)
         except ValueError as exc:
-            raise ValueError("东方财富 raw 路径越界") from exc
-        if not raw_path.is_file():
-            raise ValueError("东方财富 raw 文件不存在")
-        if _integer(page.get("bytes"), "东方财富 raw bytes", 1) != raw_path.stat().st_size:
-            raise ValueError("东方财富 raw bytes 不匹配")
-        if _require_sha256(page.get("sha256"), "东方财富 raw sha256") != sha256_file(raw_path):
-            raise ValueError("东方财富 raw SHA-256 不匹配")
-        payload = _load_json_bytes(raw_path, "东方财富 raw 响应")
-        if payload.get("success") is not True:
-            raise ValueError("东方财富 raw 响应 success 不为 true")
-        result = payload.get("result")
-        if not isinstance(result, dict):
-            raise ValueError("东方财富 raw 响应缺少 result 对象")
-        rows = result.get("data")
-        if not isinstance(rows, list):
-            raise ValueError("东方财富 raw 响应缺少 result.data 列表")
-        if _integer(page.get("returned_rows"), "东方财富 manifest returned_rows", 0) != len(rows):
-            raise ValueError("东方财富 raw returned_rows 不匹配")
-        page_count = _integer(result.get("count"), "东方财富 raw result.count", 0)
-        page_total = _integer(result.get("pages"), "东方财富 raw result.pages", 1)
-        for field in ("pageNum", "pageNumber", "pageNo"):
-            if field in result and _integer(result[field], f"东方财富 raw result.{field}", 1) != expected_page_number:
-                raise ValueError("东方财富 raw 返回页码与 manifest 页号不一致")
-        if _integer(page.get("reported_count"), "东方财富 manifest reported_count", 0) != page_count:
-            raise ValueError("东方财富 raw reported_count 不匹配")
-        if _integer(page.get("reported_pages"), "东方财富 manifest reported_pages", 1) != page_total:
-            raise ValueError("东方财富 raw reported_pages 不匹配")
-        if reported_count is None:
-            reported_count = page_count
-            reported_pages = page_total
-        elif reported_count != page_count or reported_pages != page_total:
-            raise ValueError("东方财富 raw 分页元数据不一致")
-        for raw_row in rows:
-            if not isinstance(raw_row, dict):
-                raise ValueError("东方财富 raw 行不是对象")
-            if raw_row.get("TRADE_MARKET_CODE") != EASTMONEY_MARKET_CODE:
-                raise ValueError("东方财富 raw TRADE_MARKET_CODE 不匹配")
-            source_trade_date = raw_row.get("TRADE_DATE")
-            trade_date = _source_trade_date(source_trade_date, "东方财富 raw TRADE_DATE")
-            if not (requested_start <= trade_date <= requested_end):
-                raise ValueError("东方财富 raw TRADE_DATE 超出请求日期范围")
-            if date.fromisoformat(trade_date) < POST2017_START:
-                raise ValueError("东方财富 raw TRADE_DATE 越过 2017-01-03 分段边界")
-            raw_total = _positive_decimal(raw_row.get("TOTAL_MARKET_CAP"), "东方财富 raw TOTAL_MARKET_CAP")
-            records.append((trade_date, str(source_trade_date).strip(), raw_total))
-    if reported_pages != len(pages) or reported_count != len(records):
-        raise ValueError("东方财富 raw 分页数量或总行数不匹配")
-    dates = [record[0] for record in records]
-    if not dates or len(dates) != len(set(dates)) or dates != sorted(dates):
-        raise ValueError("东方财富 raw 日期必须唯一且升序")
-    return {trade_date: (source_trade_date, raw_total) for trade_date, source_trade_date, raw_total in records}
+            raise ValueError("东方财富增量 raw 目录越界") from exc
+        records: list[tuple[str, str, Decimal]] = []
+        pages = batch["pages"]
+        if not isinstance(pages, list):
+            raise ValueError("东方财富增量 batch pages 不是列表")
+        reported_count: int | None = None
+        reported_pages: int | None = None
+        for expected_page_number, page in enumerate(pages, start=1):
+            if not isinstance(page, dict):
+                raise ValueError("东方财富 manifest page 不是对象")
+            if _integer(page.get("page_number"), "东方财富 page_number", 1) != expected_page_number:
+                raise ValueError("东方财富 manifest pages 必须从 1 连续编号")
+            _validate_vendor_page_request(page, expected_page_number, requested_start, requested_end)
+            expected_relative = raw_directory / f"page-{expected_page_number:04d}.json"
+            if page.get("relative_path") != expected_relative.as_posix():
+                raise ValueError("东方财富 raw 相对路径不符合固定契约")
+            raw_path = (paths["directory"] / expected_relative).resolve()
+            try:
+                raw_path.relative_to(raw_root)
+            except ValueError as exc:
+                raise ValueError("东方财富 raw 路径越界") from exc
+            if not raw_path.is_file():
+                raise ValueError("东方财富 raw 文件不存在")
+            if _integer(page.get("bytes"), "东方财富 raw bytes", 1) != raw_path.stat().st_size:
+                raise ValueError("东方财富 raw bytes 不匹配")
+            if _require_sha256(page.get("sha256"), "东方财富 raw sha256") != sha256_file(raw_path):
+                raise ValueError("东方财富 raw SHA-256 不匹配")
+            payload = _load_json_bytes(raw_path, "东方财富 raw 响应")
+            if payload.get("success") is not True:
+                raise ValueError("东方财富 raw 响应 success 不为 true")
+            result = payload.get("result")
+            if not isinstance(result, dict):
+                raise ValueError("东方财富 raw 响应缺少 result 对象")
+            rows = result.get("data")
+            if not isinstance(rows, list):
+                raise ValueError("东方财富 raw 响应缺少 result.data 列表")
+            if _integer(page.get("returned_rows"), "东方财富 manifest returned_rows", 0) != len(rows):
+                raise ValueError("东方财富 raw returned_rows 不匹配")
+            page_count = _integer(result.get("count"), "东方财富 raw result.count", 0)
+            page_total = _integer(result.get("pages"), "东方财富 raw result.pages", 1)
+            for field in ("pageNum", "pageNumber", "pageNo"):
+                if field in result and _integer(result[field], f"东方财富 raw result.{field}", 1) != expected_page_number:
+                    raise ValueError("东方财富 raw 返回页码与 manifest 页号不一致")
+            if _integer(page.get("reported_count"), "东方财富 manifest reported_count", 0) != page_count:
+                raise ValueError("东方财富 raw reported_count 不匹配")
+            if _integer(page.get("reported_pages"), "东方财富 manifest reported_pages", 1) != page_total:
+                raise ValueError("东方财富 raw reported_pages 不匹配")
+            if reported_count is None:
+                reported_count = page_count
+                reported_pages = page_total
+            elif reported_count != page_count or reported_pages != page_total:
+                raise ValueError("东方财富 raw 分页元数据不一致")
+            for raw_row in rows:
+                if not isinstance(raw_row, dict):
+                    raise ValueError("东方财富 raw 行不是对象")
+                if raw_row.get("TRADE_MARKET_CODE") != EASTMONEY_MARKET_CODE:
+                    raise ValueError("东方财富 raw TRADE_MARKET_CODE 不匹配")
+                source_trade_date = raw_row.get("TRADE_DATE")
+                trade_date = _source_trade_date(source_trade_date, "东方财富 raw TRADE_DATE")
+                if not (requested_start <= trade_date <= requested_end):
+                    raise ValueError("东方财富 raw TRADE_DATE 超出请求日期范围")
+                if date.fromisoformat(trade_date) < POST2017_START:
+                    raise ValueError("东方财富 raw TRADE_DATE 越过 2017-01-03 分段边界")
+                raw_total = _positive_decimal(raw_row.get("TOTAL_MARKET_CAP"), "东方财富 raw TOTAL_MARKET_CAP")
+                records.append((trade_date, str(source_trade_date).strip(), raw_total))
+        if reported_pages != len(pages) or reported_count != len(records):
+            raise ValueError("东方财富 raw 分页数量或总行数不匹配")
+        dates = [record[0] for record in records]
+        if not dates or len(dates) != len(set(dates)) or dates != sorted(dates):
+            raise ValueError("东方财富 raw 日期必须唯一且升序")
+        for trade_date in list(active_by_date):
+            if requested_start <= trade_date <= requested_end:
+                del active_by_date[trade_date]
+        active_by_date.update(
+            {
+                trade_date: (source_trade_date, raw_total)
+                for trade_date, source_trade_date, raw_total in records
+            }
+        )
+    return active_by_date
 
 
 def _validate_vendor_csv(
@@ -470,8 +561,8 @@ def verify_post2017_vendor_inputs(
     paths = _vendor_paths(project_root)
     try:
         manifest = _load_json_bytes(paths["manifest"], "东方财富 manifest")
-        pages, requested_start, requested_end = _validate_vendor_manifest(manifest)
-        raw_by_date = _validated_vendor_raw_records(paths, pages, requested_start, requested_end)
+        batches = _validate_vendor_manifest(manifest)
+        raw_by_date = _validated_vendor_raw_records(paths, batches)
         frame = _validate_vendor_csv(paths["table"], manifest, raw_by_date)
     except (OSError, UnicodeError, ValueError, TypeError, KeyError, pd.errors.ParserError, pd.errors.EmptyDataError) as exc:
         return None, f"东方财富后 2017 市值数据不可安全读取，比例为 N/A：{exc}"

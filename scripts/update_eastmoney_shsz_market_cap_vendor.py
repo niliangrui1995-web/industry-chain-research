@@ -13,6 +13,7 @@ from pathlib import Path
 import re
 import time
 from typing import Any
+import uuid
 from zoneinfo import ZoneInfo
 
 import requests
@@ -346,6 +347,140 @@ def load_dfcf_post2017_common_dates(
     return requested
 
 
+def _load_existing_vendor_records(table_path: Path) -> list[VendorRecord]:
+    try:
+        with table_path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            if reader.fieldnames != CSV_COLUMNS:
+                raise ValueError("已有东方财富市值 CSV 列集合不符合固定契约")
+            records: list[VendorRecord] = []
+            for row in reader:
+                if row.get("source") != SOURCE_NAME:
+                    raise ValueError("已有东方财富市值 CSV source 不匹配")
+                if row.get("source_market_code") != MARKET_CODE:
+                    raise ValueError("已有东方财富市值 CSV source_market_code 不匹配")
+                if row.get("unit_conversion") != "raw_divided_by_10000":
+                    raise ValueError("已有东方财富市值 CSV unit_conversion 不匹配")
+                if row.get("status") != "pass":
+                    raise ValueError("已有东方财富市值 CSV status 不为 pass")
+                trade_date = _strict_date(row.get("date"), field_name="已有东方财富市值 date")
+                source_date, source_trade_date = _source_date(row.get("source_trade_date"))
+                if source_date != trade_date:
+                    raise ValueError("已有东方财富市值 date 与 source_trade_date 不一致")
+                raw_total_market_cap = _positive_decimal(
+                    row.get("raw_total_market_cap"), field_name="已有 raw_total_market_cap"
+                )
+                market_cap_yi = _positive_decimal(
+                    row.get("market_cap_yi"), field_name="已有 market_cap_yi"
+                )
+                if decimal_to_yi(raw_total_market_cap) != market_cap_yi:
+                    raise ValueError("已有东方财富市值单位换算不一致")
+                records.append(
+                    VendorRecord(
+                        trade_date=trade_date,
+                        source_trade_date=source_trade_date,
+                        raw_total_market_cap=raw_total_market_cap,
+                        market_cap_yi=market_cap_yi,
+                    )
+                )
+    except OSError as exc:
+        raise ValueError(f"无法读取已有东方财富市值 CSV: {exc}") from exc
+    validate_vendor_records(records)
+    return records
+
+
+def _load_existing_manifest(manifest_path: Path) -> dict[str, object]:
+    try:
+        decoded = json.loads(manifest_path.read_text(encoding="utf-8"), parse_constant=_reject_json_constant)
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as exc:
+        raise ValueError(f"无法读取已有东方财富市值 manifest: {exc}") from exc
+    if not isinstance(decoded, dict):
+        raise ValueError("已有东方财富市值 manifest 必须是对象")
+    for field, expected in {
+        "source": SOURCE_NAME,
+        "source_url": EASTMONEY_URL,
+        "report_name": REPORT_NAME,
+        "source_market_code": MARKET_CODE,
+    }.items():
+        if decoded.get(field) != expected:
+            raise ValueError(f"已有东方财富市值 manifest {field} 不匹配")
+    return decoded
+
+
+def _legacy_manifest_batch(manifest: dict[str, object]) -> dict[str, object]:
+    pages = manifest.get("pages")
+    if not isinstance(pages, list) or not pages:
+        raise ValueError("已有旧版东方财富市值 manifest pages 缺失")
+    requested_start = _strict_date(
+        manifest.get("requested_start"), field_name="已有东方财富市值 requested_start"
+    )
+    requested_end = _strict_date(
+        manifest.get("requested_end"), field_name="已有东方财富市值 requested_end"
+    )
+    if requested_start > requested_end:
+        raise ValueError("已有东方财富市值 manifest 请求区间倒序")
+    return {
+        "batch_id": "legacy-full-snapshot",
+        "sequence": 1,
+        "raw_directory": RAW_DIRECTORY.as_posix(),
+        "requested_start": requested_start.isoformat(),
+        "requested_end": requested_end.isoformat(),
+        "pages": pages,
+    }
+
+
+def _existing_incremental_batches(manifest: dict[str, object]) -> list[dict[str, object]]:
+    version = manifest.get("manifest_version")
+    if version is None:
+        return [_legacy_manifest_batch(manifest)]
+    if version != 2:
+        raise ValueError("已有东方财富市值 manifest_version 不受支持")
+    batches = manifest.get("batches")
+    if not isinstance(batches, list) or not batches:
+        raise ValueError("已有增量东方财富市值 manifest batches 缺失")
+    copied: list[dict[str, object]] = []
+    for position, batch in enumerate(batches, start=1):
+        if not isinstance(batch, dict):
+            raise ValueError("已有增量东方财富市值 batch 必须是对象")
+        if batch.get("sequence") != position:
+            raise ValueError("已有增量东方财富市值 batch sequence 不连续")
+        copied.append(dict(batch))
+    return copied
+
+
+def _load_incremental_state(output_dir: Path) -> tuple[list[VendorRecord], list[dict[str, object]]]:
+    table_path = _output_path(output_dir, Path(TABLE_FILENAME))
+    manifest_path = _output_path(output_dir, Path(MANIFEST_FILENAME))
+    table_exists = table_path.exists()
+    manifest_exists = manifest_path.exists()
+    if not table_exists and not manifest_exists:
+        return [], []
+    if table_exists != manifest_exists:
+        raise ValueError("增量市值更新要求已有 CSV 与 manifest 同时存在")
+    manifest = _load_existing_manifest(manifest_path)
+    expected_csv_sha256 = manifest.get("csv_sha256")
+    if not isinstance(expected_csv_sha256, str) or re.fullmatch(
+        r"[0-9a-f]{64}", expected_csv_sha256
+    ) is None:
+        raise ValueError("已有东方财富市值 manifest csv_sha256 无效")
+    if sha256_file(table_path) != expected_csv_sha256:
+        raise ValueError("已有东方财富市值 CSV SHA-256 不匹配")
+    records = _load_existing_vendor_records(table_path)
+    expected_output_records = _integer_metadata(
+        manifest.get("output_records"),
+        field_name="已有东方财富市值 manifest output_records",
+        minimum=0,
+    )
+    if expected_output_records != len(records):
+        raise ValueError("已有东方财富市值 manifest output_records 与 CSV 行数不匹配")
+    return records, _existing_incremental_batches(manifest)
+
+
+def _new_batch_id() -> str:
+    timestamp = datetime.now(ZoneInfo("Asia/Shanghai")).strftime("%Y%m%dT%H%M%S")
+    return f"run-{timestamp}-{uuid.uuid4().hex[:12]}"
+
+
 def _json_bytes(payload: object) -> bytes:
     return (json.dumps(payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
 
@@ -396,7 +531,11 @@ def _table_rows(records: list[VendorRecord]) -> list[dict[str, str]]:
 
 
 def update_vendor_market_cap(
-    project_root: Path, requested_dates: list[date], options: UpdateOptions
+    project_root: Path,
+    requested_dates: list[date],
+    options: UpdateOptions,
+    *,
+    incremental: bool = False,
 ) -> dict[str, object]:
     if any(day < POST2017_START for day in requested_dates):
         raise ValueError("东方财富市值分段不得触及 2017-01-03 之前日期")
@@ -409,6 +548,7 @@ def update_vendor_market_cap(
             "network_requests": 0,
             "output_dir": str(output_dir),
             "written": False,
+            "incremental": incremental,
         }
     start_date = requested_dates[0]
     end_date = requested_dates[-1]
@@ -423,6 +563,129 @@ def update_vendor_market_cap(
         for record in all_records
         if record.trade_date not in requested_set
     ]
+
+    if incremental:
+        existing_records, existing_batches = _load_incremental_state(output_dir)
+        existing_by_date = {record.trade_date: record for record in existing_records}
+        revised_dates = [
+            record.trade_date.isoformat()
+            for record in output_records
+            if (
+                (previous := existing_by_date.get(record.trade_date)) is not None
+                and (
+                    previous.raw_total_market_cap != record.raw_total_market_cap
+                    or previous.source_trade_date != record.source_trade_date
+                )
+            )
+        ]
+        new_dates = [
+            record.trade_date.isoformat()
+            for record in output_records
+            if record.trade_date not in existing_by_date
+        ]
+        withdrawn_dates = [
+            day.isoformat()
+            for day in requested_dates
+            if day in existing_by_date and day not in available_dates
+        ]
+        merged_by_date = {
+            record.trade_date: record
+            for record in existing_records
+            if record.trade_date not in requested_set
+        }
+        merged_by_date.update({record.trade_date: record for record in output_records})
+        merged_records = [merged_by_date[day] for day in sorted(merged_by_date)]
+        all_dfcf_dates = load_dfcf_post2017_common_dates(
+            project_root, POST2017_START, end_date
+        )
+        active_missing_dates = [
+            day.isoformat() for day in all_dfcf_dates if day not in merged_by_date
+        ]
+
+        batch_id = _new_batch_id()
+        raw_directory = RAW_DIRECTORY / "batches" / batch_id
+        page_manifest: list[dict[str, object]] = []
+        for page in pages:
+            relative_path = raw_directory / f"page-{page.page_number:04d}.json"
+            raw_path = _output_path(output_dir, relative_path)
+            _atomic_write_bytes(page.payload, raw_path)
+            page_manifest.append(
+                {
+                    "page_number": page.page_number,
+                    "relative_path": relative_path.as_posix(),
+                    "sha256": sha256_file(raw_path),
+                    "bytes": raw_path.stat().st_size,
+                    "returned_rows": len(page.records),
+                    "reported_count": page.count,
+                    "reported_pages": page.pages,
+                    "request": request_log[page.page_number - 1],
+                }
+            )
+        batch = {
+            "batch_id": batch_id,
+            "sequence": len(existing_batches) + 1,
+            "raw_directory": raw_directory.as_posix(),
+            "requested_start": start_date.isoformat(),
+            "requested_end": end_date.isoformat(),
+            "requested_dfcf_common_dates": len(requested_dates),
+            "returned_dfcf_common_dates": len(output_records),
+            "missing_dfcf_common_dates": missing_dates,
+            "pages": page_manifest,
+            "network_requests": network_requests,
+            "generated_at_beijing": _beijing_now(),
+        }
+
+        table_path = _output_path(output_dir, Path(TABLE_FILENAME))
+        manifest_path = _output_path(output_dir, Path(MANIFEST_FILENAME))
+        _atomic_write_csv(_table_rows(merged_records), table_path)
+        manifest = {
+            "manifest_version": 2,
+            "source": SOURCE_NAME,
+            "source_url": EASTMONEY_URL,
+            "report_name": REPORT_NAME,
+            "source_market_code": MARKET_CODE,
+            "requested_start": start_date.isoformat(),
+            "requested_end": end_date.isoformat(),
+            "requested_dfcf_common_dates": len(requested_dates),
+            "output_records": len(merged_records),
+            "data_range": {
+                "start_date": merged_records[0].trade_date.isoformat() if merged_records else None,
+                "end_date": merged_records[-1].trade_date.isoformat() if merged_records else None,
+            },
+            "missing_dfcf_common_dates": missing_dates,
+            "active_missing_dfcf_common_dates": active_missing_dates,
+            "returned_non_dfcf_dates": non_dfcf_dates,
+            "batches": [*existing_batches, batch],
+            "network_requests": network_requests,
+            "response_count": len(pages),
+            "csv_sha256": sha256_file(table_path),
+            "reporting_eligible": False,
+            "ratio_review_status": RATIO_REVIEW_STATUS,
+            "scope_warning": (
+                "东方财富 Choice 厂商口径／未经交易所复核、未经完整审计；"
+                "仅覆盖 2017-01-03 及以后与 DFCF 共同日期精确重合的记录；"
+                "A/B、CDR、基金等资产范围未核验，分子可能含非 A 股融资标的。"
+            ),
+            "revision_summary": {
+                "checked_start": start_date.isoformat(),
+                "checked_end": end_date.isoformat(),
+                "new_dates": new_dates,
+                "revised_dates": revised_dates,
+                "withdrawn_dfcf_dates": withdrawn_dates,
+            },
+            "generated_at_beijing": _beijing_now(),
+        }
+        _atomic_write_bytes(_json_bytes(manifest), manifest_path)
+        return {
+            "requested_dates": len(requested_dates),
+            "output_records": len(merged_records),
+            "network_requests": network_requests,
+            "output_dir": str(output_dir),
+            "written": True,
+            "incremental": True,
+            "revised_dates": revised_dates,
+            "withdrawn_dfcf_dates": withdrawn_dates,
+        }
 
     page_manifest: list[dict[str, object]] = []
     for page in pages:
@@ -506,6 +769,11 @@ def main() -> None:
     parser.add_argument("--timeout-seconds", type=int, default=30)
     parser.add_argument("--max-retries", type=int, default=4)
     parser.add_argument("--sleep-seconds", type=float, default=0.2)
+    parser.add_argument(
+        "--incremental",
+        action="store_true",
+        help="保留既有市值记录并把本次请求写为不可变原始批次。",
+    )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     if args.start_date < POST2017_START:
@@ -529,6 +797,7 @@ def main() -> None:
                     "requested_end": requested_dates[-1].isoformat() if requested_dates else None,
                     "output_dir": str(output_dir),
                     "source_url": EASTMONEY_URL,
+                    "incremental": args.incremental,
                 },
                 ensure_ascii=False,
             )
@@ -544,6 +813,7 @@ def main() -> None:
             max_retries=args.max_retries,
             sleep_seconds=args.sleep_seconds,
         ),
+        incremental=args.incremental,
     )
     print(json.dumps(result, ensure_ascii=False))
 
