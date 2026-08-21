@@ -4546,21 +4546,21 @@
     },
     "603256.SH": {
       "exists": true,
-      "byte_length": 53412,
-      "sha256": "60acaf167a8da79dd59df3a1e33e667787d26b6f084edfdc3ec4695b152879b2",
-      "record_count": 46
+      "byte_length": 66085,
+      "sha256": "d7ad47897a2b2c28abb0fa54a3d05ed6102894798184ede347ed3fc0d39add2f",
+      "record_count": 50
     },
     "601869.SH": {
       "exists": true,
-      "byte_length": 30411,
-      "sha256": "d5c36f85ea5143c7000f8f20f5487e6a0e168fe3bba9e094af52646e0cbaa126",
-      "record_count": 23
+      "byte_length": 34192,
+      "sha256": "30552989f1d68b4c06806db50e03883df5ffea8e375a7ccab72a8cb903162eb9",
+      "record_count": 24
     },
     "301511.SZ": {
       "exists": true,
-      "byte_length": 63259,
-      "sha256": "4a7e219ae838bb6ea06730badda3ce8ee7af09da8faed9ee51bd824a70c915e7",
-      "record_count": 62
+      "byte_length": 66200,
+      "sha256": "6b34b8d22403914e6d0c18b31ba5ff4b6680cbb8d9d428f8e7beac408dc62548",
+      "record_count": 63
     },
     "002384.SZ": {
       "exists": true,
@@ -4570,15 +4570,15 @@
     },
     "300308.SZ": {
       "exists": true,
-      "byte_length": 68340,
-      "sha256": "05b90d6fa466bff03231bc0ec4a34c8d7b002341a504442975e14eeb27806bd7",
-      "record_count": 51
+      "byte_length": 75489,
+      "sha256": "fd50b6e5862b1b0955f43253cf499688a2d100065d015243f41db05a76cee6e4",
+      "record_count": 53
     },
     "688498.SH": {
       "exists": true,
-      "byte_length": 24657,
-      "sha256": "8eec16e4949db016f245d8437e75119a1c66711b4f1fb2e3332345ff9ad49073",
-      "record_count": 15
+      "byte_length": 35558,
+      "sha256": "4c0bfa0a725762349a0ba46391ae6082b91715619403a0a3a057c8b356b01d66",
+      "record_count": 18
     },
     "688668.SH": {
       "exists": true,
@@ -4588,9 +4588,9 @@
     },
     "300394.SZ": {
       "exists": true,
-      "byte_length": 14136,
-      "sha256": "e918a938978b07040507c8fd0382ff60cf0ed24d2d285a2e0a57cfa2a0ab76d2",
-      "record_count": 17
+      "byte_length": 21490,
+      "sha256": "923acfda8e6f6e936e18d90e57c5a9a204c08c2dad66f93d0a4ca988d493ef5e",
+      "record_count": 19
     },
     "002851.SZ": {
       "exists": true,
@@ -4600,9 +4600,9 @@
     },
     "000636.SZ": {
       "exists": true,
-      "byte_length": 31960,
-      "sha256": "df060a7f3e009c38f2caf03c998c63835248a4efccc10b282564e80d9f15991d",
-      "record_count": 19
+      "byte_length": 35677,
+      "sha256": "deca0aef287642cd840cc9e5e99fd299599f5db007bf80326575b0c0c6a5703a",
+      "record_count": 20
     },
     "688048.SH": {
       "exists": true,
@@ -4612,9 +4612,9 @@
     },
     "301217.SZ": {
       "exists": true,
-      "byte_length": 8555,
-      "sha256": "40429a582a0053e441a518eae076953ee48443b1899feb49702aeda3b2bdf8d9",
-      "record_count": 5
+      "byte_length": 15214,
+      "sha256": "b26ab31123ff05cef12b559a3d8d26d398f98a258a6daa8da2d7ced6e7de0f9f",
+      "record_count": 7
     }
   }
 }
