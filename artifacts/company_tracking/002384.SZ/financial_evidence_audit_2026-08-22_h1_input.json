@@ -1,0 +1,899 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "002384-2026h1-masterbook-delta-2026-08-22",
+  "as_of": "2026-08-22T23:59:59+08:00",
+  "sources": [
+    {
+      "id": "S_LEDGER_DRAFT",
+      "source_type": "report_under_audit",
+      "origin_id": "watchlists:ai-chain:002384:2026h1-delta",
+      "locator": "watchlists/AI产业链.xlsx#AI产业链!D2",
+      "source_date": "2026-08-22",
+      "checked_at": "2026-08-22T23:59:59+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_H1",
+      "source_type": "official_filing",
+      "origin_id": "cninfo:002384:2026h1:20260822:1225491182",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-22/1225491182.PDF#pages=8,21,22,92",
+      "source_date": "2026-08-22",
+      "checked_at": "2026-08-22T23:59:59+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_DRAFT_REVENUE",
+      "metric": "revenue",
+      "value": "27797683972.88",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_REVENUE",
+      "metric": "revenue",
+      "value": "27797683972.88",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "attributable_net_profit",
+      "value": "2956898811.04",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "attributable_net_profit",
+      "value": "2956898811.04",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_OPERATING_CASH_FLOW",
+      "metric": "operating_cash_flow",
+      "value": "2383887276.10",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_OPERATING_CASH_FLOW",
+      "metric": "operating_cash_flow",
+      "value": "2383887276.10",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_OPTICAL_MODULE_REVENUE",
+      "metric": "product_revenue",
+      "value": "5350999299.05",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_revenue_optical_module_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_OPTICAL_MODULE_REVENUE",
+      "metric": "product_revenue",
+      "value": "5350999299.05",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_revenue_optical_module_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_OPTICAL_MODULE_GROSS_MARGIN",
+      "metric": "gross_margin",
+      "value": "39.33",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_gross_margin_optical_module_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_OPTICAL_MODULE_GROSS_MARGIN",
+      "metric": "gross_margin",
+      "value": "39.33",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_gross_margin_optical_module_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20260630",
+      "metric": "accounts_receivable",
+      "value": "10598328021.04",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ACCOUNTS_RECEIVABLE_20260630",
+      "metric": "accounts_receivable",
+      "value": "10598328021.04",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20251231",
+      "metric": "accounts_receivable",
+      "value": "9792745060.06",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ACCOUNTS_RECEIVABLE_20251231",
+      "metric": "accounts_receivable",
+      "value": "9792745060.06",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_INVENTORY_20260630",
+      "metric": "inventory",
+      "value": "11417997322.49",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_INVENTORY_20260630",
+      "metric": "inventory",
+      "value": "11417997322.49",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_INVENTORY_20251231",
+      "metric": "inventory",
+      "value": "8928944182.01",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_INVENTORY_20251231",
+      "metric": "inventory",
+      "value": "8928944182.01",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_AI_PCB_PROJECT_BUDGET",
+      "metric": "capex_project_budget",
+      "value": "7000000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_budget_ai_pcb_not_commissioned",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_AI_PCB_PROJECT_BUDGET",
+      "metric": "capex_project_budget",
+      "value": "7000000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_budget_ai_pcb_not_commissioned",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_AI_PCB_PROJECT_PROGRESS",
+      "metric": "project_progress",
+      "value": "27.02",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_progress_ai_pcb_not_commissioned",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_AI_PCB_PROJECT_PROGRESS",
+      "metric": "project_progress",
+      "value": "27.02",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_progress_ai_pcb_not_commissioned",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_OPTICAL_MODULE_LINE_BUDGET",
+      "metric": "capex_project_budget",
+      "value": "1800000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_budget_optical_module_not_commissioned",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_OPTICAL_MODULE_LINE_BUDGET",
+      "metric": "capex_project_budget",
+      "value": "1800000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_budget_optical_module_not_commissioned",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_OPTICAL_MODULE_LINE_PROGRESS",
+      "metric": "project_progress",
+      "value": "82.61",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_progress_optical_module_not_commissioned",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_OPTICAL_MODULE_LINE_PROGRESS",
+      "metric": "project_progress",
+      "value": "82.61",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_progress_optical_module_not_commissioned",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_THAILAND_PCB_OPTICAL_BUDGET",
+      "metric": "capex_project_budget",
+      "value": "1312000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_budget_thailand_pcb_optical_not_commissioned",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_THAILAND_PCB_OPTICAL_BUDGET",
+      "metric": "capex_project_budget",
+      "value": "1312000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_budget_thailand_pcb_optical_not_commissioned",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_THAILAND_PCB_OPTICAL_PROGRESS",
+      "metric": "project_progress",
+      "value": "88.37",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_progress_thailand_pcb_optical_not_commissioned",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_THAILAND_PCB_OPTICAL_PROGRESS",
+      "metric": "project_progress",
+      "value": "88.37",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_cip_project_progress_thailand_pcb_optical_not_commissioned",
+      "source_refs": [
+        "S_H1"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_REVENUE"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_REVENUE"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ATTRIBUTABLE_NET_PROFIT",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ATTRIBUTABLE_NET_PROFIT"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ATTRIBUTABLE_NET_PROFIT"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_OPERATING_CASH_FLOW",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_OPERATING_CASH_FLOW"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_OPERATING_CASH_FLOW"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_OPTICAL_MODULE_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_OPTICAL_MODULE_REVENUE"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_OPTICAL_MODULE_REVENUE"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_OPTICAL_MODULE_GROSS_MARGIN",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_OPTICAL_MODULE_GROSS_MARGIN"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_OPTICAL_MODULE_GROSS_MARGIN"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ACCOUNTS_RECEIVABLE_20260630",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20260630"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ACCOUNTS_RECEIVABLE_20260630"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ACCOUNTS_RECEIVABLE_20251231",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20251231"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ACCOUNTS_RECEIVABLE_20251231"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_INVENTORY_20260630",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_INVENTORY_20260630"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_INVENTORY_20260630"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_INVENTORY_20251231",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_INVENTORY_20251231"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_INVENTORY_20251231"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_AI_PCB_PROJECT_BUDGET",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_AI_PCB_PROJECT_BUDGET"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_AI_PCB_PROJECT_BUDGET"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_AI_PCB_PROJECT_PROGRESS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_AI_PCB_PROJECT_PROGRESS"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_AI_PCB_PROJECT_PROGRESS"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_OPTICAL_MODULE_LINE_BUDGET",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_OPTICAL_MODULE_LINE_BUDGET"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_OPTICAL_MODULE_LINE_BUDGET"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_OPTICAL_MODULE_LINE_PROGRESS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_OPTICAL_MODULE_LINE_PROGRESS"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_OPTICAL_MODULE_LINE_PROGRESS"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_THAILAND_PCB_OPTICAL_BUDGET",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_THAILAND_PCB_OPTICAL_BUDGET"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_THAILAND_PCB_OPTICAL_BUDGET"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_THAILAND_PCB_OPTICAL_PROGRESS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_THAILAND_PCB_OPTICAL_PROGRESS"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_THAILAND_PCB_OPTICAL_PROGRESS"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    }
+  ]
+}

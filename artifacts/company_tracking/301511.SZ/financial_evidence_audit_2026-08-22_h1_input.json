@@ -1,0 +1,619 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "301511-2026h1-masterbook-delta-2026-08-22",
+  "as_of": "2026-08-22T23:59:59+08:00",
+  "sources": [
+    {
+      "id": "S_LEDGER_DRAFT",
+      "source_type": "report_under_audit",
+      "origin_id": "watchlists:ai-chain:301511:2026h1-delta",
+      "locator": "watchlists/AI产业链.xlsx#AI产业链!D76",
+      "source_date": "2026-08-22",
+      "checked_at": "2026-08-22T23:59:59+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_H1",
+      "source_type": "official_filing",
+      "origin_id": "cninfo:301511:2026h1:20260822:1225491029",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-22/1225491029.PDF#pages=9,12,15,16",
+      "source_date": "2026-08-22",
+      "checked_at": "2026-08-22T23:59:59+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_DRAFT_REVENUE",
+      "metric": "revenue",
+      "value": "9196561806.87",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_REVENUE",
+      "metric": "revenue",
+      "value": "9196561806.87",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "attributable_net_profit",
+      "value": "263458191.26",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "attributable_net_profit",
+      "value": "263458191.26",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_OPERATING_CASH_FLOW",
+      "metric": "operating_cash_flow",
+      "value": "-612863178.56",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_OPERATING_CASH_FLOW",
+      "metric": "operating_cash_flow",
+      "value": "-612863178.56",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ELECTRONIC_CIRCUIT_FOIL_REVENUE",
+      "metric": "product_revenue",
+      "value": "1307684185.81",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_revenue_electronic_circuit_foil_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ELECTRONIC_CIRCUIT_FOIL_REVENUE",
+      "metric": "product_revenue",
+      "value": "1307684185.81",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_revenue_electronic_circuit_foil_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ELECTRONIC_CIRCUIT_FOIL_GROSS_MARGIN",
+      "metric": "gross_margin",
+      "value": "4.85",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_gross_margin_electronic_circuit_foil_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ELECTRONIC_CIRCUIT_FOIL_GROSS_MARGIN",
+      "metric": "gross_margin",
+      "value": "4.85",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_gross_margin_electronic_circuit_foil_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_AI_FOIL_PLANNED_CAPACITY",
+      "metric": "planned_annual_capacity",
+      "value": "50000",
+      "unit": "count",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "planned_annual_tonnes_not_commissioned",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_AI_FOIL_PLANNED_CAPACITY",
+      "metric": "planned_annual_capacity",
+      "value": "50000",
+      "unit": "count",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "planned_annual_tonnes_not_commissioned",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20260630",
+      "metric": "accounts_receivable",
+      "value": "3584416184.80",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ACCOUNTS_RECEIVABLE_20260630",
+      "metric": "accounts_receivable",
+      "value": "3584416184.80",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20251231",
+      "metric": "accounts_receivable",
+      "value": "3444454745.42",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ACCOUNTS_RECEIVABLE_20251231",
+      "metric": "accounts_receivable",
+      "value": "3444454745.42",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_INVENTORY_20260630",
+      "metric": "inventory",
+      "value": "2679839823.78",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_INVENTORY_20260630",
+      "metric": "inventory",
+      "value": "2679839823.78",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_INVENTORY_20251231",
+      "metric": "inventory",
+      "value": "1872255160.23",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_INVENTORY_20251231",
+      "metric": "inventory",
+      "value": "1872255160.23",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_REVENUE"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_REVENUE"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ATTRIBUTABLE_NET_PROFIT",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ATTRIBUTABLE_NET_PROFIT"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ATTRIBUTABLE_NET_PROFIT"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_OPERATING_CASH_FLOW",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_OPERATING_CASH_FLOW"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_OPERATING_CASH_FLOW"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ELECTRONIC_CIRCUIT_FOIL_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ELECTRONIC_CIRCUIT_FOIL_REVENUE"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ELECTRONIC_CIRCUIT_FOIL_REVENUE"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ELECTRONIC_CIRCUIT_FOIL_GROSS_MARGIN",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ELECTRONIC_CIRCUIT_FOIL_GROSS_MARGIN"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ELECTRONIC_CIRCUIT_FOIL_GROSS_MARGIN"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_AI_FOIL_PLANNED_CAPACITY",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_AI_FOIL_PLANNED_CAPACITY"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_AI_FOIL_PLANNED_CAPACITY"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ACCOUNTS_RECEIVABLE_20260630",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20260630"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ACCOUNTS_RECEIVABLE_20260630"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ACCOUNTS_RECEIVABLE_20251231",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20251231"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ACCOUNTS_RECEIVABLE_20251231"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_INVENTORY_20260630",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_INVENTORY_20260630"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_INVENTORY_20260630"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_INVENTORY_20251231",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_INVENTORY_20251231"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_INVENTORY_20251231"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    }
+  ]
+}

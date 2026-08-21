@@ -1,0 +1,563 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "300308-2026h1-masterbook-delta-2026-08-22",
+  "as_of": "2026-08-22T23:59:59+08:00",
+  "sources": [
+    {
+      "id": "S_LEDGER_DRAFT",
+      "source_type": "report_under_audit",
+      "origin_id": "watchlists:ai-chain:300308:2026h1-delta",
+      "locator": "watchlists/AI产业链.xlsx#AI产业链!D3",
+      "source_date": "2026-08-22",
+      "checked_at": "2026-08-22T23:59:59+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_H1",
+      "source_type": "official_filing",
+      "origin_id": "cninfo:300308:2026h1:20260822:1225491753",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-22/1225491753.PDF#pages=8,21,26,27",
+      "source_date": "2026-08-22",
+      "checked_at": "2026-08-22T23:59:59+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_DRAFT_REVENUE",
+      "metric": "revenue",
+      "value": "41777861795.03",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_REVENUE",
+      "metric": "revenue",
+      "value": "41777861795.03",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "attributable_net_profit",
+      "value": "13651149693.27",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ATTRIBUTABLE_NET_PROFIT",
+      "metric": "attributable_net_profit",
+      "value": "13651149693.27",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_OPERATING_CASH_FLOW",
+      "metric": "operating_cash_flow",
+      "value": "1799674832.02",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_OPERATING_CASH_FLOW",
+      "metric": "operating_cash_flow",
+      "value": "1799674832.02",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_OPTICAL_TRANSCEIVER_MODULE_REVENUE",
+      "metric": "product_revenue",
+      "value": "41355212182.06",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_revenue_optical_transceiver_module_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_OPTICAL_TRANSCEIVER_MODULE_REVENUE",
+      "metric": "product_revenue",
+      "value": "41355212182.06",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_revenue_optical_transceiver_module_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_OPTICAL_TRANSCEIVER_MODULE_GROSS_MARGIN",
+      "metric": "gross_margin",
+      "value": "46.59",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_gross_margin_optical_transceiver_module_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_OPTICAL_TRANSCEIVER_MODULE_GROSS_MARGIN",
+      "metric": "gross_margin",
+      "value": "46.59",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_product_gross_margin_optical_transceiver_module_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20260630",
+      "metric": "accounts_receivable",
+      "value": "15000893993.58",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ACCOUNTS_RECEIVABLE_20260630",
+      "metric": "accounts_receivable",
+      "value": "15000893993.58",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20251231",
+      "metric": "accounts_receivable",
+      "value": "6276876022.07",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_ACCOUNTS_RECEIVABLE_20251231",
+      "metric": "accounts_receivable",
+      "value": "6276876022.07",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_INVENTORY_20260630",
+      "metric": "inventory",
+      "value": "19825909263.51",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_INVENTORY_20260630",
+      "metric": "inventory",
+      "value": "19825909263.51",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    },
+    {
+      "id": "F_DRAFT_INVENTORY_20251231",
+      "metric": "inventory",
+      "value": "12680707624.68",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_LEDGER_DRAFT"
+      ]
+    },
+    {
+      "id": "F_H1_INVENTORY_20251231",
+      "metric": "inventory",
+      "value": "12680707624.68",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2025-12-31T23:59:59+08:00"
+      },
+      "available_at": "2026-08-22",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": [
+        "S_H1"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_REVENUE"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_REVENUE"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ATTRIBUTABLE_NET_PROFIT",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ATTRIBUTABLE_NET_PROFIT"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ATTRIBUTABLE_NET_PROFIT"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_OPERATING_CASH_FLOW",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_OPERATING_CASH_FLOW"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_OPERATING_CASH_FLOW"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_OPTICAL_TRANSCEIVER_MODULE_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_OPTICAL_TRANSCEIVER_MODULE_REVENUE"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_OPTICAL_TRANSCEIVER_MODULE_REVENUE"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_OPTICAL_TRANSCEIVER_MODULE_GROSS_MARGIN",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_OPTICAL_TRANSCEIVER_MODULE_GROSS_MARGIN"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_OPTICAL_TRANSCEIVER_MODULE_GROSS_MARGIN"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ACCOUNTS_RECEIVABLE_20260630",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20260630"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ACCOUNTS_RECEIVABLE_20260630"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_ACCOUNTS_RECEIVABLE_20251231",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_ACCOUNTS_RECEIVABLE_20251231"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_ACCOUNTS_RECEIVABLE_20251231"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_INVENTORY_20260630",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_INVENTORY_20260630"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_INVENTORY_20260630"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "C_INVENTORY_20251231",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "F_DRAFT_INVENTORY_20251231"
+      },
+      "references": [
+        {
+          "fact_id": "F_H1_INVENTORY_20251231"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    }
+  ]
+}
