@@ -191,3 +191,9 @@ metadata:
 - 中际旭创 2025 年年度报告 PDF 镜像，新浪公告: http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-3/2026-03-31/12041853.PDF
 - 旭创科技产品方案页: https://products.zj-innolight.com/
 - 腾讯行情接口快照: https://qt.gtimg.cn/q=sz300308
+
+## 稳定跟踪假设 ID（2026-08-21 标记）
+
+- `INNO-01_800G_1600G_REVENUE_MARGIN`：800G/1.6T 高速光模块的出货、收入和毛利率能否持续兑现。
+- `INNO-02_SILICON_PHOTONICS_AND_NEXTGEN`：硅光及下一代光互连产品能否从研发/定制进入可验证的量产贡献。
+- `INNO-03_ORDER_VISIBILITY_AND_WORKING_CAPITAL`：订单可见度、海外客户扩张、应收和存货周转能否支持业绩质量。

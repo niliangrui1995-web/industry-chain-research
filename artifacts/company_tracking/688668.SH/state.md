@@ -175,3 +175,9 @@ open-web fallback 仅发现交易和媒体观察，未发现可升级为官方�
 - 交易：8 月 4 日因单日涨幅达到 15% 上交所科创板交易公开信息上榜。
 - 来源：[2026H1 液冷与鼎通转债证据报告](2026H1_liquid_cooling_evidence_report_2026-08-08.md)；[2026 年半年度报告（上交所）](https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-05/688668_20260805_CJQC.pdf)；[向下修正“鼎通转债”转股价格的公告（上交所）](https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-07/688668_20260807_42I2.pdf)；[鼎通转债上市公告书（上交所）](https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-07-15/688668_20260715_ZFFU.pdf)。
 - 相对基线：H1 实际业绩替代此前预告，但关键产品分拆仍缺失，基本面 `thesis_effect=unchanged`。
+
+## 2026-08-21 日更
+
+- 公告窗口：北京时间 20:00 后核验 `2026-08-21` 与 `2026-08-22`；CNINFO 披露 2026 年第三次临时股东会决议，上交所公司公告查询为 0；龙虎榜和大宗交易二级查询均为 0。
+- 资本配置：2026 年 8 月 20 日股东会审议通过 2026 年半年度利润分配预案。该事项使此前分配提案获得股东会批准，但不改变 112G、224G 风冷量产及液冷 `small_batch_trial` 的产品阶段。
+- 相对基线：资本配置从提案推进至通过；液冷产品的客户、订单、收入、毛利率和回款仍为 `evidence_absent`，`thesis_effect=unchanged`。

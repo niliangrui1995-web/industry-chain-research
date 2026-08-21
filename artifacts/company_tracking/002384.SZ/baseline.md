@@ -228,3 +228,9 @@ AI PCB 的能力证据来自 Multek：IR 披露 Multek 具备 HDI、高多层 PC
 - 索尔思光电对外投资进展公告（CNINFO）：https://static.cninfo.com.cn/finalpage/2025-11-18/1224809835.PDF
 - 收购法国 GMD 集团完成交割公告（CNINFO）：https://static.cninfo.com.cn/finalpage/2025-11-04/1224784716.PDF
 - 腾讯行情接口（2026-05-08 收盘快照）：https://qt.gtimg.cn/q=sz002384
+
+## 稳定跟踪假设 ID（2026-08-21 标记）
+
+- `DSBJ-01_OPTICAL_MODULE_REVENUE_AND_MARGIN`：光模块业务收入、毛利率和客户导入能否持续兑现。
+- `DSBJ-02_AI_PCB_CAPABILITY_AND_REVENUE`：AI PCB/精密电路板能力能否形成可验证的收入和盈利贡献。
+- `DSBJ-03_CAPEX_FINANCING_LEVERAGE`：境外扩产、并购整合、资本注入和担保安排能否受控推进且不侵蚀财务质量。

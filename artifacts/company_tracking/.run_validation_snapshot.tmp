@@ -4546,9 +4546,9 @@
     },
     "603256.SH": {
       "exists": true,
-      "byte_length": 66085,
-      "sha256": "d7ad47897a2b2c28abb0fa54a3d05ed6102894798184ede347ed3fc0d39add2f",
-      "record_count": 50
+      "byte_length": 70282,
+      "sha256": "4221718aa0b90e639a8d2ee799ae24dce6289839fade5ad700dc8c90e812c48f",
+      "record_count": 51
     },
     "601869.SH": {
       "exists": true,
@@ -4600,9 +4600,9 @@
     },
     "000636.SZ": {
       "exists": true,
-      "byte_length": 35677,
-      "sha256": "deca0aef287642cd840cc9e5e99fd299599f5db007bf80326575b0c0c6a5703a",
-      "record_count": 20
+      "byte_length": 39887,
+      "sha256": "8715494bbb348a602a08e71f5c8eefc5847152c937ba0b5e6959e32551f8d5d8",
+      "record_count": 21
     },
     "688048.SH": {
       "exists": true,

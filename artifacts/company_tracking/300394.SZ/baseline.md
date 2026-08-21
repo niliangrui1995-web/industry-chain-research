@@ -125,3 +125,9 @@ Grok/X：`grok_status: not_run_manual_add; chrome_plugin_not_exposed_in_active_t
 - 2026-04-22 关于全资子公司对外投资设立合资公司的公告：`http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-22/12135501.PDF`
 - 2026-04-10 关于向香港联交所递交境外上市股份（H股）发行并上市申请并刊发申请资料的公告：`http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-10/12079495.PDF`
 - 龙虎榜与大宗交易观察页：`https://stockpage.10jqka.com.cn/300394/index.html`
+
+## 稳定跟踪假设 ID（2026-08-21 标记）
+
+- `TFC-01_OPTICAL_COMPONENT_REVENUE_MARGIN`：无源和有源光器件收入、产品结构和毛利率能否同步改善。
+- `TFC-02_CPO_1600G_DELIVERY`：CPO 配套、1.6T 光引擎及相关高速器件能否形成可量化订单、收入和毛利率。
+- `TFC-03_GLOBAL_CAPACITY_AND_MATERIALS`：泰国/江西/苏州产能爬坡及关键物料供给能否保障交付并改善现金流质量。

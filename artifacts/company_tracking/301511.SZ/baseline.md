@@ -208,3 +208,9 @@ AI PCB 相关的判断要点：
 - 德福科技官网公司简介，https://www.jjdefu.com/zh-Hant/aboutus/
 - 东方财富行情页，https://quote.eastmoney.com/unify/cr/0.301511
 - 东方财富 / 证券日报：关于签署《招商项目补充合同书》的公告摘要，https://finance.eastmoney.com/a/202510223541346911.html
+
+## 稳定跟踪假设 ID（2026-08-21 标记）
+
+- `DF-01_HIGH_END_ELECTRONIC_FOIL_REVENUE`：高端电子电路铜箔的收入、产品结构和客户导入能否持续改善。
+- `DF-02_UTILIZATION_AND_MARGIN_LEVERAGE`：产能利用、成本改善和毛利率修复能否转化为可持续盈利。
+- `DF-03_AI_CAPACITY_AND_FINANCING_EXECUTION`：AI 电子电路铜箔扩产、资本开支和融资安排能否按计划执行并被需求消化。

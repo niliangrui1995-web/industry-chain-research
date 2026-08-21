@@ -223,3 +223,10 @@ grok_status: not_run_or_unavailable
 9. 腾讯行情接口（2026-05-08 收盘后抓取）：http://qt.gtimg.cn/q=sh601869,sh000001
 10. 产业媒体关于 2026 年光纤价格周期的报道：https://finance.sina.com.cn/roll/2026-04-03/doc-inhtferc8901383.shtml
 11. 通信世界网关于 2026 年 HollowBand® 空芯光纤报道：https://www.cww.net.cn/article?id=607798
+
+## 稳定跟踪假设 ID（2026-08-21 标记）
+
+- `YOFC-01_PRICE_STRUCTURE_AND_MARGIN`：光传输与光互联组件的收入、产品结构和毛利率能否持续改善。
+- `YOFC-02_AI_INTERCONNECT_COMPONENTS`：高速光互联组件、PMF/CPO 配套等产品能否形成可验证的持续交付与收入。
+- `YOFC-03_HOLLOW_CORE_COMMERCIALIZATION`：空芯/多芯光纤能否由交付和示范项目走向可持续商业化贡献。
+- `YOFC-04_OVERSEAS_GLOBALIZATION`：海外需求、客户结构和全球化交付对收入与现金流的影响。
