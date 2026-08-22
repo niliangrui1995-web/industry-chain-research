@@ -1,5 +1,42 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
+## 2026-08-22 最小刷新：1.6T、AI PCB/CCL 与公司级产能/现金流边界
+
+更新时间：2026-08-23（北京时间；研究截止日 `as_of=2026-08-22T23:59:59+08:00`）
+最新报告：[2026-08-22.md](2026-08-22.md)；结构化主账：[2026-08-22.evidence.json](2026-08-22.evidence.json)；规范化产物：[2026-08-22.normalized.json](2026-08-22.normalized.json)；证据检查：[2026-08-22.bottleneck_evidence_checks.csv](2026-08-22.bottleneck_evidence_checks.csv)。
+
+### 运行合同与校验
+
+| 字段 | 本轮实际值 |
+|---|---|
+| captured_at_beijing | 2026-08-23T01:28:23+08:00 |
+| skill_revision | git:af0b36d948591c3d9a3bf9457900f0c67d517ffa |
+| prompt_contract_version | 2026-07-27.1 |
+| skill_content_sha256 | 1d4912fb6f17c3bf8203d178f5a596334b63e001ab84b5c3de3ffcd7d33375fa |
+| skill_tree_status | clean |
+| skills | ai-chain-research-orchestrator；financial-evidence-audit |
+| status | ok |
+
+本期结构化五行均以 `claim_as_of=2026-08-22` 关联唯一 `evidence_check_id`。严格 normalizer 返回 `issues=0`；瓶颈校验返回 `reviewable`、`eligible_count=5`、`incomplete_count=0`、`ineligible_count=0`。四份 H1 财务证据审计在本期重新执行，分别为长飞光纤 `11/11`、德福科技 `10/10`、东山精密 `15/15`、中际旭创 `9/9` 的 `PASS / publishable`。
+
+### 当前主台账（2026-08-22）
+
+| 节点 | 结论/时段 | 维持或调整理由 | 边界 |
+|---|---|---|---|
+| Azure AI云有效算力容量 | 限 Microsoft/Azure 的 `hard_bottleneck`；2026H2；`unchanged` | 复用 7/29 三腿，仍新鲜；本期不扩展研究范围。 | 不映射硬件供应商订单。 |
+| AI服务器内存组合（HBM、server DRAM、eSSD） | `hard_bottleneck`；2026H2；`unchanged` | 复用 7/30 三腿，仍新鲜；本期不拆客户、料号或配额。 | 仅组合级。 |
+| 领先逻辑与后端先进封装/测试有效产能 | 限 TSMC 披露范围的 `hard_bottleneck`；2026H2；`unchanged` | 复用 2026Q1/Q2 三腿。 | 不下沉至 OSAT、ATE、探针或材料订单。 |
+| 1.6T高速光模块有效交付（核心料齐套与客户认证） | `hard_bottleneck`；2026H2；`unchanged`，`boundary_tightened` | Lumentum 初步出货证明早期交付存在；中际既有供给缺口三腿仍未被规模化、多供应商、同客户认证证据证伪。 | 出货量、客户、认证、交期、1.6T独立收入和稳定批交均为 `evidence_absent`。 |
+| M8/M9/M10 CCL/prepreg材料组合 | `soft_bottleneck`；2026H2；`unchanged` | 南亚 8/21 同向确认材料组合偏紧；台光电名义扩产及国内在建项目仅为缓解路径。 | 分级交期、allocation、锁料、延期、合格产出、良率和同客户 AVL 均为 `evidence_absent`。 |
+
+### 公司级产能/现金流 delta
+
+- 德福科技：2026H1 经营现金流为负，且 50,000 吨是 `planned_annual_tonnes_not_commissioned`；公司级资金占用/项目兑现风险升为重点监控，但不是行业 CCL 供给或流动性结论。
+- 东山精密：AI PCB 在建项目预算与进度均通过财务证据审计，但 basis 明确为 `not_commissioned`；不得当作当前合格产能。
+- 长飞光纤、中际旭创：经营现金流为正仅是公司级 H1 事实；本轮未建立自由现金流、现金、债务或 1.6T 分项的审计链。
+
+最大证据缺口：1.6T 的跨厂同客户认证、稳定大规模交付与交期；M8/M9/M10 分级商业条款和合格产出；以及项目实际投产、自由现金流、债务到期和融资用途。详见本期报告。下方 2026-08-12、2026-08-09 及更早内容为历史记录。
+
 ## 2026-08-12 财报增量（CRWV FY2026 Q2；非周报重跑）
 
 - **新增（需求、容量与资本开支）**：审计已准出 Q2 收入环比 `+23.92%`、Adjusted EBITDA 环比 `+30.51%`、公司定义 CapEx 环比 `+37.81%`（均为 `PASS`）。管理层将增长约束归于近端可服务容量，并称跨行业、地区和基础设施代际需求高于供给；这是公司级管理层表述，不构成行业级缺口结论。
