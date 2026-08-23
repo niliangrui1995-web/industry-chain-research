@@ -443,13 +443,22 @@ def resolve_project_root(value: str | None) -> Path:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="更新东方财富妙想前 2017 沪深A股市值厂商序列")
+    parser = argparse.ArgumentParser(description="重建冻结的东方财富妙想前 2017 沪深A股市值快照")
     parser.add_argument("--project-root", default=None)
     parser.add_argument("--start-date", type=date.fromisoformat, default=EARLIEST_SUPPORTED_DATE)
     parser.add_argument("--end-date", type=date.fromisoformat, default=LATEST_PRE2017_DATE)
     parser.add_argument("--timeout-seconds", type=int, default=30)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--rebuild-frozen-snapshot",
+        action="store_true",
+        help="仅限用户明确授权时重建完整前2017冻结快照；日常自动化不得使用。",
+    )
     args = parser.parse_args()
+    if args.start_date != EARLIEST_SUPPORTED_DATE or args.end_date != LATEST_PRE2017_DATE:
+        parser.error("前2017冻结快照只能覆盖完整固定日期段")
+    if not args.dry_run and not args.rebuild_frozen_snapshot:
+        parser.error("前2017冻结快照默认只读；重建必须显式传入 --rebuild-frozen-snapshot")
     project_root = resolve_project_root(args.project_root)
     requested_dates = load_dfcf_pre2017_common_dates(
         project_root, args.start_date, args.end_date

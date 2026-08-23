@@ -28,6 +28,8 @@ Last verified: 2026-08-03
 
 普通文档、Excel、PDF、PPT、搜索、行情、金融数据和统计任务直接使用当前会话已安装的全局技能、插件或原生工具，不在仓库重复 vendoring。
 
+已接入的账户级厂商数据伴侣：`hithink-finance`。当用户明确提及同花顺 Financial API，或需要其支持的 A 股行情、财报、最新估值、指数/板块或基金数据时，将其作为项目领域 Skill 的数据伴侣；不复制到 `.agents/skills/`，不写入凭据，决策关键数字仍须经过 `financial-evidence-audit`。
+
 ## 使用原则
 
 - 简单问题直接回答；复杂投研只选与问题匹配的一个领域技能，必要时再附加一个数据、文件或状态技能；命中决策关键数字时额外通过 `financial-evidence-audit` 准出，不设宽泛总入口。

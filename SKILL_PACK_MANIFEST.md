@@ -1,6 +1,6 @@
 # 项目技能清单
 
-项目技能根目录：`.agents/skills/`。清单只记录项目专属能力；全局技能、插件和 MCP 不在仓库复制。
+项目技能根目录：`.agents/skills/`。清单记录项目专属能力及已登记的账户级数据伴侣；全局技能、插件和 MCP 不在仓库复制。
 
 ## 活跃技能
 
@@ -17,6 +17,12 @@
 | `a-share-leverage-capitulation-analyst` | 大盘压力、两融去杠杆、暴跌共振、抱团拥挤与顶部风险 | 日更与逐股明细均保留 DFCF 厂商边界；见底三因子与顶部研究独立；价格拥挤负责顶部排序，融资流出只作瓦解确认；所有可执行口径从 T+1 起 |
 | `earnings-call-investment-analyst` | 财报、指引、电话会、QoQ、需求/瓶颈 | 原始来源优先；完整深挖才加载详细 checklist 和采集脚本 |
 | `ht-local-market-data` | 本地 `D:\HT` 日线、板块池、厂商表 | 只读、非官方、非实时；账户/订单/日志默认禁读 |
+
+## 已接入的账户级厂商数据 Skill
+
+| Skill | 触发范围 | 关键边界 |
+|---|---|---|
+| `hithink-finance` | 用户明确提及同花顺 Financial API，或需 A 股行情、财报、最新估值、指数/板块或基金数据 | 账户级已安装 Skill，不复制入 `.agents/skills/`；厂商数据须标注来源与时点，凭据仅从安全来源读取，决策关键数字仍经 `financial-evidence-audit` |
 
 ## 已移出项目技能层
 

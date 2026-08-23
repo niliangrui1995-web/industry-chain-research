@@ -68,6 +68,18 @@ class SkillLibraryTests(unittest.TestCase):
                 with self.subTest(path=path, removed=removed):
                     self.assertNotIn(removed, text)
 
+    def test_hithink_finance_is_registered_as_an_account_level_data_companion(self) -> None:
+        for path in [
+            ROOT / "README.md",
+            ROOT / "AGENTS.md",
+            ROOT / "SKILL_PACK_MANIFEST.md",
+        ]:
+            text = path.read_text(encoding="utf-8")
+            with self.subTest(path=path):
+                self.assertIn("hithink-finance", text)
+                self.assertIn("账户级", text)
+                self.assertIn("厂商", text)
+
     def test_domain_routes_are_mutually_bounded(self) -> None:
         agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
         company = (SKILL_ROOT / "research-listed-company" / "SKILL.md").read_text(

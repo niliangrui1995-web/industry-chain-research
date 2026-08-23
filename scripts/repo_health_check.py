@@ -138,8 +138,11 @@ def check_routing_consistency() -> CheckResult:
     problems: list[str] = []
     required_pairs = [
         ("README.md", readme, "项目技能位于 Codex 标准仓库路径 `.agents/skills/`"),
+        ("README.md", readme, "hithink-finance"),
         ("AGENTS.md", agents, "仓库技能位于 `.agents/skills/`"),
+        ("AGENTS.md", agents, "hithink-finance"),
         ("SKILL_PACK_MANIFEST.md", manifest, "项目技能根目录：`.agents/skills/`"),
+        ("SKILL_PACK_MANIFEST.md", manifest, "hithink-finance"),
         ("research-listed-company/SKILL.md", company, "financial-evidence-audit"),
         ("research-industry-chain/SKILL.md", industry, "需求超过合格供给"),
         ("income-investment/SKILL.md", income, "不得对所有行业机械使用 EPS payout"),

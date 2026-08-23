@@ -760,6 +760,26 @@ def _parse_cli_date(value: str) -> date:
         raise argparse.ArgumentTypeError("日期必须为 YYYY-MM-DD") from exc
 
 
+def resolve_cli_incremental_mode(
+    output_dir: Path, *, bootstrap_full: bool, incremental_requested: bool
+) -> bool:
+    """默认拒绝全量覆盖；只有空目录且显式授权时才允许首次建库。"""
+
+    table_exists = (output_dir / TABLE_FILENAME).exists()
+    manifest_exists = (output_dir / MANIFEST_FILENAME).exists()
+    if bootstrap_full:
+        if incremental_requested:
+            raise ValueError("--bootstrap-full 与 --incremental 不能同时使用")
+        if table_exists or manifest_exists:
+            raise ValueError("已有后2017市值基线时禁止 --bootstrap-full 覆盖")
+        return False
+    if table_exists and manifest_exists:
+        return True
+    if table_exists != manifest_exists:
+        raise ValueError("后2017市值 CSV 与 manifest 必须同时存在，禁止重建掩盖损坏")
+    raise ValueError("后2017市值基线缺失；首次建库必须显式传入 --bootstrap-full")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="更新东方财富2017年后沪深两市市值厂商序列")
     parser.add_argument("--project-root", default=None)
@@ -772,7 +792,12 @@ def main() -> None:
     parser.add_argument(
         "--incremental",
         action="store_true",
-        help="保留既有市值记录并把本次请求写为不可变原始批次。",
+        help="兼容参数；已有完整基线时默认即为增量更新。",
+    )
+    parser.add_argument(
+        "--bootstrap-full",
+        action="store_true",
+        help="仅允许为空的输出目录显式执行首次全量建库。",
     )
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
@@ -787,6 +812,14 @@ def main() -> None:
         project_root, args.start_date, args.end_date
     )
     output_dir = project_root / OUTPUT_DIRECTORY
+    try:
+        incremental = resolve_cli_incremental_mode(
+            output_dir,
+            bootstrap_full=args.bootstrap_full,
+            incremental_requested=args.incremental,
+        )
+    except ValueError as exc:
+        parser.error(str(exc))
     if args.dry_run:
         print(
             json.dumps(
@@ -797,7 +830,7 @@ def main() -> None:
                     "requested_end": requested_dates[-1].isoformat() if requested_dates else None,
                     "output_dir": str(output_dir),
                     "source_url": EASTMONEY_URL,
-                    "incremental": args.incremental,
+                    "incremental": incremental,
                 },
                 ensure_ascii=False,
             )
@@ -813,7 +846,7 @@ def main() -> None:
             max_retries=args.max_retries,
             sleep_seconds=args.sleep_seconds,
         ),
-        incremental=args.incremental,
+        incremental=incremental,
     )
     print(json.dumps(result, ensure_ascii=False))
 

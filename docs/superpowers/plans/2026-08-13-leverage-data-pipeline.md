@@ -1,5 +1,7 @@
 # 严格沪深市值快照与两融发布包 Implementation Plan
 
+> **已废弃运行手册（保留为历史实施记录）**：本计划描述的官方前段与旧脚本不再是日常两融网页数据链。当前唯一日常入口、厂商来源和缺口刷新规则见 `docs/automation/LEVERAGE_INCREMENTAL_REFRESH_CONTRACT.md`；不得按本文重建或调用历史脚本。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (- [ ]) syntax for tracking.
 
 **Goal:** 构建可审计的官方逐日沪深 A 股市值快照，并将其与经过 DFCF 审计的两市融资余额和本地 TDX 三条指数合成为可供“基金持仓”离线网页消费的静态发布包。

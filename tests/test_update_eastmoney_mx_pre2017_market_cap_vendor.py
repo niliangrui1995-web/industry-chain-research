@@ -199,3 +199,15 @@ def test_update_writes_raw_csv_and_date_contract_without_full_dfcf_hash(
     rows = csv_path.read_text(encoding="utf-8").splitlines()
     assert rows[1].startswith("2016-12-29,523258.1296603089,")
     assert rows[2].startswith("2016-12-30,524487.8084415803,")
+
+
+def test_cli_refuses_implicit_rebuild_of_frozen_pre2017_snapshot(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    module = load_module()
+    monkeypatch.setattr(sys, "argv", ["update_eastmoney_mx_pre2017_market_cap_vendor.py"])
+
+    with pytest.raises(SystemExit) as raised:
+        module.main()
+
+    assert raised.value.code == 2

@@ -85,6 +85,27 @@ class AutomationPromptContractTests(unittest.TestCase):
             self.assertIn(".run_validation_snapshot.tmp", text)
             self.assertIn("blocked/postwrite_validation_failed", text)
 
+    def test_leverage_prompt_uses_the_fixed_gap_only_refresh_contract(self) -> None:
+        contract = (
+            ROOT / "docs" / "automation" / "LEVERAGE_INCREMENTAL_REFRESH_CONTRACT.md"
+        ).read_text(encoding="utf-8")
+        prompt = (
+            ROOT / "docs" / "automation" / "LEVERAGE_INCREMENTAL_REFRESH_PROMPT.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("two_rong_refresh_protocol_version=2026-08-23.2", contract)
+        self.assertIn("refresh_leverage_dashboard_incremental.py", contract)
+        self.assertIn("已有历史数据是只读基线", contract)
+        self.assertIn("不扫描中间日期", contract)
+        self.assertIn("仅处理的新增尾部", contract)
+        self.assertIn("refresh_leverage_dashboard_incremental.py", prompt)
+        self.assertIn("已有历史数据一律直接复用", prompt)
+        self.assertIn("不检查历史数据", prompt)
+        self.assertIn("append_leverage_dashboard_tail.py", prompt)
+        self.assertIn("然后自动备份并发布", prompt)
+        self.assertIn("不得回看历史、换源、`--bootstrap-full`", prompt)
+        self.assertNotIn("前 2017 官方原始链", prompt)
+
 
 if __name__ == "__main__":
     unittest.main()

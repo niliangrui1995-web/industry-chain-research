@@ -497,7 +497,7 @@ def test_cli_dry_run_makes_zero_http_requests_and_writes_no_vendor_directory(
             "2017-01-03",
             "--end-date",
             "2017-01-04",
-            "--incremental",
+            "--bootstrap-full",
             "--dry-run",
         ],
     )
@@ -507,6 +507,33 @@ def test_cli_dry_run_makes_zero_http_requests_and_writes_no_vendor_directory(
     result = json.loads(capsys.readouterr().out)
     assert calls == 0
     assert result["dry_run"] is True
-    assert result["incremental"] is True
+    assert result["incremental"] is False
     assert result["requested_dates"] == 2
     assert not (tmp_path / MODULE.OUTPUT_DIRECTORY).exists()
+
+
+def test_cli_mode_defaults_to_incremental_for_complete_existing_state(tmp_path: Path) -> None:
+    output = tmp_path / MODULE.OUTPUT_DIRECTORY
+    output.mkdir(parents=True)
+    (output / MODULE.TABLE_FILENAME).write_text("date\n2017-01-03\n", encoding="utf-8")
+    (output / MODULE.MANIFEST_FILENAME).write_text("{}\n", encoding="utf-8")
+
+    assert MODULE.resolve_cli_incremental_mode(
+        output, bootstrap_full=False, incremental_requested=False
+    ) is True
+
+
+def test_cli_mode_rejects_implicit_full_bootstrap_and_incomplete_state(tmp_path: Path) -> None:
+    output = tmp_path / MODULE.OUTPUT_DIRECTORY
+
+    with pytest.raises(ValueError, match="显式传入 --bootstrap-full"):
+        MODULE.resolve_cli_incremental_mode(
+            output, bootstrap_full=False, incremental_requested=False
+        )
+
+    output.mkdir(parents=True)
+    (output / MODULE.TABLE_FILENAME).write_text("date\n2017-01-03\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="必须同时存在"):
+        MODULE.resolve_cli_incremental_mode(
+            output, bootstrap_full=False, incremental_requested=True
+        )
