@@ -1,5 +1,49 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
+## 2026-08-23 周度总览：AI PCB 板级有效交付升级，核心硬卡点维持
+
+更新时间：2026-08-23（北京时间；研究截止日 as_of=2026-08-23）。
+最新报告：[2026-08-23.md](2026-08-23.md)；结构化主账：[2026-08-23.evidence.json](2026-08-23.evidence.json)；规范化产物：[2026-08-23.normalized.json](2026-08-23.normalized.json)。
+
+### 运行合同与校验
+
+| 字段 | 本轮实际值 |
+|---|---|
+| captured_at_beijing | 2026-08-23T19:08:45+08:00 |
+| skill_revision | git:0027e7bf17f1bcd418d20412868df311919decf4 |
+| prompt_contract_version | 2026-07-27.1 |
+| skill_content_sha256 | 656fd6486cebe6403278246e6d7424d8f25c1ae6894787f172b244eeec2bb5e0 |
+| skill_tree_status | clean |
+| skills | ai-chain-research-orchestrator；research-industry-chain |
+| status | ok |
+
+本期主台账的 6 条 hard/soft 声明都以 claim_as_of=2026-08-23 唯一关联同包 ai-chain-20260823-* 检查 ID，ledger/check 的 time_horizon 和 evidence_review_status 一致。严格 normalizer 返回 issues=0；validator 返回 reviewable、eligible_count=6、incomplete_count=0、ineligible_count=0。未使用价格、估值、市值、预期差或其他决策关键派生数字，故本轮未调用 financial-evidence-audit。
+
+### 当前主台账（2026-08-23）
+
+| 节点 | 检查 ID | 结论/时段 | 变化 | 边界与反转 |
+|---|---|---|---|---|
+| Azure AI 云有效算力容量 | ai-chain-20260823-azure-capacity-01 | 限 Microsoft/Azure 的 hard_bottleneck；2026H2 | unchanged | 需求超过可用容量、增量容量迅速变现；不得映射其他云厂商或硬件订单。可用容量持续快于需求时降级。 |
+| AI 服务器内存组合（HBM、server DRAM、eSSD） | ai-chain-20260823-memory-01 | hard_bottleneck；2026H2 | unchanged | 仅组合级。原厂确认 H2 市场供不应求、供给约束持续；三类产品共同平衡/库存回补时降级。 |
+| 领先逻辑与后端先进封装/测试有效产能 | ai-chain-20260823-leading-edge-backend-01 | 限 TSMC 披露范围的 hard_bottleneck；2026H2 | unchanged | N3 紧张、后端 shortage mode、tester 短缺；不下沉至 OSAT、HBM 测试、探针或 A 股公司订单。 |
+| 1.6T 高速光模块有效交付 | ai-chain-20260823-1p6t-delivery-01 | hard_bottleneck；2026H2 | unchanged，boundary_tightened | 限核心料齐套、认证和批量制造的合格交付；已有初步出货不等于稳定批交。 |
+| 板级高多层/高阶 HDI 有效交付（不含 ABF/BT） | ai-chain-20260823-board-pcb-01 | soft_bottleneck；2026H2 | upgraded | 景旺 AI 工厂满产且未来数月有效产能不足，生益电子交叉；缺行业硬交期、allocation、转单和延期。 |
+| 高端高速 CCL/prepreg 材料组合（M8/M9/M10 分级 N/A） | ai-chain-20260823-pcb-ccl-01 | soft_bottleneck；2026H2 | unchanged | 组合级材料偏紧；M8/M9/M10 分级交期、报价、AVL 与二供仍 evidence_absent。 |
+
+### 专项吸收、非升级项与未来队列
+
+- 光模块专项：1.6T hard 已吸收。天孚有源物料仅公司级 soft，AXT/Tongmei InP 仅出口许可通道 soft，均不进入主链当前账本。NPO/2.4T 系统认证、互操作与先进封测为 2027H2-2028 的 medium likely_future_bottleneck。
+- AI PCB 专项：板级高多层/高阶 HDI 新升 soft；铜箔、Low Dk/Df 电子布、CCL/prepreg 保持软约束。HVLP5、Q cloth、M9+/PTFE/M10、设备耗材、ABF/BT T-glass 只保留 low watch，且 ABF/BT 与板级 PCB 分开。
+- 美国区域大型负荷并网/资源充裕度为 2027-2030 的 medium likely_future_bottleneck，证据仅支持区域场景，不升级为全球电力设备当前短缺。液冷、网络/OCS、HBM test/probe 为 watch，仍缺三腿行业缺口。
+
+### 下期默认动作
+
+1. 复核微软、Samsung、TSMC 的下一次一手披露是否撤回核心缺口表述。
+2. 获取 1.6T 的同客户认证供应商数、交期、稳定批交或未满足订单证据。
+3. 获取两家以上高端板厂的硬交期、allocation、转单或客户延期证据。
+4. 获取 M8/M9/M10、HVLP5、Q cloth 的分等级产能、交期、AVL 或订单/收入证据。
+5. 将美国区域并网观察落实到获电、排队、设备或项目延期的可复核事实，并继续核验液冷行业级有效供给。
+
 ## 2026-08-22 最小刷新：1.6T、AI PCB/CCL 与公司级产能/现金流边界
 
 更新时间：2026-08-23（北京时间；研究截止日 `as_of=2026-08-22T23:59:59+08:00`）
