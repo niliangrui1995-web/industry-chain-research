@@ -575,6 +575,235 @@ def build_from_fixture(root: Path, days: list[str]) -> tuple[list[dict[str, obje
     return records, provenance, margin, vendor, vendor_reason
 
 
+def mx_raw_payload(rows: list[tuple[str, str]]) -> bytes:
+    return json.dumps(
+        {
+            "status": 0,
+            "data": {
+                "data": {
+                    "searchDataResultDTO": {
+                        "questionId": "fixture-question-id",
+                        "dataTableDTOList": [
+                            {
+                                "entityTagDTO": {
+                                    "entityId": "001004",
+                                    "fullName": "沪深A股",
+                                    "className": "市场类(沪深京)",
+                                },
+                                "field": {
+                                    "returnCode": "326608",
+                                    "returnName": "总市值(合计)",
+                                    "returnSourceCode": "ZSZ",
+                                    "returnSourceName": "总市值(合计)_板块",
+                                    "dateGranularity": "DAY",
+                                    "unit": "1",
+                                },
+                                "table": {
+                                    "headName": [f"{day}(日)" for day, _ in rows],
+                                    "326608": [
+                                        f"{(Decimal(value) / Decimal('1000000000000')).quantize(Decimal('0.01'))}万亿"
+                                        for _, value in rows
+                                    ],
+                                },
+                                "rawTable": {
+                                    "headName": [day for day, _ in rows],
+                                    "326608": [value for _, value in rows],
+                                },
+                            }
+                        ],
+                    }
+                }
+            },
+        },
+        ensure_ascii=False,
+    ).encode("utf-8")
+
+
+def write_mx_pre2017_fixture(root: Path, days: list[str]) -> Path:
+    output = root / "artifacts/leverage_capitulation/mx_pre2017_market_cap_vendor"
+    raw_rows = [
+        (day, str(Decimal("51000000000000") + Decimal(index) * Decimal("1000000000000")))
+        for index, day in reversed(list(enumerate(days)))
+    ]
+    raw_path = output / "raw/mx-response.json"
+    raw_path.parent.mkdir(parents=True, exist_ok=True)
+    raw_path.write_bytes(mx_raw_payload(raw_rows))
+    raw_sha256 = MODULE.sha256_file(raw_path)
+    table_path = output / "mx_pre2017_market_cap_vendor.csv"
+    csv_rows = []
+    for index, day in enumerate(days):
+        raw_value = Decimal("51000000000000") + Decimal(index) * Decimal("1000000000000")
+        csv_rows.append(
+            ",".join(
+                [
+                    day,
+                    format(raw_value / Decimal("100000000"), "f"),
+                    "东方财富妙想厂商数据",
+                    day,
+                    "fixture-question-id",
+                    "沪深A股",
+                    "ZSZ",
+                    "总市值(合计)_板块",
+                    "001004",
+                    format(raw_value, "f"),
+                    "yuan",
+                    "raw_yuan_divided_by_100000000",
+                    raw_sha256,
+                    "pass",
+                ]
+            )
+        )
+    write_csv(
+        table_path,
+        "date,market_cap_yi,source,source_trade_date,source_question_id,source_universe,source_metric_code,source_metric_name,source_entity_code,raw_market_cap,raw_unit,unit_conversion,raw_response_sha256,status\n"
+        + "\n".join(csv_rows)
+        + "\n",
+    )
+    date_sequence_sha256 = hashlib.sha256(("\n".join(days) + "\n").encode("ascii")).hexdigest()
+    contract = {
+        "start": days[0],
+        "end": days[-1],
+        "count": len(days),
+        "date_sequence_sha256": date_sequence_sha256,
+    }
+    financial_evidence_audit = {
+        "applicable": False,
+        "status": "N/A",
+        "reason_code": "UNSUPPORTED_RATIO_CONTRACT",
+    }
+    query = "2016年12月29日至2016年12月30日沪深A股每日总市值"
+    manifest = {
+        "schema_version": 1,
+        "source": "东方财富妙想厂商数据",
+        "source_url": "https://mkapi2.dfcfs.com/finskillshub/api/claw/query",
+        "reporting_eligible": False,
+        "ratio_review_status": "mx_vendor_unverified",
+        "scope_warning": "测试用东方财富妙想厂商口径警示。",
+        "query": query,
+        "query_sha256": hashlib.sha256(query.encode("utf-8")).hexdigest(),
+        "source_profile": {
+            "entity_id": "001004",
+            "entity_name": "沪深A股",
+            "entity_class": "市场类(沪深京)",
+            "return_code": "326608",
+            "return_name": "总市值(合计)",
+            "return_source_code": "ZSZ",
+            "return_source_name": "总市值(合计)_板块",
+            "date_granularity": "DAY",
+            "raw_unit": "yuan",
+        },
+        "raw_response": {
+            "relative_path": "raw/mx-response.json",
+            "bytes": raw_path.stat().st_size,
+            "sha256": raw_sha256,
+            "question_id": "fixture-question-id",
+        },
+        "dfcf_pre2017_date_contract": contract,
+        "requested_dfcf_common_dates": days,
+        "matched_dfcf_common_dates": days,
+        "missing_dfcf_common_dates": [],
+        "returned_non_dfcf_dates": [],
+        "output_records": len(days),
+        "csv_sha256": MODULE.sha256_file(table_path),
+        "financial_evidence_audit": financial_evidence_audit,
+    }
+    audit = {
+        "schema_version": 1,
+        "source": "东方财富妙想厂商数据",
+        "raw_response_sha256": raw_sha256,
+        "csv_sha256": manifest["csv_sha256"],
+        "date_linkage_status": "pass",
+        "scope_mapping_status": "pass",
+        "decimal_calculation_status": "pass",
+        "ratio_reporting_eligible": False,
+        "dfcf_pre2017_date_contract": contract,
+        "financial_evidence_audit": financial_evidence_audit,
+    }
+    (output / "mx_pre2017_market_cap_vendor_manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False), encoding="utf-8"
+    )
+    (output / "mx_pre2017_market_cap_vendor_audit.json").write_text(
+        json.dumps(audit, ensure_ascii=False), encoding="utf-8"
+    )
+    return output
+
+
+def test_mx_pre2017_vendor_chain_supplies_ratio_without_official_reader(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    days = ["2016-12-29", "2016-12-30", "2017-01-03"]
+    pre_days = days[:2]
+    write_valid_dfcf_fixture(tmp_path, days)
+    write_vendor_fixture(tmp_path, [vendor_raw_row("2017-01-03")])
+    write_mx_pre2017_fixture(tmp_path, pre_days)
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_DATE_COUNT", 2, raising=False)
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_START", pre_days[0], raising=False)
+    monkeypatch.setattr(MODULE, "PRE2017_REQUIRED_END", pre_days[-1], raising=False)
+    margin = MODULE.verify_dfcf_inputs(tmp_path)
+    vendor, vendor_reason = MODULE.verify_post2017_vendor_inputs(tmp_path)
+
+    mx_vendor, mx_reason = MODULE.verify_pre2017_mx_vendor_inputs(tmp_path, margin)
+
+    assert mx_vendor is not None and mx_reason is None
+    records, provenance = MODULE.build_dashboard_records(
+        margin.frame,
+        vendor,
+        index_frames(days),
+        vendor_reason,
+        pre2017_mx_vendor=mx_vendor,
+        pre2017_mx_vendor_reason=mx_reason,
+    )
+    assert [record["market_cap_source"] for record in records[:2]] == [
+        "mx_pre2017_vendor_unverified",
+        "mx_pre2017_vendor_unverified",
+    ]
+    assert all(record["ratio_pct"] is not None for record in records)
+    assert provenance["mx_pre2017_chain_status"] == "available"
+    assert "official_pre2017_chain_status" not in provenance
+
+    metadata = {
+        ticker: {
+            "source": "fixture",
+            "path": f"fixture/{ticker}.day",
+            "sha256": "a" * 64,
+            "first_date": days[0],
+            "last_date": days[-1],
+        }
+        for ticker in MODULE.INDEX_PATHS
+    }
+    manifest = MODULE.build_manifest(
+        records,
+        provenance,
+        margin,
+        vendor,
+        vendor_reason,
+        metadata,
+        pre2017_mx_vendor=mx_vendor,
+        pre2017_mx_vendor_reason=mx_reason,
+    )
+    assert manifest["market_cap"]["ratio_review_status"] == (
+        "mixed_mx_pre2017_vendor_unverified_eastmoney_vendor_unverified"
+    )
+    assert manifest["market_cap"]["mx_pre2017"]["available"] is True
+    assert "official_pre2017" not in manifest["market_cap"]
+
+    def official_reader_is_forbidden(*args: object, **kwargs: object) -> object:
+        raise AssertionError("默认厂商优先构建不得读取官方前段链")
+
+    monkeypatch.setattr(MODULE, "verify_pre2017_official_inputs", official_reader_is_forbidden)
+    monkeypatch.setattr(MODULE, "_load_indices", lambda: (index_frames(days), metadata))
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["build_leverage_dashboard_bundle.py", "--project-root", str(tmp_path)],
+    )
+
+    MODULE.main()
+
+    printed = json.loads(capsys.readouterr().out)
+    assert printed["market_cap"]["mx_pre2017"]["available"] is True
+
+
 def test_bundle_refuses_dfcf_audit_with_exchange_requests(tmp_path: Path) -> None:
     write_valid_dfcf_fixture(tmp_path, ["2017-01-03"], exchange_requests=1)
     with pytest.raises(ValueError, match="exchange_requests"):

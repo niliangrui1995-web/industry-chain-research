@@ -26,6 +26,17 @@ from official_pre2017_contract import (
     parse_sse_stockday_mapping_evidence,
     parse_sse_tx_num,
 )
+from update_eastmoney_mx_pre2017_market_cap_vendor import (
+    AUDIT_FILENAME as MX_PRE2017_AUDIT_FILENAME,
+    CSV_COLUMNS as MX_PRE2017_CSV_COLUMNS_ORDERED,
+    MANIFEST_FILENAME as MX_PRE2017_MANIFEST_FILENAME,
+    OUTPUT_DIRECTORY as MX_PRE2017_OUTPUT_DIRECTORY,
+    RATIO_REVIEW_STATUS as MX_PRE2017_REVIEW_STATUS,
+    SOURCE_NAME as MX_PRE2017_SOURCE_NAME,
+    SOURCE_URL as MX_PRE2017_URL,
+    TABLE_FILENAME as MX_PRE2017_TABLE_FILENAME,
+    _parse_mx_response,
+)
 
 
 DAY_STRUCT = struct.Struct("<IIIIIfII")
@@ -55,6 +66,20 @@ MIXED_AUDITED_REVIEW_STATUS = (
 )
 MIXED_OFFICIAL_UNAVAILABLE_REVIEW_STATUS = (
     "mixed_official_pre2017_unavailable_eastmoney_vendor_unverified"
+)
+MX_PRE2017_SOURCE = "mx_pre2017_vendor_unverified"
+MX_PRE2017_UNAVAILABLE_SOURCE = "pre2017_mx_vendor_unavailable"
+MIXED_MX_VENDOR_REVIEW_STATUS = (
+    "mixed_mx_pre2017_vendor_unverified_eastmoney_vendor_unverified"
+)
+MIXED_MX_UNAVAILABLE_REVIEW_STATUS = (
+    "mixed_mx_pre2017_unavailable_eastmoney_vendor_unverified"
+)
+MX_PRE2017_SCOPE_WARNING = (
+    "2011-08-03 至 2016-12-30 分母为东方财富妙想厂商口径；"
+    "2017-01-03 起分母为东方财富 Choice 厂商口径。两段均未经交易所复核、未经完整审计，"
+    "且口径边界可能造成水平不可直接拼接比较；分子为 DFCF 厂商两融余额，可能含非 A 股融资标的，"
+    "该聚合比例不是正式财务比例。"
 )
 OFFICIAL_PRE2017_SSE_URL = "https://query.sse.com.cn/commonQuery.do"
 OFFICIAL_PRE2017_SSE_MAPPING_URL = (
@@ -121,6 +146,14 @@ class VendorMarketCapInput:
 
 @dataclass(frozen=True)
 class OfficialPre2017Input:
+    frame: pd.DataFrame
+    manifest: dict[str, object]
+    audit: dict[str, object]
+    paths: dict[str, Path]
+
+
+@dataclass(frozen=True)
+class MxPre2017VendorInput:
     frame: pd.DataFrame
     manifest: dict[str, object]
     audit: dict[str, object]
@@ -569,6 +602,208 @@ def verify_post2017_vendor_inputs(
     return VendorMarketCapInput(frame=frame, manifest=manifest, paths=paths), None
 
 
+def _mx_pre2017_paths(project_root: Path) -> dict[str, Path]:
+    directory = project_root / MX_PRE2017_OUTPUT_DIRECTORY
+    return {
+        "directory": directory,
+        "table": directory / MX_PRE2017_TABLE_FILENAME,
+        "manifest": directory / MX_PRE2017_MANIFEST_FILENAME,
+        "audit": directory / MX_PRE2017_AUDIT_FILENAME,
+    }
+
+
+def _pre2017_dfcf_dates(margin: MarginInput) -> list[str]:
+    values = [
+        str(value)
+        for value in margin.frame["date"].tolist()
+        if date.fromisoformat(str(value)) < POST2017_START
+    ]
+    if (
+        len(values) != PRE2017_REQUIRED_DATE_COUNT
+        or not values
+        or values[0] != PRE2017_REQUIRED_START
+        or values[-1] != PRE2017_REQUIRED_END
+    ):
+        raise ValueError(
+            "DFCF 前段共同日期不满足 2011-08-03 至 2016-12-30 的 1316 日合同"
+        )
+    return values
+
+
+def _date_sequence_sha256(values: list[str]) -> str:
+    return hashlib.sha256(("\n".join(values) + "\n").encode("ascii")).hexdigest()
+
+
+def _validate_mx_pre2017_manifest(
+    manifest: dict[str, object], pre_dates: list[str]
+) -> dict[str, object]:
+    if manifest.get("schema_version") != 1:
+        raise ValueError("东方财富妙想前段 manifest schema_version 不匹配")
+    if manifest.get("source") != MX_PRE2017_SOURCE_NAME:
+        raise ValueError("东方财富妙想前段 manifest source 不匹配")
+    if manifest.get("source_url") != MX_PRE2017_URL:
+        raise ValueError("东方财富妙想前段 manifest source_url 不匹配")
+    if manifest.get("reporting_eligible") is not False:
+        raise ValueError("东方财富妙想前段 manifest reporting_eligible 必须为 false")
+    if manifest.get("ratio_review_status") != MX_PRE2017_REVIEW_STATUS:
+        raise ValueError("东方财富妙想前段 manifest ratio_review_status 不匹配")
+    if not isinstance(manifest.get("scope_warning"), str) or not manifest["scope_warning"].strip():
+        raise ValueError("东方财富妙想前段 manifest 缺少 scope_warning")
+    query = manifest.get("query")
+    if not isinstance(query, str) or not query.strip():
+        raise ValueError("东方财富妙想前段 manifest 缺少 query")
+    if _require_sha256(manifest.get("query_sha256"), "东方财富妙想前段 query_sha256") != hashlib.sha256(query.encode("utf-8")).hexdigest():
+        raise ValueError("东方财富妙想前段 query_sha256 不匹配")
+    contract = manifest.get("dfcf_pre2017_date_contract")
+    expected_contract = {
+        "start": pre_dates[0],
+        "end": pre_dates[-1],
+        "count": len(pre_dates),
+        "date_sequence_sha256": _date_sequence_sha256(pre_dates),
+    }
+    if contract != expected_contract:
+        raise ValueError("东方财富妙想前段 DFCF 日期合同不匹配")
+    for field in ("requested_dfcf_common_dates", "matched_dfcf_common_dates"):
+        if manifest.get(field) != pre_dates:
+            raise ValueError(f"东方财富妙想前段 manifest {field} 不匹配")
+    if manifest.get("missing_dfcf_common_dates") != []:
+        raise ValueError("东方财富妙想前段 manifest 存在缺失 DFCF 日期")
+    if manifest.get("returned_non_dfcf_dates") != []:
+        raise ValueError("东方财富妙想前段 manifest 存在非 DFCF 日期")
+    if _integer(manifest.get("output_records"), "东方财富妙想前段 output_records", 0) != len(pre_dates):
+        raise ValueError("东方财富妙想前段 manifest output_records 不匹配")
+    _require_sha256(manifest.get("csv_sha256"), "东方财富妙想前段 csv_sha256")
+    financial_evidence_audit = {
+        "applicable": False,
+        "status": "N/A",
+        "reason_code": "UNSUPPORTED_RATIO_CONTRACT",
+    }
+    if manifest.get("financial_evidence_audit") != financial_evidence_audit:
+        raise ValueError("东方财富妙想前段 financial_evidence_audit 不匹配")
+    raw_response = manifest.get("raw_response")
+    if not isinstance(raw_response, dict):
+        raise ValueError("东方财富妙想前段 manifest 缺少 raw_response")
+    if raw_response.get("relative_path") != "raw/mx-response.json":
+        raise ValueError("东方财富妙想前段 raw_response relative_path 不匹配")
+    _require_sha256(raw_response.get("sha256"), "东方财富妙想前段 raw_response sha256")
+    _integer(raw_response.get("bytes"), "东方财富妙想前段 raw_response bytes", 1)
+    if not isinstance(raw_response.get("question_id"), str) or not raw_response["question_id"].strip():
+        raise ValueError("东方财富妙想前段 raw_response question_id 无效")
+    return raw_response
+
+
+def _validate_mx_pre2017_csv(
+    table_path: Path,
+    manifest: dict[str, object],
+    pre_dates: list[str],
+    raw_records: list[object],
+    question_id: str,
+    raw_response_sha256: str,
+) -> pd.DataFrame:
+    if _require_sha256(manifest.get("csv_sha256"), "东方财富妙想前段 CSV SHA-256") != sha256_file(table_path):
+        raise ValueError("东方财富妙想前段 CSV SHA-256 不匹配")
+    frame = _read_csv(table_path)
+    if set(frame.columns) != set(MX_PRE2017_CSV_COLUMNS_ORDERED):
+        raise ValueError("东方财富妙想前段 CSV 列集合不符合固定契约")
+    if _validate_dates(frame, "东方财富妙想前段 CSV") != pre_dates:
+        raise ValueError("东方财富妙想前段 CSV 日期与 DFCF 前段共同日期不一致")
+    raw_by_date = {
+        record.trade_date.isoformat(): record
+        for record in raw_records
+    }
+    if set(raw_by_date) != set(pre_dates):
+        raise ValueError("东方财富妙想前段原始响应日期与 DFCF 前段共同日期不一致")
+    for row in frame.itertuples(index=False):
+        if row.source != MX_PRE2017_SOURCE_NAME:
+            raise ValueError("东方财富妙想前段 CSV source 不匹配")
+        if _source_trade_date(row.source_trade_date, "东方财富妙想前段 source_trade_date") != row.date:
+            raise ValueError("东方财富妙想前段 CSV date 与 source_trade_date 不一致")
+        if row.source_question_id != question_id:
+            raise ValueError("东方财富妙想前段 CSV question_id 与原始响应不一致")
+        if (
+            row.source_universe != "沪深A股"
+            or row.source_metric_code != "ZSZ"
+            or row.source_metric_name != "总市值(合计)_板块"
+            or row.source_entity_code != "001004"
+        ):
+            raise ValueError("东方财富妙想前段 CSV 范围或指标字段不匹配")
+        if row.raw_unit != "yuan" or row.unit_conversion != "raw_yuan_divided_by_100000000":
+            raise ValueError("东方财富妙想前段 CSV 单位换算字段不匹配")
+        if row.raw_response_sha256 != raw_response_sha256:
+            raise ValueError("东方财富妙想前段 CSV 原始响应 SHA-256 不匹配")
+        if row.status != "pass":
+            raise ValueError("东方财富妙想前段 CSV status 不为 pass")
+        raw_record = raw_by_date.get(row.date)
+        if raw_record is None:
+            raise ValueError("东方财富妙想前段 CSV 日期未在原始响应中找到")
+        raw_market_cap = _positive_decimal(row.raw_market_cap, "东方财富妙想前段 raw_market_cap")
+        market_cap = _positive_decimal(row.market_cap_yi, "东方财富妙想前段 market_cap_yi")
+        if raw_market_cap != raw_record.raw_total_market_cap:
+            raise ValueError("东方财富妙想前段 CSV 原始市值与原始响应不一致")
+        if market_cap != raw_market_cap / Decimal("100000000"):
+            raise ValueError("东方财富妙想前段 CSV 市值单位换算不一致")
+    return frame
+
+
+def verify_pre2017_mx_vendor_inputs(
+    project_root: Path, margin: MarginInput
+) -> tuple[MxPre2017VendorInput | None, str | None]:
+    """复核前段东方财富妙想厂商链；失败时仅使前段比例降级为 N/A。"""
+
+    paths = _mx_pre2017_paths(project_root)
+    try:
+        pre_dates = _pre2017_dfcf_dates(margin)
+        manifest = _load_json_bytes(paths["manifest"], "东方财富妙想前段 manifest")
+        audit = _load_json_bytes(paths["audit"], "东方财富妙想前段 audit")
+        raw_response = _validate_mx_pre2017_manifest(manifest, pre_dates)
+        _, raw_payload = _validated_bound_file(
+            paths["directory"],
+            raw_response.get("relative_path"),
+            raw_response.get("sha256"),
+            raw_response.get("bytes"),
+            "东方财富妙想前段原始响应",
+        )
+        raw_records, question_id, source_profile = _parse_mx_response(
+            raw_payload,
+            expected_dates=[date.fromisoformat(value) for value in pre_dates],
+        )
+        if raw_response.get("question_id") != question_id:
+            raise ValueError("东方财富妙想前段 question_id 与原始响应不一致")
+        if manifest.get("source_profile") != source_profile:
+            raise ValueError("东方财富妙想前段 source_profile 与原始响应不一致")
+        frame = _validate_mx_pre2017_csv(
+            paths["table"],
+            manifest,
+            pre_dates,
+            raw_records,
+            question_id,
+            _require_sha256(raw_response.get("sha256"), "东方财富妙想前段 raw_response sha256"),
+        )
+        financial_evidence_audit = {
+            "applicable": False,
+            "status": "N/A",
+            "reason_code": "UNSUPPORTED_RATIO_CONTRACT",
+        }
+        expected_audit = {
+            "schema_version": 1,
+            "source": MX_PRE2017_SOURCE_NAME,
+            "raw_response_sha256": manifest["raw_response"]["sha256"],
+            "csv_sha256": manifest["csv_sha256"],
+            "date_linkage_status": "pass",
+            "scope_mapping_status": "pass",
+            "decimal_calculation_status": "pass",
+            "ratio_reporting_eligible": False,
+            "dfcf_pre2017_date_contract": manifest["dfcf_pre2017_date_contract"],
+            "financial_evidence_audit": financial_evidence_audit,
+        }
+        for field, value in expected_audit.items():
+            if audit.get(field) != value:
+                raise ValueError(f"东方财富妙想前段 audit {field} 不匹配")
+    except (OSError, UnicodeError, ValueError, TypeError, KeyError, json.JSONDecodeError, pd.errors.ParserError, pd.errors.EmptyDataError) as exc:
+        return None, f"2011–2016 东方财富妙想厂商市值链不可安全读取，前段比例为 N/A：{exc}"
+    return MxPre2017VendorInput(frame=frame, manifest=manifest, audit=audit, paths=paths), None
+
+
 def _official_pre2017_paths(project_root: Path) -> dict[str, Path]:
     directory = project_root / OFFICIAL_PRE2017_OUTPUT_DIRECTORY
     return {
@@ -998,15 +1233,25 @@ def build_dashboard_records(
     indices: dict[str, pd.DataFrame],
     vendor_reason: str | None,
     *,
+    pre2017_mx_vendor: MxPre2017VendorInput | None = None,
+    pre2017_mx_vendor_reason: str | None = None,
     official_pre2017: OfficialPre2017Input | None = None,
     official_pre2017_reason: str | None = None,
+    official_pre2017_requested: bool = False,
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
     _validate_dates(margin, "DFCF 输出表")
     vendor_by_date: dict[str, object] = {}
+    mx_pre2017_by_date: dict[str, object] = {}
     official_by_date: dict[str, object] = {}
     if vendor is not None:
         _validate_dates(vendor.frame, "东方财富市值输出表")
         vendor_by_date = {str(row.date): row for row in vendor.frame.itertuples(index=False)}
+    if pre2017_mx_vendor is not None:
+        _validate_dates(pre2017_mx_vendor.frame, "东方财富妙想前段市值输出表")
+        mx_pre2017_by_date = {
+            str(row.date): row
+            for row in pre2017_mx_vendor.frame.itertuples(index=False)
+        }
     if official_pre2017 is not None:
         _validate_dates(official_pre2017.frame, "前段官方市值输出表")
         official_by_date = {
@@ -1026,8 +1271,20 @@ def build_dashboard_records(
         if date.fromisoformat(day) < POST2017_START:
             source = OFFICIAL_PRE2017_UNAVAILABLE_SOURCE
             review_status = "unavailable"
+            mx_row = mx_pre2017_by_date.get(day)
             official_row = official_by_date.get(day)
-            if official_row is not None:
+            if mx_row is not None:
+                denominator_decimal = _positive_decimal(
+                    mx_row.market_cap_yi, "mx_pre2017 market_cap_yi"
+                )
+                denominator = float(denominator_decimal)
+                ratio = _ratio(
+                    _positive_decimal(row.total_margin_y, "total_margin_y"),
+                    denominator_decimal,
+                )
+                source = MX_PRE2017_SOURCE
+                review_status = MX_PRE2017_REVIEW_STATUS
+            elif official_row is not None:
                 denominator_decimal = _positive_decimal(
                     official_row.market_cap_yi, "official_pre2017 market_cap_yi"
                 )
@@ -1038,6 +1295,8 @@ def build_dashboard_records(
                 )
                 source = OFFICIAL_PRE2017_SOURCE
                 review_status = OFFICIAL_PRE2017_REVIEW_STATUS
+            elif pre2017_mx_vendor_reason is not None:
+                source = MX_PRE2017_UNAVAILABLE_SOURCE
         else:
             source = "eastmoney_post2017_vendor_unverified"
             review_status = "unavailable"
@@ -1067,18 +1326,21 @@ def build_dashboard_records(
     ratio_available = ratio_data_range["start"] is not None
     if ratio_available:
         unavailable_reason = None
-        scope_warning = (
-            "2011-08-03 至 2016-12-30 分母已通过交易所原始链准出；"
-            "但分子为 DFCF 厂商两融余额，financial-evidence-audit 对该聚合比值为 "
-            "UNSUPPORTED_RATIO_CONTRACT，不能称为正式财务比例或严格证券类别匹配。"
-            if official_pre2017 is not None
-            else (vendor.manifest["scope_warning"] if vendor is not None else VENDOR_SCOPE_WARNING)
-        )
+        if pre2017_mx_vendor is not None:
+            scope_warning = MX_PRE2017_SCOPE_WARNING
+        elif official_pre2017 is not None:
+            scope_warning = (
+                "2011-08-03 至 2016-12-30 分母已通过交易所原始链准出；"
+                "但分子为 DFCF 厂商两融余额，financial-evidence-audit 对该聚合比值为 "
+                "UNSUPPORTED_RATIO_CONTRACT，不能称为正式财务比例或严格证券类别匹配。"
+            )
+        else:
+            scope_warning = vendor.manifest["scope_warning"] if vendor is not None else VENDOR_SCOPE_WARNING
     else:
-        unavailable_reason = official_pre2017_reason or vendor_reason or (
+        unavailable_reason = pre2017_mx_vendor_reason or official_pre2017_reason or vendor_reason or (
             "没有与 DFCF 日期精确匹配且通过校验的 2017-01-03 后东方财富市值记录，比例为 N/A。"
         )
-        scope_warning = (
+        scope_warning = MX_PRE2017_SCOPE_WARNING if pre2017_mx_vendor_reason is not None else (
             "2011-08-03 至 2016-12-30 官方原始链未通过读取门，前段比例为 N/A；"
             + VENDOR_SCOPE_WARNING
         )
@@ -1088,11 +1350,20 @@ def build_dashboard_records(
         "ratio_scope_warning": scope_warning,
         "ratio_data_range": ratio_data_range,
         "source_switch_date": POST2017_START.isoformat(),
-        "official_pre2017_chain_status": (
-            "available" if official_pre2017 is not None else "unavailable"
-        ),
-        "official_pre2017_unavailable_reason": official_pre2017_reason,
     }
+    mx_schema = pre2017_mx_vendor is not None or (
+        pre2017_mx_vendor_reason is not None and official_pre2017 is None
+    )
+    if mx_schema:
+        provenance["mx_pre2017_chain_status"] = (
+            "available" if pre2017_mx_vendor is not None else "unavailable"
+        )
+        provenance["mx_pre2017_unavailable_reason"] = pre2017_mx_vendor_reason
+    else:
+        provenance["official_pre2017_chain_status"] = (
+            "available" if official_pre2017 is not None else "unavailable"
+        )
+        provenance["official_pre2017_unavailable_reason"] = official_pre2017_reason
     return records, provenance
 
 
@@ -1129,7 +1400,18 @@ def _source_segments(
     records: list[dict[str, object]],
     vendor_reason: str | None,
     official_pre2017_reason: str | None,
+    pre2017_mx_vendor_reason: str | None,
 ) -> list[dict[str, object]]:
+    mx_pre_records = [
+        record
+        for record in records
+        if record["market_cap_source"] == MX_PRE2017_SOURCE
+    ]
+    mx_unavailable_pre_records = [
+        record
+        for record in records
+        if record["market_cap_source"] == MX_PRE2017_UNAVAILABLE_SOURCE
+    ]
     official_pre_records = [
         record
         for record in records
@@ -1142,6 +1424,28 @@ def _source_segments(
     ]
     post_records = [record for record in records if record["market_cap_source"] == "eastmoney_post2017_vendor_unverified"]
     segments: list[dict[str, object]] = []
+    if mx_pre_records:
+        segments.append(
+            {
+                "start": mx_pre_records[0]["date"],
+                "end": mx_pre_records[-1]["date"],
+                "market_cap_source": MX_PRE2017_SOURCE,
+                "market_cap_review_status": MX_PRE2017_REVIEW_STATUS,
+                "ratio_available": True,
+                "reason": MX_PRE2017_SCOPE_WARNING,
+            }
+        )
+    if mx_unavailable_pre_records:
+        segments.append(
+            {
+                "start": mx_unavailable_pre_records[0]["date"],
+                "end": mx_unavailable_pre_records[-1]["date"],
+                "market_cap_source": MX_PRE2017_UNAVAILABLE_SOURCE,
+                "market_cap_review_status": "unavailable",
+                "ratio_available": False,
+                "reason": pre2017_mx_vendor_reason or "东方财富妙想前段厂商市值链不可用，比例为 N/A。",
+            }
+        )
     if official_pre_records:
         segments.append(
             {
@@ -1186,17 +1490,25 @@ def _manifest_reason(
     vendor_reason: str | None,
     official_pre2017_reason: str | None,
     *,
+    pre2017_mx_vendor: MxPre2017VendorInput | None,
+    pre2017_mx_vendor_reason: str | None,
     official_pre2017: OfficialPre2017Input | None,
 ) -> str:
     if vendor_reason:
         return (
-            f"2011–2016 前段状态：{official_pre2017_reason or PRE2017_REASON}；"
+            f"2011–2016 前段状态：{pre2017_mx_vendor_reason or official_pre2017_reason or PRE2017_REASON}；"
             f"2017 后厂商分母亦不可用：{vendor_reason}"
         )
     if provenance["ratio_available"] is True:
+        if pre2017_mx_vendor is not None:
+            return (
+                "2011–2016 前段分母为东方财富妙想厂商口径，2017-01-03 起为东方财富 Choice 厂商口径；"
+                "两段均未经交易所复核和完整审计，且口径边界可能造成水平不可直接拼接比较。"
+                "全段聚合比例不是正式 financial-evidence-audit 准出指标。"
+            )
         if official_pre2017 is None:
             return (
-                f"2011–2016 前段状态：{(official_pre2017_reason or PRE2017_REASON).rstrip('。')}；"
+                f"2011–2016 前段状态：{(pre2017_mx_vendor_reason or official_pre2017_reason or PRE2017_REASON).rstrip('。')}；"
                 "2017-01-03 起分母仅为东方财富 Choice 厂商口径，"
                 "未经交易所复核或完整审计。全段聚合比例不是正式 financial-evidence-audit 准出指标。"
             )
@@ -1205,7 +1517,7 @@ def _manifest_reason(
             "未经交易所复核或完整审计。全段聚合比例不是正式 financial-evidence-audit 准出指标。"
         )
     return (
-        f"2011–2016 前段状态：{official_pre2017_reason or PRE2017_REASON}；"
+        f"2011–2016 前段状态：{pre2017_mx_vendor_reason or official_pre2017_reason or PRE2017_REASON}；"
         "2017-01-03 起没有可精确匹配 DFCF 日期的合格厂商分母。"
     )
 
@@ -1218,8 +1530,11 @@ def build_manifest(
     vendor_reason: str | None,
     index_metadata: dict[str, object],
     *,
+    pre2017_mx_vendor: MxPre2017VendorInput | None = None,
+    pre2017_mx_vendor_reason: str | None = None,
     official_pre2017: OfficialPre2017Input | None = None,
     official_pre2017_reason: str | None = None,
+    official_pre2017_requested: bool = False,
 ) -> dict[str, object]:
     missing_records = sum(record["ratio_pct"] is None for record in records)
     dfcf_inputs = {
@@ -1227,35 +1542,82 @@ def build_manifest(
         for name, path in margin.paths.items()
         if name in {"sse", "szse", "balances"}
     }
-    market_cap = {
+    if pre2017_mx_vendor is not None:
+        ratio_review_status = MIXED_MX_VENDOR_REVIEW_STATUS
+    elif official_pre2017 is not None:
+        ratio_review_status = MIXED_AUDITED_REVIEW_STATUS
+    elif pre2017_mx_vendor_reason is not None:
+        ratio_review_status = MIXED_MX_UNAVAILABLE_REVIEW_STATUS
+    else:
+        ratio_review_status = MIXED_OFFICIAL_UNAVAILABLE_REVIEW_STATUS
+    if pre2017_mx_vendor is not None:
+        scope_definition = (
+            "分子为 DFCF 两市融资余额厂商口径，可能含非 A 股融资标的；"
+            "2011-08-03 至 2016-12-30 的分母为东方财富妙想沪深A股日度总市值，"
+            "2017-01-03 起分母为东方财富 Choice RPT_VALUEMARKET / TRADE_MARKET_CODE=000300。"
+            "两段均未经交易所复核和完整审计，口径边界可能造成水平不可直接拼接比较；"
+            "全段均不能称为严格证券类别匹配或正式财务比例。"
+        )
+    else:
+        scope_definition = (
+            "分子为 DFCF 两市融资余额厂商口径，可能含非 A 股融资标的；"
+            "2011-08-03 至 2016-12-30 的分母仅在官方原始链、DFCF 日期绑定和独立审计均通过时启用；"
+            "2017-01-03 起分母为东方财富 Choice RPT_VALUEMARKET / TRADE_MARKET_CODE=000300，"
+            "未经交易所复核和完整审计。全段均不能称为严格证券类别匹配或正式财务比例。"
+        )
+    market_cap: dict[str, object] = {
         "reporting_eligible": False,
         "ratio_available": provenance["ratio_available"] is True,
-        "ratio_review_status": (
-            MIXED_AUDITED_REVIEW_STATUS
-            if official_pre2017 is not None
-            else MIXED_OFFICIAL_UNAVAILABLE_REVIEW_STATUS
-        ),
+        "ratio_review_status": ratio_review_status,
         "reason": _manifest_reason(
             provenance,
             vendor_reason,
             official_pre2017_reason,
+            pre2017_mx_vendor=pre2017_mx_vendor,
+            pre2017_mx_vendor_reason=pre2017_mx_vendor_reason,
             official_pre2017=official_pre2017,
         ),
         "ratio_data_range": provenance["ratio_data_range"],
         "ratio_missing_records": missing_records,
         "source_switch_date": POST2017_START.isoformat(),
         "source_segments": _source_segments(
-            records, vendor_reason, official_pre2017_reason
+            records, vendor_reason, official_pre2017_reason, pre2017_mx_vendor_reason
         ),
-        "scope_definition": (
-            "分子为 DFCF 两市融资余额厂商口径，可能含非 A 股融资标的；"
-            "2011-08-03 至 2016-12-30 的分母仅在官方原始链、DFCF 日期绑定和独立审计均通过时启用；"
-            "2017-01-03 起分母为东方财富 Choice RPT_VALUEMARKET / TRADE_MARKET_CODE=000300，"
-            "未经交易所复核和完整审计。全段均不能称为严格证券类别匹配或正式财务比例。"
-        ),
+        "scope_definition": scope_definition,
         "source_url": vendor.manifest["source_url"] if vendor is not None else None,
         "csv_sha256": vendor.manifest["csv_sha256"] if vendor is not None else None,
-        "official_pre2017": {
+    }
+    if pre2017_mx_vendor is not None or (
+        pre2017_mx_vendor_reason is not None and official_pre2017 is None
+    ):
+        market_cap["mx_pre2017"] = {
+            "available": pre2017_mx_vendor is not None,
+            "reason": pre2017_mx_vendor_reason,
+            "table_sha256": (
+                pre2017_mx_vendor.manifest["csv_sha256"]
+                if pre2017_mx_vendor is not None
+                else None
+            ),
+            "raw_response_sha256": (
+                pre2017_mx_vendor.manifest["raw_response"]["sha256"]
+                if pre2017_mx_vendor is not None
+                else None
+            ),
+            "date_contract_status": (
+                "pass" if pre2017_mx_vendor is not None else "blocked"
+            ),
+            "financial_evidence_audit": (
+                pre2017_mx_vendor.audit["financial_evidence_audit"]
+                if pre2017_mx_vendor is not None
+                else {
+                    "applicable": False,
+                    "status": "N/A",
+                    "reason_code": "UNSUPPORTED_RATIO_CONTRACT",
+                }
+            ),
+        }
+    else:
+        market_cap["official_pre2017"] = {
             "available": official_pre2017 is not None,
             "reason": official_pre2017_reason,
             "table_sha256": (
@@ -1266,7 +1628,7 @@ def build_manifest(
             "raw_chain_status": (
                 official_pre2017.audit["official_raw_chain_status"]
                 if official_pre2017 is not None
-                else "blocked"
+                else ("blocked" if official_pre2017_requested else "not_requested")
             ),
             "financial_evidence_audit": (
                 official_pre2017.audit["financial_evidence_audit"]
@@ -1277,8 +1639,7 @@ def build_manifest(
                     "reason_code": "UNSUPPORTED_RATIO_CONTRACT",
                 }
             ),
-        },
-    }
+        }
     return {
         "schema_version": "1",
         "payload_sha256": None,
@@ -1416,13 +1777,26 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="构建两融网页静态发布包")
     parser.add_argument("--project-root", default=None)
     parser.add_argument("--publish-dir", default=None)
+    parser.add_argument(
+        "--allow-official-pre2017-fallback",
+        action="store_true",
+        help="仅当东方财富妙想前段厂商链不可用时，才读取既有官方前段链。",
+    )
     args = parser.parse_args()
     project_root = resolve_project_root(args.project_root)
     output_dir = project_root / OUTPUT_DIRECTORY
     margin = verify_dfcf_inputs(project_root)
-    official_pre2017, official_pre2017_reason = verify_pre2017_official_inputs(
+    pre2017_mx_vendor, pre2017_mx_vendor_reason = verify_pre2017_mx_vendor_inputs(
         project_root, margin
     )
+    official_pre2017: OfficialPre2017Input | None = None
+    official_pre2017_reason: str | None = None
+    official_pre2017_requested = False
+    if pre2017_mx_vendor is None and args.allow_official_pre2017_fallback:
+        official_pre2017_requested = True
+        official_pre2017, official_pre2017_reason = verify_pre2017_official_inputs(
+            project_root, margin
+        )
     vendor, vendor_reason = verify_post2017_vendor_inputs(project_root)
     indices, index_metadata = _load_indices()
     records, provenance = build_dashboard_records(
@@ -1430,8 +1804,11 @@ def main() -> None:
         vendor,
         indices,
         vendor_reason,
+        pre2017_mx_vendor=pre2017_mx_vendor,
+        pre2017_mx_vendor_reason=pre2017_mx_vendor_reason,
         official_pre2017=official_pre2017,
         official_pre2017_reason=official_pre2017_reason,
+        official_pre2017_requested=official_pre2017_requested,
     )
     payload = build_payload(records, provenance)
     manifest = build_manifest(
@@ -1441,8 +1818,11 @@ def main() -> None:
         vendor,
         vendor_reason,
         index_metadata,
+        pre2017_mx_vendor=pre2017_mx_vendor,
+        pre2017_mx_vendor_reason=pre2017_mx_vendor_reason,
         official_pre2017=official_pre2017,
         official_pre2017_reason=official_pre2017_reason,
+        official_pre2017_requested=official_pre2017_requested,
     )
     payload_path, manifest_path = write_bundle(output_dir, payload, manifest)
     if args.publish_dir:
