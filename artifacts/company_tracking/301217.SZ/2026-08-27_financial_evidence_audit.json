@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "301217-h1-2026-official-yoy-20260827",
+  "as_of": "2026-08-27T00:21:00+08:00",
+  "sources": [
+    {
+      "id": "S_CNINFO_H1",
+      "source_type": "official_filing",
+      "origin_id": "cninfo:301217:2026h1:1225509625",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225509625.PDF#page=8",
+      "source_date": "2026-08-27",
+      "checked_at": "2026-08-27T00:21:00+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_REVENUE_H1_2026",
+      "metric": "revenue",
+      "value": "4021121522.41",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "H1 FY2026"
+      },
+      "available_at": "2026-08-27",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_CNINFO_H1"]
+    },
+    {
+      "id": "F_REVENUE_H1_2025",
+      "metric": "revenue",
+      "value": "2997208702.81",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "H1 FY2025"
+      },
+      "available_at": "2026-08-27",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_CNINFO_H1"]
+    },
+    {
+      "id": "F_ATTRIBUTABLE_NET_PROFIT_H1_2026",
+      "metric": "attributable_net_profit",
+      "value": "214879534.74",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "H1 FY2026"
+      },
+      "available_at": "2026-08-27",
+      "basis": "reported_attributable_net_profit_prc_gaap",
+      "source_refs": ["S_CNINFO_H1"]
+    },
+    {
+      "id": "F_ATTRIBUTABLE_NET_PROFIT_H1_2025",
+      "metric": "attributable_net_profit",
+      "value": "34954022.34",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "H1 FY2025"
+      },
+      "available_at": "2026-08-27",
+      "basis": "reported_attributable_net_profit_prc_gaap",
+      "source_refs": ["S_CNINFO_H1"]
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_REVENUE_H1_YOY",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {"fact_id": "F_REVENUE_H1_2026"},
+      "base": {"fact_id": "F_REVENUE_H1_2025"},
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "C_ATTRIBUTABLE_NET_PROFIT_H1_YOY",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {"fact_id": "F_ATTRIBUTABLE_NET_PROFIT_H1_2026"},
+      "base": {"fact_id": "F_ATTRIBUTABLE_NET_PROFIT_H1_2025"},
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_attributable_net_profit_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    }
+  ]
+}

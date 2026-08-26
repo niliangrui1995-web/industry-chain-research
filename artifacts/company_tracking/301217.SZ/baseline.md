@@ -151,3 +151,11 @@ PCB 铜箔主要产品：
 - 2026-06-16 部分募投项目结项及节余资金永久补流公告（CNINFO）：https://static.cninfo.com.cn/finalpage/2026-06-16/1225371951.PDF
 - 2026-07-01 第二次临时股东会决议（CNINFO）：https://static.cninfo.com.cn/finalpage/2026-07-01/1225403894.PDF
 - 2026 年日常关联交易预计（CNINFO）：https://static.cninfo.com.cn/finalpage/2026-03-05/1224995566.PDF
+
+## 2026-08-27 半年报增量证据
+
+- 稳定跟踪标识：`A1_PCB_MIX_AND_PROCESSING_FEE` 指 PCB 铜箔加工费与高端品占比改善；`A3_CASH_CONVERSION_AND_WORKING_CAPITAL` 指产品结构改善不能以持续恶化的营运资本和现金流为代价。
+- 2026H1 公司实现营业收入 40.2112 亿元、归母净利润 2.1488 亿元；财务证据审计以 CNINFO 原始半年报复算收入同比 34.1622%、归母净利润同比 514.7491%，两项均为 `PASS`。
+- 分产品上，PCB 铜箔收入 25.0679 亿元、毛利率 11.60%，同比增加 6.04 个百分点；锂电池铜箔收入 13.7387 亿元、毛利率 3.77%，同比增加 3.53 个百分点。公司披露高频高速基板用铜箔产量占 PCB 铜箔总产量比例已超过 50%，但没有 HVLP 分代收入、毛利率、客户或订单披露，不能将全部改善外推为 HVLP 兑现。
+- 经营活动现金流净额仍为 -2.8503 亿元，虽较上年同期改善 37.74%，仍未满足 `A3_CASH_CONVERSION_AND_WORKING_CAPITAL` 的充分验证条件。中期利润分配为待股东会批准的预案，不能提前写成已实施现金流出。
+- 来源：2026 年半年度报告（CNINFO）：https://static.cninfo.com.cn/finalpage/2026-08-27/1225509625.PDF；财务审计见同目录 `2026-08-27_financial_evidence_audit_result.json`。
