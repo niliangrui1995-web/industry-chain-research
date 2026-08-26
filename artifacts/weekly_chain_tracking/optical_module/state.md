@@ -67,6 +67,13 @@ as_of：2026-08-23
 - [Coherent FY2026 Q4 演示材料](https://www.coherent.com/content/dam/coherent/site/en/documents/investors/investor-presentations/2026/august-12/investor-presentation-20260812.pdf)
 - [AXT 2026-08-13 Form 10-Q](https://www.sec.gov/Archives/edgar/data/1051627/000143774926027677/axti20260630_10q.htm)
 
+## 2026-08-26 财报增量（SMTC FY2027 Q2；非周报重跑）
+
+- **新增（本季合并收入，`official_fact` / 已审计）**：Semtech FY2027 Q2 合并收入为 $341.9m；相对事件前 Q2 收入一致预期 $328.4m，收入层面为 `beat`，+$13.5m / +4.1108%，`C_Q2_REVENUE_SURPRISE=PASS/publishable`。该结论仅为公司合并收入，不拆写为数据中心、800G 或 1.6T 收入。
+- **`management_claim`（数据中心、800G/1.6T 与 backlog）**：第三方自动逐字稿中，管理层称 AI 数据中心相关铜缆、光纤和光子产品组合需求强，数据中心、800G/1.6T 及 Q3 目标继续提高；并称 bookings/backlog 强劲、对 FY2027 余下期间及 FY2028 有定性覆盖。该内容不是官方逐字稿，且未披露 backlog 金额、客户、取消率或 take-or-pay；不得升级为官方订单、客户、产能、认证、出货或独立收入事实。
+- **未改变（当前台账与 Q3 相对预期）**：不改变 `as_of=2026-08-23`、既有证据检查 ID 或任何 hard/soft/watch 等级。Q3 FY2027 官方收入指引为 $410m ± $5m；其相对事件前市场预期仍为`证据不足`（`source_gap`，`C_Q3_GUIDANCE_REVENUE_SURPRISE=FAIL/blocked`），不得标为 `beat` / `meet` / `miss`。
+- **证据边界与下一验证**：在本审计包的 `as_of=2026-08-26T09:14:41+08:00`，FY2027 Q2 10-Q、Q2 official presentation、可匿名核验的官方电话会 replay/transcript/captions 均未取得；本增量未将其纳入结论，保持 `provisional=true`。对 1.6T/AI 光互连账本，优先等待可核验的官方电话会材料以复核上述 `management_claim`；10-Q 继续用于补足财务可比性、税项、营运资本及分部口径。依据：[SMTC FY2027 Q2 财报复盘](../../earnings/SMTC/Jul_2026/analysis/earnings_review.md)。
+
 ## 历史记录（2026-08-12 及此前；已被以上状态替代）
 
 ## 2026-08-12 财报增量（LITE FY2026 Q4；非周报重跑）
