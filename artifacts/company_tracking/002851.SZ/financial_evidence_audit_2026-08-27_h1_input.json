@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "002851-2026h1-official-yoy-20260827",
+  "as_of": "2026-08-27T20:48:35+08:00",
+  "sources": [
+    {
+      "id": "S_CNINFO_H1",
+      "source_type": "official_filing",
+      "origin_id": "cninfo:002851:2026h1:1225522762",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225522762.PDF#page=8",
+      "source_date": "2026-08-27",
+      "checked_at": "2026-08-27T20:48:35+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {"id":"F_REVENUE_H1_2026","metric":"revenue","value":"6061004622.08","unit":"currency","currency":"CNY","scale":"1","period":{"kind":"duration","start":"2026-01-01","end":"2026-06-30","frequency":"half","label":"H1 FY2026"},"available_at":"2026-08-27","basis":"reported_consolidated_prc_gaap","source_refs":["S_CNINFO_H1"]},
+    {"id":"F_REVENUE_H1_2025","metric":"revenue","value":"4673733754.96","unit":"currency","currency":"CNY","scale":"1","period":{"kind":"duration","start":"2025-01-01","end":"2025-06-30","frequency":"half","label":"H1 FY2025"},"available_at":"2026-08-27","basis":"reported_consolidated_prc_gaap","source_refs":["S_CNINFO_H1"]},
+    {"id":"F_ATTRIBUTABLE_NET_PROFIT_H1_2026","metric":"attributable_net_profit","value":"252070426.76","unit":"currency","currency":"CNY","scale":"1","period":{"kind":"duration","start":"2026-01-01","end":"2026-06-30","frequency":"half","label":"H1 FY2026"},"available_at":"2026-08-27","basis":"reported_attributable_net_profit_prc_gaap","source_refs":["S_CNINFO_H1"]},
+    {"id":"F_ATTRIBUTABLE_NET_PROFIT_H1_2025","metric":"attributable_net_profit","value":"173590606.69","unit":"currency","currency":"CNY","scale":"1","period":{"kind":"duration","start":"2025-01-01","end":"2025-06-30","frequency":"half","label":"H1 FY2025"},"available_at":"2026-08-27","basis":"reported_attributable_net_profit_prc_gaap","source_refs":["S_CNINFO_H1"]},
+    {"id":"F_DEDUCTED_NET_PROFIT_H1_2026","metric":"deducted_attributable_net_profit","value":"118191464.60","unit":"currency","currency":"CNY","scale":"1","period":{"kind":"duration","start":"2026-01-01","end":"2026-06-30","frequency":"half","label":"H1 FY2026"},"available_at":"2026-08-27","basis":"reported_deducted_attributable_net_profit_prc_gaap","source_refs":["S_CNINFO_H1"]},
+    {"id":"F_DEDUCTED_NET_PROFIT_H1_2025","metric":"deducted_attributable_net_profit","value":"140918936.94","unit":"currency","currency":"CNY","scale":"1","period":{"kind":"duration","start":"2025-01-01","end":"2025-06-30","frequency":"half","label":"H1 FY2025"},"available_at":"2026-08-27","basis":"reported_deducted_attributable_net_profit_prc_gaap","source_refs":["S_CNINFO_H1"]},
+    {"id":"F_OPERATING_CASH_FLOW_H1_2026","metric":"operating_cash_flow","value":"29545052.08","unit":"currency","currency":"CNY","scale":"1","period":{"kind":"duration","start":"2026-01-01","end":"2026-06-30","frequency":"half","label":"H1 FY2026"},"available_at":"2026-08-27","basis":"reported_consolidated_prc_gaap","source_refs":["S_CNINFO_H1"]},
+    {"id":"F_OPERATING_CASH_FLOW_H1_2025","metric":"operating_cash_flow","value":"192100900.06","unit":"currency","currency":"CNY","scale":"1","period":{"kind":"duration","start":"2025-01-01","end":"2025-06-30","frequency":"half","label":"H1 FY2025"},"available_at":"2026-08-27","basis":"reported_consolidated_prc_gaap","source_refs":["S_CNINFO_H1"]}
+  ],
+  "checks": [
+    {"id":"C_REVENUE_H1_YOY","kind":"percentage","materiality":"material","mode":"change","current":{"fact_id":"F_REVENUE_H1_2026"},"base":{"fact_id":"F_REVENUE_H1_2025"},"period_relation":"yoy","output_metric":"revenue_yoy_pct","output_basis":"reported_consolidated_prc_gaap_yoy","source_gate":{"min_independent_origins":1,"counted_tier":"official","required_anchor_tier":"official"}},
+    {"id":"C_ATTRIBUTABLE_NET_PROFIT_H1_YOY","kind":"percentage","materiality":"material","mode":"change","current":{"fact_id":"F_ATTRIBUTABLE_NET_PROFIT_H1_2026"},"base":{"fact_id":"F_ATTRIBUTABLE_NET_PROFIT_H1_2025"},"period_relation":"yoy","output_metric":"attributable_net_profit_yoy_pct","output_basis":"reported_attributable_net_profit_prc_gaap_yoy","source_gate":{"min_independent_origins":1,"counted_tier":"official","required_anchor_tier":"official"}},
+    {"id":"C_DEDUCTED_NET_PROFIT_H1_YOY","kind":"percentage","materiality":"material","mode":"change","current":{"fact_id":"F_DEDUCTED_NET_PROFIT_H1_2026"},"base":{"fact_id":"F_DEDUCTED_NET_PROFIT_H1_2025"},"period_relation":"yoy","output_metric":"deducted_attributable_net_profit_yoy_pct","output_basis":"reported_deducted_attributable_net_profit_prc_gaap_yoy","source_gate":{"min_independent_origins":1,"counted_tier":"official","required_anchor_tier":"official"}},
+    {"id":"C_OPERATING_CASH_FLOW_H1_YOY","kind":"percentage","materiality":"material","mode":"change","current":{"fact_id":"F_OPERATING_CASH_FLOW_H1_2026"},"base":{"fact_id":"F_OPERATING_CASH_FLOW_H1_2025"},"period_relation":"yoy","output_metric":"operating_cash_flow_yoy_pct","output_basis":"reported_consolidated_prc_gaap_yoy","source_gate":{"min_independent_origins":1,"counted_tier":"official","required_anchor_tier":"official"}}
+  ]
+}
