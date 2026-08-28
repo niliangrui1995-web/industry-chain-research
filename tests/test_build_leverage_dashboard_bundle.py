@@ -1134,6 +1134,41 @@ def test_payload_manifest_schema_hash_and_atomic_publish_are_consistent(
     assert (publish_dir / manifest_path.name).read_bytes() == manifest_path.read_bytes()
 
 
+def test_load_indices_records_the_exact_tdx_snapshot_metadata(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    paths: dict[str, Path] = {}
+    for code, base_close in {"000001": 300000, "399106": 180000, "399006": 200000}.items():
+        path = tmp_path / f"{code}.day"
+        raw = b"".join(
+            MODULE.DAY_STRUCT.pack(
+                int(day.replace("-", "")), 0, 0, close, close, 0.0, 0, 0
+            )
+            for day, close in [
+                ("2026-08-20", base_close),
+                ("2026-08-21", base_close + 100),
+            ]
+        )
+        path.write_bytes(raw)
+        paths[code] = path
+
+    monkeypatch.setattr(MODULE, "INDEX_PATHS", paths)
+    frames, metadata = MODULE._load_indices()
+
+    for code, path in paths.items():
+        raw = path.read_bytes()
+        assert frames[code]["date"].tolist() == ["2026-08-20", "2026-08-21"]
+        assert metadata[code] == {
+            "source": MODULE.INDEX_SOURCE,
+            "path": str(path),
+            "sha256": hashlib.sha256(raw).hexdigest(),
+            "sha256_covers_through": "2026-08-21",
+            "source_snapshot_hash_status": MODULE.INDEX_SNAPSHOT_HASH_RECORDED,
+            "first_date": "2026-08-20",
+            "last_date": "2026-08-21",
+        }
+
+
 def test_manifest_marks_verified_pre2017_chain_as_audited(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

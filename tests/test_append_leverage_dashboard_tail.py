@@ -84,6 +84,17 @@ def write_fixture(tmp_path: Path, *, include_new_market_cap: bool = True) -> tup
         "payload_sha256": "base-payload-sha",
         "payload_records": 1,
         "data_range": {"start": "2026-08-20", "end": "2026-08-20"},
+        "description": "DFCF 两融余额与三指数静态数据包；两融余额下降仅为去杠杆压力代理，不证明强平、底部或反弹。",
+        "indices": {
+            code: {
+                "source": "本地TDX厂商日线",
+                "path": str(tmp_path / "tdx" / f"{code}.day"),
+                "sha256": "0" * 64,
+                "first_date": "2026-08-20",
+                "last_date": "2026-08-20",
+            }
+            for code in ("000001", "399106", "399006")
+        },
         "market_cap": {
             "ratio_available": True,
             "ratio_data_range": {"start": "2026-08-20", "end": "2026-08-20"},
@@ -153,6 +164,19 @@ def test_append_only_adds_new_tail_and_preserves_existing_records(tmp_path: Path
     assert manifest["payload_records"] == 2
     assert manifest["data_range"]["end"] == "2026-08-21"
     assert manifest["market_cap"]["source_segments"][1]["end"] == "2026-08-21"
+    for code in ("000001", "399106", "399006"):
+        index = manifest["indices"][code]
+        assert index == {
+            "source": "本地 TDX 厂商日线（用于三指数收盘价；未做交易所或指数编制方原始链复核）",
+            "path": str(tmp_path / "tdx" / f"{code}.day"),
+            "sha256": sha256((tmp_path / "tdx" / f"{code}.day").read_bytes()),
+            "sha256_covers_through": "2026-08-21",
+            "source_snapshot_hash_status": "recorded",
+            "first_date": "2026-08-20",
+            "last_date": "2026-08-21",
+        }
+    assert "本地 TDX 厂商日线" in manifest["description"]
+    assert "未做交易所或指数编制方原始链复核" in manifest["description"]
     assert manifest["incremental_tail"] == {
         "base_payload_sha256": "base-payload-sha",
         "base_last_date": "2026-08-20",
@@ -163,6 +187,57 @@ def test_append_only_adds_new_tail_and_preserves_existing_records(tmp_path: Path
         project_root / MODULE.DASHBOARD_DIRECTORY / MODULE.PAYLOAD_FILENAME
     )
     assert artifact_payload.read_bytes() == payload_path.read_bytes()
+
+
+def test_reconcile_repairs_stale_index_coverage_without_forging_tail_hash(
+    tmp_path: Path,
+) -> None:
+    project_root, publish_dir = write_fixture(tmp_path)
+    MODULE.append_tail(project_root, publish_dir, cutoff=date(2026, 8, 21))
+    payload_path = publish_dir / MODULE.PAYLOAD_FILENAME
+    manifest_path = publish_dir / MODULE.MANIFEST_FILENAME
+    artifact_directory = project_root / MODULE.DASHBOARD_DIRECTORY
+    artifact_manifest_path = artifact_directory / MODULE.MANIFEST_FILENAME
+    before_payload = payload_path.read_bytes()
+    stale_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    for index in stale_manifest["indices"].values():
+        index["source"] = "本地TDX厂商日线"
+        index["sha256"] = "0" * 64
+        index.pop("sha256_covers_through", None)
+        index.pop("source_snapshot_hash_status", None)
+        index["last_date"] = "2026-08-20"
+    stale_manifest["description"] = (
+        "DFCF 两融余额与三指数静态数据包；两融余额下降仅为去杠杆压力代理，"
+        "不证明强平、底部或反弹。"
+    )
+    stale_manifest_bytes = json.dumps(stale_manifest, ensure_ascii=False).encode("utf-8")
+    manifest_path.write_bytes(stale_manifest_bytes)
+    artifact_manifest_path.write_bytes(stale_manifest_bytes)
+
+    result = MODULE.reconcile_index_metadata(project_root, publish_dir)
+
+    repaired_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert result == {
+        "status": "metadata_repaired",
+        "historical_data_policy": "reuse_without_full_validation",
+        "reconciled_index_last_dates": {
+            "000001": "2026-08-21",
+            "399106": "2026-08-21",
+            "399006": "2026-08-21",
+        },
+    }
+    assert payload_path.read_bytes() == before_payload
+    for code in ("000001", "399106", "399006"):
+        index = repaired_manifest["indices"][code]
+        assert index["source"] == (
+            "本地 TDX 厂商日线（用于三指数收盘价；未做交易所或指数编制方原始链复核）"
+        )
+        assert index["last_date"] == "2026-08-21"
+        assert index["sha256"] == "0" * 64
+        assert index["sha256_covers_through"] == "2026-08-20"
+        assert index["source_snapshot_hash_status"] == "tail_snapshot_evidence_absent"
+    assert "尾部输入的完整文件哈希未留存" in repaired_manifest["description"]
+    assert artifact_manifest_path.read_bytes() == manifest_path.read_bytes()
 
 
 def test_append_does_not_write_when_no_new_tail_exists(tmp_path: Path) -> None:

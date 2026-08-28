@@ -114,6 +114,13 @@ INDEX_PATHS = {
     "399106": Path(r"D:\HT\vipdoc\sz\lday\sz399106.day"),
     "399006": Path(r"D:\HT\vipdoc\sz\lday\sz399006.day"),
 }
+INDEX_SOURCE = "本地 TDX 厂商日线（用于三指数收盘价；未做交易所或指数编制方原始链复核）"
+INDEX_SNAPSHOT_HASH_RECORDED = "recorded"
+MANIFEST_DESCRIPTION = (
+    "DFCF 两融余额与三指数静态数据包；"
+    "三指数收盘价来自本地 TDX 厂商日线，未做交易所或指数编制方原始链复核；"
+    "两融余额下降仅为去杠杆压力代理，不证明强平、底部或反弹。"
+)
 VENDOR_CSV_COLUMNS = {
     "date",
     "market_cap_yi",
@@ -1656,7 +1663,7 @@ def build_manifest(
         },
         "market_cap": market_cap,
         "indices": index_metadata,
-        "description": "DFCF 两融余额与三指数静态数据包；两融余额下降仅为去杠杆压力代理，不证明强平、底部或反弹。",
+        "description": MANIFEST_DESCRIPTION,
     }
 
 
@@ -1755,13 +1762,17 @@ def _load_indices() -> tuple[dict[str, pd.DataFrame], dict[str, object]]:
     indices: dict[str, pd.DataFrame] = {}
     metadata: dict[str, object] = {}
     for ticker, path in INDEX_PATHS.items():
-        indices[ticker] = parse_day_bytes(path.read_bytes())
+        payload = path.read_bytes()
+        indices[ticker] = parse_day_bytes(payload)
+        last_date = indices[ticker].iloc[-1]["date"]
         metadata[ticker] = {
-            "source": "本地TDX厂商日线",
+            "source": INDEX_SOURCE,
             "path": str(path),
-            "sha256": sha256_file(path),
+            "sha256": hashlib.sha256(payload).hexdigest(),
+            "sha256_covers_through": last_date,
+            "source_snapshot_hash_status": INDEX_SNAPSHOT_HASH_RECORDED,
             "first_date": indices[ticker].iloc[0]["date"],
-            "last_date": indices[ticker].iloc[-1]["date"],
+            "last_date": last_date,
         }
     return indices, metadata
 

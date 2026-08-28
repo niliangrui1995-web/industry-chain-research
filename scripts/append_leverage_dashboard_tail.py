@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import csv
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP, localcontext
 import hashlib
 import json
@@ -29,6 +29,20 @@ INDEX_PATHS = {
     "399106": Path(r"D:\HT\vipdoc\sz\lday\sz399106.day"),
     "399006": Path(r"D:\HT\vipdoc\sz\lday\sz399006.day"),
 }
+INDEX_VALUE_FIELDS = {
+    "000001": "index_000001_close",
+    "399106": "index_399106_close",
+    "399006": "index_399006_close",
+}
+INDEX_SOURCE = "本地 TDX 厂商日线（用于三指数收盘价；未做交易所或指数编制方原始链复核）"
+INDEX_SNAPSHOT_HASH_RECORDED = "recorded"
+INDEX_SNAPSHOT_HASH_TAIL_EVIDENCE_ABSENT = "tail_snapshot_evidence_absent"
+MANIFEST_DESCRIPTION = (
+    "DFCF 两融余额与三指数静态数据包；"
+    "三指数收盘价来自本地 TDX 厂商日线，未做交易所或指数编制方原始链复核；"
+    "两融余额下降仅为去杠杆压力代理，不证明强平、底部或反弹。"
+)
+HISTORICAL_TAIL_HASH_GAP = "本包新增尾部输入的完整文件哈希未留存（本地 TDX 厂商日线）。"
 
 
 class TailAppendBlocked(RuntimeError):
@@ -133,7 +147,9 @@ def _read_new_market_caps(path: Path, after: date, cutoff: date) -> dict[date, D
     return values
 
 
-def _read_new_index_values(path: Path, after: date, cutoff: date) -> dict[date, Decimal]:
+def _read_new_index_values(
+    path: Path, after: date, cutoff: date
+) -> tuple[dict[date, Decimal], dict[str, object]]:
     try:
         payload = path.read_bytes()
     except OSError as exc:
@@ -141,12 +157,14 @@ def _read_new_index_values(path: Path, after: date, cutoff: date) -> dict[date, 
     if not payload or len(payload) % DAY_STRUCT.size:
         raise TailAppendBlocked(f"TDX 指数格式无效: {path}")
     values: dict[date, Decimal] = {}
+    source_dates: list[date] = []
     for offset in range(0, len(payload), DAY_STRUCT.size):
         raw_day, _, _, _, raw_close, _, _, _ = DAY_STRUCT.unpack_from(payload, offset)
         try:
             current = datetime.strptime(str(raw_day), "%Y%m%d").date()
         except ValueError:
             continue
+        source_dates.append(current)
         if not after < current <= cutoff:
             continue
         if current in values:
@@ -154,7 +172,17 @@ def _read_new_index_values(path: Path, after: date, cutoff: date) -> dict[date, 
         values[current] = _positive_decimal(
             Decimal(raw_close) / Decimal("100"), f"TDX 指数 {current} 收盘价"
         )
-    return values
+    if not source_dates:
+        raise TailAppendBlocked(f"TDX 指数没有有效交易日期: {path}")
+    return values, {
+        "source": INDEX_SOURCE,
+        "path": str(path),
+        "sha256": _sha256(payload),
+        "sha256_covers_through": max(source_dates).isoformat(),
+        "source_snapshot_hash_status": INDEX_SNAPSHOT_HASH_RECORDED,
+        "first_date": min(source_dates).isoformat(),
+        "last_date": max(source_dates).isoformat(),
+    }
 
 
 def _ratio(numerator: Decimal, denominator: Decimal) -> float:
@@ -264,8 +292,24 @@ def _publish_tail_atomically(
         raise
 
 
+def _publish_manifest_atomically(
+    *, manifest_bytes: bytes, artifact_manifest: Path, publish_manifest: Path
+) -> None:
+    targets = [artifact_manifest, publish_manifest]
+    snapshot = _snapshot(targets)
+    try:
+        _atomic_write_bytes(manifest_bytes, artifact_manifest)
+        _atomic_write_bytes(manifest_bytes, publish_manifest)
+    except Exception:
+        _restore_snapshot(snapshot)
+        raise
+
+
 def _update_metadata(
-    payload: dict[str, Any], manifest: dict[str, Any], records: list[dict[str, object]]
+    payload: dict[str, Any],
+    manifest: dict[str, Any],
+    records: list[dict[str, object]],
+    index_metadata: dict[str, dict[str, object]],
 ) -> None:
     last_date = str(records[-1]["date"])
     payload["generated_at_beijing"] = _beijing_now()
@@ -279,6 +323,8 @@ def _update_metadata(
     if isinstance(data_range, dict):
         data_range["end"] = last_date
     manifest["payload_records"] = len(records)
+    manifest["indices"] = index_metadata
+    manifest["description"] = MANIFEST_DESCRIPTION
     market_cap = manifest.get("market_cap")
     if isinstance(market_cap, dict):
         ratio_range = market_cap.get("ratio_data_range")
@@ -325,9 +371,15 @@ def append_tail(
         baseline_date,
         end_date,
     )
-    index_values = {
+    index_inputs = {
         code: _read_new_index_values(path, baseline_date, end_date)
         for code, path in INDEX_PATHS.items()
+    }
+    index_values = {
+        code: values for code, (values, _) in index_inputs.items()
+    }
+    index_metadata = {
+        code: metadata for code, (_, metadata) in index_inputs.items()
     }
     tail_records = _build_tail_records(margin_rows, market_caps, index_values)
 
@@ -335,7 +387,7 @@ def append_tail(
     if not isinstance(existing_records, list):
         raise TailAppendBlocked("既有网页包 records 无效")
     existing_records.extend(tail_records)
-    _update_metadata(payload, manifest, existing_records)
+    _update_metadata(payload, manifest, existing_records, index_metadata)
     payload_bytes = _json_bytes(payload)
     manifest["payload_sha256"] = _sha256(payload_bytes)
     manifest["incremental_tail"] = {
@@ -361,6 +413,151 @@ def append_tail(
     }
 
 
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(character in "0123456789abcdef" for character in value)
+    )
+
+
+def _effective_index_tail(
+    payload: dict[str, Any],
+) -> dict[str, tuple[date, Decimal]]:
+    records = payload.get("records")
+    if not isinstance(records, list) or not records:
+        raise TailAppendBlocked("既有网页包没有可核对的指数记录")
+
+    effective: dict[str, tuple[date, Decimal]] = {}
+    for record_number, record in enumerate(records, start=1):
+        if not isinstance(record, dict):
+            raise TailAppendBlocked(f"既有网页包第 {record_number} 条记录无效")
+        current = _parse_date(record.get("date"), f"既有网页包第 {record_number} 条记录")
+        for code, field in INDEX_VALUE_FIELDS.items():
+            value = record.get(field)
+            if value is None:
+                continue
+            close = _positive_decimal(
+                value, f"既有网页包 {current.isoformat()} {code} 收盘价"
+            )
+            previous = effective.get(code)
+            if previous is None or current > previous[0]:
+                effective[code] = (current, close)
+
+    missing = [code for code in INDEX_VALUE_FIELDS if code not in effective]
+    if missing:
+        raise TailAppendBlocked(f"既有网页包缺少有效指数收盘价: {', '.join(missing)}")
+    return effective
+
+
+def _assert_current_index_tail_matches(
+    code: str, target_date: date, expected_close: Decimal
+) -> None:
+    values, _ = _read_new_index_values(
+        INDEX_PATHS[code], target_date - timedelta(days=1), target_date
+    )
+    actual_close = values.get(target_date)
+    if actual_close is None:
+        raise TailAppendBlocked(
+            f"本地 TDX 指数缺少既有网页包尾部日期: {code} {target_date.isoformat()}"
+        )
+    if actual_close != expected_close:
+        raise TailAppendBlocked(
+            f"本地 TDX 指数与既有网页包尾部收盘价不一致: {code} {target_date.isoformat()}"
+        )
+
+
+def reconcile_index_metadata(
+    project_root: Path, publish_dir: Path
+) -> dict[str, object]:
+    """仅修复既有尾部的指数来源元数据，不刷新或改写 payload 记录。"""
+
+    output_directory = project_root / DASHBOARD_DIRECTORY
+    artifact_payload_path = output_directory / PAYLOAD_FILENAME
+    artifact_manifest_path = output_directory / MANIFEST_FILENAME
+    published_payload_path = publish_dir / PAYLOAD_FILENAME
+    published_manifest_path = publish_dir / MANIFEST_FILENAME
+    payload = _read_json(published_payload_path, "既有发布网页包")
+    manifest = _read_json(published_manifest_path, "既有发布网页清单")
+    try:
+        payload_bytes = published_payload_path.read_bytes()
+        artifact_payload_bytes = artifact_payload_path.read_bytes()
+        published_manifest_bytes = published_manifest_path.read_bytes()
+        artifact_manifest_bytes = artifact_manifest_path.read_bytes()
+    except OSError as exc:
+        raise TailAppendBlocked("既有网页包产物无法读取") from exc
+    payload_sha256 = _sha256(payload_bytes)
+    if manifest.get("payload_sha256") != payload_sha256:
+        raise TailAppendBlocked("既有发布网页包 SHA-256 与清单不一致")
+    if artifact_payload_bytes != payload_bytes:
+        raise TailAppendBlocked("研究仓产物与既有发布网页包 payload 不一致")
+    if artifact_manifest_bytes != published_manifest_bytes:
+        raise TailAppendBlocked("研究仓产物与既有发布网页包 manifest 不一致")
+    artifact_manifest = _read_json(artifact_manifest_path, "研究仓既有网页清单")
+    if artifact_manifest.get("payload_sha256") != payload_sha256:
+        raise TailAppendBlocked("研究仓既有网页清单与 payload SHA-256 不一致")
+
+    effective = _effective_index_tail(payload)
+    indices = manifest.get("indices")
+    if not isinstance(indices, dict):
+        raise TailAppendBlocked("既有发布网页清单指数元数据无效")
+
+    stale_codes: list[str] = []
+    prior_dates: dict[str, date] = {}
+    for code, (effective_date, _) in effective.items():
+        entry = indices.get(code)
+        if not isinstance(entry, dict):
+            raise TailAppendBlocked(f"既有发布网页清单缺少指数元数据: {code}")
+        first_date = _parse_date(entry.get("first_date"), f"既有清单指数 {code} 首日")
+        prior_date = _parse_date(entry.get("last_date"), f"既有清单指数 {code} 末日")
+        if first_date > prior_date or first_date > effective_date:
+            raise TailAppendBlocked(f"既有清单指数日期范围无效: {code}")
+        if not _is_sha256(entry.get("sha256")):
+            raise TailAppendBlocked(f"既有清单指数 SHA-256 无效: {code}")
+        if not isinstance(entry.get("path"), str) or not entry["path"].strip():
+            raise TailAppendBlocked(f"既有清单指数路径无效: {code}")
+        prior_dates[code] = prior_date
+        if prior_date < effective_date:
+            stale_codes.append(code)
+
+    reconciled_dates = {
+        code: effective[code][0].isoformat() for code in INDEX_VALUE_FIELDS
+    }
+    if not stale_codes:
+        return {
+            "status": "no_changes",
+            "historical_data_policy": "reuse_without_full_validation",
+            "reconciled_index_last_dates": reconciled_dates,
+        }
+    if len(stale_codes) != len(INDEX_VALUE_FIELDS):
+        raise TailAppendBlocked("指数来源日期仅部分落后，拒绝混合修复历史快照证据")
+
+    for code in stale_codes:
+        effective_date, effective_close = effective[code]
+        _assert_current_index_tail_matches(code, effective_date, effective_close)
+        entry = indices[code]
+        assert isinstance(entry, dict)
+        entry["source"] = INDEX_SOURCE
+        entry["sha256_covers_through"] = prior_dates[code].isoformat()
+        entry["source_snapshot_hash_status"] = (
+            INDEX_SNAPSHOT_HASH_TAIL_EVIDENCE_ABSENT
+        )
+        entry["last_date"] = effective_date.isoformat()
+
+    manifest["description"] = f"{MANIFEST_DESCRIPTION}{HISTORICAL_TAIL_HASH_GAP}"
+    manifest_bytes = _json_bytes(manifest)
+    _publish_manifest_atomically(
+        manifest_bytes=manifest_bytes,
+        artifact_manifest=artifact_manifest_path,
+        publish_manifest=published_manifest_path,
+    )
+    return {
+        "status": "metadata_repaired",
+        "historical_data_policy": "reuse_without_full_validation",
+        "reconciled_index_last_dates": reconciled_dates,
+    }
+
+
 def _resolve_root(value: str | None, default: Path, marker: str) -> Path:
     root = Path(value).expanduser().resolve() if value else default
     if not (root / marker).exists():
@@ -376,16 +573,26 @@ def _resolve_directory(value: str | None, default: Path) -> Path:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="将两融新增尾部直接追加到既有网页包")
+    parser = argparse.ArgumentParser(description="维护两融网页包的新增尾部或指数元数据")
     parser.add_argument("--project-root", default=None)
     parser.add_argument("--publish-dir", default=None)
     parser.add_argument("--end-date", default=None)
+    parser.add_argument(
+        "--reconcile-index-metadata",
+        action="store_true",
+        help="只修复既有网页包指数来源元数据，不刷新或改写 payload 记录",
+    )
     args = parser.parse_args()
     try:
         project_root = _resolve_root(args.project_root, PROJECT_ROOT_DEFAULT, "AGENTS.md")
         publish_dir = _resolve_directory(args.publish_dir, PUBLISH_DIRECTORY_DEFAULT)
-        cutoff = _parse_date(args.end_date, "--end-date") if args.end_date else None
-        result = append_tail(project_root, publish_dir, cutoff=cutoff)
+        if args.reconcile_index_metadata:
+            if args.end_date:
+                raise TailAppendBlocked("--reconcile-index-metadata 不接受 --end-date")
+            result = reconcile_index_metadata(project_root, publish_dir)
+        else:
+            cutoff = _parse_date(args.end_date, "--end-date") if args.end_date else None
+            result = append_tail(project_root, publish_dir, cutoff=cutoff)
     except TailAppendBlocked as exc:
         print(json.dumps({"status": "blocked", "reason": str(exc)}, ensure_ascii=False))
         raise SystemExit(2) from exc
