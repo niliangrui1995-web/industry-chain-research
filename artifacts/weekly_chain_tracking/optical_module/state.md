@@ -6,7 +6,7 @@
 最新周报：artifacts/weekly_chain_tracking/optical_module/2026-08-23.md
 本周窗口：2026-08-10 至 2026-08-23
 as_of：2026-08-23
-下次运行先读：本文件、BASELINE_TEMPLATE.md、2026-08-23.md、2026-08-23.evidence.json、2026-08-23.normalized.json、2026-08-23.bottleneck_evidence_checks.csv 与自动化记忆。
+下次运行先读：本文件、BASELINE_TEMPLATE.md、2026-08-23.md、2026-08-23.evidence.json、2026-08-23.normalized.json、2026-08-23.bottleneck_evidence_checks.csv、2026-08-29_domestic_fau_pm_fau_dfau_evidence_delta.md 与自动化记忆。
 
 ### 运行元数据
 
@@ -73,6 +73,15 @@ as_of：2026-08-23
 - **`management_claim`（数据中心、800G/1.6T 与 backlog）**：第三方自动逐字稿中，管理层称 AI 数据中心相关铜缆、光纤和光子产品组合需求强，数据中心、800G/1.6T 及 Q3 目标继续提高；并称 bookings/backlog 强劲、对 FY2027 余下期间及 FY2028 有定性覆盖。该内容不是官方逐字稿，且未披露 backlog 金额、客户、取消率或 take-or-pay；不得升级为官方订单、客户、产能、认证、出货或独立收入事实。
 - **未改变（当前台账与 Q3 相对预期）**：不改变 `as_of=2026-08-23`、既有证据检查 ID 或任何 hard/soft/watch 等级。Q3 FY2027 官方收入指引为 $410m ± $5m；其相对事件前市场预期仍为`证据不足`（`source_gap`，`C_Q3_GUIDANCE_REVENUE_SURPRISE=FAIL/blocked`），不得标为 `beat` / `meet` / `miss`。
 - **证据边界与下一验证**：在本审计包的 `as_of=2026-08-26T09:14:41+08:00`，FY2027 Q2 10-Q、Q2 official presentation、可匿名核验的官方电话会 replay/transcript/captions 均未取得；本增量未将其纳入结论，保持 `provisional=true`。对 1.6T/AI 光互连账本，优先等待可核验的官方电话会材料以复核上述 `management_claim`；10-Q 继续用于补足财务可比性、税项、营运资本及分部口径。依据：[SMTC FY2027 Q2 财报复盘](../../earnings/SMTC/Jul_2026/analysis/earnings_review.md)。
+
+## 2026-08-29 国内 FAU / PM-FAU / dFAU 证据增量（非周报重跑）
+
+- 承接：[FAU / PM-FAU / dFAU 增量账本](2026-08-29_domestic_fau_pm_fau_dfau_evidence_delta.md)与[源报告](../../../docs/国内FAU_PM-FAU_dFAU企业证据分层报告_20260829.md)。本增量不改变主周报 `as_of=2026-08-23`、既有 `evidence_check_id`、hard/soft/watch 等级或排名；FAU 子节点仍为 `watch`，未见单品交期、配额、返工率、未满足订单或合格二供不足的供需闭环。
+- 仕佳光子（688313.SH）：仅将面向 CPO 先进封装的高通道 FAU 小批量出货记为 `shipment` / `official_fact`；小批量订单和客户端送样验证也只对应高精度 FAU 项目。客户名、金额及 FAU 独立收入/利润均为 `evidence_absent`，不得外推为 PM-FAU 或 dFAU 出货。
+- 光库科技（300620.SZ）：高精度多通道 FAU 已通过大客户合格供应商清单（AVL），仅记为 `qualification` / `management_claim`；“保偏型 CPO 用光纤阵列”只确认 PM-FAU 产品能力。实际出货、订单、单品收入以及 PM-FAU 出货均为 `evidence_absent`。
+- 天孚通信（300394.SZ）与 HYC：分别仅按公司 IR / 官网口径记 `shipment` / `management_claim`（CPO 配套 FAU 稳定交付；大通道高精度 FAU 稳定交付，HYC 另有 PMF+SMF 阵列能力）。两者的命名客户、订单金额、产品收入、出货量和客户侧验收均为 `evidence_absent`。
+- 爱德泰与 TwinstarTech：仅有严格 dFAU 的结构证据，分别为 `official_fact` + `inference` 与 `management_claim` + `inference`；商业阶段为 `N/A`，客户、订单、收入和明确单品出货为 `evidence_absent`。国内严格 dFAU 商业交付仍为 `N/A`。
+- 严禁把 MPO/MT、普通 FAU、`Detachable FA`、可拆卸连接器、产品页或泛 CPO 进展写成严格 dFAU 商业交付、客户订单或收入。下一次升级须以产品级客户认证、原始订单、明确单品出货或收入等一手材料为准；规格/循环可靠性最多强化结构或可靠性证据。
 
 ## 历史记录（2026-08-12 及此前；已被以上状态替代）
 
