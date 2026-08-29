@@ -1,4 +1,4 @@
-"""构建“通达信市场汇总口径 C5”交易集中度日度发布包。
+"""构建“通达信全A等权 AMOUNT 口径 C5”交易集中度日度发布包。
 
 原始输入只读自用户的 ``D:\\HT\\vipdoc`` 日线目录；本任务目录只落盘
 加工后的 CSV、JSON 和 manifest，不复制任何原始 .day 文件。
@@ -37,7 +37,6 @@ DAY_DTYPE = np.dtype(
 DAY_RECORD_BYTES = DAY_DTYPE.itemsize
 
 START_DATE = 20130101
-DENOMINATOR_SWITCH_DATE = 20160126
 BEIJING_UNIVERSE_SWITCH_DATE = 20220802
 TASK_DIRECTORY = Path("trading_concentration")
 DEFAULT_OUTPUT_DIRECTORY = TASK_DIRECTORY / "data"
@@ -57,9 +56,7 @@ CANDIDATE_PREFIXES = {
     "bj": ("43", "83", "87", "88", "92"),
 }
 DENOMINATOR_PATHS = {
-    "sh000002": Path("vipdoc/sh/lday/sh000002.day"),
-    "sz399107": Path("vipdoc/sz/lday/sz399107.day"),
-    "sh880005": Path("vipdoc/sh/lday/sh880005.day"),
+    "sh880008": Path("vipdoc/sh/lday/sh880008.day"),
 }
 CHINEXT_INDEX_PATH = Path("vipdoc/sz/lday/sz399006.day")
 DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -250,54 +247,21 @@ def close_by_date(records: np.ndarray, *, label: str) -> dict[int, float]:
 def build_denominator_rows(
     denominator_data: dict[str, dict[int, float]], start_date: int
 ) -> tuple[list[DenominatorRow], list[dict[str, str]]]:
-    sh = denominator_data["sh000002"]
-    sz = denominator_data["sz399107"]
-    full = denominator_data["sh880005"]
+    full = denominator_data["sh880008"]
     rows: list[DenominatorRow] = []
     omitted: list[dict[str, str]] = []
 
-    pre_dates = sorted(
-        date
-        for date in set(sh) | set(sz)
-        if start_date <= date < DENOMINATOR_SWITCH_DATE
-    )
-    for date in pre_dates:
-        if date not in sh or date not in sz:
-            omitted.append(
-                {
-                    "date": compact_date_to_iso(date),
-                    "reason": "sh000002_or_sz399107_missing",
-                }
-            )
-            continue
-        amount = sh[date] + sz[date]
-        if amount <= 0:
-            omitted.append(
-                {
-                    "date": compact_date_to_iso(date),
-                    "reason": "pre2016_denominator_not_positive",
-                }
-            )
-            continue
-        rows.append(
-            DenominatorRow(
-                date=date,
-                amount_yuan=amount,
-                source="sh000002_plus_sz399107",
-            )
-        )
-
-    for date in sorted(date for date in full if date >= max(start_date, DENOMINATOR_SWITCH_DATE)):
+    for date in sorted(date for date in full if date >= start_date):
         amount = full[date]
         if amount <= 0:
             omitted.append(
                 {
                     "date": compact_date_to_iso(date),
-                    "reason": "sh880005_not_positive",
+                    "reason": "sh880008_not_positive",
                 }
             )
             continue
-        rows.append(DenominatorRow(date=date, amount_yuan=amount, source="sh880005"))
+        rows.append(DenominatorRow(date=date, amount_yuan=amount, source="sh880008"))
 
     rows.sort(key=lambda row: row.date)
     if not rows:
@@ -447,8 +411,8 @@ def build_payload(records: list[dict[str, object]], generated_at: str) -> dict[s
         "provenance": {
             "evidence_level": "market_data_vendor",
             "source": "通达信本地盘后 .day 日线",
-            "metric_name": "通达信市场汇总口径 C5",
-            "definition": "C5 = 当日成交活跃普通 A 股中，成交额前 5% 个股成交额之和 / 当日市场成交额 × 100%。",
+            "metric_name": "通达信全A等权 AMOUNT 口径 C5",
+            "definition": "C5 = 当日成交活跃普通 A 股中，成交额前 5% 个股成交额之和 / sh880008.day.amount × 100%。",
             "active_stock_rule": "close > 0 且 amount > 0 且 volume > 0；K = ceil(0.05 × N)。",
             "comparison_index": {
                 "code": "399006",
@@ -457,7 +421,7 @@ def build_payload(records: list[dict[str, object]], generated_at: str) -> dict[s
                 "value": "收盘价",
             },
             "raw_data_copied": False,
-            "scope_warning": "该曲线是基于通达信厂商日线的交易活跃 A 股代理，不等同于官方逐日全市场成分清单。未设置覆盖率门槛，也不插值。",
+            "scope_warning": "该曲线以通达信全A等权品种的 AMOUNT 字段为分母，并以通达信厂商日线中的交易活跃 A 股为分子代理；不等同于官方逐日全市场成分清单。未设置覆盖率门槛，也不插值。",
         },
     }
 
@@ -532,15 +496,9 @@ def build_manifest(
         "denominator_segments": [
             {
                 "start": compact_date_to_iso(START_DATE),
-                "end": "2016-01-25",
-                "source": "sh000002_plus_sz399107",
-                "formula": "sh000002.day.amount + sz399107.day.amount",
-            },
-            {
-                "start": "2016-01-26",
                 "end": records[-1]["date"] if records else None,
-                "source": "sh880005",
-                "formula": "sh880005.day.amount",
+                "source": "sh880008",
+                "formula": "sh880008.day.amount",
             },
         ],
         "numerator_segments": [
@@ -563,7 +521,7 @@ def build_manifest(
         "candidate_total_bytes": sum(candidate.size for candidate in candidates),
         "skipped_candidate_files": skipped_candidate_files,
         "omitted_dates": omitted_dates,
-        "scope_warning": "分母于 2016-01-26 从沪深 A 股加总切换为 sh880005；分子于 2022-08-02 起纳入北交所候选股。口径切换点前后的水平不应当被视为完全可比。该包不设 coverage_ratio 门槛，也不插值。",
+        "scope_warning": "分母全期间使用 sh880008.day.amount；分子于 2022-08-02 起纳入北交所候选股。sh880008 的历史成分与纳入规则未作为本包的官方逐日成分清单使用。该包不设 coverage_ratio 门槛，也不插值。",
     }
 
 
@@ -634,9 +592,8 @@ def verify_artifact_bundle(payload_path: Path, manifest_path: Path, csv_path: Pa
         recomputed = 100 * float(record["top5_amount_yi"]) / float(record["market_amount_yi"])
         if abs(recomputed - float(record["c5_pct"])) > 0.0002:
             raise ValueError("C5 与成交额字段不一致")
-        expected_source = "sh000002_plus_sz399107" if date < "2016-01-26" else "sh880005"
-        if record.get("denominator_source") != expected_source:
-            raise ValueError("分母分段不一致")
+        if record.get("denominator_source") != "sh880008":
+            raise ValueError("分母来源不一致")
         expected_scope = "sh_sz_active_a" if date < "2022-08-02" else "sh_sz_bj_active_a"
         if record.get("numerator_scope") != expected_scope:
             raise ValueError("分子分段不一致")
@@ -731,7 +688,7 @@ def resolve_project_root(value: str | None) -> Path:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="构建通达信市场汇总口径 C5 交易集中度发布包")
+    parser = argparse.ArgumentParser(description="构建通达信全A等权 AMOUNT 口径 C5 交易集中度发布包")
     parser.add_argument("--project-root", default=None)
     parser.add_argument("--tdx-root", default=r"D:\HT")
     parser.add_argument("--output-dir", default=None)

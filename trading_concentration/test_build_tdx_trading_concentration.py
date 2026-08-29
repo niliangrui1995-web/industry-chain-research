@@ -59,16 +59,9 @@ class TradingConcentrationBuilderTests(unittest.TestCase):
             bj_dir = tdx_root / "vipdoc/bj/lday"
 
             write_day(
-                sh_dir / "sh000002.day",
-                [(20160125, 1, 10_000, 1), (20160126, 1, 10_000, 1)],
-            )
-            write_day(
-                sz_dir / "sz399107.day",
-                [(20160125, 1, 20_000, 1), (20160126, 1, 20_000, 1)],
-            )
-            write_day(
-                sh_dir / "sh880005.day",
+                sh_dir / "sh880008.day",
                 [
+                    (20160125, 1, 50_000, 1),
                     (20160126, 1, 50_000, 1),
                     (20220801, 1, 50_000, 1),
                     (20220802, 1, 50_000, 1),
@@ -126,7 +119,7 @@ class TradingConcentrationBuilderTests(unittest.TestCase):
             self.assertEqual(by_date["2016-01-25"]["active_stock_count"], 20)
             self.assertEqual(by_date["2016-01-25"]["top5_stock_count"], 1)
             self.assertEqual(by_date["2016-01-25"]["chinext_close"], 1500)
-            self.assertEqual(by_date["2016-01-25"]["denominator_source"], "sh000002_plus_sz399107")
+            self.assertEqual(by_date["2016-01-25"]["denominator_source"], "sh880008")
             self.assertEqual(by_date["2016-01-26"]["active_stock_count"], 21)
             self.assertEqual(by_date["2016-01-26"]["top5_stock_count"], 2)
             self.assertEqual(by_date["2022-08-01"]["active_stock_count"], 21)
@@ -135,6 +128,18 @@ class TradingConcentrationBuilderTests(unittest.TestCase):
             self.assertEqual(by_date["2022-08-02"]["numerator_scope"], "sh_sz_bj_active_a")
             self.assertGreater(by_date["2022-08-02"]["c5_pct"], by_date["2022-08-01"]["c5_pct"])
             self.assertFalse(manifest["raw_data_copied"])
+            self.assertEqual(
+                manifest["denominator_segments"],
+                [
+                    {
+                        "start": "2013-01-01",
+                        "end": "2022-08-02",
+                        "source": "sh880008",
+                        "formula": "sh880008.day.amount",
+                    }
+                ],
+            )
+            self.assertTrue(all(record["denominator_source"] == "sh880008" for record in payload["records"]))
             self.assertEqual(manifest["candidate_file_count"]["bj"], 1)
             self.assertEqual(manifest["comparison_index_input"]["code"], "399006")
             self.assertEqual(manifest["comparison_index_input"]["missing_output_records"], 0)
