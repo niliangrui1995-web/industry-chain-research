@@ -13,11 +13,14 @@ import io
 import json
 import math
 import os
+import posixpath
 import re
+import zipfile
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Iterable
+from xml.etree import ElementTree
 
 import numpy as np
 
@@ -38,12 +41,16 @@ DAY_RECORD_BYTES = DAY_DTYPE.itemsize
 
 START_DATE = 20130101
 BEIJING_UNIVERSE_SWITCH_DATE = 20220802
+AI_CHAIN_START_DATE = 20250101
 TASK_DIRECTORY = Path("trading_concentration")
 DEFAULT_OUTPUT_DIRECTORY = TASK_DIRECTORY / "data"
 PUBLISH_DIRECTORY = Path(r"D:\vcp_hunter\基金持仓\public\data")
 PAYLOAD_FILENAME = "trading-concentration-dashboard.json"
 MANIFEST_FILENAME = "trading-concentration-dashboard.manifest.json"
 CSV_FILENAME = "trading-concentration-daily.csv"
+AI_CHAIN_WORKBOOK_RELATIVE_PATH = Path("watchlists") / "AI产业链.xlsx"
+AI_CHAIN_SHEET_NAME = "AI产业链"
+AI_CHAIN_CODE_HEADER = "代码"
 
 MARKET_DIRECTORIES = {
     "sh": Path("vipdoc/sh/lday"),
@@ -60,6 +67,10 @@ DENOMINATOR_PATHS = {
 }
 CHINEXT_INDEX_PATH = Path("vipdoc/sz/lday/sz399006.day")
 DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+SECURITY_CODE_PATTERN = re.compile(r"^\d{6}$")
+OOXML_MAIN_NAMESPACE = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+OOXML_RELATIONSHIP_NAMESPACE = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
+OOXML_PACKAGE_RELATIONSHIP_NAMESPACE = "{http://schemas.openxmlformats.org/package/2006/relationships}"
 
 
 @dataclass(frozen=True)
@@ -76,6 +87,15 @@ class DenominatorRow:
     date: int
     amount_yuan: float
     source: str
+
+
+@dataclass(frozen=True)
+class AIChainUniverse:
+    workbook_path: Path
+    workbook_sha256: str
+    input_codes: tuple[str, ...]
+    resolved_codes: tuple[str, ...]
+    non_stock_code_rows_excluded: int
 
 
 def beijing_now() -> str:
@@ -144,6 +164,192 @@ def snapshot_file(path: Path, market: str, code: str) -> FileSnapshot:
         size=stat.st_size,
         mtime_ns=stat.st_mtime_ns,
     )
+
+
+def _column_from_cell_reference(value: str) -> str:
+    match = re.fullmatch(r"([A-Z]+)\d+", value)
+    if match is None:
+        raise ValueError(f"XLSX 单元格坐标无效: {value}")
+    return match.group(1)
+
+
+def _xlsx_shared_strings(archive: zipfile.ZipFile) -> list[str]:
+    try:
+        raw = archive.read("xl/sharedStrings.xml")
+    except KeyError:
+        return []
+    root = ElementTree.fromstring(raw)
+    return ["".join(item.itertext()) for item in root.findall(f"{OOXML_MAIN_NAMESPACE}si")]
+
+
+def _xlsx_cell_text(cell: ElementTree.Element, shared_strings: list[str]) -> str | None:
+    cell_type = cell.attrib.get("t")
+    if cell_type == "inlineStr":
+        inline = cell.find(f"{OOXML_MAIN_NAMESPACE}is")
+        return "" if inline is None else "".join(inline.itertext())
+    value = cell.find(f"{OOXML_MAIN_NAMESPACE}v")
+    if value is None or value.text is None:
+        return None
+    if cell_type == "s":
+        try:
+            return shared_strings[int(value.text)]
+        except (IndexError, ValueError) as exc:
+            raise ValueError("XLSX sharedStrings 索引无效") from exc
+    return value.text
+
+
+def _xlsx_sheet_path(archive: zipfile.ZipFile, sheet_name: str) -> str:
+    workbook = ElementTree.fromstring(archive.read("xl/workbook.xml"))
+    target_sheet = next(
+        (
+            sheet
+            for sheet in workbook.findall(f"{OOXML_MAIN_NAMESPACE}sheets/{OOXML_MAIN_NAMESPACE}sheet")
+            if sheet.attrib.get("name") == sheet_name
+        ),
+        None,
+    )
+    if target_sheet is None:
+        raise ValueError(f"XLSX 缺少工作表: {sheet_name}")
+    relationship_id = target_sheet.attrib.get(f"{OOXML_RELATIONSHIP_NAMESPACE}id")
+    if not relationship_id:
+        raise ValueError(f"XLSX 工作表缺少关系标识: {sheet_name}")
+    relationships = ElementTree.fromstring(archive.read("xl/_rels/workbook.xml.rels"))
+    target = next(
+        (
+            relation.attrib.get("Target")
+            for relation in relationships.findall(f"{OOXML_PACKAGE_RELATIONSHIP_NAMESPACE}Relationship")
+            if relation.attrib.get("Id") == relationship_id
+        ),
+        None,
+    )
+    if not target:
+        raise ValueError(f"XLSX 工作表关系不存在: {sheet_name}")
+    path = target.lstrip("/") if target.startswith("/") else posixpath.normpath(f"xl/{target}")
+    if not path.startswith("xl/"):
+        raise ValueError(f"XLSX 工作表路径不受支持: {target}")
+    return path
+
+
+def _xlsx_code_column_values(workbook_path: Path) -> list[str]:
+    try:
+        with zipfile.ZipFile(workbook_path) as archive:
+            shared_strings = _xlsx_shared_strings(archive)
+            sheet = ElementTree.fromstring(archive.read(_xlsx_sheet_path(archive, AI_CHAIN_SHEET_NAME)))
+    except (OSError, zipfile.BadZipFile, ElementTree.ParseError) as exc:
+        raise ValueError(f"无法读取 AI 产业链工作簿: {workbook_path}") from exc
+
+    code_column: str | None = None
+    values: list[str] = []
+    for row in sheet.findall(f"{OOXML_MAIN_NAMESPACE}sheetData/{OOXML_MAIN_NAMESPACE}row"):
+        cells: dict[str, str] = {}
+        for cell in row.findall(f"{OOXML_MAIN_NAMESPACE}c"):
+            reference = cell.attrib.get("r")
+            if reference is None:
+                continue
+            text = _xlsx_cell_text(cell, shared_strings)
+            if text is not None:
+                cells[_column_from_cell_reference(reference)] = text.strip()
+        if code_column is None:
+            code_column = next(
+                (column for column, value in cells.items() if value == AI_CHAIN_CODE_HEADER), None
+            )
+            if code_column is not None:
+                continue
+        elif code_column in cells:
+            values.append(cells[code_column])
+    if code_column is None:
+        raise ValueError(f"{AI_CHAIN_SHEET_NAME} 未找到“{AI_CHAIN_CODE_HEADER}”列")
+    return values
+
+
+def ai_chain_codes_sha256(codes: Iterable[str]) -> str:
+    canonical = "\n".join(codes).encode("ascii")
+    return hashlib.sha256(canonical).hexdigest()
+
+
+def load_ai_chain_universe(project_root: Path) -> AIChainUniverse:
+    workbook_path = (project_root / AI_CHAIN_WORKBOOK_RELATIVE_PATH).resolve()
+    if not workbook_path.is_file():
+        raise FileNotFoundError(f"缺少 AI 产业链工作簿: {workbook_path}")
+    input_codes: list[str] = []
+    resolved_codes: list[str] = []
+    input_seen: set[str] = set()
+    resolved_seen: set[str] = set()
+    non_stock_code_rows_excluded = 0
+    for raw_code in _xlsx_code_column_values(workbook_path):
+        if not SECURITY_CODE_PATTERN.fullmatch(raw_code):
+            if raw_code:
+                non_stock_code_rows_excluded += 1
+            continue
+        if raw_code in input_seen:
+            raise ValueError(f"AI 产业链工作簿代码重复: {raw_code}")
+        input_seen.add(raw_code)
+        resolved_code = raw_code
+        if resolved_code in resolved_seen:
+            raise ValueError(f"AI 产业链代码归一化后重复: {resolved_code}")
+        input_codes.append(raw_code)
+        resolved_codes.append(resolved_code)
+        resolved_seen.add(resolved_code)
+    if not resolved_codes:
+        raise ValueError("AI 产业链工作簿没有可用证券代码")
+    for code in resolved_codes:
+        market_for_code(code)
+    return AIChainUniverse(
+        workbook_path=workbook_path,
+        workbook_sha256=sha256_file(workbook_path),
+        input_codes=tuple(input_codes),
+        resolved_codes=tuple(resolved_codes),
+        non_stock_code_rows_excluded=non_stock_code_rows_excluded,
+    )
+
+
+def assert_ai_chain_universe_unchanged(universe: AIChainUniverse) -> None:
+    try:
+        current_sha256 = sha256_file(universe.workbook_path)
+    except OSError as exc:
+        raise RuntimeError(f"计算期间 AI 产业链工作簿不可读: {universe.workbook_path}") from exc
+    if current_sha256 != universe.workbook_sha256:
+        raise RuntimeError("计算期间 AI 产业链工作簿发生变化，拒绝混合快照输出")
+
+
+def market_for_code(code: str) -> str:
+    for market, prefixes in CANDIDATE_PREFIXES.items():
+        if code.startswith(prefixes):
+            return market
+    raise ValueError(f"AI 产业链代码不属于受支持的 A/BJ 市场: {code}")
+
+
+def ai_chain_candidate_snapshots(
+    universe: AIChainUniverse, candidates: Iterable[FileSnapshot]
+) -> list[FileSnapshot]:
+    by_key = {(candidate.market, candidate.code): candidate for candidate in candidates}
+    selected: list[FileSnapshot] = []
+    missing: list[str] = []
+    for code in universe.resolved_codes:
+        market = market_for_code(code)
+        candidate = by_key.get((market, code))
+        if candidate is None:
+            missing.append(f"{code}.{market.upper()}")
+        else:
+            selected.append(candidate)
+    if missing:
+        raise FileNotFoundError(
+            "AI 产业链成分缺少通达信 .day 日线，拒绝静默缩减分子: " + "、".join(missing)
+        )
+    return selected
+
+
+def candidate_column_indexes(
+    candidates: list[FileSnapshot], selected: Iterable[FileSnapshot]
+) -> np.ndarray:
+    positions = {(candidate.market, candidate.code): index for index, candidate in enumerate(candidates)}
+    indexes: list[int] = []
+    for candidate in selected:
+        index = positions.get((candidate.market, candidate.code))
+        if index is None:
+            raise ValueError(f"AI 产业链候选股不在全 A 候选矩阵中: {candidate.path}")
+        indexes.append(index)
+    return np.asarray(indexes, dtype=np.intp)
 
 
 def discover_candidate_files(tdx_root: Path) -> list[FileSnapshot]:
@@ -325,6 +531,109 @@ def rounded_yi(amount_yuan: float) -> float:
     return round(amount_yuan / 100_000_000, 8)
 
 
+def build_ai_chain_series_records(
+    denominator_rows: list[DenominatorRow],
+    amount_matrix: np.ndarray,
+    *,
+    c5_output_dates: set[int],
+) -> list[dict[str, object]]:
+    """计算当前 AI 产业链工作簿快照的全池成交额占比分子。
+
+    该序列独立于 C5：分子是工作簿中全部当日成交活跃成分的 AMOUNT 之和，
+    而不是在 AI 股票池内再取前 5%。2025-01-01 前不回溯，避免把当前
+    成分表伪装成历史逐日成分。输出日历严格跟随实际 C5 records；若全 A
+    当日无有效样本而 C5 被记为 omitted，则 AI 也不额外产生孤立空值日。
+    """
+
+    if amount_matrix.shape[0] != len(denominator_rows):
+        raise ValueError("AI 产业链分子矩阵和分母日历行数不一致")
+    records: list[dict[str, object]] = []
+    for row_index, denominator in enumerate(denominator_rows):
+        if denominator.date < AI_CHAIN_START_DATE or denominator.date not in c5_output_dates:
+            continue
+        active_amounts = amount_matrix[row_index]
+        active_amounts = active_amounts[active_amounts > 0]
+        active_stock_count = int(active_amounts.size)
+        if active_stock_count == 0:
+            records.append(
+                {
+                    "date": compact_date_to_iso(denominator.date),
+                    "ai_chain_amount_pct": None,
+                    "ai_chain_amount_yi": None,
+                    "ai_chain_active_stock_count": 0,
+                }
+            )
+            continue
+        amount_yuan = float(active_amounts.sum(dtype=np.float64))
+        amount_pct = 100 * amount_yuan / denominator.amount_yuan
+        if not math.isfinite(amount_pct) or amount_pct < 0:
+            raise ValueError(f"{compact_date_to_iso(denominator.date)} 计算出无效 AI 产业链成交额占比")
+        records.append(
+            {
+                "date": compact_date_to_iso(denominator.date),
+                "ai_chain_amount_pct": round(amount_pct, 6),
+                "ai_chain_amount_yi": rounded_yi(amount_yuan),
+                "ai_chain_active_stock_count": active_stock_count,
+            }
+        )
+    return records
+
+
+def build_ai_chain_series(
+    records: list[dict[str, object]], universe: AIChainUniverse
+) -> dict[str, object]:
+    return {
+        "name": "AI产业链成交额占比",
+        "field": "ai_chain_amount_pct",
+        "start_date": compact_date_to_iso(AI_CHAIN_START_DATE),
+        "definition": "AI产业链成交额占比 = 当前 AI产业链.xlsx 股票池中当日成交活跃成分的 AMOUNT 之和 / sh880008.day.amount × 100%。",
+        "active_stock_rule": "close > 0 且 amount > 0 且 volume > 0；不插值。",
+        "universe": {
+            "workbook": str(AI_CHAIN_WORKBOOK_RELATIVE_PATH).replace("\\", "/"),
+            "sheet": AI_CHAIN_SHEET_NAME,
+            "code_column": AI_CHAIN_CODE_HEADER,
+            "code_count": len(universe.resolved_codes),
+            "codes_sha256": ai_chain_codes_sha256(universe.resolved_codes),
+        },
+        "records": records,
+    }
+
+
+def build_ai_chain_manifest(
+    series_records: list[dict[str, object]],
+    universe: AIChainUniverse,
+    candidates: Iterable[FileSnapshot],
+) -> dict[str, object]:
+    series_dates = [record["date"] for record in series_records]
+    return {
+        "name": "AI产业链成交额占比",
+        "field": "ai_chain_amount_pct",
+        "start_date": compact_date_to_iso(AI_CHAIN_START_DATE),
+        "data_range": {
+            "start": series_dates[0] if series_dates else None,
+            "end": series_dates[-1] if series_dates else None,
+        },
+        "records": len(series_records),
+        "missing_output_records": sum(
+            record.get("ai_chain_amount_pct") is None for record in series_records
+        ),
+        "formula": "sum(AI产业链当前股票池当日有效 AMOUNT) / sh880008.day.amount × 100%。",
+        "active_stock_rule": "close > 0 且 amount > 0 且 volume > 0；不插值。",
+        "universe": {
+            "workbook_path": str(universe.workbook_path),
+            "workbook_sha256": universe.workbook_sha256,
+            "sheet": AI_CHAIN_SHEET_NAME,
+            "code_column": AI_CHAIN_CODE_HEADER,
+            "input_code_count": len(universe.input_codes),
+            "resolved_code_count": len(universe.resolved_codes),
+            "resolved_code_sha256": ai_chain_codes_sha256(universe.resolved_codes),
+            "non_stock_code_rows_excluded": universe.non_stock_code_rows_excluded,
+            "code_aliases": [],
+            "tdx_candidate_file_count": sum(1 for _ in candidates),
+        },
+    }
+
+
 def build_records(
     denominator_rows: list[DenominatorRow],
     amount_matrix: np.ndarray,
@@ -403,11 +712,14 @@ def candidate_counts(candidates: Iterable[FileSnapshot]) -> dict[str, int]:
     return result
 
 
-def build_payload(records: list[dict[str, object]], generated_at: str) -> dict[str, object]:
+def build_payload(
+    records: list[dict[str, object]], generated_at: str, ai_chain_series: dict[str, object]
+) -> dict[str, object]:
     return {
         "schema_version": "1",
         "generated_at_beijing": generated_at,
         "records": records,
+        "ai_chain_series": ai_chain_series,
         "provenance": {
             "evidence_level": "market_data_vendor",
             "source": "通达信本地盘后 .day 日线",
@@ -435,6 +747,9 @@ def build_manifest(
     denominator_files: dict[str, FileSnapshot],
     comparison_index_file: FileSnapshot,
     comparison_index_close_by_date: dict[int, float],
+    ai_chain_series_records: list[dict[str, object]],
+    ai_chain_universe: AIChainUniverse,
+    ai_chain_candidates: list[FileSnapshot],
     skipped_candidate_files: list[dict[str, str]],
     omitted_dates: list[dict[str, str]],
 ) -> dict[str, object]:
@@ -493,6 +808,9 @@ def build_manifest(
         },
         "denominator_inputs": denominator_inputs,
         "comparison_index_input": comparison_index_input,
+        "ai_chain_series": build_ai_chain_manifest(
+            ai_chain_series_records, ai_chain_universe, ai_chain_candidates
+        ),
         "denominator_segments": [
             {
                 "start": compact_date_to_iso(START_DATE),
@@ -533,6 +851,116 @@ def _strict_iso_date(value: object, label: str) -> str:
     except ValueError as exc:
         raise ValueError(f"{label} 不是有效日期") from exc
     return value
+
+
+def _is_finite_nonnegative(value: object) -> bool:
+    return isinstance(value, (int, float)) and math.isfinite(value) and float(value) >= 0
+
+
+def verify_ai_chain_series(
+    payload: dict[str, object], manifest: dict[str, object], records: list[dict[str, object]]
+) -> None:
+    payload_series = payload.get("ai_chain_series")
+    manifest_series = manifest.get("ai_chain_series")
+    if payload_series is None and manifest_series is None:
+        return
+    if not isinstance(payload_series, dict) or not isinstance(manifest_series, dict):
+        raise ValueError("AI 产业链子序列 payload 与 manifest 必须同时存在")
+    expected_start_date = compact_date_to_iso(AI_CHAIN_START_DATE)
+    if (
+        payload_series.get("name") != "AI产业链成交额占比"
+        or payload_series.get("field") != "ai_chain_amount_pct"
+        or payload_series.get("start_date") != expected_start_date
+        or not isinstance(payload_series.get("definition"), str)
+        or not payload_series["definition"].strip()
+        or not isinstance(payload_series.get("active_stock_rule"), str)
+        or not payload_series["active_stock_rule"].strip()
+    ):
+        raise ValueError("payload AI 产业链子序列说明不一致")
+    payload_universe = payload_series.get("universe")
+    if (
+        not isinstance(payload_universe, dict)
+        or payload_universe.get("workbook") != str(AI_CHAIN_WORKBOOK_RELATIVE_PATH).replace("\\", "/")
+        or payload_universe.get("sheet") != AI_CHAIN_SHEET_NAME
+        or payload_universe.get("code_column") != AI_CHAIN_CODE_HEADER
+        or not isinstance(payload_universe.get("code_count"), int)
+        or payload_universe["code_count"] <= 0
+        or not isinstance(payload_universe.get("codes_sha256"), str)
+        or re.fullmatch(r"[a-f0-9]{64}", payload_universe["codes_sha256"]) is None
+    ):
+        raise ValueError("payload AI 产业链股票池说明不一致")
+
+    series_records = payload_series.get("records")
+    if not isinstance(series_records, list):
+        raise ValueError("payload AI 产业链 records 必须是数组")
+    expected_dates = [record["date"] for record in records if record["date"] >= expected_start_date]
+    if len(series_records) != len(expected_dates):
+        raise ValueError("AI 产业链子序列记录数与 C5 日历不一致")
+    c5_by_date = {record["date"]: record for record in records}
+    for index, (series_record, expected_date) in enumerate(zip(series_records, expected_dates, strict=True)):
+        if not isinstance(series_record, dict):
+            raise ValueError(f"ai_chain_series.records[{index}] 不是对象")
+        date = _strict_iso_date(series_record.get("date"), f"ai_chain_series.records[{index}].date")
+        if date != expected_date:
+            raise ValueError("AI 产业链子序列日期必须与 C5 交易日历一致")
+        amount_pct = series_record.get("ai_chain_amount_pct")
+        amount_yi = series_record.get("ai_chain_amount_yi")
+        active_count = series_record.get("ai_chain_active_stock_count")
+        if not isinstance(active_count, int) or active_count < 0:
+            raise ValueError("AI 产业链活跃成分数必须是非负整数")
+        if amount_pct is None or amount_yi is None:
+            if amount_pct is not None or amount_yi is not None or active_count != 0:
+                raise ValueError("AI 产业链空值记录必须同时为空且活跃成分数为 0")
+            continue
+        if not _is_finite_nonnegative(amount_pct) or not _is_finite_nonnegative(amount_yi):
+            raise ValueError("AI 产业链成交额或占比必须是非负有限数")
+        if active_count <= 0:
+            raise ValueError("AI 产业链有成交额记录时活跃成分数必须为正")
+        c5_record = c5_by_date[date]
+        recomputed = 100 * float(amount_yi) / float(c5_record["market_amount_yi"])
+        if abs(recomputed - float(amount_pct)) > 0.0002:
+            raise ValueError("AI 产业链成交额占比与统一分母不一致")
+
+    expected_data_range = {
+        "start": expected_dates[0] if expected_dates else None,
+        "end": expected_dates[-1] if expected_dates else None,
+    }
+    if (
+        manifest_series.get("name") != "AI产业链成交额占比"
+        or manifest_series.get("field") != "ai_chain_amount_pct"
+        or manifest_series.get("start_date") != expected_start_date
+        or manifest_series.get("data_range") != expected_data_range
+        or manifest_series.get("records") != len(series_records)
+        or manifest_series.get("missing_output_records")
+        != sum(record.get("ai_chain_amount_pct") is None for record in series_records)
+        or not isinstance(manifest_series.get("formula"), str)
+        or not manifest_series["formula"].strip()
+        or not isinstance(manifest_series.get("active_stock_rule"), str)
+        or not manifest_series["active_stock_rule"].strip()
+    ):
+        raise ValueError("manifest AI 产业链子序列说明不一致")
+    manifest_universe = manifest_series.get("universe")
+    if (
+        not isinstance(manifest_universe, dict)
+        or not isinstance(manifest_universe.get("workbook_path"), str)
+        or not isinstance(manifest_universe.get("workbook_sha256"), str)
+        or re.fullmatch(r"[a-f0-9]{64}", manifest_universe["workbook_sha256"]) is None
+        or manifest_universe.get("sheet") != AI_CHAIN_SHEET_NAME
+        or manifest_universe.get("code_column") != AI_CHAIN_CODE_HEADER
+        or not isinstance(manifest_universe.get("input_code_count"), int)
+        or not isinstance(manifest_universe.get("resolved_code_count"), int)
+        or manifest_universe["input_code_count"] <= 0
+        or manifest_universe["resolved_code_count"] <= 0
+        or manifest_universe["input_code_count"] != payload_universe["code_count"]
+        or manifest_universe["resolved_code_count"] != payload_universe["code_count"]
+        or manifest_universe.get("resolved_code_sha256") != payload_universe["codes_sha256"]
+        or not isinstance(manifest_universe.get("non_stock_code_rows_excluded"), int)
+        or manifest_universe["non_stock_code_rows_excluded"] < 0
+        or not isinstance(manifest_universe.get("tdx_candidate_file_count"), int)
+        or manifest_universe["tdx_candidate_file_count"] != payload_universe["code_count"]
+        or not isinstance(manifest_universe.get("code_aliases"), list)
+    ):
+        raise ValueError("manifest AI 产业链股票池说明不一致")
 
 
 def verify_artifact_bundle(payload_path: Path, manifest_path: Path, csv_path: Path) -> dict[str, object]:
@@ -615,6 +1043,7 @@ def verify_artifact_bundle(payload_path: Path, manifest_path: Path, csv_path: Pa
     missing_chinext = sum(record.get("chinext_close") is None for record in records)
     if comparison_index.get("missing_output_records") != missing_chinext:
         raise ValueError("manifest 创业板指缺口统计不一致")
+    verify_ai_chain_series(payload, manifest, records)
     return manifest
 
 
@@ -706,6 +1135,9 @@ def main() -> None:
     )
 
     candidates = discover_candidate_files(tdx_root)
+    ai_chain_universe = load_ai_chain_universe(project_root)
+    ai_chain_candidates = ai_chain_candidate_snapshots(ai_chain_universe, candidates)
+    ai_chain_indexes = candidate_column_indexes(candidates, ai_chain_candidates)
     denominator_files = denominator_snapshots(tdx_root)
     comparison_index_file = comparison_index_snapshot(tdx_root)
     denominator_data = {
@@ -721,14 +1153,21 @@ def main() -> None:
     records, numerator_omitted = build_records(
         denominator_rows, amount_matrix, chinext_close_by_date
     )
+    ai_chain_series_records = build_ai_chain_series_records(
+        denominator_rows,
+        amount_matrix[:, ai_chain_indexes],
+        c5_output_dates={int(record["date"].replace("-", "")) for record in records},
+    )
+    ai_chain_series = build_ai_chain_series(ai_chain_series_records, ai_chain_universe)
     del amount_matrix
 
     # 拒绝用 TDX 刷新中的混合快照生成产物；不复制任何原始文件。
+    assert_ai_chain_universe_unchanged(ai_chain_universe)
     assert_snapshots_unchanged(
         [*candidates, *denominator_files.values(), comparison_index_file]
     )
     generated_at = beijing_now()
-    payload = build_payload(records, generated_at)
+    payload = build_payload(records, generated_at, ai_chain_series)
     manifest = build_manifest(
         records=records,
         generated_at=generated_at,
@@ -737,6 +1176,9 @@ def main() -> None:
         denominator_files=denominator_files,
         comparison_index_file=comparison_index_file,
         comparison_index_close_by_date=chinext_close_by_date,
+        ai_chain_series_records=ai_chain_series_records,
+        ai_chain_universe=ai_chain_universe,
+        ai_chain_candidates=ai_chain_candidates,
         skipped_candidate_files=skipped_candidate_files,
         omitted_dates=[*denominator_omitted, *numerator_omitted],
     )

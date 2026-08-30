@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 
@@ -38,11 +39,46 @@ def write_day(path: Path, rows: list[tuple[int, float, float, float]], *, append
         handle.write(body)
 
 
+def write_ai_chain_workbook(project_root: Path, codes: list[str]) -> None:
+    workbook_path = project_root / "watchlists" / "AI产业链.xlsx"
+    workbook_path.parent.mkdir(parents=True, exist_ok=True)
+    rows = [
+        '<x:row r="1"><x:c r="B1" t="inlineStr"><x:is><x:t>代码</x:t></x:is></x:c></x:row>',
+        *[
+            f'<x:row r="{index}"><x:c r="B{index}" t="inlineStr"><x:is><x:t>{code}</x:t></x:is></x:c></x:row>'
+            for index, code in enumerate(codes, start=2)
+        ],
+    ]
+    workbook_xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<x:workbook xmlns:x="http://schemas.openxmlformats.org/spreadsheetml/2006/main" '
+        'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'
+        '<x:sheets><x:sheet name="AI产业链" sheetId="1" r:id="rId1"/></x:sheets></x:workbook>'
+    )
+    relationships_xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+        '<Relationship Id="rId1" '
+        'Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" '
+        'Target="worksheets/sheet1.xml"/></Relationships>'
+    )
+    sheet_xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<x:worksheet xmlns:x="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+        f'<x:sheetData>{"".join(rows)}</x:sheetData></x:worksheet>'
+    )
+    with zipfile.ZipFile(workbook_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("xl/workbook.xml", workbook_xml)
+        archive.writestr("xl/_rels/workbook.xml.rels", relationships_xml)
+        archive.writestr("xl/worksheets/sheet1.xml", sheet_xml)
+
+
 class TradingConcentrationTailAppendTests(unittest.TestCase):
     def create_baseline(self, root: Path) -> tuple[Path, Path, Path]:
         project_root = root / "project"
         project_root.mkdir()
         (project_root / "AGENTS.md").write_text("test\n", encoding="utf-8")
+        write_ai_chain_workbook(project_root, ["600000", "920001"])
         tdx_root = root / "HT"
         sh_dir = tdx_root / "vipdoc/sh/lday"
         sz_dir = tdx_root / "vipdoc/sz/lday"
@@ -187,6 +223,74 @@ class TradingConcentrationTailAppendTests(unittest.TestCase):
             self.assertEqual(no_change["status"], "no_changes")
             self.assertEqual(
                 {name: (output_dir / name).read_bytes() for name in before_rerun}, before_rerun
+            )
+
+    def test_appends_ai_chain_series_after_its_start_date(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            project_root = root / "project"
+            project_root.mkdir()
+            (project_root / "AGENTS.md").write_text("test\n", encoding="utf-8")
+            write_ai_chain_workbook(project_root, ["600000", "920139"])
+            tdx_root = root / "HT"
+            sh_dir = tdx_root / "vipdoc/sh/lday"
+            sz_dir = tdx_root / "vipdoc/sz/lday"
+            bj_dir = tdx_root / "vipdoc/bj/lday"
+            write_day(sh_dir / "sh880008.day", [(20241231, 1, 10_000, 1)])
+            write_day(sz_dir / "sz399006.day", [(20241231, 2_400, 1, 1)])
+            for offset in range(20):
+                write_day(sh_dir / f"sh600{offset:03d}.day", [(20241231, 1, 100 + offset, 1)])
+            write_day(bj_dir / "bj920139.day", [(20250102, 1, 500, 1)])
+            output_dir = root / "output"
+            built = subprocess.run(
+                [
+                    sys.executable,
+                    str(BUILDER_SCRIPT),
+                    "--project-root",
+                    str(project_root),
+                    "--tdx-root",
+                    str(tdx_root),
+                    "--output-dir",
+                    str(output_dir),
+                    "--start-date",
+                    "20241231",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(built.returncode, 0, built.stderr)
+            baseline = json.loads((output_dir / PAYLOAD_FILENAME).read_text(encoding="utf-8"))
+            baseline_records = baseline["records"]
+            baseline_csv_lines = (output_dir / CSV_FILENAME).read_text(encoding="utf-8").splitlines()
+            self.assertEqual(baseline["ai_chain_series"]["records"], [])
+
+            write_day(sh_dir / "sh880008.day", [(20250102, 1, 10_000, 1)], append=True)
+            write_day(sz_dir / "sz399006.day", [(20250102, 2_500, 1, 1)], append=True)
+            for offset in range(20):
+                write_day(
+                    sh_dir / f"sh600{offset:03d}.day", [(20250102, 1, 100 + offset, 1)], append=True
+                )
+
+            result = self.run_append(project_root, tdx_root, output_dir)
+            self.assertEqual(result["status"], "updated")
+            self.assertEqual(result["ai_chain_records_added"], 1)
+            payload = json.loads((output_dir / PAYLOAD_FILENAME).read_text(encoding="utf-8"))
+            self.assertEqual(payload["records"][: len(baseline_records)], baseline_records)
+            self.assertEqual(
+                (output_dir / CSV_FILENAME).read_text(encoding="utf-8").splitlines()[: len(baseline_csv_lines)],
+                baseline_csv_lines,
+            )
+            self.assertEqual(
+                payload["ai_chain_series"]["records"],
+                [
+                    {
+                        "date": "2025-01-02",
+                        "ai_chain_amount_pct": 6.0,
+                        "ai_chain_amount_yi": 0.000006,
+                        "ai_chain_active_stock_count": 2,
+                    }
+                ],
             )
 
 

@@ -271,6 +271,31 @@ def read_baseline_bundle(output_directory: Path) -> tuple[dict[str, Any], dict[s
     return payload, manifest, records, watermark, omitted_dates
 
 
+def read_ai_chain_baseline(
+    payload: dict[str, Any], manifest: dict[str, Any], universe: builder.AIChainUniverse
+) -> list[dict[str, Any]]:
+    series = payload.get("ai_chain_series")
+    manifest_series = manifest.get("ai_chain_series")
+    if not isinstance(series, dict) or not isinstance(manifest_series, dict):
+        raise ValueError("AI 产业链子序列尚未初始化；需先执行一次性回填，拒绝只追加 C5")
+    series_records = series.get("records")
+    if not isinstance(series_records, list) or not all(isinstance(row, dict) for row in series_records):
+        raise ValueError("AI 产业链既有 records 无效")
+    expected_fingerprint = builder.ai_chain_codes_sha256(universe.resolved_codes)
+    payload_universe = series.get("universe")
+    manifest_universe = manifest_series.get("universe")
+    if (
+        not isinstance(payload_universe, dict)
+        or not isinstance(manifest_universe, dict)
+        or payload_universe.get("code_count") != len(universe.resolved_codes)
+        or payload_universe.get("codes_sha256") != expected_fingerprint
+        or manifest_universe.get("resolved_code_count") != len(universe.resolved_codes)
+        or manifest_universe.get("resolved_code_sha256") != expected_fingerprint
+    ):
+        raise ValueError("AI 产业链股票池已变化；需显式历史回填，拒绝静默改变增量分子")
+    return series_records
+
+
 def _snapshot_stat(snapshot: builder.FileSnapshot, tail: TailRead) -> dict[str, object]:
     return {
         "path": str(snapshot.path),
@@ -293,6 +318,9 @@ def build_append_manifest(
     denominator_tail: TailRead,
     comparison_index_file: builder.FileSnapshot,
     comparison_index_tail: TailRead,
+    ai_chain_series_records: list[dict[str, Any]],
+    ai_chain_universe: builder.AIChainUniverse,
+    ai_chain_candidates: list[builder.FileSnapshot],
     previous_watermark: int,
     processed_through: int,
     skipped_tail_candidates: list[dict[str, str]],
@@ -345,6 +373,9 @@ def build_append_manifest(
     comparison_index_input["missing_output_records"] = sum(
         record.get("chinext_close") is None for record in records
     )
+    manifest["ai_chain_series"] = builder.build_ai_chain_manifest(
+        ai_chain_series_records, ai_chain_universe, ai_chain_candidates
+    )
 
     manifest["append_checkpoint"] = {
         "mode": "append_only",
@@ -356,6 +387,8 @@ def build_append_manifest(
             ),
             "processed_source_date_end": builder.compact_date_to_iso(processed_through),
             "records_added": len(records) - int(baseline["payload_records"]),
+            "ai_chain_records_added": len(ai_chain_series_records)
+            - int(baseline.get("ai_chain_series", {}).get("records", 0)),
             "omitted_dates_added": len(omitted_dates) - len(baseline["omitted_dates"]),
             "denominator_tail_input": _snapshot_stat(denominator_file, denominator_tail),
             "comparison_index_tail_input": _snapshot_stat(
@@ -374,9 +407,12 @@ def run_append(
     output_directory: Path,
     publish_directory: Path | None,
 ) -> dict[str, object]:
-    del project_root  # 已由 CLI 校验；输出目录可在测试中独立指定。
     payload, baseline_manifest, previous_records, watermark, existing_omitted = read_baseline_bundle(
         output_directory
+    )
+    ai_chain_universe = builder.load_ai_chain_universe(project_root)
+    previous_ai_chain_records = read_ai_chain_baseline(
+        payload, baseline_manifest, ai_chain_universe
     )
     denominator_files = builder.denominator_snapshots(tdx_root)
     denominator_file = denominator_files["sh880008"]
@@ -407,6 +443,8 @@ def run_append(
     )
     calendar_dates = np.asarray([row.date for row in denominator_rows], dtype=np.uint32)
     candidates = builder.discover_candidate_files(tdx_root)
+    ai_chain_candidates = builder.ai_chain_candidate_snapshots(ai_chain_universe, candidates)
+    ai_chain_indexes = builder.candidate_column_indexes(candidates, ai_chain_candidates)
     if calendar_dates.size:
         amount_matrix, skipped_tail_candidates, candidate_tail_stats = scan_tail_active_amount_matrix(
             candidates, calendar_dates=calendar_dates, after_date=watermark
@@ -415,6 +453,11 @@ def run_append(
             denominator_rows,
             amount_matrix,
             tail_close_by_date(comparison_index_tail.records, label="sz399006"),
+        )
+        tail_ai_chain_records = builder.build_ai_chain_series_records(
+            denominator_rows,
+            amount_matrix[:, ai_chain_indexes],
+            c5_output_dates={int(record["date"].replace("-", "")) for record in tail_records},
         )
         del amount_matrix
     else:
@@ -426,6 +469,7 @@ def run_append(
             "candidate_tail_bytes_scanned": 0,
         }
         tail_records = []
+        tail_ai_chain_records = []
         numerator_omitted = []
 
     processed_through = max(denominator_amounts)
@@ -434,6 +478,11 @@ def run_append(
     _validate_omitted_dates(omitted_dates, watermark=processed_through)
     payload["generated_at_beijing"] = builder.beijing_now()
     payload["records"] = records
+    ai_chain_series = payload.get("ai_chain_series")
+    if not isinstance(ai_chain_series, dict):  # 已由 read_ai_chain_baseline 防御，保留类型窄化。
+        raise ValueError("AI 产业链子序列不存在")
+    ai_chain_series_records = [*previous_ai_chain_records, *tail_ai_chain_records]
+    ai_chain_series["records"] = ai_chain_series_records
     manifest = build_append_manifest(
         baseline=baseline_manifest,
         records=records,
@@ -442,6 +491,9 @@ def run_append(
         denominator_tail=denominator_tail,
         comparison_index_file=comparison_index_file,
         comparison_index_tail=comparison_index_tail,
+        ai_chain_series_records=ai_chain_series_records,
+        ai_chain_universe=ai_chain_universe,
+        ai_chain_candidates=ai_chain_candidates,
         previous_watermark=watermark,
         processed_through=processed_through,
         skipped_tail_candidates=skipped_tail_candidates,
@@ -449,6 +501,7 @@ def run_append(
         candidate_tail_stats=candidate_tail_stats,
     )
 
+    builder.assert_ai_chain_universe_unchanged(ai_chain_universe)
     builder.assert_snapshots_unchanged(
         [*candidates, *denominator_files.values(), comparison_index_file]
     )
@@ -467,6 +520,7 @@ def run_append(
             "end": builder.compact_date_to_iso(processed_through),
         },
         "records_added": len(tail_records),
+        "ai_chain_records_added": len(tail_ai_chain_records),
         "omitted_dates_added": len(omitted_dates) - len(existing_omitted),
         "records": verified_manifest["payload_records"],
         "data_range": verified_manifest["data_range"],
