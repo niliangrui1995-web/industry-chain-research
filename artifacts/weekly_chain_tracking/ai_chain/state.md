@@ -1,5 +1,50 @@
 # 周度总览：AI产业链上下游雷达 - 滚动状态
 
+## 2026-08-30 周度总览：四条硬卡点维持，PCB 保持 soft，新增 SAP 未来情景
+
+更新时间：2026-08-30（北京时间；研究截止日 as_of=2026-08-30）。
+最新报告：[2026-08-30.md](2026-08-30.md)；结构化主账：[2026-08-30.evidence.json](2026-08-30.evidence.json)；规范化产物：[2026-08-30.normalized.json](2026-08-30.normalized.json)。
+
+### 运行合同与校验
+
+| 字段 | 本轮实际值 |
+|---|---|
+| captured_at_beijing | 2026-08-30T19:15:43+08:00 |
+| skill_revision | git:c6eaa5262bd8c836d06cd48813bb0e49d70adefe |
+| prompt_contract_version | 2026-07-27.1 |
+| skill_content_sha256 | 656fd6486cebe6403278246e6d7424d8f25c1ae6894787f172b244eeec2bb5e0 |
+| skill_tree_status | clean |
+| skills | ai-chain-research-orchestrator；research-industry-chain |
+| status | ok |
+
+本期 6 条 hard/soft 声明都以 claim_as_of=2026-08-30 唯一关联 ai-chain-20260830-* 检查 ID，ledger/check 的时点、评审状态与期限一致。严格 normalizer 返回 issues=0；validator 返回 reviewable、eligible_count=6、incomplete_count=0、ineligible_count=0，全部 fresh 且无一致性警告。本期未使用价格、估值、市值、预期差或决策关键派生数字，未调用 financial-evidence-audit。
+
+### 当前主台账（2026-08-30）
+
+| 节点 | 检查 ID | 结论/时段 | 变化 | 边界与反转 |
+|---|---|---|---|---|
+| Azure AI 云有效算力容量 | ai-chain-20260830-azure-capacity-01 | 限 Microsoft/Azure 的 hard_bottleneck；2026H2 | unchanged | 需求超过可用容量、增量容量迅速变现；不映射其他云厂商或硬件订单。可用容量持续快于需求时降级。 |
+| AI 服务器内存组合（HBM、server DRAM、eSSD） | ai-chain-20260830-memory-01 | hard_bottleneck；2026H2 | unchanged | 仅组合级。Samsung 仍预计供不应求与供给约束持续；三类产品共同平衡时降级。 |
+| 领先逻辑与后端先进封装/测试有效产能 | ai-chain-20260830-leading-edge-backend-01 | 限 TSMC 披露范围的 hard_bottleneck；2026H2 | unchanged | N3 紧张、后端 shortage mode、tester 短缺；不下沉至 OSAT、HBM 测试、探针或 A 股公司订单。 |
+| 1.6T 高速光模块有效交付 | ai-chain-20260830-1p6t-delivery-01 | hard_bottleneck；2026H2 | unchanged，boundary_tightened | 核心料齐套、认证与批量制造的合格交付受限；H1 出货增加和供应商分散是缓解路径，不等于同客户多供应商稳定批交。 |
+| 板级高多层/高阶 HDI 有效交付（不含 ABF/BT） | ai-chain-20260830-board-pcb-01 | soft_bottleneck；2026H2 | unchanged | 沪士满载/扩容和景旺满产是公司样本；缺行业硬交期、allocation、转单和延期。 |
+| 高端高速 CCL/prepreg 材料组合（M8/M9/M10 分级 N/A） | ai-chain-20260830-pcb-ccl-01 | soft_bottleneck；2026H2 | unchanged | 广义材料偏紧、M6-M8 批供/M9 认证/N8 试产并存；分级交期、报价、AVL 与二供仍 evidence_absent。 |
+
+### 本期新增、专项吸收与未来队列
+
+- **1.6T 反证闭环**：中际 H1 的硅光放量、出货增加和供应商分散已显式纳入反向证据，故不得使用“零交付”或“一家独供”表述；解除 hard 仍需多家经同客户认证供应商稳定批交和交期常态化。
+- **PCB 口径收紧**：铜箔、电子布只吸收为材料组合的公司级 soft 事实，不另建主链账本；板级 PCB、ABF 工艺族和 BT 载板不得混写。IPC QPL/资格要求仅用于“合格有效供给”方法论。
+- **新增 SAP 未来情景**：高端 IC/FC-BGA 载板的 SAP 有效产能（ABF 工艺族，BT 不含）为 2026Q4-2028 的 high likely_future_bottleneck；IBIDEN 预测与扩产路径不构成当前交期、订单或收入事实。
+- **未来优先队列**：NPO/2.4T 的系统认证/互操作/先进封测为 2027H2-2028 medium likely；美国区域大型负荷并网/资源充裕度为 2027-2030 medium likely，范围仅美国。HBM test/probe、下一代低损耗材料、液冷继续维持 watch。
+
+### 下期默认动作
+
+1. 复核 Microsoft、Samsung、TSMC 的下一次一手披露是否撤回核心缺口表述。
+2. 获取 1.6T 的同客户认证供应商数、稳定批交、交期或未满足订单证据。
+3. 获取两家以上高端板厂的硬交期、allocation、转单或客户延期证据。
+4. 获取 M8/M9/M10、HVLP5、Q cloth 的分等级产能、交期、AVL 或订单/收入证据。
+5. 获取 SAP 的分客户交期/allocation、合格二供或实际产能释放；把美国区域并网观察落实到获电、排队、设备或项目延期事实。
+
 ## 2026-08-23 周度总览：AI PCB 板级有效交付升级，核心硬卡点维持
 
 更新时间：2026-08-23（北京时间；研究截止日 as_of=2026-08-23）。

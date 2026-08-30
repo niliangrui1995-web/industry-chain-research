@@ -1,5 +1,69 @@
 # 周度跟踪：光模块及上游细分环节 - 滚动状态
 
+## 2026-08-30 当前状态
+
+更新时间：2026-08-30 18:38:09 CST
+最新周报：`artifacts/weekly_chain_tracking/optical_module/2026-08-30.md`
+本周窗口：2026-08-24 至 2026-08-30
+as_of：2026-08-30
+下次运行先读：本文件、`BASELINE_TEMPLATE.md`、`2026-08-30.md`、`2026-08-30.evidence.json`、`2026-08-30.normalized.json`、`2026-08-30.bottleneck_evidence_checks.csv`、`2026-08-30.300502_h1_financial_audit_result.json`、`2026-08-29_domestic_fau_pm_fau_dfau_evidence_delta.md` 与自动化记忆。
+
+### 运行元数据
+
+```json
+{
+  "captured_at_beijing": "2026-08-30T18:38:09+08:00",
+  "prompt_contract_version": "2026-07-27.1",
+  "skill_content_sha256": "8d0f9c8c73892ddab5208744456451de4f87d514520815a0686ea6f644fe9540",
+  "skill_revision": "git:c6eaa5262bd8c836d06cd48813bb0e49d70adefe",
+  "skill_tree_status": "clean",
+  "skills": [
+    "ai-chain-research-orchestrator",
+    "financial-evidence-audit",
+    "research-industry-chain"
+  ],
+  "status": "ok"
+}
+```
+
+### 本期准出与边界
+
+- `2026-08-30.evidence.json`、`2026-08-30.normalized.json` 和 `2026-08-30.bottleneck_evidence_checks.csv` 统一使用 `as_of=2026-08-30`；严格 normalizer 为 `issues=[]`，validator 为 `reviewable`，`eligible=3`、`incomplete=0`、`ineligible=0`。
+- 新易盛 2026H1 的合并营收、光互联产品收入、光互联产品毛利率和经营现金流四项正式披露字段审计为 `PASS / publishable`、4/4 verified；仅核验已披露财务字段，不用于价格、估值、预期差或交易结论。
+- `eligible_for_bottleneck_review` 不自动确认卡点；hard/soft 结论已按三腿证据、范围边界与反证人工复核。
+
+### 当前主结论
+
+1. `1.6T高速光模块有效交付（核心料齐套与客户认证）`：`hard_bottleneck`、`2026H2`、`unchanged`。
+   - 检查 ID：`optical-20260830-1p6t-delivery-01`；`claim_as_of=2026-08-30`；`eligible_for_bottleneck_review`。
+   - [中际旭创 2026-07-28 IR](https://static.cninfo.com.cn/finalpage/2026-07-28/1225445792.PDF) 同时支持需求、少数厂商可大规模交付、原材料紧缺和供给缺口较大。中际规模放量、新易盛正式 H1、Lumentum 初始出货和 Coherent 扩产均是缓解/反证，不证明行业交期已常态化。
+2. `高速有源光器件有效产出（天孚公司级）`：`soft_bottleneck`、`2026H2`、`unchanged`。
+   - 检查 ID：`optical-20260830-active-material-02`；`claim_as_of=2026-08-30`；`eligible_for_bottleneck_review`。
+   - [天孚通信 2026H1](https://static.cninfo.com.cn/finalpage/2026-08-19/1225480328.PDF) 支持“个别物料阶段性供给紧缺影响有源器件提产”的三腿闭环；物料未命名，故不升级为 200G EML、FAU、CPO 或全行业卡点。公司称 Q3 起逐步缓解。
+3. `InP衬底出口许可可得性（AXT/Tongmei通道）`：`soft_bottleneck`、`2026H2`、`unchanged`。
+   - 检查 ID：`optical-20260830-inp-export-03`；`claim_as_of=2026-08-30`；`eligible_for_bottleneck_review`。
+   - [AXT 2026Q2 10-Q](https://www.sec.gov/Archives/edgar/data/1051627/000143774926027677/axti20260630_10q.htm) 的需求、审批不可预测和订单积压三腿只支持出口许可通道；[Coherent FY2026 10-K](https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm) 的 InP 扩产仅作全球校准和缓解路径。
+4. 唯一 `likely_future_bottleneck` 仍是 `NPO/2.4T光引擎的系统认证、互操作与先进封装测试`，`2027H2-2028`、`medium`。OIF 实施协议补强互操作门槛的机制依据，但没有订单、交期或缺口，不能升级为当前短缺。CPO/SiPh 测试、ELS/FAU/MT/PM fiber、OCS、DSP/TIA/driver、热接口和高密连接均为 `watch`。
+
+### 公司映射、排名与遗留问题
+
+- `main_candidate`：中际旭创（300308.SZ，`revenue/current`）和新易盛（300502.SZ，`revenue/current`）。新易盛本期正式 H1 已补齐整体光互联收入阶段；两者均不得拆写未披露的 1.6T 单独收入、客户或订单金额。
+- `watch_only`：天孚通信（`shipment/current`）、光库科技（`qualification/current`）、光迅科技（`mass_production/current`）、罗博特科（`design_win/current`）、云南锗业（`mass_production/current`）。云南锗业 H1 的 2–4 英寸 InP 产量/公司口径供需偏紧，不代表 6 英寸、全球 InP 或实际 shipment/revenue。
+- 基本面质量：中际旭创 > 新易盛 > 天孚通信 > 光迅科技 > 光库科技 > 罗博特科 > 云南锗业。
+- 业绩弹性：中际旭创 ≈ 新易盛 > 天孚通信 > 光迅科技 > 光库科技 ≈ 罗博特科 ≈ 云南锗业。
+- 交易弹性：`N/A`；本期未运行价格、估值或量能审计。
+- 下期优先补齐：1.6T 交期和同客户认证供应商数；天孚受限物料/交期/二供；AXT 许可积压的获批与出货；云南锗业 InP 的尺寸/良率/客户/实际发货；CPO/NPO 的认证/良率/交期；FAU、耦合设备与严格 dFAU 的产品级实际 shipment 或收入。
+
+### 结构化产物与关键来源
+
+- 证据包：`2026-08-30.evidence.json`；规范化：`2026-08-30.normalized.json`；检查表：`2026-08-30.bottleneck_evidence_checks.csv`；新易盛 H1 审计输入/结果：`2026-08-30.300502_h1_financial_audit_input.json` / `2026-08-30.300502_h1_financial_audit_result.json`。
+- [中际旭创 2026-07-28 投资者关系活动记录表](https://static.cninfo.com.cn/finalpage/2026-07-28/1225445792.PDF)
+- [新易盛 2026H1](https://static.cninfo.com.cn/finalpage/2026-08-25/1225499406.PDF)
+- [天孚通信 2026H1](https://static.cninfo.com.cn/finalpage/2026-08-19/1225480328.PDF)
+- [AXT 2026Q2 Form 10-Q](https://www.sec.gov/Archives/edgar/data/1051627/000143774926027677/axti20260630_10q.htm)
+- [Coherent FY2026 Form 10-K](https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm)
+- [OIF Implementation Agreements](https://www.oiforum.com/technical-work/implementation-agreements-ias/)
+
 ## 2026-08-23 当前状态
 
 更新时间：2026-08-23 18:36:57 CST

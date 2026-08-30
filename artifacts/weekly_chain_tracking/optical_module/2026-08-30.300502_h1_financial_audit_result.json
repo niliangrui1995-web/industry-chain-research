@@ -1,0 +1,207 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "300502-2026h1-optical-module-weekly-20260830",
+  "input_sha256": "3238615aa58148a7e3e682cb0401ee3ae644fcea885bebd82afa09cddf95b101",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 4,
+    "verified_count": 4,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:300502:2026h1:20260825:1225499406"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "20909746962.2",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap_unaudited",
+          "source_ids": [
+            "S_H1",
+            "S_LEDGER_DRAFT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OPTICAL_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:300502:2026h1:20260825:1225499406"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "20882600000",
+          "metric": "optical_interconnect_revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_optical_interconnect_product_revenue_unaudited",
+          "source_ids": [
+            "S_H1",
+            "S_LEDGER_DRAFT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OPTICAL_GROSS_MARGIN",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:300502:2026h1:20260825:1225499406"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "48.46",
+          "metric": "optical_interconnect_gross_margin",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_optical_interconnect_product_gross_margin_unaudited",
+          "source_ids": [
+            "S_H1",
+            "S_LEDGER_DRAFT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OPERATING_CASH_FLOW",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:300502:2026h1:20260825:1225499406"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "1616408524.15",
+          "metric": "operating_cash_flow",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap_unaudited",
+          "source_ids": [
+            "S_H1",
+            "S_LEDGER_DRAFT"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    }
+  ]
+}

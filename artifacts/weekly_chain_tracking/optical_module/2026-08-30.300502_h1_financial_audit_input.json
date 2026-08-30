@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "300502-2026h1-optical-module-weekly-20260830",
+  "as_of": "2026-08-30T18:38:09+08:00",
+  "sources": [
+    {
+      "id": "S_LEDGER_DRAFT",
+      "source_type": "report_under_audit",
+      "origin_id": "workpaper:optical-module:300502:2026h1:20260830",
+      "locator": "artifacts/weekly_chain_tracking/optical_module/2026-08-30.evidence.json#financial_validation",
+      "source_date": "2026-08-30",
+      "checked_at": "2026-08-30T18:38:09+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_H1",
+      "source_type": "official_filing",
+      "origin_id": "cninfo:300502:2026h1:20260825:1225499406",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225499406.PDF",
+      "source_date": "2026-08-25",
+      "checked_at": "2026-08-30T18:38:09+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_DRAFT_REVENUE",
+      "metric": "revenue",
+      "value": "20909746962.20",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-30",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": ["S_LEDGER_DRAFT"]
+    },
+    {
+      "id": "F_H1_REVENUE",
+      "metric": "revenue",
+      "value": "20909746962.20",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-25",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": ["S_H1"]
+    },
+    {
+      "id": "F_DRAFT_OPTICAL_REVENUE",
+      "metric": "optical_interconnect_revenue",
+      "value": "20882600000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-30",
+      "basis": "reported_optical_interconnect_product_revenue_unaudited",
+      "source_refs": ["S_LEDGER_DRAFT"]
+    },
+    {
+      "id": "F_H1_OPTICAL_REVENUE",
+      "metric": "optical_interconnect_revenue",
+      "value": "20882600000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-25",
+      "basis": "reported_optical_interconnect_product_revenue_unaudited",
+      "source_refs": ["S_H1"]
+    },
+    {
+      "id": "F_DRAFT_OPTICAL_GROSS_MARGIN",
+      "metric": "optical_interconnect_gross_margin",
+      "value": "48.46",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-30",
+      "basis": "reported_optical_interconnect_product_gross_margin_unaudited",
+      "source_refs": ["S_LEDGER_DRAFT"]
+    },
+    {
+      "id": "F_H1_OPTICAL_GROSS_MARGIN",
+      "metric": "optical_interconnect_gross_margin",
+      "value": "48.46",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-25",
+      "basis": "reported_optical_interconnect_product_gross_margin_unaudited",
+      "source_refs": ["S_H1"]
+    },
+    {
+      "id": "F_DRAFT_OPERATING_CASH_FLOW",
+      "metric": "operating_cash_flow",
+      "value": "1616408524.15",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-30",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": ["S_LEDGER_DRAFT"]
+    },
+    {
+      "id": "F_H1_OPERATING_CASH_FLOW",
+      "metric": "operating_cash_flow",
+      "value": "1616408524.15",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2026-01-01", "end": "2026-06-30", "frequency": "half", "label": "2026H1"},
+      "available_at": "2026-08-25",
+      "basis": "reported_consolidated_prc_gaap_unaudited",
+      "source_refs": ["S_H1"]
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {"fact_id": "F_DRAFT_REVENUE"},
+      "references": [{"fact_id": "F_H1_REVENUE"}],
+      "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"},
+      "tolerance": {"relative_pct": "0", "absolute_base": "0"}
+    },
+    {
+      "id": "C_OPTICAL_REVENUE",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {"fact_id": "F_DRAFT_OPTICAL_REVENUE"},
+      "references": [{"fact_id": "F_H1_OPTICAL_REVENUE"}],
+      "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"},
+      "tolerance": {"relative_pct": "0", "absolute_base": "0"}
+    },
+    {
+      "id": "C_OPTICAL_GROSS_MARGIN",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {"fact_id": "F_DRAFT_OPTICAL_GROSS_MARGIN"},
+      "references": [{"fact_id": "F_H1_OPTICAL_GROSS_MARGIN"}],
+      "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"},
+      "tolerance": {"relative_pct": "0", "absolute_base": "0"}
+    },
+    {
+      "id": "C_OPERATING_CASH_FLOW",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {"fact_id": "F_DRAFT_OPERATING_CASH_FLOW"},
+      "references": [{"fact_id": "F_H1_OPERATING_CASH_FLOW"}],
+      "source_gate": {"min_independent_origins": 1, "counted_tier": "official", "required_anchor_tier": "official"},
+      "tolerance": {"relative_pct": "0", "absolute_base": "0"}
+    }
+  ]
+}
