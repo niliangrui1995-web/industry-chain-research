@@ -191,6 +191,191 @@ class AIChainBackfillTests(unittest.TestCase):
             self.assertEqual(csv_path.read_bytes(), legacy_csv)
             builder.verify_artifact_bundle(payload_path, manifest_path, csv_path)
 
+    def test_changed_member_set_requires_explicit_ai_only_rebuild_and_preserves_c5(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            project_root = root / "project"
+            project_root.mkdir()
+            (project_root / "AGENTS.md").write_text("test\n", encoding="utf-8")
+            write_ai_chain_workbook(project_root, ["600000", "920139"])
+            tdx_root = root / "HT"
+            sh_dir = tdx_root / "vipdoc/sh/lday"
+            sz_dir = tdx_root / "vipdoc/sz/lday"
+            bj_dir = tdx_root / "vipdoc/bj/lday"
+            write_day(sh_dir / "sh880008.day", [(20250102, 1, 10_000, 1)])
+            write_day(sz_dir / "sz399006.day", [(20250102, 2_500, 1, 1)])
+            for offset in range(20):
+                write_day(sh_dir / f"sh600{offset:03d}.day", [(20250102, 1, 100 + offset, 1)])
+            write_day(bj_dir / "bj920139.day", [(20250102, 1, 500, 1)])
+            write_day(bj_dir / "bj920001.day", [(20250102, 1, 900, 1)])
+            output_dir = root / "output"
+            build = subprocess.run(
+                [
+                    sys.executable,
+                    str(BUILDER_SCRIPT),
+                    "--project-root",
+                    str(project_root),
+                    "--tdx-root",
+                    str(tdx_root),
+                    "--output-dir",
+                    str(output_dir),
+                    "--start-date",
+                    "20250102",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(build.returncode, 0, build.stderr)
+
+            payload_path = output_dir / builder.PAYLOAD_FILENAME
+            manifest_path = output_dir / builder.MANIFEST_FILENAME
+            csv_path = output_dir / builder.CSV_FILENAME
+            baseline_payload = json.loads(payload_path.read_text(encoding="utf-8"))
+            baseline_records = baseline_payload["records"]
+            baseline_ai_records = baseline_payload["ai_chain_series"]["records"]
+            baseline_csv = csv_path.read_bytes()
+            baseline_bundle = {
+                path.name: path.read_bytes() for path in (payload_path, manifest_path, csv_path)
+            }
+
+            write_ai_chain_workbook(project_root, ["600000", "920001"])
+            blocked = subprocess.run(
+                [
+                    sys.executable,
+                    str(BACKFILL_SCRIPT),
+                    "--project-root",
+                    str(project_root),
+                    "--tdx-root",
+                    str(tdx_root),
+                    "--output-dir",
+                    str(output_dir),
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(blocked.returncode, 0)
+            self.assertIn("--rebuild-on-universe-change", blocked.stderr)
+            self.assertEqual(
+                {path.name: path.read_bytes() for path in (payload_path, manifest_path, csv_path)},
+                baseline_bundle,
+            )
+
+            rebuilt = subprocess.run(
+                [
+                    sys.executable,
+                    str(BACKFILL_SCRIPT),
+                    "--project-root",
+                    str(project_root),
+                    "--tdx-root",
+                    str(tdx_root),
+                    "--output-dir",
+                    str(output_dir),
+                    "--rebuild-on-universe-change",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(rebuilt.returncode, 0, rebuilt.stderr)
+            result = json.loads(rebuilt.stdout)
+            self.assertEqual(result["status"], "universe_rebuilt")
+            self.assertEqual(result["ai_chain_membership"]["status"], "changed")
+            self.assertTrue(result["c5_records_preserved"])
+            self.assertTrue(result["csv_bytes_preserved"])
+            self.assertFalse(result["ai_chain_records_preserved"])
+
+            payload = json.loads(payload_path.read_text(encoding="utf-8"))
+            self.assertEqual(payload["records"], baseline_records)
+            self.assertEqual(csv_path.read_bytes(), baseline_csv)
+            self.assertNotEqual(payload["ai_chain_series"]["records"], baseline_ai_records)
+            self.assertEqual(
+                payload["ai_chain_series"]["records"],
+                [
+                    {
+                        "date": "2025-01-02",
+                        "ai_chain_amount_pct": 10.0,
+                        "ai_chain_amount_yi": 0.00001,
+                        "ai_chain_active_stock_count": 2,
+                    }
+                ],
+            )
+            builder.verify_artifact_bundle(payload_path, manifest_path, csv_path)
+
+    def test_row_reorder_keeps_member_set_matched(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            project_root = root / "project"
+            project_root.mkdir()
+            (project_root / "AGENTS.md").write_text("test\n", encoding="utf-8")
+            write_ai_chain_workbook(project_root, ["600000", "920139"])
+            tdx_root = root / "HT"
+            sh_dir = tdx_root / "vipdoc/sh/lday"
+            sz_dir = tdx_root / "vipdoc/sz/lday"
+            bj_dir = tdx_root / "vipdoc/bj/lday"
+            write_day(sh_dir / "sh880008.day", [(20250102, 1, 10_000, 1)])
+            write_day(sz_dir / "sz399006.day", [(20250102, 2_500, 1, 1)])
+            for offset in range(20):
+                write_day(sh_dir / f"sh600{offset:03d}.day", [(20250102, 1, 100 + offset, 1)])
+            write_day(bj_dir / "bj920139.day", [(20250102, 1, 500, 1)])
+            output_dir = root / "output"
+            build = subprocess.run(
+                [
+                    sys.executable,
+                    str(BUILDER_SCRIPT),
+                    "--project-root",
+                    str(project_root),
+                    "--tdx-root",
+                    str(tdx_root),
+                    "--output-dir",
+                    str(output_dir),
+                    "--start-date",
+                    "20250102",
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(build.returncode, 0, build.stderr)
+            payload_path = output_dir / builder.PAYLOAD_FILENAME
+            manifest_path = output_dir / builder.MANIFEST_FILENAME
+            csv_path = output_dir / builder.CSV_FILENAME
+            baseline_payload = json.loads(payload_path.read_text(encoding="utf-8"))
+            baseline_ai_records = baseline_payload["ai_chain_series"]["records"]
+            baseline_member_fingerprint = baseline_payload["ai_chain_series"]["universe"][
+                "member_codes_sha256"
+            ]
+
+            write_ai_chain_workbook(project_root, ["920139", "600000"])
+            refreshed = subprocess.run(
+                [
+                    sys.executable,
+                    str(BACKFILL_SCRIPT),
+                    "--project-root",
+                    str(project_root),
+                    "--tdx-root",
+                    str(tdx_root),
+                    "--output-dir",
+                    str(output_dir),
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(refreshed.returncode, 0, refreshed.stderr)
+            result = json.loads(refreshed.stdout)
+            self.assertEqual(result["status"], "universe_metadata_refreshed")
+            self.assertEqual(result["ai_chain_membership"]["status"], "matched")
+            self.assertTrue(result["ai_chain_records_preserved"])
+            payload = json.loads(payload_path.read_text(encoding="utf-8"))
+            self.assertEqual(payload["ai_chain_series"]["records"], baseline_ai_records)
+            self.assertEqual(
+                payload["ai_chain_series"]["universe"]["member_codes_sha256"],
+                baseline_member_fingerprint,
+            )
+            builder.verify_artifact_bundle(payload_path, manifest_path, csv_path)
+
 
 if __name__ == "__main__":
     unittest.main()

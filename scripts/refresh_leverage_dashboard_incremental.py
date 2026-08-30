@@ -12,7 +12,7 @@ import sys
 from typing import Iterable
 
 
-PROTOCOL_VERSION = "2026-08-23.2"
+PROTOCOL_VERSION = "2026-08-28.1"
 PROJECT_ROOT_DEFAULT = Path(r"D:\vcp_hunter\产业链投研")
 FUND_ROOT_DEFAULT = Path(r"D:\vcp_hunter\基金持仓")
 DFCF_DIRECTORY = Path("artifacts/leverage_capitulation/dfcf_daily")

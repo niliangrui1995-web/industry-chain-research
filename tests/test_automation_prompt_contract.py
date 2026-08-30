@@ -93,17 +93,27 @@ class AutomationPromptContractTests(unittest.TestCase):
             ROOT / "docs" / "automation" / "LEVERAGE_INCREMENTAL_REFRESH_PROMPT.md"
         ).read_text(encoding="utf-8")
 
-        self.assertIn("two_rong_refresh_protocol_version=2026-08-23.2", contract)
+        self.assertIn("two_rong_refresh_protocol_version=2026-08-28.1", contract)
         self.assertIn("refresh_leverage_dashboard_incremental.py", contract)
         self.assertIn("已有历史数据是只读基线", contract)
         self.assertIn("不扫描中间日期", contract)
         self.assertIn("仅处理的新增尾部", contract)
+        daily_contract = (
+            ROOT / "docs" / "automation" / "DAILY_MARKET_DATA_PUBLISH_CONTRACT.md"
+        ).read_text(encoding="utf-8")
+
         self.assertIn("refresh_leverage_dashboard_incremental.py", prompt)
-        self.assertIn("已有历史数据一律直接复用", prompt)
-        self.assertIn("不检查历史数据", prompt)
-        self.assertIn("append_leverage_dashboard_tail.py", prompt)
-        self.assertIn("然后自动备份并发布", prompt)
-        self.assertIn("不得回看历史、换源、`--bootstrap-full`", prompt)
+        self.assertIn("DAILY_MARKET_DATA_PUBLISH_CONTRACT.md", prompt)
+        self.assertIn("daily_market_data_publish_protocol_version=2026-08-30.1", prompt)
+        self.assertIn("two_rong_refresh_protocol_version=2026-08-28.1", prompt)
+        self.assertIn("refresh_tdx_trading_concentration_daily.py", daily_contract)
+        self.assertIn("membership=unchanged", daily_contract)
+        self.assertIn("membership=changed", daily_contract)
+        self.assertIn("ai_chain_rebuilt", daily_contract)
+        self.assertIn("trading-concentration-daily.csv", daily_contract)
+        self.assertIn("sh880008.day.amount", daily_contract)
+        self.assertIn("git add .", daily_contract)
+        self.assertIn("Accept-Encoding: identity", daily_contract)
         self.assertNotIn("前 2017 官方原始链", prompt)
 
 

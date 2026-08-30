@@ -281,18 +281,29 @@ def read_ai_chain_baseline(
     series_records = series.get("records")
     if not isinstance(series_records, list) or not all(isinstance(row, dict) for row in series_records):
         raise ValueError("AI 产业链既有 records 无效")
-    expected_fingerprint = builder.ai_chain_codes_sha256(universe.resolved_codes)
+    expected_member_fingerprint = builder.ai_chain_member_codes_sha256(universe.resolved_codes)
     payload_universe = series.get("universe")
     manifest_universe = manifest_series.get("universe")
+    payload_has_member_fingerprint = isinstance(payload_universe, dict) and (
+        "member_codes_sha256" in payload_universe
+    )
+    manifest_has_member_fingerprint = isinstance(manifest_universe, dict) and (
+        "member_codes_sha256" in manifest_universe
+    )
     if (
         not isinstance(payload_universe, dict)
         or not isinstance(manifest_universe, dict)
         or payload_universe.get("code_count") != len(universe.resolved_codes)
-        or payload_universe.get("codes_sha256") != expected_fingerprint
         or manifest_universe.get("resolved_code_count") != len(universe.resolved_codes)
-        or manifest_universe.get("resolved_code_sha256") != expected_fingerprint
+        or not payload_has_member_fingerprint
+        or not manifest_has_member_fingerprint
+        or payload_universe.get("member_codes_sha256") != expected_member_fingerprint
+        or manifest_universe.get("member_codes_sha256") != expected_member_fingerprint
     ):
-        raise ValueError("AI 产业链股票池已变化；需显式历史回填，拒绝静默改变增量分子")
+        raise ValueError(
+            "AI 产业链成员集合已变化或旧包缺少集合指纹；"
+            "需显式历史回填，拒绝静默改变增量分子"
+        )
     return series_records
 
 
@@ -449,6 +460,15 @@ def run_append(
         amount_matrix, skipped_tail_candidates, candidate_tail_stats = scan_tail_active_amount_matrix(
             candidates, calendar_dates=calendar_dates, after_date=watermark
         )
+        ai_chain_paths = {str(candidate.path) for candidate in ai_chain_candidates}
+        skipped_ai_chain_candidates = [
+            candidate for candidate in skipped_tail_candidates if candidate["path"] in ai_chain_paths
+        ]
+        if skipped_ai_chain_candidates:
+            raise ValueError(
+                "AI 产业链候选日线尾部不可读，拒绝静默缩减分子: "
+                f"{skipped_ai_chain_candidates[0]}"
+            )
         tail_records, numerator_omitted = builder.build_records(
             denominator_rows,
             amount_matrix,
@@ -478,11 +498,10 @@ def run_append(
     _validate_omitted_dates(omitted_dates, watermark=processed_through)
     payload["generated_at_beijing"] = builder.beijing_now()
     payload["records"] = records
-    ai_chain_series = payload.get("ai_chain_series")
-    if not isinstance(ai_chain_series, dict):  # 已由 read_ai_chain_baseline 防御，保留类型窄化。
-        raise ValueError("AI 产业链子序列不存在")
     ai_chain_series_records = [*previous_ai_chain_records, *tail_ai_chain_records]
-    ai_chain_series["records"] = ai_chain_series_records
+    payload["ai_chain_series"] = builder.build_ai_chain_series(
+        ai_chain_series_records, ai_chain_universe
+    )
     manifest = build_append_manifest(
         baseline=baseline_manifest,
         records=records,

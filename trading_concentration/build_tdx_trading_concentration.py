@@ -267,6 +267,12 @@ def ai_chain_codes_sha256(codes: Iterable[str]) -> str:
     return hashlib.sha256(canonical).hexdigest()
 
 
+def ai_chain_member_codes_sha256(codes: Iterable[str]) -> str:
+    """返回与工作簿行顺序无关的 AI 成分集合指纹。"""
+
+    return ai_chain_codes_sha256(sorted(codes))
+
+
 def load_ai_chain_universe(project_root: Path) -> AIChainUniverse:
     workbook_path = (project_root / AI_CHAIN_WORKBOOK_RELATIVE_PATH).resolve()
     if not workbook_path.is_file():
@@ -594,6 +600,7 @@ def build_ai_chain_series(
             "code_column": AI_CHAIN_CODE_HEADER,
             "code_count": len(universe.resolved_codes),
             "codes_sha256": ai_chain_codes_sha256(universe.resolved_codes),
+            "member_codes_sha256": ai_chain_member_codes_sha256(universe.resolved_codes),
         },
         "records": records,
     }
@@ -627,6 +634,7 @@ def build_ai_chain_manifest(
             "input_code_count": len(universe.input_codes),
             "resolved_code_count": len(universe.resolved_codes),
             "resolved_code_sha256": ai_chain_codes_sha256(universe.resolved_codes),
+            "member_codes_sha256": ai_chain_member_codes_sha256(universe.resolved_codes),
             "non_stock_code_rows_excluded": universe.non_stock_code_rows_excluded,
             "code_aliases": [],
             "tdx_candidate_file_count": sum(1 for _ in candidates),
@@ -889,6 +897,12 @@ def verify_ai_chain_series(
         or re.fullmatch(r"[a-f0-9]{64}", payload_universe["codes_sha256"]) is None
     ):
         raise ValueError("payload AI 产业链股票池说明不一致")
+    payload_has_member_fingerprint = "member_codes_sha256" in payload_universe
+    if payload_has_member_fingerprint and (
+        not isinstance(payload_universe.get("member_codes_sha256"), str)
+        or re.fullmatch(r"[a-f0-9]{64}", payload_universe["member_codes_sha256"]) is None
+    ):
+        raise ValueError("payload AI 产业链成员集合指纹无效")
 
     series_records = payload_series.get("records")
     if not isinstance(series_records, list):
@@ -961,6 +975,17 @@ def verify_ai_chain_series(
         or not isinstance(manifest_universe.get("code_aliases"), list)
     ):
         raise ValueError("manifest AI 产业链股票池说明不一致")
+    manifest_has_member_fingerprint = "member_codes_sha256" in manifest_universe
+    if manifest_has_member_fingerprint and (
+        not isinstance(manifest_universe.get("member_codes_sha256"), str)
+        or re.fullmatch(r"[a-f0-9]{64}", manifest_universe["member_codes_sha256"]) is None
+    ):
+        raise ValueError("manifest AI 产业链成员集合指纹无效")
+    if payload_has_member_fingerprint != manifest_has_member_fingerprint or (
+        payload_has_member_fingerprint
+        and payload_universe["member_codes_sha256"] != manifest_universe["member_codes_sha256"]
+    ):
+        raise ValueError("AI 产业链成员集合指纹不一致")
 
 
 def verify_artifact_bundle(payload_path: Path, manifest_path: Path, csv_path: Path) -> dict[str, object]:
