@@ -8,16 +8,16 @@
     "SH": "007",
     "SZ": "001"
   },
-  "requested_start": "2026-08-27",
-  "backfill_start": "2026-08-27",
-  "requested_end": "2026-08-27",
+  "requested_start": "2026-08-28",
+  "backfill_start": "2026-08-28",
+  "requested_end": "2026-08-28",
   "network_requests": 2,
-  "sh_rows": 3660,
-  "sz_rows": 3660,
-  "common_rows": 3660,
-  "sh_latest": "2026-08-27",
-  "sz_latest": "2026-08-27",
-  "latest_common_date": "2026-08-27",
+  "sh_rows": 3661,
+  "sz_rows": 3661,
+  "common_rows": 3661,
+  "sh_latest": "2026-08-28",
+  "sz_latest": "2026-08-28",
+  "latest_common_date": "2026-08-28",
   "sh_only_dates": [],
   "sz_only_dates": [],
   "changed_rows": {
@@ -28,8 +28,8 @@
   "table_updated": true,
   "sample_status": "dfcf_vendor_only_unverified_by_exchange",
   "vendor_warning": "DFCF vendor data only; not validated against exchange official aggregates.",
-  "dfcf_sse_margin_sha256": "7c4753f8256ae5f9bb72e44374ed8d6222e1bed9a3baf8ca303cee146be1fdfc",
-  "dfcf_szse_margin_sha256": "4e2dc484f30aabe629ddab25dbb6a9cadcfcda629087cd885cfd9f18b1e14a0f",
-  "dfcf_margin_balances_sha256": "e967d849b87e3e6aade772133a4cdf41a13e71ab4d38cb9d39d515b3b8b5295b",
-  "updated_at_utc": "2026-08-28T01:04:31+00:00"
+  "dfcf_sse_margin_sha256": "7256ca4bc761ca744523c630c54560cf6e502efdcac3d2f2e5a1b8689d1b8c9d",
+  "dfcf_szse_margin_sha256": "d574b7bbfc38a48b52e2700dc1ab630118b1989b8d60cd06fb05c650a62faf54",
+  "dfcf_margin_balances_sha256": "f13ef3869711243503ca2f3a601c096df36cb668a80a9223605b305be135a78a",
+  "updated_at_utc": "2026-08-31T01:04:18+00:00"
 }
