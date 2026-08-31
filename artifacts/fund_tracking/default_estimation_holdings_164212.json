@@ -11,7 +11,6 @@
     "created_at": "2026-07-20 21:53:45",
     "model_version": "official_q2_top10_fund_investment_anchor_v1",
     "source_pdf": "https://pdf.dfcfw.com/pdf/H2_AN202607201827148844_1.pdf",
-    "source_local_pdf": "D:\\vcp_hunter\\产业链投研\\artifacts\\fund_tracking\\q2_2026_164212.pdf",
     "tracking_workbook": "D:\\vcp_hunter\\产业链投研\\artifacts\\fund_tracking\\天弘全球新能源汽车QDII_LOF_164212_持仓跟踪.xlsx",
     "previous_fit_backup": "D:\\vcp_hunter\\产业链投研\\artifacts\\fund_tracking\\default_estimation_holdings_164212.pre_q2_official_20260720_215346.json",
     "usage": "用于后续估算的官方Q2锚点；未披露权益桶需重新拟合，不能当作完整持仓。"
