@@ -1,6 +1,6 @@
 ---
 name: research-industry-chain
-description: Research industry chains through terminal demand, supply-chain topology, BOM/value nodes, qualified-supply bottlenecks, bottleneck duration, future constraint migration, global leaders, and optional listed-company mapping. Use for 产业链拆解、上下游、BOM、价值量、堵点、卡点、供需缺口、交期、产能、良率、国产替代、AI/半导体细分环节或海外龙头映射.
+description: Research industry chains through terminal demand, supply-chain topology, BOM/value nodes, qualified-supply bottlenecks, bottleneck duration, future constraint migration, global leaders, and optional listed-company mapping. Use for 产业链拆解、上下游、BOM、价值量、堵点、卡点、供需缺口、交期、产能、良率、国产替代、AI/半导体细分环节或海外龙头映射. When the user explicitly requests Serenity or serenity-stock-choke, use its choke-point lens only to generate candidate nodes, then validate them under this skill's same evidence gates.
 ---
 
 # Research Industry Chain
@@ -18,6 +18,10 @@ description: Research industry chains through terminal demand, supply-chain topo
 - `watch`：只有约束机制、前置指标或待验证情景，尚不能证明当前合格供给缺口。
 
 结构化 hard/soft 声明必须通过 `validate_bottleneck_evidence.py` 的等级一致性门。当前 hard/soft 还必须提供 `claim_as_of` 与需求、供给、缺口、来源四类 ISO 日期；默认新鲜度窗口为 180 天，`max_age_days` 只能在 1-365 天内覆盖。三条关键证据腿分别记录来源类型和可复核定位：hard 必须全部来自 `regulatory|official|company_original|official_counterparty`，soft 可增加 `credible_third_party`；`social|anonymous|lead_only` 只能观察。陈旧证据可保留为 `historical`、`watch` 或未完成记录，但不能支持当前 hard/soft。`eligible_for_bottleneck_review` 只表示证据包与声明等级相容，不能自动授予瓶颈结论。
+
+## Serenity 候选模式（仅显式点名）
+
+用户明确要求 `Serenity` 或 `serenity-stock-choke` 时，先从终端向上游提出“某节点断供会影响哪个产品、在何时、为何无法替代”的候选命题，并列出合格供给、替代/二供、扩产和反证路径。技术壁垒、国产替代、小市值、资金信号或市场热度都不是瓶颈证明；候选默认是 `watch`，只有完成下列同一套供需、时点和来源闭环后才可升级为 `soft_bottleneck` 或 `hard_bottleneck`。不输出买卖、仓位或时点指令。
 
 ## 自适应流程
 

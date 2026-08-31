@@ -15,7 +15,7 @@ Last verified: 2026-08-03
 | Skill | 用途 |
 |---|---|
 | `research-listed-company` | 上市公司生意、护城河、管理层、资本配置、预期、估值与最强反方 |
-| `research-industry-chain` | 产业链、BOM、真实供需瓶颈、未来约束迁移和可选公司映射 |
+| `research-industry-chain` | 产业链、BOM、真实供需瓶颈、未来约束迁移和可选公司映射；点名 Serenity 时先生成候选约束命题，再按同一证据门禁验证 |
 | `income-investment` | 分红/配息覆盖、行业专用指标、减配情景、税币种与收益陷阱 |
 | `user-investment-discipline` | 市场周期、过热、追涨、扩仓和加杠杆时的用户纪律 |
 | `financial-evidence-audit` | 决策关键数字的来源、口径、单位、派生关系与准出审计 |

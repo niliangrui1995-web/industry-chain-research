@@ -7,7 +7,7 @@
 | Skill | 触发范围 | 关键边界 |
 |---|---|---|
 | `research-listed-company` | 上市公司、个股比较、护城河、管理层、预期和估值 | 上游公司研究方法取优，本地官方证据与 point-in-time 门禁覆盖；无组合输入不编造仓位 |
-| `research-industry-chain` | 上下游、BOM、堵点、卡点、AI/半导体节点 | 瓶颈必须有合格供给缺口；股票映射放在节点判断之后 |
+| `research-industry-chain` | 上下游、BOM、堵点、卡点、AI/半导体节点，以及明确点名 Serenity 的候选咽喉命题 | 瓶颈必须有合格供给缺口；Serenity 仅生成 `watch` 候选，股票映射放在节点判断之后 |
 | `income-investment` | 股息、配息、分红持续性、REIT/银行/保险/BDC/资源股收入 | 使用行业专用可分配现金口径；税务、币种和组合输入不足时不输出税后收入或动作 |
 | `user-investment-discipline` | 市场周期、MA30、双头、过热、追涨、扩仓或杠杆冲动 | 仅执行用户条件纪律；不承担公司、产业链、财报或估值研究 |
 | `financial-evidence-audit` | 市值、预期差、估值、覆盖率、单位换算及报告准出 | Decimal 确定性计算；来源冲突、期间/单位/币种不一致时 fail closed |

@@ -1,6 +1,6 @@
 interface:
   display_name: "产业链研究"
-  short_description: "拆解需求、BOM、供需瓶颈及未来约束迁移"
-  default_prompt: "Use $research-industry-chain to identify the real demand path, bottlenecks, and optional listed-company exposure."
+  short_description: "拆解需求、BOM、供需瓶颈与 Serenity 候选约束"
+  default_prompt: "Use $research-industry-chain to validate real supply bottlenecks; apply the Serenity candidate lens only when explicitly requested."
 policy:
   allow_implicit_invocation: true

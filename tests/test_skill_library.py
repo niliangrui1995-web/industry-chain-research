@@ -285,6 +285,10 @@ class SkillLibraryTests(unittest.TestCase):
         self.assertIn("Copyright (c) 2026 xbtlin", notice)
         self.assertIn("MIT License", notice)
         self.assertIn("09ebc400a8815636e02f5b7d1d811a53164a0b92", notice)
+        self.assertIn("fadewalk/serenity-stock-choke", notice)
+        self.assertIn("b64c5fd7823e8ab75c8421d4e5077270430a5124", notice)
+        self.assertIn("Copyright (c) 2025-2026 fadewalk", notice)
+        self.assertIn("research-industry-chain", notice)
 
 
 if __name__ == "__main__":
