@@ -1,0 +1,219 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.1",
+  "audit_id": "688048-2026h1-official-yoy-20260831",
+  "input_sha256": "22617893caab99539bcc4c3f56fa91da9308b3ba5e4616f8c8b952dc533559de",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 4,
+    "verified_count": 4,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_REVENUE_H1_YOY",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CNINFO_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:688048:2026h1:1225534249"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "82.6664389647588572678687950972314048993594066306",
+          "metric": "revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "H1 FY2026"
+          },
+          "basis": "reported_consolidated_prc_gaap_yoy",
+          "source_ids": [
+            "S_CNINFO_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "yoy",
+        "contracted_output_metric": "revenue_yoy_pct",
+        "contracted_output_basis": "reported_consolidated_prc_gaap_yoy"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_ATTRIBUTABLE_NET_PROFIT_H1_YOY",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CNINFO_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:688048:2026h1:1225534249"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "238.04426534429764909087724316742257713716509126572",
+          "metric": "attributable_net_profit_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "H1 FY2026"
+          },
+          "basis": "reported_attributable_net_profit_prc_gaap_yoy",
+          "source_ids": [
+            "S_CNINFO_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "yoy",
+        "contracted_output_metric": "attributable_net_profit_yoy_pct",
+        "contracted_output_basis": "reported_attributable_net_profit_prc_gaap_yoy"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_DEDUCTED_NET_PROFIT_H1_YOY",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CNINFO_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:688048:2026h1:1225534249"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "9.3412419506063127029229305805546570920851434904614",
+          "metric": "deducted_attributable_net_profit_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "H1 FY2026"
+          },
+          "basis": "reported_deducted_attributable_net_profit_prc_gaap_yoy",
+          "source_ids": [
+            "S_CNINFO_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "yoy",
+        "contracted_output_metric": "deducted_attributable_net_profit_yoy_pct",
+        "contracted_output_basis": "reported_deducted_attributable_net_profit_prc_gaap_yoy"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_OPERATING_CASH_FLOW_H1_YOY",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_CNINFO_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "cninfo:688048:2026h1:1225534249"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-459.87520659300841919665419076176777089669777703974",
+          "metric": "operating_cash_flow_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "H1 FY2026"
+          },
+          "basis": "reported_consolidated_prc_gaap_yoy",
+          "source_ids": [
+            "S_CNINFO_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "yoy",
+        "contracted_output_metric": "operating_cash_flow_yoy_pct",
+        "contracted_output_basis": "reported_consolidated_prc_gaap_yoy"
+      },
+      "issues": []
+    }
+  ]
+}
