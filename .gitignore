@@ -31,6 +31,11 @@ artifacts/*
 !artifacts/weekly_chain_tracking/**
 !artifacts/company_tracking/
 !artifacts/company_tracking/**
+
+# 本次清理的临时资料
+/.tmp_changyingtong_688143_20260831/
+/.tmp_ai_chain_workbook_update_20260830/
+/artifacts/company_tracking/.run_validation_snapshot.tmp
 ._static_js_static_js_*.js
 q4_attendee_*.html
 q4_chunk_*.js

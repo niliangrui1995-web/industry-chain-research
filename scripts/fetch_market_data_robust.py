@@ -13,6 +13,8 @@ print(f"有效股票总数: {len(valid_df)}")
 
 def get_secid(code):
     code_str = str(code).zfill(6)
+    if code_str.startswith('92'):
+        return f"0.{code_str}"
     if code_str.startswith('6') or code_str.startswith('9'):
         return f"1.{code_str}"
     elif code_str.startswith('0') or code_str.startswith('3'):
