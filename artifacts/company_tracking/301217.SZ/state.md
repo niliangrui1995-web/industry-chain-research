@@ -115,3 +115,9 @@ not_investment_advice: true
 - 龙虎榜 / 大宗交易：对 2026-08-26 的二级查询均返回 `code=9201` 空结果；深交所 annList 返回 HTTP 500，故未将其表述为官方零记录。
 - 相对基线：基本面主线从“高端品供货/产量线索”增加到中报分产品收入、毛利率和高频高速基板用铜箔占比的硬证据，但 HVLP 代际、客户、订单、独立收入与现金转化仍缺口显著，整体状态维持 `watch`。
 - 来源：2026 年半年度报告 https://static.cninfo.com.cn/finalpage/2026-08-27/1225509625.PDF；中期利润分配预案 https://static.cninfo.com.cn/finalpage/2026-08-27/1225509705.PDF；董事会秘书聘任 https://static.cninfo.com.cn/finalpage/2026-08-27/1225509704.PDF。
+
+## 2026-09-03 晚间日更
+
+- 公告窗口：CNINFO 公司名查询为 0；SZSE annList 返回 HTTP 500，作为 source_gap 保留。
+- 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0。
+- 联网观察：未发现 HVLP/RTF 分代、客户、订单、收入、毛利率、经营现金流或回款的新硬证据；高频高速基板用铜箔的既有公司级事实不外推为 HVLP 代际兑现，thesis_effect=unchanged。

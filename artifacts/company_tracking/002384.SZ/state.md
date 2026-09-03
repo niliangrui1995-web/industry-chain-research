@@ -360,3 +360,9 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 公告窗口：北京时间 20:00 后核验 `2026-08-24` 与 `2026-08-25`；CNINFO 查询为 0、深交所 `annList` 返回 HTTP 500，均保留来源边界。公司当日业绩说明会的《投资者关系活动记录表》由公开 PDF 镜像取得并完成文本/文件签名核验；原始 CNINFO 或公司 IR URL 尚未取得，故按 `confirmed_secondary` 的公司管理层主张记录。
 - 管理层主张：公司称 1.6T 光模块已向客户供货；AI PCB 产品面向 AI 交换机、加速卡等场景，服务国内外主流 AI 服务器及 ODM 厂商，配套产线正稳步释放产能；对 NPO/CPO 仅称持续跟踪并开展预研。公司同时明确具体客户、订单、出货、良率、销量、价格、供应链商业细节及未来业绩不便披露。
 - 相对基线：这补充了管理层对产品供货、AI PCB 应用和前沿技术储备的最新口径，但没有新增可核验的具名客户、订单金额、分产品收入、毛利率、良率或产能数据；光模块和 AI PCB 的商业化阶段及基本面 thesis 均 `unchanged`。
+
+## 2026-09-03 晚间日更
+
+- 公告窗口：CNINFO 公司名查询 0；SZSE annList 返回 HTTP 500，作为 source_gap 保留。
+- 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0。
+- 相对基线：未出现新增回购、并购整合、光电互连客户、订单、收入、毛利率或良率硬证据，thesis_effect=unchanged。

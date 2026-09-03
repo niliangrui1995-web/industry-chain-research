@@ -188,3 +188,9 @@ multi_agent_status: used_by_explicit_user_permission
 - 公告窗口：北京时间 20:00 后核验 `2026-08-21` 与 `2026-08-22`；CNINFO 为 0，深交所 annList TLS 连接失败并按 `source_gap` 保留；龙虎榜和大宗交易二级查询均为 0。
 - 联网观察：最近 24 小时结果主要为行情、储能/AIDC 题材和既有 8 月 14 日募集资金专户注销公告，没有公司确认的 AIDC 客户、订单、收入占比、毛利率或交付节奏增量。
 - 相对基线：AIDC 电源主线维持 `watch+ / catalyst_watch`，`thesis_effect=unchanged`。
+
+## 2026-09-03 晚间日更
+
+- 公告窗口：CNINFO 再确认《继续使用部分闲置募集资金进行现金管理》及《为子公司提供担保的进展》两份公告；两项已在上一轮 T+1 事件台账中存在，本轮不重复追加。
+- 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0；SZSE annList 返回 HTTP 500。
+- 相对基线：理财续作与子公司授信担保是资金/风险观察，不构成 AIDC 客户、订单、收入、毛利率或现金回款证据；继续跟踪高资产负债率子公司融资和偿债现金流，thesis_effect=unchanged。

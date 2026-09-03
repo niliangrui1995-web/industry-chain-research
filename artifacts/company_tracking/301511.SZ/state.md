@@ -486,3 +486,9 @@ open_web_fallback_status: no_signal_2026-07-20
 - 公告窗口：北京时间 20:00 后完成 `2026-08-25` 与 `2026-08-26` 的 T/T+1 核验；CNINFO 无新增，深交所 `annList` 返回 HTTP 500，保留为 `source_gap`。龙虎榜与大宗交易二级查询均为 `code=9201` 空结果。
 - 可信媒体观察：证券时报/人民财讯转述公司互动平台回复称，子公司烁金公司的表面处理机可补充 HVLP 系列铜箔扩产需求，且调试效率较高。由于未取得原始互动易材料，且没有设备产能、投用、HVLP 客户、订单、销量、收入或毛利率数据，本条仅记录为 `management_claim_change`。
 - 相对基线：该表述不改变 `DF-03` 的扩产/融资执行判断，更不证明 HVLP/RTF 已形成新增客户或财务兑现；基本面 `thesis_effect=unchanged`，继续跟踪原始互动易、设备投用及分产品经营数据。
+
+## 2026-09-03 晚间日更
+
+- 公告窗口：CNINFO 公司名查询 0；SZSE annList 返回 HTTP 500，作为 source_gap 保留。
+- 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0。
+- 相对基线：未出现回购终止、减持完成之后的新增筹码、HVLP/RTF 客户、订单、分产品收入、毛利率或回款事实，thesis_effect=unchanged。
