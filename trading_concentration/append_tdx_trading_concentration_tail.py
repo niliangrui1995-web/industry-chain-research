@@ -329,6 +329,7 @@ def build_append_manifest(
     denominator_tail: TailRead,
     comparison_index_file: builder.FileSnapshot,
     comparison_index_tail: TailRead,
+    comparison_index_close_by_date: dict[int, float],
     ai_chain_series_records: list[dict[str, Any]],
     ai_chain_universe: builder.AIChainUniverse,
     ai_chain_candidates: list[builder.FileSnapshot],
@@ -378,11 +379,10 @@ def build_append_manifest(
     manifest["skipped_candidate_files"] = combined_skipped
     manifest["omitted_dates"] = omitted_dates
 
-    comparison_index_input = manifest.get("comparison_index_input")
-    if not isinstance(comparison_index_input, dict):
-        raise ValueError("既有 manifest 缺少 comparison_index_input")
-    comparison_index_input["missing_output_records"] = sum(
-        record.get("chinext_close") is None for record in records
+    manifest["comparison_index_input"] = builder.build_comparison_index_input(
+        comparison_index_file=comparison_index_file,
+        comparison_index_close_by_date=comparison_index_close_by_date,
+        records=records,
     )
     manifest["ai_chain_series"] = builder.build_ai_chain_manifest(
         ai_chain_series_records, ai_chain_universe, ai_chain_candidates
@@ -448,6 +448,9 @@ def run_append(
     comparison_index_tail = read_tail_day_records(
         comparison_index_file.path, after_date=watermark, label="sz399006"
     )
+    comparison_index_close_by_date = builder.close_by_date(
+        builder.read_day_array(comparison_index_file.path, label="sz399006"), label="sz399006"
+    )
     denominator_amounts = builder.amount_by_date(denominator_tail.records, label="sh880008")
     denominator_rows, denominator_omitted = build_tail_denominator_rows(
         denominator_amounts, after_date=watermark
@@ -510,6 +513,7 @@ def run_append(
         denominator_tail=denominator_tail,
         comparison_index_file=comparison_index_file,
         comparison_index_tail=comparison_index_tail,
+        comparison_index_close_by_date=comparison_index_close_by_date,
         ai_chain_series_records=ai_chain_series_records,
         ai_chain_universe=ai_chain_universe,
         ai_chain_candidates=ai_chain_candidates,
@@ -525,11 +529,22 @@ def run_append(
         [*candidates, *denominator_files.values(), comparison_index_file]
     )
     payload_path, manifest_path, csv_path = builder.write_bundle(
-        output_directory, payload, manifest, records
+        output_directory,
+        payload,
+        manifest,
+        records,
+        comparison_index_file=comparison_index_file,
+        comparison_index_close_by_date=comparison_index_close_by_date,
     )
     if publish_directory is not None:
         builder.publish_bundle_atomically(payload_path, manifest_path, publish_directory)
-    verified_manifest = builder.verify_artifact_bundle(payload_path, manifest_path, csv_path)
+    verified_manifest = builder.verify_artifact_bundle(
+        payload_path,
+        manifest_path,
+        csv_path,
+        comparison_index_file=comparison_index_file,
+        comparison_index_close_by_date=comparison_index_close_by_date,
+    )
     return {
         "status": "updated",
         "watermark_date": builder.compact_date_to_iso(watermark),

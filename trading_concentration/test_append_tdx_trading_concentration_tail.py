@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import struct
 import subprocess
@@ -7,6 +8,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -191,6 +193,24 @@ class TradingConcentrationTailAppendTests(unittest.TestCase):
             self.assertEqual(manifest["append_checkpoint"]["last_denominator_date"], "2022-08-02")
             self.assertEqual(manifest["denominator_segments"][0]["end"], "2022-08-02")
             self.assertEqual(manifest["numerator_segments"][1]["end"], "2022-08-02")
+            comparison_index_input = manifest["comparison_index_input"]
+            comparison_index_path = sz_dir / "sz399006.day"
+            self.assertEqual(
+                comparison_index_input["data_range"],
+                {"start": "2022-07-29", "end": "2022-08-02"},
+            )
+            self.assertEqual(comparison_index_input["bytes"], comparison_index_path.stat().st_size)
+            self.assertEqual(
+                comparison_index_input["sha256"],
+                hashlib.sha256(comparison_index_path.read_bytes()).hexdigest(),
+            )
+            self.assertEqual(
+                comparison_index_input["last_write_time_utc"],
+                datetime.fromtimestamp(
+                    comparison_index_path.stat().st_mtime_ns / 1_000_000_000,
+                    tz=timezone.utc,
+                ).isoformat(timespec="seconds"),
+            )
             self.assertEqual({path.name for path in output_dir.iterdir()}, {PAYLOAD_FILENAME, MANIFEST_FILENAME, CSV_FILENAME})
 
             before_rerun = {name: (output_dir / name).read_bytes() for name in (PAYLOAD_FILENAME, MANIFEST_FILENAME, CSV_FILENAME)}

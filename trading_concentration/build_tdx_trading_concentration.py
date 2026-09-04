@@ -746,6 +746,38 @@ def build_payload(
     }
 
 
+def build_comparison_index_input(
+    *,
+    comparison_index_file: FileSnapshot,
+    comparison_index_close_by_date: dict[int, float],
+    records: list[dict[str, object]],
+) -> dict[str, object]:
+    comparison_index_dates = sorted(comparison_index_close_by_date)
+    if not comparison_index_dates:
+        raise ValueError("创业板指输入没有有效收盘价")
+    return {
+        "code": "399006",
+        "name": "创业板指",
+        "field": "chinext_close",
+        "value": "收盘价",
+        "price_scale": "close / 100",
+        "source": "通达信本地盘后 .day 日线",
+        "path": str(comparison_index_file.path),
+        "bytes": comparison_index_file.size,
+        "sha256": sha256_file(comparison_index_file.path),
+        "last_write_time_utc": datetime.fromtimestamp(
+            comparison_index_file.mtime_ns / 1_000_000_000, tz=timezone.utc
+        ).isoformat(timespec="seconds"),
+        "data_range": {
+            "start": compact_date_to_iso(comparison_index_dates[0]),
+            "end": compact_date_to_iso(comparison_index_dates[-1]),
+        },
+        "missing_output_records": sum(
+            record.get("chinext_close") is None for record in records
+        ),
+    }
+
+
 def build_manifest(
     *,
     records: list[dict[str, object]],
@@ -773,28 +805,11 @@ def build_manifest(
         }
         for name, snapshot in denominator_files.items()
     }
-    comparison_index_dates = sorted(comparison_index_close_by_date)
-    comparison_index_input = {
-        "code": "399006",
-        "name": "创业板指",
-        "field": "chinext_close",
-        "value": "收盘价",
-        "price_scale": "close / 100",
-        "source": "通达信本地盘后 .day 日线",
-        "path": str(comparison_index_file.path),
-        "bytes": comparison_index_file.size,
-        "sha256": sha256_file(comparison_index_file.path),
-        "last_write_time_utc": datetime.fromtimestamp(
-            comparison_index_file.mtime_ns / 1_000_000_000, tz=timezone.utc
-        ).isoformat(timespec="seconds"),
-        "data_range": {
-            "start": compact_date_to_iso(comparison_index_dates[0]),
-            "end": compact_date_to_iso(comparison_index_dates[-1]),
-        },
-        "missing_output_records": sum(
-            record.get("chinext_close") is None for record in records
-        ),
-    }
+    comparison_index_input = build_comparison_index_input(
+        comparison_index_file=comparison_index_file,
+        comparison_index_close_by_date=comparison_index_close_by_date,
+        records=records,
+    )
     return {
         "schema_version": "1",
         "generated_at_beijing": generated_at,
@@ -988,7 +1003,16 @@ def verify_ai_chain_series(
         raise ValueError("AI 产业链成员集合指纹不一致")
 
 
-def verify_artifact_bundle(payload_path: Path, manifest_path: Path, csv_path: Path) -> dict[str, object]:
+def verify_artifact_bundle(
+    payload_path: Path,
+    manifest_path: Path,
+    csv_path: Path,
+    *,
+    comparison_index_file: FileSnapshot | None = None,
+    comparison_index_close_by_date: dict[int, float] | None = None,
+) -> dict[str, object]:
+    if (comparison_index_file is None) != (comparison_index_close_by_date is None):
+        raise ValueError("创业板指输入快照与收盘价映射必须同时提供")
     payload = json.loads(payload_path.read_text(encoding="utf-8"))
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict) or not isinstance(manifest, dict):
@@ -1061,13 +1085,66 @@ def verify_artifact_bundle(payload_path: Path, manifest_path: Path, csv_path: Pa
     comparison_index = manifest.get("comparison_index_input")
     if not isinstance(comparison_index, dict):
         raise ValueError("manifest 缺少创业板指输入说明")
-    if comparison_index.get("code") != "399006" or comparison_index.get("field") != "chinext_close":
+    if (
+        comparison_index.get("code") != "399006"
+        or comparison_index.get("name") != "创业板指"
+        or comparison_index.get("field") != "chinext_close"
+        or comparison_index.get("value") != "收盘价"
+        or comparison_index.get("price_scale") != "close / 100"
+    ):
         raise ValueError("manifest 创业板指字段说明不一致")
     if comparison_index.get("source") != "通达信本地盘后 .day 日线":
         raise ValueError("manifest 创业板指来源说明不一致")
+    if not isinstance(comparison_index.get("path"), str) or not comparison_index["path"]:
+        raise ValueError("manifest 创业板指输入路径无效")
+    if (
+        not isinstance(comparison_index.get("bytes"), int)
+        or isinstance(comparison_index["bytes"], bool)
+        or comparison_index["bytes"] <= 0
+    ):
+        raise ValueError("manifest 创业板指输入字节数无效")
+    if not isinstance(comparison_index.get("sha256"), str) or re.fullmatch(
+        r"[0-9a-f]{64}", comparison_index["sha256"]
+    ) is None:
+        raise ValueError("manifest 创业板指输入 SHA-256 无效")
+    last_write_time = comparison_index.get("last_write_time_utc")
+    if not isinstance(last_write_time, str):
+        raise ValueError("manifest 创业板指输入写入时间无效")
+    try:
+        parsed_last_write_time = datetime.fromisoformat(last_write_time)
+    except ValueError as exc:
+        raise ValueError("manifest 创业板指输入写入时间无效") from exc
+    if parsed_last_write_time.utcoffset() != timedelta(0):
+        raise ValueError("manifest 创业板指输入写入时间必须是 UTC")
+    comparison_range = comparison_index.get("data_range")
+    if not isinstance(comparison_range, dict):
+        raise ValueError("manifest 创业板指输入日期范围无效")
+    comparison_start = _strict_iso_date(
+        comparison_range.get("start"), "comparison_index_input.data_range.start"
+    )
+    comparison_end = _strict_iso_date(
+        comparison_range.get("end"), "comparison_index_input.data_range.end"
+    )
+    if comparison_start > comparison_end:
+        raise ValueError("manifest 创业板指输入日期范围倒置")
+    output_chinext_dates = [
+        record["date"] for record in records if record.get("chinext_close") is not None
+    ]
+    if output_chinext_dates and (
+        comparison_start > output_chinext_dates[0] or comparison_end < output_chinext_dates[-1]
+    ):
+        raise ValueError("manifest 创业板指输入日期范围未覆盖 chinext_close 输出")
     missing_chinext = sum(record.get("chinext_close") is None for record in records)
     if comparison_index.get("missing_output_records") != missing_chinext:
         raise ValueError("manifest 创业板指缺口统计不一致")
+    if comparison_index_file is not None and comparison_index_close_by_date is not None:
+        expected_comparison_index_input = build_comparison_index_input(
+            comparison_index_file=comparison_index_file,
+            comparison_index_close_by_date=comparison_index_close_by_date,
+            records=records,
+        )
+        if comparison_index != expected_comparison_index_input:
+            raise ValueError("manifest 创业板指输入元数据与当前快照不一致")
     verify_ai_chain_series(payload, manifest, records)
     return manifest
 
@@ -1077,6 +1154,9 @@ def write_bundle(
     payload: dict[str, object],
     manifest: dict[str, object],
     records: list[dict[str, object]],
+    *,
+    comparison_index_file: FileSnapshot | None = None,
+    comparison_index_close_by_date: dict[int, float] | None = None,
 ) -> tuple[Path, Path, Path]:
     payload_path = output_directory / PAYLOAD_FILENAME
     manifest_path = output_directory / MANIFEST_FILENAME
@@ -1087,7 +1167,13 @@ def write_bundle(
     completed_manifest["payload_sha256"] = sha256_file(payload_path)
     completed_manifest["csv_sha256"] = sha256_file(csv_path)
     atomic_write_bytes(json_bytes(completed_manifest), manifest_path)
-    verify_artifact_bundle(payload_path, manifest_path, csv_path)
+    verify_artifact_bundle(
+        payload_path,
+        manifest_path,
+        csv_path,
+        comparison_index_file=comparison_index_file,
+        comparison_index_close_by_date=comparison_index_close_by_date,
+    )
     return payload_path, manifest_path, csv_path
 
 
@@ -1207,10 +1293,23 @@ def main() -> None:
         skipped_candidate_files=skipped_candidate_files,
         omitted_dates=[*denominator_omitted, *numerator_omitted],
     )
-    payload_path, manifest_path, csv_path = write_bundle(output_directory, payload, manifest, records)
+    payload_path, manifest_path, csv_path = write_bundle(
+        output_directory,
+        payload,
+        manifest,
+        records,
+        comparison_index_file=comparison_index_file,
+        comparison_index_close_by_date=chinext_close_by_date,
+    )
     if args.publish_dir:
         publish_bundle_atomically(payload_path, manifest_path, Path(args.publish_dir).resolve())
-    verified_manifest = verify_artifact_bundle(payload_path, manifest_path, csv_path)
+    verified_manifest = verify_artifact_bundle(
+        payload_path,
+        manifest_path,
+        csv_path,
+        comparison_index_file=comparison_index_file,
+        comparison_index_close_by_date=chinext_close_by_date,
+    )
     print(
         json.dumps(
             {
