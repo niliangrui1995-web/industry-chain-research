@@ -348,3 +348,9 @@ CNINFO 2026-05-14 未见新公告，最新硬公告仍为 2026-05-13 股票交�
 - 公告窗口：北京时间 20:00 后核验 2026-09-03 与 2026-09-04；CNINFO 公司名查询为 0，SZSE annList 返回 HTTP 500，保留为 source_gap。
 - 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0。
 - 联网观察：未发现可升级为 InP 合同交付、验收、收入或回款的新硬证据；基本面 thesis_effect=unchanged。
+
+## 2026-09-05 日更（20:00 前）
+
+- 公告与交易：对最近完整交易日 2026-09-04，CNINFO 公司名查询为 0，SZSE annList 返回 HTTP 500（source_gap）；龙虎榜和大宗交易官方逐公司查询均为 recordcount=0。
+- 待核验观察：公开网页镜像出现 9 月 4 日投资者关系记录，含 InP 市场需求、扩产和认证等管理层表述；未取得 CNINFO/SZSE 原始链接，且无具名客户、订单、交付、收入或回款，保持 observation_only。
+- 相对基线：匿名 InP 长协仍为 `design_win`，不升格为 `shipment` 或 `revenue`；北京时间 20:00 后仍需复扫当日和 T+1 窗口。

@@ -366,3 +366,9 @@ Batch 2 fallback：`open_web_fallback_status: open_web_fallback_searched_observa
 - 公告窗口：CNINFO 公司名查询 0；SZSE annList 返回 HTTP 500，作为 source_gap 保留。
 - 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0。
 - 相对基线：未出现新增回购、并购整合、光电互连客户、订单、收入、毛利率或良率硬证据，thesis_effect=unchanged。
+
+## 2026-09-05 日更（20:00 前）
+
+- 公告与交易：CNINFO 对 2026-09-04 至 2026-09-05 查询为 0，SZSE annList 返回 HTTP 500（source_gap）；2026-09-04 龙虎榜和大宗交易官方逐公司查询均为 recordcount=0。
+- 补入账核验：CNINFO 9 月 2 日《回购股份进展公告》显示截至 8 月 31 日累计回购 255,200 股、金额 49,994,780 元，与此前 7 月末累计数据一致，8 月未见新增实际回购，故仅更新状态、不重复追加 event。
+- 相对基线：资本配置和光电互连客户、订单、收入、毛利率、良率证据均无实质变化，`thesis_effect=unchanged`；晚间复扫待完成。

@@ -121,3 +121,9 @@ not_investment_advice: true
 - 公告窗口：CNINFO 公司名查询为 0；SZSE annList 返回 HTTP 500，作为 source_gap 保留。
 - 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0。
 - 联网观察：未发现 HVLP/RTF 分代、客户、订单、收入、毛利率、经营现金流或回款的新硬证据；高频高速基板用铜箔的既有公司级事实不外推为 HVLP 代际兑现，thesis_effect=unchanged。
+
+## 2026-09-05 日更（20:00 前）
+
+- CNINFO 公司名查询为 0，SZSE annList 返回 HTTP 500（source_gap）；2026-09-04 龙虎榜和大宗交易官方逐公司查询均为 recordcount=0。
+- 公开网页仅见价格或板块信息，未发现可验证的 HVLP/RTF 分代、客户、订单、收入、毛利率、现金流或回款新事实。
+- 相对基线：高频高速基板用铜箔的既有公司级事实不外推为 HVLP 代际兑现，`thesis_effect=unchanged`；晚间复扫待完成。

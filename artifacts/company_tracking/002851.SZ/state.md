@@ -194,3 +194,9 @@ multi_agent_status: used_by_explicit_user_permission
 - 公告窗口：CNINFO 再确认《继续使用部分闲置募集资金进行现金管理》及《为子公司提供担保的进展》两份公告；两项已在上一轮 T+1 事件台账中存在，本轮不重复追加。
 - 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0；SZSE annList 返回 HTTP 500。
 - 相对基线：理财续作与子公司授信担保是资金/风险观察，不构成 AIDC 客户、订单、收入、毛利率或现金回款证据；继续跟踪高资产负债率子公司融资和偿债现金流，thesis_effect=unchanged。
+
+## 2026-09-05 日更（20:00 前）
+
+- CNINFO 公司名查询为 0，SZSE annList 返回 HTTP 500（source_gap）；2026-09-04 龙虎榜和大宗交易官方逐公司查询均为 recordcount=0。
+- 公开网页仅复核上一轮已入账的资金管理及子公司担保事项，未发现新的法定经营或交易事实。
+- 相对基线：AIDC 客户、订单、收入、毛利率、回款以及子公司融资/偿债现金流证据边界不变，`thesis_effect=unchanged`；晚间复扫待完成。

@@ -181,3 +181,9 @@ multi_agent_status: not_used_by_policy
 - 公告窗口：CNINFO 公司名查询为 0，SZSE annList 返回 HTTP 500，作为 source_gap 保留；公司 IR 页面本轮未见同日原始调研记录。
 - 联网观察：公开网页转述 9 月 3 日机构调研中的订单饱满、较高产能利用率、MLCC 高端化和毛利率口径；未取得发行人原始 IR，且无 AI 算力/高容 MLCC 客户、订单、收入、ASP、毛利率或回款拆分，只作待核验 management_claim 线索。
 - 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0；thesis_effect=unchanged。
+
+## 2026-09-05 日更（20:00 前）
+
+- 公司官网原始《投资者关系活动记录表（2026-04）》确认 9 月 1—2 日券商策略会中管理层称性能类产品已通过客户认证、行业景气向上、价格平稳、订单饱满、产能利用率较高，并称服务器方向产品可适配服务器电源场景；该管理层口径已入账。
+- 边界：原文未披露服务器/AI算力或高端MLCC的具名客户、订单、销量、收入、ASP、毛利率或回款，也明确交流不涉及应披露重大信息；不升级为经营兑现事实。
+- CNINFO 2026-09-04 至 09-05 公司名查询为 0，SZSE annList HTTP 500 为 source_gap；龙虎榜和大宗交易官方逐公司查询均为 recordcount=0。`thesis_effect=unchanged`，晚间复扫待完成。

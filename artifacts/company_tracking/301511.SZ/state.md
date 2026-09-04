@@ -492,3 +492,9 @@ open_web_fallback_status: no_signal_2026-07-20
 - 公告窗口：CNINFO 公司名查询 0；SZSE annList 返回 HTTP 500，作为 source_gap 保留。
 - 龙虎榜/大宗交易：SZSE ShowReport 对 9 月 3 日逐公司查询均为 recordcount=0。
 - 相对基线：未出现回购终止、减持完成之后的新增筹码、HVLP/RTF 客户、订单、分产品收入、毛利率或回款事实，thesis_effect=unchanged。
+
+## 2026-09-05 日更（20:00 前）
+
+- 公告与交易：CNINFO 公司名查询为 0，SZSE annList 返回 HTTP 500（source_gap）；2026-09-04 龙虎榜和大宗交易官方逐公司查询均为 recordcount=0。
+- 9 月 4 日除权除息为既有权益分派安排，未发现新的经营、客户、订单或收入披露。
+- 相对基线：HVLP/RTF 的客户、收入和回款边界不变，`thesis_effect=unchanged`；晚间复扫待完成。
