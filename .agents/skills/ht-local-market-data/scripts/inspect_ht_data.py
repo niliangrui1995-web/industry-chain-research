@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import re
+import stat
 import struct
 import sys
 import time
@@ -18,15 +19,6 @@ from typing import Any
 
 DAY_STRUCT = struct.Struct("<IIIIIfII")
 LC1_STRUCT = struct.Struct("<HHfffffII")
-SKIPPED_TOP_DIRS = {
-    "htlog",
-    "T0001",
-    "lct",
-    "funcs_jy",
-    "chrome",
-    "chrome49",
-    "华泰证券网上交易委托系统",
-}
 REQUIRED_DATA_DIRS = (
     Path("vipdoc") / "sh" / "lday",
     Path("vipdoc") / "sz" / "lday",
@@ -50,6 +42,61 @@ HQ_CACHE_FILES = [
     "fundstk.dat",
     "gbbq",
 ]
+MARKET_FILE_RULES = {
+    **{f"vipdoc/{market}/lday": rf"{market}\d{{6}}\.day" for market in ("sh", "sz", "bj", "ds")},
+    **{f"vipdoc/{market}/minline": rf"{market}\d{{6}}\.lc1" for market in ("sh", "sz", "bj")},
+    "vipdoc/cw": r"(?:gpcw\d{8}\.(?:zip|dat)|gp\d{6}\.dat)",
+    "T0002/blocknew": r"(?:[^/\\]+\.blk|blocknew\.cfg)",
+    "T0002/hq_cache": "(?:" + "|".join(re.escape(name) for name in HQ_CACHE_FILES) + ")",
+}
+
+
+def is_plain_path(root: Path, path: Path, *, directory: bool = False) -> bool:
+    """Reject symbolic links and Windows reparse points before following paths."""
+    root = root.absolute()
+    path = path.absolute()
+    try:
+        relative = path.relative_to(root)
+    except ValueError:
+        return False
+    if ".." in relative.parts:
+        return False
+    # Include root ancestors: an otherwise ordinary root may itself sit below a
+    # junction. lstat inspects the link, never its target.
+    current = Path(path.anchor)
+    parts = path.parts[1:]
+    for index, part in enumerate(parts):
+        current /= part
+        try:
+            info = current.lstat()
+        except OSError:
+            return False
+        if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+            return False
+        want_directory = index < len(parts) - 1 or directory
+        if not (stat.S_ISDIR(info.st_mode) if want_directory else stat.S_ISREG(info.st_mode)):
+            return False
+    return True
+
+
+def market_files(root: Path, relative_dir: str) -> list[Path]:
+    """Enumerate one approved data folder; filter names before querying metadata."""
+    pattern = MARKET_FILE_RULES[relative_dir]
+    directory = root / relative_dir
+    if not is_plain_path(root, directory, directory=True):
+        return []
+    return sorted(
+        path for path in directory.iterdir()
+        if re.fullmatch(pattern, path.name, flags=re.IGNORECASE)
+        and is_plain_path(root, path)
+    )
+
+
+def valid_sample_code(code: str) -> str:
+    code_l = code.lower()
+    if not re.fullmatch(r"(?:sh|sz|bj|ds)\d{6}", code_l):
+        raise ValueError("invalid market-prefixed sample code")
+    return code_l
 
 
 def fmt_time(ts: float | int | None) -> str | None:
@@ -85,18 +132,15 @@ def safe_stat(path: Path) -> dict[str, Any]:
 
 def summarize_top_dirs(root: Path) -> dict[str, Any]:
     dirs: dict[str, Any] = {}
-    for top in sorted((p for p in root.iterdir() if p.is_dir()), key=lambda p: p.name.lower()):
-        if top.name in SKIPPED_TOP_DIRS:
-            dirs[top.name] = {"skipped": True, "reason": "software/account/log/runtime boundary"}
-            continue
+    for top in ("vipdoc", "T0002"):
         count = 0
         size = 0
         latest = 0.0
         exts: Counter[str] = Counter()
-        for dirpath, dirnames, filenames in os.walk(top):
-            dirnames[:] = [d for d in dirnames if d not in SKIPPED_TOP_DIRS]
-            for name in filenames:
-                fp = Path(dirpath) / name
+        for relative_dir in MARKET_FILE_RULES:
+            if not relative_dir.startswith(top + "/"):
+                continue
+            for fp in market_files(root, relative_dir):
                 try:
                     st = fp.stat()
                 except OSError:
@@ -105,7 +149,7 @@ def summarize_top_dirs(root: Path) -> dict[str, Any]:
                 size += st.st_size
                 latest = max(latest, st.st_mtime)
                 exts[fp.suffix.lower() or "<noext>"] += 1
-        dirs[top.name] = {
+        dirs[top] = {
             "files": count,
             "size_mb": round(size / 1024 / 1024, 2),
             "latest_mtime": fmt_time(latest),
@@ -146,10 +190,7 @@ def summarize_day(root: Path, codes: list[str]) -> dict[str, Any]:
     samples: list[dict[str, Any]] = []
 
     for market in ("sh", "sz", "bj", "ds"):
-        day_dir = root / "vipdoc" / market / "lday"
-        if not day_dir.exists():
-            continue
-        for path in day_dir.glob("*.day"):
+        for path in market_files(root, f"vipdoc/{market}/lday"):
             st = path.stat()
             if st.st_size == 0 or st.st_size % DAY_STRUCT.size:
                 bad.append({"file": rel(path, root), "size": st.st_size})
@@ -175,9 +216,9 @@ def summarize_day(root: Path, codes: list[str]) -> dict[str, Any]:
             record_buckets[bucket] += 1
 
     for code in codes:
-        code_l = code.lower()
+        code_l = valid_sample_code(code)
         path = root / "vipdoc" / code_l[:2] / "lday" / f"{code_l}.day"
-        if not path.exists():
+        if not is_plain_path(root, path):
             samples.append({"code": code, "exists": False})
             continue
         st = path.stat()
@@ -219,10 +260,7 @@ def summarize_lc1(root: Path, codes: list[str]) -> dict[str, Any]:
     samples: list[dict[str, Any]] = []
 
     for market in ("sh", "sz", "bj"):
-        min_dir = root / "vipdoc" / market / "minline"
-        if not min_dir.exists():
-            continue
-        for path in min_dir.glob("*.lc1"):
+        for path in market_files(root, f"vipdoc/{market}/minline"):
             total += 1
             st = path.stat()
             if st.st_size == 0 or st.st_size % LC1_STRUCT.size:
@@ -238,9 +276,11 @@ def summarize_lc1(root: Path, codes: list[str]) -> dict[str, Any]:
             latest[str(date)] += 1
 
     for code in codes:
-        code_l = code.lower()
+        code_l = valid_sample_code(code)
+        if code_l.startswith("ds"):
+            continue
         path = root / "vipdoc" / code_l[:2] / "minline" / f"{code_l}.lc1"
-        if not path.exists():
+        if not is_plain_path(root, path):
             continue
         st = path.stat()
         with path.open("rb") as fh:
@@ -279,10 +319,11 @@ def summarize_lc1(root: Path, codes: list[str]) -> dict[str, Any]:
 
 def summarize_cw(root: Path) -> dict[str, Any]:
     cw_dir = root / "vipdoc" / "cw"
-    if not cw_dir.exists():
+    if not is_plain_path(root, cw_dir, directory=True):
         return {"exists": False}
 
-    zip_files = sorted(cw_dir.glob("*.zip"))
+    cw_files = market_files(root, "vipdoc/cw")
+    zip_files = [path for path in cw_files if path.suffix.lower() == ".zip"]
     zero_zip: list[str] = []
     bad_zip: list[dict[str, Any]] = []
     checked = 0
@@ -318,7 +359,7 @@ def summarize_cw(root: Path) -> dict[str, Any]:
         "bad_zip_sample": bad_zip[:20],
         "latest_mtime": fmt_time(latest),
         "latest_zip_sample": tail,
-        "per_stock_dat_count": len(list(cw_dir.glob("gp*.dat"))),
+        "per_stock_dat_count": sum(bool(re.fullmatch(r"gp\d{6}\.dat", path.name, flags=re.IGNORECASE)) for path in cw_files),
     }
 
 
@@ -339,11 +380,13 @@ def normalize_blk_code(line: str) -> str | None:
 
 def summarize_blocknew(root: Path, include_samples: bool) -> dict[str, Any]:
     block_dir = root / "T0002" / "blocknew"
-    if not block_dir.exists():
+    if not is_plain_path(root, block_dir, directory=True):
         return {"exists": False}
 
     blocks: list[dict[str, Any]] = []
-    for path in sorted(block_dir.glob("*.blk")):
+    for path in market_files(root, "T0002/blocknew"):
+        if path.suffix.lower() != ".blk":
+            continue
         data = path.read_bytes()
         text, enc = decode_text(data)
         codes = [code for code in (normalize_blk_code(line) for line in text.splitlines()) if code]
@@ -360,7 +403,7 @@ def summarize_blocknew(root: Path, include_samples: bool) -> dict[str, Any]:
 
     cfg = block_dir / "blocknew.cfg"
     cfg_tokens: list[str] = []
-    if cfg.exists() and include_samples:
+    if include_samples and is_plain_path(root, cfg):
         text, enc = decode_text(cfg.read_bytes())
         cfg_tokens = [token.strip() for token in re.split(r"\x00+", text) if token.strip()][:40]
 
@@ -376,21 +419,22 @@ def summarize_blocknew(root: Path, include_samples: bool) -> dict[str, Any]:
 
 def summarize_hq_cache(root: Path) -> dict[str, Any]:
     hq_dir = root / "T0002" / "hq_cache"
-    if not hq_dir.exists():
+    if not is_plain_path(root, hq_dir, directory=True):
         return {"exists": False}
     files = []
     for name in HQ_CACHE_FILES:
         path = hq_dir / name
-        if path.exists():
+        if is_plain_path(root, path):
             st = path.stat()
             files.append({"file": name, "size": st.st_size, "mtime": fmt_time(st.st_mtime)})
     return {"exists": True, "selected_files": files}
 
 
 def inspect(root: Path, codes: list[str], include_block_samples: bool) -> dict[str, Any]:
-    if not root.is_dir():
+    codes = [valid_sample_code(code) for code in codes]
+    if not is_plain_path(root, root, directory=True):
         raise FileNotFoundError(root)
-    missing = [path for path in REQUIRED_DATA_DIRS if not (root / path).is_dir()]
+    missing = [path for path in REQUIRED_DATA_DIRS if not is_plain_path(root, root / path, directory=True)]
     if missing:
         expected = ", ".join(str(path) for path in REQUIRED_DATA_DIRS)
         raise FileNotFoundError(f"{root} does not contain the required market-data directories: {expected}")
@@ -398,6 +442,8 @@ def inspect(root: Path, codes: list[str], include_block_samples: bool) -> dict[s
     for relative in REQUIRED_DAY_FILES:
         path = root / relative
         try:
+            if not is_plain_path(root, path):
+                raise FileNotFoundError("market-data sentinel is absent or linked")
             tail = parse_day_tail(path, 1)
         except (OSError, ValueError, struct.error):
             invalid_day_files.append(relative)
@@ -408,7 +454,7 @@ def inspect(root: Path, codes: list[str], include_block_samples: bool) -> dict[s
         expected = ", ".join(str(path) for path in REQUIRED_DAY_FILES)
         raise FileNotFoundError(f"{root} does not contain valid .day sentinel files: {expected}")
     hq_dir = root / "T0002" / "hq_cache"
-    if not any((hq_dir / name).is_file() and (hq_dir / name).stat().st_size > 0 for name in HQ_CACHE_FILES):
+    if not any(is_plain_path(root, hq_dir / name) and (hq_dir / name).stat().st_size > 0 for name in HQ_CACHE_FILES):
         raise FileNotFoundError(f"{root} does not contain a nonempty core hq_cache file")
     return {
         "root": str(root),
@@ -425,7 +471,8 @@ def inspect(root: Path, codes: list[str], include_block_samples: bool) -> dict[s
             "blocknew": "secondary_trading_context",
             "financial_cw": "market_data_vendor, not official filings",
         },
-        "privacy_boundary": "Skipped account/trading/log/runtime directories unless explicitly inspected outside this helper.",
+        "scan_scope": {"directory_file_whitelist": MARKET_FILE_RULES, "recursive": False, "follow_reparse_points": False},
+        "privacy_boundary": "仅检查明确行情目录与文件白名单；不枚举其他目录，不查询账户、密码或日志文件元数据，不跟随符号链接或 reparse point。",
     }
 
 

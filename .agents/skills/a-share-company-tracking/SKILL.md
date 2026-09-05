@@ -1,6 +1,6 @@
 ---
 name: a-share-company-tracking
-description: Maintain the 产业链投研 A-share watchlist and durable per-company baseline, falsifiable thesis, management-promise and capital-allocation ledgers, state, events, daily report, and run status. Use for watchlist 日更、公司持续跟踪、baseline 补建、thesis 漂移、事件归因、state/events 更新、completion table 核对或晚间公告复扫. This skill writes only the named project tracking artifacts and does not make external watchlist or trading changes.
+description: 维护本项目 A 股 watchlist 日更、公司基线、thesis 漂移、state/events 和晚间公告复扫。用于持续跟踪与状态写回；单次公司问答不触发，不修改外部 watchlist 或交易状态。
 ---
 
 # A-Share Company Tracking
@@ -17,12 +17,17 @@ description: Maintain the 产业链投研 A-share watchlist and durable per-comp
 
 只处理 `enabled=Y`。保留工作簿原格式和字段；不要触碰未命名的状态文件。
 
+## 按任务读取合同
+
+- 执行完整 watchlist 日更或跟踪自动化时，在业务采集或写入前读取[公司跟踪运行合同](../../../docs/company_tracking/A_SHARE_COMPANY_TRACKING_PROMPT.md)，按其中的命令先完成元数据预检，再于工作簿或事件写入前建立 snapshot，最后运行 validator；只有 `status=passed` 才可报告整轮完成。无新增、来源失败和提前结束也遵守合同中的状态记录要求。
+- 单公司基线补建或指定状态的局部修改只处理用户要求的范围，保留来源、事件追加和工作簿回读检查；不自动扩展为全部 enabled 公司日更，也不创建调度任务。
+
 ## 硬门
 
 1. 把每家公司作为独立工作单元，完成后再汇总；不得用一次泛查询替代逐公司核验。
 2. 官方公告、交易所、CNINFO 和公司 IR 才能更新确认状态；open-web、社交和模型摘要进入观察池，除非被可靠来源确认。
-3. 北京时间 20:00 前运行时记录 `pending_evening_rescan`；20:00 及以后检查公告日期 `T` 和 `T+1`。
-4. completion table 必须覆盖全部 enabled 公司；单家公司失败时记录原因并继续其余公司。
+3. 执行当日日更或公告复扫时，北京时间 20:00 前运行记录 `pending_evening_rescan`；20:00 及以后检查公告日期 `T` 和 `T+1`。
+4. 整轮日更的 completion table 必须覆盖全部 enabled 公司；局部基线或状态修改只核对本次指定公司。单家公司失败时记录原因并继续本次范围内的其余公司。
 5. 行情、龙虎榜、大宗交易和概念原因只改变交易结构判断，不证明业务质量。
 6. 是否使用子代理由当前任务或自动化 prompt 决定；本技能不建立额外固定代理链。
 7. 日更必须区分 `fact_change`、`management_claim_change`、`estimate_change`、`valuation_price_change`、`wording_only` 和 `evidence_gap`；不得把表述、预测或价格变化写成公司硬事实。

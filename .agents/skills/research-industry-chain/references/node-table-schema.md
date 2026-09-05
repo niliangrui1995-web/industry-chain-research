@@ -66,6 +66,8 @@ Alias: `supply_chain_nodes` in the data-interface normalizer.
 
 Strict mode rejects blank/bare semantic placeholders in required fields. `severity` and `status_change` must use the enums shown above. Every hard/soft row must uniquely match a same-node, same-severity, same-time-horizon current evidence check; ledger/check `claim_as_of` must equal top-level `as_of`. The normalizer recomputes eligibility and rejects self-reported status. Historical rows are watch/rejected; future claims use `future_bottleneck_scenarios`.
 
+For hard/soft rows, all repeated evidence fields must equal the authoritative companion after normalization and surrounding-whitespace trimming: demand/supply/gap evidence, constraint mechanism, substitution path, second-source status, relief window, positive validation, counterevidence, key reversal, evidence grade, and source. Use report prose for summaries; changes require an updated and revalidated companion.
+
 ### future_bottleneck_scenarios
 
 | column | type | note |

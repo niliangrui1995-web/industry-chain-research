@@ -98,6 +98,10 @@ Excluded source 不得被 fact 引用，并会原样进入机器结果。
 
 `value * scale` 是内部 base value。允许单位：`currency`、`currency_per_share`、`share`、`percent`、`ratio`、`multiple`、`count`。货币单位必须填写三位币种；其他单位的 `currency` 必须为 `null`。Decimal context 精度为 50；51-200 位输入虽然可解析，但乘 `scale` 后只要触发 `Rounded` 或 `Inexact`，就以 `DECIMAL_PRECISION_LOSS` 拒绝，不能吞掉尾数冲突。
 
+Fact 可另填 `accounting_context`，且填写时三个字段必须完整：`reporting_scope=consolidated|parent_only|standalone`、`accounting_framework=prc_gaap|us_gaap|ifrs`、`measurement_basis=reported|adjusted|issuer_defined`；另允许可选的非空 `measurement_definition`，其他未知字段均拒绝。这些字段必须来自 fact 对应报表及指标定义，不能从公司 ticker 或常识推定。`accounting_framework` 表示底层报表准则；AFFO 等派生指标仍保留自身 `basis` 和计量性质，不能因其底层报表为 US GAAP 就称 AFFO 为 GAAP 指标。
+
+为兼容已有完整口径，未填写 `accounting_context` 时，仅精确匹配 `<reported|adjusted>_<consolidated|parent_only|parent|standalone>_<prc_gaap|us_gaap|ifrs>` 的 basis 可解析出等价元数据，其中 `parent` 等价于 `parent_only`。显式元数据不得覆盖该 basis 已表达的范围或准则；冲突报 `BASIS_MISMATCH`。其他 basis（如 `reported_affo`）不自动假定范围，参与 ratio 前必须补齐元数据。`cross_source` 检查及其派生引用保留元数据，不能通过前序核验丢掉范围。
+
 每个 duration fact 必须另填 `available_at`，表示该数值真实披露或首次可得时点，而不是报表期末；它不得早于 `period.end` 或晚于 `root.as_of`。Instant/estimate 默认以 `as_of`/`expectation_as_of` 为 information time，也可用更晚的 `available_at`。每个参与 check 的非缺失 fact 必须至少有一个角色合格来源满足 `source_date >= information_at`，否则报 `STALE_RECORD_SOURCE`；因此 2020 来源不能支撑 2026 价格、股本或共识。
 
 缺失值写成：
@@ -305,6 +309,8 @@ percentage = (actual - consensus) / abs(consensus) * 100
 
 支持 `pe_user_defined`、`pe`、`pb`、`ps`、`p_fcf`、`dividend_yield`、`earnings_yield`。如填写 `expected_low/high`，还必须填写 tolerance。Multiple 输出高分母对应低估值；分母非正时输出 `not_meaningful`，不生成数字。
 
+`dividend_yield` 的可信 cash-dividend 或 dividend-per-share fact 允许 `value="0"`，正市值或正价格下结果是有意义的 `0%`，无需额外布尔确认字段。仍须通过来源、metric、basis 和期间门。缺失/未披露的股息保留 `null` 和 `missing_reason`，不得用零替代；负股息仍阻断，零或负市值/价格仍为 `not_meaningful`。其他 valuation numerator 的正值合同不变。
+
 `pe_user_defined` 是固定项目口径：numerator 的 metric/basis 必须都是 `total_market_cap` 且为 instant；denominator 必须直接引用同一个前序 `expectation_gap` 的 `annualized_low/high`，metric=`deducted_attributable_net_profit`、basis=`latest_single_quarter_deducted_attributable_net_profit_x4`。复制相同数字到普通 fact 也不能替代这条派生链。
 
 通用估值只接受以下配对：
@@ -362,6 +368,8 @@ percentage = (actual - consensus) / abs(consensus) * 100
 `change` 使用 `current/base`，relation 可为 `sequential`、`yoy` 或 `qoq`，要求 current/base metric 与 basis 完全相同；`output_metric` 固定为 `<input_metric>_<relation>_pct`，`output_basis` 固定为 `<input_basis>_<relation>`，不能把 revenue 变化率标成 `eps_qoq_pct`。`qoq/yoy` 两个输入除各自满足 frequency 跨度门外，跨度差不得超过 15 天。如填写 expected，必须填写 tolerance。
 
 `ratio` 使用 `numerator/denominator` 且要求 `period_relation=same`；`output_basis` 固定为 `<numerator_basis>_over_<denominator_basis>`。可审计配对包括 gross/operating/net/attributable/deducted margin，普通公司 cash-dividend payout、profit/FCF/operating-cash-flow coverage，以及收益型行业的显式合同：`cash_distribution` 除以 `affo|ffo|distributable_amount|net_investment_income` 为 `distribution_payout_pct`，反向为 `distribution_coverage_pct`；另支持 `distributable_profit`、`capital_available_for_distribution` 与 cash dividend 的 payout/coverage。未知配对只能使用 `calc` 做非准出计算，在 audit 中报 `UNSUPPORTED_RATIO_CONTRACT`。
+
+所有 ratio 输入必须具备上述 `accounting_context`（显式或已知 basis 解析），且 `reporting_scope`、`accounting_framework` 相同；任何范围缺失报 `MISSING_ACCOUNTING_CONTEXT`，即使 supporting check 也阻断准出。Margin 还必须有相同的 `measurement_basis`，但自由文本 basis 可使用不同指标标签，例如同一 reported context 的 `reported_gross_profit` 与 `reported_revenue` 可以配对。若 margin 两侧都是 `adjusted` 或 `issuer_defined`，还必须各自提供相同的 `measurement_definition`，指向同一份有来源的调整/计量定义；缺失定义阻断，不能因均叫 adjusted 就假定口径一致。Payout/coverage 则按指标白名单允许不同计量性质和不同 basis，例如同一合并范围、同一 US GAAP 底层报表的 `reported_cash_distribution` 与 `reported_affo`；该例两项均需显式元数据，AFFO 的 `measurement_basis` 按原文取 `issuer_defined` 或 `adjusted`。工具检查声明的合同，不替代原文对 AFFO 调整项与分派归属的核验。审计结果的 `details.accounting_contexts` 保留两侧口径，不能通过拼接 `output_basis` 洗掉母公司/合并报表冲突。
 `qoq` 要求两个季度期末相隔 75-110 天；`yoy` 要求可比期间期末相隔 350-380 天，避免把跨季或跨年数据贴错标签。
 
 ## 准出结果

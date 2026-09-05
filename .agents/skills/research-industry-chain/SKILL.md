@@ -1,6 +1,6 @@
 ---
 name: research-industry-chain
-description: Research industry chains through terminal demand, supply-chain topology, BOM/value nodes, qualified-supply bottlenecks, bottleneck duration, future constraint migration, global leaders, and optional listed-company mapping. Use for 产业链拆解、上下游、BOM、价值量、堵点、卡点、供需缺口、交期、产能、良率、国产替代、AI/半导体细分环节或海外龙头映射. When the user explicitly requests Serenity or serenity-stock-choke, use its choke-point lens only to generate candidate nodes, then validate them under this skill's same evidence gates.
+description: 用于产业链拆解、上下游、BOM/价值量、供需缺口与瓶颈研究，核验需求、合格供给、替代路径和约束迁移，并按需映射上市公司。仅在用户显式点名 Serenity 或 serenity-stock-choke 时启用候选模式。
 ---
 
 # Research Industry Chain
@@ -36,6 +36,8 @@ description: Research industry chains through terminal demand, supply-chain topo
 
 ## 证据纪律
 
+首次读取外部或本地市场/财务数据前，按 [项目数据源路由](../../../docs/data_source_routing.md) 拆分数据卡、探测主源并按字段、日期和口径等价回退；本技能的官方原文和证据等级硬门优先。
+
 - 当前价格、产能、交期、订单、客户、财务和政策必须实时核验。
 - A 级官方材料可支撑硬结论；可靠行业/媒体/数据商用于交叉验证；社交、模型和概念标签只作为线索。
 - 未验证的 BOM 份额、市场份额、交期、良率、产能和财务数字写 `N/A`。
@@ -45,6 +47,7 @@ description: Research industry chains through terminal demand, supply-chain topo
 - 产品规划、送样、客户验证、design win、认证、量产、出货、收入和利润/现金流严格分开。`main_candidate` 只表示研究优先级；未到 `revenue`/`profit_cashflow` 时不得写成已兑现业绩受益。
 - `social|anonymous|lead_only` 只能作为观察、主题相邻或否决线索，不能证明 `revenue`/`profit_cashflow`，也不能支持 `main_candidate`。
 - `bottleneck_ledger` 的 hard/soft 行必须用 `evidence_check_id` 唯一关联同包 `claim_window=current` 的证据检查，并且 ledger/check 的 `claim_as_of` 均等于顶层 `as_of`、`time_horizon` 一致，`evidence_review_status` 等于 normalizer 重新计算的 `eligible_for_bottleneck_review`；历史记录只能 watch/rejected，未来情景走 `future_bottleneck_scenarios`。
+- 同包 `bottleneck_evidence_checks` 是 hard/soft 行的权威证据记录；主表重复的需求、供给、缺口、约束、替代、二供、缓解、正面验证、反证、反转、等级和来源字段必须与其规范化后的值一致（仅忽略首尾空白）。这些字段不接受另写摘要；摘要放报告正文，证据变化必须更新证据包并重新校验。
 
 ## 领域参考
 
@@ -69,11 +72,13 @@ AI 数据中心节点层级需要更细时，读 [references/ai-chain-node-taxon
 
 ```powershell
 python .agents/skills/research-industry-chain/scripts/normalize_research_inputs.py --input data.xlsx --as-of 2026-07-27 --pretty
-python .agents/skills/research-industry-chain/scripts/calculate_hhi.py --shares 35 25 15 10 5
+python .agents/skills/research-industry-chain/scripts/calculate_hhi.py --shares 35 25 15 10 5 --unit percent
 python .agents/skills/research-industry-chain/scripts/validate_bottleneck_evidence.py --csv nodes.csv --as-of 2026-07-27 --pretty
 ```
 
 脚本只做规范化、显式时点截断、完整性门和一致性计算，不获取事实、不打万能分，也不自动授予瓶颈等级。`--as-of` 是可复现研究时点，不使用机器当前日期替代。没有可靠份额数据时不计算 HHI。
+
+HHI 的裸数字必须声明 `--unit percent`（0-100）或 `--unit fraction`（0-1），不得按数值大小猜单位。所有值自带 `%` 时可省略单位；`0.9% 0.1%` 的 HHI 为 0.82、覆盖率为 1%，缺失市场份额不补齐、不归一化。拒绝非有限数、负份额、单份额或总份额超出 100%；不完整覆盖会输出 `coverage_warning`，只能解释为已提供份额的 HHI。
 
 ## 输出
 

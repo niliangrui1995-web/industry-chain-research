@@ -1559,6 +1559,46 @@ class FinancialEvidenceAuditTests(unittest.TestCase):
                 codes = {issue["code"] for issue in result["checks"][0]["issues"]}
                 self.assertIn("METRIC_MISMATCH", codes)
 
+    def test_zero_dividend_yield_is_meaningful_but_missing_is_not_zero(self) -> None:
+        for value, expected in (("0", "0"), ("1", "0.2")):
+            with self.subTest(value=value):
+                payload = self.generic_valuation_payload("dividend_yield")
+                payload["facts"][0]["value"] = value
+                code, result = self.audit(payload)
+                self.assertEqual(code, 0, result)
+                self.assertEqual(result["release_status"], "publishable")
+                self.assertEqual(result["checks"][0]["state"], "meaningful")
+                self.assertEqual(result["checks"][0]["outputs"]["low"]["value"], expected)
+                self.assertEqual(result["checks"][0]["outputs"]["high"]["value"], expected)
+
+        for value in (None, "-1"):
+            with self.subTest(value=value):
+                payload = self.generic_valuation_payload("dividend_yield")
+                payload["facts"][0]["value"] = value
+                if value is None:
+                    payload["facts"][0]["missing_reason"] = "dividend_not_disclosed"
+                code, result = self.audit(payload)
+                self.assertEqual(code, 1, result)
+                self.assertEqual(result["release_status"], "blocked")
+
+    def test_zero_dividend_per_share_and_zero_market_cap_remain_distinct(self) -> None:
+        payload = self.generic_valuation_payload("dividend_yield")
+        payload["facts"][0].update(
+            metric="dividend_per_share", value="0", unit="currency_per_share",
+            basis="ttm_dividend_per_share",
+        )
+        payload["facts"][1].update(
+            metric="close_price", unit="currency_per_share", basis="official_close",
+        )
+        payload["checks"][0]["valuation_basis"] = "ttm_dividend_per_share"
+        code, result = self.audit(payload)
+        self.assertEqual(code, 0, result)
+        self.assertEqual(result["checks"][0]["outputs"]["low"]["value"], "0")
+        payload["facts"][1]["value"] = "0"
+        code, result = self.audit(payload)
+        self.assertEqual(result["checks"][0]["state"], "not_meaningful")
+        self.assertIsNone(result["checks"][0]["outputs"]["low"]["value"])
+
     def test_generic_valuation_rejects_bad_basis_period_and_eps_as_price(self) -> None:
         payload = self.generic_valuation_payload("pe")
         payload["facts"][1]["basis"] = "ttm_revenue"
@@ -1868,6 +1908,12 @@ class FinancialEvidenceAuditTests(unittest.TestCase):
                 payload["facts"][0]["basis"] = f"reported_{numerator_metric}"
                 payload["facts"][1]["metric"] = denominator_metric
                 payload["facts"][1]["basis"] = f"reported_{denominator_metric}"
+                for item in payload["facts"]:
+                    item["accounting_context"] = {
+                        "reporting_scope": "consolidated",
+                        "accounting_framework": "us_gaap",
+                        "measurement_basis": "reported",
+                    }
                 payload["checks"][0]["output_metric"] = output_metric
                 payload["checks"][0]["output_basis"] = (
                     f"reported_{numerator_metric}_over_reported_{denominator_metric}"
@@ -1893,6 +1939,188 @@ class FinancialEvidenceAuditTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn(
             "PERIOD_MISMATCH",
+            {issue["code"] for issue in result["checks"][0]["issues"]},
+        )
+
+    def test_percentage_ratio_blocks_scope_and_accounting_conflicts(self) -> None:
+        for basis in (
+            "reported_parent_prc_gaap",
+            "reported_consolidated_us_gaap",
+            "adjusted_consolidated_prc_gaap",
+        ):
+            with self.subTest(basis=basis):
+                payload = self.ratio_payload()
+                payload["facts"][0]["basis"] = basis
+                payload["checks"][0]["output_basis"] = (
+                    f"{basis}_over_reported_consolidated_prc_gaap"
+                )
+                code, result = self.audit(payload)
+                self.assertEqual(code, 1, result)
+                self.assertEqual(result["release_status"], "blocked")
+                self.assertIn(
+                    "BASIS_MISMATCH",
+                    {issue["code"] for issue in result["checks"][0]["issues"]},
+                )
+
+        payload = self.ratio_payload()
+        payload["facts"][0]["value"] = "75"
+        code, result = self.audit(payload)
+        self.assertEqual(code, 0, result)
+        self.assertEqual(result["checks"][0]["outputs"]["value"]["value"], "75")
+
+    def test_ratio_unknown_context_cannot_publish_even_as_supporting(self) -> None:
+        for basis in ("reported", "unmapped_vendor_basis"):
+            with self.subTest(basis=basis):
+                payload = self.ratio_payload()
+                for item in payload["facts"]:
+                    item["basis"] = basis
+                payload["checks"][0]["output_basis"] = f"{basis}_over_{basis}"
+                code, result = self.audit(payload)
+                self.assertEqual(code, 1, result)
+                self.assertIn(
+                    "MISSING_ACCOUNTING_CONTEXT",
+                    {issue["code"] for issue in result["checks"][0]["issues"]},
+                )
+                known = self.ratio_payload()
+                payload["facts"].extend(
+                    dict(item, id=item["id"] + "_KNOWN") for item in known["facts"]
+                )
+                known["checks"][0].update(
+                    id="C_KNOWN",
+                    numerator=value_ref("F_GROSS_PROFIT_KNOWN"),
+                    denominator=value_ref("F_REVENUE_KNOWN"),
+                )
+                payload["checks"][0]["materiality"] = "supporting"
+                payload["checks"].append(known["checks"][0])
+                code, result = self.audit(payload)
+                self.assertEqual(code, 1, result)
+                self.assertEqual(result["release_status"], "blocked")
+
+    def test_ratio_explicit_context_cannot_override_known_basis(self) -> None:
+        payload = self.ratio_payload()
+        payload["facts"][0]["accounting_context"] = {
+            "reporting_scope": "parent_only",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported",
+        }
+        code, result = self.audit(payload)
+        self.assertEqual(code, 1, result)
+        self.assertIn(
+            "BASIS_MISMATCH",
+            {issue["code"] for issue in result["checks"][0]["issues"]},
+        )
+
+    def test_income_ratio_allows_distinct_metric_bases_with_explicit_context(self) -> None:
+        payload = self.ratio_payload()
+        payload["facts"][0].update(
+            metric="cash_distribution", basis="reported_cash_distribution", value="75",
+        )
+        payload["facts"][1].update(metric="affo", basis="reported_affo")
+        payload["checks"][0].update(
+            output_metric="distribution_payout_pct",
+            output_basis="reported_cash_distribution_over_reported_affo",
+        )
+        for item in payload["facts"]:
+            item["accounting_context"] = {
+                "reporting_scope": "consolidated",
+                "accounting_framework": "us_gaap",
+                "measurement_basis": "reported",
+            }
+        payload["facts"][1]["accounting_context"]["measurement_basis"] = "issuer_defined"
+        code, result = self.audit(payload)
+        self.assertEqual(code, 0, result)
+        self.assertEqual(result["checks"][0]["outputs"]["value"]["value"], "75")
+        payload["facts"][0]["accounting_context"]["reporting_scope"] = "parent_only"
+        code, result = self.audit(payload)
+        self.assertEqual(code, 1, result)
+        self.assertIn(
+            "BASIS_MISMATCH",
+            {issue["code"] for issue in result["checks"][0]["issues"]},
+        )
+
+    def test_ratio_accounting_context_survives_cross_source_reference(self) -> None:
+        payload = self.ratio_payload()
+        for item in payload["facts"]:
+            item["basis"] = "company_defined_reported_basis"
+            item["accounting_context"] = {
+                "reporting_scope": "consolidated",
+                "accounting_framework": "ifrs",
+                "measurement_basis": "reported",
+            }
+        payload["facts"].append(dict(payload["facts"][0], id="F_GROSS_REFERENCE"))
+        payload["checks"][0].update(
+            numerator=check_ref("C_CROSS", "value"),
+            output_basis="company_defined_reported_basis_over_company_defined_reported_basis",
+        )
+        payload["checks"].insert(0, {
+            "id": "C_CROSS", "kind": "cross_source", "materiality": "material",
+            "target": value_ref("F_GROSS_PROFIT"),
+            "references": [value_ref("F_GROSS_REFERENCE")],
+            "source_gate": gate(),
+            "tolerance": {"relative_pct": "0", "absolute_base": "0"},
+        })
+        code, result = self.audit(payload)
+        self.assertEqual(code, 0, result)
+        self.assertEqual(
+            result["checks"][0]["outputs"]["value"]["accounting_context"],
+            payload["facts"][0]["accounting_context"],
+        )
+        payload["facts"][1]["accounting_context"]["reporting_scope"] = "parent_only"
+        code, result = self.audit(payload)
+        self.assertEqual(code, 1, result)
+        self.assertEqual(result["checks"][0]["status"], "PASS")
+        self.assertIn(
+            "BASIS_MISMATCH",
+            {issue["code"] for issue in result["checks"][1]["issues"]},
+        )
+
+    def test_ratio_partial_or_unknown_accounting_context_is_invalid(self) -> None:
+        for context in (
+            {"reporting_scope": "consolidated"},
+            {"reporting_scope": "all", "accounting_framework": "ifrs",
+             "measurement_basis": "reported"},
+            {"reporting_scope": "consolidated", "accounting_framework": "ifrs",
+             "measurement_basis": "reported", "override": True},
+        ):
+            with self.subTest(context=context):
+                payload = self.ratio_payload()
+                payload["facts"][0]["accounting_context"] = context
+                code, result = self.audit(payload)
+                self.assertEqual(code, 2, result)
+                self.assertEqual(result["code"], "SCHEMA_ERROR")
+
+    def test_margin_context_accepts_distinct_metric_labels_and_binds_adjustments(self) -> None:
+        payload = self.ratio_payload()
+        payload["facts"][0]["basis"] = "reported_gross_profit"
+        payload["facts"][1]["basis"] = "reported_revenue"
+        for item in payload["facts"]:
+            item["accounting_context"] = {
+                "reporting_scope": "consolidated",
+                "accounting_framework": "prc_gaap",
+                "measurement_basis": "reported",
+            }
+        payload["checks"][0]["output_basis"] = "reported_gross_profit_over_reported_revenue"
+        code, result = self.audit(payload)
+        self.assertEqual(code, 0, result)
+        self.assertEqual(result["checks"][0]["outputs"]["value"]["value"], "30")
+
+        for item in payload["facts"]:
+            item["accounting_context"]["measurement_basis"] = "adjusted"
+        code, result = self.audit(payload)
+        self.assertEqual(code, 1, result)
+        self.assertIn(
+            "MISSING_ACCOUNTING_CONTEXT",
+            {issue["code"] for issue in result["checks"][0]["issues"]},
+        )
+        for item in payload["facts"]:
+            item["accounting_context"]["measurement_definition"] = "issuer:FY2025:non-gaap-reconciliation-A"
+        code, result = self.audit(payload)
+        self.assertEqual(code, 0, result)
+        payload["facts"][1]["accounting_context"]["measurement_definition"] = "issuer:FY2025:non-gaap-reconciliation-B"
+        code, result = self.audit(payload)
+        self.assertEqual(code, 1, result)
+        self.assertIn(
+            "BASIS_MISMATCH",
             {issue["code"] for issue in result["checks"][0]["issues"]},
         )
 

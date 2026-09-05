@@ -4,6 +4,8 @@ import argparse
 import hashlib
 import json
 import os
+import stat
+import struct
 import time
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -24,6 +26,8 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) CodexResearch/1.0",
 }
 SAMPLE_STATUS = "dfcf_vendor_only_unverified_by_exchange"
+TDX_DAY_STRUCT = struct.Struct("<IIIIIfII")
+DEFAULT_CALENDAR_FILE = Path(r"D:\HT\vipdoc\sh\lday\sh000001.day")
 
 
 def utc_now() -> str:
@@ -175,21 +179,72 @@ def merge_market_snapshot(
     return merged, changed
 
 
-def build_merged_table(sh: pd.DataFrame, sz: pd.DataFrame) -> pd.DataFrame:
-    merged = sh[["date", "sh_margin_y"]].merge(
-        sz[["date", "sz_margin_y"]], on="date", how="inner", validate="one_to_one"
+def load_trading_calendar(path: Path) -> tuple[pd.DatetimeIndex | None, dict[str, object]]:
+    """Reuse the refresh pipeline's local index sentinel without network access."""
+    absolute = path.absolute()
+    current = Path(absolute.anchor)
+    for part in absolute.parts[1:]:
+        current /= part
+        try:
+            info = current.lstat()
+        except FileNotFoundError:
+            return None, {"status": "unavailable", "path": str(absolute)}
+        if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+            raise ValueError("local trading calendar must not traverse a reparse point")
+    raw = absolute.read_bytes()
+    if not raw or len(raw) % TDX_DAY_STRUCT.size:
+        raise ValueError("invalid local trading calendar file size")
+    dates = pd.DatetimeIndex(
+        pd.to_datetime(
+            [str(record[0]) for record in TDX_DAY_STRUCT.iter_unpack(raw)],
+            format="%Y%m%d",
+            errors="raise",
+        )
     )
-    if merged.empty:
-        raise ValueError("DFCF SH/SZ snapshots have no common dates")
+    if dates.has_duplicates or not dates.is_monotonic_increasing:
+        raise ValueError("local trading calendar dates must be unique and increasing")
+    return dates, {
+        "status": "available",
+        "path": str(absolute),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "rows": len(dates),
+        "start": dates.min().date().isoformat(),
+        "end": dates.max().date().isoformat(),
+    }
+
+
+def build_merged_table(
+    sh: pd.DataFrame, sz: pd.DataFrame, *, trading_calendar: pd.DatetimeIndex | None = None
+) -> pd.DataFrame:
+    merged = sh[["date", "sh_margin_y"]].merge(
+        sz[["date", "sz_margin_y"]], on="date", how="outer", validate="one_to_one"
+    )
+    if trading_calendar is not None and not merged.empty:
+        covered = trading_calendar[
+            (trading_calendar >= merged["date"].min()) & (trading_calendar <= merged["date"].max())
+        ]
+        all_dates = pd.DatetimeIndex(merged["date"]).union(covered)
+        merged = merged.set_index("date").reindex(all_dates).rename_axis("date").reset_index()
     merged = merged.sort_values("date").reset_index(drop=True)
+    complete = merged[["sh_margin_y", "sz_margin_y"]].notna().all(axis=1)
+    if not complete.any():
+        raise ValueError("DFCF SH/SZ snapshots have no common dates")
+    # Keep the union's incomplete sessions until after differencing. An inner
+    # join here would silently turn a missing session into a multi-day change.
+    previous_complete = complete.shift(fill_value=False)
     merged["total_margin_y"] = merged["sh_margin_y"] + merged["sz_margin_y"]
     for prefix in ("sh", "sz", "total"):
         balance = f"{prefix}_margin_y"
         merged[f"{prefix}_change_y"] = merged[balance].diff()
-        merged[f"{prefix}_change_pct"] = merged[balance].pct_change() * 100.0
+        merged[f"{prefix}_change_pct"] = (
+            merged[balance].pct_change(fill_method=None) * 100.0
+        )
+    merged["change_status"] = "complete"
+    merged.loc[~previous_complete, "change_status"] = "previous_session_incomplete"
+    merged.loc[0, "change_status"] = "no_previous_observation"
     merged["source"] = "DFCF/东方财富Choice数据"
     merged["sample_status"] = SAMPLE_STATUS
-    return merged
+    return merged.loc[complete].reset_index(drop=True)
 
 
 def atomic_write_csv(frame: pd.DataFrame, path: Path) -> None:
@@ -242,11 +297,13 @@ def main() -> None:
     )
     parser.add_argument("--end-date", default=date.today().isoformat())
     parser.add_argument("--refresh-days", type=int, default=14)
+    parser.add_argument("--trading-calendar-file", default=str(DEFAULT_CALENDAR_FILE))
     args = parser.parse_args()
 
     if args.refresh_days < 1:
         raise ValueError("--refresh-days must be positive")
     project_root = resolve_project_root(args.project_root)
+    trading_calendar, calendar_meta = load_trading_calendar(Path(args.trading_calendar_file))
     output_dir = (
         Path(args.output_dir).expanduser().resolve()
         if args.output_dir
@@ -292,7 +349,7 @@ def main() -> None:
         if table_path.exists()
         else pd.DataFrame()
     )
-    table = build_merged_table(updated["SH"], updated["SZ"])
+    table = build_merged_table(updated["SH"], updated["SZ"], trading_calendar=trading_calendar)
     old_latest = old_table["date"].max() if not old_table.empty else pd.NaT
     table_updated = not frames_equal(old_table, table)
     if table_updated:
@@ -300,6 +357,19 @@ def main() -> None:
 
     sh_dates = set(updated["SH"]["date"])
     sz_dates = set(updated["SZ"]["date"])
+    observed_dates = sh_dates | sz_dates
+    if trading_calendar is not None:
+        calendar_meta["covers_observed_range"] = bool(
+            trading_calendar.min() <= min(observed_dates) and trading_calendar.max() >= max(observed_dates)
+        )
+        calendar_meta["observed_dates_outside_calendar"] = sorted(
+            value.date().isoformat() for value in observed_dates - set(trading_calendar)
+        )
+        calendar_meta["missing_both_market_dates"] = sorted(
+            value.date().isoformat()
+            for value in set(trading_calendar) - observed_dates
+            if min(observed_dates) <= value <= max(observed_dates)
+        )
     latest_common = table["date"].max()
     new_common_dates = int(table["date"].gt(old_latest).sum()) if pd.notna(old_latest) else len(table)
     audit_path = output_dir / "dfcf_margin_audit.json"
@@ -322,6 +392,12 @@ def main() -> None:
         "latest_common_date": latest_common.date().isoformat(),
         "sh_only_dates": sorted(value.date().isoformat() for value in sh_dates - sz_dates),
         "sz_only_dates": sorted(value.date().isoformat() for value in sz_dates - sh_dates),
+        "change_calendar_basis": "observed_sh_sz_date_union_with_local_tdx" if trading_calendar is not None else "observed_sh_sz_date_union",
+        "trading_calendar": calendar_meta,
+        "change_calendar_limitation": "本地 TDX 日历为厂商数据；覆盖范围以审计起止日为准，覆盖外双边缺失无法识别。" if trading_calendar is not None else "本地日历不可用，沪深同时缺失的交易日无法仅从 DFCF 日期并集识别。",
+        "incomplete_previous_session_dates": table.loc[
+            table["change_status"].eq("previous_session_incomplete"), "date"
+        ].dt.strftime("%Y-%m-%d").tolist(),
         "changed_rows": changed_rows,
         "new_common_dates": new_common_dates,
         "table_updated": table_updated,

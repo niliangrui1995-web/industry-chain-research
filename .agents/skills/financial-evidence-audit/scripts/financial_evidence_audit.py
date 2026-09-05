@@ -25,7 +25,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-TOOL_VERSION = "1.4.1"
+TOOL_VERSION = "1.4.2"
 SCHEMA_VERSION = "1.0"
 DECIMAL_PRECISION = 50
 MAX_EXPRESSION_LENGTH = 512
@@ -165,6 +165,15 @@ RATIO_OUTPUT_METRICS = {
         "dividend_coverage_pct"
     ),
 }
+ACCOUNTING_CONTEXT_VALUES = {
+    "reporting_scope": {"consolidated", "parent_only", "standalone"},
+    "accounting_framework": {"prc_gaap", "us_gaap", "ifrs"},
+    "measurement_basis": {"reported", "adjusted", "issuer_defined"},
+}
+ACCOUNTING_BASIS_RE = re.compile(
+    r"^(reported|adjusted)_(consolidated|parent_only|parent|standalone)_"
+    r"(prc_gaap|us_gaap|ifrs)$"
+)
 EXPECTATION_COMPANY_BASES = {
     "actual_quarterly_deducted_attributable_net_profit_prc_gaap",
     "preannouncement_quarterly_deducted_attributable_net_profit_prc_gaap",
@@ -220,6 +229,7 @@ SUPPORTING_BLOCKING_CODES = {
     "UNTRUSTED_RECORD_SOURCE",
     "STALE_RECORD_SOURCE",
     "UNSUPPORTED_RATIO_CONTRACT",
+    "MISSING_ACCOUNTING_CONTEXT",
 }
 
 
@@ -250,6 +260,38 @@ class ValueRecord:
     source_ids: frozenset[str]
     missing_reason: str | None = None
     information_at: str | None = None
+    accounting_context: dict[str, str] | None = None
+
+
+def _basis_accounting_context(basis: str) -> dict[str, str] | None:
+    match = ACCOUNTING_BASIS_RE.fullmatch(basis)
+    if match is None:
+        return None
+    measurement, scope, framework = match.groups()
+    return {
+        "reporting_scope": "parent_only" if scope == "parent" else scope,
+        "accounting_framework": framework,
+        "measurement_basis": measurement,
+    }
+
+
+def _validate_accounting_context(value: Any, context: str) -> dict[str, str]:
+    required = set(ACCOUNTING_CONTEXT_VALUES)
+    if (
+        not isinstance(value, dict)
+        or not required.issubset(value)
+        or set(value) - required - {"measurement_definition"}
+    ):
+        raise AuditInputError(
+            "SCHEMA_ERROR", f"{context} requires reporting_scope, accounting_framework "
+            "and measurement_basis, with optional measurement_definition",
+        )
+    for key, allowed in ACCOUNTING_CONTEXT_VALUES.items():
+        if not isinstance(value[key], str) or value[key] not in allowed:
+            raise AuditInputError("SCHEMA_ERROR", f"{context}.{key} is invalid")
+    if "measurement_definition" in value:
+        _required_text(value, "measurement_definition", context)
+    return dict(value)
 
 
 def _required_text(obj: dict[str, Any], field: str, context: str) -> str:
@@ -341,6 +383,7 @@ def record_payload(record: ValueRecord) -> dict[str, Any]:
         "source_ids": sorted(record.source_ids),
         "missing_reason": record.missing_reason,
         "information_at": record.information_at,
+        "accounting_context": record.accounting_context,
     }
 
 
@@ -780,6 +823,13 @@ class AuditEngine:
                 )
             information_at = available_at
         basis = _required_text(fact, "basis", context)
+        accounting_context = (
+            _validate_accounting_context(
+                fact["accounting_context"], f"{context}.accounting_context"
+            )
+            if "accounting_context" in fact
+            else _basis_accounting_context(basis)
+        )
 
         if "value" not in fact:
             raise AuditInputError("SCHEMA_ERROR", f"{context}.value is required")
@@ -831,6 +881,7 @@ class AuditEngine:
             source_ids=frozenset(source_refs),
             missing_reason=missing_reason,
             information_at=information_at,
+            accounting_context=accounting_context,
         )
 
     def _validate_provisional_context(self, context: Any) -> dict[str, Any]:
@@ -1051,6 +1102,79 @@ class AuditEngine:
             issues.append(_issue("PERIOD_MISMATCH", "period mismatch", refs=refs))
         if basis and left.basis != right.basis:
             issues.append(_issue("BASIS_MISMATCH", "metric basis mismatch", refs=refs))
+        if basis and left.accounting_context != right.accounting_context:
+            issues.append(_issue("BASIS_MISMATCH", "accounting context mismatch", refs=refs))
+        return issues
+
+    @staticmethod
+    def _ratio_accounting_issues(
+        left: ValueRecord, right: ValueRecord
+    ) -> list[dict[str, Any]]:
+        issues: list[dict[str, Any]] = []
+        for name, record in (("numerator", left), ("denominator", right)):
+            if record.accounting_context is None:
+                issues.append(
+                    _issue(
+                        "MISSING_ACCOUNTING_CONTEXT",
+                        "ratio input requires a known accounting basis or explicit "
+                        "reporting_scope, accounting_framework and measurement_basis",
+                        refs=[name],
+                    )
+                )
+                continue
+            inferred = _basis_accounting_context(record.basis)
+            if inferred is not None and any(
+                record.accounting_context[field] != value
+                for field, value in inferred.items()
+            ):
+                issues.append(
+                    _issue(
+                        "BASIS_MISMATCH",
+                        "explicit accounting context conflicts with the input basis",
+                        refs=[name],
+                    )
+                )
+        if left.accounting_context is None or right.accounting_context is None:
+            return issues
+        for field in ("reporting_scope", "accounting_framework"):
+            if left.accounting_context[field] != right.accounting_context[field]:
+                issues.append(
+                    _issue(
+                        "BASIS_MISMATCH", f"ratio {field} mismatch",
+                        refs=["numerator", "denominator"],
+                    )
+                )
+        if right.metric == "revenue":
+            left_measurement = left.accounting_context["measurement_basis"]
+            right_measurement = right.accounting_context["measurement_basis"]
+            if left_measurement != right_measurement:
+                issues.append(
+                    _issue(
+                        "BASIS_MISMATCH", "margin inputs require the same measurement basis",
+                        refs=["numerator", "denominator"],
+                    )
+                )
+            elif left_measurement != "reported":
+                definitions = [
+                    record.accounting_context.get("measurement_definition")
+                    for record in (left, right)
+                ]
+                if not all(definitions):
+                    issues.append(
+                        _issue(
+                            "MISSING_ACCOUNTING_CONTEXT",
+                            "adjusted or issuer-defined margin requires both "
+                            "measurement_definition references",
+                            refs=["numerator", "denominator"],
+                        )
+                    )
+                elif definitions[0] != definitions[1]:
+                    issues.append(
+                        _issue(
+                            "BASIS_MISMATCH", "margin measurement definitions differ",
+                            refs=["numerator", "denominator"],
+                        )
+                    )
         return issues
 
     @staticmethod
@@ -1166,6 +1290,7 @@ class AuditEngine:
             basis=target.basis,
             source_ids=_union_sources([target, *references]),
             missing_reason=target.missing_reason,
+            accounting_context=target.accounting_context,
         )
         details = {"reference_count": len(references)}
         return {"value": output}, issues, gate_details, details, "verified"
@@ -2365,8 +2490,17 @@ class AuditEngine:
             issues.append(_issue("UNIT_MISMATCH", "valuation inputs must be monetary"))
         if not (numerator.currency == denominator_low.currency == denominator_high.currency):
             issues.append(_issue("CURRENCY_MISMATCH", "valuation currencies differ"))
-        if numerator.value is not None and numerator.value <= 0:
-            issues.append(_issue("NONPOSITIVE_INPUT", "valuation numerator must be positive"))
+        if numerator.value is not None and (
+            numerator.value < 0
+            or (numerator.value == 0 and metric != "dividend_yield")
+        ):
+            issues.append(
+                _issue(
+                    "NONPOSITIVE_INPUT",
+                    "valuation numerator must be positive, except an evidenced "
+                    "zero cash dividend or dividend per share",
+                )
+            )
         if (
             denominator_low.value is not None
             and denominator_high.value is not None
@@ -2552,6 +2686,8 @@ class AuditEngine:
                 basis=mode == "change",
             )
         )
+        if mode == "ratio":
+            issues.extend(self._ratio_accounting_issues(left, right))
         if period_relation != "same":
             if left.period.get("kind") != "duration" or right.period.get("kind") != "duration":
                 issues.append(_issue("PERIOD_MISMATCH", "change inputs must be duration periods"))
@@ -2649,6 +2785,11 @@ class AuditEngine:
             "contracted_output_metric": contracted_output_metric,
             "contracted_output_basis": contracted_output_basis,
         }
+        if mode == "ratio":
+            details["accounting_contexts"] = {
+                "numerator": left.accounting_context,
+                "denominator": right.accounting_context,
+            }
         return {"value": output}, issues, gate_details, details, state
 
     def _execute_check(self, check: dict[str, Any], index: int) -> dict[str, Any]:

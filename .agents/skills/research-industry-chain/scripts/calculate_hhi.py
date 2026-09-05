@@ -6,45 +6,62 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 import sys
 from pathlib import Path
 from typing import Iterable
 
 
-def _parse_share(value: str) -> float:
-    raw = str(value).strip().replace("%", "")
+def _parse_share(value: str | float, unit: str) -> float:
+    raw = str(value).strip()
+    if raw.endswith("%"):
+        if unit != "percent":
+            raise ValueError("percent suffix conflicts with fraction unit")
+        raw = raw[:-1].strip()
     if not raw:
         raise ValueError("empty share value")
-    return float(raw)
+    share = float(raw)
+    if not math.isfinite(share):
+        raise ValueError("shares must be finite numbers")
+    return share
 
 
-def _normalize_shares(values: Iterable[float]) -> list[float]:
-    shares = [float(v) for v in values]
-    if not shares:
+def _normalize_shares(values: Iterable[str | float], unit: str | None) -> list[float]:
+    values = list(values)
+    if not values:
         raise ValueError("at least one share is required")
-    if any(v < 0 for v in shares):
-        raise ValueError("shares must be non-negative")
+    if unit is None:
+        if not all(str(value).strip().endswith("%") for value in values):
+            raise ValueError("bare shares require an explicit unit: percent or fraction")
+        unit = "percent"
+    if unit not in {"percent", "fraction"}:
+        raise ValueError("unit must be percent or fraction")
+    shares = [_parse_share(value, unit) for value in values]
+    upper_bound = 100 if unit == "percent" else 1
+    if any(not 0 <= value <= upper_bound for value in shares):
+        raise ValueError(f"each {unit} share must be between 0 and {upper_bound}")
 
-    total = sum(shares)
+    total = math.fsum(shares)
     if total <= 0:
         raise ValueError("share total must be positive")
+    if total > upper_bound and not math.isclose(total, upper_bound, rel_tol=1e-12):
+        raise ValueError(f"{unit} share total cannot exceed {upper_bound}")
 
-    # Accept either decimals that sum near 1 or percentage points.
-    if max(shares) <= 1 and total <= 1.5:
+    if unit == "fraction":
         shares = [v * 100 for v in shares]
 
     return shares
 
 
-def _read_csv(path: Path, share_column: str, company_column: str | None) -> tuple[list[float], list[dict[str, object]]]:
+def _read_csv(path: Path, share_column: str, company_column: str | None) -> tuple[list[str], list[dict[str, object]]]:
     rows: list[dict[str, object]] = []
-    shares: list[float] = []
+    shares: list[str] = []
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         if not reader.fieldnames or share_column not in reader.fieldnames:
             raise ValueError(f"CSV must contain share column: {share_column}")
         for row in reader:
-            share = _parse_share(row.get(share_column, ""))
+            share = row.get(share_column, "") or ""
             shares.append(share)
             rows.append(
                 {
@@ -63,12 +80,13 @@ def _classify(hhi: float) -> str:
     return "highly_concentrated"
 
 
-def calculate_hhi(shares: list[float]) -> dict[str, object]:
-    normalized = _normalize_shares(shares)
-    hhi = sum(v * v for v in normalized)
+def calculate_hhi(shares: list[str | float], unit: str | None = None) -> dict[str, object]:
+    normalized = _normalize_shares(shares, unit)
+    hhi = math.fsum(v * v for v in normalized)
     sorted_shares = sorted(normalized, reverse=True)
     result: dict[str, object] = {
         "hhi": round(hhi, 2),
+        "input_unit": unit or "percent",
         "classification": _classify(hhi),
         "share_total": round(sum(normalized), 4),
         "cr3": round(sum(sorted_shares[:3]), 4),
@@ -76,17 +94,22 @@ def calculate_hhi(shares: list[float]) -> dict[str, object]:
         "shares_percent": [round(v, 6) for v in normalized],
         "screen_hhi_gt_1800": hhi > 1800,
     }
-    if not 99 <= sum(normalized) <= 101:
+    if not math.isclose(math.fsum(normalized), 100, rel_tol=1e-12):
         result["coverage_warning"] = (
-            "market shares do not sum to about 100%; HHI is based only on provided shares"
+            "market shares do not sum to 100%; HHI is based only on provided shares"
         )
     return result
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Calculate HHI from market shares.")
-    parser.add_argument("--shares", nargs="*", type=float, help="Market shares as percentages or decimals.")
-    parser.add_argument("--csv", type=Path, help="CSV file containing market share data.")
+    inputs = parser.add_mutually_exclusive_group(required=True)
+    inputs.add_argument("--shares", nargs="+", help="Market shares; bare numbers require --unit.")
+    inputs.add_argument("--csv", type=Path, help="CSV file containing market share data.")
+    parser.add_argument(
+        "--unit", choices=("percent", "fraction"),
+        help="Required for bare numbers; may be omitted only if every share ends in %%.",
+    )
     parser.add_argument("--share-column", default="share", help="CSV share column name. Default: share")
     parser.add_argument("--company-column", default=None, help="Optional CSV company column name.")
     parser.add_argument("--pretty", action="store_true", help="Pretty-print JSON output.")
@@ -95,11 +118,11 @@ def main() -> int:
     try:
         if args.csv:
             shares, rows = _read_csv(args.csv, args.share_column, args.company_column)
-            result = calculate_hhi(shares)
+            result = calculate_hhi(shares, unit=args.unit)
             if rows:
                 result["rows"] = rows
         elif args.shares:
-            result = calculate_hhi(args.shares)
+            result = calculate_hhi(args.shares, unit=args.unit)
         else:
             raise ValueError("provide --shares or --csv")
     except Exception as exc:  # noqa: BLE001 - command-line tool should print user-facing errors.

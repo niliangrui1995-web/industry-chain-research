@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import re
 import unittest
 from pathlib import Path
@@ -289,6 +290,81 @@ class SkillLibraryTests(unittest.TestCase):
         self.assertIn("b64c5fd7823e8ab75c8421d4e5077270430a5124", notice)
         self.assertIn("Copyright (c) 2025-2026 fadewalk", notice)
         self.assertIn("research-industry-chain", notice)
+
+
+class EarningsPackSourceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        script = (
+            SKILL_ROOT
+            / "earnings-call-investment-analyst"
+            / "scripts"
+            / "earnings_pack_builder.py"
+        )
+        spec = importlib.util.spec_from_file_location("earnings_pack_builder", script)
+        assert spec is not None and spec.loader is not None
+        cls.builder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.builder)
+
+    def test_unverified_shared_platform_is_not_an_official_source(self) -> None:
+        sources, gaps = self.builder.build_sources(
+            source_inventory=None,
+            webcast_assets={
+                "input_url": "https://event.on24.com/unverified-event",
+                "assets": [
+                    {
+                        "category": "document",
+                        "url": "https://q4cdn.com/unverified.pdf",
+                    }
+                ],
+            },
+            transcript_manifest=None,
+            transcript_path=None,
+            manual_sources=[],
+            company_domains={"issuer.example"},
+        )
+
+        self.assertEqual([source["source_type"] for source in sources], ["unknown", "unknown"])
+        official_ids = [
+            source_id
+            for source_type in ["company_original", "regulatory_filing", "official_event_platform"]
+            for source_id in self.builder.source_ids_by_type(sources, source_type)
+        ]
+        self.assertEqual(official_ids, [])
+        self.assertEqual(self.builder.company_original_status(sources, gaps), "unavailable")
+
+    def test_verified_manual_platform_role_survives_webcast_deduplication(self) -> None:
+        event_url = "https://event.on24.com/issuer-q2-event"
+        notes = "Verified company IR link: https://issuer.example/ir/q2"
+        sources, _ = self.builder.build_sources(
+            source_inventory=None,
+            webcast_assets={"input_url": event_url},
+            transcript_manifest=None,
+            transcript_path=None,
+            manual_sources=[
+                {"url": event_url, "type": "official_event_platform", "notes": notes}
+            ],
+            company_domains={"issuer.example"},
+        )
+
+        self.assertEqual(len(sources), 1)
+        self.assertEqual(sources[0]["source_type"], "official_event_platform")
+        self.assertEqual(sources[0]["hosting_type"], "official_platform_hosted")
+        self.assertEqual(sources[0]["notes"], notes)
+        self.assertEqual(
+            self.builder.source_ids_by_type(sources, "official_event_platform"),
+            [sources[0]["id"]],
+        )
+
+    def test_company_and_regulatory_domains_keep_their_source_roles(self) -> None:
+        self.assertEqual(
+            self.builder.classify_source("https://ir.issuer.example/q2", company_domains={"issuer.example"}),
+            "company_original",
+        )
+        self.assertEqual(
+            self.builder.classify_source("https://www.sec.gov/Archives/issuer-q2"),
+            "regulatory_filing",
+        )
 
 
 if __name__ == "__main__":

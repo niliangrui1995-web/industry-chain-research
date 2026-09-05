@@ -1,6 +1,6 @@
 interface:
   display_name: "财报与电话会分析"
   short_description: "核验财报、单季扣非年化预期差、指引与电话会增量"
-  default_prompt: "Use $earnings-call-investment-analyst to analyze this earnings release or call. For A shares, compare latest single-quarter deducted attributable profit times four with pre-event full-year attributable-profit consensus, and use the same denominator for the user-defined PE(TTM)."
+  default_prompt: "Use $earnings-call-investment-analyst to analyze this earnings release or call. For A shares, compare latest single-quarter deducted attributable profit times four with pre-event full-year attributable-profit consensus; calculate the user-defined PE(TTM) with that denominator only when the task or user explicitly requests run-rate valuation."
 policy:
   allow_implicit_invocation: true

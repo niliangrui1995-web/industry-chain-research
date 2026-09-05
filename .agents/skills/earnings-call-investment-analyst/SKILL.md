@@ -23,7 +23,7 @@ description: Analyze public-company earnings releases, financial results, guidan
 - 可靠全文 transcript 可作主要工作材料；有原始音频时只核验关键措辞或争议段落，默认不做全量 ASR。
 - 只有音频而无可靠全文时，才考虑转录。
 - 当前日期、预期、价格、市值和财报后反应必须实时核验。
-- 官方字幕播放列表缺少 `EXT-X-ENDLIST` 时，按不完整滑动窗口处理。
+- 官方字幕缺少 `EXT-X-ENDLIST`、列表为空或任一分段下载/格式校验失败时，按不完整材料处理；下载脚本退出非零，禁止将部分合并结果当作完整电话会。
 
 找不到官方 transcript 或 replay 不是停止理由；换用搜索、浏览器、页面源码、网络请求、直接下载或可靠 provider。脚本失败也不是停止理由。
 

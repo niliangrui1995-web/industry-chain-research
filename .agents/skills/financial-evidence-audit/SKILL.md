@@ -45,8 +45,8 @@ python .agents/skills/financial-evidence-audit/scripts/financial_evidence_audit.
 - `market_cap`：价格必须独立来自 vendor/official，股本和 expected 各自可信；检查 metric/basis、时点和资本化口径。`adjusted_close` 不得用于点时市值。
 - `expectation_gap`：固定检查事件前 `fy_attributable_net_profit` 共识与最新单季度 `deducted_attributable_net_profit` 的 x4 年化比较；季度必须是 official 的 actual/preannouncement/derived 单季扣非归母 PRC-GAAP 合法 basis，其 `available_at` 必须是带时区且精确等于 `event_at`，共识必须是 vendor/credible 的 pre-event FY 归母 PRC-GAAP basis，且其每个来源 `source_date` 必须证明事件前已发布或已有快照，不能把 actual 后形成的共识靠自报更晚事件洗成 pre-event。
 - `expectation_surprise`：用必填 `subject_kind=reported_actual|company_guidance` 分开核验已报告 actual/range 或公司 guidance range 对事件前 consensus 的 deterministic beat/meet/miss/straddles；reported actual 的 `available_at` 与 guidance 的形成/可得时点都必须是带时区且精确等于 `event_at`；支持 revenue、EPS、net income 等合法指标，强制 metric、单位、币种、accounting basis、目标期间和各自 PIT 一致，并同时输出绝对与百分比差异。
-- `valuation`：计算 PE/PB/PS/P-FCF 或收益率区间；强制合法分子/分母 metric、basis、period 和各自可信来源，点时价格禁用 `adjusted_close`，市场快照不得早于历史 flow 期末、estimate 形成时点或 PB 账面价值时点。
-- `percentage`：变化率的 current/base 必须同 metric，`output_metric=input_metric+relation+_pct` 且 basis 同步派生；ratio 仅允许明确的 margin、股息 payout/coverage 白名单配对，未知配对不能准出。
+- `valuation`：计算 PE/PB/PS/P-FCF 或收益率区间；强制合法分子/分母 metric、basis、period 和各自可信来源，点时价格禁用 `adjusted_close`，市场快照不得早于历史 flow 期末、estimate 形成时点或 PB 账面价值时点。已获可信来源证实的零现金股息或零每股股息，在正市值/价格下可准出 `0%`；缺失股息不能填零。
+- `percentage`：变化率的 current/base 必须同 metric，`output_metric=input_metric+relation+_pct` 且 basis 同步派生；ratio 仅允许明确的 margin、股息 payout/coverage 白名单配对，另检查相同报表范围、底层会计框架和 margin 计量口径。已知 basis 可解析，否则必须提供有来源的 `accounting_context`；范围未知或冲突不能准出，AFFO/FFO 与 distribution 的合法不同指标不能用 basis 字符串相同代替检查。
 
 派生引用使用 `{ "check_id": "C1", "output": "value" }`；原始引用使用 `{ "fact_id": "F1" }`。前向引用、未知输出和循环依赖属于无效输入。
 

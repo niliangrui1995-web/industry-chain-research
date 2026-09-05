@@ -106,7 +106,7 @@ Recommended fields:
 | evidence_grade | A/B/C/N/A |
 | source | source note |
 
-Preferred data path: official filings and IR first; `finance`, `alpha-vantage`, iFinD global stock MCP, or other global market-data tools for market snapshot.
+Preferred data path: official filings and company IR for business evidence; select market snapshots by field, market, date, and basis using [project data-source routing](../../../../docs/data_source_routing.md).
 
 ### supply_chain_nodes
 
@@ -140,6 +140,8 @@ Required: `bottleneck_node`, `demand_evidence`, `supply_evidence`, `supply_gap_e
 `severity` is limited to `hard_bottleneck|soft_bottleneck|watch|rejected`; `status_change` is limited to `new|upgraded|unchanged|downgraded|resolved|rejected`. A `hard_bottleneck` claim must also pass the structured severity-consistency gate in `validate_bottleneck_evidence.py`.
 
 Every hard/soft ledger row must provide `claim_as_of`, `evidence_check_id`, and `evidence_review_status`. The ID must uniquely match a same-packet `bottleneck_evidence_checks.check_id` with `claim_window=current`, the same node/severity/time horizon, and ledger/check `claim_as_of` both equal to top-level `as_of`. The claimed status must equal the normalizer-computed `eligible_for_bottleneck_review`. Historical evidence stays watch/rejected; future claims use `future_bottleneck_scenarios`.
+
+The companion check is the authoritative evidence record. After normalization and trimming surrounding whitespace, ledger `demand_evidence`, `supply_evidence`, `supply_gap_evidence`, `constraint_mechanism`, `substitution_path`, `second_source_status`, `relief_window`, `positive_validation`, `counterevidence`, `key_reversal`, `evidence_grade`, and `source` must exactly equal the corresponding check fields. Independent summaries belong in report prose, not these gated fields. Update and revalidate the evidence packet when the evidence changes; do not silently copy an old eligible status onto conflicting ledger evidence.
 
 Recommended fields:
 
@@ -223,7 +225,7 @@ Recommended fields:
 | evidence_grade | A/B/C/N/A |
 | source | source note |
 
-Preferred data path: `allstock-data`, `stock-evaluator`, official filings, exchange disclosures, and company IR.
+Preferred data path: official filings, exchange disclosures, and company IR for exposure evidence; use [project data-source routing](../../../../docs/data_source_routing.md) for market and financial data cards without substituting vendor snapshots for original disclosures.
 
 ### financial_validation
 
@@ -305,7 +307,7 @@ When supplied, `date` must be an ISO date/timestamp no later than top-level `as_
 
 ## Connector Boundary
 
-- Global leader market data: use `finance`, `alpha-vantage`, iFinD global stock MCP, official filings, and company IR.
-- China market data: use `allstock-data`, `finance`, `stock-evaluator`, exchange filings, and company IR.
+- Global and China market/financial data: before the first read, use [project data-source routing](../../../../docs/data_source_routing.md) to form data cards, probe one primary source, and try ordered fallbacks only when field, date, and basis are equivalent.
+- Official filings, exchange disclosures, and company IR remain the required original sources for claims that need them; this skill's evidence gates take precedence over general source routing.
 - Live AI news or rumor discovery: use `ai-chain-research-orchestrator` only when needed, then verify original sources.
 - The data-interface script does not fetch from the internet. It normalizes verified or user-provided inputs.

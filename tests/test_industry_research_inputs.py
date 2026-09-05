@@ -390,6 +390,34 @@ class IndustryResearchInputTests(unittest.TestCase):
             normalized_check["review_status"], "eligible_for_bottleneck_review"
         )
 
+        for field, contradictory_value in {
+            "second_source_status": "active",
+            "supply_gap_evidence": "no supply gap; qualified supply exceeds demand",
+            "evidence_grade": "C",
+            "demand_evidence": "customer cancels ramp",
+            "supply_evidence": "qualified capacity is unconstrained",
+            "constraint_mechanism": "qualification no longer required",
+            "substitution_path": "certified substitute already available",
+            "relief_window": "constraint already resolved",
+            "positive_validation": "allocation ended",
+            "counterevidence": "delivery time normalized",
+            "key_reversal": "second source already reaches volume",
+            "source": "anonymous social media claim",
+        }.items():
+            with self.subTest(field=field):
+                drifted_ledger = {**ledger, field: contradictory_value}
+                code, drifted_payload = self.run_json(
+                    {
+                        "bottleneck_evidence_checks": [check],
+                        "bottleneck_ledger": [drifted_ledger],
+                    }
+                )
+                self.assertEqual(code, 2)
+                self.assertIn(
+                    f"ledger {field} must equal companion {field}",
+                    "\n".join(issue["message"] for issue in drifted_payload["issues"]),
+                )
+
         ledger["evidence_review_status"] = "watch_only"
         code, payload = self.run_json(
             {

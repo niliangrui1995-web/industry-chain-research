@@ -1408,6 +1408,24 @@ def validate_bottleneck_companions(
             ledger.get("time_horizon", "")
         ).strip():
             add_link_error("ledger time_horizon must equal companion time_horizon")
+        # Repeated evidence is a copy of the authoritative check, not an independent
+        # summary that can drift while retaining the old check's eligibility.
+        for field in (
+            "demand_evidence",
+            "supply_evidence",
+            "supply_gap_evidence",
+            "constraint_mechanism",
+            "substitution_path",
+            "second_source_status",
+            "relief_window",
+            "positive_validation",
+            "counterevidence",
+            "key_reversal",
+            "evidence_grade",
+            "source",
+        ):
+            if str(ledger.get(field, "")).strip() != str(check.get(field, "")).strip():
+                add_link_error(f"ledger {field} must equal companion {field}")
         if claimed_review != check_review:
             add_link_error(
                 "evidence_review_status must equal the normalizer-computed check review_status"

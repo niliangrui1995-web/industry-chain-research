@@ -54,14 +54,14 @@ Grok is primarily for X/Twitter-native collection. Keep it focused on posts, acc
 范围：
 1. 全球主线公司：[NVIDIA, AMD, Broadcom, Marvell, TSMC, SK hynix, Micron, Samsung, Microsoft, Google, Amazon, Meta, Oracle, OpenAI, xAI 等，按任务删减]
 2. 产业链环节：[GPU/ASIC, HBM, CoWoS/SoIC, ABF, PCB/CCL, electronic cloth, copper foil, resin, optical modules, silicon photonics, CPO/OCS, liquid cooling, power, connectors, server ODM, switches, data-center power]
-3. 中国映射：A股、港股、台股、美股中真正有订单、客户验证、产能紧缺、价格上涨或技术壁垒的公司，过滤纯概念股。
+3. 公司线索：记录来源明确提及的 A股、港股、台股、美股公司、产品，以及订单、客户验证、产能、价格或技术相关原文主张；不要自行判定真实受益或补出未具名公司。
 
 输出要求：
 - 优先保留新增变量，不重复旧闻；若旧闻正在窗口内被重新定价或发酵，可标成“旧闻再发酵/背景”。
 - 每条尽量给发布时间、来源链接或账号、信息类型；没有链接但有明确账号/截图/来源指向的高信号线索可放入 C3 观察池。
 - 证据等级：A=官方/公告/财报/交易所；B=可信媒体/供应链媒体/券商；C= X爆料/论坛/未经证实传闻。
 - C级必须标注待核实，不得写成事实。
-- 默认用表格输出：消息 | 时间 | 来源 | 证据等级 | 产业链环节 | 受益/受压公司 | A股/港美台映射 | 为什么重要 | 下一步核验。
+- 默认用表格输出：消息 | 发布时间/事件时间 | 原始作者/来源链接 | 证据等级 | 产业链环节 | 来源提及公司/产品 | 来源原文主张 | 核验状态 | 下一步核验。来源中的受益判断或因果解释须明确归因，不能改写成已验证事实。
 - 如果表格会遗漏脉络，可在表格前加 3-5 条“发现摘要”，但不要给投资结论。
 请用中文回答。
 ```
@@ -85,7 +85,7 @@ Use this when the user asks for 爆料, rumors, market chatter, or weak-but-earl
 - 表格中保留原始来源语言。
 
 默认输出中文表格：
-爆料内容 | 发布时间 | 来源链接/账号 | 来源语言 | 可信度C1-C3 | 涉及环节 | 可能映射标的 | 为什么值得跟踪 | 如何验证 | 如何证伪
+爆料内容 | 发布时间/事件时间 | 来源链接/账号 | 来源语言 | 可信度C1-C3 | 涉及环节 | 来源提及公司/产品 | 来源原文主张 | 如何验证 | 如何证伪
 
 要求：优先列有链接或账号的线索；明显旧闻一般不列，除非窗口内重新发酵；无法确认必须写“待核实”。
 ```
@@ -164,13 +164,13 @@ Use this when a small set of important leads needs counter-evidence or source ch
 2. 判断是否为最近 [24/48/72] 小时新增变量，还是旧闻重复。
 3. 找反证：公司是否否认、订单是否无法验证、数据是否来自二手转述、是否有时间错配。
 4. 给证据等级 A/B/C，并说明为什么。
-5. 输出每条线索的“可用结论”和“不能下的结论”。
+5. 列出原文支持的事实、仍缺证据的主张及其来源；涉及受益或因果关系时保留来源归因，不自行形成投资结论。
 
 线索：
 [粘贴Grok/X/Codex收集到的候选表]
 
 输出字段：
-线索 | 核验结果 | 最强来源链接 | 反证/疑点 | 证据等级 | 可用结论 | 不可用结论 | 下一步验证
+线索 | 核验结果 | 最强来源链接 | 反证/疑点 | 证据等级 | 原文支持的事实 | 仍缺证据的主张 | 下一步验证
 ```
 
 ## Codex Synthesis Checklist
@@ -181,12 +181,12 @@ Before finalizing, check:
 - Are source links attached to hard claims?
 - Are C-level rumors separated from conclusions?
 - Are A-share/HK/US/Taiwan tickers normalized?
-- Are fundamental quality, earnings elasticity, and trading elasticity ranked separately?
-- Are "true leader" names separated from concept followers?
+- Are company links and causal claims attributed to their original sources rather than inferred by the collection model?
+- Are beneficiary judgments, company rankings, and earnings/trading elasticity left to the subsequent industry-chain or company analysis when requested?
 - Are follow-up indicators concrete enough to monitor?
 
 ## Default Table
 
 ```text
-Claim | Time | Source | Grade | Chain segment | Beneficiaries | Pressured names | Stock mapping | Elasticity | Risk | Next verification
+Claim | Published at | Event at | Original source / URL | Grade | Chain segment | Source-mentioned company / product | Attributed source claim | Verification status | Next verification
 ```

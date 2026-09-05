@@ -87,11 +87,92 @@ class HtLocalMarketDataTests(unittest.TestCase):
             top_dirs = module.summarize_top_dirs(root)
             result = module.inspect(root, [], include_block_samples=False)
 
-            self.assertTrue(top_dirs["htlog"]["skipped"])
-            self.assertTrue(top_dirs["T0001"]["skipped"])
-            self.assertTrue(top_dirs["funcs_jy"]["skipped"])
-            self.assertEqual(top_dirs["vipdoc"]["files"], 3)
+            self.assertEqual(set(top_dirs), {"vipdoc", "T0002"})
+            self.assertEqual(top_dirs["vipdoc"]["files"], 2)
             self.assertIn("privacy_boundary", result)
+
+    def test_whitelist_never_stats_private_files_or_enumerates_unapproved_directories(self) -> None:
+        module = load_module(
+            "inspect_ht_data_whitelist",
+            ROOT / ".agents" / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for relative in module.REQUIRED_DATA_DIRS:
+                (root / relative).mkdir(parents=True)
+            record = module.DAY_STRUCT.pack(20260710, 10000, 11000, 9000, 10500, 1000.0, 100, 0)
+            for relative in module.REQUIRED_DAY_FILES:
+                (root / relative).write_bytes(record)
+            (root / "T0002" / "hq_cache" / "base.dbf").write_bytes(b"dbf")
+            private = root / "T0002" / "account"
+            private.mkdir()
+            (private / "secret.pass").write_bytes(b"private")
+            (root / "vipdoc" / "sh" / "lday" / "secret.pass").write_bytes(b"private")
+            original_iterdir = Path.iterdir
+            original_stat = Path.stat
+            original_lstat = Path.lstat
+
+            def guarded_iterdir(path):
+                if path == root or path == root / "T0002" or "account" in path.parts:
+                    raise AssertionError("unapproved directory enumerated")
+                return original_iterdir(path)
+
+            def guarded_stat(path, *args, **kwargs):
+                if "account" in path.parts or path.suffix == ".pass":
+                    raise AssertionError("private metadata queried")
+                return original_stat(path, *args, **kwargs)
+
+            def guarded_lstat(path, *args, **kwargs):
+                if "account" in path.parts or path.suffix == ".pass":
+                    raise AssertionError("private link metadata queried")
+                return original_lstat(path, *args, **kwargs)
+
+            with patch.object(Path, "iterdir", guarded_iterdir), patch.object(Path, "stat", guarded_stat), patch.object(Path, "lstat", guarded_lstat):
+                result = module.inspect(root, [], include_block_samples=False)
+            self.assertEqual(result["daily_day"]["files"], 2)
+            self.assertEqual(result["top_dirs"]["T0002"]["files"], 1)
+
+    def test_market_symlink_and_code_traversal_are_rejected(self) -> None:
+        module = load_module(
+            "inspect_ht_data_symlink",
+            ROOT / ".agents" / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "root"
+            outside = Path(tmp) / "outside"
+            root.mkdir()
+            outside.mkdir()
+            (root / "vipdoc" / "sh").mkdir(parents=True)
+            record = module.DAY_STRUCT.pack(20260710, 10000, 11000, 9000, 10500, 1000.0, 100, 0)
+            (outside / "sh000001.day").write_bytes(record)
+            linked_dir = root / "vipdoc" / "sh" / "lday"
+            try:
+                linked_dir.symlink_to(outside, target_is_directory=True)
+            except OSError as exc:
+                self.skipTest(f"directory symlink unavailable: {exc}")
+            self.assertEqual(module.summarize_day(root, ["sh000001"])["files"], 0)
+            with self.assertRaisesRegex(ValueError, "code"):
+                module.summarize_day(root, ["sh../../outside/sh000001"])
+
+    def test_regular_market_filename_symlink_is_not_read(self) -> None:
+        module = load_module(
+            "inspect_ht_data_file_link",
+            ROOT / ".agents" / "skills" / "ht-local-market-data" / "scripts" / "inspect_ht_data.py",
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "root"
+            folder = root / "vipdoc" / "sh" / "lday"
+            folder.mkdir(parents=True)
+            outside = Path(tmp) / "outside.day"
+            outside.write_bytes(b"must not read")
+            try:
+                (folder / "sh000001.day").symlink_to(outside)
+            except OSError as exc:
+                self.skipTest(f"file symlink unavailable: {exc}")
+            with patch.object(Path, "read_bytes", side_effect=AssertionError("linked file read")):
+                result = module.summarize_day(root, ["sh000001"])
+            self.assertEqual(result["files"], 0)
+            self.assertFalse(result["samples"][0]["exists"])
 
 
 if __name__ == "__main__":

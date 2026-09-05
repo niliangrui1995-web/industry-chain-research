@@ -15,6 +15,8 @@ The pack must prioritize company original materials:
 7. `media_or_analyst`: financial media, analyst notes, blogs, or commentary.
 8. `unknown`: source type cannot be determined.
 
+Shared hosting domains such as ON24 or Q4 CDN do not prove that an event belongs to the company. The pack builder keeps them `unknown` until the agent verifies a company IR/filing link to the exact event or asset. Then use the existing `--manual-source` fields with `type=official_event_platform` and `notes` containing the official linking source and verification context; the explicit role also applies when the same URL appears in webcast assets. Pass only company-owned domains to `--company-domain`, never a shared hosting provider.
+
 For reported facts, use `company_original` and `regulatory_filing` first. Use lower-tier sources only when official evidence is missing, and label that limitation.
 
 Use `hosting_type` to separate content origin from hosting path:

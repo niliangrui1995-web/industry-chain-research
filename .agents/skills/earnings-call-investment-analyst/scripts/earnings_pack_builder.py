@@ -113,7 +113,7 @@ def classify_source(url: str = "", title: str = "", company_domains: set[str] | 
     if domain in company_domains or any(domain.endswith(f".{d}") for d in company_domains):
         return "company_original"
     if domain_matches(domain, OFFICIAL_EVENT_DOMAINS):
-        return "official_event_platform"
+        return "unknown"
     if domain_matches(domain, THIRD_PARTY_AUDIO_DOMAINS) and any(
         token in lowered for token in ("audio-files", ".mp3", ".mpeg", ".m4a", ".wav")
     ):
@@ -263,6 +263,11 @@ def build_sources(
     sources: list[dict[str, Any]] = []
     seen: dict[tuple[str, str], str] = {}
     gaps: list[str] = []
+    explicit_sources = {
+        item["url"]: item
+        for item in manual_sources
+        if item.get("url") and item.get("type")
+    }
 
     if source_inventory:
         retrieved_at = source_inventory.get("retrieved_at", "")
@@ -293,7 +298,8 @@ def build_sources(
         input_url = webcast_assets.get("input_url", "")
         retrieved_at = webcast_assets.get("retrieved_at", "")
         if input_url:
-            input_source_type = classify_source(input_url, "webcast replay transcript", company_domains)
+            explicit_source = explicit_sources.get(input_url, {})
+            input_source_type = explicit_source.get("type") or classify_source(input_url, "webcast replay transcript", company_domains)
             add_source(
                 sources,
                 seen,
@@ -303,7 +309,7 @@ def build_sources(
                 file_path=webcast_assets.get("page_path", ""),
                 retrieved_at=retrieved_at,
                 publisher=domain_of(input_url),
-                notes="Input webcast page inspected for replay assets.",
+                notes=explicit_source.get("notes") or "Input webcast page inspected for replay assets.",
             )
 
         for asset in webcast_assets.get("assets", []):
@@ -313,7 +319,8 @@ def build_sources(
                 continue
             download = asset.get("download") or {}
             file_path = download.get("path", "") if isinstance(download, dict) else ""
-            source_type = classify_source(url, category, company_domains)
+            explicit_source = explicit_sources.get(url, {})
+            source_type = explicit_source.get("type") or classify_source(url, category, company_domains)
             add_source(
                 sources,
                 seen,
@@ -323,7 +330,7 @@ def build_sources(
                 file_path=file_path,
                 retrieved_at=retrieved_at,
                 publisher=domain_of(url),
-                notes=f"Discovered from webcast page; category={category}.",
+                notes=explicit_source.get("notes") or f"Discovered from webcast page; category={category}.",
             )
 
     if transcript_manifest:
@@ -331,7 +338,8 @@ def build_sources(
             sources,
             transcript_manifest.get("media_path", "") or transcript_manifest.get("input", ""),
         )
-        origin_source_type = (origin_source or {}).get("source_type") or classify_source(
+        explicit_source = explicit_sources.get(transcript_manifest.get("input", ""), {})
+        origin_source_type = (origin_source or {}).get("source_type") or explicit_source.get("type") or classify_source(
             transcript_manifest.get("input", ""),
             "audio transcription input",
             company_domains,

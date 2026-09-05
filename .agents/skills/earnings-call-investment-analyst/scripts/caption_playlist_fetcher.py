@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import math
 import re
 import sys
 import time
@@ -64,16 +65,34 @@ def playlist_segments(playlist_text: str, playlist_url: str) -> list[str]:
 
 
 def playlist_duration_seconds(playlist_text: str) -> float:
+    lines = playlist_text.splitlines()
+    if not lines or lines[0].strip() != "#EXTM3U":
+        raise ValueError("播放列表缺少 EXTM3U 文件头。")
     duration = 0.0
-    for raw_line in playlist_text.splitlines():
+    pending_segment = False
+    ended = False
+    for raw_line in lines[1:]:
         line = raw_line.strip()
-        if not line.startswith("#EXTINF:"):
+        if not line:
             continue
-        value = line.split(":", 1)[1].split(",", 1)[0]
-        try:
-            duration += float(value)
-        except ValueError:
-            continue
+        if line.startswith(("#EXT-X-GAP", "#EXT-X-BYTERANGE", "#EXT-X-KEY:", "#EXT-X-MAP:", "#EXT-X-STREAM-INF:", "#EXT-X-PART:")):
+            raise ValueError("播放列表存在缺段标记或不支持的分段格式。")
+        if line.startswith("#EXTINF:"):
+            if pending_segment or ended:
+                raise ValueError("播放列表的 EXTINF 与分段地址顺序无效。")
+            value = float(line.split(":", 1)[1].split(",", 1)[0])
+            if not math.isfinite(value) or value < 0:
+                raise ValueError("播放列表的 EXTINF 时长必须为有限非负数。")
+            duration += value
+            pending_segment = True
+        elif line == "#EXT-X-ENDLIST":
+            ended = True
+        elif not line.startswith("#"):
+            if not pending_segment or ended:
+                raise ValueError("字幕分段缺少 EXTINF 或位于 ENDLIST 之后。")
+            pending_segment = False
+    if pending_segment or not math.isfinite(duration):
+        raise ValueError("播放列表存在悬空 EXTINF 或非法总时长。")
     return duration
 
 
@@ -87,12 +106,40 @@ def checked_segment_size(current_total_bytes: int, segment_text: str) -> tuple[i
 
 def normalize_vtt_segment(text: str) -> list[str]:
     lines = []
-    for raw_line in text.splitlines():
+    for index, raw_line in enumerate(text.lstrip("\ufeff").splitlines()):
         line = raw_line.rstrip()
-        if not line or line == "WEBVTT" or line.startswith("X-TIMESTAMP-MAP="):
+        if not line or index == 0 or line.startswith("X-TIMESTAMP-MAP="):
             continue
         lines.append(line)
     return lines
+
+
+def validate_vtt_segment(text: str) -> None:
+    lines = text.lstrip("\ufeff").splitlines()
+    if not lines or not re.fullmatch(r"WEBVTT(?:[ \t].*)?", lines[0]) or "-->" in lines[0]:
+        raise ValueError("分段响应不是有效的 WEBVTT 字幕，可能返回了错误页。")
+    index = 1
+    while index < len(lines) and lines[index].startswith("X-TIMESTAMP-MAP="):
+        index += 1
+    if index < len(lines) and lines[index].strip():
+        raise ValueError("WEBVTT 文件头与字幕正文缺少空行。")
+    timestamp = r"(?:\d{2,}:)?[0-5]\d:[0-5]\d\.\d{3}"
+    timing = re.compile(rf"({timestamp})[ \t]+-->[ \t]+({timestamp})(?:[ \t]+.*)?")
+
+    def seconds(value: str) -> float:
+        parts = [float(part) for part in value.split(":")]
+        return sum(part * 60 ** power for power, part in enumerate(reversed(parts)))
+
+    for block in re.split(r"\n[ \t]*\n", "\n".join(lines[index:]).strip()):
+        if not block:
+            continue
+        cue = block.splitlines()
+        if re.fullmatch(r"NOTE(?:[ \t].*)?", cue[0]) or cue[0] in {"STYLE", "REGION"}:
+            continue
+        time_index = 0 if "-->" in cue[0] else 1
+        match = timing.fullmatch(cue[time_index]) if time_index < len(cue) else None
+        if match is None or seconds(match[1]) >= seconds(match[2]):
+            raise ValueError("WEBVTT 字幕块缺少有效时间轴，不能确认为已下载字幕。")
 
 
 def vtt_to_plain_text(vtt_text: str) -> str:
@@ -132,14 +179,21 @@ def main() -> int:
     segments = playlist_segments(playlist_text, args.playlist_url)
     if len(segments) > MAX_SEGMENTS:
         raise ValueError(f"playlist has too many segments: {len(segments)}")
-    is_complete_playlist = "#EXT-X-ENDLIST" in playlist_text
-    duration_seconds = playlist_duration_seconds(playlist_text)
+    playlist_ended = any(line.strip() == "#EXT-X-ENDLIST" for line in playlist_text.splitlines())
+    warnings = []
+    try:
+        duration_seconds = playlist_duration_seconds(playlist_text)
+    except ValueError as exc:
+        duration_seconds = None
+        warnings.append(f"播放列表格式校验失败：{exc}")
+    playlist_valid = duration_seconds is not None
     merged_lines = ["WEBVTT", ""]
     segment_records = []
     total_segment_bytes = 0
-    for index, segment_url in enumerate(segments):
+    for index, segment_url in enumerate(segments if playlist_valid else []):
         try:
             segment_text = fetch_text(segment_url, args.user_agent, MAX_SEGMENT_BYTES)
+            validate_vtt_segment(segment_text)
             total_segment_bytes, segment_bytes = checked_segment_size(total_segment_bytes, segment_text)
             segment_path = raw_dir / f"segment_{index:04d}.vtt"
             segment_path.write_text(segment_text, encoding="utf-8")
@@ -158,26 +212,39 @@ def main() -> int:
     merged_vtt_path.write_text(merged_vtt, encoding="utf-8")
     plain_text_path.write_text(vtt_to_plain_text(merged_vtt), encoding="utf-8")
 
+    downloaded_count = sum(1 for item in segment_records if item["status"] == "ok")
+    download_complete = playlist_valid and bool(segments) and downloaded_count == len(segments)
+    playlist_complete = playlist_ended and download_complete
+    if not playlist_ended:
+        warnings.append("播放列表缺少 EXT-X-ENDLIST，可能仅为直播或回看滑动窗口。")
+    if not segments:
+        warnings.append("播放列表不含字幕分段。")
+    elif not download_complete:
+        warnings.append(f"字幕分段下载不完整：{downloaded_count}/{len(segments)}，合并结果仅供诊断。")
+
     manifest = {
         "playlist_url": args.playlist_url,
         "playlist_path": str(playlist_path),
         "merged_vtt_path": str(merged_vtt_path),
         "plain_text_path": str(plain_text_path),
-        "playlist_complete": is_complete_playlist,
-        "warning": "" if is_complete_playlist else "Playlist has no EXT-X-ENDLIST; it may be a sliding live/DVR window rather than the full call captions.",
+        "playlist_ended": playlist_ended,
+        "playlist_valid": playlist_valid,
+        "download_complete": download_complete,
+        "playlist_complete": playlist_complete,
+        "warning": " ".join(warnings),
         "playlist_duration_seconds": duration_seconds,
         "segment_count": len(segments),
-        "downloaded_count": sum(1 for item in segment_records if item["status"] == "ok"),
+        "downloaded_count": downloaded_count,
         "segment_bytes_total": total_segment_bytes,
         "segments": segment_records,
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
     }
-    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
+    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False, allow_nan=False), encoding="utf-8")
 
     print(str(manifest_path))
     print(str(merged_vtt_path))
     print(str(plain_text_path))
-    return 0
+    return 0 if playlist_complete else 1
 
 
 if __name__ == "__main__":

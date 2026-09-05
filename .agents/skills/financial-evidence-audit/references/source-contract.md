@@ -30,7 +30,8 @@
 - `market_cap.expected`、`valuation.expected_low/high`、`percentage.expected` 是待核对的报告 claim，可来自 `report_under_audit`；它们可以被比较但仍不计入 origin 数量或 anchor，也不能替代计算输入的可信来源。
 - 多个来源都接近报告值仍不代表彼此一致；正式准出还必须通过来源之间的 pairwise 数值检查。
 - 点时价格、市值和估值只接受未复权或真实时点价格；`adjusted_close` 只可用于收益率/趋势序列，不能作为当时可交易价格或市值基础。
-- Actual-vs-consensus 合同中的 `event_at` 必须是真实 actual/guidance 首次可得事件：A 股 `expectation_gap` 的 quarterly low/high 与全球 `expectation_surprise.reported_actual` 的 actual low/high 都要求 `available_at` 为带时区且精确等于 `event_at`；`company_guidance` 的形成/可得时点同样精确等于事件。Subject 必须来自 official release/filing 或 official company source，consensus 必须来自事件前 vendor 或可信历史快照。不得把 actual 发布后形成的共识靠自报更晚事件伪装成 pre-event；Subject 与 consensus 的 metric、币种、单位、accounting basis 与目标期间必须一致，GAAP、adjusted 和 non-GAAP 不得跨口径比较。
+- Actual-vs-consensus 合同中的 `event_at` 必须是真实 actual/guidance 首次可得事件：A 股 `expectation_gap` 的 quarterly low/high 与全球 `expectation_surprise.reported_actual` 的 actual low/high 都要求 `available_at` 为带时区且精确等于 `event_at`；`company_guidance` 的形成/可得时点同样精确等于事件。Subject 必须来自 official release/filing 或 official company source，consensus 必须来自事件前 vendor 或可信历史快照。不得把 actual 发布后形成的共识靠自报更晚事件伪装成 pre-event。
+- `expectation_surprise` 的 Subject 与 consensus 必须同 metric、币种、单位、accounting basis 和目标期间，GAAP、adjusted 和 non-GAAP 不得跨口径比较。A 股 `expectation_gap` 按专用合同比较最新单季度 `deducted_attributable_net_profit` 乘 4 与事件前 `fy_attributable_net_profit` 全年共识；两者币种、单位和 PRC-GAAP 口径一致，季度必须完整落在共识目标年度内，分别使用合同规定的 basis。该跨指标、跨期间比较固定 `formal_surprise_status=N/A`，不得改装成同口径正式 beat/miss。
 
 ## 缺源与冲突
 
