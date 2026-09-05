@@ -50,7 +50,7 @@ Last verified: 2026-08-03
 - `artifacts/`：研究证据、原始抓取、公司跟踪和专题输出；本地原始材料统一归入 `artifacts/source_captures/`。
 - `watchlists/`：观察池和持续跟踪名单；`AI产业链.xlsx` 为 AI 产业链主观察池。
 - `docs/`：自动化合同、证据规范和专题说明；参考材料在 `docs/reference_materials/`，译文在 `docs/translations/`，历史工作簿在 `docs/historical_workbooks/`。
-- `scripts/`：确定性项目辅助脚本；历史一次性脚本在 `scripts/legacy/`。
+- `scripts/`：确定性项目辅助脚本。
 - `SKILL_PACK_MANIFEST.md`：精简后的技能清单和迁移边界。
 - `THIRD_PARTY_NOTICES.md`：上游方法改写的版本归属与许可证全文。
 
