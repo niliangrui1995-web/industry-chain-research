@@ -1,0 +1,588 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "preclinical-cro-8-h1-revenue-20260909",
+  "as_of": "2026-09-09T12:00:00+08:00",
+  "sources": [
+    {
+      "id": "WUXI_H1",
+      "source_type": "official_filing",
+      "origin_id": "wuxi:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-04/1225455027.PDF",
+      "source_date": "2026-08-04",
+      "checked_at": "2026-09-09T12:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "PHARMARON_H1",
+      "source_type": "official_filing",
+      "origin_id": "pharmaron:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225487380.PDF",
+      "source_date": "2026-08-21",
+      "checked_at": "2026-09-09T12:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "CHEMPARTNER_H1",
+      "source_type": "official_filing",
+      "origin_id": "chempartner:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225525859.PDF",
+      "source_date": "2026-08-29",
+      "checked_at": "2026-09-09T12:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "JOINN_H1",
+      "source_type": "official_filing",
+      "origin_id": "joinn:2026H1:report",
+      "locator": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-29/603127_20260829_QXT1.pdf",
+      "source_date": "2026-08-29",
+      "checked_at": "2026-09-09T12:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "INNOSTAR_H1",
+      "source_type": "official_filing",
+      "origin_id": "innostar:2026H1:report",
+      "locator": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-25/688710_20260825_8ORV.pdf",
+      "source_date": "2026-08-25",
+      "checked_at": "2026-09-09T12:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "PHARMARESOURCES_H1",
+      "source_type": "official_filing",
+      "origin_id": "pharmaresources:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225519893.PDF",
+      "source_date": "2026-08-28",
+      "checked_at": "2026-09-09T12:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "HITGEN_H1",
+      "source_type": "official_filing",
+      "origin_id": "hitgen:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225508326.PDF",
+      "source_date": "2026-08-27",
+      "checked_at": "2026-09-09T12:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "MEDICILON_H1",
+      "source_type": "official_filing",
+      "origin_id": "medicilon:2026H1:report",
+      "locator": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-25/688202_20260825_YJX5.pdf",
+      "source_date": "2026-08-25",
+      "checked_at": "2026-09-09T12:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "DRAFT",
+      "source_type": "report_under_audit",
+      "origin_id": "preclinical-cro-8:research:20260909",
+      "locator": "2026H1事实底表.md",
+      "source_date": "2026-09-09",
+      "checked_at": "2026-09-09T12:00:00+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "revenue_wuxi_h1",
+      "metric": "revenue",
+      "value": "288.9748",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "WUXI_H1"
+      ],
+      "available_at": "2026-08-04"
+    },
+    {
+      "id": "D_revenue_wuxi_h1",
+      "metric": "revenue",
+      "value": "288.9748",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "DRAFT"
+      ],
+      "available_at": "2026-08-04"
+    },
+    {
+      "id": "revenue_pharmaron_h1",
+      "metric": "revenue",
+      "value": "75.9542",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "PHARMARON_H1"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "D_revenue_pharmaron_h1",
+      "metric": "revenue",
+      "value": "75.9542",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "DRAFT"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "revenue_chempartner_h1",
+      "metric": "revenue",
+      "value": "5.6246",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "CHEMPARTNER_H1"
+      ],
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "D_revenue_chempartner_h1",
+      "metric": "revenue",
+      "value": "5.6246",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "DRAFT"
+      ],
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "revenue_joinn_h1",
+      "metric": "revenue",
+      "value": "7.0382",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "JOINN_H1"
+      ],
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "D_revenue_joinn_h1",
+      "metric": "revenue",
+      "value": "7.0382",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "DRAFT"
+      ],
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "revenue_innostar_h1",
+      "metric": "revenue",
+      "value": "4.6499",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "INNOSTAR_H1"
+      ],
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "D_revenue_innostar_h1",
+      "metric": "revenue",
+      "value": "4.6499",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "DRAFT"
+      ],
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "revenue_pharmaresources_h1",
+      "metric": "revenue",
+      "value": "3.6441",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "PHARMARESOURCES_H1"
+      ],
+      "available_at": "2026-08-28"
+    },
+    {
+      "id": "D_revenue_pharmaresources_h1",
+      "metric": "revenue",
+      "value": "3.6441",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "DRAFT"
+      ],
+      "available_at": "2026-08-28"
+    },
+    {
+      "id": "revenue_hitgen_h1",
+      "metric": "revenue",
+      "value": "3.4598",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "HITGEN_H1"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "D_revenue_hitgen_h1",
+      "metric": "revenue",
+      "value": "3.4598",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "DRAFT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "revenue_medicilon_h1",
+      "metric": "revenue",
+      "value": "7.6147",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "MEDICILON_H1"
+      ],
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "D_revenue_medicilon_h1",
+      "metric": "revenue",
+      "value": "7.6147",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "DRAFT"
+      ],
+      "available_at": "2026-08-25"
+    }
+  ],
+  "checks": [
+    {
+      "id": "VERIFY_revenue_wuxi_h1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_revenue_wuxi_h1"
+      },
+      "references": [
+        {
+          "fact_id": "revenue_wuxi_h1"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_revenue_pharmaron_h1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_revenue_pharmaron_h1"
+      },
+      "references": [
+        {
+          "fact_id": "revenue_pharmaron_h1"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_revenue_chempartner_h1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_revenue_chempartner_h1"
+      },
+      "references": [
+        {
+          "fact_id": "revenue_chempartner_h1"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_revenue_joinn_h1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_revenue_joinn_h1"
+      },
+      "references": [
+        {
+          "fact_id": "revenue_joinn_h1"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_revenue_innostar_h1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_revenue_innostar_h1"
+      },
+      "references": [
+        {
+          "fact_id": "revenue_innostar_h1"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_revenue_pharmaresources_h1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_revenue_pharmaresources_h1"
+      },
+      "references": [
+        {
+          "fact_id": "revenue_pharmaresources_h1"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_revenue_hitgen_h1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_revenue_hitgen_h1"
+      },
+      "references": [
+        {
+          "fact_id": "revenue_hitgen_h1"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_revenue_medicilon_h1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_revenue_medicilon_h1"
+      },
+      "references": [
+        {
+          "fact_id": "revenue_medicilon_h1"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    }
+  ]
+}

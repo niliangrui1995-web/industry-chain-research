@@ -1,0 +1,499 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.2",
+  "audit_id": "innovation-drug-transmission-20260909",
+  "input_sha256": "1ac44c797835e8479ea16410232fe51baafc503a0a3adc29d45accf512400d5d",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 10,
+    "verified_count": 10,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "VERIFY_innostar_order_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "INNOSTAR_ORDER_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "innostar_order_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "175.56",
+          "metric": "new_orders_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "DRAFT",
+            "INNOSTAR_ORDER_YOY_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_medicilon_order_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "MEDICILON_ORDER_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon_order_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "104.74",
+          "metric": "new_orders_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "DRAFT",
+            "MEDICILON_ORDER_YOY_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_joinn_order_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "JOINN_ORDER_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "joinn_order_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "98",
+          "metric": "new_orders_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "DRAFT",
+            "JOINN_ORDER_YOY_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_tigermed_clinical_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "TIGERMED_CLINICAL_REV_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "tigermed_clinical_rev_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "20.68",
+          "metric": "clinical_trial_technical_service_revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "DRAFT",
+            "TIGERMED_CLINICAL_REV_YOY_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_pharmaron_clinical_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "PHARMARON_CLINICAL_REV_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "pharmaron_clinical_rev_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "13.75",
+          "metric": "clinical_research_service_revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "DRAFT",
+            "PHARMARON_CLINICAL_REV_YOY_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_nossig_clinical_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "NOSSIG_CLINICAL_REV_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "nossig_clinical_rev_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "37.48",
+          "metric": "clinical_technical_service_revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "DRAFT",
+            "NOSSIG_CLINICAL_REV_YOY_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_wuxi_chemistry_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "WUXI_CHEMISTRY_REV_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "wuxi_chemistry_rev_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "53.3",
+          "metric": "chemistry_revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "DRAFT",
+            "WUXI_CHEMISTRY_REV_YOY_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_asymchem_revenue_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "ASYMCHEM_REVENUE_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "asymchem_revenue_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "13.13",
+          "metric": "revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "ASYMCHEM_REVENUE_YOY_H1",
+            "DRAFT"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_porton_late_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "PORTON_LATE_REV_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "porton_late_rev_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "24.29",
+          "metric": "late_commercial_cdmo_revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "DRAFT",
+            "PORTON_LATE_REV_YOY_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_jiuzhou_revenue_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "JIUZHOU_REVENUE_YOY_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "jiuzhou_revenue_yoy:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-10.3",
+          "metric": "revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_operating_metric",
+          "source_ids": [
+            "DRAFT",
+            "JIUZHOU_REVENUE_YOY_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    }
+  ]
+}

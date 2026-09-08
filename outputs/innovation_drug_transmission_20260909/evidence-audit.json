@@ -1,0 +1,730 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "innovation-drug-transmission-20260909",
+  "as_of": "2026-09-09T16:00:00+08:00",
+  "sources": [
+    {
+      "id": "INNOSTAR_ORDER_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "innostar_order_yoy:2026H1:report",
+      "locator": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-25/688710_20260825_8ORV.pdf",
+      "source_date": "2026-08-25",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "MEDICILON_ORDER_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "medicilon_order_yoy:2026H1:report",
+      "locator": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-25/688202_20260825_YJX5.pdf",
+      "source_date": "2026-08-25",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "JOINN_ORDER_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "joinn_order_yoy:2026H1:report",
+      "locator": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-29/603127_20260829_QXT1.pdf",
+      "source_date": "2026-08-29",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "TIGERMED_CLINICAL_REV_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "tigermed_clinical_rev_yoy:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225525347.PDF",
+      "source_date": "2026-08-29",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "PHARMARON_CLINICAL_REV_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "pharmaron_clinical_rev_yoy:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225487380.PDF",
+      "source_date": "2026-08-21",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "NOSSIG_CLINICAL_REV_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "nossig_clinical_rev_yoy:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225519078.PDF",
+      "source_date": "2026-08-28",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "WUXI_CHEMISTRY_REV_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "wuxi_chemistry_rev_yoy:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-04/1225455027.PDF",
+      "source_date": "2026-08-04",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "ASYMCHEM_REVENUE_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "asymchem_revenue_yoy:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225496302.PDF",
+      "source_date": "2026-08-25",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "PORTON_LATE_REV_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "porton_late_rev_yoy:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-22/1225492110.PDF",
+      "source_date": "2026-08-22",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "JIUZHOU_REVENUE_YOY_H1",
+      "source_type": "official_filing",
+      "origin_id": "jiuzhou_revenue_yoy:2026H1:report",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-04/1225454249.PDF",
+      "source_date": "2026-08-04",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "DRAFT",
+      "source_type": "report_under_audit",
+      "origin_id": "innovation-drug-transmission:research:20260909",
+      "locator": "创新药复苏传导证据卡.md",
+      "source_date": "2026-09-09",
+      "checked_at": "2026-09-09T16:00:00+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "metric": "new_orders_yoy_pct",
+      "value": "175.56",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-25",
+      "id": "innostar_order_yoy",
+      "source_refs": [
+        "INNOSTAR_ORDER_YOY_H1"
+      ]
+    },
+    {
+      "metric": "new_orders_yoy_pct",
+      "value": "175.56",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-25",
+      "id": "D_innostar_order_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    },
+    {
+      "metric": "new_orders_yoy_pct",
+      "value": "104.74",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-25",
+      "id": "medicilon_order_yoy",
+      "source_refs": [
+        "MEDICILON_ORDER_YOY_H1"
+      ]
+    },
+    {
+      "metric": "new_orders_yoy_pct",
+      "value": "104.74",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-25",
+      "id": "D_medicilon_order_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    },
+    {
+      "metric": "new_orders_yoy_pct",
+      "value": "98.00",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-29",
+      "id": "joinn_order_yoy",
+      "source_refs": [
+        "JOINN_ORDER_YOY_H1"
+      ]
+    },
+    {
+      "metric": "new_orders_yoy_pct",
+      "value": "98.00",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-29",
+      "id": "D_joinn_order_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    },
+    {
+      "metric": "clinical_trial_technical_service_revenue_yoy_pct",
+      "value": "20.68",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-29",
+      "id": "tigermed_clinical_rev_yoy",
+      "source_refs": [
+        "TIGERMED_CLINICAL_REV_YOY_H1"
+      ]
+    },
+    {
+      "metric": "clinical_trial_technical_service_revenue_yoy_pct",
+      "value": "20.68",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-29",
+      "id": "D_tigermed_clinical_rev_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    },
+    {
+      "metric": "clinical_research_service_revenue_yoy_pct",
+      "value": "13.75",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-21",
+      "id": "pharmaron_clinical_rev_yoy",
+      "source_refs": [
+        "PHARMARON_CLINICAL_REV_YOY_H1"
+      ]
+    },
+    {
+      "metric": "clinical_research_service_revenue_yoy_pct",
+      "value": "13.75",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-21",
+      "id": "D_pharmaron_clinical_rev_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    },
+    {
+      "metric": "clinical_technical_service_revenue_yoy_pct",
+      "value": "37.48",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-28",
+      "id": "nossig_clinical_rev_yoy",
+      "source_refs": [
+        "NOSSIG_CLINICAL_REV_YOY_H1"
+      ]
+    },
+    {
+      "metric": "clinical_technical_service_revenue_yoy_pct",
+      "value": "37.48",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-28",
+      "id": "D_nossig_clinical_rev_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    },
+    {
+      "metric": "chemistry_revenue_yoy_pct",
+      "value": "53.30",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-04",
+      "id": "wuxi_chemistry_rev_yoy",
+      "source_refs": [
+        "WUXI_CHEMISTRY_REV_YOY_H1"
+      ]
+    },
+    {
+      "metric": "chemistry_revenue_yoy_pct",
+      "value": "53.30",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-04",
+      "id": "D_wuxi_chemistry_rev_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    },
+    {
+      "metric": "revenue_yoy_pct",
+      "value": "13.13",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-25",
+      "id": "asymchem_revenue_yoy",
+      "source_refs": [
+        "ASYMCHEM_REVENUE_YOY_H1"
+      ]
+    },
+    {
+      "metric": "revenue_yoy_pct",
+      "value": "13.13",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-25",
+      "id": "D_asymchem_revenue_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    },
+    {
+      "metric": "late_commercial_cdmo_revenue_yoy_pct",
+      "value": "24.29",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-22",
+      "id": "porton_late_rev_yoy",
+      "source_refs": [
+        "PORTON_LATE_REV_YOY_H1"
+      ]
+    },
+    {
+      "metric": "late_commercial_cdmo_revenue_yoy_pct",
+      "value": "24.29",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-22",
+      "id": "D_porton_late_rev_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    },
+    {
+      "metric": "revenue_yoy_pct",
+      "value": "-10.30",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-04",
+      "id": "jiuzhou_revenue_yoy",
+      "source_refs": [
+        "JIUZHOU_REVENUE_YOY_H1"
+      ]
+    },
+    {
+      "metric": "revenue_yoy_pct",
+      "value": "-10.30",
+      "unit": "percent",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "issuer_reported_operating_metric",
+      "available_at": "2026-08-04",
+      "id": "D_jiuzhou_revenue_yoy",
+      "source_refs": [
+        "DRAFT"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "VERIFY_innostar_order_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_innostar_order_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "innostar_order_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_medicilon_order_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_medicilon_order_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "medicilon_order_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_joinn_order_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_joinn_order_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "joinn_order_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_tigermed_clinical_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_tigermed_clinical_rev_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "tigermed_clinical_rev_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_pharmaron_clinical_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_pharmaron_clinical_rev_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "pharmaron_clinical_rev_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_nossig_clinical_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_nossig_clinical_rev_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "nossig_clinical_rev_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_wuxi_chemistry_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_wuxi_chemistry_rev_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "wuxi_chemistry_rev_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_asymchem_revenue_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_asymchem_revenue_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "asymchem_revenue_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_porton_late_rev_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_porton_late_rev_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "porton_late_rev_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "VERIFY_jiuzhou_revenue_yoy",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "D_jiuzhou_revenue_yoy"
+      },
+      "references": [
+        {
+          "fact_id": "jiuzhou_revenue_yoy"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    }
+  ]
+}
