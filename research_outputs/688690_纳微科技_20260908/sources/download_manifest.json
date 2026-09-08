@@ -1,0 +1,16 @@
+[
+  {
+    "name": "2026H1",
+    "bytes": 1779215,
+    "pages": 237,
+    "url": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-8/2026-08-27/12545796.PDF",
+    "sha256": "cc8ef428c353d917e06bb3521d3629bd57a7eea436e7046f6ed0156ffa2b3c91"
+  },
+  {
+    "name": "2025FY",
+    "bytes": 2205956,
+    "pages": 295,
+    "url": "https://stockmc.xueqiu.com/202604/688690_20260416_FX2T.pdf",
+    "sha256": "ead0ff9369c34457e26591cba7942230aaa8cbbcebd8fb43be9c2890aa6eca7b"
+  }
+]

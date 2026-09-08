@@ -1,0 +1,185 @@
+{
+  "created_at": "2026-09-09T02:17:42+08:00",
+  "files": [
+    {
+      "path": "audit-result.json",
+      "bytes": 84484,
+      "sha256": "8314e599237e23cb9457f906a6ee1ef3a6a0d5b289b577b59c234ae9ce14803e"
+    },
+    {
+      "path": "build_audit.py",
+      "bytes": 11440,
+      "sha256": "beb546ced958c301b631c2dc416a37e32de729a22f55a3336ab6737fc4807c70"
+    },
+    {
+      "path": "competitiveness/competitive_findings.md",
+      "bytes": 9485,
+      "sha256": "e7bcb7e5d53dc5ec0f4b27842550b2d8850e58b0cd37e6de0444fafadf1311de"
+    },
+    {
+      "path": "competitiveness/joinn_2026h1_mirror.pdf",
+      "bytes": 1098296,
+      "sha256": "aff5140ad70f4f86039ecb281a8331cf9c7ea05bedc70bf033d786b22779f228"
+    },
+    {
+      "path": "competitiveness/joinn_2026h1_mirror.txt",
+      "bytes": 352462,
+      "sha256": "d44ef32840ed1cec92f7cbe71c552fa4cb0d0e1cdfd26ee42ed9ddbbbf84b961"
+    },
+    {
+      "path": "competitiveness/manifest.json",
+      "bytes": 967,
+      "sha256": "ccbf61810188904f7a5877904cf5886a2a4dbbb61fb97c53d902cc998965f757"
+    },
+    {
+      "path": "competitiveness/medicilon_2025_mirror.pdf",
+      "bytes": 1767914,
+      "sha256": "a37583a1e975422ac2a5ddf2ec8db514ddebb3efb42ad2a45089bbb854f4c444"
+    },
+    {
+      "path": "competitiveness/medicilon_2025_mirror.txt",
+      "bytes": 618069,
+      "sha256": "5af0deb567d40077e0e0bb00d3635be470ac53dfdd616f05c008ca10b6b22bfd"
+    },
+    {
+      "path": "competitiveness/medicilon_2026h1_mirror.pdf",
+      "bytes": 1445989,
+      "sha256": "6aa6138dd610cda355b546e5e8ecc3195e267b21d2e5f9fbe9d670acdd541b93"
+    },
+    {
+      "path": "competitiveness/medicilon_2026h1_mirror.txt",
+      "bytes": 459703,
+      "sha256": "3cd6181c3c5bbabb9269c931986a4ba11ee93bd1cc166ed2f46432fb2040aca1"
+    },
+    {
+      "path": "competitiveness/medicilon_h1_page40.png",
+      "bytes": 180359,
+      "sha256": "b1c0161f4353805094ad0e391823c01b1785b1e1e136dfa83eefef03df9d2ddc"
+    },
+    {
+      "path": "competitiveness/pharmaron_2026h1.pdf",
+      "bytes": 3147673,
+      "sha256": "e4be77dd5f4d902fcf9193d3029d82b5a83fd9d66d05c09fd845b04852101d8f"
+    },
+    {
+      "path": "competitiveness/pharmaron_2026h1.txt",
+      "bytes": 416036,
+      "sha256": "27f2a27eb0284a19c23d7e6874a273d4907f9cb3d4d6e4790b951c52c434d4f4"
+    },
+    {
+      "path": "competitiveness/wuxi_2026h1.pdf",
+      "bytes": 1216470,
+      "sha256": "d0dba19ede6e35ae3e127a1da91a42f04262e90d14efeb847bdfbff9b6354a5f"
+    },
+    {
+      "path": "competitiveness/wuxi_2026h1.txt",
+      "bytes": 414994,
+      "sha256": "812d19e45b616e004b0fc54192b870c1b35cb8b6a50e56cd0a3db12f662798c0"
+    },
+    {
+      "path": "data_request_plan.json",
+      "bytes": 3429,
+      "sha256": "c5b747c3c135f727c51a175250d4ffeab2ba09341e21ff3c9f373dc51ae1ed62"
+    },
+    {
+      "path": "demand/demand_evidence.md",
+      "bytes": 10345,
+      "sha256": "705a0b8f7f6c79f8bf8e5856d359ac939a9b582c6979fad4039e67c6de3e6676"
+    },
+    {
+      "path": "evidence-audit.json",
+      "bytes": 82994,
+      "sha256": "88f579ed72b2e9bb42acf00ff9bbad2730a4a45a2b57254fbd0905b1da281b8b"
+    },
+    {
+      "path": "financials/2025FY.pdf",
+      "bytes": 1767914,
+      "sha256": "a37583a1e975422ac2a5ddf2ec8db514ddebb3efb42ad2a45089bbb854f4c444"
+    },
+    {
+      "path": "financials/2025FY.txt",
+      "bytes": 618655,
+      "sha256": "d9738eec9de555b6289a41fbd27618bb62d750ceb6d80a14e129cd8b9ba1a7ea"
+    },
+    {
+      "path": "financials/2025H1.pdf",
+      "bytes": 1331026,
+      "sha256": "93bcd57fe6e77e12b04f91830ac54a9f8a983c8836b93570da3d22c6fb7257e7"
+    },
+    {
+      "path": "financials/2025H1.txt",
+      "bytes": 444066,
+      "sha256": "1ae33c22d4a3c6cc9f580cd94fe853c8c031e32dcb9ec0b84ce0a1c1a1cde03e"
+    },
+    {
+      "path": "financials/2026_counterclaim.pdf",
+      "bytes": 117392,
+      "sha256": "d6009080960d85b1e9105e0ab897355ee5d70907638ebf143adb797f6cffdac4"
+    },
+    {
+      "path": "financials/2026_counterclaim.txt",
+      "bytes": 4404,
+      "sha256": "ff5ce2bd71c00fccc25942ee65fa4fa3ce52fed22caba0cbb46134e7d9d6ba37"
+    },
+    {
+      "path": "financials/2026H1.pdf",
+      "bytes": 1445989,
+      "sha256": "6aa6138dd610cda355b546e5e8ecc3195e267b21d2e5f9fbe9d670acdd541b93"
+    },
+    {
+      "path": "financials/2026H1.txt",
+      "bytes": 460163,
+      "sha256": "a644d5a50e61f1dd7d3ef147a8ed323bc478f71cbb0d90f821502f3f4b12a232"
+    },
+    {
+      "path": "financials/2026H1_raised_funds.pdf",
+      "bytes": 239406,
+      "sha256": "3877eb4b6df9c6b718ff3e39d5d3f77d1f032ec6b5567d7998538808757351dd"
+    },
+    {
+      "path": "financials/2026H1_raised_funds.txt",
+      "bytes": 22904,
+      "sha256": "a243f32d832829ef33b903d46602920e24eb030a9f7771e0f9d5e936cf543f8c"
+    },
+    {
+      "path": "financials/2026Q1.pdf",
+      "bytes": 171690,
+      "sha256": "672dbb94b84eedd4c507f62b3d15bcb3be946f616c9529ca437a5c70273cebff"
+    },
+    {
+      "path": "financials/2026Q1.txt",
+      "bytes": 23220,
+      "sha256": "07d3f7657e6a666f25218b016fe8a739f1d7604e9af0a3a924de545e510af5bf"
+    },
+    {
+      "path": "financials/financial_facts.json",
+      "bytes": 48100,
+      "sha256": "ea285b2b233eb63a712eb4ff2e6b7e712e014959f1a0c2a6815458827171061e"
+    },
+    {
+      "path": "financials/financial_findings.md",
+      "bytes": 2432,
+      "sha256": "aef5c870a1e475844a4877ed3a4762a7f0f174191b079b84ea4f02276e8a65ea"
+    },
+    {
+      "path": "forecast_snapshot.json",
+      "bytes": 1973,
+      "sha256": "b87a8dd6a81bc3ef8609b7e194157143920446508e3e02b6c6c9436d3225e12a"
+    },
+    {
+      "path": "market_snapshots.json",
+      "bytes": 2597,
+      "sha256": "afb4544329667fc69445039fc4e9e453f68c2e6a2e7271e322421aaf52d3c07e"
+    },
+    {
+      "path": "run_status.json",
+      "bytes": 1454,
+      "sha256": "cbcea4ac06be5dc90be4a751cee891ef6e4b80d2055c2d7a2f80bee619ce12de"
+    },
+    {
+      "path": "美迪西688202_深度研究.md",
+      "bytes": 20600,
+      "sha256": "c0db0ba86c8eb6df78b0f4ab2d2e6c1c5221060e59eebb1dbed230904915e23d"
+    }
+  ]
+}

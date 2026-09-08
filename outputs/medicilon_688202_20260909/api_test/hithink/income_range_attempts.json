@@ -1,0 +1,33 @@
+{
+  "request_1": {
+    "method": "get_a_share_financials_income_statements",
+    "args": {
+      "thscode": "688202.SH",
+      "period": "quarterly",
+      "start": 1546300800000,
+      "end": 1788912000000
+    },
+    "response": {
+      "code": 1004,
+      "message": "Parameter conflict: limit must not be set together with start/end",
+      "request_id": "d00a38c565404706a3e9c2d51980f47c",
+      "data": null
+    }
+  },
+  "request_2": {
+    "method": "get_a_share_financials_income_statements",
+    "args": {
+      "thscode": "688202.SH",
+      "period": "quarterly",
+      "limit": null,
+      "start": 1546300800000,
+      "end": 1788912000000
+    },
+    "response": {
+      "code": 1002,
+      "message": "Invalid parameter format: limit",
+      "request_id": "b120f04a3a3441bb8933389a0e07db90",
+      "data": null
+    }
+  }
+}

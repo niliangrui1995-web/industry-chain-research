@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美迪西（688202.SH）单季度扣非净利润</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050505;
+      --panel: #0b0b0b;
+      --bar: #202020;
+      --line: #4b4b4b;
+      --text: #dddddd;
+      --muted: #a5a5a5;
+      --yellow: #ffc400;
+      --q1: #efb19d;
+      --q2: #db7955;
+      --q3: #ec5929;
+      --q4: #a91418;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", SimSun, sans-serif;
+      font-size: 14px;
+    }
+    main { max-width: 1160px; margin: 0 auto; padding: 8px 12px 30px; }
+    .top-nav {
+      padding: 0 0 8px;
+      text-align: center;
+      color: #cacaca;
+      font-size: 13px;
+      line-height: 22px;
+      border-bottom: 1px solid #242424;
+    }
+    .top-nav a { color: inherit; text-decoration: none; padding: 0 7px; }
+    .top-nav a:first-child { color: var(--yellow); }
+    .metric-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 25px;
+      margin-top: 8px;
+      padding: 3px 10px;
+      color: #f4f4f4;
+      background: var(--bar);
+      border-top: 1px solid #303030;
+      border-bottom: 1px solid #303030;
+      font-weight: 700;
+    }
+    .metric-bar .badge { color: #ff8a00; font-size: 12px; font-weight: 400; }
+    .metric-bar .arrow { padding-right: 5px; color: #f0f0f0; }
+    .chart-frame {
+      position: relative;
+      margin-top: 10px;
+      border: 1px solid #4a4a4a;
+      background: #000;
+    }
+    .chart-title {
+      margin: 0;
+      padding: 13px 18px 2px;
+      color: #e3e3e3;
+      font-size: 20px;
+      font-weight: 400;
+      text-align: center;
+    }
+    .chart-subtitle {
+      margin: 0;
+      color: #a7a7a7;
+      font-size: 12px;
+      text-align: center;
+    }
+    .chart-scroller { overflow-x: auto; }
+    svg {
+      display: block;
+      width: 100%;
+      min-width: 1040px;
+      height: auto;
+      background: #000;
+    }
+    .year-panel {
+      position: absolute;
+      z-index: 2;
+      top: 50px;
+      left: 152px;
+      width: 190px;
+      padding: 4px 8px 5px;
+      color: #e6e6e6;
+      background: rgba(4, 4, 4, .82);
+      border-left: 1px solid rgba(255, 255, 255, .2);
+      font-size: 13px;
+      line-height: 1.45;
+      pointer-events: none;
+    }
+    .year-panel-title { margin-bottom: 2px; color: #fff; font-weight: 700; }
+    .year-row { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+    .year-row.missing { color: #777; }
+    .year-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+    .year-dot.missing { background: #666; }
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      min-height: 40px;
+      padding: 9px 14px 10px;
+      color: #e0e0e0;
+      font-size: 13px;
+    }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .legend i { display: inline-block; width: 24px; height: 13px; border-radius: 2px; }
+    .note {
+      margin: 0;
+      padding: 6px 14px 9px;
+      color: #b3b3b3;
+      font-size: 12px;
+      text-align: center;
+      border-top: 1px solid #282828;
+    }
+    .source {
+      margin: 11px 5px 0;
+      color: #969696;
+      font-size: 12px;
+      text-align: center;
+    }
+    details {
+      margin-top: 14px;
+      border: 1px solid #414141;
+      background: var(--panel);
+    }
+    summary {
+      padding: 9px 12px;
+      color: #e1e1e1;
+      cursor: pointer;
+      background: #1d1d1d;
+      font-weight: 700;
+    }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td {
+      padding: 8px 11px;
+      text-align: right;
+      white-space: nowrap;
+      border-top: 1px solid #353535;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: #bdbdbd; background: #141414; font-weight: 400; }
+    .negative { color: #ff8068; }
+    .positive { color: #f2c2ac; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    @media (max-width: 720px) {
+      main { padding: 5px 4px 22px; }
+      .year-panel { left: 124px; top: 50px; }
+      .metric-bar .badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="top-nav" aria-label="图表导航">
+      <a href="#chart">主要指标</a>｜<a href="#quarter-table">季度明细</a>｜<a href="#method">数据口径</a>
+    </nav>
+    <section aria-labelledby="chart-heading">
+      <div class="metric-bar">
+        <span><span class="arrow">▶</span>主要指标</span>
+        <span class="badge">季度单季口径 · 截至 2026-06-30</span>
+      </div>
+      <div id="chart" class="chart-frame">
+        <h1 id="chart-heading" class="chart-title">扣非净利润(万元)</h1>
+        <p class="chart-subtitle">美迪西（688202.SH）· 按年度分组，季度并列</p>
+        <p id="chart-summary" class="sr-only"></p>
+        <div id="year-panel" class="year-panel" aria-live="polite"></div>
+        <div class="chart-scroller">
+          <svg id="profit-chart" viewBox="0 0 1140 395" role="img" aria-labelledby="chart-heading chart-summary">
+            <title>美迪西单季度扣非净利润，按年度分组的柱状图</title>
+          </svg>
+        </div>
+        <div class="legend" aria-label="季度图例">
+          <span><i style="background:#efb19d"></i>一季度</span>
+          <span><i style="background:#db7955"></i>二季度</span>
+          <span><i style="background:#ec5929"></i>三季度</span>
+          <span><i style="background:#a91418"></i>四季度</span>
+        </div>
+        <p class="note">悬停或聚焦柱体，可查看该年度已披露季度的具体数值。</p>
+      </div>
+      <p id="method" class="source">数据来源：东方财富妙想字段 <code>DJDKCFJSJLR</code> 的单季度精确元值，图表换算为万元显示；2019 年仅 Q4，2026 年截至 Q2。</p>
+    </section>
+    <details id="quarter-table">
+      <summary>展开查看 27 个季度的精确数值</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>报告期</th><th>单季度扣非净利润（元）</th><th>单季度扣非净利润（万元）</th></tr></thead>
+          <tbody id="data-table"></tbody>
+        </table>
+      </div>
+    </details>
+  </main>
+  <script>
+    const data = [
+      { period: "2019Q4", value: 14742432.24 },
+      { period: "2020Q1", value: 15196689.03 },
+      { period: "2020Q2", value: 28652888.87 },
+      { period: "2020Q3", value: 27858196.52 },
+      { period: "2020Q4", value: 51770491.69 },
+      { period: "2021Q1", value: 43487247.68 },
+      { period: "2021Q2", value: 66198316.03 },
+      { period: "2021Q3", value: 66499259.83 },
+      { period: "2021Q4", value: 94889152.71 },
+      { period: "2022Q1", value: 74720697.27 },
+      { period: "2022Q2", value: 79266932.72 },
+      { period: "2022Q3", value: 109066781.50 },
+      { period: "2022Q4", value: 44056856.58 },
+      { period: "2023Q1", value: 98677712.67 },
+      { period: "2023Q2", value: 57455827.52 },
+      { period: "2023Q3", value: -56214502.64 },
+      { period: "2023Q4", value: -157535173.21 },
+      { period: "2024Q1", value: -40234221.46 },
+      { period: "2024Q2", value: -39368137.77 },
+      { period: "2024Q3", value: -62225428.47 },
+      { period: "2024Q4", value: -205885380.55 },
+      { period: "2025Q1", value: -19382964.69 },
+      { period: "2025Q2", value: -7347402.45 },
+      { period: "2025Q3", value: -28144036.74 },
+      { period: "2025Q4", value: -126282513.68 },
+      { period: "2026Q1", value: 10876254.05 },
+      { period: "2026Q2", value: 32150556.90 }
+    ];
+
+    const quarterNames = { Q1: "一季度", Q2: "二季度", Q3: "三季度", Q4: "四季度" };
+    const quarterColors = { Q1: "#efb19d", Q2: "#db7955", Q3: "#ec5929", Q4: "#a91418" };
+    const svg = document.getElementById("profit-chart");
+    const yearPanel = document.getElementById("year-panel");
+    const tbody = document.getElementById("data-table");
+    const ns = "http://www.w3.org/2000/svg";
+    const width = 1140;
+    const height = 395;
+    const margin = { top: 14, right: 28, bottom: 70, left: 104 };
+    const plotWidth = width - margin.left - margin.right;
+    const plotHeight = height - margin.top - margin.bottom;
+    const grouped = {};
+
+    data.forEach(function (item) {
+      const year = item.period.slice(0, 4);
+      const quarter = item.period.slice(-2);
+      if (!grouped[year]) { grouped[year] = []; }
+      grouped[year].push({ period: item.period, quarter: quarter, value: item.value, wan: item.value / 10000 });
+    });
+    const years = Object.keys(grouped).sort();
+    const valuesWan = data.map(function (item) { return item.value / 10000; });
+    const axisStep = 5000;
+    const rawMin = Math.min.apply(null, valuesWan.concat([0]));
+    const rawMax = Math.max.apply(null, valuesWan.concat([0]));
+    const yMin = Math.floor((rawMin - axisStep * 0.3) / axisStep) * axisStep;
+    const yMax = Math.ceil((rawMax + axisStep * 0.3) / axisStep) * axisStep;
+    const yScale = function (value) {
+      return margin.top + (yMax - value) / (yMax - yMin) * plotHeight;
+    };
+    const zeroY = yScale(0);
+    const groupWidth = plotWidth / years.length;
+    const slotWidth = Math.min(25, groupWidth * 0.18);
+    const slotGap = Math.min(8, groupWidth * 0.055);
+    const totalSlotsWidth = slotWidth * 4 + slotGap * 3;
+    const create = function (name, attrs) {
+      const node = document.createElementNS(ns, name);
+      Object.keys(attrs || {}).forEach(function (key) { node.setAttribute(key, String(attrs[key])); });
+      return node;
+    };
+    const addText = function (content, attrs) {
+      const node = create("text", attrs);
+      node.textContent = content;
+      svg.appendChild(node);
+      return node;
+    };
+    const formatWan = function (value, digits) {
+      const sign = value < 0 ? "−" : "";
+      return sign + Math.abs(value).toLocaleString("zh-CN", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      }) + "万元";
+    };
+    const addPanelRow = function (quarter, text, missing) {
+      const row = document.createElement("div");
+      row.className = "year-row" + (missing ? " missing" : "");
+      const dot = document.createElement("span");
+      dot.className = "year-dot" + (missing ? " missing" : "");
+      if (!missing) { dot.style.background = quarterColors[quarter]; }
+      const value = document.createElement("span");
+      value.textContent = quarterNames[quarter] + "：" + text;
+      row.appendChild(dot);
+      row.appendChild(value);
+      yearPanel.appendChild(row);
+    };
+    const updateYearPanel = function (year) {
+      const entries = grouped[year] || [];
+      yearPanel.replaceChildren();
+      const title = document.createElement("div");
+      title.className = "year-panel-title";
+      title.textContent = year + (year === "2026" ? "-06-30" : "-12-31");
+      yearPanel.appendChild(title);
+      ["Q1", "Q2", "Q3", "Q4"].forEach(function (quarter) {
+        const item = entries.find(function (entry) { return entry.quarter === quarter; });
+        if (item) {
+          addPanelRow(quarter, formatWan(item.wan, 1), false);
+        } else {
+          addPanelRow(quarter, year === "2019" ? "上市前" : "未披露", true);
+        }
+      });
+    };
+
+    for (let tick = yMin; tick <= yMax + 0.001; tick += axisStep) {
+      const y = yScale(tick);
+      svg.appendChild(create("line", {
+        x1: margin.left, y1: y, x2: width - margin.right, y2: y,
+        stroke: tick === 0 ? "#d1d1d1" : "#515151",
+        "stroke-width": tick === 0 ? 1.2 : 0.7,
+        "stroke-dasharray": tick === 0 ? "0" : "3 3"
+      }));
+      addText((tick < 0 ? "−" : "") + Math.abs(tick).toLocaleString("zh-CN"), {
+        x: margin.left - 14, y: y + 4, "text-anchor": "end",
+        fill: "#d4d4d4", "font-size": 11
+      });
+    }
+
+    years.forEach(function (year, groupIndex) {
+      const groupStart = margin.left + groupIndex * groupWidth;
+      const slotStart = groupStart + (groupWidth - totalSlotsWidth) / 2;
+      const labelX = groupStart + groupWidth / 2;
+      if (groupIndex > 0) {
+        svg.appendChild(create("line", {
+          x1: groupStart, y1: margin.top, x2: groupStart, y2: height - margin.bottom + 8,
+          stroke: "#292929", "stroke-width": 1
+        }));
+      }
+      addText(year + (year === "2026" ? "-06-30" : "-12-31"), {
+        x: labelX, y: height - margin.bottom + 27, "text-anchor": "middle",
+        fill: "#d5d5d5", "font-size": 12
+      });
+      ["Q1", "Q2", "Q3", "Q4"].forEach(function (quarter, quarterIndex) {
+        const item = grouped[year].find(function (entry) { return entry.quarter === quarter; });
+        if (!item) { return; }
+        const x = slotStart + quarterIndex * (slotWidth + slotGap);
+        const valueY = yScale(item.wan);
+        const barY = Math.min(zeroY, valueY);
+        const barHeight = Math.max(1, Math.abs(zeroY - valueY));
+        const rect = create("rect", {
+          x: x, y: barY, width: slotWidth, height: barHeight, rx: 1,
+          fill: quarterColors[quarter], tabindex: 0,
+          "aria-label": item.period + "，" + quarterNames[quarter] + "扣非净利润" + formatWan(item.wan, 2)
+        });
+        const title = create("title");
+        title.textContent = item.period + "：" + formatWan(item.wan, 2);
+        rect.appendChild(title);
+        rect.addEventListener("mouseenter", function () { updateYearPanel(year); });
+        rect.addEventListener("focus", function () { updateYearPanel(year); });
+        svg.appendChild(rect);
+      });
+    });
+
+    addText("单位：万元", {
+      x: margin.left, y: margin.top - 3, fill: "#aeaeae", "font-size": 11
+    });
+
+    updateYearPanel("2022");
+    document.getElementById("chart-summary").textContent =
+      "柱状图按年度分组展示美迪西从2019年第四季度到2026年第二季度的27个单季度扣非净利润。每组内颜色由浅到深依次代表第一至第四季度，2019年第一至三季度为上市前，2026年第三、四季度尚未披露。";
+
+    data.forEach(function (item) {
+      const tr = document.createElement("tr");
+      const tdPeriod = document.createElement("td");
+      const tdYuan = document.createElement("td");
+      const tdWan = document.createElement("td");
+      tdPeriod.textContent = item.period;
+      tdYuan.textContent = item.value.toLocaleString("zh-CN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " 元";
+      tdWan.textContent = formatWan(item.value / 10000, 2);
+      tdYuan.className = item.value >= 0 ? "positive" : "negative";
+      tdWan.className = item.value >= 0 ? "positive" : "negative";
+      tr.appendChild(tdPeriod);
+      tr.appendChild(tdYuan);
+      tr.appendChild(tdWan);
+      tbody.appendChild(tr);
+    });
+  </script>
+</body>
+</html>

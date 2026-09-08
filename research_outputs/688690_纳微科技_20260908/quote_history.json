@@ -1,0 +1,39 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"code\":0,\"message\":\"success\",\"request_id\":\"ff0fe50e75ec4614b08bf5462e54d3a7\",\"data\":{\"timestamp\":1788796800000,\"item\":[{\"date_ms\":1788710400000,\"volume\":11403625,\"turnover\":414326173.87,\"open_price\":35.65,\"high_price\":37.37,\"low_price\":35.31,\"close_price\":36.93},{\"date_ms\":1788796800000,\"volume\":22228073,\"turnover\":886468329.09,\"open_price\":36.9,\"high_price\":41.87,\"low_price\":36.51,\"close_price\":41.4}],\"thscode\":\"688690.SH\",\"interval\":\"1d\",\"adjust\":\"none\"}}"
+    }
+  ],
+  "structuredContent": {
+    "request_id": "ff0fe50e75ec4614b08bf5462e54d3a7",
+    "data": {
+      "thscode": "688690.SH",
+      "item": [
+        {
+          "volume": 11403625,
+          "close_price": 36.93,
+          "turnover": 414326173.87,
+          "high_price": 37.37,
+          "date_ms": 1788710400000,
+          "low_price": 35.31,
+          "open_price": 35.65
+        },
+        {
+          "volume": 22228073,
+          "close_price": 41.4,
+          "turnover": 886468329.09,
+          "high_price": 41.87,
+          "date_ms": 1788796800000,
+          "low_price": 36.51,
+          "open_price": 36.9
+        }
+      ],
+      "adjust": "none",
+      "timestamp": 1788796800000,
+      "interval": "1d"
+    },
+    "code": 0,
+    "message": "success"
+  }
+}

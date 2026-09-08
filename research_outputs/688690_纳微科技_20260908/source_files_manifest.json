@@ -1,0 +1,27 @@
+[
+  {
+    "file": "2025FY.pdf",
+    "bytes": 2205956,
+    "sha256": "ead0ff9369c34457e26591cba7942230aaa8cbbcebd8fb43be9c2890aa6eca7b"
+  },
+  {
+    "file": "2025FY_summary.pdf",
+    "bytes": 480813,
+    "sha256": "c79c66462ca7540b847434c3fbfd8c1039d41e25aaff0eab78586001433f624f"
+  },
+  {
+    "file": "2026H1.pdf",
+    "bytes": 1779215,
+    "sha256": "cc8ef428c353d917e06bb3521d3629bd57a7eea436e7046f6ed0156ffa2b3c91"
+  },
+  {
+    "file": "2026Q1.pdf",
+    "bytes": 172539,
+    "sha256": "6eecffcd163f1a26da77892b71a0258f8b563aab2212765d2ac2fd6be22ca50d"
+  },
+  {
+    "file": "IR_20260828.pdf",
+    "bytes": 322317,
+    "sha256": "c6f06c83c043ae001698f5a4475b396f7f6f3457311c9cc9a481e5e04c623729"
+  }
+]

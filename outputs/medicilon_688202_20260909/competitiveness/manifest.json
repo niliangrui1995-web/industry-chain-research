@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-09-09 Asia/Shanghai",
+  "files": [
+    {
+      "file": "joinn_2026h1_mirror.pdf",
+      "sha256": "aff5140ad70f4f86039ecb281a8331cf9c7ea05bedc70bf033d786b22779f228",
+      "pages": 166,
+      "pdf": true
+    },
+    {
+      "file": "medicilon_2025_mirror.pdf",
+      "sha256": "a37583a1e975422ac2a5ddf2ec8db514ddebb3efb42ad2a45089bbb854f4c444",
+      "pages": 293,
+      "pdf": true
+    },
+    {
+      "file": "medicilon_2026h1_mirror.pdf",
+      "sha256": "6aa6138dd610cda355b546e5e8ecc3195e267b21d2e5f9fbe9d670acdd541b93",
+      "pages": 230,
+      "pdf": true
+    },
+    {
+      "file": "pharmaron_2026h1.pdf",
+      "sha256": "e4be77dd5f4d902fcf9193d3029d82b5a83fd9d66d05c09fd845b04852101d8f",
+      "pages": 161,
+      "pdf": true
+    },
+    {
+      "file": "wuxi_2026h1.pdf",
+      "sha256": "d0dba19ede6e35ae3e127a1da91a42f04262e90d14efeb847bdfbff9b6354a5f",
+      "pages": 199,
+      "pdf": true
+    }
+  ]
+}

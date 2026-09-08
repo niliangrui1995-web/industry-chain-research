@@ -1,0 +1,82 @@
+{
+  "method": "get_a_share_financials_indicators",
+  "sample_reports": [
+    {
+      "report": "2026-2",
+      "response": {
+        "code": 0,
+        "message": "success",
+        "request_id": "d4e8e6f355424ad3bf583aaaf1bb7c3d",
+        "data": {
+          "thscode": "688202.SH",
+          "report": "2026-2",
+          "abilities": [
+            {
+              "ability": "profitability",
+              "indicators": [
+                {"index_id": "total_assets_net_ratio", "value": "1.8754"},
+                {"index_id": "index_deduct_weighted_avg_roe", "value": "2.2000"},
+                {"index_id": "sale_gross_margin", "value": "31.5971"},
+                {"index_id": "sale_net_interest_ratio", "value": "6.7766"},
+                {"index_id": "index_weighted_avg_roe", "value": "2.6300"}
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "report": "2025-4",
+      "response": {
+        "code": 0,
+        "message": "success",
+        "request_id": "5b592842e72f452db6877b380a81fb57",
+        "data": {
+          "thscode": "688202.SH",
+          "report": "2025-4",
+          "abilities": [
+            {
+              "ability": "profitability",
+              "indicators": [
+                {"index_id": "total_assets_net_ratio", "value": "-6.1641"},
+                {"index_id": "index_deduct_weighted_avg_roe", "value": "-8.9200"},
+                {"index_id": "sale_gross_margin", "value": "17.3580"},
+                {"index_id": "sale_net_interest_ratio", "value": "-14.4299"},
+                {"index_id": "index_weighted_avg_roe", "value": "-8.2600"}
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "report": "2019-4",
+      "response": {
+        "code": 0,
+        "message": "success",
+        "request_id": "4a23bb344e974b4fa4e4e7e2b39293f5",
+        "data": {
+          "thscode": "688202.SH",
+          "report": "2019-4",
+          "abilities": [
+            {
+              "ability": "profitability",
+              "indicators": [
+                {"index_id": "sale_gross_margin", "value": "35.9150"},
+                {"index_id": "sale_net_interest_ratio", "value": "15.2469"},
+                {"index_id": "total_assets_net_ratio", "value": "8.5327"},
+                {"index_id": "index_deduct_weighted_avg_roe", "value": "12.2300"},
+                {"index_id": "index_weighted_avg_roe", "value": "13.9400"}
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "field_assessment": {
+    "amount_field_for_deducted_parent_profit": null,
+    "available_deducted_metric": "index_deduct_weighted_avg_roe",
+    "available_deducted_metric_type": "ratio, not profit amount"
+  }
+}

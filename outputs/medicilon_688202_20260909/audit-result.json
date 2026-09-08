@@ -1,0 +1,3023 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.2",
+  "audit_id": "medicilon-688202-20260909",
+  "input_sha256": "147a98c2b0d9fd34e7a73b4341240fb2a4bc152f552adcd4b268087923b6d2a6",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 58,
+    "verified_count": 58,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "VERIFY_revenue_2023",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "1366000000",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2023-01-01",
+            "end": "2023-12-31",
+            "frequency": "year",
+            "label": "FY2023"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_attributable_net_profit_2023",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-33000000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2023-01-01",
+            "end": "2023-12-31",
+            "frequency": "year",
+            "label": "FY2023"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_deducted_attributable_net_profit_2023",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-58000000",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2023-01-01",
+            "end": "2023-12-31",
+            "frequency": "year",
+            "label": "FY2023"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_operating_cash_flow_2023",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "33000000",
+          "metric": "operating_cash_flow",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2023-01-01",
+            "end": "2023-12-31",
+            "frequency": "year",
+            "label": "FY2023"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_revenue_2024",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "1038000000",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2024-01-01",
+            "end": "2024-12-31",
+            "frequency": "year",
+            "label": "FY2024"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_attributable_net_profit_2024",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-331000000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2024-01-01",
+            "end": "2024-12-31",
+            "frequency": "year",
+            "label": "FY2024"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_deducted_attributable_net_profit_2024",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-348000000",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2024-01-01",
+            "end": "2024-12-31",
+            "frequency": "year",
+            "label": "FY2024"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_operating_cash_flow_2024",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-23000000",
+          "metric": "operating_cash_flow",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2024-01-01",
+            "end": "2024-12-31",
+            "frequency": "year",
+            "label": "FY2024"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_revenue_2025",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "1163000000",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2025-01-01",
+            "end": "2025-12-31",
+            "frequency": "year",
+            "label": "FY2025"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_attributable_net_profit_2025",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-168000000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2025-01-01",
+            "end": "2025-12-31",
+            "frequency": "year",
+            "label": "FY2025"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_deducted_attributable_net_profit_2025",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-181000000",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2025-01-01",
+            "end": "2025-12-31",
+            "frequency": "year",
+            "label": "FY2025"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_operating_cash_flow_2025",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FY"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2025FY:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "105000000",
+          "metric": "operating_cash_flow",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2025-01-01",
+            "end": "2025-12-31",
+            "frequency": "year",
+            "label": "FY2025"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "FY"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_revenue_2025H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "540000000",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2025-01-01",
+            "end": "2025-06-30",
+            "frequency": "half",
+            "label": "2025H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_attributable_net_profit_2025H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-12900000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2025-01-01",
+            "end": "2025-06-30",
+            "frequency": "half",
+            "label": "2025H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_deducted_attributable_net_profit_2025H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "-26730000",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2025-01-01",
+            "end": "2025-06-30",
+            "frequency": "half",
+            "label": "2025H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_operating_cash_flow_2025H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "74670000",
+          "metric": "operating_cash_flow",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2025-01-01",
+            "end": "2025-06-30",
+            "frequency": "half",
+            "label": "2025H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_revenue_2026H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "761000000",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_attributable_net_profit_2026H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "51600000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_deducted_attributable_net_profit_2026H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "43030000",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_operating_cash_flow_2026H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "134800000",
+          "metric": "operating_cash_flow",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "YOY_revenue_H1",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "40.907465665257623534110220442867648022388785179794",
+          "metric": "revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap_yoy",
+          "source_ids": [
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "yoy",
+        "contracted_output_metric": "revenue_yoy_pct",
+        "contracted_output_basis": "reported_consolidated_prc_gaap_yoy"
+      },
+      "issues": []
+    },
+    {
+      "id": "YOY_operating_cash_flow_H1",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "80.530081921465548495792876091582016111409429096418",
+          "metric": "operating_cash_flow_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap_yoy",
+          "source_ids": [
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "yoy",
+        "contracted_output_metric": "operating_cash_flow_yoy_pct",
+        "contracted_output_basis": "reported_consolidated_prc_gaap_yoy"
+      },
+      "issues": []
+    },
+    {
+      "id": "MARGIN_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "6.7766496214698814324835499930906814636051840209017",
+          "metric": "attributable_net_margin_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap_over_reported_consolidated_prc_gaap",
+          "source_ids": [
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator * 100",
+        "state": "meaningful",
+        "period_relation": "same",
+        "contracted_output_metric": "attributable_net_margin_pct",
+        "contracted_output_basis": "reported_consolidated_prc_gaap_over_reported_consolidated_prc_gaap",
+        "accounting_contexts": {
+          "numerator": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          },
+          "denominator": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "issues": []
+    },
+    {
+      "id": "MARGIN_deducted_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "5.6504624115536881881163321164867607371208197781149",
+          "metric": "deducted_attributable_net_margin_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap_over_reported_consolidated_prc_gaap",
+          "source_ids": [
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator * 100",
+        "state": "meaningful",
+        "period_relation": "same",
+        "contracted_output_metric": "deducted_attributable_net_margin_pct",
+        "contracted_output_basis": "reported_consolidated_prc_gaap_over_reported_consolidated_prc_gaap",
+        "accounting_contexts": {
+          "numerator": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          },
+          "denominator": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_gross_margin_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "31.6",
+          "metric": "gross_margin_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_gross_margin_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_new_orders_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "1233000000",
+          "metric": "new_contract_value",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_defined_new_orders",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_new_orders_growth_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "104.74",
+          "metric": "new_orders_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_defined_new_orders_yoy",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_overseas_share_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "45.7",
+          "metric": "overseas_revenue_share_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_revenue_share",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_double_filing_revenue_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "167000000",
+          "metric": "dual_filing_revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_dual_filing_revenue",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_cash_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "288530000",
+          "metric": "cash_and_cash_equivalents_reported_balance",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_cash_available_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "228550000",
+          "metric": "cash_available_on_demand",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_receivables_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "445790000",
+          "metric": "accounts_receivable_net",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_inventory_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "208130000",
+          "metric": "inventory",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_advances_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "187420000",
+          "metric": "contract_liabilities",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_advances_FY",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "79090000",
+          "metric": "contract_liabilities",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2025-12-31T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_notes_payable_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "150970000",
+          "metric": "notes_payable",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_notes_payable_FY",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "5200000",
+          "metric": "notes_payable",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2025-12-31T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_equity_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "2002730000",
+          "metric": "equity_attributable_to_parent",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "equity_attributable_to_parent",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_credit_impairment_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "25557000",
+          "metric": "credit_impairment_loss",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap_loss_positive",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_capex_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "108019700",
+          "metric": "cash_paid_to_acquire_long_lived_assets",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_discovery_revenue_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "347000000",
+          "metric": "discovery_pharmaceutical_revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_segment_metric",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_preclinical_revenue_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "414000000",
+          "metric": "preclinical_revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_segment_metric",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_discovery_growth_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "29.42",
+          "metric": "discovery_pharmaceutical_revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_segment_metric",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_preclinical_growth_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "52.26",
+          "metric": "preclinical_revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_segment_metric",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_preclinical_orders_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "820000000",
+          "metric": "preclinical_new_orders",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_segment_metric",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_discovery_orders_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "414000000",
+          "metric": "discovery_pharmaceutical_new_orders",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "issuer_reported_segment_metric",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_receivables_gross_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "688000000",
+          "metric": "accounts_receivable_gross",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_receivables_allowance_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "242000000",
+          "metric": "accounts_receivable_allowance",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_restricted_cash_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "60000000",
+          "metric": "restricted_cash",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_litigation_claim_H1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "150000000",
+          "metric": "plaintiff_damage_claim_not_recognized_loss",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-06-30T23:59:59+08:00"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "DRAFT",
+            "H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "MARKET_CAP",
+      "kind": "market_cap",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "H1",
+          "PRICE"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "hithink:688202:20260908:unadjusted",
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "12588799640.8",
+          "metric": "total_market_cap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-08T15:00:00+08:00"
+          },
+          "basis": "total_market_cap",
+          "source_ids": [
+            "H1",
+            "PRICE"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "price * shares",
+        "capitalization_basis": "total"
+      },
+      "issues": []
+    },
+    {
+      "id": "PB_H1",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "H1",
+          "PRICE"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "hithink:688202:20260908:unadjusted",
+          "medicilon:2026H1:report"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "6.2858254194783717948727863398608565427196215199526",
+          "metric": "pb",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-08T15:00:00+08:00"
+          },
+          "basis": "equity_attributable_to_parent",
+          "source_ids": [
+            "H1",
+            "PRICE"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "6.2858254194783717948727863398608565427196215199526",
+          "metric": "pb",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-08T15:00:00+08:00"
+          },
+          "basis": "equity_attributable_to_parent",
+          "source_ids": [
+            "H1",
+            "PRICE"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "equity_attributable_to_parent",
+        "state": "meaningful"
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_forecast_2026",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FORECAST"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "ths:688202:20260908:forecasts"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "104000000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "estimate",
+            "expectation_as_of": "2026-09-08T15:00:00+08:00",
+            "target_start": "2026-01-01",
+            "target_end": "2026-12-31",
+            "frequency": "year",
+            "label": "FY2026E current vendor aggregate"
+          },
+          "basis": "fy_attributable_net_profit",
+          "source_ids": [
+            "DRAFT",
+            "FORECAST"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "FORWARD_PE_2026",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "FORECAST",
+          "H1",
+          "PRICE"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "hithink:688202:20260908:unadjusted",
+          "medicilon:2026H1:report",
+          "ths:688202:20260908:forecasts"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "121.04615039230769230769230769230769230769230769231",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-08T15:00:00+08:00"
+          },
+          "basis": "fy_attributable_net_profit",
+          "source_ids": [
+            "FORECAST",
+            "H1",
+            "PRICE"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "121.04615039230769230769230769230769230769230769231",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-08T15:00:00+08:00"
+          },
+          "basis": "fy_attributable_net_profit",
+          "source_ids": [
+            "FORECAST",
+            "H1",
+            "PRICE"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "fy_attributable_net_profit",
+        "state": "meaningful"
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_forecast_2027",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FORECAST"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "ths:688202:20260908:forecasts"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "224000000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "estimate",
+            "expectation_as_of": "2026-09-08T15:00:00+08:00",
+            "target_start": "2027-01-01",
+            "target_end": "2027-12-31",
+            "frequency": "year",
+            "label": "FY2027E current vendor aggregate"
+          },
+          "basis": "fy_attributable_net_profit",
+          "source_ids": [
+            "DRAFT",
+            "FORECAST"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "FORWARD_PE_2027",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "FORECAST",
+          "H1",
+          "PRICE"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "hithink:688202:20260908:unadjusted",
+          "medicilon:2026H1:report",
+          "ths:688202:20260908:forecasts"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "56.199998396428571428571428571428571428571428571429",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-08T15:00:00+08:00"
+          },
+          "basis": "fy_attributable_net_profit",
+          "source_ids": [
+            "FORECAST",
+            "H1",
+            "PRICE"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "56.199998396428571428571428571428571428571428571429",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-08T15:00:00+08:00"
+          },
+          "basis": "fy_attributable_net_profit",
+          "source_ids": [
+            "FORECAST",
+            "H1",
+            "PRICE"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "fy_attributable_net_profit",
+        "state": "meaningful"
+      },
+      "issues": []
+    },
+    {
+      "id": "VERIFY_forecast_2028",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "FORECAST"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "ths:688202:20260908:forecasts"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "356000000",
+          "metric": "attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "estimate",
+            "expectation_as_of": "2026-09-08T15:00:00+08:00",
+            "target_start": "2028-01-01",
+            "target_end": "2028-12-31",
+            "frequency": "year",
+            "label": "FY2028E current vendor aggregate"
+          },
+          "basis": "fy_attributable_net_profit",
+          "source_ids": [
+            "DRAFT",
+            "FORECAST"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "FORWARD_PE_2028",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "FORECAST",
+          "H1",
+          "PRICE"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "hithink:688202:20260908:unadjusted",
+          "medicilon:2026H1:report",
+          "ths:688202:20260908:forecasts"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "35.36179674382022471910112359550561797752808988764",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-08T15:00:00+08:00"
+          },
+          "basis": "fy_attributable_net_profit",
+          "source_ids": [
+            "FORECAST",
+            "H1",
+            "PRICE"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "35.36179674382022471910112359550561797752808988764",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-08T15:00:00+08:00"
+          },
+          "basis": "fy_attributable_net_profit",
+          "source_ids": [
+            "FORECAST",
+            "H1",
+            "PRICE"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "fy_attributable_net_profit",
+        "state": "meaningful"
+      },
+      "issues": []
+    }
+  ]
+}

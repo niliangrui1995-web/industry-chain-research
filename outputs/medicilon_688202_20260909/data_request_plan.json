@@ -1,0 +1,85 @@
+{
+  "entity": "上海美迪西生物医药股份有限公司",
+  "ticker": "688202.SH",
+  "as_of": "2026-09-09T02:17:42+08:00",
+  "report_currency": "CNY",
+  "research_question": "未来两三年发展前景、服务竞争力与下游研发需求变化",
+  "cards": [
+    {
+      "field": "entity",
+      "period": "current",
+      "evidence_tier": "vendor_snapshot",
+      "primary_source": "hithink-finance meta",
+      "fallback_source": [
+        "iFinD",
+        "Eastmoney",
+        "TDX"
+      ],
+      "probe": "688202.SH uniquely identified, code=0",
+      "audit_required": false
+    },
+    {
+      "field": "revenue, attributable profit, deducted profit, cash flow, segments, balance sheet, shares",
+      "period": "2023FY-2026H1 and 2026Q1",
+      "basis": "PRC-GAAP consolidated; CNY; exact filing units",
+      "evidence_tier": "official_evidence",
+      "primary_source": "Medicilon IR official filings",
+      "fallback_source": [
+        "CNINFO",
+        "SSE",
+        "vendor index pointing to original filing"
+      ],
+      "probe": "success: original PDFs verified by magic, pages and title; statutory originals retained via mirrors where direct SSE returned HTML",
+      "audit_required": true,
+      "fallback_reason": "SSE direct downloads returned HTML instead of PDF; use issuer-index-matched original PDF mirrors, same origin"
+    },
+    {
+      "field": "latest completed close and total market cap",
+      "period": "2026-09-08 close",
+      "basis": "unadjusted CNY price; total shares",
+      "evidence_tier": "vendor_snapshot",
+      "primary_source": "hithink-finance",
+      "fallback_source": [
+        "iFinD"
+      ],
+      "probe": "success: historical unadjusted 2026-09-08 close=93.70 CNY; post-close snapshot agrees; market cap computed using official total shares",
+      "audit_required": true,
+      "fallback_reason": null
+    },
+    {
+      "field": "new orders, technologies, capabilities, customer geography, pricing and utilization commentary",
+      "period": "FY2025-H1 2026",
+      "basis": "issuer defined; distinguish orders from realized revenue",
+      "evidence_tier": "official_evidence",
+      "primary_source": "Medicilon filings and official IR",
+      "fallback_source": [
+        "SSE investor record",
+        "CNINFO"
+      ],
+      "audit_required": true
+    },
+    {
+      "field": "pre-event consensus and current forecasts",
+      "period": "before earliest H1 results disclosure; current FY2026-2028",
+      "basis": "dated attributable profit forecasts, distinguish forecast from fact",
+      "evidence_tier": "vendor_snapshot",
+      "primary_source": "dated broker publications indexed by vendors",
+      "fallback_source": [
+        "dated credible secondary forecast snapshot"
+      ],
+      "probe": "current F10 available but cannot itself establish pre-event PIT",
+      "audit_required": true
+    },
+    {
+      "field": "biopharma research budgets, licensing, regulatory changes and NAMs",
+      "period": "available by 2026-09-09",
+      "basis": "separate upfront from milestone values and draft from binding rules",
+      "evidence_tier": "official_evidence",
+      "primary_source": "NMPA, FDA, original issuer and industry reports",
+      "fallback_source": [
+        "credible dated secondary reporting"
+      ],
+      "audit_required": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "ticker": "688690.SH",
+  "completed_at": "2026-09-08T16:45:13.663139+08:00",
+  "calculation_audit_status": "PASS",
+  "audit_release_status": "publishable",
+  "verified_count": 73,
+  "formal_surprise_status": "N/A",
+  "audit_blockers": [],
+  "unresolved_numeric_conflicts": [],
+  "resolved_conflict": "IR deducted profit field excluded in favor of formal H1 financial table",
+  "report_utf8_roundtrip": "passed",
+  "price_basis": "2026-09-08 unadjusted close",
+  "git_backup_performed": false
+}

@@ -1,0 +1,30 @@
+{
+  "ticker": "688202.SH",
+  "completed_at": "2026-09-09T02:17:42+08:00",
+  "status": "completed",
+  "calculation_audit_status": "PASS",
+  "audit_release_status": "publishable",
+  "verified_count": 58,
+  "audit_blockers": [],
+  "unresolved_numeric_conflicts": 0,
+  "formal_surprise_status": "N/A",
+  "formal_surprise_reason": "缺少可验证的事件前、同期间同口径半年度一致预期；不以当前滚动全年预测替代。",
+  "review": {
+    "competitiveness": "复核无阻断，已补充AAALAC认可范围",
+    "financials": "复核无阻断，已补充原告诉请损失赔偿量级"
+  },
+  "changes": "仅本次研究目录新增产物，未修改既有项目代码和其他研究目录",
+  "source_limits": [
+    "半年报未经会计师审计，本工具只核数字与口径",
+    "部分官方PDF直连被拦截，已采用可核对原文镜像",
+    "报价与利用率具体数值、在手订单及取消率未披露",
+    "各新分子及NAMs独立收入利润缺失",
+    "波士顿中心独立经济回报未披露",
+    "国内私募Biotech最新同口径融资到账总量缺口"
+  ],
+  "excluded_quote": {
+    "value": "93.30",
+    "url": "https://hk.investing.com/equities/shanghai-medicilon-inc-historical-data",
+    "reason": "页面快照标注14:56:59且历史行与厂商完成日线不一致；未用作已完成收盘。采用同花顺未复权日线及盘后快照93.70。"
+  }
+}

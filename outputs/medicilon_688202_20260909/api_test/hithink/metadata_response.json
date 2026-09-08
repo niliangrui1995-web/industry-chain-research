@@ -1,0 +1,18 @@
+{
+  "code": 0,
+  "message": "success",
+  "request_id": "e60c15ef164f4eee85c264b99eb476c4",
+  "data": {
+    "timestamp": 1788856522697,
+    "item": [
+      {
+        "thscode": "688202.SH",
+        "ticker": "688202",
+        "name": "美迪西",
+        "exchange": "SH",
+        "asset_type": "a-share",
+        "currency": "CNY"
+      }
+    ]
+  }
+}

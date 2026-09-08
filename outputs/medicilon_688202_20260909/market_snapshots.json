@@ -1,0 +1,73 @@
+{
+  "hithink_0": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"code\":0,\"message\":\"success\",\"request_id\":\"e88a490fc12440d0aeefb7da62438f4b\",\"data\":{\"timestamp\":1788890396000,\"total\":1,\"item\":[{\"thscode\":\"688202.SH\",\"ticker\":\"688202\",\"volume\":9490716,\"turnover\":871676670,\"last_price\":93.7,\"price_change\":2.2,\"price_change_ratio_pct\":2.404372,\"open_price\":91.42,\"high_price\":94.3,\"low_price\":89.16,\"prev_price\":91.5}]}}"
+      }
+    ],
+    "structuredContent": {
+      "request_id": "e88a490fc12440d0aeefb7da62438f4b",
+      "data": {
+        "timestamp": 1788890396000,
+        "total": 1,
+        "item": [
+          {
+            "high_price": 94.3,
+            "low_price": 89.16,
+            "open_price": 91.42,
+            "volume": 9490716,
+            "thscode": "688202.SH",
+            "prev_price": 91.5,
+            "price_change": 2.2,
+            "last_price": 93.7,
+            "ticker": "688202",
+            "turnover": 871676670,
+            "price_change_ratio_pct": 2.404372
+          }
+        ]
+      },
+      "code": 0,
+      "message": "success"
+    }
+  },
+  "hithink_1": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"code\":0,\"message\":\"success\",\"request_id\":\"37afb6d187384855856d6b4172c8b4f5\",\"data\":{\"timestamp\":1788796800000,\"item\":[{\"date_ms\":1788710400000,\"volume\":4303775.0,\"turnover\":394831594.63,\"open_price\":93.0,\"high_price\":93.48,\"low_price\":90.78,\"close_price\":91.5},{\"date_ms\":1788796800000,\"volume\":9490716.0,\"turnover\":871676670.83,\"open_price\":91.42,\"high_price\":94.3,\"low_price\":89.16,\"close_price\":93.7}],\"thscode\":\"688202.SH\",\"interval\":\"1d\",\"adjust\":\"none\"}}"
+      }
+    ],
+    "structuredContent": {
+      "message": "success",
+      "data": {
+        "thscode": "688202.SH",
+        "item": [
+          {
+            "date_ms": 1788710400000,
+            "low_price": 90.78,
+            "open_price": 93,
+            "volume": 4303775,
+            "turnover": 394831594.63,
+            "close_price": 91.5,
+            "high_price": 93.48
+          },
+          {
+            "date_ms": 1788796800000,
+            "low_price": 89.16,
+            "open_price": 91.42,
+            "volume": 9490716,
+            "turnover": 871676670.83,
+            "close_price": 93.7,
+            "high_price": 94.3
+          }
+        ],
+        "adjust": "none",
+        "timestamp": 1788796800000,
+        "interval": "1d"
+      },
+      "request_id": "37afb6d187384855856d6b4172c8b4f5",
+      "code": 0
+    }
+  }
+}

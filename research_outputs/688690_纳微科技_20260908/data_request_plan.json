@@ -1,0 +1,80 @@
+{
+  "entity": "苏州纳微科技股份有限公司",
+  "ticker": "688690.SH",
+  "research_date": "2026-09-08",
+  "timezone": "Asia/Shanghai",
+  "cards": [
+    {
+      "field": "entity_identity",
+      "primary_source": "hithink-finance meta search",
+      "fallback_source": [
+        "iFinD",
+        "Eastmoney"
+      ],
+      "probe": "code=0, unique A-share/CNY/SH match",
+      "fallback_reason": null
+    },
+    {
+      "field": "close_price",
+      "as_of": "2026-09-08T15:00:00+08:00",
+      "interval": "2026-09-07/2026-09-08",
+      "frequency": "1d",
+      "definition": "CNY/share, unadjusted completed-session close",
+      "evidence_tier": "vendor_snapshot",
+      "primary_source": "hithink-finance historical",
+      "fallback_source": [
+        "iFinD"
+      ],
+      "probe": "code=0, adjust=none, 2 rows through 2026-09-08",
+      "fallback_reason": null,
+      "audit_required": true
+    },
+    {
+      "field": "financials_and_total_shares",
+      "as_of": "2026-09-08",
+      "definition": "PRC-GAAP consolidated; attributable and deducted attributable kept separate; amounts CNY",
+      "period": "FY2023-FY2025,2025H1,2026Q1,2026H1",
+      "evidence_tier": "official_evidence",
+      "primary_source": "company IR / SSE / CNINFO original filings",
+      "fallback_source": [
+        "complete original filing hosted by Sina/Xueqiu"
+      ],
+      "probe": "SSE static returned anti-bot HTML; CNINFO API timed out; complete PDF fallback validated 237/295 pages",
+      "fallback_reason": "primary delivery unavailable; original report identity/page count/financial tables verified; no extra independent origin claimed",
+      "audit_required": true
+    },
+    {
+      "field": "products_customer_applications_and_outlook",
+      "as_of": "2026-09-08",
+      "definition": "reported commercial stage and issuer application statistics, separate from independently established leadership",
+      "evidence_tier": "official_evidence",
+      "primary_source": "company reports and dated investor relations records",
+      "fallback_source": [
+        "complete original record mirrors"
+      ],
+      "probe": "FY2025/H1/2026-007 originals read",
+      "audit_required": true
+    },
+    {
+      "field": "downstream_demand_and_competitor_products",
+      "as_of": "2026-09-08",
+      "definition": "company-reported volumes/prices/technology, not inferred NanoMicro orders",
+      "evidence_tier": "official_evidence",
+      "primary_source": "Lilly/Novo Nordisk/WuXi/Cytiva/Tosoh/DAISOGEL official materials",
+      "fallback_source": [],
+      "probe": "targeted original publications accessed",
+      "audit_required": false
+    },
+    {
+      "field": "current_earnings_estimates",
+      "as_of": "2026-09-08",
+      "definition": "vendor rolling FY2026/FY2027 attributable net profit forecasts, not event-pre consensus",
+      "evidence_tier": "vendor_snapshot",
+      "primary_source": "THS rolling forecast page",
+      "fallback_source": [],
+      "probe": "current aggregate updated on final refresh; reported four contributors but only three visible rows; event-pre coverage unproven",
+      "formal_surprise_status": "N/A",
+      "audit_required": true
+    }
+  ]
+}

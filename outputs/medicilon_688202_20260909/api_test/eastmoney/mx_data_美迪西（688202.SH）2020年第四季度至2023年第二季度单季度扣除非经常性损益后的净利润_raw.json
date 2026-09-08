@@ -1,0 +1,258 @@
+{
+  "success": true,
+  "status": 0,
+  "code": 0,
+  "message": "ok",
+  "data": {
+    "requestId": null,
+    "message": "OK",
+    "status": 0,
+    "code": 0,
+    "data": {
+      "protocolType": "SEARCH_DATA",
+      "id": "6cd0da04-c23f-41a2-b0c5-e38b4aeb3764",
+      "refSeq": null,
+      "keyEntityList": null,
+      "searchDataResultDTO": {
+        "questionId": "f2b62fdc-563d-4b6e-8b5d-c60d62556e9e",
+        "dataTableDTOList": [
+          {
+            "code": "688202.SH",
+            "entityName": "美迪西(688202.SH)",
+            "table": {
+              "100000000003177": [
+                "5746万元",
+                "9868万元",
+                "4406万元",
+                "1.091亿元",
+                "7927万元",
+                "7472万元",
+                "9489万元",
+                "6650万元",
+                "6620万元",
+                "4349万元",
+                "5177万元"
+              ],
+              "headName": [
+                "2023中报",
+                "2023一季报",
+                "2022年报",
+                "2022三季报",
+                "2022中报",
+                "2022一季报",
+                "2021年报",
+                "2021三季报",
+                "2021中报",
+                "2021一季报",
+                "2020年报"
+              ]
+            },
+            "rawTable": {
+              "100000000003177": [
+                "57455827.519999996",
+                "98677712.67",
+                "44056856.57999998",
+                "109066781.5",
+                "79266932.72000001",
+                "74720697.27",
+                "94889152.71000001",
+                "66499259.83",
+                "66198316.029999994",
+                "43487247.68",
+                "51770491.69"
+              ],
+              "headName": [
+                "2023中报",
+                "2023一季报",
+                "2022年报",
+                "2022三季报",
+                "2022中报",
+                "2022一季报",
+                "2021年报",
+                "2021三季报",
+                "2021中报",
+                "2021一季报",
+                "2020年报"
+              ]
+            },
+            "truncateRawTable": {},
+            "nameMap": {
+              "100000000003177": "单季度.扣除非经常损益后的净利润",
+              "headNameSub": "数据来源"
+            },
+            "headNameMap": {},
+            "field": {
+              "returnCode": "100000000003177",
+              "returnName": "单季度.扣除非经常损益后的净利润",
+              "classCode": "007101",
+              "checkedRelatedIndicators": true,
+              "startDate": "2020-10-01 00:00:00",
+              "endDate": "2023-06-30 00:00:00",
+              "fuzzy": false,
+              "dateGranularity": "QUARTER",
+              "defineType": -1,
+              "isLoopN": false,
+              "fixedParamValue": "DataAdjustType=1",
+              "quantType": "1",
+              "isGroup": false,
+              "returnSourceCode": "DJDKCFJSJLR",
+              "returnSourceName": "单季度.扣除非经常损益后的净利润",
+              "graph": "1",
+              "unit": "1",
+              "tableType": "1",
+              "unitName": "元",
+              "unitDesc": "101:元:元",
+              "dcsdField": false
+            },
+            "entityName2TagMap": {},
+            "entityCodes": [
+              "688202.SH"
+            ],
+            "macroAttributeExcelMap": {},
+            "fieldSet": [
+              {
+                "returnCode": "100000000003177",
+                "returnName": "单季度.扣除非经常损益后的净利润",
+                "classCode": "007101",
+                "checkedRelatedIndicators": true,
+                "startDate": "2020-10-01 00:00:00",
+                "endDate": "2023-06-30 00:00:00",
+                "fuzzy": false,
+                "dateGranularity": "QUARTER",
+                "defineType": -1,
+                "isLoopN": false,
+                "fixedParamValue": "DataAdjustType=1",
+                "quantType": "1",
+                "isGroup": false,
+                "returnSourceCode": "DJDKCFJSJLR",
+                "returnSourceName": "单季度.扣除非经常损益后的净利润",
+                "graph": "1",
+                "unit": "1",
+                "tableType": "1",
+                "unitName": "元",
+                "unitDesc": "101:元:元",
+                "dcsdField": false
+              }
+            ],
+            "dataTableType": "NORM_TABLE",
+            "rowInfo": {},
+            "colInfo": {},
+            "indicatorOrder": [
+              "100000000003177"
+            ],
+            "tipFlags": [],
+            "dataType": "数据浏览器",
+            "title": "美迪西(688202.SH)的单季度.扣除非经常损益后的净利润",
+            "hasThumbnail": true,
+            "indicatorLimited": false,
+            "dataPositionEnum": "MetricLeftTimeTop",
+            "orderCol": {},
+            "jumpUrlList": [
+              {
+                "choiceUrl": "EM://stockdatacenter?type=browser&modType=STOCK&code=688202.SH&indId=100000000003177|451:2020-12-31|314:1,100000000003177|451:2021-03-31|314:1,100000000003177|451:2021-06-30|314:1,100000000003177|451:2021-09-30|314:1,100000000003177|451:2021-12-31|314:1,100000000003177|451:2022-03-31|314:1,100000000003177|451:2022-06-30|314:1,100000000003177|451:2022-09-30|314:1,100000000003177|451:2022-12-31|314:1,100000000003177|451:2023-03-31|314:1,100000000003177|451:2023-06-30|314:1",
+                "typeName": "股票数据浏览器"
+              }
+            ],
+            "dataTypeEnum": "DATA_BROWSER",
+            "dateRuleSet": [],
+            "freqConvert": false,
+            "deleteInfo": [],
+            "macroCodeMap": {},
+            "entityTagDTO": {
+              "entityId": "1001042711",
+              "entityType": "SEC",
+              "entityTypeCode": "058001001",
+              "entityTypeName": "A股",
+              "classCode": "002001",
+              "className": "沪深京股票",
+              "publishCode": "",
+              "fullName": "美迪西",
+              "shortName": "",
+              "matchWord": "美迪西（688202.SH）",
+              "secuCode": "688202",
+              "market": "1",
+              "marketChar": ".SH",
+              "correct": false,
+              "hasKLine": false,
+              "valuation": false,
+              "relatedEntity": false
+            },
+            "entityTagDTOList": [
+              {
+                "entityId": "1001042711",
+                "entityType": "SEC",
+                "entityTypeCode": "058001001",
+                "entityTypeName": "A股",
+                "classCode": "002001",
+                "className": "沪深京股票",
+                "publishCode": "",
+                "fullName": "美迪西",
+                "shortName": "",
+                "matchWord": "美迪西（688202.SH）",
+                "secuCode": "688202",
+                "market": "1",
+                "marketChar": ".SH",
+                "correct": false,
+                "hasKLine": false,
+                "valuation": false,
+                "relatedEntity": false
+              }
+            ],
+            "indexTable": false,
+            "edbThirdData": false,
+            "dataUpdate": {
+              "2023中报": false
+            },
+            "supportsTimeSeries": false,
+            "estimatedTokens": 0,
+            "summaryTips": {
+              "periodicalReport": null
+            },
+            "nestEntityListMap": {},
+            "excelTimeTruncate": false,
+            "frontendEntityName": "",
+            "frontendEntityCode": "",
+            "frontendTitle": "",
+            "frontendDesc": "",
+            "indicatorCount": 0,
+            "fieldParameterStr": "",
+            "tdayEnum": "NORMAL"
+          }
+        ],
+        "condition": {
+          "search_data_task_0": [
+            "美迪西",
+            "单季度.扣除非经常损益后的净利润",
+            "2020-10-01至2023-06-30"
+          ]
+        },
+        "entityTagDTOList": [
+          {
+            "entityId": "1001042711",
+            "entityType": "SEC",
+            "entityTypeCode": "058001001",
+            "entityTypeName": "A股",
+            "classCode": "002001",
+            "className": "沪深京股票",
+            "publishCode": "",
+            "fullName": "美迪西",
+            "shortName": "",
+            "matchWord": "美迪西（688202.SH）",
+            "secuCode": "688202",
+            "market": "1",
+            "marketChar": ".SH",
+            "correct": false,
+            "hasKLine": false,
+            "valuation": false,
+            "relatedEntity": false
+          }
+        ]
+      },
+      "entityName": null,
+      "message": null,
+      "tableTruncated": false
+    },
+    "stack": null
+  },
+  "requestId": "2dd7e4de67a543a18856a3e5c8962860"
+}

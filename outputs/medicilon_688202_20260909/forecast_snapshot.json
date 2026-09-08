@@ -1,0 +1,28 @@
+{
+  "ticker": "688202.SH",
+  "snapshot_date": "2026-09-08",
+  "retrieved_at": "2026-09-09T02:02:53+08:00",
+  "source": "https://basic.10jqka.com.cn/688202/worth.html",
+  "source_type": "market_data_vendor",
+  "origin_id": "THS_F10_688202_forecast_20260908",
+  "basis": "current dated broker FY attributable profit forecasts; CNY; five institutions within six months, vendor headline aggregate",
+  "means_cny_100million": {"2026": "1.04", "2027": "2.24", "2028": "3.56"},
+  "range_2026_cny_100million": {"low": "0.50", "high": "1.82"},
+  "components_dates": ["2026-08-27", "2026-08-25", "2026-08-05", "2026-06-16", "2026-05-02"],
+  "caveats": [
+    "Forecasts are not reported earnings or company guidance.",
+    "Components mix pre and post interim report dates; cannot claim historical pre-event consensus from this current snapshot.",
+    "Detail module retains an older same-broker March forecast; use headline five-institution aggregate as vendor value, not an independently reconstructed mean.",
+    "Rounded row 2026 values range 0.50 to 1.82; detailed row has 0.4968 and 0.7430. Preserve vendor rounding, do not claim false numeric conflict.",
+    "Ignore vendor built-in dynamic PE module: recompute with fixed 2026-09-08 unadjusted closing market cap."
+  ],
+  "event_expectation_check": {
+    "earliest_h1_preannouncement_dated": "2026-07-20",
+    "earliest_h1_preannouncement_known_available_by": "2026-07-19T22:10:44+08:00",
+    "formal_report_dated": "2026-08-25",
+    "formal_report_known_available_by": "2026-08-24T22:57:00+08:00",
+    "formal_surprise_status": "N/A",
+    "reason": "No verified same-period same-basis pre-event H1 consensus. Available historical FY forecasts are a different period; current F10 is not a historical PIT snapshot.",
+    "historical_sources_examined": ["https://quoteimg.cfi.cn/ybdata.aspx?id=20260616000275", "https://quote.cfi.cn/ybdata.aspx?id=20260511000422", "https://stock.10jqka.com.cn/20260805/c678688404.shtml"]
+  }
+}
