@@ -1,0 +1,32 @@
+[
+  {
+    "name": "snibe_2026h1",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-14/1225471103.PDF",
+    "pages": 152,
+    "status": "ok"
+  },
+  {
+    "name": "snibe_2025fy",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225208420.PDF",
+    "pages": 190,
+    "status": "ok"
+  },
+  {
+    "name": "autobio_2026h1",
+    "url": "https://www.autobio.com.cn/Uploads/ProductDocPdfFile/2026-08-26/6a8e8650e58fa.pdf",
+    "pages": 210,
+    "status": "ok"
+  },
+  {
+    "name": "microtech_2026h1",
+    "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-27/688029_20260827_9EXF.pdf",
+    "status": "error",
+    "error": "not PDF"
+  },
+  {
+    "name": "endovastec_2026h1",
+    "url": "https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-27/688016_20260827_DQ1Q.pdf",
+    "status": "error",
+    "error": "not PDF"
+  }
+]

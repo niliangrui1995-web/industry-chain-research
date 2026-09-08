@@ -1,0 +1,170 @@
+{
+  "as_of": "2026-09-06",
+  "price_as_of": "2026-09-04T15:00:00+08:00",
+  "method": "官方FY2025归母+官方2026H1归母-官方2025H1归母；当前未复权价*最近官方总股本。calc仅作补充算术，不计入正式审计的verified_count。",
+  "companies": {
+    "edan": {
+      "ticker": "300206",
+      "fy_source": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225051222.PDF#page=11",
+      "h1_source": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225500907.PDF#page=7",
+      "shares_source": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225500907.PDF#page=7",
+      "ttm_net_profit": {
+        "expression": "305637857.53 + 201841258.45 - 154451434.92",
+        "verdict": "PASS",
+        "result": "353027681.06",
+        "precision": 50,
+        "rounded": false
+      },
+      "reconstructed_pe_ttm": {
+        "expression": "(11.79 * 579663346) / (305637857.53 + 201841258.45 - 154451434.92)",
+        "verdict": "PASS",
+        "result": "19.35890927538474084551153242079424376569594091988",
+        "precision": 50,
+        "rounded": true
+      },
+      "vendor_pe_ttm": "19.358909",
+      "absolute_difference": "2.753847408455115324207942438E-7"
+    },
+    "apt": {
+      "ticker": "688617",
+      "fy_source": "https://static.cninfo.com.cn/finalpage/2026-03-25/1225029311.PDF#page=8",
+      "h1_source": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225482705.PDF#page=7",
+      "shares_source": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225482705.PDF#page=7",
+      "ttm_net_profit": {
+        "expression": "820636582.43 + 537319119.80 - 425160981.21",
+        "verdict": "PASS",
+        "result": "932794721.02",
+        "precision": 50,
+        "rounded": false
+      },
+      "reconstructed_pe_ttm": {
+        "expression": "(251.41 * 141529162) / (820636582.43 + 537319119.80 - 425160981.21)",
+        "verdict": "PASS",
+        "result": "38.145420226554960955304227950164305701507838921367",
+        "precision": 50,
+        "rounded": true
+      },
+      "vendor_pe_ttm": "38.14542",
+      "absolute_difference": "2.265549609553042279501643057E-7"
+    },
+    "intco": {
+      "ticker": "300677",
+      "fy_source": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-24/12172711.PDF#page=6",
+      "h1_source": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225495115.PDF#page=11",
+      "shares_source": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225521443.PDF#page=1",
+      "ttm_net_profit": {
+        "expression": "1010699970.94 + 837340519.61 - 710439983.93",
+        "verdict": "PASS",
+        "result": "1137600506.62",
+        "precision": 50,
+        "rounded": false
+      },
+      "reconstructed_pe_ttm": {
+        "expression": "(54.25 * 654753263) / (1010699970.94 + 837340519.61 - 710439983.93)",
+        "verdict": "PASS",
+        "result": "31.223935213677867481117068140357716888162333086497",
+        "precision": 50,
+        "rounded": true
+      },
+      "vendor_pe_ttm": "31.223935",
+      "absolute_difference": "2.136778674811170681403577169E-7"
+    },
+    "mindray": {
+      "ticker": "300760",
+      "fy_source": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225059012.PDF#page=20",
+      "h1_source": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225529856.PDF#page=16",
+      "shares_source": "https://static.cninfo.com.cn/finalpage/2026-08-11/1225466190.PDF",
+      "ttm_net_profit": {
+        "expression": "8135775409 + 4796791800 - 5068767098",
+        "verdict": "PASS",
+        "result": "7863800111",
+        "precision": 50,
+        "rounded": false
+      },
+      "reconstructed_pe_ttm": {
+        "expression": "(169.91 * 1211799431) / (8135775409 + 4796791800 - 5068767098)",
+        "verdict": "PASS",
+        "result": "26.182868131807985626454588807388367249916228192388",
+        "precision": 50,
+        "rounded": true
+      },
+      "vendor_pe_ttm": "26.182868",
+      "absolute_difference": "1.318079856264545888073883672E-7"
+    }
+  },
+  "valuation_preferences": {
+    "notice": "以下PE区间是研究者主观要求的估值纪律，非历史分位、市场共识或目标价；固定2026H1末TTM利润及当前股本，不含未来分红、送转、稀释。盈利变化后必须重新计算。",
+    "edan": {
+      "pe_low_assumption": "18",
+      "pe_high_assumption": "20",
+      "low_price": {
+        "expression": "11.79 / 19.358909 * 18",
+        "verdict": "PASS",
+        "result": "10.962394626680666766913362731339870444145380300098",
+        "precision": 50,
+        "rounded": true
+      },
+      "high_price": {
+        "expression": "11.79 / 19.358909 * 20",
+        "verdict": "PASS",
+        "result": "12.180438474089629741014847479266522715717089222332",
+        "precision": 50,
+        "rounded": true
+      }
+    },
+    "apt": {
+      "pe_low_assumption": "33",
+      "pe_high_assumption": "35",
+      "low_price": {
+        "expression": "251.41 / 38.14542 * 33",
+        "verdict": "PASS",
+        "result": "217.49740860108500574905191763519709574570158094995",
+        "precision": 50,
+        "rounded": true
+      },
+      "high_price": {
+        "expression": "251.41 / 38.14542 * 35",
+        "verdict": "PASS",
+        "result": "230.67906972842349094596415506763328336665319191662",
+        "precision": 50,
+        "rounded": true
+      }
+    }
+  },
+  "sensitivity": {
+    "notice": "未来TTM利润和终点估值的假设组合，无概率权重、非预测。价格变动率=(1+假设利润增速)*假设终点PE/当前PE-1；未计分红与股本变化。",
+    "edan_downside": {
+      "earnings_change_assumption": "-10%",
+      "terminal_pe_assumption": "16",
+      "price_change_pct": {
+        "expression": "(0.9 * 16 / 19.358909 - 1) * 100",
+        "verdict": "PASS",
+        "result": "-25.615642906322871810596351271654823110124645970493",
+        "precision": 50,
+        "rounded": true
+      }
+    },
+    "apt_growth_with_derating": {
+      "earnings_change_assumption": "+25%",
+      "terminal_pe_assumption": "35",
+      "price_change_pct": {
+        "expression": "(1.25 * 35 / 38.14542 - 1) * 100",
+        "verdict": "PASS",
+        "result": "14.69266821547645824846075885388075422947237178146",
+        "precision": 50,
+        "rounded": true
+      }
+    },
+    "apt_downside": {
+      "earnings_change_assumption": "0%",
+      "terminal_pe_assumption": "30",
+      "price_change_pct": {
+        "expression": "(30 / 38.14542 - 1) * 100",
+        "verdict": "PASS",
+        "result": "-21.353598937959000058198336785910339956933230778426",
+        "precision": 50,
+        "rounded": true
+      }
+    }
+  }
+}

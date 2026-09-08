@@ -1,0 +1,3249 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "880652-20260906",
+  "as_of": "2026-09-06T04:43:35.337888+00:00",
+  "sources": [
+    {
+      "id": "REPORT",
+      "source_type": "report_under_audit",
+      "origin_id": "research:880652:20260906",
+      "locator": "D:\\vcp_hunter\\产业链投研\\research_outputs\\880652_2026-09-06\\research_report.md",
+      "source_date": "2026-09-06T04:43:35.337888+00:00",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "OFF_688578",
+      "source_type": "official_filing",
+      "origin_id": "688578:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225481694.PDF",
+      "source_date": "2026-08-20",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "OFF_688235",
+      "source_type": "official_filing",
+      "origin_id": "688235:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225512422.PDF",
+      "source_date": "2026-08-27",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "OFF_002422",
+      "source_type": "official_filing",
+      "origin_id": "002422:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225512872.PDF",
+      "source_date": "2026-08-27",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "OFF_600276",
+      "source_type": "official_filing",
+      "origin_id": "600276:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225483600.PDF",
+      "source_date": "2026-08-20",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "OFF_688192",
+      "source_type": "official_filing",
+      "origin_id": "688192:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225486626.PDF",
+      "source_date": "2026-08-21",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "OFF_300558",
+      "source_type": "official_filing",
+      "origin_id": "300558:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225487673.PDF",
+      "source_date": "2026-08-21",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "THS_PRICE",
+      "source_type": "market_data_vendor",
+      "origin_id": "ths:prices:20260904",
+      "locator": "mcp:hithink-finance:prices-snapshot:950cf02c29474c028c189d6a853cebac",
+      "source_date": "2026-09-06T04:43:35.337888+00:00",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "THS_VAL",
+      "source_type": "market_data_vendor",
+      "origin_id": "ths:valuation:20260904",
+      "locator": "mcp:hithink-finance:valuations-snapshot:32f16aa951b142c78befc1d18ea8f0be",
+      "source_date": "2026-09-06T04:43:35.337888+00:00",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "TDX_LOCAL",
+      "source_type": "market_data_vendor",
+      "origin_id": "tdx:daily:20260904",
+      "locator": "D:\\vcp_hunter\\产业链投研\\research_outputs\\880652_2026-09-06\\market_local.json",
+      "source_date": "2026-09-06T04:43:35.337888+00:00",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "TDX_688578",
+      "source_type": "market_data_vendor",
+      "origin_id": "tdx:fundamental:20260904",
+      "locator": "D:\\vcp_hunter\\产业链投研\\research_outputs\\880652_2026-09-06\\tdx_valuation_crosscheck.json#688578",
+      "source_date": "2026-09-06T04:43:35.337888+00:00",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "TDX_688235",
+      "source_type": "market_data_vendor",
+      "origin_id": "tdx:fundamental:20260904",
+      "locator": "D:\\vcp_hunter\\产业链投研\\research_outputs\\880652_2026-09-06\\tdx_valuation_crosscheck.json#688235",
+      "source_date": "2026-09-06T04:43:35.337888+00:00",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "TDX_600276",
+      "source_type": "market_data_vendor",
+      "origin_id": "tdx:fundamental:20260904",
+      "locator": "D:\\vcp_hunter\\产业链投研\\research_outputs\\880652_2026-09-06\\tdx_valuation_crosscheck.json#600276",
+      "source_date": "2026-09-06T04:43:35.337888+00:00",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "TDX_002422",
+      "source_type": "market_data_vendor",
+      "origin_id": "tdx:fundamental:20260904",
+      "locator": "D:\\vcp_hunter\\产业链投研\\research_outputs\\880652_2026-09-06\\tdx_valuation_crosscheck.json#002422",
+      "source_date": "2026-09-06T04:43:35.337888+00:00",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "DIZAL_CONTRACT",
+      "source_type": "official_filing",
+      "origin_id": "688192:20260901:license-effective",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225539616.PDF",
+      "source_date": "2026-09-01",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    },
+    {
+      "id": "AZ_CONTRACT",
+      "source_type": "official_customer_supplier",
+      "origin_id": "AZ:20260901:license-completion",
+      "locator": "https://www.astrazeneca-us.com/content/az-us/media/press-releases/2026/AstraZeneca-completes-global-license-agreement-for-oral-EGFR-inhibitor-ZEGFROVY-sunvozertinib-for-lung-cancer.html",
+      "source_date": "2026-09-01",
+      "checked_at": "2026-09-06T04:43:35.337888+00:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "688578_revenue_2026",
+      "metric": "revenue",
+      "value": "3319788082.89",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688578"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "688578_revenue_2025",
+      "metric": "revenue",
+      "value": "2373762579.40",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688578"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "CLAIM_688578_revenue",
+      "metric": "revenue",
+      "value": "33.20",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "688578_attributable_net_profit_2026",
+      "metric": "attributable_net_profit",
+      "value": "1540790493.67",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688578"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "688578_attributable_net_profit_2025",
+      "metric": "attributable_net_profit",
+      "value": "1051235341.42",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688578"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "CLAIM_688578_attributable_net_profit",
+      "metric": "attributable_net_profit",
+      "value": "15.41",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "688578_deducted_attributable_net_profit_2026",
+      "metric": "deducted_attributable_net_profit",
+      "value": "1366655403.25",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688578"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "688578_deducted_attributable_net_profit_2025",
+      "metric": "deducted_attributable_net_profit",
+      "value": "905111736.01",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688578"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "CLAIM_688578_deducted_attributable_net_profit",
+      "metric": "deducted_attributable_net_profit",
+      "value": "13.67",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "688578_operating_cash_flow_2026",
+      "metric": "operating_cash_flow",
+      "value": "1444581425.62",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688578"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "688578_operating_cash_flow_2025",
+      "metric": "operating_cash_flow",
+      "value": "1092645248.45",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688578"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "CLAIM_688578_operating_cash_flow",
+      "metric": "operating_cash_flow",
+      "value": "14.45",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "688235_revenue_2026",
+      "metric": "revenue",
+      "value": "22219533",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "688235_revenue_2025",
+      "metric": "revenue",
+      "value": "17518269",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "CLAIM_688235_revenue",
+      "metric": "revenue",
+      "value": "222.20",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "688235_product_revenue_2026",
+      "metric": "product_revenue",
+      "value": "21797444",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "688235_product_revenue_2025",
+      "metric": "product_revenue",
+      "value": "17360163",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "CLAIM_688235_product_revenue",
+      "metric": "product_revenue",
+      "value": "217.97",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "688235_attributable_net_profit_2026",
+      "metric": "attributable_net_profit",
+      "value": "3270593",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "688235_attributable_net_profit_2025",
+      "metric": "attributable_net_profit",
+      "value": "449784",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "CLAIM_688235_attributable_net_profit",
+      "metric": "attributable_net_profit",
+      "value": "32.71",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "688235_deducted_attributable_net_profit_2026",
+      "metric": "deducted_attributable_net_profit",
+      "value": "2918072",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "688235_deducted_attributable_net_profit_2025",
+      "metric": "deducted_attributable_net_profit",
+      "value": "261105",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "CLAIM_688235_deducted_attributable_net_profit",
+      "metric": "deducted_attributable_net_profit",
+      "value": "29.18",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "688235_operating_cash_flow_2026",
+      "metric": "operating_cash_flow",
+      "value": "4438577",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "688235_operating_cash_flow_2025",
+      "metric": "operating_cash_flow",
+      "value": "1631496",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688235"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "CLAIM_688235_operating_cash_flow",
+      "metric": "operating_cash_flow",
+      "value": "44.39",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "002422_revenue_2026",
+      "metric": "revenue",
+      "value": "8838531817",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_002422"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "002422_revenue_2025",
+      "metric": "revenue",
+      "value": "9083327620",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_002422"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "CLAIM_002422_revenue",
+      "metric": "revenue",
+      "value": "88.39",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "002422_attributable_net_profit_2026",
+      "metric": "attributable_net_profit",
+      "value": "1127768264",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_002422"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "002422_attributable_net_profit_2025",
+      "metric": "attributable_net_profit",
+      "value": "1000625359",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_002422"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "CLAIM_002422_attributable_net_profit",
+      "metric": "attributable_net_profit",
+      "value": "11.28",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "002422_deducted_attributable_net_profit_2026",
+      "metric": "deducted_attributable_net_profit",
+      "value": "699366733",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_002422"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "002422_deducted_attributable_net_profit_2025",
+      "metric": "deducted_attributable_net_profit",
+      "value": "985477298",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_002422"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "CLAIM_002422_deducted_attributable_net_profit",
+      "metric": "deducted_attributable_net_profit",
+      "value": "6.99",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "002422_operating_cash_flow_2026",
+      "metric": "operating_cash_flow",
+      "value": "2341171910",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_002422"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "002422_operating_cash_flow_2025",
+      "metric": "operating_cash_flow",
+      "value": "1189534877",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_002422"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "CLAIM_002422_operating_cash_flow",
+      "metric": "operating_cash_flow",
+      "value": "23.41",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-27"
+    },
+    {
+      "id": "600276_deducted_attributable_net_profit_2026",
+      "metric": "deducted_attributable_net_profit",
+      "value": "3729589028.70",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_600276"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "600276_deducted_attributable_net_profit_2025",
+      "metric": "deducted_attributable_net_profit",
+      "value": "4272848537.94",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_600276"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "CLAIM_600276_deducted_attributable_net_profit",
+      "metric": "deducted_attributable_net_profit",
+      "value": "37.30",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "600276_operating_cash_flow_2026",
+      "metric": "operating_cash_flow",
+      "value": "1987003872.34",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_600276"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "600276_operating_cash_flow_2025",
+      "metric": "operating_cash_flow",
+      "value": "4300453251.40",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_600276"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "CLAIM_600276_operating_cash_flow",
+      "metric": "operating_cash_flow",
+      "value": "19.87",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "688192_revenue_2026",
+      "metric": "revenue",
+      "value": "522692723.71",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688192"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "688192_revenue_2025",
+      "metric": "revenue",
+      "value": "355001420.82",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688192"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "CLAIM_688192_revenue",
+      "metric": "revenue",
+      "value": "5.23",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "688192_attributable_net_profit_2026",
+      "metric": "attributable_net_profit",
+      "value": "-210373370.09",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688192"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "688192_attributable_net_profit_2025",
+      "metric": "attributable_net_profit",
+      "value": "-377360125.54",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688192"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "CLAIM_688192_attributable_net_profit",
+      "metric": "attributable_net_profit",
+      "value": "-2.10",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "688192_operating_cash_flow_2026",
+      "metric": "operating_cash_flow",
+      "value": "-274307782.28",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688192"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "688192_operating_cash_flow_2025",
+      "metric": "operating_cash_flow",
+      "value": "-264669368.74",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_688192"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "CLAIM_688192_operating_cash_flow",
+      "metric": "operating_cash_flow",
+      "value": "-2.74",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "300558_deducted_attributable_net_profit_2026",
+      "metric": "deducted_attributable_net_profit",
+      "value": "203403701.74",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_300558"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "300558_deducted_attributable_net_profit_2025",
+      "metric": "deducted_attributable_net_profit",
+      "value": "190623726.76",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "OFF_300558"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "CLAIM_300558_deducted_attributable_net_profit",
+      "metric": "deducted_attributable_net_profit",
+      "value": "2.03",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "100000000",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "REPORT"
+      ],
+      "available_at": "2026-08-21"
+    },
+    {
+      "id": "P_600276",
+      "metric": "close_price",
+      "value": "46.02",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_600276",
+      "metric": "close_price",
+      "value": "46.02",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_688235",
+      "metric": "close_price",
+      "value": "271",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_688235",
+      "metric": "close_price",
+      "value": "271",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_688506",
+      "metric": "close_price",
+      "value": "261.5",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_688506",
+      "metric": "close_price",
+      "value": "261.5",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_688331",
+      "metric": "close_price",
+      "value": "124.24",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_688331",
+      "metric": "close_price",
+      "value": "124.24",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_688336",
+      "metric": "close_price",
+      "value": "42.16",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_688336",
+      "metric": "close_price",
+      "value": "42.16",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_688578",
+      "metric": "close_price",
+      "value": "110.55",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_688578",
+      "metric": "close_price",
+      "value": "110.55",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_688266",
+      "metric": "close_price",
+      "value": "117.99",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_688266",
+      "metric": "close_price",
+      "value": "117.99",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_688192",
+      "metric": "close_price",
+      "value": "57.07",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_688192",
+      "metric": "close_price",
+      "value": "57.07",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_002422",
+      "metric": "close_price",
+      "value": "41.92",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_002422",
+      "metric": "close_price",
+      "value": "41.92",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_002653",
+      "metric": "close_price",
+      "value": "69.19",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_002653",
+      "metric": "close_price",
+      "value": "69.19",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_002294",
+      "metric": "close_price",
+      "value": "31.42",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_002294",
+      "metric": "close_price",
+      "value": "31.42",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_300558",
+      "metric": "close_price",
+      "value": "48.98",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_300558",
+      "metric": "close_price",
+      "value": "48.98",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_688180",
+      "metric": "close_price",
+      "value": "33.49",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_688180",
+      "metric": "close_price",
+      "value": "33.49",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "P_688428",
+      "metric": "close_price",
+      "value": "31.71",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "THS_PRICE"
+      ]
+    },
+    {
+      "id": "L_688428",
+      "metric": "close_price",
+      "value": "31.71",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX_LOCAL"
+      ]
+    },
+    {
+      "id": "PE_THS_688578",
+      "metric": "pe_ttm",
+      "value": "18.571785",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "vendor_ttm_attributable_net_profit",
+      "source_refs": [
+        "THS_VAL"
+      ]
+    },
+    {
+      "id": "PE_TDX_688578",
+      "metric": "pe_ttm",
+      "value": "18.57",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "vendor_ttm_attributable_net_profit",
+      "source_refs": [
+        "TDX_688578"
+      ]
+    },
+    {
+      "id": "ALLIST_SHARES",
+      "metric": "total_shares",
+      "value": "450000000",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T23:59:59+08:00"
+      },
+      "basis": "total_shares_outstanding",
+      "source_refs": [
+        "OFF_688578"
+      ]
+    },
+    {
+      "id": "ALLIST_MARKET_CAP",
+      "metric": "total_market_cap",
+      "value": "49747501056.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "total_market_cap",
+      "source_refs": [
+        "TDX_688578"
+      ]
+    },
+    {
+      "id": "PE_THS_688235",
+      "metric": "pe_ttm",
+      "value": "97.640242",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "vendor_ttm_attributable_net_profit",
+      "source_refs": [
+        "THS_VAL"
+      ]
+    },
+    {
+      "id": "PE_TDX_688235",
+      "metric": "pe_ttm",
+      "value": "97.62",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "vendor_ttm_attributable_net_profit",
+      "source_refs": [
+        "TDX_688235"
+      ]
+    },
+    {
+      "id": "PE_THS_600276",
+      "metric": "pe_ttm",
+      "value": "39.532566",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "vendor_ttm_attributable_net_profit",
+      "source_refs": [
+        "THS_VAL"
+      ]
+    },
+    {
+      "id": "PE_TDX_600276",
+      "metric": "pe_ttm",
+      "value": "39.53",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "vendor_ttm_attributable_net_profit",
+      "source_refs": [
+        "TDX_600276"
+      ]
+    },
+    {
+      "id": "PE_THS_002422",
+      "metric": "pe_ttm",
+      "value": "36.458551",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "vendor_ttm_attributable_net_profit",
+      "source_refs": [
+        "THS_VAL"
+      ]
+    },
+    {
+      "id": "PE_TDX_002422",
+      "metric": "pe_ttm",
+      "value": "36.46",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "basis": "vendor_ttm_attributable_net_profit",
+      "source_refs": [
+        "TDX_002422"
+      ]
+    },
+    {
+      "id": "DIZAL_UPFRONT",
+      "metric": "contractual_upfront_payment",
+      "value": "600",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-08-31T23:59:59+08:00"
+      },
+      "basis": "contractually_payable_not_cash_received",
+      "source_refs": [
+        "DIZAL_CONTRACT"
+      ]
+    },
+    {
+      "id": "AZ_UPFRONT",
+      "metric": "contractual_upfront_payment",
+      "value": "600",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "1000000",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-08-31T23:59:59+08:00"
+      },
+      "basis": "contractually_payable_not_cash_received",
+      "source_refs": [
+        "AZ_CONTRACT"
+      ]
+    },
+    {
+      "id": "CLAIM_UPFRONT",
+      "metric": "contractual_upfront_payment",
+      "value": "6",
+      "unit": "currency",
+      "currency": "USD",
+      "scale": "100000000",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-08-31T23:59:59+08:00"
+      },
+      "basis": "contractually_payable_not_cash_received",
+      "source_refs": [
+        "REPORT"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "ROUND_688578_revenue",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688578_revenue"
+      },
+      "references": [
+        {
+          "fact_id": "688578_revenue_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688578_revenue",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688578_revenue_2026"
+      },
+      "base": {
+        "fact_id": "688578_revenue_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688578_attributable_net_profit",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688578_attributable_net_profit"
+      },
+      "references": [
+        {
+          "fact_id": "688578_attributable_net_profit_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688578_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688578_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "688578_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688578_deducted_attributable_net_profit",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688578_deducted_attributable_net_profit"
+      },
+      "references": [
+        {
+          "fact_id": "688578_deducted_attributable_net_profit_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688578_deducted_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688578_deducted_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "688578_deducted_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688578_operating_cash_flow",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688578_operating_cash_flow"
+      },
+      "references": [
+        {
+          "fact_id": "688578_operating_cash_flow_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688578_operating_cash_flow",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688578_operating_cash_flow_2026"
+      },
+      "base": {
+        "fact_id": "688578_operating_cash_flow_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688235_revenue",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688235_revenue"
+      },
+      "references": [
+        {
+          "fact_id": "688235_revenue_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688235_revenue",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688235_revenue_2026"
+      },
+      "base": {
+        "fact_id": "688235_revenue_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688235_product_revenue",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688235_product_revenue"
+      },
+      "references": [
+        {
+          "fact_id": "688235_product_revenue_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688235_product_revenue",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688235_product_revenue_2026"
+      },
+      "base": {
+        "fact_id": "688235_product_revenue_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "product_revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688235_attributable_net_profit",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688235_attributable_net_profit"
+      },
+      "references": [
+        {
+          "fact_id": "688235_attributable_net_profit_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688235_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688235_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "688235_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688235_deducted_attributable_net_profit",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688235_deducted_attributable_net_profit"
+      },
+      "references": [
+        {
+          "fact_id": "688235_deducted_attributable_net_profit_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688235_deducted_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688235_deducted_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "688235_deducted_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688235_operating_cash_flow",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688235_operating_cash_flow"
+      },
+      "references": [
+        {
+          "fact_id": "688235_operating_cash_flow_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688235_operating_cash_flow",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688235_operating_cash_flow_2026"
+      },
+      "base": {
+        "fact_id": "688235_operating_cash_flow_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_002422_revenue",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_002422_revenue"
+      },
+      "references": [
+        {
+          "fact_id": "002422_revenue_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_002422_revenue",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "002422_revenue_2026"
+      },
+      "base": {
+        "fact_id": "002422_revenue_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_002422_attributable_net_profit",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_002422_attributable_net_profit"
+      },
+      "references": [
+        {
+          "fact_id": "002422_attributable_net_profit_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_002422_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "002422_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "002422_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_002422_deducted_attributable_net_profit",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_002422_deducted_attributable_net_profit"
+      },
+      "references": [
+        {
+          "fact_id": "002422_deducted_attributable_net_profit_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_002422_deducted_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "002422_deducted_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "002422_deducted_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_002422_operating_cash_flow",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_002422_operating_cash_flow"
+      },
+      "references": [
+        {
+          "fact_id": "002422_operating_cash_flow_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_002422_operating_cash_flow",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "002422_operating_cash_flow_2026"
+      },
+      "base": {
+        "fact_id": "002422_operating_cash_flow_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_600276_deducted_attributable_net_profit",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_600276_deducted_attributable_net_profit"
+      },
+      "references": [
+        {
+          "fact_id": "600276_deducted_attributable_net_profit_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_600276_deducted_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "600276_deducted_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "600276_deducted_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_600276_operating_cash_flow",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_600276_operating_cash_flow"
+      },
+      "references": [
+        {
+          "fact_id": "600276_operating_cash_flow_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_600276_operating_cash_flow",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "600276_operating_cash_flow_2026"
+      },
+      "base": {
+        "fact_id": "600276_operating_cash_flow_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688192_revenue",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688192_revenue"
+      },
+      "references": [
+        {
+          "fact_id": "688192_revenue_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688192_revenue",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688192_revenue_2026"
+      },
+      "base": {
+        "fact_id": "688192_revenue_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688192_attributable_net_profit",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688192_attributable_net_profit"
+      },
+      "references": [
+        {
+          "fact_id": "688192_attributable_net_profit_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688192_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688192_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "688192_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_688192_operating_cash_flow",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_688192_operating_cash_flow"
+      },
+      "references": [
+        {
+          "fact_id": "688192_operating_cash_flow_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_688192_operating_cash_flow",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "688192_operating_cash_flow_2026"
+      },
+      "base": {
+        "fact_id": "688192_operating_cash_flow_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "ROUND_300558_deducted_attributable_net_profit",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_300558_deducted_attributable_net_profit"
+      },
+      "references": [
+        {
+          "fact_id": "300558_deducted_attributable_net_profit_2026"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "500000"
+      }
+    },
+    {
+      "id": "YOY_300558_deducted_attributable_net_profit",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "300558_deducted_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "300558_deducted_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "PRICE_600276",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_600276"
+      },
+      "references": [
+        {
+          "fact_id": "P_600276"
+        },
+        {
+          "fact_id": "L_600276"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_688235",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_688235"
+      },
+      "references": [
+        {
+          "fact_id": "P_688235"
+        },
+        {
+          "fact_id": "L_688235"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_688506",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_688506"
+      },
+      "references": [
+        {
+          "fact_id": "P_688506"
+        },
+        {
+          "fact_id": "L_688506"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_688331",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_688331"
+      },
+      "references": [
+        {
+          "fact_id": "P_688331"
+        },
+        {
+          "fact_id": "L_688331"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_688336",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_688336"
+      },
+      "references": [
+        {
+          "fact_id": "P_688336"
+        },
+        {
+          "fact_id": "L_688336"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_688578",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_688578"
+      },
+      "references": [
+        {
+          "fact_id": "P_688578"
+        },
+        {
+          "fact_id": "L_688578"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_688266",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_688266"
+      },
+      "references": [
+        {
+          "fact_id": "P_688266"
+        },
+        {
+          "fact_id": "L_688266"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_688192",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_688192"
+      },
+      "references": [
+        {
+          "fact_id": "P_688192"
+        },
+        {
+          "fact_id": "L_688192"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_002422",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_002422"
+      },
+      "references": [
+        {
+          "fact_id": "P_002422"
+        },
+        {
+          "fact_id": "L_002422"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_002653",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_002653"
+      },
+      "references": [
+        {
+          "fact_id": "P_002653"
+        },
+        {
+          "fact_id": "L_002653"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_002294",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_002294"
+      },
+      "references": [
+        {
+          "fact_id": "P_002294"
+        },
+        {
+          "fact_id": "L_002294"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_300558",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_300558"
+      },
+      "references": [
+        {
+          "fact_id": "P_300558"
+        },
+        {
+          "fact_id": "L_300558"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_688180",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_688180"
+      },
+      "references": [
+        {
+          "fact_id": "P_688180"
+        },
+        {
+          "fact_id": "L_688180"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PRICE_688428",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "P_688428"
+      },
+      "references": [
+        {
+          "fact_id": "P_688428"
+        },
+        {
+          "fact_id": "L_688428"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PE_688578",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "PE_THS_688578"
+      },
+      "references": [
+        {
+          "fact_id": "PE_THS_688578"
+        },
+        {
+          "fact_id": "PE_TDX_688578"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0.1",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "MCAP_688578",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": {
+        "fact_id": "P_688578"
+      },
+      "shares": {
+        "fact_id": "ALLIST_SHARES"
+      },
+      "expected": {
+        "fact_id": "ALLIST_MARKET_CAP"
+      },
+      "capitalization_basis": "total",
+      "max_share_age_days": 90,
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0.001",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PE_688235",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "PE_THS_688235"
+      },
+      "references": [
+        {
+          "fact_id": "PE_THS_688235"
+        },
+        {
+          "fact_id": "PE_TDX_688235"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0.1",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PE_600276",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "PE_THS_600276"
+      },
+      "references": [
+        {
+          "fact_id": "PE_THS_600276"
+        },
+        {
+          "fact_id": "PE_TDX_600276"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0.1",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "PE_002422",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "PE_THS_002422"
+      },
+      "references": [
+        {
+          "fact_id": "PE_THS_002422"
+        },
+        {
+          "fact_id": "PE_TDX_002422"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0.1",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "DIZAL_UPFRONT_AMOUNT",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "CLAIM_UPFRONT"
+      },
+      "references": [
+        {
+          "fact_id": "DIZAL_UPFRONT"
+        },
+        {
+          "fact_id": "AZ_UPFRONT"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    }
+  ]
+}

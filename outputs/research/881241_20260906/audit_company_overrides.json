@@ -1,0 +1,20 @@
+{
+  "apt": {
+    "h1_url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225482705.PDF#page=7",
+    "date": "2026-08-20",
+    "fy_np": "820636582.43",
+    "fy_url": "https://static.cninfo.com.cn/finalpage/2026-03-25/1225029311.PDF#page=8",
+    "fy_date": "2026-03-25",
+    "shares": "141529162",
+    "shares_at": "2026-06-30T15:00:00+08:00"
+  },
+  "intco": {
+    "fy_np": "1010699970.94",
+    "fy_url": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-24/12172711.PDF#page=6",
+    "fy_date": "2026-04-24",
+    "shares": "654753263",
+    "shares_at": "2026-08-20T15:00:00+08:00",
+    "shares_url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225521443.PDF#page=1",
+    "shares_date": "2026-08-27"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "as_of": "2026-09-06T23:59:59+08:00",
+  "period": "2026-01-01/2026-06-30",
+  "currency": "CNY",
+  "unit": "yuan",
+  "accounting_basis": "PRC-GAAP consolidated attributable",
+  "facts_are_reported_not_calculated": true,
+  "data_request_plan": {
+    "fields": [
+      "revenue",
+      "attributable_net_profit",
+      "deducted_attributable_net_profit",
+      "operating_cashflow",
+      "business_stage",
+      "share_count"
+    ],
+    "primary_source": "公司/交易所/CNINFO原文",
+    "fallback": "可核对原始PDF的新浪索引",
+    "probe": "直接PDF校验格式+页数+题名，SSE static空白PDF转同路径star域名成功；CNINFO列表空结果不得当负面证据",
+    "audit": "主代理合并执行financial-evidence-audit；本包保留原值和原披露比例，不自行计算估值"
+  },
+  "sources": {
+    "yuyue_2026h1": {
+      "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-08-22/071f1993-fb95-49d5-8cca-d2591cdb896f.PDF",
+      "disclosed": "2026-08-22",
+      "financial_page": 8,
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\yuyue_2026h1.pdf",
+      "sha256": "a7754d76f0aea55539ec7dea8337383ba54c235c2bcc6180232d526300448774"
+    },
+    "apt_2026h1": {
+      "url": "https://star.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-20/688617_20260820_I709.pdf",
+      "disclosed": "2026-08-20",
+      "financial_page": 7,
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\apt_2026h1.pdf",
+      "sha256": "0dd08b97c926ee7e0895b84e1aefa7ce3562c09635ae99fc8e1d3057c004c31f"
+    },
+    "intco_2026h1": {
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225495115.PDF",
+      "disclosed": "2026-08-25",
+      "financial_page": 11,
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\intco_2026h1.pdf",
+      "sha256": "c567a01c3fd6ac66709ff5ec10e36c8335dce2a819d89eaa20980c184255833d"
+    },
+    "sinocare_2026h1": {
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-04/1225454934.PDF",
+      "disclosed": "2026-08-04",
+      "financial_page": 8,
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\sinocare_2026h1.pdf",
+      "sha256": "c19c5f48866fcda0b73f5c0294aba1ce2e907d6582d20f1a1a3917dce3e45058"
+    },
+    "lepu_2026h1": {
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-22/1225491328.PDF",
+      "disclosed": "2026-08-22",
+      "financial_page": 7,
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\lepu_2026h1.pdf",
+      "sha256": "1889c737efdc1fc7b4a5414b21646553add51768de409a1308aef184f7a5b6c2"
+    },
+    "yuyue_2025fy": {
+      "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-25/63dda053-2c9c-4ecd-bb73-b1266d9feedf.PDF",
+      "disclosed": "2026-04-25",
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\yuyue_2025fy.pdf",
+      "sha256": "a4271fd562d1cbee0092c38efe3bd6bae2de0227ff4046bc9efe416475d2d889"
+    },
+    "yuyue_2026q1": {
+      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-25/d2bb70e5-50ca-40a2-8f65-ed80f65ee0ff.PDF",
+      "disclosed": "2026-04-25",
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\yuyue_2026q1.pdf",
+      "sha256": "d09e7c1900827d911d2f5159433d4269acd2b9adb6e31aeead4a4e1d71a35fc0"
+    },
+    "intco_2026q1": {
+      "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-24/b36fe282-b780-45bf-8538-8833c151e4dc.PDF",
+      "disclosed": "2026-04-24",
+      "financial_page": 2,
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\intco_2026q1.pdf",
+      "sha256": "d0056dcb37ade311d1a35ec0b66ff87f143641cd19d2feb278b12e80d5238061"
+    },
+    "intco_2025fy_summary": {
+      "url": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-24/12172711.PDF",
+      "disclosed": "2026-04-24",
+      "financial_page": 6,
+      "note": "公司原始摘要的新浪转载；PDF页6=印刷页05；不是独立来源",
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\intco_2025fy_summary.pdf",
+      "sha256": "7e2376bfd02238a97e484d314110774f63279ad7c26290dd9493970b92ed352b"
+    },
+    "intco_20260825_cancel_proposal": {
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225495119.PDF",
+      "disclosed": "2026-08-25",
+      "note": "截至8月20日股本及待股东会审议注销计划",
+      "local_path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\consumables_home\\intco_20260825_cancel_proposal.pdf",
+      "sha256": "ce03d2bc85e72082f2ed4a8cc1f699ff8337f402d38eea72b81548da72cb8614"
+    }
+  },
+  "companies": {
+    "002223": {
+      "entity": "江苏鱼跃医疗设备股份有限公司",
+      "source": "yuyue_2026h1",
+      "revenue": "4569315559.46",
+      "net_profit": "842813546.32",
+      "deducted_net_profit": "761227088.92",
+      "ocf": "1182158411.84",
+      "prior_h1": {
+        "revenue": "4658967431.03",
+        "net_profit": "1202704408.78",
+        "deducted_net_profit": "913718165.11",
+        "ocf": "1166860677.34"
+      },
+      "reported_yoy_pct": {
+        "revenue": "-1.92",
+        "net_profit": "-29.92",
+        "deducted_net_profit": "-16.69",
+        "ocf": "1.31"
+      }
+    },
+    "688617": {
+      "entity": "深圳惠泰医疗器械股份有限公司",
+      "source": "apt_2026h1",
+      "revenue": "1526351745.77",
+      "net_profit": "537319119.80",
+      "deducted_net_profit": "528771505.05",
+      "ocf": "549285182.90",
+      "prior_h1": {
+        "revenue": "1213804906.53",
+        "net_profit": "425160981.21",
+        "deducted_net_profit": "410820730.61",
+        "ocf": "444648652.93"
+      },
+      "reported_yoy_pct": {
+        "revenue": "25.75",
+        "net_profit": "26.38",
+        "deducted_net_profit": "28.71",
+        "ocf": "23.53"
+      },
+      "h1_share_count": "141529162",
+      "share_locator": "PDF pp67-68;截至半年报披露日无后续股本变动"
+    },
+    "300677": {
+      "entity": "英科医疗科技股份有限公司",
+      "source": "intco_2026h1",
+      "revenue": "6909022700.33",
+      "net_profit": "837340519.61",
+      "deducted_net_profit": "1060540163.36",
+      "ocf": "1757744842.35",
+      "prior_h1": {
+        "revenue": "4913439043.41",
+        "net_profit": "710439983.93",
+        "deducted_net_profit": "400201229.00",
+        "ocf": "745482560.58"
+      },
+      "reported_yoy_pct": {
+        "revenue": "40.61",
+        "net_profit": "17.86",
+        "deducted_net_profit": "165.00",
+        "ocf": "135.79"
+      },
+      "h1_share_count": "654753263",
+      "share_locator": "PDF p52;8/25注销方案p3-4确认截至8/20仍为该股本；拟减至651447083尚需股东会",
+      "fy2025": {
+        "source": "intco_2025fy_summary",
+        "revenue": "9925819444.72",
+        "net_profit": "1010699970.94",
+        "deducted_net_profit": "396851301.89"
+      },
+      "q12026": {
+        "source": "intco_2026q1",
+        "revenue": "2887034413.31",
+        "net_profit": "10030762.95",
+        "deducted_net_profit": "181971193.45",
+        "ocf": "290260535.83"
+      }
+    },
+    "300298": {
+      "entity": "三诺生物传感股份有限公司",
+      "source": "sinocare_2026h1",
+      "revenue": "2537036279.21",
+      "net_profit": "221337341.60",
+      "deducted_net_profit": "210299160.14",
+      "ocf": "237489713.39",
+      "prior_h1": {
+        "revenue": "2263667609.81",
+        "net_profit": "180654708.01",
+        "deducted_net_profit": "158279651.88",
+        "ocf": "273364831.63"
+      },
+      "reported_yoy_pct": {
+        "revenue": "12.08",
+        "net_profit": "22.52",
+        "deducted_net_profit": "32.87",
+        "ocf": "-13.12"
+      }
+    },
+    "300003": {
+      "entity": "乐普（北京）医疗器械股份有限公司",
+      "source": "lepu_2026h1",
+      "revenue": "3214194092.31",
+      "net_profit": "499475609.79",
+      "deducted_net_profit": "480755800.14",
+      "ocf": "632568809.91",
+      "prior_h1": {
+        "revenue": "3369384556.21",
+        "net_profit": "690925899.89",
+        "deducted_net_profit": "662195779.67",
+        "ocf": "636364548.11"
+      },
+      "reported_yoy_pct": {
+        "revenue": "-4.61",
+        "net_profit": "-27.71",
+        "deducted_net_profit": "-27.40",
+        "ocf": "-0.60"
+      }
+    }
+  }
+}

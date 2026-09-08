@@ -1,0 +1,2287 @@
+{
+  "as_of": "2026-09-06T12:33:51.942674+08:00",
+  "retrieved_at": "2026-09-06T12:33:51.942674+08:00",
+  "board_code": "880652",
+  "board_name": "创新药",
+  "evidence_tier": "secondary_trading_context",
+  "source_encoding": "gbk",
+  "header": "GN_创新药,280,880652,20230117,20260821,0,",
+  "membership_date_field": "20260821",
+  "membership_date_caveat": "头记录日期字段按原文保留，非自行推定实时成分变更日期。",
+  "header_line": 582,
+  "count": 280,
+  "unique_count": 280,
+  "market_counts": {
+    "sz": 141,
+    "sh": 130,
+    "bj": 9
+  },
+  "sources": [
+    {
+      "path": "D:\\HT\\T0002\\hq_cache\\infoharbor_block.dat",
+      "mtime": "2026-09-05T10:37:43.414147+08:00",
+      "bytes": 738770,
+      "sha256": "92b668e9d5d5712a94321f91acdbd39063873d470f267e4f3107fb5ad854cf90"
+    },
+    {
+      "path": "D:\\HT\\T0002\\hq_cache\\tdxzs.cfg",
+      "mtime": "2026-09-04T17:53:40+08:00",
+      "bytes": 18272,
+      "sha256": "a33983fc8bb15c97db93fe9b60394b326b71a91e99e33b8b54700415442074da"
+    },
+    {
+      "path": "D:\\HT\\T0002\\hq_cache\\tdxzsbase2.cfg",
+      "mtime": "2026-09-05T10:37:45.199067+08:00",
+      "bytes": 68283,
+      "sha256": "5614db339029a58b49e254a45e9d49c0ca8ac91f3d6e8cc00d41571f48702e34"
+    },
+    {
+      "path": "D:\\HT\\T0002\\hq_cache\\infoharbor_ex.code",
+      "mtime": "2026-09-05T10:37:44.017177+08:00",
+      "bytes": 182004,
+      "sha256": "e8a87d8c131c1483201ea5bad2987156dd3f56b6ff31b448b195eaf6bdc7552a"
+    }
+  ],
+  "constituents": [
+    {
+      "market": "sz",
+      "code": "000078",
+      "ticker": "sz000078",
+      "name": "ST海王",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000078.day"
+    },
+    {
+      "market": "sz",
+      "code": "000513",
+      "ticker": "sz000513",
+      "name": "丽珠集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000513.day"
+    },
+    {
+      "market": "sz",
+      "code": "000534",
+      "ticker": "sz000534",
+      "name": "万泽股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000534.day"
+    },
+    {
+      "market": "sz",
+      "code": "000538",
+      "ticker": "sz000538",
+      "name": "云南白药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000538.day"
+    },
+    {
+      "market": "sz",
+      "code": "000566",
+      "ticker": "sz000566",
+      "name": "海南海药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000566.day"
+    },
+    {
+      "market": "sz",
+      "code": "000597",
+      "ticker": "sz000597",
+      "name": "东北制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000597.day"
+    },
+    {
+      "market": "sz",
+      "code": "000623",
+      "ticker": "sz000623",
+      "name": "吉林敖东",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000623.day"
+    },
+    {
+      "market": "sz",
+      "code": "000650",
+      "ticker": "sz000650",
+      "name": "仁和药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000650.day"
+    },
+    {
+      "market": "sz",
+      "code": "000661",
+      "ticker": "sz000661",
+      "name": "长春高新",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000661.day"
+    },
+    {
+      "market": "sz",
+      "code": "000705",
+      "ticker": "sz000705",
+      "name": "浙江震元",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000705.day"
+    },
+    {
+      "market": "sz",
+      "code": "000739",
+      "ticker": "sz000739",
+      "name": "普洛药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000739.day"
+    },
+    {
+      "market": "sz",
+      "code": "000756",
+      "ticker": "sz000756",
+      "name": "新华制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000756.day"
+    },
+    {
+      "market": "sz",
+      "code": "000766",
+      "ticker": "sz000766",
+      "name": "通化金马",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000766.day"
+    },
+    {
+      "market": "sz",
+      "code": "000788",
+      "ticker": "sz000788",
+      "name": "北大医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000788.day"
+    },
+    {
+      "market": "sz",
+      "code": "000790",
+      "ticker": "sz000790",
+      "name": "华神科技",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000790.day"
+    },
+    {
+      "market": "sz",
+      "code": "000813",
+      "ticker": "sz000813",
+      "name": "德展健康",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000813.day"
+    },
+    {
+      "market": "sz",
+      "code": "000908",
+      "ticker": "sz000908",
+      "name": "石药景峰",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000908.day"
+    },
+    {
+      "market": "sz",
+      "code": "000915",
+      "ticker": "sz000915",
+      "name": "华特达因",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000915.day"
+    },
+    {
+      "market": "sz",
+      "code": "000919",
+      "ticker": "sz000919",
+      "name": "金陵药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000919.day"
+    },
+    {
+      "market": "sz",
+      "code": "000931",
+      "ticker": "sz000931",
+      "name": "中 关 村",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000931.day"
+    },
+    {
+      "market": "sz",
+      "code": "000950",
+      "ticker": "sz000950",
+      "name": "重药控股",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000950.day"
+    },
+    {
+      "market": "sz",
+      "code": "000963",
+      "ticker": "sz000963",
+      "name": "华东医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000963.day"
+    },
+    {
+      "market": "sz",
+      "code": "000989",
+      "ticker": "sz000989",
+      "name": "九芝堂",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000989.day"
+    },
+    {
+      "market": "sz",
+      "code": "000999",
+      "ticker": "sz000999",
+      "name": "华润三九",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz000999.day"
+    },
+    {
+      "market": "sz",
+      "code": "002004",
+      "ticker": "sz002004",
+      "name": "华邦健康",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002004.day"
+    },
+    {
+      "market": "sz",
+      "code": "002007",
+      "ticker": "sz002007",
+      "name": "华兰生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002007.day"
+    },
+    {
+      "market": "sz",
+      "code": "002019",
+      "ticker": "sz002019",
+      "name": "亿帆医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002019.day"
+    },
+    {
+      "market": "sz",
+      "code": "002020",
+      "ticker": "sz002020",
+      "name": "京新药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002020.day"
+    },
+    {
+      "market": "sz",
+      "code": "002038",
+      "ticker": "sz002038",
+      "name": "双鹭药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002038.day"
+    },
+    {
+      "market": "sz",
+      "code": "002082",
+      "ticker": "sz002082",
+      "name": "ST万邦",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002082.day"
+    },
+    {
+      "market": "sz",
+      "code": "002099",
+      "ticker": "sz002099",
+      "name": "海翔药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002099.day"
+    },
+    {
+      "market": "sz",
+      "code": "002198",
+      "ticker": "sz002198",
+      "name": "ST嘉应",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002198.day"
+    },
+    {
+      "market": "sz",
+      "code": "002219",
+      "ticker": "sz002219",
+      "name": "新里程",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002219.day"
+    },
+    {
+      "market": "sz",
+      "code": "002250",
+      "ticker": "sz002250",
+      "name": "联化科技",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002250.day"
+    },
+    {
+      "market": "sz",
+      "code": "002252",
+      "ticker": "sz002252",
+      "name": "上海莱士",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002252.day"
+    },
+    {
+      "market": "sz",
+      "code": "002262",
+      "ticker": "sz002262",
+      "name": "恩华药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002262.day"
+    },
+    {
+      "market": "sz",
+      "code": "002275",
+      "ticker": "sz002275",
+      "name": "桂林三金",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002275.day"
+    },
+    {
+      "market": "sz",
+      "code": "002287",
+      "ticker": "sz002287",
+      "name": "奇正藏药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002287.day"
+    },
+    {
+      "market": "sz",
+      "code": "002294",
+      "ticker": "sz002294",
+      "name": "信立泰",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002294.day"
+    },
+    {
+      "market": "sz",
+      "code": "002317",
+      "ticker": "sz002317",
+      "name": "众生药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002317.day"
+    },
+    {
+      "market": "sz",
+      "code": "002332",
+      "ticker": "sz002332",
+      "name": "仙琚制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002332.day"
+    },
+    {
+      "market": "sz",
+      "code": "002349",
+      "ticker": "sz002349",
+      "name": "精华制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002349.day"
+    },
+    {
+      "market": "sz",
+      "code": "002370",
+      "ticker": "sz002370",
+      "name": "亚太药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002370.day"
+    },
+    {
+      "market": "sz",
+      "code": "002393",
+      "ticker": "sz002393",
+      "name": "力生制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002393.day"
+    },
+    {
+      "market": "sz",
+      "code": "002398",
+      "ticker": "sz002398",
+      "name": "垒知集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002398.day"
+    },
+    {
+      "market": "sz",
+      "code": "002399",
+      "ticker": "sz002399",
+      "name": "海普瑞",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002399.day"
+    },
+    {
+      "market": "sz",
+      "code": "002412",
+      "ticker": "sz002412",
+      "name": "汉森制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002412.day"
+    },
+    {
+      "market": "sz",
+      "code": "002422",
+      "ticker": "sz002422",
+      "name": "科伦药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002422.day"
+    },
+    {
+      "market": "sz",
+      "code": "002424",
+      "ticker": "sz002424",
+      "name": "ST百灵",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002424.day"
+    },
+    {
+      "market": "sz",
+      "code": "002437",
+      "ticker": "sz002437",
+      "name": "誉衡药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002437.day"
+    },
+    {
+      "market": "sz",
+      "code": "002550",
+      "ticker": "sz002550",
+      "name": "千红制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002550.day"
+    },
+    {
+      "market": "sz",
+      "code": "002581",
+      "ticker": "sz002581",
+      "name": "*ST未名",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002581.day"
+    },
+    {
+      "market": "sz",
+      "code": "002589",
+      "ticker": "sz002589",
+      "name": "瑞康医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002589.day"
+    },
+    {
+      "market": "sz",
+      "code": "002603",
+      "ticker": "sz002603",
+      "name": "以岭药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002603.day"
+    },
+    {
+      "market": "sz",
+      "code": "002653",
+      "ticker": "sz002653",
+      "name": "海思科",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002653.day"
+    },
+    {
+      "market": "sz",
+      "code": "002675",
+      "ticker": "sz002675",
+      "name": "东诚药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002675.day"
+    },
+    {
+      "market": "sz",
+      "code": "002737",
+      "ticker": "sz002737",
+      "name": "葵花药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002737.day"
+    },
+    {
+      "market": "sz",
+      "code": "002755",
+      "ticker": "sz002755",
+      "name": "奥赛康",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002755.day"
+    },
+    {
+      "market": "sz",
+      "code": "002773",
+      "ticker": "sz002773",
+      "name": "康弘药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002773.day"
+    },
+    {
+      "market": "sz",
+      "code": "002793",
+      "ticker": "sz002793",
+      "name": "罗欣药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002793.day"
+    },
+    {
+      "market": "sz",
+      "code": "002821",
+      "ticker": "sz002821",
+      "name": "凯莱英",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002821.day"
+    },
+    {
+      "market": "sz",
+      "code": "002864",
+      "ticker": "sz002864",
+      "name": "盘龙药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002864.day"
+    },
+    {
+      "market": "sz",
+      "code": "002873",
+      "ticker": "sz002873",
+      "name": "新天药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002873.day"
+    },
+    {
+      "market": "sz",
+      "code": "002880",
+      "ticker": "sz002880",
+      "name": "卫光生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002880.day"
+    },
+    {
+      "market": "sz",
+      "code": "002900",
+      "ticker": "sz002900",
+      "name": "哈三联",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002900.day"
+    },
+    {
+      "market": "sz",
+      "code": "002907",
+      "ticker": "sz002907",
+      "name": "华森制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002907.day"
+    },
+    {
+      "market": "sz",
+      "code": "002923",
+      "ticker": "sz002923",
+      "name": "润都股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002923.day"
+    },
+    {
+      "market": "sz",
+      "code": "002940",
+      "ticker": "sz002940",
+      "name": "昂利康",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz002940.day"
+    },
+    {
+      "market": "sz",
+      "code": "003020",
+      "ticker": "sz003020",
+      "name": "立方制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz003020.day"
+    },
+    {
+      "market": "sz",
+      "code": "300003",
+      "ticker": "sz300003",
+      "name": "乐普医疗",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300003.day"
+    },
+    {
+      "market": "sz",
+      "code": "300006",
+      "ticker": "sz300006",
+      "name": "莱美药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300006.day"
+    },
+    {
+      "market": "sz",
+      "code": "300009",
+      "ticker": "sz300009",
+      "name": "安科生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300009.day"
+    },
+    {
+      "market": "sz",
+      "code": "300012",
+      "ticker": "sz300012",
+      "name": "华测检测",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300012.day"
+    },
+    {
+      "market": "sz",
+      "code": "300016",
+      "ticker": "sz300016",
+      "name": "北陆药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300016.day"
+    },
+    {
+      "market": "sz",
+      "code": "300026",
+      "ticker": "sz300026",
+      "name": "红日药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300026.day"
+    },
+    {
+      "market": "sz",
+      "code": "300039",
+      "ticker": "sz300039",
+      "name": "上海凯宝",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300039.day"
+    },
+    {
+      "market": "sz",
+      "code": "300086",
+      "ticker": "sz300086",
+      "name": "康芝药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300086.day"
+    },
+    {
+      "market": "sz",
+      "code": "300109",
+      "ticker": "sz300109",
+      "name": "新开源",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300109.day"
+    },
+    {
+      "market": "sz",
+      "code": "300122",
+      "ticker": "sz300122",
+      "name": "智飞生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300122.day"
+    },
+    {
+      "market": "sz",
+      "code": "300142",
+      "ticker": "sz300142",
+      "name": "沃森生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300142.day"
+    },
+    {
+      "market": "sz",
+      "code": "300147",
+      "ticker": "sz300147",
+      "name": "*ST香雪",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300147.day"
+    },
+    {
+      "market": "sz",
+      "code": "300149",
+      "ticker": "sz300149",
+      "name": "睿智医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300149.day"
+    },
+    {
+      "market": "sz",
+      "code": "300158",
+      "ticker": "sz300158",
+      "name": "振东制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300158.day"
+    },
+    {
+      "market": "sz",
+      "code": "300181",
+      "ticker": "sz300181",
+      "name": "佐力药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300181.day"
+    },
+    {
+      "market": "sz",
+      "code": "300194",
+      "ticker": "sz300194",
+      "name": "福安药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300194.day"
+    },
+    {
+      "market": "sz",
+      "code": "300199",
+      "ticker": "sz300199",
+      "name": "翰宇药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300199.day"
+    },
+    {
+      "market": "sz",
+      "code": "300204",
+      "ticker": "sz300204",
+      "name": "舒泰神",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300204.day"
+    },
+    {
+      "market": "sz",
+      "code": "300233",
+      "ticker": "sz300233",
+      "name": "金城医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300233.day"
+    },
+    {
+      "market": "sz",
+      "code": "300238",
+      "ticker": "sz300238",
+      "name": "冠昊生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300238.day"
+    },
+    {
+      "market": "sz",
+      "code": "300254",
+      "ticker": "sz300254",
+      "name": "仟源医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300254.day"
+    },
+    {
+      "market": "sz",
+      "code": "300255",
+      "ticker": "sz300255",
+      "name": "常山药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300255.day"
+    },
+    {
+      "market": "sz",
+      "code": "300272",
+      "ticker": "sz300272",
+      "name": "开能健康",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300272.day"
+    },
+    {
+      "market": "sz",
+      "code": "300347",
+      "ticker": "sz300347",
+      "name": "泰格医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300347.day"
+    },
+    {
+      "market": "sz",
+      "code": "300357",
+      "ticker": "sz300357",
+      "name": "我武生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300357.day"
+    },
+    {
+      "market": "sz",
+      "code": "300358",
+      "ticker": "sz300358",
+      "name": "楚天科技",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300358.day"
+    },
+    {
+      "market": "sz",
+      "code": "300363",
+      "ticker": "sz300363",
+      "name": "博腾股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300363.day"
+    },
+    {
+      "market": "sz",
+      "code": "300404",
+      "ticker": "sz300404",
+      "name": "博济医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300404.day"
+    },
+    {
+      "market": "sz",
+      "code": "300412",
+      "ticker": "sz300412",
+      "name": "迦南科技",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300412.day"
+    },
+    {
+      "market": "sz",
+      "code": "300434",
+      "ticker": "sz300434",
+      "name": "金石亚药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300434.day"
+    },
+    {
+      "market": "sz",
+      "code": "300436",
+      "ticker": "sz300436",
+      "name": "广生堂",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300436.day"
+    },
+    {
+      "market": "sz",
+      "code": "300485",
+      "ticker": "sz300485",
+      "name": "赛升药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300485.day"
+    },
+    {
+      "market": "sz",
+      "code": "300497",
+      "ticker": "sz300497",
+      "name": "富祥股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300497.day"
+    },
+    {
+      "market": "sz",
+      "code": "300534",
+      "ticker": "sz300534",
+      "name": "陇神戎发",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300534.day"
+    },
+    {
+      "market": "sz",
+      "code": "300558",
+      "ticker": "sz300558",
+      "name": "贝达药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300558.day"
+    },
+    {
+      "market": "sz",
+      "code": "300573",
+      "ticker": "sz300573",
+      "name": "兴齐眼药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300573.day"
+    },
+    {
+      "market": "sz",
+      "code": "300575",
+      "ticker": "sz300575",
+      "name": "中旗股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300575.day"
+    },
+    {
+      "market": "sz",
+      "code": "300584",
+      "ticker": "sz300584",
+      "name": "海辰药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300584.day"
+    },
+    {
+      "market": "sz",
+      "code": "300601",
+      "ticker": "sz300601",
+      "name": "康泰生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300601.day"
+    },
+    {
+      "market": "sz",
+      "code": "300639",
+      "ticker": "sz300639",
+      "name": "凯普生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300639.day"
+    },
+    {
+      "market": "sz",
+      "code": "300642",
+      "ticker": "sz300642",
+      "name": "透景生命",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300642.day"
+    },
+    {
+      "market": "sz",
+      "code": "300683",
+      "ticker": "sz300683",
+      "name": "海特生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300683.day"
+    },
+    {
+      "market": "sz",
+      "code": "300685",
+      "ticker": "sz300685",
+      "name": "艾德生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300685.day"
+    },
+    {
+      "market": "sz",
+      "code": "300705",
+      "ticker": "sz300705",
+      "name": "九典制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300705.day"
+    },
+    {
+      "market": "sz",
+      "code": "300723",
+      "ticker": "sz300723",
+      "name": "一品红",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300723.day"
+    },
+    {
+      "market": "sz",
+      "code": "300725",
+      "ticker": "sz300725",
+      "name": "药石科技",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300725.day"
+    },
+    {
+      "market": "sz",
+      "code": "300759",
+      "ticker": "sz300759",
+      "name": "康龙化成",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300759.day"
+    },
+    {
+      "market": "sz",
+      "code": "300765",
+      "ticker": "sz300765",
+      "name": "石药创新",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300765.day"
+    },
+    {
+      "market": "sz",
+      "code": "300858",
+      "ticker": "sz300858",
+      "name": "科拓生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300858.day"
+    },
+    {
+      "market": "sz",
+      "code": "300871",
+      "ticker": "sz300871",
+      "name": "回盛生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300871.day"
+    },
+    {
+      "market": "sz",
+      "code": "300878",
+      "ticker": "sz300878",
+      "name": "维康药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300878.day"
+    },
+    {
+      "market": "sz",
+      "code": "300957",
+      "ticker": "sz300957",
+      "name": "贝泰妮",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz300957.day"
+    },
+    {
+      "market": "sz",
+      "code": "301015",
+      "ticker": "sz301015",
+      "name": "百洋医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301015.day"
+    },
+    {
+      "market": "sz",
+      "code": "301075",
+      "ticker": "sz301075",
+      "name": "多瑞医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301075.day"
+    },
+    {
+      "market": "sz",
+      "code": "301080",
+      "ticker": "sz301080",
+      "name": "百普赛斯",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301080.day"
+    },
+    {
+      "market": "sz",
+      "code": "301093",
+      "ticker": "sz301093",
+      "name": "华兰股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301093.day"
+    },
+    {
+      "market": "sz",
+      "code": "301096",
+      "ticker": "sz301096",
+      "name": "百诚医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301096.day"
+    },
+    {
+      "market": "sz",
+      "code": "301103",
+      "ticker": "sz301103",
+      "name": "何氏眼科",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301103.day"
+    },
+    {
+      "market": "sz",
+      "code": "301111",
+      "ticker": "sz301111",
+      "name": "粤万年青",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301111.day"
+    },
+    {
+      "market": "sz",
+      "code": "301126",
+      "ticker": "sz301126",
+      "name": "达嘉维康",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301126.day"
+    },
+    {
+      "market": "sz",
+      "code": "301130",
+      "ticker": "sz301130",
+      "name": "西点药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301130.day"
+    },
+    {
+      "market": "sz",
+      "code": "301201",
+      "ticker": "sz301201",
+      "name": "诚达药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301201.day"
+    },
+    {
+      "market": "sz",
+      "code": "301230",
+      "ticker": "sz301230",
+      "name": "泓博医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301230.day"
+    },
+    {
+      "market": "sz",
+      "code": "301257",
+      "ticker": "sz301257",
+      "name": "普蕊斯",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301257.day"
+    },
+    {
+      "market": "sz",
+      "code": "301263",
+      "ticker": "sz301263",
+      "name": "泰恩康",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301263.day"
+    },
+    {
+      "market": "sz",
+      "code": "301277",
+      "ticker": "sz301277",
+      "name": "新天地",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301277.day"
+    },
+    {
+      "market": "sz",
+      "code": "301305",
+      "ticker": "sz301305",
+      "name": "朗坤科技",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301305.day"
+    },
+    {
+      "market": "sz",
+      "code": "301331",
+      "ticker": "sz301331",
+      "name": "恩威医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301331.day"
+    },
+    {
+      "market": "sz",
+      "code": "301333",
+      "ticker": "sz301333",
+      "name": "诺思格",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301333.day"
+    },
+    {
+      "market": "sz",
+      "code": "301393",
+      "ticker": "sz301393",
+      "name": "昊帆生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301393.day"
+    },
+    {
+      "market": "sz",
+      "code": "301408",
+      "ticker": "sz301408",
+      "name": "华人健康",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301408.day"
+    },
+    {
+      "market": "sz",
+      "code": "301520",
+      "ticker": "sz301520",
+      "name": "万邦医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sz\\lday\\sz301520.day"
+    },
+    {
+      "market": "sh",
+      "code": "600056",
+      "ticker": "sh600056",
+      "name": "中国医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600056.day"
+    },
+    {
+      "market": "sh",
+      "code": "600062",
+      "ticker": "sh600062",
+      "name": "华润双鹤",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600062.day"
+    },
+    {
+      "market": "sh",
+      "code": "600079",
+      "ticker": "sh600079",
+      "name": "ST人福",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600079.day"
+    },
+    {
+      "market": "sh",
+      "code": "600080",
+      "ticker": "sh600080",
+      "name": "ST金花",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600080.day"
+    },
+    {
+      "market": "sh",
+      "code": "600085",
+      "ticker": "sh600085",
+      "name": "同仁堂",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600085.day"
+    },
+    {
+      "market": "sh",
+      "code": "600129",
+      "ticker": "sh600129",
+      "name": "太极集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600129.day"
+    },
+    {
+      "market": "sh",
+      "code": "600196",
+      "ticker": "sh600196",
+      "name": "复星医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600196.day"
+    },
+    {
+      "market": "sh",
+      "code": "600211",
+      "ticker": "sh600211",
+      "name": "西藏药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600211.day"
+    },
+    {
+      "market": "sh",
+      "code": "600216",
+      "ticker": "sh600216",
+      "name": "浙江医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600216.day"
+    },
+    {
+      "market": "sh",
+      "code": "600222",
+      "ticker": "sh600222",
+      "name": "太龙药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600222.day"
+    },
+    {
+      "market": "sh",
+      "code": "600223",
+      "ticker": "sh600223",
+      "name": "福瑞达",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600223.day"
+    },
+    {
+      "market": "sh",
+      "code": "600252",
+      "ticker": "sh600252",
+      "name": "中恒集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600252.day"
+    },
+    {
+      "market": "sh",
+      "code": "600267",
+      "ticker": "sh600267",
+      "name": "海正药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600267.day"
+    },
+    {
+      "market": "sh",
+      "code": "600276",
+      "ticker": "sh600276",
+      "name": "恒瑞医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600276.day"
+    },
+    {
+      "market": "sh",
+      "code": "600285",
+      "ticker": "sh600285",
+      "name": "羚锐制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600285.day"
+    },
+    {
+      "market": "sh",
+      "code": "600332",
+      "ticker": "sh600332",
+      "name": "白云山",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600332.day"
+    },
+    {
+      "market": "sh",
+      "code": "600351",
+      "ticker": "sh600351",
+      "name": "亚宝药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600351.day"
+    },
+    {
+      "market": "sh",
+      "code": "600380",
+      "ticker": "sh600380",
+      "name": "健康元",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600380.day"
+    },
+    {
+      "market": "sh",
+      "code": "600420",
+      "ticker": "sh600420",
+      "name": "国药现代",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600420.day"
+    },
+    {
+      "market": "sh",
+      "code": "600422",
+      "ticker": "sh600422",
+      "name": "昆药集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600422.day"
+    },
+    {
+      "market": "sh",
+      "code": "600436",
+      "ticker": "sh600436",
+      "name": "片仔癀",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600436.day"
+    },
+    {
+      "market": "sh",
+      "code": "600479",
+      "ticker": "sh600479",
+      "name": "千金药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600479.day"
+    },
+    {
+      "market": "sh",
+      "code": "600488",
+      "ticker": "sh600488",
+      "name": "津药药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600488.day"
+    },
+    {
+      "market": "sh",
+      "code": "600503",
+      "ticker": "sh600503",
+      "name": "华丽家族",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600503.day"
+    },
+    {
+      "market": "sh",
+      "code": "600513",
+      "ticker": "sh600513",
+      "name": "联环药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600513.day"
+    },
+    {
+      "market": "sh",
+      "code": "600521",
+      "ticker": "sh600521",
+      "name": "华海药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600521.day"
+    },
+    {
+      "market": "sh",
+      "code": "600535",
+      "ticker": "sh600535",
+      "name": "天士力",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600535.day"
+    },
+    {
+      "market": "sh",
+      "code": "600538",
+      "ticker": "sh600538",
+      "name": "国发股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600538.day"
+    },
+    {
+      "market": "sh",
+      "code": "600557",
+      "ticker": "sh600557",
+      "name": "康缘药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600557.day"
+    },
+    {
+      "market": "sh",
+      "code": "600566",
+      "ticker": "sh600566",
+      "name": "济川药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600566.day"
+    },
+    {
+      "market": "sh",
+      "code": "600572",
+      "ticker": "sh600572",
+      "name": "康恩贝",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600572.day"
+    },
+    {
+      "market": "sh",
+      "code": "600594",
+      "ticker": "sh600594",
+      "name": "益佰制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600594.day"
+    },
+    {
+      "market": "sh",
+      "code": "600645",
+      "ticker": "sh600645",
+      "name": "中源协和",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600645.day"
+    },
+    {
+      "market": "sh",
+      "code": "600664",
+      "ticker": "sh600664",
+      "name": "哈药股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600664.day"
+    },
+    {
+      "market": "sh",
+      "code": "600668",
+      "ticker": "sh600668",
+      "name": "尖峰集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600668.day"
+    },
+    {
+      "market": "sh",
+      "code": "600682",
+      "ticker": "sh600682",
+      "name": "南京新百",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600682.day"
+    },
+    {
+      "market": "sh",
+      "code": "600721",
+      "ticker": "sh600721",
+      "name": "百花医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600721.day"
+    },
+    {
+      "market": "sh",
+      "code": "600739",
+      "ticker": "sh600739",
+      "name": "辽宁成大",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600739.day"
+    },
+    {
+      "market": "sh",
+      "code": "600771",
+      "ticker": "sh600771",
+      "name": "广誉远",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600771.day"
+    },
+    {
+      "market": "sh",
+      "code": "600774",
+      "ticker": "sh600774",
+      "name": "汉商集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600774.day"
+    },
+    {
+      "market": "sh",
+      "code": "600789",
+      "ticker": "sh600789",
+      "name": "鲁抗医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600789.day"
+    },
+    {
+      "market": "sh",
+      "code": "600812",
+      "ticker": "sh600812",
+      "name": "华北制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600812.day"
+    },
+    {
+      "market": "sh",
+      "code": "600851",
+      "ticker": "sh600851",
+      "name": "海欣股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600851.day"
+    },
+    {
+      "market": "sh",
+      "code": "600867",
+      "ticker": "sh600867",
+      "name": "通化东宝",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600867.day"
+    },
+    {
+      "market": "sh",
+      "code": "600881",
+      "ticker": "sh600881",
+      "name": "亚泰集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600881.day"
+    },
+    {
+      "market": "sh",
+      "code": "600976",
+      "ticker": "sh600976",
+      "name": "健民集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600976.day"
+    },
+    {
+      "market": "sh",
+      "code": "600993",
+      "ticker": "sh600993",
+      "name": "马应龙",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600993.day"
+    },
+    {
+      "market": "sh",
+      "code": "600998",
+      "ticker": "sh600998",
+      "name": "九州通",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh600998.day"
+    },
+    {
+      "market": "sh",
+      "code": "601089",
+      "ticker": "sh601089",
+      "name": "福元医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh601089.day"
+    },
+    {
+      "market": "sh",
+      "code": "601607",
+      "ticker": "sh601607",
+      "name": "上海医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh601607.day"
+    },
+    {
+      "market": "sh",
+      "code": "603086",
+      "ticker": "sh603086",
+      "name": "先达股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603086.day"
+    },
+    {
+      "market": "sh",
+      "code": "603087",
+      "ticker": "sh603087",
+      "name": "甘李药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603087.day"
+    },
+    {
+      "market": "sh",
+      "code": "603127",
+      "ticker": "sh603127",
+      "name": "昭衍新药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603127.day"
+    },
+    {
+      "market": "sh",
+      "code": "603207",
+      "ticker": "sh603207",
+      "name": "小方制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603207.day"
+    },
+    {
+      "market": "sh",
+      "code": "603222",
+      "ticker": "sh603222",
+      "name": "济民健康",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603222.day"
+    },
+    {
+      "market": "sh",
+      "code": "603229",
+      "ticker": "sh603229",
+      "name": "奥翔药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603229.day"
+    },
+    {
+      "market": "sh",
+      "code": "603259",
+      "ticker": "sh603259",
+      "name": "药明康德",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603259.day"
+    },
+    {
+      "market": "sh",
+      "code": "603336",
+      "ticker": "sh603336",
+      "name": "宏辉果蔬",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603336.day"
+    },
+    {
+      "market": "sh",
+      "code": "603351",
+      "ticker": "sh603351",
+      "name": "威尔药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603351.day"
+    },
+    {
+      "market": "sh",
+      "code": "603367",
+      "ticker": "sh603367",
+      "name": "辰欣药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603367.day"
+    },
+    {
+      "market": "sh",
+      "code": "603368",
+      "ticker": "sh603368",
+      "name": "柳药集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603368.day"
+    },
+    {
+      "market": "sh",
+      "code": "603392",
+      "ticker": "sh603392",
+      "name": "万泰生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603392.day"
+    },
+    {
+      "market": "sh",
+      "code": "603439",
+      "ticker": "sh603439",
+      "name": "三力制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603439.day"
+    },
+    {
+      "market": "sh",
+      "code": "603456",
+      "ticker": "sh603456",
+      "name": "九洲药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603456.day"
+    },
+    {
+      "market": "sh",
+      "code": "603567",
+      "ticker": "sh603567",
+      "name": "珍宝岛",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603567.day"
+    },
+    {
+      "market": "sh",
+      "code": "603590",
+      "ticker": "sh603590",
+      "name": "康辰药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603590.day"
+    },
+    {
+      "market": "sh",
+      "code": "603669",
+      "ticker": "sh603669",
+      "name": "灵康药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603669.day"
+    },
+    {
+      "market": "sh",
+      "code": "603707",
+      "ticker": "sh603707",
+      "name": "健友股份",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603707.day"
+    },
+    {
+      "market": "sh",
+      "code": "603716",
+      "ticker": "sh603716",
+      "name": "塞力医疗",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603716.day"
+    },
+    {
+      "market": "sh",
+      "code": "603858",
+      "ticker": "sh603858",
+      "name": "步长制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603858.day"
+    },
+    {
+      "market": "sh",
+      "code": "603980",
+      "ticker": "sh603980",
+      "name": "吉华集团",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603980.day"
+    },
+    {
+      "market": "sh",
+      "code": "603998",
+      "ticker": "sh603998",
+      "name": "方盛制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh603998.day"
+    },
+    {
+      "market": "sh",
+      "code": "605116",
+      "ticker": "sh605116",
+      "name": "奥锐特",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh605116.day"
+    },
+    {
+      "market": "sh",
+      "code": "605199",
+      "ticker": "sh605199",
+      "name": "ST葫芦娃",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh605199.day"
+    },
+    {
+      "market": "sh",
+      "code": "688062",
+      "ticker": "sh688062",
+      "name": "迈威生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688062.day"
+    },
+    {
+      "market": "sh",
+      "code": "688068",
+      "ticker": "sh688068",
+      "name": "热景生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688068.day"
+    },
+    {
+      "market": "sh",
+      "code": "688076",
+      "ticker": "sh688076",
+      "name": "ST诺泰",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688076.day"
+    },
+    {
+      "market": "sh",
+      "code": "688091",
+      "ticker": "sh688091",
+      "name": "上海谊众",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688091.day"
+    },
+    {
+      "market": "sh",
+      "code": "688098",
+      "ticker": "sh688098",
+      "name": "申联生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688098.day"
+    },
+    {
+      "market": "sh",
+      "code": "688117",
+      "ticker": "sh688117",
+      "name": "圣诺生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688117.day"
+    },
+    {
+      "market": "sh",
+      "code": "688131",
+      "ticker": "sh688131",
+      "name": "皓元医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688131.day"
+    },
+    {
+      "market": "sh",
+      "code": "688136",
+      "ticker": "sh688136",
+      "name": "科兴制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688136.day"
+    },
+    {
+      "market": "sh",
+      "code": "688163",
+      "ticker": "sh688163",
+      "name": "赛伦生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688163.day"
+    },
+    {
+      "market": "sh",
+      "code": "688166",
+      "ticker": "sh688166",
+      "name": "博瑞医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688166.day"
+    },
+    {
+      "market": "sh",
+      "code": "688176",
+      "ticker": "sh688176",
+      "name": "亚虹医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688176.day"
+    },
+    {
+      "market": "sh",
+      "code": "688177",
+      "ticker": "sh688177",
+      "name": "百奥泰",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688177.day"
+    },
+    {
+      "market": "sh",
+      "code": "688180",
+      "ticker": "sh688180",
+      "name": "君实生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688180.day"
+    },
+    {
+      "market": "sh",
+      "code": "688181",
+      "ticker": "sh688181",
+      "name": "八亿时空",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688181.day"
+    },
+    {
+      "market": "sh",
+      "code": "688189",
+      "ticker": "sh688189",
+      "name": "ST南新",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688189.day"
+    },
+    {
+      "market": "sh",
+      "code": "688192",
+      "ticker": "sh688192",
+      "name": "迪哲医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688192.day"
+    },
+    {
+      "market": "sh",
+      "code": "688197",
+      "ticker": "sh688197",
+      "name": "首药控股",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688197.day"
+    },
+    {
+      "market": "sh",
+      "code": "688198",
+      "ticker": "sh688198",
+      "name": "佰仁医疗",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688198.day"
+    },
+    {
+      "market": "sh",
+      "code": "688202",
+      "ticker": "sh688202",
+      "name": "美迪西",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688202.day"
+    },
+    {
+      "market": "sh",
+      "code": "688221",
+      "ticker": "sh688221",
+      "name": "前沿生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688221.day"
+    },
+    {
+      "market": "sh",
+      "code": "688222",
+      "ticker": "sh688222",
+      "name": "成都先导",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688222.day"
+    },
+    {
+      "market": "sh",
+      "code": "688235",
+      "ticker": "sh688235",
+      "name": "百济神州",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688235.day"
+    },
+    {
+      "market": "sh",
+      "code": "688247",
+      "ticker": "sh688247",
+      "name": "宣泰医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688247.day"
+    },
+    {
+      "market": "sh",
+      "code": "688266",
+      "ticker": "sh688266",
+      "name": "泽璟制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688266.day"
+    },
+    {
+      "market": "sh",
+      "code": "688278",
+      "ticker": "sh688278",
+      "name": "特宝生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688278.day"
+    },
+    {
+      "market": "sh",
+      "code": "688289",
+      "ticker": "sh688289",
+      "name": "圣湘生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688289.day"
+    },
+    {
+      "market": "sh",
+      "code": "688302",
+      "ticker": "sh688302",
+      "name": "海创药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688302.day"
+    },
+    {
+      "market": "sh",
+      "code": "688317",
+      "ticker": "sh688317",
+      "name": "之江生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688317.day"
+    },
+    {
+      "market": "sh",
+      "code": "688319",
+      "ticker": "sh688319",
+      "name": "欧林生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688319.day"
+    },
+    {
+      "market": "sh",
+      "code": "688321",
+      "ticker": "sh688321",
+      "name": "微芯生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688321.day"
+    },
+    {
+      "market": "sh",
+      "code": "688331",
+      "ticker": "sh688331",
+      "name": "荣昌生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688331.day"
+    },
+    {
+      "market": "sh",
+      "code": "688336",
+      "ticker": "sh688336",
+      "name": "三生国健",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688336.day"
+    },
+    {
+      "market": "sh",
+      "code": "688356",
+      "ticker": "sh688356",
+      "name": "键凯科技",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688356.day"
+    },
+    {
+      "market": "sh",
+      "code": "688363",
+      "ticker": "sh688363",
+      "name": "华熙生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688363.day"
+    },
+    {
+      "market": "sh",
+      "code": "688373",
+      "ticker": "sh688373",
+      "name": "盟科药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688373.day"
+    },
+    {
+      "market": "sh",
+      "code": "688382",
+      "ticker": "sh688382",
+      "name": "益方生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688382.day"
+    },
+    {
+      "market": "sh",
+      "code": "688428",
+      "ticker": "sh688428",
+      "name": "诺诚健华",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688428.day"
+    },
+    {
+      "market": "sh",
+      "code": "688443",
+      "ticker": "sh688443",
+      "name": "智翔金泰",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688443.day"
+    },
+    {
+      "market": "sh",
+      "code": "688488",
+      "ticker": "sh688488",
+      "name": "艾迪药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688488.day"
+    },
+    {
+      "market": "sh",
+      "code": "688505",
+      "ticker": "sh688505",
+      "name": "复旦张江",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688505.day"
+    },
+    {
+      "market": "sh",
+      "code": "688506",
+      "ticker": "sh688506",
+      "name": "百利天恒",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688506.day"
+    },
+    {
+      "market": "sh",
+      "code": "688513",
+      "ticker": "sh688513",
+      "name": "苑东生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688513.day"
+    },
+    {
+      "market": "sh",
+      "code": "688520",
+      "ticker": "sh688520",
+      "name": "神州细胞",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688520.day"
+    },
+    {
+      "market": "sh",
+      "code": "688550",
+      "ticker": "sh688550",
+      "name": "瑞联新材",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688550.day"
+    },
+    {
+      "market": "sh",
+      "code": "688553",
+      "ticker": "sh688553",
+      "name": "汇宇制药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688553.day"
+    },
+    {
+      "market": "sh",
+      "code": "688566",
+      "ticker": "sh688566",
+      "name": "吉贝尔",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688566.day"
+    },
+    {
+      "market": "sh",
+      "code": "688578",
+      "ticker": "sh688578",
+      "name": "艾力斯",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688578.day"
+    },
+    {
+      "market": "sh",
+      "code": "688621",
+      "ticker": "sh688621",
+      "name": "阳光诺和",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688621.day"
+    },
+    {
+      "market": "sh",
+      "code": "688658",
+      "ticker": "sh688658",
+      "name": "悦康药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688658.day"
+    },
+    {
+      "market": "sh",
+      "code": "688687",
+      "ticker": "sh688687",
+      "name": "凯因科技",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688687.day"
+    },
+    {
+      "market": "sh",
+      "code": "688710",
+      "ticker": "sh688710",
+      "name": "益诺思",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688710.day"
+    },
+    {
+      "market": "sh",
+      "code": "688739",
+      "ticker": "sh688739",
+      "name": "成大生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688739.day"
+    },
+    {
+      "market": "sh",
+      "code": "688759",
+      "ticker": "sh688759",
+      "name": "必贝特",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688759.day"
+    },
+    {
+      "market": "sh",
+      "code": "688765",
+      "ticker": "sh688765",
+      "name": "禾元生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688765.day"
+    },
+    {
+      "market": "sh",
+      "code": "688799",
+      "ticker": "sh688799",
+      "name": "华纳药厂",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688799.day"
+    },
+    {
+      "market": "sh",
+      "code": "688806",
+      "ticker": "sh688806",
+      "name": "泰诺麦博",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\sh\\lday\\sh688806.day"
+    },
+    {
+      "market": "bj",
+      "code": "920017",
+      "ticker": "bj920017",
+      "name": "星昊医药",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\bj\\lday\\bj920017.day"
+    },
+    {
+      "market": "bj",
+      "code": "920047",
+      "ticker": "bj920047",
+      "name": "诺思兰德",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\bj\\lday\\bj920047.day"
+    },
+    {
+      "market": "bj",
+      "code": "920344",
+      "ticker": "bj920344",
+      "name": "三元基因",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\bj\\lday\\bj920344.day"
+    },
+    {
+      "market": "bj",
+      "code": "920367",
+      "ticker": "bj920367",
+      "name": "新赣江",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\bj\\lday\\bj920367.day"
+    },
+    {
+      "market": "bj",
+      "code": "920476",
+      "ticker": "bj920476",
+      "name": "海能技术",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\bj\\lday\\bj920476.day"
+    },
+    {
+      "market": "bj",
+      "code": "920478",
+      "ticker": "bj920478",
+      "name": "峆一药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\bj\\lday\\bj920478.day"
+    },
+    {
+      "market": "bj",
+      "code": "920566",
+      "ticker": "bj920566",
+      "name": "梓橦宫",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\bj\\lday\\bj920566.day"
+    },
+    {
+      "market": "bj",
+      "code": "920735",
+      "ticker": "bj920735",
+      "name": "德源药业",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\bj\\lday\\bj920735.day"
+    },
+    {
+      "market": "bj",
+      "code": "920982",
+      "ticker": "bj920982",
+      "name": "锦波生物",
+      "latest_daily_date": "20260904",
+      "daily_file": "D:\\HT\\vipdoc\\bj\\lday\\bj920982.day"
+    }
+  ]
+}

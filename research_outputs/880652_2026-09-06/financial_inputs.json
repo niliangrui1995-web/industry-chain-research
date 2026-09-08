@@ -1,0 +1,155 @@
+{
+  "as_of": "2026-09-06T04:36:22.953Z",
+  "companies": [
+    {
+      "code": "688578",
+      "name": "艾力斯",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225481694.PDF",
+      "date": "2026-08-20",
+      "pages": "10-11,31,35,37",
+      "scale": "1",
+      "metrics": [
+        [
+          "revenue",
+          "3319788082.89",
+          "2373762579.40",
+          "33.20"
+        ],
+        [
+          "attributable_net_profit",
+          "1540790493.67",
+          "1051235341.42",
+          "15.41"
+        ],
+        [
+          "deducted_attributable_net_profit",
+          "1366655403.25",
+          "905111736.01",
+          "13.67"
+        ],
+        [
+          "operating_cash_flow",
+          "1444581425.62",
+          "1092645248.45",
+          "14.45"
+        ]
+      ]
+    },
+    {
+      "code": "688235",
+      "name": "百济神州",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225512422.PDF",
+      "date": "2026-08-27",
+      "pages": "7-8,67-68",
+      "scale": "1000",
+      "metrics": [
+        [
+          "revenue",
+          "22219533",
+          "17518269",
+          "222.20"
+        ],
+        [
+          "product_revenue",
+          "21797444",
+          "17360163",
+          "217.97"
+        ],
+        [
+          "attributable_net_profit",
+          "3270593",
+          "449784",
+          "32.71"
+        ],
+        [
+          "deducted_attributable_net_profit",
+          "2918072",
+          "261105",
+          "29.18"
+        ],
+        ["operating_cash_flow", "4438577", "1631496", "44.39"]
+      ]
+    },
+    {
+      "code": "002422",
+      "name": "科伦药业",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225512872.PDF",
+      "date": "2026-08-27",
+      "pages": "10-11",
+      "scale": "1",
+      "metrics": [
+        [
+          "revenue",
+          "8838531817",
+          "9083327620",
+          "88.39"
+        ],
+        [
+          "attributable_net_profit",
+          "1127768264",
+          "1000625359",
+          "11.28"
+        ],
+        [
+          "deducted_attributable_net_profit",
+          "699366733",
+          "985477298",
+          "6.99"
+        ],
+        [
+          "operating_cash_flow",
+          "2341171910",
+          "1189534877",
+          "23.41"
+        ]
+      ]
+    },
+    {
+      "code": "600276",
+      "name": "恒瑞医药",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225483600.PDF",
+      "date": "2026-08-20",
+      "pages": "6,22,57",
+      "scale": "1",
+      "metrics": [
+        ["deducted_attributable_net_profit", "3729589028.70", "4272848537.94", "37.30"],
+        ["operating_cash_flow", "1987003872.34", "4300453251.40", "19.87"]
+      ]
+    },
+    {
+      "code": "688192",
+      "name": "迪哲医药",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225486626.PDF",
+      "date": "2026-08-21",
+      "pages": "9,12-13",
+      "scale": "1",
+      "metrics": [
+        ["revenue", "522692723.71", "355001420.82", "5.23"],
+        ["attributable_net_profit", "-210373370.09", "-377360125.54", "-2.10"],
+        ["operating_cash_flow", "-274307782.28", "-264669368.74", "-2.74"]
+      ]
+    },
+    {
+      "code": "300558",
+      "name": "贝达药业",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-08-21/1225487673.PDF",
+      "date": "2026-08-21",
+      "pages": "6-7,23",
+      "scale": "1",
+      "metrics": [
+        [
+          "deducted_attributable_net_profit",
+          "203403701.74",
+          "190623726.76",
+          "2.03"
+        ]
+      ]
+    }
+  ],
+  "limitations": [
+    "百济神州数字已与8/27正式中报交叉校验；CNY PRC-GAAP不与USD US-GAAP混算",
+    "PE为同花顺和TDX的归母利润TTM快照交叉核验，不含未来利润预测",
+    "百济神州TDX当前市值与6/30股本不匹配，不用旧股本计算当前市值",
+    "原始日线无复权元数据；跨除权收益不用于排序"
+  ]
+}

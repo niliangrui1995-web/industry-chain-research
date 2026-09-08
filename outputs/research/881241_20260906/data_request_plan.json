@@ -1,0 +1,74 @@
+[
+  {
+    "field": "constituents",
+    "as_of": "2026-09-06T13:00:00+08:00",
+    "definition": "通达信881241医疗器械行业当前成分，market_data_vendor",
+    "primary_source": "本地TDX板块映射",
+    "fallback_source": "通达信公开行业分类",
+    "probe": "PASS: 881241 -> X2703；108分类记录、106有20260904日线。仅本地厂商分类恢复，服务端清单未独立核验。",
+    "artifact": "tdx_constituents.json"
+  },
+  {
+    "field": "prices_valuations",
+    "as_of": "2026-09-04T15:00:00+08:00",
+    "definition": "最近完成交易日，人民币未复权价格、PE_TTM、PB_MRQ",
+    "primary_source": "hithink-finance",
+    "fallback_source": "iFinD -> 本地TDX收盘价格；估值缺失则N/A",
+    "probe": "PASS: 精确证券身份与单股只读探测后，取得108只估值、4只重点最新报价；4只收盘价与本地TDX日线一致。PB存在重点公司跨源差异，正文不用PB。",
+    "artifact": [
+      "vendor_valuations.json",
+      "short_quotes.json",
+      "valuation_cross.json"
+    ],
+    "fallback_used": "CFI同日页面作估值显示旁证；未确认两厂商底层独立性。未启动不必要的iFinD回退。"
+  },
+  {
+    "field": "financials_business",
+    "as_of": "2026-09-06",
+    "definition": "2026H1与2025年报PRC-GAAP合并财报，归母扣非CFO，人民币元",
+    "primary_source": "CNINFO/交易所/公司原文",
+    "fallback_source": "可核对原文的转载",
+    "probe": "PASS: 106只2026H1厂商财务初筛；18家公司读取原始披露或原文转载，重点4家公司收入、归母、扣非、CFO同比进入审计。",
+    "artifact": [
+      "vendor_financials.json",
+      "universe_screen.csv",
+      "core_company_facts.json"
+    ]
+  },
+  {
+    "field": "derived_valuation",
+    "as_of": "2026-09-06",
+    "definition": "当前价对应TTM市盈率及场景",
+    "primary_source": "官方财报+厂商快照经financial_evidence_audit",
+    "fallback_source": "N/A",
+    "probe": "PASS: 32项正式审计，无重大失败；另4家公司标准TTM公式重算与厂商值一致，calc仅属补充算术，不增加verified_count。",
+    "artifact": [
+      "evidence_audit_result.json",
+      "valuation_reconciliation_and_scenarios.json"
+    ]
+  },
+  {
+    "field": "pre_event_consensus",
+    "as_of": "2026-09-06T13:00:00+08:00",
+    "definition": "2026H1披露前形成且可核对机构/发布日期/口径的2026FY归母预期",
+    "primary_source": "历史时点一致预期或当时机构原始研报",
+    "probe": "evidence_absent: 公开检索出现旧年度研报、未披露样本成分的新闻摘要及H1披露后预测，不能构建可信事件前样本。",
+    "formal_surprise_status": "N/A",
+    "sample_count": 0,
+    "annualized_core_gap_status": "insufficient",
+    "excluded_examples": [
+      {
+        "url": "https://m.hibor.com.cn/wap_detail.aspx?id=19fdd2168ff05174ebf675b39e593d28",
+        "reason": "2025年7月旧预测，非已校验的2026H1前最新机构预测"
+      },
+      {
+        "url": "https://forex.cfi.cn/newspage.aspx?id=20260821000323&p=2",
+        "reason": "2026-08-21惠泰点评晚于8月20日H1披露"
+      },
+      {
+        "url": "https://jg-static.eeo.com.cn/article/info?id=60ea7fcfd40d44c580967189118fde27",
+        "reason": "新闻摘要无可核验机构样本和原始形成时间"
+      }
+    ]
+  }
+]

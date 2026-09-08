@@ -1,0 +1,57 @@
+{
+  "as_of": "2026-09-06T04:48:06.390Z",
+  "report": "research_report.md",
+  "universe": {
+    "provider": "TDX",
+    "code": "880652",
+    "name": "创新药",
+    "constituents": 280,
+    "focused_companies": 14
+  },
+  "recommendation_order": [
+    {
+      "ticker": "688578.SH",
+      "name": "艾力斯",
+      "role": "优先选择",
+      "confidence": "中等偏高（相对匹配，不是价格保证）"
+    },
+    {
+      "ticker": "688235.SH",
+      "name": "百济神州",
+      "role": "成长选择，估值约束",
+      "confidence": "中等"
+    },
+    {
+      "ticker": "688192.SH",
+      "name": "迪哲医药",
+      "role": "高风险条件选项",
+      "confidence": "中等偏低（现金兑现及估值待验证）"
+    }
+  ],
+  "quote_as_of": "2026-09-04T15:00:00+08:00",
+  "financial_period": "2026H1",
+  "default_horizon": "6–12个月",
+  "calculation_audit_status": "PASS",
+  "audit_release_status": "publishable",
+  "audit_artifact": "audit_result.json",
+  "checks_passed": 58,
+  "audit_blockers": [],
+  "unresolved_numeric_conflicts": [],
+  "excluded_unresolved_items": [
+    {
+      "item": "百济神州当前TDX市值与6/30股本",
+      "reason": "时点股本不匹配，未使用该市值作报告结论"
+    },
+    {
+      "item": "三生国健原始历史价格回撤",
+      "reason": "转增除权影响，未用作投资排名"
+    }
+  ],
+  "limitations": [
+    "未对280家公司完成同等深度逐管线审计",
+    "无独立rNPV或共识目标价模型；不主张迪哲已被证明低估",
+    "厂商PE为历史归母口径，非扣非或预测PE",
+    "迪哲协议生效与首付款到账分开，尚未核得实际收款确认"
+  ],
+  "memory_use": "仅复用本地行情边界与概念分类方法，当前成分、日期、财报和行情均重新核实"
+}

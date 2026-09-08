@@ -1,0 +1,1887 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "tdx881241-20260906",
+  "as_of": "2026-09-06T12:57:52+08:00",
+  "sources": [
+    {
+      "id": "V_PRICE",
+      "source_type": "market_data_vendor",
+      "origin_id": "hithink:quote:20260904",
+      "locator": "mcp://hithink-finance-a-share/get_a_share_prices_snapshot?tickers=300206,688617,300677,300760",
+      "source_date": "2026-09-06",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "V_TDX",
+      "source_type": "market_data_vendor",
+      "origin_id": "tdx:lday:20260904",
+      "locator": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\tdx_constituents.json",
+      "source_date": "2026-09-06",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "V_PE",
+      "source_type": "market_data_vendor",
+      "origin_id": "vendor-pe-20260904-underlying-independence-unverified",
+      "locator": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\vendor_valuations.json",
+      "source_date": "2026-09-06",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "R_REPORT",
+      "source_type": "report_under_audit",
+      "origin_id": "report:tdx881241:20260906",
+      "locator": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\report.md",
+      "source_date": "2026-09-06",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_edan_H1",
+      "source_type": "official_filing",
+      "origin_id": "300206:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225500907.PDF#page=7",
+      "source_date": "2026-08-26",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_edan_CFI",
+      "source_type": "market_data_vendor",
+      "origin_id": "vendor-pe-20260904-underlying-independence-unverified",
+      "locator": "https://quote.cfi.cn/quote.aspx?client=pc&lm=ggyl&stockid=11703",
+      "source_date": "2026-09-04",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_edan_SHARES",
+      "source_type": "official_filing",
+      "origin_id": "300206:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225500907.PDF#shares",
+      "source_date": "2026-08-26",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_edan_FY",
+      "source_type": "official_filing",
+      "origin_id": "300206:2025FY",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225051222.PDF#page=11",
+      "source_date": "2026-03-31",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_apt_H1",
+      "source_type": "official_filing",
+      "origin_id": "688617:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225482705.PDF#page=7",
+      "source_date": "2026-08-20",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_apt_CFI",
+      "source_type": "market_data_vendor",
+      "origin_id": "vendor-pe-20260904-underlying-independence-unverified",
+      "locator": "https://data.cfi.cn/cfi_lhb_stock.aspx?stockcode=688617",
+      "source_date": "2026-09-04",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_apt_SHARES",
+      "source_type": "official_filing",
+      "origin_id": "688617:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225482705.PDF#shares",
+      "source_date": "2026-08-20",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_apt_FY",
+      "source_type": "official_filing",
+      "origin_id": "688617:2025FY",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-03-25/1225029311.PDF#page=8",
+      "source_date": "2026-03-25",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_intco_H1",
+      "source_type": "official_filing",
+      "origin_id": "300677:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225495115.PDF#page=11",
+      "source_date": "2026-08-25",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_intco_CFI",
+      "source_type": "market_data_vendor",
+      "origin_id": "vendor-pe-20260904-underlying-independence-unverified",
+      "locator": "https://quote.cfi.cn/300677.html",
+      "source_date": "2026-09-04",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_intco_SHARES",
+      "source_type": "official_filing",
+      "origin_id": "300677:shares:2026-08-20T15:00:00+08:00",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225521443.PDF#page=1",
+      "source_date": "2026-08-27",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_intco_FY",
+      "source_type": "official_filing",
+      "origin_id": "300677:2025FY",
+      "locator": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-24/12172711.PDF#page=6",
+      "source_date": "2026-04-24",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_mindray_H1",
+      "source_type": "official_filing",
+      "origin_id": "300760:2026H1",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225529856.PDF#page=16",
+      "source_date": "2026-08-29",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_mindray_CFI",
+      "source_type": "market_data_vendor",
+      "origin_id": "vendor-pe-20260904-underlying-independence-unverified",
+      "locator": "https://quote.cfi.cn/quote.aspx?client=pc&lm=jjcc&stockid=66755",
+      "source_date": "2026-09-04",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_mindray_SHARES",
+      "source_type": "official_filing",
+      "origin_id": "300760:shares:2026-08-07T15:00:00+08:00",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-08-11/1225466190.PDF",
+      "source_date": "2026-08-11",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_mindray_FY",
+      "source_type": "official_filing",
+      "origin_id": "300760:2025FY",
+      "locator": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225059012.PDF#page=20",
+      "source_date": "2026-03-31",
+      "checked_at": "2026-09-06T12:57:52+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "edan_revenue_2026",
+      "metric": "revenue",
+      "value": "1023518584.81",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_edan_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "edan_revenue_2025",
+      "metric": "revenue",
+      "value": "913807258.77",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_edan_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "edan_attributable_net_profit_2026",
+      "metric": "attributable_net_profit",
+      "value": "201841258.45",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_edan_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "edan_attributable_net_profit_2025",
+      "metric": "attributable_net_profit",
+      "value": "154451434.92",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_edan_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "edan_deducted_attributable_net_profit_2026",
+      "metric": "deducted_attributable_net_profit",
+      "value": "191217912.21",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_edan_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "edan_deducted_attributable_net_profit_2025",
+      "metric": "deducted_attributable_net_profit",
+      "value": "144826160.38",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_edan_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "edan_operating_cash_flow_2026",
+      "metric": "operating_cash_flow",
+      "value": "152901229.63",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_edan_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "edan_operating_cash_flow_2025",
+      "metric": "operating_cash_flow",
+      "value": "88515100.07",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_edan_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "edan_price",
+      "metric": "close_price",
+      "value": "11.79",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "V_PRICE"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "edan_tdx_price",
+      "metric": "close_price",
+      "value": "11.79",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "V_TDX"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "edan_vendor_pe",
+      "metric": "pe_ttm",
+      "value": "19.358909",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "V_PE"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "edan_report_pe",
+      "metric": "pe_ttm",
+      "value": "19.36",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "R_REPORT"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "edan_shares",
+      "metric": "total_shares",
+      "value": "579663346",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "basis": "total_shares_outstanding",
+      "source_refs": [
+        "S_edan_SHARES"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "edan_fy_np",
+      "metric": "attributable_net_profit",
+      "value": "305637857.53",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "fy_attributable_net_profit",
+      "source_refs": [
+        "S_edan_FY"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "frequency": "year",
+        "label": "FY2025"
+      },
+      "available_at": "2026-03-31"
+    },
+    {
+      "id": "apt_revenue_2026",
+      "metric": "revenue",
+      "value": "1526351745.77",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_apt_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "apt_revenue_2025",
+      "metric": "revenue",
+      "value": "1213804906.53",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_apt_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "apt_attributable_net_profit_2026",
+      "metric": "attributable_net_profit",
+      "value": "537319119.80",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_apt_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "apt_attributable_net_profit_2025",
+      "metric": "attributable_net_profit",
+      "value": "425160981.21",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_apt_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "apt_deducted_attributable_net_profit_2026",
+      "metric": "deducted_attributable_net_profit",
+      "value": "528771505.05",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_apt_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "apt_deducted_attributable_net_profit_2025",
+      "metric": "deducted_attributable_net_profit",
+      "value": "410820730.61",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_apt_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "apt_operating_cash_flow_2026",
+      "metric": "operating_cash_flow",
+      "value": "549285182.90",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_apt_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "apt_operating_cash_flow_2025",
+      "metric": "operating_cash_flow",
+      "value": "444648652.93",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_apt_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-20"
+    },
+    {
+      "id": "apt_price",
+      "metric": "close_price",
+      "value": "251.41",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "V_PRICE"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "apt_tdx_price",
+      "metric": "close_price",
+      "value": "251.41",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "V_TDX"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "apt_vendor_pe",
+      "metric": "pe_ttm",
+      "value": "38.14542",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "V_PE"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "apt_report_pe",
+      "metric": "pe_ttm",
+      "value": "38.15",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "R_REPORT"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "apt_shares",
+      "metric": "total_shares",
+      "value": "141529162",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "basis": "total_shares_outstanding",
+      "source_refs": [
+        "S_apt_SHARES"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "apt_fy_np",
+      "metric": "attributable_net_profit",
+      "value": "820636582.43",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "fy_attributable_net_profit",
+      "source_refs": [
+        "S_apt_FY"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "frequency": "year",
+        "label": "FY2025"
+      },
+      "available_at": "2026-03-25"
+    },
+    {
+      "id": "intco_revenue_2026",
+      "metric": "revenue",
+      "value": "6909022700.33",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_intco_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "intco_revenue_2025",
+      "metric": "revenue",
+      "value": "4913439043.41",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_intco_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "intco_attributable_net_profit_2026",
+      "metric": "attributable_net_profit",
+      "value": "837340519.61",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_intco_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "intco_attributable_net_profit_2025",
+      "metric": "attributable_net_profit",
+      "value": "710439983.93",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_intco_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "intco_deducted_attributable_net_profit_2026",
+      "metric": "deducted_attributable_net_profit",
+      "value": "1060540163.36",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_intco_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "intco_deducted_attributable_net_profit_2025",
+      "metric": "deducted_attributable_net_profit",
+      "value": "400201229.00",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_intco_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "intco_operating_cash_flow_2026",
+      "metric": "operating_cash_flow",
+      "value": "1757744842.35",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_intco_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "intco_operating_cash_flow_2025",
+      "metric": "operating_cash_flow",
+      "value": "745482560.58",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_intco_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-25"
+    },
+    {
+      "id": "intco_price",
+      "metric": "close_price",
+      "value": "54.25",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "V_PRICE"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "intco_tdx_price",
+      "metric": "close_price",
+      "value": "54.25",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "V_TDX"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "intco_vendor_pe",
+      "metric": "pe_ttm",
+      "value": "31.223935",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "V_PE"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "intco_report_pe",
+      "metric": "pe_ttm",
+      "value": "31.22",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "R_REPORT"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "intco_shares",
+      "metric": "total_shares",
+      "value": "654753263",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "basis": "total_shares_outstanding",
+      "source_refs": [
+        "S_intco_SHARES"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-08-20T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "intco_fy_np",
+      "metric": "attributable_net_profit",
+      "value": "1010699970.94",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "fy_attributable_net_profit",
+      "source_refs": [
+        "S_intco_FY"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "frequency": "year",
+        "label": "FY2025"
+      },
+      "available_at": "2026-04-24"
+    },
+    {
+      "id": "mindray_revenue_2026",
+      "metric": "revenue",
+      "value": "17746969604",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_mindray_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "mindray_revenue_2025",
+      "metric": "revenue",
+      "value": "16743003854",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_mindray_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "mindray_attributable_net_profit_2026",
+      "metric": "attributable_net_profit",
+      "value": "4796791800",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_mindray_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "mindray_attributable_net_profit_2025",
+      "metric": "attributable_net_profit",
+      "value": "5068767098",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_mindray_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "mindray_deducted_attributable_net_profit_2026",
+      "metric": "deducted_attributable_net_profit",
+      "value": "4784797726",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_mindray_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "mindray_deducted_attributable_net_profit_2025",
+      "metric": "deducted_attributable_net_profit",
+      "value": "4949323103",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_mindray_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "mindray_operating_cash_flow_2026",
+      "metric": "operating_cash_flow",
+      "value": "4876986709",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_mindray_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "mindray_operating_cash_flow_2025",
+      "metric": "operating_cash_flow",
+      "value": "3922092201",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "S_mindray_H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "available_at": "2026-08-29"
+    },
+    {
+      "id": "mindray_price",
+      "metric": "close_price",
+      "value": "169.91",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "V_PRICE"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "mindray_tdx_price",
+      "metric": "close_price",
+      "value": "169.91",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "V_TDX"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "mindray_vendor_pe",
+      "metric": "pe_ttm",
+      "value": "26.182868",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "V_PE"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "mindray_report_pe",
+      "metric": "pe_ttm",
+      "value": "26.18",
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "R_REPORT"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "mindray_shares",
+      "metric": "total_shares",
+      "value": "1211799431",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "basis": "total_shares_outstanding",
+      "source_refs": [
+        "S_mindray_SHARES"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-08-07T15:00:00+08:00"
+      }
+    },
+    {
+      "id": "mindray_fy_np",
+      "metric": "attributable_net_profit",
+      "value": "8135775409",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "basis": "fy_attributable_net_profit",
+      "source_refs": [
+        "S_mindray_FY"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "frequency": "year",
+        "label": "FY2025"
+      },
+      "available_at": "2026-03-31"
+    }
+  ],
+  "checks": [
+    {
+      "id": "edan_revenue_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "edan_revenue_2026"
+      },
+      "base": {
+        "fact_id": "edan_revenue_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "edan_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "edan_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "edan_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "edan_deducted_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "edan_deducted_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "edan_deducted_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "edan_operating_cash_flow_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "edan_operating_cash_flow_2026"
+      },
+      "base": {
+        "fact_id": "edan_operating_cash_flow_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "edan_price_cross",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "edan_price"
+      },
+      "references": [
+        {
+          "fact_id": "edan_tdx_price"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "edan_pe_report_rounding",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "edan_report_pe"
+      },
+      "references": [
+        {
+          "fact_id": "edan_vendor_pe"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0.005"
+      }
+    },
+    {
+      "id": "edan_market_cap",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": {
+        "fact_id": "edan_price"
+      },
+      "shares": {
+        "fact_id": "edan_shares"
+      },
+      "capitalization_basis": "total",
+      "max_share_age_days": 120,
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "edan_pe_fy2025",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pe",
+      "numerator": {
+        "check_id": "edan_market_cap",
+        "output": "value"
+      },
+      "denominator_low": {
+        "fact_id": "edan_fy_np"
+      },
+      "denominator_high": {
+        "fact_id": "edan_fy_np"
+      },
+      "valuation_basis": "fy_attributable_net_profit",
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "apt_revenue_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "apt_revenue_2026"
+      },
+      "base": {
+        "fact_id": "apt_revenue_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "apt_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "apt_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "apt_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "apt_deducted_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "apt_deducted_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "apt_deducted_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "apt_operating_cash_flow_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "apt_operating_cash_flow_2026"
+      },
+      "base": {
+        "fact_id": "apt_operating_cash_flow_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "apt_price_cross",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "apt_price"
+      },
+      "references": [
+        {
+          "fact_id": "apt_tdx_price"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "apt_pe_report_rounding",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "apt_report_pe"
+      },
+      "references": [
+        {
+          "fact_id": "apt_vendor_pe"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0.005"
+      }
+    },
+    {
+      "id": "apt_market_cap",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": {
+        "fact_id": "apt_price"
+      },
+      "shares": {
+        "fact_id": "apt_shares"
+      },
+      "capitalization_basis": "total",
+      "max_share_age_days": 120,
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "apt_pe_fy2025",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pe",
+      "numerator": {
+        "check_id": "apt_market_cap",
+        "output": "value"
+      },
+      "denominator_low": {
+        "fact_id": "apt_fy_np"
+      },
+      "denominator_high": {
+        "fact_id": "apt_fy_np"
+      },
+      "valuation_basis": "fy_attributable_net_profit",
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "intco_revenue_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "intco_revenue_2026"
+      },
+      "base": {
+        "fact_id": "intco_revenue_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "intco_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "intco_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "intco_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "intco_deducted_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "intco_deducted_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "intco_deducted_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "intco_operating_cash_flow_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "intco_operating_cash_flow_2026"
+      },
+      "base": {
+        "fact_id": "intco_operating_cash_flow_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "intco_price_cross",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "intco_price"
+      },
+      "references": [
+        {
+          "fact_id": "intco_tdx_price"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "intco_pe_report_rounding",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "intco_report_pe"
+      },
+      "references": [
+        {
+          "fact_id": "intco_vendor_pe"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0.005"
+      }
+    },
+    {
+      "id": "intco_market_cap",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": {
+        "fact_id": "intco_price"
+      },
+      "shares": {
+        "fact_id": "intco_shares"
+      },
+      "capitalization_basis": "total",
+      "max_share_age_days": 120,
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "intco_pe_fy2025",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pe",
+      "numerator": {
+        "check_id": "intco_market_cap",
+        "output": "value"
+      },
+      "denominator_low": {
+        "fact_id": "intco_fy_np"
+      },
+      "denominator_high": {
+        "fact_id": "intco_fy_np"
+      },
+      "valuation_basis": "fy_attributable_net_profit",
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "mindray_revenue_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "mindray_revenue_2026"
+      },
+      "base": {
+        "fact_id": "mindray_revenue_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "mindray_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "mindray_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "mindray_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "mindray_deducted_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "mindray_deducted_attributable_net_profit_2026"
+      },
+      "base": {
+        "fact_id": "mindray_deducted_attributable_net_profit_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "mindray_operating_cash_flow_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "mindray_operating_cash_flow_2026"
+      },
+      "base": {
+        "fact_id": "mindray_operating_cash_flow_2025"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "mindray_price_cross",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "mindray_price"
+      },
+      "references": [
+        {
+          "fact_id": "mindray_tdx_price"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "mindray_pe_report_rounding",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "mindray_report_pe"
+      },
+      "references": [
+        {
+          "fact_id": "mindray_vendor_pe"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0.005"
+      }
+    },
+    {
+      "id": "mindray_market_cap",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": {
+        "fact_id": "mindray_price"
+      },
+      "shares": {
+        "fact_id": "mindray_shares"
+      },
+      "capitalization_basis": "total",
+      "max_share_age_days": 120,
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "mindray_pe_fy2025",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pe",
+      "numerator": {
+        "check_id": "mindray_market_cap",
+        "output": "value"
+      },
+      "denominator_low": {
+        "fact_id": "mindray_fy_np"
+      },
+      "denominator_high": {
+        "fact_id": "mindray_fy_np"
+      },
+      "valuation_basis": "fy_attributable_net_profit",
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    }
+  ]
+}

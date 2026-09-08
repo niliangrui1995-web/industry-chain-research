@@ -1,0 +1,549 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "weigao688161-20260906",
+  "as_of": "2026-09-06T05:12:37Z",
+  "sources": [
+    {
+      "id": "H1",
+      "source_type": "official_filing",
+      "origin_id": "688161:2026H1",
+      "locator": "https://star.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-08-26/688161_20260826_3QOG.pdf",
+      "source_date": "2026-08-26",
+      "checked_at": "2026-09-06T05:12:37Z",
+      "status": "accepted"
+    },
+    {
+      "id": "V",
+      "source_type": "market_data_vendor",
+      "origin_id": "hithink:688161:20260904",
+      "locator": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\weigao\\vendor_snapshot.json",
+      "source_date": "2026-09-06",
+      "checked_at": "2026-09-06T05:12:37Z",
+      "status": "accepted"
+    },
+    {
+      "id": "TDX",
+      "source_type": "market_data_vendor",
+      "origin_id": "tdx:688161:20260904",
+      "locator": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\weigao\\..\\tdx_constituents.json",
+      "source_date": "2026-09-06",
+      "checked_at": "2026-09-06T05:12:37Z",
+      "status": "accepted"
+    },
+    {
+      "id": "REPORT",
+      "source_type": "report_under_audit",
+      "origin_id": "report:weigao:20260906",
+      "locator": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\weigao\\assessment.md",
+      "source_date": "2026-09-06",
+      "checked_at": "2026-09-06T05:12:37Z",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "revenue0",
+      "metric": "revenue",
+      "value": "704424329.89",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "revenue1",
+      "metric": "revenue",
+      "value": "740917209.72",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "attributable_net_profit0",
+      "metric": "attributable_net_profit",
+      "value": "132231492.32",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "attributable_net_profit1",
+      "metric": "attributable_net_profit",
+      "value": "141957058.61",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "deducted_attributable_net_profit0",
+      "metric": "deducted_attributable_net_profit",
+      "value": "125915962.69",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "deducted_attributable_net_profit1",
+      "metric": "deducted_attributable_net_profit",
+      "value": "135796706.88",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "operating_cash_flow0",
+      "metric": "operating_cash_flow",
+      "value": "140415502.11",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "operating_cash_flow1",
+      "metric": "operating_cash_flow",
+      "value": "186207847.40",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "operating_cost0",
+      "metric": "operating_cost",
+      "value": "256593141.79",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "operating_cost1",
+      "metric": "operating_cost",
+      "value": "248195913.11",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "adjusted_attributable_net_profit0",
+      "metric": "adjusted_attributable_net_profit",
+      "value": "145645663.44",
+      "basis": "adjusted_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "adjusted_attributable_net_profit1",
+      "metric": "adjusted_attributable_net_profit",
+      "value": "152736814.55",
+      "basis": "adjusted_consolidated_prc_gaap",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-06-30",
+        "frequency": "half",
+        "label": "2025H1"
+      },
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "available_at": "2026-08-26"
+    },
+    {
+      "id": "price",
+      "metric": "close_price",
+      "value": "22.4",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "V"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1"
+    },
+    {
+      "id": "tdx_price",
+      "metric": "close_price",
+      "value": "22.4",
+      "basis": "unadjusted_close",
+      "source_refs": [
+        "TDX"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1"
+    },
+    {
+      "id": "vendor_pe",
+      "metric": "pe_ttm",
+      "value": "34.605558",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "V"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1"
+    },
+    {
+      "id": "report_pe",
+      "metric": "pe_ttm",
+      "value": "34.61",
+      "basis": "pe_ttm",
+      "source_refs": [
+        "REPORT"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-04T15:00:00+08:00"
+      },
+      "unit": "multiple",
+      "currency": null,
+      "scale": "1"
+    },
+    {
+      "id": "shares",
+      "metric": "total_shares",
+      "value": "400000000",
+      "basis": "total_shares_outstanding",
+      "source_refs": [
+        "H1"
+      ],
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T15:00:00+08:00"
+      },
+      "unit": "share",
+      "currency": null,
+      "scale": "1"
+    }
+  ],
+  "checks": [
+    {
+      "id": "revenue_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "revenue0"
+      },
+      "base": {
+        "fact_id": "revenue1"
+      },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "attributable_net_profit0"
+      },
+      "base": {
+        "fact_id": "attributable_net_profit1"
+      },
+      "period_relation": "yoy",
+      "output_metric": "attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "deducted_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "deducted_attributable_net_profit0"
+      },
+      "base": {
+        "fact_id": "deducted_attributable_net_profit1"
+      },
+      "period_relation": "yoy",
+      "output_metric": "deducted_attributable_net_profit_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "operating_cash_flow_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "operating_cash_flow0"
+      },
+      "base": {
+        "fact_id": "operating_cash_flow1"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cash_flow_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "operating_cost_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "operating_cost0"
+      },
+      "base": {
+        "fact_id": "operating_cost1"
+      },
+      "period_relation": "yoy",
+      "output_metric": "operating_cost_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "adjusted_attributable_net_profit_yoy",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": {
+        "fact_id": "adjusted_attributable_net_profit0"
+      },
+      "base": {
+        "fact_id": "adjusted_attributable_net_profit1"
+      },
+      "period_relation": "yoy",
+      "output_metric": "adjusted_attributable_net_profit_yoy_pct",
+      "output_basis": "adjusted_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "price_cross",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "price"
+      },
+      "references": [
+        {
+          "fact_id": "tdx_price"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0"
+      }
+    },
+    {
+      "id": "pe_report",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": {
+        "fact_id": "report_pe"
+      },
+      "references": [
+        {
+          "fact_id": "vendor_pe"
+        }
+      ],
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": {
+        "relative_pct": "0",
+        "absolute_base": "0.005"
+      }
+    },
+    {
+      "id": "marketcap",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": {
+        "fact_id": "price"
+      },
+      "shares": {
+        "fact_id": "shares"
+      },
+      "capitalization_basis": "total",
+      "max_share_age_days": 100,
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    }
+  ]
+}

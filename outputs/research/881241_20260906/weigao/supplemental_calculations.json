@@ -1,0 +1,42 @@
+{
+  "note": "calc仅为补充算术，不计入正式审计核验数量。运动医学原始披露单位万元，有舍入，收入占比应使用约数。",
+  "q1_source": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0429/2026042905705_c.pdf#page=2",
+  "fy_source": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0327/2026032702689_c.pdf#page=2",
+  "results": {
+    "q2_revenue_yoy": {
+      "expression": "((704424329.89-296330838.73)/(740917209.72-290185005.08)-1)*100",
+      "verdict": "PASS",
+      "result": "-9.459877293226819294089835328878575957083624287619",
+      "precision": 50,
+      "rounded": true
+    },
+    "q2_deducted_yoy": {
+      "expression": "((125915962.69-40867094.09)/(135796706.88-49066897.23)-1)*100",
+      "verdict": "PASS",
+      "result": "-1.938135292563737340106107335380275448350416159365",
+      "precision": 50,
+      "rounded": true
+    },
+    "sports_revenue_share": {
+      "expression": "41696300/704424329.89*100",
+      "verdict": "PASS",
+      "result": "5.9192021386471876053048744590970277680509318218546",
+      "precision": 50,
+      "rounded": true
+    },
+    "ttm_np": {
+      "expression": "268643514.62+132231492.32-141957058.61",
+      "verdict": "PASS",
+      "result": "258917948.33",
+      "precision": 50,
+      "rounded": false
+    },
+    "pe_ttm_rebuild": {
+      "expression": "22.4*400000000/(268643514.62+132231492.32-141957058.61)",
+      "verdict": "PASS",
+      "result": "34.605557698071073696430444753014778378767018248603",
+      "precision": 50,
+      "rounded": true
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "cards": [
+    {
+      "field": "identity_quote_pe",
+      "ticker": "688161.SH",
+      "as_of": "2026-09-04T15:00:00+08:00",
+      "definition": "A股CNY未复权收盘价、标准PE_TTM",
+      "primary": "hithink-finance",
+      "fallback": "TDX日线和同日公开行情",
+      "tier": "vendor_snapshot"
+    },
+    {
+      "field": "financials_business",
+      "ticker": "688161.SH",
+      "as_of": "2026-09-06",
+      "period": "2026H1/2025FY",
+      "definition": "合并PRCGAAP收入、归母、扣非、CFO、总股本",
+      "primary": "交易所/CNINFO官方报告",
+      "fallback": "原始披露的可核实转载",
+      "tier": "official_evidence"
+    }
+  ],
+  "quote": {
+    "request_id": "2f2fa1141d0d43f2a1449f50b9f57f64",
+    "data": {
+      "timestamp": 1788671366000,
+      "total": 1,
+      "item": [
+        {
+          "high_price": 22.95,
+          "price_change": 0.7,
+          "open_price": 21.88,
+          "volume": 2525254,
+          "thscode": "688161.SH",
+          "prev_price": 21.7,
+          "low_price": 21.8,
+          "last_price": 22.4,
+          "ticker": "688161",
+          "price_change_ratio_pct": 3.225806,
+          "turnover": 56682223
+        }
+      ]
+    },
+    "code": 0,
+    "message": "success"
+  },
+  "valuation": {
+    "request_id": "423c1b3e3c734c19b6967f6f963cc392",
+    "data": {
+      "timestamp": 1788671366000,
+      "total": 1,
+      "item": [
+        {
+          "pb_mrq": 2.135738,
+          "thscode": "688161.SH",
+          "pe_mrq": 33.879978,
+          "pe_ttm": 34.605558,
+          "name": "威高骨科",
+          "ticker": "688161",
+          "pcf_ttm": 24.2408,
+          "ps_ttm": 6.028388
+        }
+      ]
+    },
+    "code": 0,
+    "message": "success"
+  }
+}

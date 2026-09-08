@@ -1,0 +1,126 @@
+{
+  "edan": {
+    "ticker": "300206",
+    "name": "理邦仪器",
+    "h1_url": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225500907.PDF#page=7",
+    "date": "2026-08-26",
+    "fy_url": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225051222.PDF#page=11",
+    "fy_date": "2026-03-31",
+    "fy_np": "305637857.53",
+    "shares": "579663346",
+    "shares_at": "2026-06-30T15:00:00+08:00",
+    "price": "11.79",
+    "h1": {
+      "revenue": [
+        "1023518584.81",
+        "913807258.77"
+      ],
+      "attributable_net_profit": [
+        "201841258.45",
+        "154451434.92"
+      ],
+      "deducted_attributable_net_profit": [
+        "191217912.21",
+        "144826160.38"
+      ],
+      "operating_cash_flow": [
+        "152901229.63",
+        "88515100.07"
+      ]
+    }
+  },
+  "apt": {
+    "ticker": "688617",
+    "name": "惠泰医疗",
+    "h1_url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225482705.PDF#page=7",
+    "date": "2026-08-20",
+    "price": "251.41",
+    "h1": {
+      "revenue": [
+        "1526351745.77",
+        "1213804906.53"
+      ],
+      "attributable_net_profit": [
+        "537319119.80",
+        "425160981.21"
+      ],
+      "deducted_attributable_net_profit": [
+        "528771505.05",
+        "410820730.61"
+      ],
+      "operating_cash_flow": [
+        "549285182.90",
+        "444648652.93"
+      ]
+    },
+    "fy_np": "820636582.43",
+    "fy_url": "https://static.cninfo.com.cn/finalpage/2026-03-25/1225029311.PDF#page=8",
+    "fy_date": "2026-03-25",
+    "shares": "141529162",
+    "shares_at": "2026-06-30T15:00:00+08:00"
+  },
+  "intco": {
+    "ticker": "300677",
+    "name": "英科医疗",
+    "h1_url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225495115.PDF#page=11",
+    "date": "2026-08-25",
+    "price": "54.25",
+    "h1": {
+      "revenue": [
+        "6909022700.33",
+        "4913439043.41"
+      ],
+      "attributable_net_profit": [
+        "837340519.61",
+        "710439983.93"
+      ],
+      "deducted_attributable_net_profit": [
+        "1060540163.36",
+        "400201229.00"
+      ],
+      "operating_cash_flow": [
+        "1757744842.35",
+        "745482560.58"
+      ]
+    },
+    "fy_np": "1010699970.94",
+    "fy_url": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-24/12172711.PDF#page=6",
+    "fy_date": "2026-04-24",
+    "shares": "654753263",
+    "shares_at": "2026-08-20T15:00:00+08:00",
+    "shares_url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225521443.PDF#page=1",
+    "shares_date": "2026-08-27"
+  },
+  "mindray": {
+    "ticker": "300760",
+    "name": "迈瑞医疗",
+    "h1_url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225529856.PDF#page=16",
+    "date": "2026-08-29",
+    "fy_url": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225059012.PDF#page=20",
+    "fy_date": "2026-03-31",
+    "fy_np": "8135775409",
+    "shares": "1211799431",
+    "shares_at": "2026-08-07T15:00:00+08:00",
+    "shares_url": "https://static.cninfo.com.cn/finalpage/2026-08-11/1225466190.PDF",
+    "shares_date": "2026-08-11",
+    "price": "169.91",
+    "h1": {
+      "revenue": [
+        "17746969604",
+        "16743003854"
+      ],
+      "attributable_net_profit": [
+        "4796791800",
+        "5068767098"
+      ],
+      "deducted_attributable_net_profit": [
+        "4784797726",
+        "4949323103"
+      ],
+      "operating_cash_flow": [
+        "4876986709",
+        "3922092201"
+      ]
+    }
+  }
+}

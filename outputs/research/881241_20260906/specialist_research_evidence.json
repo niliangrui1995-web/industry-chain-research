@@ -1,0 +1,180 @@
+{
+  "as_of": "2026-09-06",
+  "currency": "CNY",
+  "numeric_basis": "下列财务绝对值为官方报告原文人民币元，增长率为报告原文百分比。未请求行情，未自行形成估值或TTM审计结论。",
+  "sources_manifest": "sources_specialists/manifest.json",
+  "companies": [
+    {
+      "ticker": "301367",
+      "name": "瑞迈特",
+      "exchange": "SZSE",
+      "formerly": "怡和嘉业",
+      "financials_2026h1": {
+        "revenue": 762997434.31,
+        "revenue_yoy_pct": 40.3,
+        "parent_net_profit": 126578275.06,
+        "parent_net_profit_yoy_pct": -3.63,
+        "deducted_parent_net_profit": 118362246.73,
+        "deducted_parent_net_profit_yoy_pct": 19.18,
+        "operating_cash_flow": 132225349.49,
+        "operating_cash_flow_yoy_pct": 48.97,
+        "source": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225516739.PDF",
+        "pdf_page": 8
+      },
+      "ttm_inputs": {
+        "2025fy_parent_net_profit": 225655054.91,
+        "2025fy_deducted_parent_net_profit": 184664608.43,
+        "2025fy_revenue": 1159416480.5,
+        "2025fy_operating_cash_flow": 130162977.17,
+        "2025fy_source": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225143550.PDF",
+        "2025fy_pdf_page": 8,
+        "2025h1_parent_net_profit": 131345294.39,
+        "2025h1_deducted_parent_net_profit": 99316133.68,
+        "2025h1_source": "2026H1 comparative column page 8"
+      },
+      "share_capital": {
+        "shares": 125284355,
+        "as_of": "2026-06-30",
+        "source_pdf_page": 55,
+        "subsequent_check": "2026-09-01回购进展公告披露8/31回购1507371股占总股本1.2032%，未见该公告变更总股本。",
+        "source": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225540102.PDF"
+      },
+      "segments_2026h1": {
+        "domestic_revenue": 305870941.22,
+        "domestic_revenue_yoy_pct": 60.02,
+        "domestic_margin_pct": 62.93,
+        "overseas_revenue": 457126493.09,
+        "overseas_revenue_yoy_pct": 29.61,
+        "overseas_margin_pct": 46.89,
+        "overseas_margin_change_pp": -5.0,
+        "home_respiratory_revenue": 547116366.93,
+        "consumables_revenue": 204805763.4,
+        "pdf_page": 27
+      },
+      "facts": [
+        {
+          "tier": "official_fact",
+          "statement": "FDA于2026-05-20发布CMS#725759警告信，指G3X重大设计修改未提交新510(k)，并就Luna G3固件造成意外关机后未及时报告纠正/移除提出违规指控。",
+          "source": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/bmc-medical-co-ltd-725759-05202026"
+        },
+        {
+          "tier": "management_claim",
+          "statement": "截至2026H1报告披露日，美国业务正常开展；公司仍在与FDA沟通及整改，推进不及预期将影响美国后续经营。",
+          "source": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225516739.PDF",
+          "pdf_page": 40
+        },
+        {
+          "tier": "official_fact",
+          "statement": "便携制氧机PO1 5B/6B于2026-08-14取得FDA实质等同性决定K260171；该产品批准不等于G3X警告信结案。",
+          "source": "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfPMN/pmn.cfm?ID=K260171"
+        },
+        {
+          "tier": "management_claim",
+          "statement": "国内线上2025年9月底由经销转为直销，H1销售费用136791193.56元，同比增长141.24%，主要增加品牌宣传、投流和电商运营费用。",
+          "pdf_pages": [
+            25,
+            27
+          ]
+        }
+      ],
+      "assessment": "mixed；收入高增长真实，但渠道切换、销售费用激增、海外毛利下滑及未结案FDA警告削弱当前投资资格。不列最优1-3只，等待监管整改有硬进展和利润转化改善。"
+    },
+    {
+      "ticker": "300529",
+      "name": "健帆生物",
+      "exchange": "SZSE",
+      "financials_2026h1": {
+        "revenue": 1032473665.31,
+        "revenue_yoy_pct": -8.99,
+        "parent_net_profit": 381968997.2,
+        "parent_net_profit_yoy_pct": -1.99,
+        "deducted_parent_net_profit": 355390817.98,
+        "deducted_parent_net_profit_yoy_pct": -4.71,
+        "operating_cash_flow": 411211191.91,
+        "operating_cash_flow_yoy_pct": -23.61,
+        "source": "https://static.cninfo.com.cn/finalpage/2026-08-07/1225461981.PDF",
+        "pdf_page": 7
+      },
+      "management_evidence": {
+        "pdf_page": 12,
+        "revenue_pressure": "行业需求波动及市场竞争加剧，组织优化与降本使利润降幅小于收入降幅。",
+        "KHA_revenue_cny_100million": 1.57,
+        "KHA_revenue_yoy_pct": 96.59,
+        "KHA_volume_10000_units": 64.7,
+        "KHA_volume_yoy_pct": 299.7,
+        "KHA_revenue_share_pct": 15.23,
+        "overseas_revenue_cny_10000": 4155.29,
+        "overseas_revenue_yoy_pct": 20.37,
+        "gross_margin_pct": 78.46
+      },
+      "assessment": "weakened；现金创造和高毛利仍强，新品增长与医保支付政策有期权，但目前收入、扣非和CFO均下降，不宜在仅有1-3名额时优先于经营增势已确认的候选。KHA量与收入增速显著不匹配，需跟踪价格/结构，不能把销量直接外推利润。"
+    },
+    {
+      "ticker": "002901",
+      "name": "大博医疗",
+      "exchange": "SZSE",
+      "financials_2026h1": {
+        "revenue": 1339884360.68,
+        "revenue_yoy_pct": 10.69,
+        "parent_net_profit": 353331905.24,
+        "parent_net_profit_yoy_pct": 44.65,
+        "deducted_parent_net_profit": 278595726.04,
+        "deducted_parent_net_profit_yoy_pct": 25.1,
+        "operating_cash_flow": 275635630.51,
+        "operating_cash_flow_yoy_pct": 4.87,
+        "source": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225509571.PDF",
+        "pdf_page": 7
+      },
+      "nonrecurring": {
+        "financial_assets_fair_value_gain": 65233329.47,
+        "total_nonrecurring_net": 74736179.2,
+        "pdf_pages": [
+          8,
+          19
+        ]
+      },
+      "segments": {
+        "domestic_revenue": 1183477898.74,
+        "domestic_revenue_yoy_pct": 12.41,
+        "overseas_revenue": 156406461.94,
+        "overseas_revenue_yoy_pct": -0.75,
+        "trauma_revenue_yoy_pct": 9.08,
+        "spine_revenue_yoy_pct": 9.19,
+        "joint_revenue_yoy_pct": -10.35,
+        "sports_medicine_revenue": 86237012.12,
+        "sports_medicine_revenue_yoy_pct": 72.5,
+        "sports_medicine_revenue_share_pct": 6.44,
+        "gross_margin_pct": 74.45,
+        "gross_margin_change_pp": 3.44,
+        "pdf_pages": [
+          18,
+          19
+        ]
+      },
+      "assessment": "supported但目前列第二梯队；核心业务恢复有证据，扣非25.1%是积极信号，但归母44.65%包含不可持续理财公允价值收益；收入10.69%和CFO4.87%较温和、出口未增长、关节下降，运动医学高增长仅占6.44%。在未核验大博估值优势前，没有充分依据要求替代理邦/惠泰/英科的已核验主逻辑。"
+    },
+    {
+      "ticker": "688085",
+      "name": "三友医疗",
+      "exchange": "SSE",
+      "financials_2026h1": {
+        "revenue": 274020799.16,
+        "revenue_yoy_pct": 9.71,
+        "parent_net_profit": 27752031.39,
+        "parent_net_profit_yoy_pct": -24.18,
+        "deducted_parent_net_profit": 14249623.82,
+        "deducted_parent_net_profit_yoy_pct": -45.24,
+        "operating_cash_flow": 8035879.63,
+        "source": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225499008.PDF",
+        "pdf_page": 8
+      },
+      "management_adjustments": {
+        "share_based_payment_cny_10000": 1560.76,
+        "asset_and_credit_impairment_cny_10000": 1295.83,
+        "fx_loss_cny_10000": 618.55,
+        "warning": "公司剔除以上因素后的调整利润不得代替法定扣非净利润。"
+      },
+      "assessment": "weakened；不入选当下前三。增收不增利、扣非显著下降，不能靠剔除减值/汇兑/SBC恢复所谓高成长。"
+    }
+  ]
+}

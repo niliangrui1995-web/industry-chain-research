@@ -1,0 +1,63 @@
+[
+  {
+    "id": "rmt_2026h1",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225516739.PDF",
+    "path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\sources_specialists\\rmt_2026h1.pdf",
+    "pages": 154,
+    "sha256": "d5f1618f2a0646738386b586c337eb4da07f7fc3713e5e606e648ea1b1139c06"
+  },
+  {
+    "id": "jf_2026h1",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-07/1225461981.PDF",
+    "path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\sources_specialists\\jf_2026h1.pdf",
+    "pages": 179,
+    "sha256": "b0374dbf4a5b8063a1b4b5db9492f3d26c8759780bbfd5cc145d9328680e83c1"
+  },
+  {
+    "id": "rmt_ir_0828",
+    "url": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-8/2026-08-28/12570096.PDF",
+    "path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\sources_specialists\\rmt_ir_0828.pdf",
+    "pages": 6,
+    "sha256": "3e20b4e3af3d44f2aafb6225bf9f5085daa167d1713225548a53b1c893e3edda"
+  },
+  {
+    "id": "rmt_2025",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225143550.PDF",
+    "path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\sources_specialists\\rmt_2025.pdf",
+    "pages": 202,
+    "sha256": "447758ae5f8795a0616cc9c2594668b98df3a32b411b61c12e1044562f6adeff",
+    "matches_previous_mirror": true
+  },
+  {
+    "id": "db_2026h1",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225509571.PDF",
+    "path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\sources_specialists\\db_2026h1.pdf",
+    "pages": 156,
+    "sha256": "f87517f252ed722dd17388d6c52ad9ae0ff3ef8ced6eaded48613c4c90bfd3f2",
+    "matches_previous_mirror": true
+  },
+  {
+    "id": "sy_2026h1",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-08-25/1225499008.PDF",
+    "path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\sources_specialists\\sy_2026h1.pdf",
+    "pages": 230,
+    "sha256": "3459f121eef248957673516835958ce4456e761ca8b6ecdd5a5d2b2b4517c3e4",
+    "matches_previous_mirror": true
+  },
+  {
+    "id": "jf_2025",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225211564.PDF",
+    "path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\sources_specialists\\jf_2025.pdf",
+    "pages": 224,
+    "sha256": "83bc7bf3d3600e8685ec9d04261c5a1f05648f4dd3fc0190ca0b8d18964e27db",
+    "matches_previous_mirror": null
+  },
+  {
+    "id": "rmt_shares_0901",
+    "url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225540102.PDF",
+    "path": "D:\\vcp_hunter\\产业链投研\\outputs\\research\\881241_20260906\\sources_specialists\\rmt_shares_0901.pdf",
+    "pages": 3,
+    "sha256": "65dbe7be8b261708d032050deb4c95e72162c83810c23a0506f93ad6450ba00d",
+    "matches_previous_mirror": null
+  }
+]
