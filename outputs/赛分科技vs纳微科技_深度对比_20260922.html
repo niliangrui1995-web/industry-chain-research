@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>赛分科技 vs 纳微科技 · 深度对比研究报告</title>
+<style>
+:root{
+  --ink:#102A36; --soft:#4A5C68; --faint:#7C8B96;
+  --line:#D5E0E6; --bg:#F4F7F8; --panel:#fff;
+  --navy:#123A5E; --sepax:#1F6A8A; --nano:#B4532A;
+  --up:#C2452D; --ok:#1F7A4D; --warn:#8A6D1F;
+  --wash:#EEF4F7; --font:"Segoe UI","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+  --disp:"Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14.5px;line-height:1.65;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 80px;}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(244,247,248,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+.topbar-in{max-width:1180px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.brand{font-family:var(--disp);font-weight:700;color:var(--navy);white-space:nowrap;}
+.brand i{font-style:normal;color:var(--up);}
+nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;}
+nav a{font-size:12.5px;color:var(--soft);text-decoration:none;padding:4px 9px;border-radius:3px;}
+nav a:hover,nav a:focus-visible{background:#fff;color:var(--navy);outline:none;}
+.hero{padding:42px 0 22px;border-bottom:1px solid var(--line);}
+.eyebrow{font-family:var(--disp);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--up);margin:0 0 10px;}
+h1{font-family:var(--disp);font-size:clamp(28px,4vw,42px);line-height:1.15;margin:0 0 12px;color:var(--navy);font-weight:700;}
+.lede{max-width:860px;color:var(--soft);margin:0 0 18px;font-size:15.5px;}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12.5px;color:var(--faint);}
+.meta b{color:var(--navy);font-weight:600;}
+.verdicts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0 6px;}
+.vcard{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px 20px;position:relative;}
+.vcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;}
+.vcard.s::before{background:var(--sepax);}
+.vcard.n::before{background:var(--nano);}
+.vlab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 6px;}
+.vname{font-family:var(--disp);font-size:20px;margin:0 0 8px;color:var(--navy);}
+.vcard ul{margin:0;padding-left:18px;color:var(--soft);font-size:13.4px;}
+.vcard li{margin-bottom:5px;}
+section{padding-top:40px;}
+.sec-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--navy);padding-bottom:8px;margin-bottom:16px;}
+.sec-num{font-family:var(--disp);font-size:12px;font-weight:700;color:#fff;background:var(--navy);padding:2px 8px;border-radius:2px;}
+h2{font-family:var(--disp);font-size:22px;margin:0;color:var(--navy);}
+h3{font-family:var(--disp);font-size:16.5px;margin:22px 0 8px;color:var(--navy);}
+p{margin:0 0 10px;}
+.note{font-size:12.5px;color:var(--faint);}
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--panel);}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13px;}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
+thead th{background:var(--navy);color:#fff;font-weight:600;font-size:12.4px;white-space:nowrap;}
+tbody tr:nth-child(even){background:#FAFCFD;}
+td.k{font-weight:700;color:var(--navy);white-space:nowrap;background:#F3F7F9;}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:2px;border:1px solid var(--line);background:var(--wash);color:var(--soft);}
+.tag.s{background:#E7F2F6;border-color:#C5DCE6;color:var(--sepax);font-weight:700;}
+.tag.n{background:#F8EEE8;border-color:#E8D0C4;color:var(--nano);font-weight:700;}
+.miss{color:var(--warn);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px 18px;}
+.panel h3{margin-top:0;}
+.bars{display:flex;flex-direction:column;gap:14px;margin:8px 0 4px;}
+.row{display:grid;grid-template-columns:108px 1fr;gap:10px;align-items:center;}
+.row .lab{font-size:12.5px;color:var(--soft);}
+.pair{display:flex;flex-direction:column;gap:4px;}
+.track{height:14px;background:#EEF3F6;border-radius:2px;position:relative;}
+.fill{height:100%;border-radius:2px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:11px;color:#fff;font-weight:700;min-width:36px;}
+.fill.s{background:var(--sepax);}
+.fill.n{background:var(--nano);}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--soft);margin:4px 0 12px;}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px;}
+.legend .s{background:var(--sepax);}
+.legend .n{background:var(--nano);}
+ul.tight{margin:6px 0;padding-left:18px;}
+ul.tight li{margin-bottom:5px;color:var(--soft);font-size:13.5px;}
+.adv{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.adv .panel{border-top:3px solid var(--sepax);}
+.adv .panel.n{border-top-color:var(--nano);}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--faint);}
+footer b{color:var(--soft);}
+@media(max-width:820px){
+  .verdicts,.grid2,.adv{grid-template-columns:1fr;}
+  .wrap{padding:0 14px 56px;}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand">产业链投研 <i>·</i> 色谱填料双雄</div>
+    <nav aria-label="章节">
+      <a href="#s0">摘要</a>
+      <a href="#s1">对照表</a>
+      <a href="#s2">产品与技术</a>
+      <a href="#s3">客户与应用</a>
+      <a href="#s4">财务</a>
+      <a href="#s5">竞争力</a>
+      <a href="#s6">战略与风险</a>
+      <a href="#s7">相对优势</a>
+    </nav>
+  </div>
+</div>
+<div class="wrap">
+<header class="hero">
+  <p class="eyebrow">Listed company comparison · 2026-09-22</p>
+  <h1>赛分科技 vs 纳微科技<br>色谱填料双雄深度对比</h1>
+  <p class="lede">同一赛道、两种打法：赛分科技以“分析色谱现金流 + 工业纯化放量”做精生物药下游纯化；纳微科技以单分散微球平台做宽，覆盖填料、色谱柱、纯化/分析仪器，并向多肽合成载体延伸。本报告只比较上市主体，不把概念关联写成客户或订单证据。</p>
+  <div class="meta">
+    <span><b>主体</b> 苏州赛分科技 688758.SH · 苏州纳微科技 688690.SH</span>
+    <span><b>财务截止</b> 2026H1（2026-06-30）</span>
+    <span><b>行情时点</b> 2026-09-22</span>
+    <span><b>币种</b> 人民币</span>
+  </div>
+  <div class="verdicts">
+    <div class="vcard s">
+      <p class="vlab">赛分科技相对更强的地方</p>
+      <p class="vname">纯化纯度 · 利润率 · 海外起点</p>
+      <ul>
+        <li>2026H1 营收 2.80 亿元（+53.17%），归母净利 1.11 亿元（+106.19%），净利率 39.68%，高于纳微的 24.11%。</li>
+        <li>工业纯化占营收 74.64%；其中 III 期及商业化收入占工业纯化 66.93%。</li>
+        <li>分析色谱毛利率长期在 75% 以上，且是中国首款 FDA DMF 备案的国产亲和填料持有方。</li>
+      </ul>
+    </div>
+    <div class="vcard n">
+      <p class="vlab">纳微科技相对更强的地方</p>
+      <p class="vname">规模 · 平台宽度 · 小分子弹性</p>
+      <ul>
+        <li>2025 年营收 9.25 亿元，约为赛分 4.03 亿元的 2.3 倍；2026H1 营收 5.68 亿元（+37.28%）。</li>
+        <li>填料毛利率 81.81%（2025，公司交流口径），小核酸填料 2026H1 约 0.67 亿元、同比约 +170%。</li>
+        <li>已并表赛谱仪器、福立仪器、纳谱分析，形成填料—柱—仪器闭环，并定增延伸到合成载体。</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">判断属性：上列为基于已披露财务与业务结构的相对比较，不是买卖建议。行情 PE/PB 来自行情接口 2026-09-22，与卖方目标价不是同一时点。</p>
+</header>
+
+<section id="s0">
+  <div class="sec-head"><span class="sec-num">00</span><h2>要点摘要</h2></div>
+  <div class="panel">
+    <ul class="tight">
+      <li><b>生意本质相同，边界不同。</b>两者都卖生物药分离纯化的核心耗材，客户一旦把填料写进工艺，切换要重新验证。赛分几乎全部收入来自色谱材料本身；纳微约 60%–66% 来自填料/微球，其余是仪器、色谱柱、光电与 IVD 微球。</li>
+      <li><b>2026H1 赛分利润弹性更大，纳微收入体量更大。</b>赛分归母净利增速 106%，净利率接近 40%；纳微归母净利 1.37 亿元，绝对额仍高于赛分，但净利率被仪器并表和研发强度拉低。</li>
+      <li><b>应用重心错位。</b>赛分 2025 年抗体填料 1.55 亿元（+136%），胰岛素/多肽/GLP-1 填料 1.02 亿元（+78%）。纳微 2025 年大分子层析介质约 2.23 亿元（同比持平），中小分子填料约 2.70 亿元（约 +50%）。疫苗、食品检测、血液制品的精确收入占比，两家年报摘要均未给出可对齐数字。</li>
+      <li><b>扩产节奏错开。</b>赛分扬州二期预计 2026 年底建成，新增 20 万升/年；纳微南通募投建设周期到 2028 年，2026–2027 年主要靠现有基地弹性。这是未来两年供给格局的关键变量。</li>
+      <li><b>前五大客户集中度：最新年报口径缺失。</b>赛分招股书历史口径（约 2019–2022H1）前五大客户占营收 26.58%–35.92%，且最大客户曾是安捷伦（既是客户也是分析色谱竞对）。2023–2026 年报未在本次检索中取得前五大客户占比，不能用旧口径代替。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head"><span class="sec-num">01</span><h2>关键差异对照表</h2></div>
+  <div class="tscroll">
+  <table>
+    <thead><tr><th>维度</th><th>赛分科技 688758.SH</th><th>纳微科技 688690.SH</th><th>口径与来源</th></tr></thead>
+    <tbody>
+      <tr><td class="k">上市与控制人</td><td>2025-01-10 科创板上市。实控人黄学英，招股书口径控制约 31.59% 表决权</td><td>2021-06-23 科创板上市，发行价 8.07 元。董事长江必旺</td><td>公司档案 / 招股书 / 年报。一手或年报转引</td></tr>
+      <tr><td class="k">2025 营收</td><td>4.029 亿元，+27.73%</td><td>9.247 亿元，+18.18%</td><td>年报，人民币</td></tr>
+      <tr><td class="k">2025 归母净利</td><td>1.265 亿元，+48.59%；扣非 1.169 亿元</td><td>1.360 亿元，+64.18%；扣非 1.176 亿元</td><td>年报。纳微扣非另有媒体口径 1.18 亿元、+78.55%，与数据接口 1.176 亿元接近</td></tr>
+      <tr><td class="k">2026H1 营收 / 归母</td><td>2.797 亿元，+53.17% / 1.106 亿元，+106.19%</td><td>5.678 亿元，+37.28% / 1.368 亿元，+116.11%</td><td>2026 半年报，westock 利润表</td></tr>
+      <tr><td class="k">综合毛利率</td><td>2023 71.21% → 2024 70.99% → 2025 71.40% → 2026H1 75.32%</td><td>2023 77.89% → 2024 70.22% → 2025 71.31% → 2026H1 71.45%</td><td>年报/数据接口。纳微 2024 年毛利率下降与福立仪器并表有关（推断）</td></tr>
+      <tr><td class="k">研发强度</td><td>2023 18.03% → 2024 13.59% → 2025 13.67% → 2026H1 12.84%</td><td>2023 27.54% → 2024 22.64% → 2025 21.29% → 2026H1 约 16%</td><td>研发费用/营收。赛分 2024 年报摘要；纳微持续督导报告与 2025 年报转引</td></tr>
+      <tr><td class="k">主业结构（最近完整年）</td><td>2025：工业纯化 2.716 亿元（67.40%），分析色谱 1.275 亿元（31.65%），服务 0.61%</td><td>2025：色谱填料和层析介质 5.52 亿元（59.73%），分析仪器 1.72 亿元（18.64%），色谱柱 0.97 亿元（10.48%）</td><td>分产品收入。赛分为数据接口产品拆分；纳微为 2025 年报主营构成</td></tr>
+      <tr><td class="k">技术路线</td><td>琼脂糖、PMA、PS/DVB、硅胶四大基质；微球合成 + 表面修饰 + 官能团配基</td><td>单分散“种子法”，粒径 CV&lt;3%–5%；有机+无机微球同时规模化；并延伸合成载体、膜</td><td>公司年报/官网表述。CV 对比为公司或媒体转述，非第三方检测</td></tr>
+      <tr><td class="k">抗体暴露</td><td>2025 抗体收入 1.55 亿元，+136.26%；2026H1 1.46 亿元，+122.59%</td><td>2025 大分子（抗体含 ADC、重组蛋白、疫苗、血液制品合计）约 2.23 亿元，同比持平；其中抗体含 ADC 约 +13%</td><td>赛分为年报转引；纳微为 2026-04 投资者关系记录，是四类合计而非抗体单列</td></tr>
+      <tr><td class="k">多肽 / GLP-1</td><td>2025 胰岛素/多肽/GLP-1 收入 1.02 亿元，+78.31%；2026H1 0.51 亿元，约占工业纯化 24%</td><td>2025 中小分子（胰岛素、多肽、小核酸、抗生素合计）约 2.70 亿元，约 +50%；多肽填料另有口径约 1.47 亿元、+63%（媒体，需核实）</td><td>两套“多肽”口径不可直接相减</td></tr>
+      <tr><td class="k">疫苗 / 食品检测 / IVD</td><td class="miss">疫苗、食品检测收入占比：缺失。产品目录有疫苗应用，但年报未单列金额</td><td>IVD 微球 2025 年 777.56 万元，占营收 0.84%，+46.68%。食品检测收入占比：缺失。疫苗含在大分子合计中，未单列</td><td>不能把产品目录写成收入占比</td></tr>
+      <tr><td class="k">客户集中度</td><td>2026H1 百万级以上客户占工业纯化收入 92.04%。前五大客户占比：2023 年后缺失</td><td>2026H1 战略客户销售额 1.85 亿元，约占填料收入 49%；填料客户 534 家。前五大客户占比：缺失</td><td>“核心客户占比”≠前五大客户集中度</td></tr>
+      <tr><td class="k">海外收入</td><td>2025 境外 +20.60%；2026H1 境外 3207 万元，占 11.46%</td><td>2025 境外 8375 万元，占 9.06%，公司称国际主营业务约 +78%；2026H1 境外 5677 万元，占 10%</td><td>占比为半年报/年报。增速口径不完全相同</td></tr>
+      <tr><td class="k">产能</td><td>扬州一期有效产能约 2.48 万升/年；二期 +20 万升，预计 2026 年底建成；美国基地规划 +5 万升</td><td>苏州+常熟合计超 5 万平方米；常熟软胶技改已投产。南通项目总投资 6.58 亿元，建设周期至 2028 年。升产能官方数字：缺失</td><td>赛分升产能来自公司互动与半年报。纳微“50 万升/600 吨平湖基地”为第三方口径，本报告不采信</td></tr>
+      <tr><td class="k">2026-09-22 估值</td><td>33.92 元；总市值 141.26 亿元；PE(TTM) 76.98；PB 10.18</td><td>48.45 元；总市值 195.65 亿元；PE(TTM) 93.38；PB 9.40</td><td>westock 行情，盘中/收盘以接口时间为准（2026-09-22）</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head"><span class="sec-num">02</span><h2>主营业务与产品线</h2></div>
+  <p>两家都做液相色谱材料，但收入边界不能混用。赛分的“工业纯化”基本就是填料；纳微的“生物制药工艺”还包含合成载体和部分服务，仪器单列在分析检测。</p>
+  <h3>收入构成（最近可对齐期间）</h3>
+  <div class="legend"><span><i class="s"></i>赛分科技</span><span><i class="n"></i>纳微科技</span></div>
+  <div class="panel">
+    <p class="note">下图为 2025 全年占营收比重，不是绝对额。绝对额见对照表。</p>
+    <div class="bars">
+      <div class="row"><div class="lab">填料 / 工业纯化</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:67.4%">67.4%</div></div>
+        <div class="track"><div class="fill n" style="width:59.7%">59.7%</div></div>
+      </div></div>
+      <div class="row"><div class="lab">分析色谱柱</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:31.7%">31.7%</div></div>
+        <div class="track"><div class="fill n" style="width:10.5%">10.5%</div></div>
+      </div></div>
+      <div class="row"><div class="lab">仪器及配件</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:2%">≈0</div></div>
+        <div class="track"><div class="fill n" style="width:23%">22.9%</div></div>
+      </div></div>
+    </div>
+    <p class="note">纳微仪器及配件 = 色谱分析仪器 18.64% + 蛋白层析系统 4.31%（2025 年报）。赛分无并表色谱仪器主业，服务收入 0.61%，故仪器条近乎为零，这是业务边界差异，不是数据缺失。</p>
+  </div>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div class="panel">
+      <h3>赛分：双轮，越来越像纯化公司</h3>
+      <ul class="tight">
+        <li>2023–2025 工业纯化收入 1.256 / 1.873 / 2.716 亿元，增速 28.20% / 49.07% / 44.99%（公司 2026-08-21 行动方案，年报口径）。</li>
+        <li>同期分析色谱 1.152 / 1.242 / 1.275 亿元，增速 4.44% / 7.83% / 2.68%。研发需求收缩时，这块是现金流而不是成长引擎。</li>
+        <li>2026H1 工业纯化 2.088 亿元，占营收 74.64%；分析色谱 0.670 亿元，占 23.96%，毛利率 78.42%（公司交流/半年报转引）。</li>
+        <li>产品线：亲和、离子交换、疏水、体积排阻、复合模式、硅胶/聚合物反相填料，以及 FPLC 层析柱管。纯化设备不是收入支柱。</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>纳微：微球平台，填料仍是利润核心</h3>
+      <ul class="tight">
+        <li>2026H1 生物制药工艺 4.02 亿元，占 70.73%，+49.35%；分析检测 1.39 亿元，占 24.47%；平板显示 2177 万元；IVD 397 万元。</li>
+        <li>产品拆分：药物合成和分离纯化微球 3.74 亿元（65.82%，+56.84%）；纯化与分析仪器 1.01 亿元（17.71%）；液相色谱柱 5565 万元（9.80%）；分离纯化技术服务 285 万元（0.50%，-32.71%）。</li>
+        <li>2025 年填料毛利率 81.81%，色谱柱毛利率 78.19%，分析仪器毛利率 46.67%（2026-04-16 投资者关系记录，管理层口径，非审计附注逐项复核）。仪器拉低综合毛利率，但不代表填料竞争力变弱。</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>基质、粒径与表面修饰</h3>
+  <div class="tscroll">
+  <table>
+    <thead><tr><th>技术点</th><th>赛分科技</th><th>纳微科技</th><th>可比性</th></tr></thead>
+    <tbody>
+      <tr><td class="k">基质</td><td>琼脂糖、聚甲基丙烯酸酯、PS/DVB、硅胶。公司称四大基质自主生产</td><td>聚苯乙烯、聚丙烯酸酯、硅胶、琼脂糖、葡聚糖、羟基磷灰石。强调有机+无机同时规模化</td><td>基质种类重叠度高。差异在制备方法和向合成端延伸，不在“有没有琼脂糖”</td></tr>
+      <tr><td class="k">粒径控制</td><td>公司强调批次一致性与装柱能力（2000mm 级）。公开 CV 对标数据：缺失</td><td>种子法，公司/媒体称 CV&lt;3% 或 &lt;5%，对标传统筛分法 5%–10%</td><td>缺少同一实验室、同一粒径定义的第三方对比，不能断言谁的微球“更均一”</td></tr>
+      <tr><td class="k">表面修饰</td><td>表面修饰 + 官能团配基；Protein A（MabPurix）、离子交换、疏水、复合模式</td><td>表面功能化 + 孔径调控；NMab / UniMab / NanoGel 等；2026H1 推出 NMab Titan HC</td><td>都覆盖亲和与离子交换。赛分的公开差异化是 FDA DMF 首发；纳微的公开差异化是单分散平台和合成载体</td></tr>
+      <tr><td class="k">硬胶 / 软胶</td><td>软胶、硬胶全线。硅胶路线服务胰岛素、多肽等小分子</td><td>硅胶服务小分子/多肽/小核酸；琼脂糖服务抗体。2023 年琼脂糖+葡聚糖技改已投产</td><td>小分子硅胶是纳微当前弹性更大的一端；抗体软胶是赛分 2025–2026H1 增速更快的一端</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head"><span class="sec-num">03</span><h2>下游应用与客户结构</h2></div>
+  <p>能对齐的只有抗体、胰岛素/多肽，以及纳微把疫苗、血液制品包进大分子合计的口径。其余领域如果写成精确占比，就是在补造数据。</p>
+  <div class="tscroll">
+  <table>
+    <thead><tr><th>下游</th><th>赛分科技</th><th>纳微科技</th><th>证据等级</th></tr></thead>
+    <tbody>
+      <tr><td class="k">抗体 / ADC / 双抗</td><td>2025 年 1.55 亿元，+136.26%，约占当年营收 38%。2026H1 1.46 亿元，+122.59%。新增复杂抗体项目 35 个</td><td>2025 年抗体含 ADC 在大分子中实现约 +13%，绝对额未单列。2026H1 大分子层析介质约 1.41 亿元，+42%（检索摘要口径，需与年报附注核对）</td><td>赛分：年报转引，可信度中高。纳微抗体单列金额：缺失</td></tr>
+      <tr><td class="k">重组蛋白</td><td>产品覆盖重组蛋白、融合蛋白；2025 年未单列收入</td><td>含在 2025 年大分子合计约 2.23 亿元中，未单列。商业化重组白蛋白项目 2 个</td><td>收入占比缺失</td></tr>
+      <tr><td class="k">疫苗</td><td>官网有疫苗与病毒应用。收入占比：缺失</td><td>含在大分子四类合计中。2025 年疫苗收入：缺失。公司策略表述为“关注疫苗”</td><td>不能从产品页推断占比</td></tr>
+      <tr><td class="k">胰岛素</td><td>与甘李、通化东宝、联邦等有长期合作。收入与多肽、GLP-1 合并披露</td><td>含在中小分子四类合计约 2.70 亿元中。历史客户包括甘李（高瓴协同，二级资料）</td><td>胰岛素单列占比：两家均缺失</td></tr>
+      <tr><td class="k">多肽 / GLP-1</td><td>2025 年与胰岛素合并 1.02 亿元，+78.31%。2026H1 0.51 亿元</td><td>中小分子合计约 +50%。另有媒体称 2025 年多肽填料 1.47 亿元、+63%，与 2.70 亿元四类合计不是同一口径</td><td>媒体数字标“需核实原文”</td></tr>
+      <tr><td class="k">小核酸</td><td>2026H1 未单列。缺失</td><td>2026H1 约 0.67 亿元，同比约 +170%（检索摘要）。这是纳微相对赛分最清晰的增量差</td><td>需与半年报附注核对后才能当审计数字使用</td></tr>
+      <tr><td class="k">血液制品</td><td>历史大客户通化安睿特（人血白蛋白，招股书）。2025 年收入：缺失。2026H1 公司称围绕血液制品建纯化平台</td><td>含在大分子合计。2026 年公司称海外已有血液制品应用，无金额</td><td>客户存在 ≠ 当期收入占比</td></tr>
+      <tr><td class="k">IVD</td><td>分析色谱服务药物质控，不是 IVD 原料商。IVD 收入：缺失/不适用为主业</td><td>2025 年 IVD 微球 777.56 万元，占 0.84%。体量小，不能支撑“IVD 主业”叙事</td><td>年报主营构成</td></tr>
+      <tr><td class="k">食品检测</td><td>缺失。未见年报单列</td><td>缺失。概念标签有“食品安全”，不是收入证据</td><td>证据缺失</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>客户集中度：能说什么，不能说什么</h3>
+  <div class="grid2">
+    <div class="panel">
+      <h3>赛分</h3>
+      <ul class="tight">
+        <li>2025 年百万级以上核心客户贡献工业纯化收入 2.41 亿元，占该板块 88.79%；2026H1 升至 92.04%。这是粘性证据，也是单板块集中证据。</li>
+        <li>2026H1 工业纯化项目累计 1281 个，临床后期及商业化 125 个（公司/媒体转引，项目数不是客户数）。</li>
+        <li>招股书早期前五大客户占比约 27%–36%，安捷伦曾是第一大客户。上市后前五大客户表：本次未取得。</li>
+        <li>已点名客户：甘李、诺泰、联邦、通化东宝、信达生物 CDMO、复宏汉霖、百奥泰。点名不等于收入排名。</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>纳微</h3>
+      <ul class="tight">
+        <li>2024 年填料客户 792 家；2026H1 填料客户 534 家（同比 +101，统计口径可能与 2024 年“发生销售客户”不同，不可直接说客户流失）。</li>
+        <li>2024 年战略客户销售 2.24 亿元，约占填料收入一半；2026H1 战略客户 1.85 亿元，约占填料收入 49%。</li>
+        <li>已点名：盛迪亚（恒瑞）、正大天晴、丽珠、百利天恒、药明康德、诺泰、翰宇、健元。前五大客户占比：缺失。</li>
+        <li>2026H1 向美国药企出口 Protein A 亲和填料超千万元。这是出口事实，不是海外收入结构全貌。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head"><span class="sec-num">04</span><h2>财务表现：近三年与 2026H1</h2></div>
+  <p>两家均为自然年报告期，可以直接按 2023、2024、2025 对齐。2026 年只有半年，不与全年相除后年化。</p>
+  <h3>营业收入（亿元）</h3>
+  <div class="legend"><span><i class="s"></i>赛分</span><span><i class="n"></i>纳微</span></div>
+  <div class="panel">
+    <div class="bars">
+      <div class="row"><div class="lab">2023</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:26.5%">2.45</div></div>
+        <div class="track"><div class="fill n" style="width:63.4%">5.87</div></div>
+      </div></div>
+      <div class="row"><div class="lab">2024</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:34.1%">3.15</div></div>
+        <div class="track"><div class="fill n" style="width:84.6%">7.82</div></div>
+      </div></div>
+      <div class="row"><div class="lab">2025</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:43.6%">4.03</div></div>
+        <div class="track"><div class="fill n" style="width:100%">9.25</div></div>
+      </div></div>
+      <div class="row"><div class="lab">2026H1</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:30.2%">2.80</div></div>
+        <div class="track"><div class="fill n" style="width:61.4%">5.68</div></div>
+      </div></div>
+    </div>
+    <p class="note">条宽按 2025 年纳微 9.25 亿元 = 100% 缩放。来源：赛分 2024 年报摘要、2025/2026 定期报告数据接口；纳微年报及 westock 利润表。2022 年赛分营收 2.128 亿元，仅作增速基数，不纳入三年趋势主图。</p>
+  </div>
+
+  <h3>归母净利润（亿元）</h3>
+  <div class="panel">
+    <div class="bars">
+      <div class="row"><div class="lab">2023</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:38.4%">0.525</div></div>
+        <div class="track"><div class="fill n" style="width:50.1%">0.686</div></div>
+      </div></div>
+      <div class="row"><div class="lab">2024</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:62.3%">0.852</div></div>
+        <div class="track"><div class="fill n" style="width:60.6%">0.828</div></div>
+      </div></div>
+      <div class="row"><div class="lab">2025</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:92.5%">1.265</div></div>
+        <div class="track"><div class="fill n" style="width:99.5%">1.360</div></div>
+      </div></div>
+      <div class="row"><div class="lab">2026H1</div><div class="pair">
+        <div class="track"><div class="fill s" style="width:80.9%">1.106</div></div>
+        <div class="track"><div class="fill n" style="width:100%">1.368</div></div>
+      </div></div>
+    </div>
+    <p class="note">条宽按 2026H1 纳微归母 1.368 亿元 = 100%。2024 年赛分归母净利已略高于纳微，原因包括纳微当年股份支付 4481 万元、赛谱商誉减值 2506 万元（公司财务决算报告）。这是利润口径差异，不是赛分主业突然超过纳微。</p>
+  </div>
+
+  <div class="tscroll" style="margin-top:16px;">
+  <table>
+    <thead><tr><th>指标</th><th>公司</th><th>2023</th><th>2024</th><th>2025</th><th>2026H1</th></tr></thead>
+    <tbody>
+      <tr><td class="k" rowspan="2">营业收入</td><td>赛分</td><td>2.452 亿，基数年</td><td>3.155 亿，+28.65%</td><td>4.029 亿，+27.73%</td><td>2.797 亿，+53.17%</td></tr>
+      <tr><td>纳微</td><td>5.869 亿，-16.86%</td><td>7.825 亿，+33.33%</td><td>9.247 亿，+18.18%</td><td>5.678 亿，+37.28%</td></tr>
+      <tr><td class="k" rowspan="2">归母净利润</td><td>赛分</td><td>0.525 亿</td><td>0.852 亿，+62.25%</td><td>1.265 亿，+48.59%</td><td>1.106 亿，+106.19%</td></tr>
+      <tr><td>纳微</td><td>0.686 亿，-75.08%</td><td>0.828 亿，+20.82%</td><td>1.360 亿，+64.18%</td><td>1.368 亿，+116.11%</td></tr>
+      <tr><td class="k" rowspan="2">扣非归母</td><td>赛分</td><td>0.460 亿</td><td>0.778 亿，+69.15%</td><td>1.169 亿，+50.16%</td><td>1.077 亿，+131.54%</td></tr>
+      <tr><td>纳微</td><td>0.316 亿</td><td>0.659 亿，+108.55%</td><td>1.176 亿</td><td>1.274 亿，+130.47%</td></tr>
+      <tr><td class="k" rowspan="2">综合毛利率</td><td>赛分</td><td>71.21%</td><td>70.99%</td><td>71.40%</td><td>75.32%</td></tr>
+      <tr><td>纳微</td><td>77.89%</td><td>70.22%</td><td>71.31%</td><td>71.45%</td></tr>
+      <tr><td class="k" rowspan="2">研发费用 / 占比</td><td>赛分</td><td>0.442 亿 / 18.03%</td><td>0.429 亿 / 13.59%</td><td>0.551 亿 / 13.67%</td><td>0.359 亿 / 12.84%</td></tr>
+      <tr><td>纳微</td><td>1.616 亿 / 27.54%</td><td>1.772 亿 / 22.64%</td><td>1.969 亿 / 21.29%</td><td>0.907 亿 / 约 16%</td></tr>
+      <tr><td class="k" rowspan="2">经营现金流</td><td>赛分</td><td>0.434 亿</td><td>0.660 亿</td><td>1.025 亿</td><td>0.863 亿，+141.61%</td></tr>
+      <tr><td>纳微</td><td>1.255 亿</td><td>1.331 亿</td><td>1.683 亿</td><td>1.092 亿，+351.88%</td></tr>
+      <tr><td class="k" rowspan="2">资产负债率</td><td>赛分</td><td>未列入主表</td><td>7.13%</td><td>6.21%</td><td>11.82%</td></tr>
+      <tr><td>纳微</td><td>18.64%</td><td>18.25%</td><td>14.38%</td><td>12.12%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">赛分 2023 年营收、净利、毛利率、研发费用来自数据接口与 2024 年报摘要交叉；纳微 2023 年研发费用 1.616 亿元来自财务指标接口，研发占比 27.54% 来自中信持续督导报告。若附注“研发投入”含资本化而“研发费用”不含，两者会有差额；本表用费用口径。</p>
+
+  <h3>产能与产销量</h3>
+  <div class="grid2">
+    <div class="panel">
+      <h3>赛分：升，是官方单位</h3>
+      <ul class="tight">
+        <li>扬州一期：8 条介质产线，有效工业纯化产能约 2.48 万升/年，单批次 500 升。2026H1 生产计划达成率与订单交付率均为 100%。</li>
+        <li>扬州二期：募投，预计 2026 年底建成，新增 20 万升/年。投产后国内规划产能超过 22 万升/年。</li>
+        <li>扬州三期：2026 年 6 月签入园协议，规划年产 3000 公斤蛋白、18 吨硅胶基质填料。开工时点为“二期建成时”，尚未形成产能。</li>
+        <li>美国特拉华基地：规划 5 万升/年，仍在许可与设计阶段，不是已投产产能。</li>
+        <li>产销量（升或公斤的实际产量、销量、产能利用率）：一期利用率的精确百分比缺失。公司只披露交付率 100%，不能换算成利用率。</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>纳微：吨与平方米，升产能缺失</h3>
+      <ul class="tight">
+        <li>苏州基地（2016）：约 1.86 万平方米。历史产能包括聚苯乙烯 10.7 吨、聚丙烯酸酯 5 吨、硅胶 3 吨、色谱柱 10 万根。这是基地介绍口径，不是 2025 年产量。</li>
+        <li>常熟基地：约 1.80 万平方米。软胶技改（琼脂糖 40 吨/年、葡聚糖 10 吨/年）2023 年投产，当年产能利用率 46.23%，2024/2025 年效益 1563 万 / 1773 万元。这是唯一拿到的官方利用率，且只覆盖该技改项目。</li>
+        <li>公司 2026-09 调研答复：现有产能不是现阶段制约，未披露常熟整体利用率。</li>
+        <li>南通：定增项目总投资 6.58 亿元，2026-09-07 环评批复，建设周期至 2028 年。多肽固相合成载体中试已试生产。</li>
+        <li>整体产销量：缺失。第三方“50 万升、平湖 600 吨”与公司答复冲突，不采用。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head"><span class="sec-num">05</span><h2>核心竞争力</h2></div>
+  <div class="tscroll">
+  <table>
+    <thead><tr><th>维度</th><th>赛分科技</th><th>纳微科技</th><th>怎么读</th></tr></thead>
+    <tbody>
+      <tr><td class="k">技术壁垒</td><td>微球合成、表面修饰、官能团配基。四大基质自主生产。分析色谱起家，全球客户超 5000 家（公司口径）</td><td>单分散微球底层制备，有机+无机同时量产。2026 年主导 ISO/TS 4966 硅胶微粒性能规范（公司调研答复）</td><td>赛分壁垒更靠近“药企工艺导入”；纳微壁垒更靠近“材料平台可复制到多行业”</td></tr>
+      <tr><td class="k">专利</td><td>截至 2025 年末累计授权 84 项；2026H1 公司半年报口径累计授权 94 项、发明专利 31 项。两数差 10 项，可能是上半年新授权，需以半年报原文核对</td><td>媒体称累计申请国内外专利超过 150 项。2025 年报授权数：本次未取得，标缺失</td><td>申请数与授权数不可比。纳微授权专利官方数缺失</td></tr>
+      <tr><td class="k">进口替代</td><td>价格约为进口 1/3–1/2（公司/媒体口径，与“低 20%–40%”等其他口径冲突，并列不平均）。8 个主要系列 FDA DMF 备案，MabPurix 为国产亲和填料首个 DMF。2025 年新增 III 期及商业化替代项目 29 个，累计 108 个</td><td>十余款填料完成 FDA DMF。2025 年国际主营业务约 0.84 亿元，+78%。Protein A 仍需面对 Cytiva。国产填料市占“约 24%”为二级资料，公司年报未直接披露，不作为确定份额</td><td>替代进展看商业化项目数，不看概念市占</td></tr>
+      <tr><td class="k">原材料自供</td><td>公司称主要原材料和设备来自国内供应商，高度国产化。蛋白配基：扬州三期规划自产 3000 公斤蛋白，目前仍是规划，不是已自供</td><td>微球基质自产是平台能力。Protein A 配基、琼脂糖原料是否完全自供：年报未给自给率，标缺失</td><td>“高度国产化”是公司表述，不是海关或成本占比审计数</td></tr>
+      <tr><td class="k">团队</td><td>黄学英：特拉华大学博士、斯坦福博士后，曾任戴安、杜邦研究员。分析色谱与工业纯化由同一技术创始人贯穿</td><td>江必旺：北大化学、纽约州立大学博士、伯克利博士后，曾任罗门哈斯高级科学家。2022 年起总经理为牟一萍（前安捷伦、GE 医疗生命科学高管）</td><td>赛分是科学家持续操盘；纳微已把商业化管理与技术创始人分开。这是组织差异，不是能力高下的分数</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head"><span class="sec-num">06</span><h2>战略与风险</h2></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>赛分：先把升产能做出来</h3>
+      <ul class="tight">
+        <li>募投核心是扬州二期 20 万升。若 2026 年底建成，2027 年才是产能利用率爬坡年，不宜把设计产能直接乘单价写成收入。</li>
+        <li>扬州三期把蛋白配基和硅胶基质内部化，针对的是亲和填料成本与供应，不是新的下游行业。</li>
+        <li>海外：美国 5 万升仍在前期；已落地出海项目从 2025 年底“超 30 个”增至 2026H1“超 40 个”。项目数增长快于海外收入占比，说明很多项目还在临床，不是当期收入。</li>
+        <li>未见大型产业并购。增长路径是自建产能，不是买仪器公司。</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>纳微：平台变宽，也变重</h3>
+      <ul class="tight">
+        <li>2022 年并表赛谱仪器（蛋白纯化系统，持股 76.67%），2024 年并表福立仪器（分析仪器，持股 44.80%）。这解释了收入跳升、毛利率下降和商誉 1.89 亿元。</li>
+        <li>2026-04 定增预案募资不超过 7.1 亿元，其中 5 亿元给南通生物层析介质及功能性微球。2026-09-21 上交所受理，尚未注册生效。</li>
+        <li>战略意图明确：从分离纯化延伸到多肽固相合成载体。这是新产能，也是新竞争（蓝晓科技等合成载体供应商），不能默认延伸成功。</li>
+        <li>2026 年员工持股计划已过户，锁定期 12 个月。实控人 1.27% 股份曾因激励纠纷被冻结，公司称不影响控制权；这是治理事项，不是经营拐点。</li>
+      </ul>
+    </div>
+  </div>
+  <h3>风险对照</h3>
+  <div class="tscroll">
+  <table>
+    <thead><tr><th>风险</th><th>谁更暴露</th><th>已发生的证据</th><th>尚未证实的部分</th></tr></thead>
+    <tbody>
+      <tr><td class="k">客户集中</td><td>赛分的工业纯化板块</td><td>百万级客户占工业纯化 88%–92%</td><td>前五大客户最新占比缺失。集中在“大项目”还是“单一客户”，不能从 92% 直接推出</td></tr>
+      <tr><td class="k">价格竞争</td><td>两者都暴露，赛分毛利更高所以降价弹性也更大</td><td>Cytiva 2026-03 发布本土品牌“瑞予”，定位普惠市场（前期研究，媒体）</td><td>两家 2026H1 综合毛利率没有下降。价格战目前是风险，不是已兑现事实</td></tr>
+      <tr><td class="k">下游投融资周期</td><td>分析色谱和早期临床项目</td><td>赛分分析色谱 2023–2025 增速降至 2.7%–7.8%；纳微 2023 年营收 -16.86%、归母 -75%，公司明确归因于投融资趋紧</td><td>2025–2026H1 工业纯化与商业化项目恢复，不等于早期研发耗材已恢复</td></tr>
+      <tr><td class="k">产能错配</td><td>2027 年前赛分供给释放更快；纳微若订单超预期，弹性靠技改而非新基地</td><td>赛分称一期交付率 100%；纳微称产能不是现阶段制约，同时计提存货跌价</td><td>纳微 2026H1 新计提存货跌价 2329 万元，库存商品累计跌价计提率 24.2%，集中在分离纯化微球。这与“需求爆发”并存，说明部分规格滞销</td></tr>
+      <tr><td class="k">并购与商誉</td><td>纳微</td><td>2024 年计提赛谱商誉减值 2506 万元；2026-06-30 商誉仍有 1.89 亿元</td><td>福立仪器 2025 年仪器毛利率 46.67% 且同比下降，整合尚未证明能提升集团净利率</td></tr>
+      <tr><td class="k">估值</td><td>两者都高，纳微 PE(TTM) 更高</td><td>2026-09-22：赛分 PE 77 倍、PB 10.2 倍；纳微 PE 93 倍、PB 9.4 倍。赛分股价已高于东方证券 31.80 元、国泰海通 32.23 元目标价</td><td>目标价是卖方观点，不是公允价值。高估值意味着业绩miss的回撤空间大</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head"><span class="sec-num">07</span><h2>相对优势：分开看，不合成一个赢家</h2></div>
+  <div class="adv">
+    <div class="panel">
+      <h3>赛分科技的相对优势</h3>
+      <ul class="tight">
+        <li><b>纯化业务更纯。</b>工业纯化占比已到 75%，分析色谱仍提供 75% 以上毛利的现金流。收入里没有低毛利仪器去稀释。</li>
+        <li><b>利润率与现金转换当前更好。</b>2026H1 净利率 39.68%，经营现金流 0.86 亿元，资产负债率 11.82%，有息负债不足 1 亿元。</li>
+        <li><b>商业化项目占比更高。</b>III 期及商业化占工业纯化约 67%–73%。这类收入的续购可见性高于研发早期项目。</li>
+        <li><b>海外合规起点更早。</b>分析色谱积累了安捷伦、默克、赛默飞渠道；亲和填料 DMF 首发是可核验的监管事实。</li>
+        <li><b>短板：</b>体量仍是纳微的约四成；抗体和百万级客户集中；2027 年产能集中释放后若需求放缓，毛利率和利用率会先于纳微承压；蛋白配基自产尚未落地。</li>
+      </ul>
+    </div>
+    <div class="panel n">
+      <h3>纳微科技的相对优势</h3>
+      <ul class="tight">
+        <li><b>规模与客户覆盖更宽。</b>填料收入已是赛分工业纯化的约两倍，客户数百家，战略客户贡献约一半填料收入，单一项目波动的冲击更小。</li>
+        <li><b>小分子与新分子弹性更明显。</b>中小分子填料 2025 年约 +50%，小核酸 2026H1 高速增长。赛分的 GLP-1 暴露是真实的，但纳微的小分子平台更完整。</li>
+        <li><b>平台可延伸。</b>色谱柱、纯化系统、分析仪器、合成载体、耐溶剂膜，使公司不完全押注某一种填料基质。代价是毛利率、商誉和研发费用率。</li>
+        <li><b>材料端 know-how 更可迁移。</b>单分散制备若持续被客户接受，可同时服务生物药、分析检测和显示。ISO 硅胶标准是品牌证据，不是收入证据。</li>
+        <li><b>短板：</b>大分子 2025 年整体持平，抗体替代速度慢于赛分；存货跌价说明不是所有规格都在放量；南通产能要到 2028 年；定增尚未完成；前五大客户与授权专利的最新官方数缺失。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:16px;">
+    <h3>若只做一个研究结论</h3>
+    <p>若问题是“谁的生物药工业纯化收入更干净、利润率更高、商业化锁定更深”，当前证据偏向赛分科技。若问题是“谁的材料平台更大、小分子/新分子弹性更宽、抗单一下游波动更强”，当前证据偏向纳微科技。两者不是同一发展阶段：赛分在把一条高毛利纯化曲线做陡，纳微在把一个微球平台做宽。用 PE 或营收增速单指标排名，会把这两种优势混成一个错误的先后顺序。</p>
+    <p>下一验证点：赛分扬州二期 2026 年底是否建成、2027 年利用率；纳微定增是否注册完成、小核酸与多肽填料能否在半年报附注中单列；两家 2026 年报是否披露前五大客户与分应用收入。任一缺失继续标 N/A，不用券商推算填补。</p>
+  </div>
+</section>
+
+<footer>
+  <p><b>证据分级。</b>年报、半年报、交易所公告、公司投资者关系记录为一手或近一手。证券时报、上海证券报、财联社对年报的转述，数字与数据接口一致时采信。券商盈利预测、目标价、媒体市占率和“多肽填料 1.47 亿元”标为非一手，需核实原文。概念标签、招股书历史客户不外推为当期收入。</p>
+  <p><b>主要缺失。</b>两家 2025/2026 年前五大客户占比；疫苗、食品检测、重组蛋白、血液制品的分项收入；纳微整体升产能与 2025 年授权专利数；赛分蛋白配基自给率；同口径第三方粒径检测。缺失原因是定期报告摘要与本次检索未覆盖对应附注，不是该业务不存在。</p>
+  <p><b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。</p>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "msg": "操作成功",
+  "suc": true,
+  "traceId": "5c95dbd3de5a438a930e5e6237afee1a",
+  "code": "200",
+  "data": {
+    "seParams": {},
+    "requestId": "5c95dbd3de5a438a930e5e6237afee1a",
+    "apiData": {
+      "apiRecall": [],
+      "entity": [
+        {
+          "code": "DEA.N",
+          "name": "EASTERLY GOVERNMENT PROPERTIES, INC."
+        },
+        {
+          "code": "MA.N",
+          "name": "万事达"
+        },
+        {
+          "code": "688293.SH",
+          "name": "奥浦迈"
+        }
+      ]
+    },
+    "extraParams": {}
+  }
+}

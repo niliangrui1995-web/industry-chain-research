@@ -1,0 +1,357 @@
+PASS | 文件已写出 | D:\vcp_hunter\产业链投研\outputs\决策看板_全球Biotech融资.html 字节数=365954
+PASS | 无乱码替换符 | count=0
+PASS | 标签配平 <table> | open=32 close=32
+PASS | 标签配平 <thead> | open=32 close=32
+PASS | 标签配平 <tbody> | open=32 close=32
+PASS | 标签配平 <tr> | open=213 close=213
+PASS | 标签配平 <td> | open=648 close=648
+PASS | 标签配平 <th> | open=114 close=114
+PASS | 标签配平 <div> | open=391 close=391
+PASS | 标签配平 <section> | open=0 close=0
+PASS | 标签配平 <figure> | open=15 close=15
+PASS | 标签配平 <svg> | open=15 close=15
+PASS | 标签配平 <ul> | open=8 close=8
+PASS | 标签配平 <li> | open=85 close=85
+PASS | 标签配平 <button> | open=355 close=355
+PASS | 标签配平 <details> | open=19 close=19
+PASS | 标签配平 <summary> | open=19 close=19
+PASS | 标签配平 <aside> | open=1 close=1
+PASS | 标签配平 <span> | open=740 close=740
+PASS | 标签配平 <a> | open=700 close=700
+PASS | 无残留 %s 占位 | 
+PASS | 无残留 format 占位 | 
+PASS | 无 >None< 泄漏 | 
+PASS | 无 nan 泄漏 | 
+PASS | 全部 46 条证据均被引用 | 未引用: []
+PASS | 引用锚点唯一 | total=317 unique=317
+PASS | 锚点与计划一致 | planned=317 found=317
+PASS | 返回链接存在 cite-E-001-1 | 
+PASS | 返回链接存在 cite-E-001-2 | 
+PASS | 返回链接存在 cite-E-001-3 | 
+PASS | 返回链接存在 cite-E-001-4 | 
+PASS | 返回链接存在 cite-E-001-5 | 
+PASS | 返回链接存在 cite-E-001-6 | 
+PASS | 返回链接存在 cite-E-001-7 | 
+PASS | 返回链接存在 cite-E-001-8 | 
+PASS | 返回链接存在 cite-E-001-9 | 
+PASS | 返回链接存在 cite-E-001-10 | 
+PASS | 返回链接存在 cite-E-001-11 | 
+PASS | 返回链接存在 cite-E-001-12 | 
+PASS | 返回链接存在 cite-E-002-1 | 
+PASS | 返回链接存在 cite-E-002-2 | 
+PASS | 返回链接存在 cite-E-002-3 | 
+PASS | 返回链接存在 cite-E-002-4 | 
+PASS | 返回链接存在 cite-E-002-5 | 
+PASS | 返回链接存在 cite-E-002-6 | 
+PASS | 返回链接存在 cite-E-003-1 | 
+PASS | 返回链接存在 cite-E-003-2 | 
+PASS | 返回链接存在 cite-E-003-3 | 
+PASS | 返回链接存在 cite-E-003-4 | 
+PASS | 返回链接存在 cite-E-003-5 | 
+PASS | 返回链接存在 cite-E-004-1 | 
+PASS | 返回链接存在 cite-E-004-2 | 
+PASS | 返回链接存在 cite-E-005-1 | 
+PASS | 返回链接存在 cite-E-005-2 | 
+PASS | 返回链接存在 cite-E-005-3 | 
+PASS | 返回链接存在 cite-E-005-4 | 
+PASS | 返回链接存在 cite-E-005-5 | 
+PASS | 返回链接存在 cite-E-005-6 | 
+PASS | 返回链接存在 cite-E-005-7 | 
+PASS | 返回链接存在 cite-E-005-8 | 
+PASS | 返回链接存在 cite-E-005-9 | 
+PASS | 返回链接存在 cite-E-005-10 | 
+PASS | 返回链接存在 cite-E-005-11 | 
+PASS | 返回链接存在 cite-E-005-12 | 
+PASS | 返回链接存在 cite-E-006-1 | 
+PASS | 返回链接存在 cite-E-006-2 | 
+PASS | 返回链接存在 cite-E-006-3 | 
+PASS | 返回链接存在 cite-E-006-4 | 
+PASS | 返回链接存在 cite-E-006-5 | 
+PASS | 返回链接存在 cite-E-006-6 | 
+PASS | 返回链接存在 cite-E-006-7 | 
+PASS | 返回链接存在 cite-E-006-8 | 
+PASS | 返回链接存在 cite-E-006-9 | 
+PASS | 返回链接存在 cite-E-006-10 | 
+PASS | 返回链接存在 cite-E-006-11 | 
+PASS | 返回链接存在 cite-E-006-12 | 
+PASS | 返回链接存在 cite-E-006-13 | 
+PASS | 返回链接存在 cite-E-006-14 | 
+PASS | 返回链接存在 cite-E-006-15 | 
+PASS | 返回链接存在 cite-E-006-16 | 
+PASS | 返回链接存在 cite-E-007-1 | 
+PASS | 返回链接存在 cite-E-007-2 | 
+PASS | 返回链接存在 cite-E-007-3 | 
+PASS | 返回链接存在 cite-E-007-4 | 
+PASS | 返回链接存在 cite-E-007-5 | 
+PASS | 返回链接存在 cite-E-007-6 | 
+PASS | 返回链接存在 cite-E-007-7 | 
+PASS | 返回链接存在 cite-E-007-8 | 
+PASS | 返回链接存在 cite-E-007-9 | 
+PASS | 返回链接存在 cite-E-007-10 | 
+PASS | 返回链接存在 cite-E-007-11 | 
+PASS | 返回链接存在 cite-E-007-12 | 
+PASS | 返回链接存在 cite-E-007-13 | 
+PASS | 返回链接存在 cite-E-007-14 | 
+PASS | 返回链接存在 cite-E-007-15 | 
+PASS | 返回链接存在 cite-E-007-16 | 
+PASS | 返回链接存在 cite-E-008-1 | 
+PASS | 返回链接存在 cite-E-008-2 | 
+PASS | 返回链接存在 cite-E-009-1 | 
+PASS | 返回链接存在 cite-E-009-2 | 
+PASS | 返回链接存在 cite-E-009-3 | 
+PASS | 返回链接存在 cite-E-009-4 | 
+PASS | 返回链接存在 cite-E-009-5 | 
+PASS | 返回链接存在 cite-E-009-6 | 
+PASS | 返回链接存在 cite-E-009-7 | 
+PASS | 返回链接存在 cite-E-009-8 | 
+PASS | 返回链接存在 cite-E-009-9 | 
+PASS | 返回链接存在 cite-E-009-10 | 
+PASS | 返回链接存在 cite-E-009-11 | 
+PASS | 返回链接存在 cite-E-009-12 | 
+PASS | 返回链接存在 cite-E-009-13 | 
+PASS | 返回链接存在 cite-E-009-14 | 
+PASS | 返回链接存在 cite-E-010-1 | 
+PASS | 返回链接存在 cite-E-010-2 | 
+PASS | 返回链接存在 cite-E-010-3 | 
+PASS | 返回链接存在 cite-E-010-4 | 
+PASS | 返回链接存在 cite-E-010-5 | 
+PASS | 返回链接存在 cite-E-010-6 | 
+PASS | 返回链接存在 cite-E-010-7 | 
+PASS | 返回链接存在 cite-E-010-8 | 
+PASS | 返回链接存在 cite-E-011-1 | 
+PASS | 返回链接存在 cite-E-011-2 | 
+PASS | 返回链接存在 cite-E-011-3 | 
+PASS | 返回链接存在 cite-E-011-4 | 
+PASS | 返回链接存在 cite-E-011-5 | 
+PASS | 返回链接存在 cite-E-011-6 | 
+PASS | 返回链接存在 cite-E-011-7 | 
+PASS | 返回链接存在 cite-E-011-8 | 
+PASS | 返回链接存在 cite-E-011-9 | 
+PASS | 返回链接存在 cite-E-011-10 | 
+PASS | 返回链接存在 cite-E-011-11 | 
+PASS | 返回链接存在 cite-E-011-12 | 
+PASS | 返回链接存在 cite-E-011-13 | 
+PASS | 返回链接存在 cite-E-011-14 | 
+PASS | 返回链接存在 cite-E-012-1 | 
+PASS | 返回链接存在 cite-E-012-2 | 
+PASS | 返回链接存在 cite-E-012-3 | 
+PASS | 返回链接存在 cite-E-012-4 | 
+PASS | 返回链接存在 cite-E-012-5 | 
+PASS | 返回链接存在 cite-E-012-6 | 
+PASS | 返回链接存在 cite-E-012-7 | 
+PASS | 返回链接存在 cite-E-012-8 | 
+PASS | 返回链接存在 cite-E-013-1 | 
+PASS | 返回链接存在 cite-E-013-2 | 
+PASS | 返回链接存在 cite-E-013-3 | 
+PASS | 返回链接存在 cite-E-013-4 | 
+PASS | 返回链接存在 cite-E-014-1 | 
+PASS | 返回链接存在 cite-E-014-2 | 
+PASS | 返回链接存在 cite-E-014-3 | 
+PASS | 返回链接存在 cite-E-014-4 | 
+PASS | 返回链接存在 cite-E-014-5 | 
+PASS | 返回链接存在 cite-E-014-6 | 
+PASS | 返回链接存在 cite-E-014-7 | 
+PASS | 返回链接存在 cite-E-014-8 | 
+PASS | 返回链接存在 cite-E-015-1 | 
+PASS | 返回链接存在 cite-E-015-2 | 
+PASS | 返回链接存在 cite-E-015-3 | 
+PASS | 返回链接存在 cite-E-015-4 | 
+PASS | 返回链接存在 cite-E-015-5 | 
+PASS | 返回链接存在 cite-E-015-6 | 
+PASS | 返回链接存在 cite-E-016-1 | 
+PASS | 返回链接存在 cite-E-016-2 | 
+PASS | 返回链接存在 cite-E-017-1 | 
+PASS | 返回链接存在 cite-E-018-1 | 
+PASS | 返回链接存在 cite-E-018-2 | 
+PASS | 返回链接存在 cite-E-019-1 | 
+PASS | 返回链接存在 cite-E-019-2 | 
+PASS | 返回链接存在 cite-E-019-3 | 
+PASS | 返回链接存在 cite-E-019-4 | 
+PASS | 返回链接存在 cite-E-020-1 | 
+PASS | 返回链接存在 cite-E-020-2 | 
+PASS | 返回链接存在 cite-E-020-3 | 
+PASS | 返回链接存在 cite-E-020-4 | 
+PASS | 返回链接存在 cite-E-020-5 | 
+PASS | 返回链接存在 cite-E-020-6 | 
+PASS | 返回链接存在 cite-E-020-7 | 
+PASS | 返回链接存在 cite-E-020-8 | 
+PASS | 返回链接存在 cite-E-020-9 | 
+PASS | 返回链接存在 cite-E-020-10 | 
+PASS | 返回链接存在 cite-E-021-1 | 
+PASS | 返回链接存在 cite-E-021-2 | 
+PASS | 返回链接存在 cite-E-022-1 | 
+PASS | 返回链接存在 cite-E-022-2 | 
+PASS | 返回链接存在 cite-E-022-3 | 
+PASS | 返回链接存在 cite-E-022-4 | 
+PASS | 返回链接存在 cite-E-022-5 | 
+PASS | 返回链接存在 cite-E-023-1 | 
+PASS | 返回链接存在 cite-E-023-2 | 
+PASS | 返回链接存在 cite-E-023-3 | 
+PASS | 返回链接存在 cite-E-023-4 | 
+PASS | 返回链接存在 cite-E-023-5 | 
+PASS | 返回链接存在 cite-E-023-6 | 
+PASS | 返回链接存在 cite-E-023-7 | 
+PASS | 返回链接存在 cite-E-023-8 | 
+PASS | 返回链接存在 cite-E-023-9 | 
+PASS | 返回链接存在 cite-E-023-10 | 
+PASS | 返回链接存在 cite-E-023-11 | 
+PASS | 返回链接存在 cite-E-023-12 | 
+PASS | 返回链接存在 cite-E-023-13 | 
+PASS | 返回链接存在 cite-E-023-14 | 
+PASS | 返回链接存在 cite-E-023-15 | 
+PASS | 返回链接存在 cite-E-023-16 | 
+PASS | 返回链接存在 cite-E-024-1 | 
+PASS | 返回链接存在 cite-E-024-2 | 
+PASS | 返回链接存在 cite-E-024-3 | 
+PASS | 返回链接存在 cite-E-024-4 | 
+PASS | 返回链接存在 cite-E-024-5 | 
+PASS | 返回链接存在 cite-E-024-6 | 
+PASS | 返回链接存在 cite-E-024-7 | 
+PASS | 返回链接存在 cite-E-024-8 | 
+PASS | 返回链接存在 cite-E-024-9 | 
+PASS | 返回链接存在 cite-E-025-1 | 
+PASS | 返回链接存在 cite-E-025-2 | 
+PASS | 返回链接存在 cite-E-025-3 | 
+PASS | 返回链接存在 cite-E-025-4 | 
+PASS | 返回链接存在 cite-E-025-5 | 
+PASS | 返回链接存在 cite-E-025-6 | 
+PASS | 返回链接存在 cite-E-025-7 | 
+PASS | 返回链接存在 cite-E-025-8 | 
+PASS | 返回链接存在 cite-E-026-1 | 
+PASS | 返回链接存在 cite-E-026-2 | 
+PASS | 返回链接存在 cite-E-026-3 | 
+PASS | 返回链接存在 cite-E-026-4 | 
+PASS | 返回链接存在 cite-E-027-1 | 
+PASS | 返回链接存在 cite-E-027-2 | 
+PASS | 返回链接存在 cite-E-027-3 | 
+PASS | 返回链接存在 cite-E-027-4 | 
+PASS | 返回链接存在 cite-E-027-5 | 
+PASS | 返回链接存在 cite-E-027-6 | 
+PASS | 返回链接存在 cite-E-027-7 | 
+PASS | 返回链接存在 cite-E-027-8 | 
+PASS | 返回链接存在 cite-E-027-9 | 
+PASS | 返回链接存在 cite-E-027-10 | 
+PASS | 返回链接存在 cite-E-027-11 | 
+PASS | 返回链接存在 cite-E-027-12 | 
+PASS | 返回链接存在 cite-E-028-1 | 
+PASS | 返回链接存在 cite-E-028-2 | 
+PASS | 返回链接存在 cite-E-028-3 | 
+PASS | 返回链接存在 cite-E-028-4 | 
+PASS | 返回链接存在 cite-E-029-1 | 
+PASS | 返回链接存在 cite-E-029-2 | 
+PASS | 返回链接存在 cite-E-029-3 | 
+PASS | 返回链接存在 cite-E-029-4 | 
+PASS | 返回链接存在 cite-E-029-5 | 
+PASS | 返回链接存在 cite-E-030-1 | 
+PASS | 返回链接存在 cite-E-030-2 | 
+PASS | 返回链接存在 cite-E-031-1 | 
+PASS | 返回链接存在 cite-E-031-2 | 
+PASS | 返回链接存在 cite-E-031-3 | 
+PASS | 返回链接存在 cite-E-031-4 | 
+PASS | 返回链接存在 cite-E-031-5 | 
+PASS | 返回链接存在 cite-E-032-1 | 
+PASS | 返回链接存在 cite-E-032-2 | 
+PASS | 返回链接存在 cite-E-032-3 | 
+PASS | 返回链接存在 cite-E-032-4 | 
+PASS | 返回链接存在 cite-E-032-5 | 
+PASS | 返回链接存在 cite-E-032-6 | 
+PASS | 返回链接存在 cite-E-032-7 | 
+PASS | 返回链接存在 cite-E-032-8 | 
+PASS | 返回链接存在 cite-E-032-9 | 
+PASS | 返回链接存在 cite-E-032-10 | 
+PASS | 返回链接存在 cite-E-032-11 | 
+PASS | 返回链接存在 cite-E-032-12 | 
+PASS | 返回链接存在 cite-E-032-13 | 
+PASS | 返回链接存在 cite-E-032-14 | 
+PASS | 返回链接存在 cite-E-033-1 | 
+PASS | 返回链接存在 cite-E-033-2 | 
+PASS | 返回链接存在 cite-E-033-3 | 
+PASS | 返回链接存在 cite-E-033-4 | 
+PASS | 返回链接存在 cite-E-033-5 | 
+PASS | 返回链接存在 cite-E-034-1 | 
+PASS | 返回链接存在 cite-E-034-2 | 
+PASS | 返回链接存在 cite-E-034-3 | 
+PASS | 返回链接存在 cite-E-034-4 | 
+PASS | 返回链接存在 cite-E-034-5 | 
+PASS | 返回链接存在 cite-E-034-6 | 
+PASS | 返回链接存在 cite-E-034-7 | 
+PASS | 返回链接存在 cite-E-034-8 | 
+PASS | 返回链接存在 cite-E-034-9 | 
+PASS | 返回链接存在 cite-E-034-10 | 
+PASS | 返回链接存在 cite-E-034-11 | 
+PASS | 返回链接存在 cite-E-035-1 | 
+PASS | 返回链接存在 cite-E-035-2 | 
+PASS | 返回链接存在 cite-E-035-3 | 
+PASS | 返回链接存在 cite-E-035-4 | 
+PASS | 返回链接存在 cite-E-036-1 | 
+PASS | 返回链接存在 cite-E-036-2 | 
+PASS | 返回链接存在 cite-E-036-3 | 
+PASS | 返回链接存在 cite-E-036-4 | 
+PASS | 返回链接存在 cite-E-037-1 | 
+PASS | 返回链接存在 cite-E-037-2 | 
+PASS | 返回链接存在 cite-E-037-3 | 
+PASS | 返回链接存在 cite-E-037-4 | 
+PASS | 返回链接存在 cite-E-037-5 | 
+PASS | 返回链接存在 cite-E-037-6 | 
+PASS | 返回链接存在 cite-E-037-7 | 
+PASS | 返回链接存在 cite-E-037-8 | 
+PASS | 返回链接存在 cite-E-037-9 | 
+PASS | 返回链接存在 cite-E-037-10 | 
+PASS | 返回链接存在 cite-E-037-11 | 
+PASS | 返回链接存在 cite-E-038-1 | 
+PASS | 返回链接存在 cite-E-038-2 | 
+PASS | 返回链接存在 cite-E-038-3 | 
+PASS | 返回链接存在 cite-E-039-1 | 
+PASS | 返回链接存在 cite-E-039-2 | 
+PASS | 返回链接存在 cite-E-039-3 | 
+PASS | 返回链接存在 cite-E-040-1 | 
+PASS | 返回链接存在 cite-E-040-2 | 
+PASS | 返回链接存在 cite-E-040-3 | 
+PASS | 返回链接存在 cite-E-041-1 | 
+PASS | 返回链接存在 cite-E-041-2 | 
+PASS | 返回链接存在 cite-E-041-3 | 
+PASS | 返回链接存在 cite-E-041-4 | 
+PASS | 返回链接存在 cite-E-041-5 | 
+PASS | 返回链接存在 cite-E-041-6 | 
+PASS | 返回链接存在 cite-E-041-7 | 
+PASS | 返回链接存在 cite-E-041-8 | 
+PASS | 返回链接存在 cite-E-041-9 | 
+PASS | 返回链接存在 cite-E-041-10 | 
+PASS | 返回链接存在 cite-E-041-11 | 
+PASS | 返回链接存在 cite-E-042-1 | 
+PASS | 返回链接存在 cite-E-042-2 | 
+PASS | 返回链接存在 cite-E-042-3 | 
+PASS | 返回链接存在 cite-E-042-4 | 
+PASS | 返回链接存在 cite-E-042-5 | 
+PASS | 返回链接存在 cite-E-043-1 | 
+PASS | 返回链接存在 cite-E-043-2 | 
+PASS | 返回链接存在 cite-E-043-3 | 
+PASS | 返回链接存在 cite-E-044-1 | 
+PASS | 返回链接存在 cite-E-044-2 | 
+PASS | 返回链接存在 cite-E-044-3 | 
+PASS | 返回链接存在 cite-E-044-4 | 
+PASS | 返回链接存在 cite-E-044-5 | 
+PASS | 返回链接存在 cite-E-044-6 | 
+PASS | 返回链接存在 cite-E-045-1 | 
+PASS | 返回链接存在 cite-E-045-2 | 
+PASS | 返回链接存在 cite-E-045-3 | 
+PASS | 返回链接存在 cite-E-045-4 | 
+PASS | 返回链接存在 cite-E-045-5 | 
+PASS | 返回链接存在 cite-E-045-6 | 
+PASS | 返回链接存在 cite-E-046-1 | 
+PASS | 返回链接存在 cite-E-046-2 | 
+PASS | 返回链接存在 cite-E-046-3 | 
+PASS | 返回链接存在 cite-E-046-4 | 
+PASS | 正文无裸 E-xxx 编号 | count=0 示例: []
+PASS | html 标记 mode | 
+PASS | html 标记 baseline | 
+PASS | html 标记 seed | 
+PASS | UTF-8 meta | 
+PASS | viewport meta | 
+PASS | 全部 moss tokens 在 :root 中逐字出现 | missing=[]
+PASS | 图表数量 = 15 | found=15
+PASS | 每图均有数据表回退 | 
+PASS | 章节锚点齐全 | 
+
+总体: ALL PASS
+引用统计: {"E-001": 12, "E-002": 6, "E-003": 5, "E-004": 2, "E-005": 12, "E-006": 16, "E-007": 16, "E-008": 2, "E-009": 14, "E-010": 8, "E-011": 14, "E-012": 8, "E-013": 4, "E-014": 8, "E-015": 6, "E-016": 2, "E-017": 1, "E-018": 2, "E-019": 4, "E-020": 10, "E-021": 2, "E-022": 5, "E-023": 16, "E-024": 9, "E-025": 8, "E-026": 4, "E-027": 12, "E-028": 4, "E-029": 5, "E-030": 2, "E-031": 5, "E-032": 14, "E-033": 5, "E-034": 11, "E-035": 4, "E-036": 4, "E-037": 11, "E-038": 3, "E-039": 3, "E-040": 3, "E-041": 11, "E-042": 5, "E-043": 3, "E-044": 6, "E-045": 6, "E-046": 4}

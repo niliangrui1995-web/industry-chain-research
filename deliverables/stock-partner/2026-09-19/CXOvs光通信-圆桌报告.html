@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CXO vs 光通信：2026下半年配置价值圆桌报告</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #F7F5F3; --bg-secondary: #FFFFFF; --bg-card: #FFFFFF;
+  --bg-elevated: #FAFAF9; --bg-warm: #F5F2EE; --bg-dark: #2D2926;
+  --text-primary: #2D2926; --text-secondary: #5C5652;
+  --text-muted: #8A8480; --text-light: #A8A29E;
+  --accent: #D97706; --accent-light: #FEF3C7; --accent-hover: #B45309;
+  --border: #E5E2DE; --border-light: #F0EEEC;
+  --red: #DC2626; --green: #059669; --gold: #D97706; --blue: #2563EB;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', Georgia, serif;
+  background: var(--bg-primary); color: var(--text-primary);
+  line-height: 1.8; font-size: 16px; -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: inherit; font-weight: 600; letter-spacing: 0.02em; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+.prose { max-width: 760px; margin: 0 auto; }
+.prose p { font-size: 1.05rem; line-height: 1.9; margin-bottom: 20px; color: var(--text-primary); }
+.section-head { max-width: 1100px; display: grid; grid-template-columns: 120px 1fr; gap: 32px; align-items: baseline; margin: 0 auto 48px; padding: 0 48px; }
+.section-num { font-size: 0.9rem; color: var(--accent); letter-spacing: 0.15em; border-top: 1px solid var(--accent); padding-top: 8px; }
+.section-title { font-size: 2rem; }
+.section-lede { color: var(--text-muted); margin-top: 6px; font-size: 1rem; }
+section { padding: 72px 0; }
+
+/* ===== Nav ===== */
+nav { position: sticky; top: 0; z-index: 100; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(247,245,243,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-light); }
+.nav-logo { font-weight: 600; font-size: 1rem; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { color: var(--text-secondary); font-size: 0.95rem; }
+.nav-links a:hover { color: var(--accent); }
+
+/* ===== Hero ===== */
+.hero { max-width: 1100px; margin: 0 auto; padding: 96px 48px 48px; }
+.kicker { color: var(--accent); font-size: 0.9rem; letter-spacing: 0.15em; font-weight: 500; margin-bottom: 24px; }
+.hero h1 { font-size: 3rem; line-height: 1.25; margin-bottom: 24px; max-width: 900px; }
+.hero-dek { max-width: 760px; font-size: 1.15rem; color: var(--text-secondary); line-height: 1.9; margin-bottom: 40px; }
+.host { display: inline-flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--text-muted); }
+.host img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+
+/* ===== Module 1 · Conclusion Card ===== */
+.conclusion-wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+.conclusion-card {
+  padding: 40px 48px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-left: 6px solid var(--accent); border-radius: 20px;
+  box-shadow: 0 4px 28px rgba(217, 119, 6, 0.06);
+}
+#conclusion { padding: 0; }
+#conclusion .section-head { margin-bottom: 48px; }
+.cc-question {
+  font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.05em;
+  margin-bottom: 8px; text-transform: uppercase;
+}
+.cc-question-text {
+  font-size: 1.4rem; font-weight: 600; color: var(--text-primary);
+  margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px dashed var(--border);
+}
+.cc-question-text::before { content: "「"; color: var(--accent); }
+.cc-question-text::after { content: "」"; color: var(--accent); }
+
+.cc-snapshot { margin-bottom: 32px; }
+.cc-snapshot-label {
+  font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.18em;
+  font-weight: 600; margin-bottom: 14px; text-transform: uppercase;
+}
+.cc-snapshot-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--bg-elevated); border: 1px solid var(--border-light);
+  border-radius: 12px; overflow: hidden;
+}
+.cc-snap-cell {
+  padding: 16px 20px;
+  border-right: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-elevated);
+}
+.cc-snap-cell:nth-child(4n) { border-right: none; }
+.cc-snap-cell:nth-last-child(-n+4) { border-bottom: none; }
+.cc-snap-cell-label {
+  font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.cc-snap-cell-value {
+  font-size: 1.4rem; font-weight: 600; color: var(--text-primary);
+  font-variant-numeric: tabular-nums; line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+.cc-snap-cell-sub {
+  font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.cc-snap-up { color: var(--red); }
+.cc-snap-down { color: var(--green); }
+
+.cc-headline-label {
+  font-size: 0.8rem; color: var(--accent); letter-spacing: 0.2em;
+  font-weight: 600; margin-bottom: 14px; text-transform: uppercase;
+}
+.cc-headline {
+  font-size: 1.15rem; font-weight: 500; color: var(--text-primary);
+  letter-spacing: 0.01em; line-height: 1.75;
+  margin-bottom: 32px; padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.cc-headline strong { font-weight: 700; color: var(--text-primary); }
+.cc-headline em { font-style: normal; font-weight: 700; color: var(--red); }
+
+.cc-actions-intro {
+  font-size: 0.95rem; color: var(--text-muted); letter-spacing: 0.02em;
+  margin-bottom: 18px;
+}
+.cc-actions {
+  display: flex; flex-direction: column;
+  margin-bottom: 28px;
+}
+.cc-action-row {
+  display: grid; grid-template-columns: 180px 1fr;
+  gap: 28px; padding: 18px 0; align-items: baseline;
+  border-bottom: 1px dashed var(--border-light);
+}
+.cc-action-row:last-child { border-bottom: none; }
+.cc-action-label {
+  font-weight: 600; color: var(--accent); font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+.cc-action-detail {
+  color: var(--text-primary); font-size: 1rem; line-height: 1.85;
+}
+.cc-action-detail strong { color: var(--text-primary); font-weight: 600; }
+
+.cc-vote {
+  display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+  padding-top: 20px; border-top: 1px dashed var(--border);
+}
+.cc-vote-label { font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.05em; }
+.cc-vote-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.85rem; color: var(--text-secondary);
+  padding: 4px 12px; background: var(--bg-elevated); border-radius: 999px;
+  border: 1px solid var(--border-light);
+}
+.cc-vote-tag .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ===== Module 2 · Voice Card ===== */
+.voice-stack { max-width: 1100px; margin: 0 auto; padding: 0 48px; display: flex; flex-direction: column; gap: 24px; }
+.voice-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 36px; min-width: 0; }
+.voice-head { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border-light); }
+.voice-head img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+.voice-name { font-weight: 600; font-size: 1.1rem; flex: 1; }
+.voice-card ol, .voice-card ul { padding-left: 20px; }
+.voice-card li { margin-bottom: 12px; line-height: 1.8; }
+.voice-card strong { color: var(--text-primary); font-weight: 600; }
+.voice-card h4 { margin: 20px 0 10px; font-size: 1.05rem; color: var(--text-primary); }
+.voice-card p { margin-bottom: 14px; line-height: 1.85; color: var(--text-secondary); }
+.voice-card table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.95rem; margin: 16px 0; }
+.voice-card th, .voice-card td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border-light); }
+.voice-card th { color: var(--text-muted); font-weight: 500; background: var(--bg-elevated); font-size: 0.85rem; }
+.voice-card .table-scroll { overflow-x: auto; margin: 16px 0; }
+.voice-card .pull-quote { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin: 16px 0; color: var(--text-secondary); font-style: italic; }
+
+/* ===== Module 3a · Notes List（主持人札记） ===== */
+.notes-stack { max-width: 1100px; margin: 0 auto; padding: 0 48px; display: flex; flex-direction: column; gap: 16px; }
+.note-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; display: grid; grid-template-columns: 56px 1fr; gap: 20px; align-items: baseline; }
+.note-num { font-size: 1.6rem; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1; opacity: 0.6; }
+.note-body h4 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary); }
+.note-body p { font-size: 0.98rem; line-height: 1.85; color: var(--text-secondary); margin: 0 0 12px; }
+.note-body p:last-child { margin-bottom: 0; }
+.note-body p strong { color: var(--text-primary); }
+
+/* ===== Module 3b · Q&A Card（主持人 Q&A） ===== */
+.qa-stack { max-width: 1100px; margin: 0 auto; padding: 0 48px; display: flex; flex-direction: column; gap: 18px; }
+.qa-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px 32px; }
+.qa-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; letter-spacing: 0.06em; padding: 4px 12px; border-radius: 999px; background: var(--bg-warm); color: var(--text-secondary); margin-bottom: 14px; font-weight: 500; }
+.qa-tag.tag-key { background: #FEF3C7; color: #B45309; }
+.qa-tag.tag-confuse { background: #FEE2E2; color: #B91C1C; }
+.qa-tag.tag-miss { background: #DBEAFE; color: #1D4ED8; }
+.qa-tag.tag-meta { background: #EDE9FE; color: #6D28D9; }
+.qa-question { font-size: 1.15rem; font-weight: 600; color: var(--text-primary); margin-bottom: 14px; line-height: 1.5; }
+.qa-question::before { content: "Q. "; color: var(--accent); font-weight: 700; }
+.qa-answer { color: var(--text-secondary); font-size: 1rem; line-height: 1.85; }
+.qa-answer::before { content: "A. "; color: var(--text-muted); font-weight: 600; margin-right: 4px; }
+.qa-answer p { margin-bottom: 12px; }
+.qa-answer p:last-child { margin-bottom: 0; }
+.qa-answer strong { color: var(--text-primary); }
+
+/* ===== Module 4 · Trigger Table（关键变量触发表） ===== */
+.trigger-wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+.trigger-table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; font-variant-numeric: tabular-nums; }
+.trigger-table th, .trigger-table td { padding: 18px 22px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+.trigger-table tr:last-child td { border-bottom: none; }
+.trigger-table th { background: var(--bg-elevated); color: var(--text-muted); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+.trigger-var { font-weight: 600; color: var(--text-primary); font-size: 1.02rem; min-width: 200px; }
+.trigger-var .now { display: block; font-weight: 400; color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; letter-spacing: 0; text-transform: none; }
+.trigger-action { color: var(--text-secondary); font-size: 0.98rem; line-height: 1.85; }
+.trigger-action strong { color: var(--text-primary); font-weight: 600; }
+.trigger-action .up { color: var(--red); font-weight: 600; }
+.trigger-action .down { color: var(--green); font-weight: 600; }
+
+/* ===== Sub-section divider（用于 Module 3 内部 3a / 3b 分隔） ===== */
+.subsection-label { max-width: 1100px; margin: 48px auto 20px; padding: 0 48px; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; }
+.subsection-label:first-of-type { margin-top: 0; }
+
+/* ===== Passage Card（兜底承接：4 模块外的非标内容） ===== */
+.passage-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px; max-width: 1100px; margin: 0 auto 24px; }
+.passage-card h3 { font-size: 1.3rem; margin-bottom: 16px; color: var(--text-primary); }
+.passage-card h4 { font-size: 1.05rem; margin: 24px 0 10px; color: var(--text-primary); }
+.passage-card p { font-size: 1rem; line-height: 1.9; margin-bottom: 16px; color: var(--text-secondary); }
+.passage-card ul, .passage-card ol { padding-left: 22px; margin-bottom: 16px; }
+.passage-card li { margin-bottom: 8px; line-height: 1.85; color: var(--text-secondary); }
+.passage-card strong { color: var(--text-primary); font-weight: 600; }
+.passage-card table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.95rem; margin: 16px 0 24px; }
+.passage-card th, .passage-card td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+.passage-card th { color: var(--text-muted); font-weight: 500; background: var(--bg-elevated); letter-spacing: 0.04em; font-size: 0.85rem; }
+
+/* ===== Footer ===== */
+footer { background: var(--bg-dark); color: var(--text-light); padding: 48px; text-align: center; margin-top: 72px; }
+footer p { max-width: 680px; margin: 0 auto; font-size: 0.95rem; }
+.footer-sub { margin-top: 16px; font-size: 0.8rem; color: var(--text-light); opacity: 0.7; }
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .container, .voice-stack, .qa-stack, .trigger-wrap, .notes-stack, .subsection-label, .conclusion-wrap { padding-left: 24px; padding-right: 24px; }
+  .hero { padding-left: 24px; padding-right: 24px; }
+  .conclusion-card { padding: 28px 24px; }
+  .cc-headline { font-size: 1.05rem; line-height: 1.7; }
+  .cc-action-row { grid-template-columns: 1fr; gap: 6px; }
+  .cc-snapshot-grid { grid-template-columns: repeat(2, 1fr); }
+  .cc-snap-cell:nth-child(4n) { border-right: 1px solid var(--border-light); }
+  .cc-snap-cell:nth-child(2n) { border-right: none; }
+  .cc-snap-cell:nth-last-child(-n+4) { border-bottom: 1px solid var(--border-light); }
+  .cc-snap-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .hero h1 { font-size: 2.2rem; }
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .voice-card, .passage-card { padding: 24px; }
+  .qa-card { padding: 22px; }
+  .trigger-table th, .trigger-table td { padding: 14px 14px; }
+  .note-item { padding: 20px; grid-template-columns: 1fr; gap: 8px; }
+  .section-head { padding: 0 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo">📰 CXO vs 光通信 · 圆桌</a>
+  <div class="nav-links">
+    <a href="#conclusion">结论</a>
+    <a href="#voices">视角</a>
+    <a href="#thinking">思考</a>
+    <a href="#watch">关注</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="kicker">ROUND TABLE · 2026-09-19 · 板块对比</div>
+  <h1>CXO 与光通信，2026 下半年谁更值得关注？</h1>
+  <div class="hero-dek">六位专家六种方法论独立诊断：业绩兑现 vs 周期反转，4:2 的投票背后是一场关于"赚哪段时间的钱"的辩论。</div>
+  <div class="host">
+    <img src="data:image/webp;base64,UklGRi4NAABXRUJQVlA4ICINAAAQOQCdASqAAIAAPlEgjUSjoiEirhG8AHAKCWIA0AxqfSecrY/8X+L+b8qrzROeflA7ZPmC/p19Evcs8wv7L+rN6OPQA/pv966zX0Cv299Nn9tfhL/cL9t/Zx/8N6mfivDXzB+o/bDmcxI/lH3p/JfmRzE8Aj17/meFRAL9afAS/vfSH7H+wB/M/6n/seTp9B9gL+f/1r0Bv+b/Pf5L1Q/nX+V/83+g+A7+c/2T/o8CB+2idLzisPiBJhm1VAPJs9PYhGFBVyYhZnkvEGLH+UGGg6vbw97XejCEcTrbCPOdmep/BGiAkbgcj44aK/663shu4UuL6qcMWtBSdRb8gfBXbTXs6I1tVEfqI4IjsaP/QmdrX/8NT/rHBFOQn6IEQvg7iUfTE6Rk2dGAr+yjGcududqYfmtx3lGLMLD7gKLptQUW5lE1h58Fbl9Hs8mSId8sliQzqq48md2MWj2ygYt6dQt2letoGFQID/1G/SRw2P2wArmCNSZK2A1dCy13fMP70YiDGh/kTfmtotCMRdbt1ZxV8ZTf+bhkkETUEOpenTelqhjRWDe8peD92b5HooNfJymdQQyRWARImEeX1BDHUfkclVuF0wWCWV1lD1OmyaAA/v3nDuiLlIhSefVwijCl3sHTdR+VxsZfaBqlL9bc5FJ+h19/8U0zSqP258y5WGeUuDPE3D06M/qwZsO6dKCnnU2ZSjhgvBi+GgEKiopoKwmvSEoRhIgH4e2NWx2IovqSQMS3ZhhX1GGnPxwgunlJftAe7Z7fBAGY7j5j00cXHY9Nroou14B9h8JQswBFQpA6fK2Dalp8UdXGIvfi5cDEqF/KM6thUjr1qm2zSFB7dkH9b71hz6MqPhnp9BBziSj3FkgvD+XEGm+ZHDbdxn9g3kDagyaEq38306lhoQEjSqHJsOYXmst5N+LoOrRA7XDP80c1PI3g5E1fx0ERR1SFOgppfMi8p3vnWJrfbcf8/IaWkyc2SgTh4o07ZbxJC4Ec6JaSEgtFc6/9ffNGK9eBKmhLwf/yUx7PlEn/qnw6E/KvsDOjZNkWL3dlLQYsmyJky5wdsd5OqknkdChpeVUoZqwi6iF5V8DxcVwAoRnhNUuNKaDzL9XH4IgTz3K70wgQOUErKzEcxMtdwXZzukIboletuXPLutSwIn2a8cXvV0Hef4SVubSoG89xmqyos7BHgQe7++c7n7/8zVd2+TqhyKJbtkxvnI2BsVQl/cIv6WfXf4oZJcW+Hic0TXI6dh/jM9jW4rFNdcx5DYE6g2oY3scqEZgeVNn2mvJ7Ppoj/Vx3wXOsvD99fAUDPgbIyDzZYNvm3PbFHNbX5jRxiv+JF2WSjqXPO2ZJtnP6ThSQW5fXB2SjkN4sRq3e5PJGEY2V+X9LizY4/h1YX7e7IjngvXYl+22nhKM5jx2G0tl1mAUGy0Iu/dWEHGnyPUUwvvNZz2MNU565+XHezOv+XJq2qoqK0jbjTZFa+n+v/WNIOCIxuT/FwErxF47yvUxNQO3VF98LWa3ysci9lw3B5qC+D7sH3EtHGJVdprLn7b7lrBai91fXRBYKTopvzpROKS2wC5BqoKMJFok0tDblk2qcEFecKqUikG/iD/sXq8yRDnlS7Dg5qt0qe9wZSQEXOOWah8Z9IrkOju4KsLRHdoZKq6TzaEzLQOxHzVreHbj1NRImfZq2bjOd3+T9hQpuq7RkX9/YO8mV0sjxsYTTxY9GfqjSDsnrpQ1wF0M65lf3YfJJGxPPrLH/e+v3DdEgghnBOad01lAe7C/CUcNbLQ0DOvJTmcrWeh26/vdXTVss+Pqn/yylBp4CfdRHA6mXiDjwMtqtQelBOEaolVbBzedlmgA1fH7LIwMzZlcQ9A24oyoA2wf55X5/4a/PWwsWj6sgjNt8WITZp/wilneVW+0YSnPwfwQCpwGrxCkb+M4XUOwl7BCD+n7pgBiJQl+3ck4vK6C3eAqzBGlTf9dUiLTo6CH3m4XF35NJUDDl1n46nGf1/QoLtRj1V/GvvCisWzDJznVDeMY/6vBGEWXwjbkqOnqkdn1NnlwP8tgpeH1snqWnq5FCcgqkPVablnl6Ur43z65mz+UKDLRnJxKm4Ka+1Eh9TN4hEdB3uPwgYjZIHrsCEYA5teDdGfR41xJdYqk0uy1Vat/CQU9StYgz4GUw6Q2gdbk5DNF7j9NrVn64Y+etvNQ0O/7qfUgUSHlMuEqEjev767Rc7fdI9YhX4NJV2sHaNuDgPPMCkL++T1w79Z8ZEkmhZQ3cz7pEBtZzPAamUy7rP8m6aoEm4YFlHnF3LlTz/b0ha80tJdCssiVMMLZTMEsh3ZJbofdLEmA4odXelpcs7bm5yeC++1SV+5HQpx8OPWBz9dG6BRx9S6WRBtE8k+Sl5qSQOUJcs8QM5pu/X+u1fx/zYG7Y/iWmBaIdmD8zQi4rK8PxZX46s/iKsaR8MslJYS+X+G/xYfwNGh3orzO4mzgO/XzR/gmxcxFl/7xHBOlNNf/2Y3+Gv8IyfvExj2AGdXwypd1/e61Njmc/zrU2zr4iGn1/lr2YERpYVj5S/W2/PTEm8vl5e5mNJUJeDgUOnFLxbuUa/i/6KwaT/bj/hr6xYvuEs/Zwnc/hDTO0hqCrpApIuFCzVOLvisbuxvPvsoDo0duSK7X0iDNUh9W/Ws9y+EiBtGQICI7z4smp7RG6yW8M/kZRZEZCY5mYoyCPUd9rLVdnZf/pvNdq/yVLJkVE+r/ImxtwifCYGBnrpb160fGx2LajKHq3QhMrZrj5hp7lzBe9tUrllQ4ejIOJFjKcQofz6OxF4zWZ0LDP423gzggaqM+OMkQ06nFsbLT9tZsiqYTjUfliNAjboCtwxH0djUOw6P67ZOv+Vn5guhpBVgaoFXd4oCzlFk3fcKLZcaHKJpE+oQds5/zctvdtBrOR0DsgeFIivLeWW3ee3oQiuli0YEeTGAKjEfSvo5eccnjutItEj82kXhi2U4ss4FdThhcul/91s345ZP6/q0gH6bFhZXL/vn5UV9mO1DD0RxZDe/UDCRD4+xviETqD8o0xkoyCevXB/Uguq3jOLewlWP+/9P775IkfkWzL/9Bd2owuZtZPMozNYL0wCnP7Yzn/dHYni+46iyJaAh0SkC83mdVcZTP4SN/q+QH5xmQ8gzzc9XtntXZP3aN2jKL7dZNd8EcZEOzo6nMGyoj0RLGyNjl5wCAzJaXs3+7KG21YwhxqEiBfioZodTlCdEXb93GPMh8aYy2nCcutlmZgOtFpcgqw9XJoDKJqQocG4e//ucyB6bEMsrrjwO027e+GQ+BivBojrTO2uQIdd9ScR+1EtVUMhUkzvpeA//I6Ho+5NYn7WWG2Fnqq6hNP5brcGlCqa6n4Ienf1UNPoTK6eGelRZFt+qXJx73HXcUA7EPc/RjR5AabaF0zWpYvsiyu0s4gvll11BbHzfxMGLXWuVPvz2fFOL0rhHdKDtcihBQTMYh3B4K+kpEltstlvLuCe0ryZhxofGbKCUG5//sCKBT/fTx1+xP2zTiYRYa1H2JH8Fj9FdHmD8xmhTj+iPaXEEaouNnKYHykhQ/Iq+SMf4L8WPc072IKJGV04U0OC/ImTjE49ziJf+nRgOh4EM0iyjuuIQ9xywFZc5HRkaaDhhc/2AuU5ezO8U7YiYyZExUrv99XnRfVta5qd1+J/Te0SU3aq0aDl6em53RdPPT6O+nMifXbmo2X9RyRr1Rclz0q5DSXsfXonP9Nzgyf4xJl0e89+76aEFGu5MCoBKani/cnHWDJGxERU7u/1vM0kz15kOWv/gqV1gpTwIjQW/1BKMe46eLnPR2icDj37fkdXY8D8jyaHyGVJlv6t2aunbx8bGOhEsUOgUNiTYizAlu0KtzsTMvwO0tuyc17gRf4J/+A/knlXVOOi8zv3IqvNPGAHP1mMQ+mRhUKGO3/V/BtH3BfUYUAj9XVTvI3ZSBt+VHOgDurvnn7y/pbftfrmRWpFSGf5FCLRJRYZHxl7mXRuCKf8CwT0mvtdknpxkH48gbpYyT7OAyX+zz0TjVUMkRInn9WFghzmxJPLPp6yXpcxQdTcD6/2NFIZ+9T3UoBQcUN6uxP0rIS9XD8D7YskDhVfLf1uljBlV/RVlT2ilw+nNGBdRxojP2iPatS1Obp1j17p9THkHbzBeavIDXHCAYhiVzdveBVd1/SqfL+UaDoPRmRwwdebuqWPZ0DPduT8iHG1Hl/zeGmnycvtXFA/9KdBf+iDG3W5aDO1wMtsEfHG79wrcvsCvSt+KcDAVR6bDB35nwXL6k09q9BeIxrgphNRySr9CGdm51k9YtG7gWITdUcmaTMVjESdf7/HJLG1L9amjpZTWxcfeTjmDtXtAaLb18Nae89CSUnVHg58uzoTMQdY/3Xnd4Id1CqKzvcnNpA/k81EJ2hYC4oqpGdW8ErpOpXfSJumEuh9zMeIFcB9jotvUpcO8rfLUwAAA==" alt="投研主编">
+    <span>投研主编 · 圆汇众（Yuan）· 腾讯自选股股票投研专家团</span>
+  </div>
+</section>
+
+<section id="conclusion">
+  <div class="section-head">
+    <div class="section-num">01 · 结论</div>
+    <div><h2>圆桌怎么看</h2><p class="section-dek">多视角交叉验证后的综合判断</p></div>
+  </div>
+  <div class="conclusion-wrap">
+    <div class="conclusion-card">
+
+      <div class="cc-question">YOU ASKED</div>
+      <div class="cc-question-text">请从投资研究视角，对比分析 CXO 板块与光通信板块在 2026 年下半年的配置价值，并给出明确判断：哪条主线更值得关注。</div>
+
+      <div class="cc-snapshot">
+        <div class="cc-snapshot-label">当前关键数据 · 截至 2026-09-18（来源：westock-mcp）</div>
+        <div class="cc-snapshot-grid">
+          <div class="cc-snap-cell">
+            <div class="cc-snap-cell-label">中际旭创收盘</div>
+            <div class="cc-snap-cell-value">926.43</div>
+            <div class="cc-snap-cell-sub cc-snap-up">9 月低点反弹 +15% / 距 7 月高点 -35%</div>
+          </div>
+          <div class="cc-snap-cell">
+            <div class="cc-snap-cell-label">旭创 2026H1 归母净利</div>
+            <div class="cc-snap-cell-value">+241.7%</div>
+            <div class="cc-snap-cell-sub cc-snap-up">136.5 亿 · 营收 +182.5%</div>
+          </div>
+          <div class="cc-snap-cell">
+            <div class="cc-snap-cell-label">新易盛 2026H1 归母净利</div>
+            <div class="cc-snap-cell-value">+91.0%</div>
+            <div class="cc-snap-cell-sub cc-snap-up">75.3 亿 · ROE(TTM) 54%</div>
+          </div>
+          <div class="cc-snap-cell">
+            <div class="cc-snap-cell-label">药明康德收盘</div>
+            <div class="cc-snap-cell-value">160.00</div>
+            <div class="cc-snap-cell-sub cc-snap-up">PE(TTM)≈22x · 三探 150 撑住</div>
+          </div>
+          <div class="cc-snap-cell">
+            <div class="cc-snap-cell-label">药明 2026H1 归母净利</div>
+            <div class="cc-snap-cell-value">+29.4%</div>
+            <div class="cc-snap-cell-sub cc-snap-up">Q2 扣非单季 +93.6%</div>
+          </div>
+          <div class="cc-snap-cell">
+            <div class="cc-snap-cell-label">光通信板块 PE-TTM</div>
+            <div class="cc-snap-cell-value">≈84x</div>
+            <div class="cc-snap-cell-sub cc-snap-down">总市值 5.88 万亿 / 净利 697.5 亿</div>
+          </div>
+          <div class="cc-snap-cell">
+            <div class="cc-snap-cell-label">CPO 概念主力资金</div>
+            <div class="cc-snap-cell-value">+137.6 亿</div>
+            <div class="cc-snap-cell-sub cc-snap-up">单日净流入 · 板块排名 17/803</div>
+          </div>
+          <div class="cc-snap-cell">
+            <div class="cc-snap-cell-label">创新药 ETF 近 20 日</div>
+            <div class="cc-snap-cell-value">-6.3%</div>
+            <div class="cc-snap-cell-sub cc-snap-down">CXO 资金确认键未按下</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc-headline-label">圆桌综合视角</div>
+      <div class="cc-headline">六席 <strong>4:2 倾向光通信优先</strong>，但全场真正的共识是：两条主线都成立，赚的是<em>不同的钱</em>——光通信赚<strong>业绩兑现</strong>的钱（PEG≈0.3、财报连续满分，但位置高，须<em>带纪律拿、不追高</em>）；CXO 赚<strong>周期反转</strong>的钱（降息+BD 出海+订单拐点三重驱动，预期未打满，但<em>资金确认键尚未按下</em>）。最优姿势不是二选一，而是"光通信做带纪律的进攻仓、CXO 做等信号的预备仓"。</div>
+
+      <div class="cc-actions-intro">圆桌的几个核心视角：</div>
+      <div class="cc-actions">
+        <div class="cc-action-row">
+          <div class="cc-action-label">财报验证</div>
+          <div class="cc-action-detail">光通信确定性碾压：旭创 H1 归母 +241.7%、新易盛 +91.0%，利润有现金流与毛利率逐季抬升背书；CXO 内部严重分化（药明逐季加速 / 康龙弹性缺席 / 泰格 H1 亏损 4.1 亿），板块性兑现未成立，仅药明通过验证。</div>
+        </div>
+        <div class="cc-action-row">
+          <div class="cc-action-label">估值定价</div>
+          <div class="cc-action-detail">光通信"看着贵、算着便宜"：PE(TTM) 50x / 板块 84x，但 PEG≈0.3、2027E forward PE 仅 15x；CXO（药明）PEG≈0.9–1.0 是"合理的稳"。注意：低 PEG 的锚是盈利预期继续上修，预期下修即沦为价值陷阱。</div>
+        </div>
+        <div class="cc-action-row">
+          <div class="cc-action-label">产业周期</div>
+          <div class="cc-action-detail">CXO 预期差更大：光通信"从 1 到 10"已走完大半，2026H2 是高位验证期；CXO 处降息 + BD 出海 + 外包率提升三重拐点下的底部反转早段，2026H2 恰是订单回暖传导到收入端的窗口。</div>
+        </div>
+        <div class="cc-action-row">
+          <div class="cc-action-label">信号资金</div>
+          <div class="cc-action-detail">光通信政策/产业/消息/资金四层信号全对齐，但"太顺了"——84 倍估值对利空是高 beta，海外信用杂音已现；CXO 前三层修复、资金层缺席（创新药 ETF 近 20 日 -6.3%），拐点真但确认键未按下。</div>
+        </div>
+        <div class="cc-action-row">
+          <div class="cc-action-label">逆向筹码</div>
+          <div class="cc-action-detail">光通信 14 个月涨约 20 倍、近八周高点逐级下移、放量滞涨，属逆向禁区；CXO 三年出清、底部不断抬高、149.7–150 三探撑住，是逆向关注区（但最便宜的阶段已过）。</div>
+        </div>
+      </div>
+
+      <div class="cc-vote">
+        <span class="cc-vote-label">投票分布：</span>
+        <span class="cc-vote-tag"><span class="dot" style="background:var(--red)"></span>光通信优先 4 票</span>
+        <span class="cc-vote-tag"><span class="dot" style="background:var(--accent)"></span>CXO 优先 2 票</span>
+        <span class="cc-vote-tag"><span class="dot" style="background:var(--gold)"></span>短线为条件性投票（反弹仓）</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="voices">
+  <div class="section-head">
+    <div class="section-num">02 · 视角</div>
+    <div>
+      <div class="section-title">6 人怎么看</div>
+      <div class="section-lede">每位从自己的方法论独立诊断 —— 想看完整推理的人来这里</div>
+    </div>
+  </div>
+
+  <div class="voice-stack">
+
+    <article class="voice-card">
+      <div class="voice-head">
+        <img src="data:image/webp;base64,UklGRv4NAABXRUJQVlA4IPINAAAQOwCdASqAAIAAPlEijkUjoiEhKpGMcHAKCWIAzmxaz7fbec1bX875EPGGN/3HcsHbA8wX9UOlJ5mfuA9038Zvdj6Bv7EdbH6Bv7AenB+2fwt/uf+2ntc3Rfwr8kPuX3H9gnOP1+6kfyv8D/mOKn5Eah3sn/XcHaAP5tvCy1R+/nmv/7LylPGj859gf+T/3f/r/3L8o/kk/7/9D6Qvp//0e4n+s//V7Iv7geyl+3jeyGUNOHNOSXtL3XC/V40gdsN1/KQOAjaBf/F1Dr6HbuvTJ0Z9phb04pEtX88vh+qZhxDp8LlGjyBXxJ6b20pK9TU6BJVRNNKhyfVq621aQHLwhinbICK4pWqEEql/4QThpnPscsKsr7DHvWqYgPBR6OdBEVN0di44HaQnKrOV45xrhdYO/eEw4/m3WVIEgwbVP+sE2ug2oJnZ6lU+2G9vTci5Ph2SLKI9/91Q3BpxLpJM2nzyPI2ZIJlqQA49bXxVHz5vt5WkrbJtjS6UT9tEhSGUuSlBrpCXl4OS2MOTym/Z36iE7CtQKv7AmNfGg21WIgoDu0W9IFkvoTEy5YTCxpvF+aLkYcrDic8FMg/2Pa52gx6DxVo1/B66diVwHtXvshBwtIcmGmof9skGEs0dnLggAP7+lCi2B2Ld0sLdu90jV4eUZrpotz8R0vC7ICic3WCrYM0NsWaWuf6Vvf8V85vhPcCeEinv9AJX9h5rf0Nu8hp52CnuA3pAPhnqdG0ZsL5E7fKau+za8bq/ZVgyu2M3ZGwGFLFBAPtdtLPBKDWzFV4kLxxo4G43zYMJDGqlfbJRMXvS6WZ+bo1e6xt3tP+YoITQd2DG3LRx0U4X6irOd1Vt4WgRu1wC6xb2qfheEYv4KZwD4ezjPG3uy3yeadMsswU27PIhTbU7+ztwe4bdkCWMiZsP71hR2VywWk72Wf44qln1+Xka/VpqOqUZtuOp6+HpUjVyMSRHUN9FL5oBoau6b0NGKWZSoEwrKlwsgucJexYl/Qf1UmaA6vsq4sFb9Mnp7/fUzQTD23+mvPkeUyYSuN4iOWbhgE+qG0AlNWy3hZzsIaQIzFiveqfmaSDsIHyo0grzhi90J9pQSSL22nZDc9vydpppeXhVq1j/IpYIHjBKgqdSHnf/ZrFQXEpETpOZLmuBjK17FEMqyPsey4CyMpRADMszznWJsOljCrkJ2Vf1Vr8xxTJCsXNtlZStBac+9wKE1L0667x9ZIopvzY+XVTUGV6cY57//crZwVUOoirthGuzjyCkVA/wFHHO7TWiXr0DDubkKCAsUG6Dh6z9p6mjRDLv49ymV6X4vdaqxW2lAktalIy2FVTlP3VFHyqNNk+WEBlj/Ms/HwHo60I8YQvQDYoCz4tmZLHe6SClMdRKYyM3etboY5Ki/ywCl5NRWP6UDRFLezvQl9N6xgbxEJyYMQMvJZ/oqqhWFwCvt6hCdH4jj6RY+l3dCoRdmA1Qh+P/Gg3tdm1pQWYR1+ut7CST97Td/QjERh3mOiKMO3SRNY1NsEcPwLtSmWsvbA1simnKOKAb1QSbM0aSd4byFwS4n90L1PzFX8o3JLYFst6irmtcuKdpgop5TaPvTAFXyTAtkGe/OBnfwfRHJccKv1obk/3C3YHu3/BBS+flYOiY8jFMSJKiKvKou/gWfT33/Tcw4b7feEVXElnw8CrcL3VmT4MFIXIYN47XeD4IOu79mu2qp7U6PTse03Ph2MEWCFPCE72soAvX82l5QRh/VcELqbQvr68ktz26OvlgDKC5sZ8EW1YYf4LXEqbQCrXjRoMFgigHbLy1TKLknXjRANoW2AkKEJZ7/I5nEQkUN8LckDHwac9tW5b1Jhr0SA3ujwN5AxHIW6k8q0EEuqJmnCpBC+90aTXaRFxDeUv6ncYOw9pmDsrtgGDY8KsOmWtfM4oj7aJXNYVIh7XqmUs0RmYOtYoYlIekyMjZ6WKEPdzQb2kjgzHN1GVZ9N3sZrJUIYNf+E93XG1cGGJbE4wyCIOGEExiE2RmOh2onpUf4543t4LZxLkUBuPOW47OV3st17ayMXOHMrUZalEUPkDuCFMjlymjdooBynSD6ur1BdxiNEKRS1aC1lJiojzPuciolQuMyc9C7XyJBZV8NAkn7k6+3HHrp4BvtZqAzYRs4jae6KSpg/aR/TLIMiAzqai/l0YoNq23aDFmcq6C9xATNRmBsbuwWuHikStIW7cRPN812duq3wgaYEVyCgkh7Qc30OdutJQdYWt1ggm1Gr0SZ/5/qQ9h/KDVcw4uL9z0rdLPuidKuNJRvA/Nz2JRwOeeSmsteGWUXSja12HX1eHb4mNJClbW9gcbBrljZi/keJjmJAgXJfGFOZIzV67n/Afuh7+Sa8op0GW3ByJnyFBDCmw4CGwxGJ0S/vv68cT44ehUL95oIiFSklm9MVVoANfCXhcu/Eko3o72GNc18/ng/B3uvmrOMq5xV+E57r8FGz8F8P7zZZwUoyIsFwOr3MuKXzfoPtzg3fDT4W7vSWtr9Lcg1R3FvV0d7rB55G/DL+/1A824XpO/+XPRfvwxtdPhLE1AZrpJR6eDLjgRgxda1e4G6MumJ8J3XLgPb50E4MWv/aGV7F2KQQpb88QNrP4nw+VsC3tPJHBg+xz8d+0ldT0TXaoA4XpOPNTx4OlVVjnPglLbfB9xFW/AXPXE6KD4+RogFq9tOByq9oI4cLxyZn66/b1VFurnQtoRUBU+Ihwl5Jh/ymvoZtThBNDhxAJdCcZQzH+gtRX2vkRaRgE7kix853x5HB5H4Y+mZdGuwAeh2egkAV+L8g2qbJJ2RP63Pv9tK03n+N0za7c1t1evtlP2EL1S+3agZIbXfwapeDq/t+imMJSaPCjawn0+M2cygcFRz6JUlNs2KhVt1HvBvr+YnPEp0KGzPlHdQYMTcwrkMVybf3ZP+I7Z7nKT50OLbbeelND5NkI/GAElRZZ1SGn5FQwBVjhsp1RxIzO9+UE+/7U++H2+E/q/K1TAnCQcQRD+UWCVMEwSW8Ub9OK/6QmgaSwli4T1ZlKcw1h+LN3D/WQEd0qSu+umCoFmijduSF/otyG6B6vAFJXeit+vtPHy0SBfrQb6+FL+rOJJzCESCIeszU7Sq65dYxrMl5Dr8FP7RkoAjLkC7W/Jk6QK13p1yuaFFnVqT78DH9WmYch8ly0Ie45cmp84yFhW4VwTitQ2QQcs63qBs8j5v6C/8/E5nqEi+lSCVyu65mwhAbA/82Hf/jp1b34V54ng+7mSpf2/FqcwvEP127b6xzV6P8xdPTOkMkiNRG7Vprxgb0s/LAZ8xOCNs1euyUnjkNzJPCugv8kPkla+CWoHZFzXuv5/vK54SPcn0aX2j/xEUwLFZaJbjh+RlykCqtYdj3/Z7zDBGdI3aFvCTzFdKLy1QYYeZSGGWwfPhhl3J2EPqiECv1cnEyulU6S5agdYv3OMFS8ERpAdpkCyDxIjcLWtjSZLVKaTU7K3WrK6odq4oWiYTD4XIuWHhzd72Y/XiFNMA1RAan8vI654jTP4vW94Ut+0zsRTNNKV9x0gq9hQjHZfntXadaKFuIBRyWlunCLpFSbHAoZ5NgpWViPD+5fz2Kzj/+8AzMOd6ZxK3lvxEWRVQs460FiiTOO6ZM+/f1xgQGvOhtfAIz3PiGIn7WIEGHfTRw17875uizHrhKMTn+WhjyAuh2YwmGgjHqTfFqOHqxJu2bbHfDbmOD5bTOpttMawEX1Lj1hpPCm92rwdvMDrbmRI0osNeFXnhE4Xx5sQiuurjv8pTkF7jORF7FiaWTF8LrslL6MeRNqOCOhr0erLGusndT2nUYm0YDVfzp2F157zcNC9ycqTX5L1uusVMJWEM0GDjhIZq5plEKHrtuMY4Lg5EaVAR/HwNcvmsm+6X6SUauQ1Af3aAzZloIW9GJBZzZlRsLsWvueStatKz3pLVLjClm2JhQ7kpBYkfVHtY00yLg0dr/PYxxubG/921W90zxy0glnQ5f5Sbsz1ioo6PDMrypzkwGIvV6sHO566u06bMFCDYzLoh+33QXtK2tEHC2IPn9g3T7di8dtYEVYABG96iG8l0hiDFyNA+o2Tg2hIKuydXjzh0d7vGznvVLZDBaVwZPnXqfwMUaPpVIvQLlgUVrvTYKoIccOvk9dwPPMwp0lJxUFdsfDXFHIFBm45cMAgGTPMViDp04PeBMcbBz8lIIVQZLZ3pLzOdUuFdZRbzKM2F4CijfCu95VumzxGIPWqH8Tsqi83/0pcVNH88OzpjNXpepsYWqUCkua4M9Y+bTaRiXSIAQsggLBjF+TDYGXEmYFIWgHl5yROP9FStSg1UAo9cnVnYG4Vj5RcHQffpuhWWAyzfhKuqave/BeuuTmbkd2R3DJOOdmaFIHxLKmzKykdwY/W/PtfEN2l10kkOPLG3B9xEv86isPQjzaGKkVE1y0ySkKKjF0tAkyDQ2cfCgwFaOluKXa4kpYfxNeNxBa/Z0qvVq2N4qAprqn5eyYjzCl99qxpEtyh8zigsF7+qeQzoNJOObxIwJJtmmT8BJh5ei631ie3vf1dB7fjpEzQWK07OLea9VzpE7x++ViSLUouo85E/ZsS+6E2PhXNEw72akmZhTUfIUmHyJrAGVfCTDTLBBqfzVCDkpHH72QjO62SArIuLla5I8M0HmUkL0d1bkvzbpnOOhEVLk07Q9d+tDTb7T6vvQ/4HgaYG8v4J9829VW3Nuzs7K1G8BOV5NkyqYZCnzZBAAA=" alt="产业策略师">
+        <div class="voice-name">🌊 产业策略师 · 星望远 —— CXO &gt; 光通信</div>
+      </div>
+      <p>自上而下找"预期没被打满的确定性受益者"，从来不追最热的方向。光通信是景气高位的主线，赚业绩兑现的钱；CXO 是产业周期底部反转、预期还没打满的方向，赚景气向上的钱。</p>
+
+      <h4>周期位置：一个在中高位，一个在底部反转早段</h4>
+      <ul>
+        <li><strong>光通信</strong>：本轮 AI 硬件趋势里兑现最早最充分的环节，"从 1 到 10"已走完大半，剩下空间靠 1.6T 上量和英伟达 Rubin 平台续命——"景气延续+验证期"，不是"景气启动"。</li>
+        <li><strong>CXO</strong>：跌了三年、出清最彻底，三重拐点同现——美联储降息通道、中国创新药 BD 出海大爆发（2025 年 license-out 金额创历史纪录）、药明系在手订单重回增长。</li>
+      </ul>
+
+      <h4>需求锚与可见度</h4>
+      <ul>
+        <li>光通信锚定北美四大云厂 Capex：可见度高但已定价两三年，边际超预期幅度收窄；2026H2 核心分歧是"2027 年 Capex 还增不增"。</li>
+        <li>CXO 三条线：Biotech 融资回暖（慢变量方向明确）、BD 首付款反哺研发预算（斜率还在）、外包率提升+多肽/ADC 新分子——从低基数改善，弹性更大。</li>
+      </ul>
+
+      <h4>产业链卡位</h4>
+      <ul>
+        <li>光通信下一阶段钱往上游流（光芯片/光器件/CPO），是"后手棋"；跟踪入口：CPO 概念 pt02GN2211。</li>
+        <li>CXO 本身就是创新药的"铲子"，谁的药成了它都赚钱；选一体化龙头（药明系，多肽/ADC 产能稀缺）优先于小型特色 CRO；跟踪入口：CRO 概念 pt02251441。（来源：westock-mcp data_sector）</li>
+      </ul>
+
+      <div class="pull-quote">"光通信赚业绩兑现的钱，2026 下半年是持有验证而非新开仓的阶段；CXO 符合'热点里有持续性、预期没打满'的标准。"</div>
+    </article>
+
+    <article class="voice-card">
+      <div class="voice-head">
+        <img src="data:image/webp;base64,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" alt="信号派首席">
+        <div class="voice-name">📡 信号派首席 · 洲四方 —— 光通信 &gt; CXO（持股者盛宴，不追高）</div>
+      </div>
+      <p>政策/产业/消息/资金四层信号体系：光通信四层全对齐的主线，"更值得关注"的答案给它；但现在是"持股者的盛宴、新开仓的高危区"。CXO 方向对、拐点真，但资金确认键没按下。</p>
+
+      <h4>四层信号对齐度对比</h4>
+      <table>
+        <thead><tr><th>信号层</th><th>光通信</th><th>CXO</th></tr></thead>
+        <tbody>
+          <tr><td>政策层</td><td>中央经济工作会议持续定调"人工智能+"，算力是持续方向</td><td>集采优化暖风+降息利好投融资，但医保降价压力仍在，"暖风夹冷风"</td></tr>
+          <tr><td>产业层</td><td>板块 TTM 净利 +13.48% 跑赢营收 +5.95%，盈利股占比 68%，订单在往利润表兑现</td><td>最有底气的一层：行业订单拐点明确，多肽 CDMO 率先走出低谷</td></tr>
+          <tr><td>消息层</td><td>密度全网最高，但海外出现杂音（博通利润率、甲骨文自由现金流转负、CDS 飙至 2009 年来最高）</td><td>MNC 大额 BD 集中在 10 月–次年 1 月，催化窗口就在眼前</td></tr>
+          <tr><td>资金层</td><td>CPO 概念单日主力净流入约 137.6 亿，全市场 803 板块排第 17</td><td>不及格：主力净流入仅 8 亿出头、排名 261/803；创新药 ETF 近 20 日 -6.3%</td></tr>
+        </tbody>
+      </table>
+
+      <h4>操作纪律</h4>
+      <ul>
+        <li>光通信持有者：第一根放量大阴线必须减仓，破 5 日线减半、破 10 日线继续减，建议直接上条件单；新开仓不追，等板块级回调缩量企稳。</li>
+        <li>CXO：观察仓可以建，加仓必须等两个信号至少来一个——ETF 资金连续回流，或 Q4 BD 大单密集落地。</li>
+        <li>系统性预警：海外"AI 泡沫"担忧发酵中，若这堵墙真倒，光通信是墙根底下第一排，无条件离场。</li>
+      </ul>
+
+      <div class="pull-quote">"真正拉开差距的不是谁先看到，是谁在资金进场时敢动手、在大阴线出来时真执行。"</div>
+    </article>
+
+    <article class="voice-card">
+      <div class="voice-head">
+        <img src="data:image/webp;base64,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" alt="估值分析师">
+        <div class="voice-name">🧮 估值分析师 · 文衡价 —— 光通信 &gt; CXO</div>
+      </div>
+      <p>Price = EPS × PE。2026 下半年更愿意把卫星仓位押在光通信上：EPS 还在加速上修，PEG 约 0.3，盈利消化估值的速度远超 CXO；CXO（药明）PEG 约 0.9–1.0，是"合理的稳"，适合做回调时的防守型成长底仓。</p>
+
+      <h4>关键估值对比（来源：westock-mcp，截至 2026-09-18）</h4>
+      <table>
+        <thead><tr><th>维度</th><th>药明康德</th><th>中际旭创</th></tr></thead>
+        <tbody>
+          <tr><td>现价</td><td>160.00</td><td>926.43</td></tr>
+          <tr><td>PE(TTM)</td><td>≈22x（近 3 年 75 分位偏上）</td><td>≈50x（近 3 年 60–70 分位）</td></tr>
+          <tr><td>2026H1 归母增速</td><td>+29.4%（扣非单季 +93.6%）</td><td>+241.7%</td></tr>
+          <tr><td>Forward PE</td><td>2026E 约 17–18x</td><td>2026E 31.7x / 2027E 15.3x</td></tr>
+          <tr><td>PEG</td><td>≈0.9</td><td>≈0.3</td></tr>
+        </tbody>
+      </table>
+
+      <h4>EPS 斜率与配置框架</h4>
+      <ul>
+        <li>药明 EPS(TTM) 八个季度逐季上行、年化 20–30%，上涨大头是盈利驱动，PE 从 12x 修复到 22x——健康的修复结构。</li>
+        <li>旭创 EPS(TTM) 两年 4.4 倍且仍在加速，一致预期 2027E EPS 60.66（+107%）——若股价不动，明年此时 PE 只剩 15x。</li>
+        <li>警示：光通信是类周期成长，2028E 增速降至 42.5%；买它的锚不是"PEG 低"，而是"盈利预期是否还在上修"。预期下修，PEG 再低也要跑。</li>
+        <li>卫星仓（进攻）→ 光通信，分批建仓、买点在波动里等；准核心成长仓 → CXO，作光通信回撤时的对冲性配置。共同风控锚：谁的盈利预期下修，谁先减。</li>
+      </ul>
+
+      <div class="pull-quote">"CXO 是'可以拿'，光通信是'必须给仓位、但要带纪律拿'。"</div>
+    </article>
+
+    <article class="voice-card">
+      <div class="voice-head">
+        <img src="data:image/webp;base64,UklGRqgMAABXRUJQVlA4IJwMAACQOQCdASqAAIAAPlEijkSjoiEWSpWkOAUEsgBnjh6+E84uwf378Mc6ObztD/i/a72ifMA/Sj/WfZ33EPMB+3PrRejH/ReoB/R/871ifoG/tB6bn7cfCF+3X7e/AN+xn/3u0Xhz5Z/cXt3zk4kHa3+g4md4p/O/83w84Av0L+9cU3cmf7jksaAH529WX+u/9vmD/Of9F/5/9H8BP8x/sO+2fucycc0qQjj+LWzmRBg2OehtiKCx3Tsg6agCN9nkC4MFQF5lYsDWyJa858AYpzfUNoXQKUDdbJBc0PbaFlF0UVDMH2pASO8RdKAaP+vGyBMrJsJ6J95e/4tSnYWGgP7xpfxzs74WVPPoQsfgw5ndWiv7+XtQBU8TL/NcyFWFLXAjVYHbjxLlhvg17a7cK9iqMpZ7CvJH0oUUf+vzb06h8xR6F18U+KsrVFFYPE2RFGVJL3DFutvBJjgygN2yfMcwCq4poIhs7PoDNozKE/spL9SnKuAd2RaJ2OzF1NYNpYCyRf661oEopk7///p12PoK+zk1eCeHm9UDhZ0ENjcX+2HdQGxSbU0W2D2Mdt6TjuJzVhKka/gEBAi+u4PdtQqvxXakseVcKY3CqlOaksq2VLiuCZ6AAP7//guBZh/O+WkMsehbfd6Yc4gPJLcL4j9i/w1YuRVBCjuyUJ3SD4zbt/9iy+AHHjFX68SyOlCUp1aKcNHid1B+DEicehv4pzEBmKLIFDexvW21+KnXUk4plJgUmxndto6LgyaV6aOcBgSHk8D851oSqqhI2t+pgaqFGDL42aaWoMhegTtO8WFaSIXC7IdBEbiuR5sVUpYSGICihcvipdN5wy8gAXI16mu8XMZjlzBdhNonI22wiqLOy3eOAoQuo4skq7sNiHBnsn6S6W1sMdB7YY+v2bPff7Nqbne1M4PVkZz7AbAhAvIfkX59BLTIqoFVqYUEqKXoyVsmr0WLj/PCiloJDVCCOub4Zognij/Jl/Ubbz2/a43CHYw+caySA5UAdc0tQky0B/dYZX8Is7ZQyWiKRIobkFuWvE/9rZnIuj9L+AIcKvCMNMHdP04f6m9zyMTmOVgkLKFcVbU8nHSWHgJcsjiZlzABEeo5+B+AyxXdP5qv4uR0w2MuQL9yF2xZ6mH+4K1il+VFjoxg+vbkkqsTtXWLUl/SsCncK0UTyVcrEB36hyo/4ipLJLZD6uACf+XZ79o38Vu+DusfudhwQ5hGZaHbfUjTaqjvsg8jFTsx6LQVTgAS0E3/JLtebZ8rVPZAPKvmmSiLR3dR9fbAiMquZoo/r1lx5GFkbGPQyH97OrA0Nr//Fpl0uLiUUz+rWQWQgHTV610S/ecqeO/BPJFaXGAb+KfQe1pDYRJnffID33duSRwrcyK+6TgpjsLLoEdAqP85o+6QoNrnrx36H61gRWMV8GUNbg+vFd7pW3KINwuMc/XOCGf1H8w6Z3zQ1JqEZcY/vzcgjJGWOHJ5EzO9II/KxNtyi9OwXMcJSG3LzXjDU8xcOnEYXvRXCBHBrhLhc0T+GxIR1S9o/wC7ZesQ7ok/AXofHE6w6QQmGOam3hInUo7KY1utSd5Ol1FXAqtHZOzghbTuf4Hlqspb6qojsfRibEPpN4Xj9ePMFFOBAEPn412bjBl3zpUm4d9y274SKxeufDbV+dQ+TtddTBahJbsv4d5xeTOPtuLkjKBxM/YGcKcxobOEPKFcRUKEI2qLf3n/ZA5tg//y1JDwbcCqOD/EQDULwDiXgqbTPqLVf8wyF5t5N7IpfA2uoYPcjmB6bggl8byR0z6xDhW3/S9qL0dN7gpOfHwf8tq2LO7g5xt+qJnzN++Ly3RtqWExmuQeCkeAL0AC3MGomqjB4JKNDTgUV7beoeENYXsI5t+RPH8thw1/H8ar7xuShzyFNrr/sPltCq3FUbVGU+bZqm6jQOecgrHwhDHtJq/zLdrgwx0YUKlkZwDtTI6MjqZCXhrlnL1YZU+ik8/uic9K6L36K0L9EuBjPKquCZ4BbshkKfJDqGgRy5jqYltak7r11KPR6j5jQ7WrZ8ONjI6fl/CBdbQzb/O9rwr5yLy/rx1Tl5bZO8/21Lsh45Qae7HFaKnfJOK/JQ/8WhspxGEiXswR7zy56j1BAnsFQyrKnSQdXRP3iDZHeIniI68zUH0FpB8a6WRQdk1IvC7jSfeoObW5OBkyhL5MSPxUbZJL8O/EhakfrIZmtvmqgO73lgTTiqzTeSReMYqck+bUi2rfznUStz0NZhmkNfl3dSm+gZ+VNlgQm3li44ZAQhKEL/4grU+y679qU1vIZa0OHDsF9LXhZWZos82HLGZiNWZVojgjogPNw8bBCRdtdrP5w7saPYwY+CXRJH8SFXWlvnq2LkfOW9OGdtAk9UA9Gj6tqVT9gN0ikuEweyAsiw3KtNUC+fneEctfZ9I5vKiYpnc602izjhfHlX8flRwjGScRWnL86ac/y4Sm4K5A/3pSLGLCvZB0MfkFysLZtq9G+/OybH/bs0ypWAhd1OxscoUjEo/4JlRYjt//66D3OTvT334070qMwz1zhSr3bc2crML1xN+4vhCFOOfiAnB2iU2ztY8qD3MHFy7baxJgQ/o1gFLAro1sDSApIv/BXvxjXzVA7v0Krf18SwWO/nbRlvSUhms3ABSj0OdCGRmDI7QM11oPe4c1SwgS7Db+dZLXMRyJWZTi5N40SadciMv4xvpxSF+/38dRzSu0AYTi5HQb3SI9+BhQtFch/Nl9zAbc9KpQutqy94Tz+oGfe9Dw8IpGisvYKFJIQDKq67JrLGh8m78hUuuVJWEnooaCDlFobG/KmfQsm1v8gFly/5OzYcCBFBl9Wb1JIJfsg/OwtsU/CUV5Qk4h+SkzviivLam3JZn7nOL9YYe29mv5A0lVrlanC2AsVL3CaAevP8Yt/IXz3Gu7luq7e3O+A6lTk2slY1SchK0IqH5z38qbCAmJIeHW0YfJW7+YK20vDMMYCcGIccnHfUBnfouiA2QTy3bxNU0Zt/0Vkjcl/7PXk76TZg+ciYe5Q9G305dl6/HG0ceGRaMxHqUXbJ8O8acx0nzUEtz/0k8RK1/PQk7ToxYrsMkkscliz43kc5Zh/J41NjnpYs7J6+Jjj5ppvzBjKVJRxJvST8r/Hqw5oNwKc6V8AMsRBjBZDBdkRPHRHhmbmQ5qdJEcywyXUoNuhhbr/Bmb/htY3OgsGJ1eSbB1vCOzrSUrKa3MC6zMAnDMO61qAMesyuIatwaGGKa1ic41u74OmsWqDQhvKI/LyjRfkV2OtJ8u1M4RPTs1MmG/60mB/ItpMCv04Z4opbJTbsTnPvrO63UUpJLea4ngRfOKaDHNUw4ZQmQ6th2FbdPfUhyIMhOjW6lYLzmlfyOJ/ifOvXKSDf5xQT+Ce231+sf/ITZ4UWoybfvviuVwxxsTJQlE14WatA/Lf0buX7cYlxadUM8l/3UrTs+F6yHlrjfZw/S+pUreGyvXXWpud7wNcG2ha+RZ5K9TRtVjMPcWdWIgzU+9B8b+lySySZt0TIdyXQ47qPGb0vDIVLsnroBpcwIWeaqkxb3HM19qfwUDmlnAbObwKg7jD4i0VuwaSswYq6ncgnM5zj6jyxRKNgO0cZ6W7Mv2+tg0VRB/3QA+sfHlR2quVsixpchrQwZ/7tqzhjQSC9U/5HZs42qTTPpdYEtnubZu3jqrP9suZ7sxnH2pg53a+qzozCbGaZmV5XCK1gsengdIaIzIFmeBl+tLAGLylwIJTedrKSOHdfanGKVvwphw9vpNkPLPHD+9AsJzt9U2649fAlOh45T58BvxVIQZ+QnmQpTxchZstokccU6ItDJ0iBp3hn2cqpdxCHw3b4SzdTmT8RLgTYnrKSYmec48H8Z+owdY6tNdy+Dm3LRTN/vMRDjp93UHdJfTcG8B8LkCHyceKl82CaasuuvBWXa9AZyc/P587QbWnORQJ/0lzWVJYlK74Hq3//09jsitGlh8hSRUReHSLPRkgR4Ql18g8MhkvVogkimTYY0zppJ9WeDPIOTwEjFba+/OZJv2XvX9f22ogWpLMSEvp/lt0O7Era2XJB1ENjMcs2j6K2Fcu2FpZxWu4VJ1YhU/HniEaombMJ8NUu9yGzKirhgOd+d3xaNFhV/FDIjoNrCCGUqBcpSE/zrzEoscqcbbdeQfgRPh0IGHoco8e7SK/rEAbgdQlvEkNhot0acjiP6TeMJpRqaKR8Cz7V5jBNJFHtWn2cjasKdDfu14gkMUYKW/aBY5n/600LRpU7OqhHQfxjX5wUSqeUQJkC0AAAA=" alt="逆向投资人">
+        <div class="voice-name">🏔️ 逆向投资人 · 坤候底 —— CXO &gt; 光通信</div>
+      </div>
+      <p>不看好坏，只看高低。两条线现在都不是"五折商品"，但光通信是主升浪顶部区域、逆向纪律的禁区；CXO 是五年大底走出来后的右侧初段，跌透过、验证过"不死"，回调到支撑位值得分批接。</p>
+
+      <h4>光通信：这不是便宜，这是贵</h4>
+      <ul>
+        <li>旭创 2025 年 4 月 65.3 → 2026 年 6 月 1416.88，14 个月约 20 倍；最新 926.43，距高点回落约 35%。</li>
+        <li>近八周高点逐级下移：1315 → 1208 → 1139 → 1080 → 1034 → 948；周换手 10%–23% 放量滞涨——"第三波冲高放量但冲不动"就是力竭信号。</li>
+        <li>未来观察清单（是观察，不是现在买）：835–870 / 793 / 713–742 / 554–644 / 510–540，跌到哪层撑住再说。</li>
+      </ul>
+
+      <h4>CXO：跌透过的东西才轮得到我（支撑位分批，资金分 10 份每份等量）</h4>
+      <table>
+        <thead><tr><th>批次</th><th>价格区间</th><th>依据</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>150 附近</td><td>整数关口 + 9 月三次下探未破（149.7/149.7/150）</td></tr>
+          <tr><td>2</td><td>125–130</td><td>2026 年 7 月底–8 月初突破平台、放量起涨点</td></tr>
+          <tr><td>3</td><td>114–117</td><td>7 月上旬低点密集区</td></tr>
+          <tr><td>4</td><td>97–105</td><td>5–6 月成交密集区 + 100 整数关口</td></tr>
+          <tr><td>5</td><td>85–90</td><td>2026 年 1–3 月低点区，与 2025 年 11–12 月平台双重支撑</td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>风险对比：光通信怕均值回归（793 到 554 之间支撑近乎真空）；CXO 怕地缘黑天鹅反复——但真再来一次恐慌跳水，下方支撑层层接住。</li>
+      </ul>
+
+      <div class="pull-quote">"1400 的旭创就是比 100 的旭创贵，同样的公司，贵的时候我不买。"</div>
+    </article>
+
+    <article class="voice-card">
+      <div class="voice-head">
+        <img src="data:image/webp;base64,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" alt="财报研究员">
+        <div class="voice-name">🔬 财报研究员 · 钊审财 —— 光通信 &gt; CXO（CXO 内只认药明）</div>
+      </div>
+      <p>季报就是考试。单看财报这关，2026 下半年光通信的业绩确定性和盈利弹性都明显强于 CXO；但 CXO 里药明康德一家正在走出"逐季加速"的独立行情，是 CXO 侧唯一通过财报验证的标的。</p>
+
+      <h4>2026 中报关键数据（来源：westock-mcp data_finance）</h4>
+      <table>
+        <thead><tr><th>公司</th><th>营收(亿)</th><th>营收YoY</th><th>归母净利(亿)</th><th>净利YoY</th><th>毛利率</th><th>ROE(TTM)</th></tr></thead>
+        <tbody>
+          <tr><td>药明康德</td><td>289.0</td><td>+38.9%</td><td>110.8</td><td>+29.4%</td><td>53.9%</td><td>26.0%</td></tr>
+          <tr><td>康龙化成</td><td>76.0</td><td>+17.9%</td><td>7.5</td><td>+7.0%</td><td>32.7%</td><td>10.5%</td></tr>
+          <tr><td>泰格医药</td><td>37.1</td><td>+14.1%</td><td>-4.1</td><td>-207.8%</td><td>27.5%</td><td>0.5%</td></tr>
+          <tr><td>中际旭创</td><td>417.8</td><td>+182.5%</td><td>136.5</td><td>+241.7%</td><td>46.3%</td><td>51.3%</td></tr>
+          <tr><td>新易盛</td><td>209.1</td><td>+100.3%</td><td>75.3</td><td>+91.0%</td><td>48.4%</td><td>54.0%</td></tr>
+          <tr><td>天孚通信</td><td>28.3</td><td>+15.1%</td><td>12.0</td><td>+33.9%</td><td>60.9%</td><td>37.2%</td></tr>
+        </tbody>
+      </table>
+
+      <h4>兑现节奏与边际方向</h4>
+      <ul>
+        <li>光通信连续四个季度满分答卷：毛利率逐季抬升（旭创 40.7%→46.3%），不是以价换量，是结构性升级在兑现。</li>
+        <li>CXO 是结构性分化：药明 Q2 单季营收 +47.7%、扣非 +93.6%、经营现金流 H1 净流入 97 亿；康龙扣非 Q2 仅 +1.6%；泰格 H1 归母 -4.1 亿。</li>
+        <li>边际方向相反：光通信高基数上增速回落（旭创单季 +192%→+175%，天孚 Q2 单季营收同比 -0.9% 已失速）；药明低基数逐季加速。2026H2：光通信兑现"高确定性的好成绩"，药明兑现"超预期方向的加速度"。</li>
+      </ul>
+
+      <div class="pull-quote">"一家加速、一家平庸、一家亏损，这不叫板块性兑现，叫结构性分化。"</div>
+    </article>
+
+    <article class="voice-card">
+      <div class="voice-head">
+        <img src="data:image/webp;base64,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" alt="短线冲浪手">
+        <div class="voice-name">⚡ 短线冲浪手 · 磊追浪 —— 盯光通信（反弹仓），CXO 是趋势备胎</div>
+      </div>
+      <p>光通信是"高弹性的右侧回马枪"，CXO 是"低波动的趋势慢牛"。只盯一条主线就盯光通信；但反弹不能放量收复 7 月平台，宁可切回 CXO 这种沿均线稳步推进的票。（数据截至 2026-09-18 收盘，来源：westock-mcp 日K 前复权）</p>
+
+      <h4>两板块近 1–4 周盘面强度</h4>
+      <table>
+        <thead><tr><th>标的</th><th>7 月高点</th><th>最大回撤</th><th>9/18 收盘</th><th>较低点反弹</th><th>日均换手</th></tr></thead>
+        <tbody>
+          <tr><td>中际旭创</td><td>1315.57（7/1）</td><td>约 -35%</td><td>926.43</td><td>+15%</td><td>2.5%–5%</td></tr>
+          <tr><td>新易盛</td><td>618.87（7/1）</td><td>约 -40%</td><td>445</td><td>+17%</td><td>2.5%–5%</td></tr>
+          <tr><td>药明康德</td><td>173.09（8/20）</td><td>约 -12%</td><td>160</td><td>+6%</td><td>1%–1.5%</td></tr>
+        </tbody>
+      </table>
+
+      <h4>定性与纪律位</h4>
+      <ul>
+        <li>光通信主升浪 7 月初已见情绪顶，9 月是"高位深调后的右侧修复"：9/7 放量止跌、双龙头联动、收复 5/10 日线，但未放量突破旭创 1000–1020 平台，上方 900–1100 套牢盘厚——做反弹可以，当主升浪做会挨打。</li>
+        <li>药明的图更干净：低点抬高、沿 10 日线推进，9/14 放量 +5% 是最明确的资金动作，换手 1%–1.5% 筹码锁定好，典型底部吸筹+趋势内洗盘。</li>
+        <li>纪律位：旭创破 5 日线（≈893）减半、破 866 清仓，1000–1020 不放量突破不加仓；新易盛破 418 走人、破 400 无条件离场；药明破 10 日线（≈157）减仓、破 149.7 离场，放量突破 173 右侧加仓。</li>
+        <li>仓位参考：三只票等分口径下 2/3 给光通信双龙头、1/3 给药明，用均线纪律兜底。</li>
+      </ul>
+
+      <div class="pull-quote">"光通信更值得盯，但要用交易的姿势而不是信仰的姿势。"</div>
+    </article>
+
+  </div>
+</section>
+
+<section id="thinking">
+  <div class="section-head">
+    <div class="section-num">03 · 思考</div>
+    <div>
+      <div class="section-title">深度思考</div>
+      <div class="section-lede">主持人替你想到的 —— 你没想到的问题、可能误读的地方、应该问但没问的</div>
+    </div>
+  </div>
+
+  <div class="subsection-label">3a · 主持人札记</div>
+  <div class="notes-stack">
+    <article class="note-item">
+      <div class="note-num">01</div>
+      <div class="note-body">
+        <h4>投票 4:2 的真正分界线是时间尺度，不是多空</h4>
+        <p>我把六份报告摆在一起看：说光通信好的四位，论据全部锚在"已兑现的 EPS 斜率与资金现实"；说 CXO 好的两位，论据全部锚在"尚未定价的周期位置"。这不是谁对谁错，是"现在"与"未来 6 个月"的投票。读者要做的选择其实是：你想赚哪一段时间的钱。</p>
+      </div>
+    </article>
+    <article class="note-item">
+      <div class="note-num">02</div>
+      <div class="note-body">
+        <h4>一个隐藏的全场共识：没有人说"光通信现在追进去"</h4>
+        <p>连给出 PEG 0.3 的估值分析师都强调"买点在波动里等"，短线手更是直接定性"反弹仓、快进快出"。光通信的分歧从来不在方向，在价格——这本身就是高位主线的典型特征。</p>
+      </div>
+    </article>
+    <article class="note-item">
+      <div class="note-num">03</div>
+      <div class="note-body">
+        <h4>药明康德是唯一被六个视角全部正面提到的标的</h4>
+        <p>板块 β 虽未确认，但个股 α 已被财报（逐季加速）、盘面（缩量沿均线爬）、逆向（支撑位三探撑住）三个互不相关的方法论交叉验证。圆桌表面在比板块，实际指向了一个更锐的结论：CXO 现阶段是个股行情，不是板块行情。</p>
+      </div>
+    </article>
+    <article class="note-item">
+      <div class="note-num">04</div>
+      <div class="note-body">
+        <h4>全场唯一的系统性暗信号来自海外信用端</h4>
+        <p>信号派提到的甲骨文 CDS 飙至 2009 年以来最高、自由现金流转负，是六份报告里唯一可能同时推翻"光通信多头逻辑"和"市场平稳假设"的观察点。它权重不高，但杀伤力最大，值得单独钉在观察台上。</p>
+      </div>
+    </article>
+    <article class="note-item">
+      <div class="note-num">05</div>
+      <div class="note-body">
+        <h4>技术面与基本面在光通信上开始背离</h4>
+        <p>短线与逆向对旭创的定性完全一致（主升浪已结束、高点逐级下移），而估值派看到的是 forward PE 15x。历史经验里，这种背离的解决方式多数是基本面预期向价格靠拢——要么盈利继续超预期把估值消化掉，要么价格继续"补课"。跟踪 Q3 财报比争论估值更有意义。</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="subsection-label">3b · 主持人 Q&amp;A</div>
+  <div class="qa-stack">
+    <article class="qa-card">
+      <span class="qa-tag tag-key">🔑 关键</span>
+      <div class="qa-question">PEG 0.3 的光通信为什么还能两个月跌 35%？</div>
+      <div class="qa-answer">
+        <p>PEG 的分母是"预期增速"，不是已实现的增速。7–9 月的回调正是市场对"2027 年云厂 Capex 是否还增"的一次预演式定价。低 PEG 保护的是长逻辑的赔率，完全不保护短期波动——从估值视角看它是买点候选，从信号和筹码视角看它同时是高 beta 资产。两种描述都成立，差别在你的持有周期。</p>
+      </div>
+    </article>
+    <article class="qa-card">
+      <span class="qa-tag tag-confuse">⚠️ 易混淆</span>
+      <div class="qa-question">光通信到底"贵"还是"便宜"？</div>
+      <div class="qa-answer">
+        <p>同一组数据两种读法：PE(TTM) 50x / 板块 84x → 贵；2027E forward PE 15x / PEG 0.3 → 便宜。差别全在你是否相信 2027 年盈利预期能兑现。从财报视角看预期一直在上修（便宜派占优），从逆向视角看 20 倍涨幅后任何预期都已被充分交易（贵派占优）。请按自己的置信度选边，别两边的好处都想占。</p>
+      </div>
+    </article>
+    <article class="qa-card">
+      <span class="qa-tag tag-miss">🔍 易疏忽</span>
+      <div class="qa-question">"配 CXO"等于"买 CXO 板块"吗？</div>
+      <div class="qa-answer">
+        <p>不等于。财报验证显示板块内部分化极大：泰格 H1 亏损 4.1 亿、康龙盈利弹性缺席。产业策略师和逆向投资人说的"CXO 值得关注"，落到执行层其实是"药明系一体化龙头值得关注"。如果按板块 ETF 或一篮子小 CRO 去表达，买到的可能是完全不同的东西。</p>
+      </div>
+    </article>
+    <article class="qa-card">
+      <span class="qa-tag tag-meta">⭐ 重要</span>
+      <div class="qa-question">为什么圆桌没有直接说"两个都配"？</div>
+      <div class="qa-answer">
+        <p>其实这恰恰是最接近圆桌真实答案的表述——但要有结构：光通信做带止损纪律的进攻仓（卫星位），CXO 做等资金信号的预备仓（观察/底仓位），两者在组合里是节奏互补而非互斥。真正需要避免的姿势是：在光通信上用信仰持仓（不止损），或在 CXO 上用交易仓位（没等到资金信号就重仓）。</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="watch">
+  <div class="section-head">
+    <div class="section-num">04 · 关注</div>
+    <div>
+      <div class="section-title">后续关注</div>
+      <div class="section-lede">当下综合视角是基于现有数据的快照 —— 什么时候该回来重看，什么情况下我们这次的视角可能错了</div>
+    </div>
+  </div>
+
+  <div class="subsection-label">4a · 关键变量观察台</div>
+  <div class="trigger-wrap">
+    <table class="trigger-table">
+      <thead>
+        <tr>
+          <th style="width: 30%;">变量 · 当前</th>
+          <th>重新评估触发线</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="trigger-var">中际旭创 1000–1020 平台<span class="now">当前 926</span></td>
+          <td class="trigger-action">放量突破 → <span class="up">右侧修复升级为趋势延续</span>；迟迟不过 → <span class="down">反弹性质不改，逢高兑现</span>。</td>
+        </tr>
+        <tr>
+          <td class="trigger-var">旭创短线纪律位<span class="now">5 日线 ≈893 / 9-16 低点 866</span></td>
+          <td class="trigger-action">破 5 日线 → <span class="down">短线强度走弱</span>；破 866 → <span class="down">修复行情结束，重回观望</span>。</td>
+        </tr>
+        <tr>
+          <td class="trigger-var">药明康德 150 关口<span class="now">当前 160，9 月三探 149.7–150 撑住</span></td>
+          <td class="trigger-action">跌破 150 → <span class="down">短期趋势存疑</span>；跌破 125–130 突破平台 → <span class="down">逆向第一支撑失效，下看 114–117</span>；放量突破 173 → <span class="up">右侧确认</span>。</td>
+        </tr>
+        <tr>
+          <td class="trigger-var">北美云厂商 2027 Capex 指引</td>
+          <td class="trigger-action">继续上修 → <span class="up">光通信低 PEG 逻辑强化</span>；指引下修 → <span class="down">戴维斯双杀起点，排序反转</span>。</td>
+        </tr>
+        <tr>
+          <td class="trigger-var">旭创/新易盛 2026Q3 财报<span class="now">10 月披露</span></td>
+          <td class="trigger-action">增速与指引双超预期 → <span class="up">"业绩兑现"论据再加固</span>；增速跌破一致预期 → <span class="down">核心论据动摇</span>。</td>
+        </tr>
+        <tr>
+          <td class="trigger-var">创新药/CXO ETF 资金流<span class="now">近 20 日 -6.3%</span></td>
+          <td class="trigger-action">连续回流+成交放大 → <span class="up">CXO 从观察仓升级</span>；持续净流出 → <span class="down">反转判断推迟</span>。</td>
+        </tr>
+        <tr>
+          <td class="trigger-var">Q4 BD 出海大单窗口<span class="now">10 月–次年 1 月</span></td>
+          <td class="trigger-action">密集落地 → <span class="up">CXO 订单预期上修</span>；窗口落空 → <span class="down">催化剂缺席</span>。</td>
+        </tr>
+        <tr>
+          <td class="trigger-var">海外 AI 信用信号<span class="now">甲骨文 CDS 创 2009 年来最高</span></td>
+          <td class="trigger-action">继续恶化 → <span class="down">系统性风险预警，光通信无条件降仓，全场结论重估</span>。</td>
+        </tr>
+        <tr>
+          <td class="trigger-var">美联储降息路径</td>
+          <td class="trigger-action">降息延续 → <span class="up">CXO 投融资回暖逻辑强化</span>；暂停/转向 → <span class="down">CXO 核心驱动动摇</span>。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection-label">4b · 综合视角失效条件</div>
+  <div class="notes-stack">
+    <div class="note-item">
+      <div class="note-num">01</div>
+      <div class="note-body">若旭创/新易盛 2026Q3 财报增速显著低于一致预期且管理层指引下修，"业绩兑现确定性"这一光通信核心论据被推翻，估值与财报两票的光通信逻辑同时失效。</div>
+    </div>
+    <div class="note-item">
+      <div class="note-num">02</div>
+      <div class="note-body">若北美云厂商 2027 年 Capex 指引转为下滑，光通信 PEG 的分母失效、低 PEG 沦为价值陷阱，本次"光通信优先"排序应反转为 CXO 优先。</div>
+    </div>
+    <div class="note-item">
+      <div class="note-num">03</div>
+      <div class="note-body">若美国生物安全类立法实质性升级并落地，CXO（尤其药明系海外收入占比高的部分）的反转逻辑受损，产业与逆向两票的 CXO 论据动摇。</div>
+    </div>
+    <div class="note-item">
+      <div class="note-num">04</div>
+      <div class="note-body">若创新药/CXO ETF 资金持续净流出且 Q4 BD 窗口落空，"CXO 处于底部反转早段"的判断需至少推迟两个季度，届时 CXO 从"预备仓"降级为"纯观察"。</div>
+    </div>
+    <div class="note-item">
+      <div class="note-num">05</div>
+      <div class="note-body">若海外 AI 信用风险演化为美股 AI 链系统性下跌，两条主线都会受冲击，但光通信首当其冲——届时本次综合视角直接失效，应以系统性风险纪律优先于一切板块判断。</div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <p>⚠️ 以上内容由 AI 基于公开信息整理生成，仅供参考，不构成任何投资建议或个股推荐。投资有风险，决策需谨慎。</p>
+  <p class="footer-sub">stock-partner-team · Generated 2026-09-19</p>
+</footer>
+
+</body>
+</html>

@@ -56,3 +56,21 @@ htmlcov/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Workspace-local assistant state and editor-generated handoff artifacts
+.radar/
+.workbuddy/
+
+# Ephemeral diagnostic captures (keep reports, source captures, and reproducible scripts)
+outputs/_tmp_*
+outputs/_blk_*.txt
+outputs/_tnf_*.txt
+outputs/_vipdoc_*.txt
+outputs/_t0002_tree.txt
+outputs/_namedbg.txt
+outputs/_day_fresh.txt
+outputs/_ht_scan.txt
+outputs/_tmp_inventory_*.txt
+research_outputs/_cdxb_*
+research_outputs/_cdxd_*
+research_outputs/_sfkj_*

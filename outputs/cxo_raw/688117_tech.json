@@ -1,0 +1,28 @@
+{
+  "msg": "操作成功",
+  "suc": true,
+  "traceId": "b7edfb53618544f8ae1feb6cc2facc17",
+  "code": "200",
+  "data": {
+    "seParams": {},
+    "requestId": "b7edfb53618544f8ae1feb6cc2facc17",
+    "apiData": {
+      "apiRecall": [],
+      "entity": [
+        {
+          "code": "DEA.N",
+          "name": "EASTERLY GOVERNMENT PROPERTIES, INC."
+        },
+        {
+          "code": "MA.N",
+          "name": "万事达"
+        },
+        {
+          "code": "688117.SH",
+          "name": "圣诺生物"
+        }
+      ]
+    },
+    "extraParams": {}
+  }
+}

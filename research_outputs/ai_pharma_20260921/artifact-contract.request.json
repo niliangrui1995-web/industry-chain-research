@@ -1,0 +1,13 @@
+{
+  "schema_version": "moss-html-artifact/v1",
+  "artifact_id": "ai-pharma-dashboard",
+  "artifact_kind": "dashboard",
+  "brand": {
+    "name": "MOSS行业研究",
+    "primary_color": "#0E1B2C",
+    "secondary_color": "#16324F",
+    "accent_color": "#E4572E",
+    "tone": "editorial",
+    "density": "dense"
+  }
+}

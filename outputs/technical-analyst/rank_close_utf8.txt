@@ -1,0 +1,43 @@
+﻿鍏虫敞涓偂 000504 鍗楀崕鐢熺墿 寮哄澶?close 12.76 day 5.37 5d 54.3 20d 55.0 ma20 41.1 ma60 50.6 macd 0.899 cross 閲戝弶(5鏃ュ墠) rsi6 93.0 j 106.8 vol5 2.6 fromhi -4.2
+鍏虫敞涓偂 301080 鐧炬櫘璧涙柉 寮哄澶?close 129.8 day 9.26 5d 41.2 20d 47.0 ma20 40.4 ma60 77.2 macd 7.138 cross 閲戝弶(5鏃ュ墠) rsi6 88.6 j 94.3 vol5 1.4 fromhi -3.9
+鍏虫敞涓偂 301047 涔夌繕绁炲窞 寮哄澶?close 150.0 day 10.12 5d 47.2 20d 39.9 ma20 43.0 ma60 59.9 macd 9.081 cross 閲戝弶(4鏃ュ墠) rsi6 91.1 j 105.0 vol5 1.61 fromhi -2.6
+鍏虫敞涓偂 688293 濂ユ郸杩?寮哄澶?close 85.0 day 12.69 5d 26.8 20d 48.0 ma20 32.0 ma60 46.3 macd 3.566 cross  rsi6 87.4 j 91.2 vol5 1.26 fromhi -4.0
+鍏虫敞涓偂 688222 鎴愰兘鍏堝 寮哄澶?close 46.02 day 3.65 5d 25.7 20d 36.1 ma20 31.4 ma60 37.1 macd 3.06 cross  rsi6 85.1 j 103.0 vol5 1.71 fromhi -3.3
+鍏虫敞涓偂 688073 姣曞緱鍖昏嵂 寮哄澶?close 80.76 day 6.12 5d 25.9 20d 29.1 ma20 26.9 ma60 33.7 macd 3.863 cross 閲戝弶(4鏃ュ墠) rsi6 87.4 j 112.7 vol5 1.29 fromhi -9.1
+鍏虫敞涓偂 301230 娉撳崥鍖昏嵂 寮哄澶?close 40.07 day 1.19 5d 30.0 20d 22.2 ma20 25.0 ma60 29.1 macd 2.232 cross 閲戝弶(4鏃ュ墠) rsi6 86.6 j 109.0 vol5 1.83 fromhi -4.0
+鍏虫敞涓偂 688758 璧涘垎绉戞妧 寮哄澶?close 33.63 day -0.97 5d 13.0 20d 23.8 ma20 16.3 ma60 27.3 macd 1.192 cross  rsi6 80.0 j 97.3 vol5 1.42 fromhi -3.3
+鍏虫敞涓偂 688690 绾冲井绉戞妧 寮哄澶?close 49.21 day 2.8 5d 12.6 20d 23.0 ma20 19.1 ma60 23.9 macd 1.864 cross  rsi6 82.9 j 91.9 vol5 1.08 fromhi -2.1
+鍏虫敞涓偂 688131 鐨撳厓鍖昏嵂 寮哄澶?close 110.37 day 9.84 5d 19.3 20d 13.3 ma20 17.2 ma60 24.2 macd 2.959 cross 閲戝弶(4鏃ュ墠) rsi6 83.3 j 109.7 vol5 1.45 fromhi -0.6
+鍏虫敞涓偂 000739 鏅礇鑽笟 寮哄澶?close 25.32 day 5.5 5d 12.1 20d 22.1 ma20 12.2 ma60 19.6 macd 0.509 cross  rsi6 76.3 j 97.4 vol5 1.13 fromhi -0.7
+鍏虫敞涓偂 688796 鐧惧ゥ璧涘浘 寮哄澶?close 135.5 day 1.02 5d 7.1 20d 13.0 ma20 8.2 ma60 8.8 macd 2.908 cross 閲戝弶(5鏃ュ墠) rsi6 65.7 j 93.5 vol5 1.16 fromhi -12.6
+鍏虫敞涓偂 688710 鐩婅鎬?寮哄澶?close 104.77 day 14.42 5d 17.2 20d 11.5 ma20 20.8 ma60 26.6 macd 3.214 cross 閲戝弶(5鏃ュ墠) rsi6 78.5 j 94.0 vol5 1.1 fromhi -0.7
+鍏虫敞涓偂 300725 鑽煶绉戞妧 寮哄澶?close 54.35 day 1.59 5d 19.3 20d 13.8 ma20 19.3 ma60 24.6 macd 2.129 cross 閲戝弶(4鏃ュ墠) rsi6 87.1 j 106.0 vol5 1.42 fromhi -5.2
+鍏虫敞涓偂 688046 鑽悍鐢熺墿 寮哄澶?close 38.61 day 2.33 5d 13.4 20d 16.4 ma20 16.9 ma60 26.4 macd 1.239 cross 閲戝弶(5鏃ュ墠) rsi6 83.9 j 95.5 vol5 1.2 fromhi -11.2
+鍏虫敞涓偂 300363 鍗氳吘鑲′唤 寮哄澶?close 25.25 day 5.03 5d 14.5 20d 22.7 ma20 19.5 ma60 30.0 macd 0.774 cross  rsi6 86.8 j 93.8 vol5 1.05 fromhi -2.8
+鍏虫敞涓偂 002821 鍑幈鑻?寮哄澶?close 188.01 day 0.19 5d 3.0 20d 9.4 ma20 8.1 ma60 11.6 macd 3.471 cross  rsi6 67.1 j 84.3 vol5 1.03 fromhi -6.0
+鍏虫敞涓偂 688202 缇庤开瑗?寮哄澶?close 117.08 day 6.57 5d 13.2 20d 12.3 ma20 18.2 ma60 27.9 macd 3.488 cross 閲戝弶(5鏃ュ墠) rsi6 86.3 j 99.0 vol5 1.04 fromhi -2.4
+鍏虫敞涓偂 300347 娉版牸鍖昏嵂 寮哄澶?close 58.5 day 1.14 5d 3.0 20d 15.0 ma20 8.5 ma60 13.5 macd 1.0 cross  rsi6 68.6 j 85.2 vol5 0.95 fromhi -2.3
+鍏虫敞涓偂 688621 闃冲厜璇哄拰 寮哄澶?close 75.26 day 0.95 5d 2.1 20d 14.0 ma20 6.5 ma60 19.1 macd 0.384 cross  rsi6 72.5 j 73.4 vol5 0.94 fromhi -4.5
+---
+AI纭欢 600641 鍏堝鍩虹數 寮哄澶?close 47.8 day 9.28 5d 42.9 20d 54.6 ma20 39.9 ma60 40.5 macd 3.387 cross  rsi6 92.6 j 114.5 vol5 1.53 fromhi -6.3
+AI纭欢 688205 寰风绔?寮哄澶?close 229.66 day 2.43 5d 4.9 20d 50.9 ma20 11.6 ma60 37.4 macd 1.833 cross  rsi6 60.1 j 61.0 vol5 0.86 fromhi -5.9
+AI纭欢 301511 寰风绉戞妧 寮哄澶?close 112.68 day 1.42 5d 0.8 20d 40.2 ma20 10.4 ma60 17.1 macd 1.858 cross  rsi6 69.7 j 56.4 vol5 0.8 fromhi -30.4
+AI纭欢 688432 鏈夌爺纭?寮哄澶?close 55.0 day 4.64 5d 1.7 20d 35.1 ma20 15.0 ma60 33.3 macd 1.354 cross  rsi6 64.8 j 77.2 vol5 1.06 fromhi -9.5
+AI纭欢 300684 涓煶绉戞妧 寮哄澶?close 119.5 day 6.93 5d 27.4 20d 36.7 ma20 27.5 ma60 65.0 macd 3.523 cross 閲戝弶(2鏃ュ墠) rsi6 87.5 j 103.1 vol5 0.89 fromhi -5.9
+AI纭欢 688025 鏉版櫘鐗?寮哄澶?close 449.79 day 2.2 5d 1.2 20d 14.5 ma20 10.3 ma60 19.3 macd 8.638 cross  rsi6 70.2 j 91.3 vol5 1.06 fromhi -2.6
+AI纭欢 300548 闀胯姱鍗氬垱 寮哄澶?close 239.0 day 1.19 5d 2.4 20d 23.9 ma20 10.1 ma60 21.9 macd 5.186 cross  rsi6 67.6 j 88.6 vol5 0.93 fromhi -3.6
+AI纭欢 601208 涓滄潗绉戞妧 寮哄澶?close 55.0 day 5.38 5d 1.3 20d 23.2 ma20 10.4 ma60 15.5 macd 1.117 cross  rsi6 71.0 j 90.0 vol5 1.23 fromhi -18.6
+AI纭欢 300570 澶景鍏?寮哄澶?close 226.18 day -0.56 5d 9.6 20d 14.6 ma20 10.3 ma60 24.6 macd 3.862 cross 閲戝弶(5鏃ュ墠) rsi6 69.6 j 69.3 vol5 1.2 fromhi -10.2
+AI纭欢 300408 涓夌幆闆嗗洟 寮哄澶?close 130.4 day 0.71 5d 0.4 20d 20.0 ma20 8.8 ma60 9.6 macd 3.07 cross  rsi6 72.9 j 58.8 vol5 0.93 fromhi -20.3
+AI纭欢 688630 鑺寰 寮哄澶?close 440.68 day 3.04 5d 1.8 20d 2.3 ma20 6.5 ma60 6.5 macd 6.358 cross  rsi6 66.3 j 85.2 vol5 1.01 fromhi -16.1
+AI纭欢 002975 鍗氭澃鑲′唤 寮哄澶?close 110.57 day 2.86 5d 4.9 20d 9.6 ma20 7.5 ma60 10.9 macd 1.81 cross 閲戝弶(5鏃ュ墠) rsi6 73.9 j 96.9 vol5 0.84 fromhi -15.9
+AI纭欢 600330 澶╅€氳偂浠?寮哄澶?close 29.98 day 0.91 5d -2.8 20d 13.1 ma20 4.1 ma60 21.4 macd -0.158 cross 姝诲弶(4鏃ュ墠) rsi6 58.0 j 79.1 vol5 0.91 fromhi -3.3
+AI纭欢 688167 鐐厜绉戞妧 寮哄澶?close 308.9 day 4.45 5d 2.6 20d 17.9 ma20 4.2 ma60 18.9 macd -1.767 cross  rsi6 59.5 j 78.4 vol5 0.73 fromhi -6.9
+AI纭欢 688048 闀垮厜鍗庤姱 澶氬ご close 348.9 day -0.85 5d 5.0 20d 20.7 ma20 12.8 ma60 8.5 macd 14.161 cross  rsi6 67.0 j 86.3 vol5 1.07 fromhi -31.1
+AI纭欢 300489 鍏夋櫤绉戞妧 澶氬ご close 264.02 day 6.03 5d 25.5 20d 26.7 ma20 16.7 ma60 20.5 macd 8.434 cross 閲戝弶(3鏃ュ墠) rsi6 82.6 j 114.9 vol5 1.34 fromhi -15.3
+AI纭欢 300502 鏂版槗鐩?澶氬ご close 451.2 day -0.84 5d 6.5 20d 13.1 ma20 8.6 ma60 0.8 macd 15.279 cross  rsi6 69.5 j 80.2 vol5 0.99 fromhi -22.1
+AI纭欢 688361 涓椋炴祴 澶氬ご close 381.32 day 0.65 5d 12.8 20d 5.3 ma20 12.1 ma60 8.8 macd 16.45 cross 閲戝弶(5鏃ュ墠) rsi6 74.9 j 100.1 vol5 1.25 fromhi -16.2
+AI纭欢 603893 鐟炶姱寰?澶氬ご close 223.01 day 2.39 5d 23.7 20d 26.6 ma20 16.9 ma60 13.3 macd 8.726 cross 閲戝弶(4鏃ュ墠) rsi6 87.9 j 118.1 vol5 1.36 fromhi -4.6
+AI纭欢 603256 瀹忓拰绉戞妧 澶氬ご close 156.8 day -1.52 5d 9.4 20d 17.1 ma20 13.4 ma60 1.4 macd 8.183 cross  rsi6 78.8 j 95.8 vol5 1.52 fromhi -38.1
+---
+counts 126 1

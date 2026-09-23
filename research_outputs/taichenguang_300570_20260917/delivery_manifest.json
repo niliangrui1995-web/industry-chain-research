@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-17T06:32:07.021665+00:00",
+  "updated_at": "2026-09-17T06:44:30.892210+00:00",
+  "content_snapshot": {
+    "source_hash": "1999b44a88e1eb2d4b6a329905572a7d6832fb865a0017dc09ca49f3b2db444a",
+    "frozen": true
+  },
+  "deliverables": {
+    "html": {
+      "required": true,
+      "generated": true,
+      "validated": true,
+      "presented": true,
+      "file": "D:/vcp_hunter/产业链投研/research_outputs/taichenguang_300570_20260917/决策看板_太辰光300570.html",
+      "error": null
+    },
+    "word": {
+      "required": false,
+      "generated": false,
+      "validated": false,
+      "presented": false,
+      "file": null,
+      "error": null
+    },
+    "pdf": {
+      "required": false,
+      "generated": false,
+      "validated": false,
+      "presented": false,
+      "file": null,
+      "error": null
+    },
+    "ppt": {
+      "required": false,
+      "generated": false,
+      "validated": false,
+      "presented": false,
+      "file": null,
+      "error": null
+    },
+    "xlsx": {
+      "required": false,
+      "generated": false,
+      "validated": false,
+      "presented": false,
+      "file": null,
+      "error": null
+    }
+  },
+  "delivery_committed": true,
+  "presentation_ready": true
+}

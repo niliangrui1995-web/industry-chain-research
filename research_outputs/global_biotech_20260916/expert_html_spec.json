@@ -1,0 +1,65 @@
+{
+  "schema": "expert-html-spec/v1",
+  "frozen_at": "2026-09-16",
+  "artifact": {
+    "file": "D:/vcp_hunter/产业链投研/outputs/决策看板_全球Biotech融资.html",
+    "title": "全球 Biotech 融资与中国创新药 BD 系统性研究",
+    "perspective": "投资研究（行业机会与风险）",
+    "contract": "research_outputs/global_biotech_20260916/artifact-contract.json",
+    "render_seed": "a8608c493bbd0b35",
+    "evidence_ledger": "research_outputs/global_biotech_20260916/evidence_ledger.json",
+    "evidence_count": 40
+  },
+  "user_decisions": {
+    "caliber_strategy": "多口径并列并标注差异（医药魔方/PitchBook/Dealforma/DealForma/CapitalIQ/IQVIA/HSBC/动脉智库等各自标注）",
+    "time_window": "2021-2025 全年 + 2026H1（个别序列延伸至 2019/2020 作基期参照）",
+    "china_scope": "中国部分按与全球统一的框架（规模趋势/轮次结构/赛道/退出/政策）重新梳理，增量精力投向全球",
+    "formats": ["html"]
+  },
+  "structure": [
+    {"id": "header", "name": "报告头部"},
+    {"id": "toc", "name": "目录"},
+    {"id": "trace", "name": "研究收束区：范围与问题树/检索与数据地图/证据覆盖与分歧/结论收束地图"},
+    {"id": "dashboard", "name": "决策看板四模块：战场仪表盘/价值机会 P0-P2/2x2 矩阵/验证动作与停止信号"},
+    {"id": "insight-1", "name": "洞察主线一：当前态势与关键矛盾（K 型复苏）"},
+    {"id": "insight-2", "name": "洞察主线二：趋势、驱动与转折信号（非降息驱动的五大驱动）"},
+    {"id": "insight-3", "name": "洞察主线三：发展方向、分化路径与验证条件（2026-2028 三情景）"},
+    {"id": "part-global", "name": "数据详章：全球总览与周期定位（多口径序列）"},
+    {"id": "part-region", "name": "数据详章：美/欧/中区域对比（统一框架）"},
+    {"id": "part-track", "name": "数据详章：热门赛道资金流向（ADC/双抗/GLP-1/AI/CGT/小核酸）"},
+    {"id": "part-exit", "name": "数据详章：退出渠道（IPO/M&A/License-out）"},
+    {"id": "part-china", "name": "数据详章：对中国创新药行业的启示（BD 双轮/CRO 传导/结构警示）"},
+    {"id": "part-conclusion", "name": "结论与跟踪指标"},
+    {"id": "part-evidence", "name": "证据链与方法论（E-001..E-040 索引+抽屉）"},
+    {"id": "disclaimer", "name": "免责声明"}
+  ],
+  "caliber_decisions": [
+    {"topic": "全球总量", "primary": "医药魔方创新药一级市场（E-011/E-015/E-005）", "parallel": ["PitchBook biopharma VC（E-007）", "医药魔方全口径含一二级（E-014）", "Dealforma biopharma T&P（E-009）", "HSBC 生命科学全口径（E-026）", "动脉智库医疗健康全口径（E-004/E-038）"], "note": "各口径覆盖范围不同，不做跨口径直接比较；2023 年医药魔方一级市场缺值，图中留空不连线"},
+    {"topic": "中国一级市场", "conflict": "中邮转述医药魔方 92.34 亿美元（E-011，推测广义含 IPO/增发） vs 信达转述医药魔方 52.05 亿美元（E-012，窄口径 VC/PE）", "resolution": "双口径并列展示并显著标注，不作二选一"},
+    {"topic": "中国区域对比", "conflict": "Dealforma 中国+香港 11 亿美元（E-009）vs 医药魔方 92.34 亿美元（E-011）", "resolution": "标注为覆盖范围与定义差异，区域对比图采用 Dealforma 口径保证美欧中同口径可比"},
+    {"topic": "并购总额", "parallel": ["CapitalIQ 2230 亿（E-020）", "医药魔方创新药 1430 亿（E-013）", "IQVIA 生命科学 2570 亿含或有（E-018）", "Evaluate 2012 亿含 Kenvue（E-021）"], "resolution": "主图用 CapitalIQ 连续序列，其余口径在口径说明卡中并列"},
+    {"topic": "推算值", "items": ["2021 全球一级市场约 509 亿美元（按 E-015 同比 -43% 反推）", "2021 中国一级市场约 149 亿美元（按 E-015 同比 -55% 反推）", "2024 全球一级市场约 365 亿美元（按 E-011 同比 -5.61% 反推）", "2024 中国一级市场约 47.8 亿美元（按 E-011 同比 +93.35% 反推）", "2022 PitchBook 约 372 亿美元（按 E-007 降 185 亿推算）", "2026 并购年化约 3020 亿美元（E-020 原文年化）"], "rule": "推算值在图中以描边/半透明+“推算”标签区分，正文注明推算路径"},
+    {"topic": "半年度数据", "rule": "2026H1/9M25 等不完整期间与全年数据并列时，以独立柱+纹理区分并在标题/图注显著标明统计期间，不混入同一可比序列"}
+  ],
+  "charts": [
+    {"id": "c1", "section": "part-global", "type": "grouped-bar", "title": "全球与中国创新药融资总额（医药魔方全口径，含一二级）", "data": "E-014", "note": "2020-2024 全年 + 9M25（九月度，独立标注）"},
+    {"id": "c2", "section": "part-global", "type": "bar", "title": "全球创新药一级市场融资（医药魔方口径）", "data": "E-015/E-011/E-005", "note": "2021/2024 为推算值，2023 缺值留空，2026H1 独立标注"},
+    {"id": "c3", "section": "part-global", "type": "bar", "title": "全球 biopharma VC 融资（PitchBook 口径）", "data": "E-007", "note": "2022 为推算值，2023 缺值留空"},
+    {"id": "c4", "section": "part-global", "type": "bar", "title": "2025 年全球 biopharma VC 轮次分布（Dealforma）", "data": "E-009", "note": "C 轮及其他为差额推算"},
+    {"id": "c5", "section": "part-region", "type": "bar", "title": "2025 年 biopharma VC 区域对比（Dealforma 同口径）", "data": "E-009", "note": "附口径冲突说明卡"},
+    {"id": "c6", "section": "part-track", "type": "bar", "title": "2025 年治疗领域资金流向（Dealforma）", "data": "E-009"},
+    {"id": "c7", "section": "part-track", "type": "bar", "title": "AI 药物发现 VC 融资 2023-2025（DealForma）", "data": "E-034"},
+    {"id": "c8", "section": "part-track", "type": "grouped-bar", "title": "CGT 融资年度序列：国外 vs 中国（医药魔方）", "data": "E-035", "note": "中国 2022/2023 缺值留空"},
+    {"id": "c9", "section": "part-exit", "type": "dual-axis", "title": "全球 biotech IPO 数量与募资额 2020-2025（DRI）", "data": "E-037", "note": "左轴金额/右轴数量，附 2026 年重开证据"},
+    {"id": "c10", "section": "part-exit", "type": "bar", "title": "全球 biopharma 并购金额 2021-2025（CapitalIQ）", "data": "E-020", "note": "2026 年化为推算柱"},
+    {"id": "c11", "section": "part-exit", "type": "bar", "title": "中国创新药 license-out 交易总额 2024-2026H1", "data": "E-022/E-023/E-005", "note": "2026H1 为半年数据独立标注"},
+    {"id": "c12", "section": "insight-2", "type": "hbar", "title": "2026 年内医药与基准指数表现（至 2026-09）", "data": "E-033"},
+    {"id": "c13", "section": "part-region", "type": "bar", "title": "中国创新药一级市场融资（医药魔方，双口径并列）", "data": "E-015/E-011/E-012/E-005", "note": "2025 双柱展示广义/窄口径冲突，2021/2024 为推算值"}
+  ],
+  "core_judgment": "全球 Biotech 一级市场融资已于 2025 年确认底部、2026H1 强劲反弹（+58.5%），复苏呈 K 型结构——资金向临床阶段资产、大额轮与确定性赛道集中，早期融资断层扩大；本轮由专利悬崖并购需求、二级市场风险偏好修复与中国资产/BD 崛起驱动而非降息。未来 2-3 年大概率为有纪律的复苏，中国创新药“融资+出海”双轮驱动延续，需警惕 IPO 窗口脆弱、MFN 药价压力与早期断层三大风险。",
+  "scenarios": {
+    "base": {"prob": "约 55%", "desc": "有纪律的复苏延续：2026 全年全球一级市场 500-550 亿美元，IPO 渐进重开，M&A 维持 2000 亿+ 高位，中国 license-out 冲击 1500 亿后增速常态化"},
+    "bull": {"prob": "约 25%", "desc": "降息重启+AI 药物临床兑现+IPO 全面重开，全球融资向 2021 年后最高水平修复"},
+    "bear": {"prob": "约 20%", "desc": "宏观冲击/药价超调/地缘升级，回到 2023-2024 筑底状态，早期断层加剧"}
+  }
+}

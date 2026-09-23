@@ -1,0 +1,4 @@
+  File "<string>", line 3
+    note='''
+         ^
+SyntaxError: unterminated triple-quoted string literal (detected at line 17)

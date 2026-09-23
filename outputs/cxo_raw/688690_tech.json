@@ -1,0 +1,28 @@
+{
+  "msg": "操作成功",
+  "suc": true,
+  "traceId": "0f7ee39536d046709ae96db832aa4a97",
+  "code": "200",
+  "data": {
+    "seParams": {},
+    "requestId": "0f7ee39536d046709ae96db832aa4a97",
+    "apiData": {
+      "apiRecall": [],
+      "entity": [
+        {
+          "code": "DEA.N",
+          "name": "EASTERLY GOVERNMENT PROPERTIES, INC."
+        },
+        {
+          "code": "MA.N",
+          "name": "万事达"
+        },
+        {
+          "code": "688690.SH",
+          "name": "纳微科技"
+        }
+      ]
+    },
+    "extraParams": {}
+  }
+}

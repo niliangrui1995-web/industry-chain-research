@@ -1,0 +1,16 @@
+{
+  "schema_version": "moss-html-artifact/v1",
+  "artifact_id": "global-innovative-financing-cxo-20260922",
+  "artifact_kind": "dashboard",
+  "artifact_mode": "interactive-web",
+  "visual_baseline": "editorial-impact",
+  "brand": {
+    "name": "产业链投研",
+    "primary_color": "#17213D",
+    "secondary_color": "#F2EDE4",
+    "accent_color": "#E4572E",
+    "tone": "editorial",
+    "density": "balanced"
+  },
+  "content_source": "frozen_delivery_package.json"
+}

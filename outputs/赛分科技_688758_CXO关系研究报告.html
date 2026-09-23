@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>赛分科技（688758.SH）研究与 CXO 产业关系分析</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --ink:#1c2733; --ink2:#4a5a6a; --line:#dfe6ee; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#1f5fbf; --blue-bg:#eaf1fc; --red:#c0392b; --green:#1e8449;
+    --amber:#b7791f; --amber-bg:#fdf6e7; --grey:#8a97a5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); line-height:1.75; font-size:15px;}
+  .wrap{max-width:1080px; margin:0 auto; padding:28px 20px 60px;}
+  header.hero{background:linear-gradient(135deg,#123f7a,#1f5fbf); color:#fff; border-radius:14px; padding:32px 38px; margin-bottom:22px;}
+  header.hero h1{font-size:25px; letter-spacing:.5px;}
+  header.hero .sub{margin-top:8px; font-size:13.5px; opacity:.92;}
+  header.hero .tags{margin-top:13px;}
+  header.hero .tag{display:inline-block; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.35); border-radius:20px; padding:2px 12px; font-size:12.5px; margin-right:8px;}
+  .concl{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--blue); border-radius:10px; padding:22px 26px; margin-bottom:22px; box-shadow:0 1px 4px rgba(20,40,80,.05);}
+  .concl h2{font-size:17px; color:var(--blue); margin-bottom:10px;}
+  .concl li{margin:6px 0 6px 20px;}
+  .concl b{color:var(--red);}
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:24px;}
+  .kpi{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .kpi .k{font-size:12.5px; color:var(--ink2);}
+  .kpi .v{font-size:19px; font-weight:700; color:var(--blue); margin-top:2px;}
+  .kpi .v.up{color:var(--red);}
+  .kpi .s{font-size:11px; color:var(--grey); margin-top:3px;}
+  section{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:24px 28px; margin-bottom:22px;}
+  section h2{font-size:19px; color:var(--ink); border-bottom:2px solid var(--blue-bg); padding-bottom:9px; margin-bottom:16px;}
+  section h2 .no{display:inline-block; background:var(--blue); color:#fff; border-radius:6px; font-size:13px; padding:1px 9px; margin-right:9px; vertical-align:2px;}
+  section h3{font-size:15.5px; color:var(--blue); margin:18px 0 8px;}
+  p{margin:7px 0;}
+  .note{font-size:12.5px; color:var(--grey); margin-top:6px;}
+  .src{font-size:12px; color:var(--grey); border-top:1px dashed var(--line); margin-top:14px; padding-top:8px;}
+  table{width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px;}
+  th{background:var(--blue-bg); color:var(--ink); text-align:left; padding:8px 10px; border:1px solid var(--line); font-weight:600;}
+  td{padding:7px 10px; border:1px solid var(--line); vertical-align:top;}
+  tr:nth-child(even) td{background:#fafbfd;}
+  .num{text-align:right; white-space:nowrap;}
+  .pos{color:var(--red); font-weight:600;}
+  .neg{color:var(--green); font-weight:600;}
+  .chart{width:100%; height:330px; margin:8px 0 2px;}
+  .chart2{width:100%; height:300px; margin:8px 0 2px;}
+  .warn{background:var(--amber-bg); border:1px solid #ecd9ae; border-radius:8px; padding:12px 16px; font-size:13.5px; margin:10px 0;}
+  .ok{background:#eef8f0; border:1px solid #cde8d3; border-radius:8px; padding:12px 16px; font-size:13.5px; margin:10px 0;}
+  .chain{display:flex; flex-wrap:wrap; align-items:stretch; gap:0; margin:16px 0 6px;}
+  .chain .stage{flex:1 1 150px; min-width:140px; border:1px solid var(--line); border-radius:10px; padding:12px 12px; background:#fafbfd; position:relative; margin-right:26px;}
+  .chain .stage:last-child{margin-right:0;}
+  .chain .stage::after{content:"→"; position:absolute; right:-21px; top:50%; transform:translateY(-50%); color:var(--grey); font-size:16px;}
+  .chain .stage:last-child::after{content:"";}
+  .chain .stage.hl{border:2px solid var(--blue); background:var(--blue-bg);}
+  .chain .stage h4{font-size:13.5px; margin-bottom:5px;}
+  .chain .stage.hl h4{color:var(--blue);}
+  .chain .stage p{font-size:12px; color:var(--ink2); margin:2px 0; line-height:1.55;}
+  .risk-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:760px){.risk-grid{grid-template-columns:1fr;}}
+  .risk-card{border:1px solid var(--line); border-radius:9px; padding:13px 16px;}
+  .risk-card h4{font-size:14px; margin-bottom:5px;}
+  .risk-card.op h4{color:var(--blue);}
+  .risk-card.rk h4{color:var(--red);}
+  .risk-card p{font-size:13px; color:var(--ink2); margin:0;}
+  .lvl{display:inline-block; font-size:11.5px; border-radius:4px; padding:0 6px; margin-left:6px; vertical-align:1px;}
+  .lvl.hi{background:#fdeaea; color:var(--red);}
+  .lvl.mid{background:var(--amber-bg); color:var(--amber);}
+  .lvl.lo{background:#eef2f6; color:var(--grey);}
+  .disclaimer{background:#eef1f5; border:1px solid var(--line); border-radius:10px; padding:18px 22px; font-size:12.8px; color:var(--ink2);}
+  .disclaimer b{color:var(--ink);}
+  .sources li{margin:4px 0 4px 20px; font-size:12.5px; color:var(--ink2);}
+  .toc{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 22px; margin-bottom:22px; font-size:13.5px;}
+  .toc a{color:var(--blue); text-decoration:none; margin-right:18px; white-space:nowrap;}
+  .toc a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>赛分科技（688758.SH）研究与 CXO 产业关系分析</h1>
+  <div class="sub">国产色谱填料/层析介质厂商 —— 生物药纯化供应链的"卖水人" | 研究基准日：2026-09-18</div>
+  <div class="tags">
+    <span class="tag">科创板 · 2025-01-10 上市（当年首只新股）</span>
+    <span class="tag">医药生物 / 化学制药（申万口径）</span>
+    <span class="tag">总市值 138.5 亿元（2026-09-18 盘中）</span>
+    <span class="tag">年初至今 +88.3%</span>
+  </div>
+</header>
+
+<div class="concl">
+  <h2>核心结论（先读）</h2>
+  <ul>
+    <li><b>公司是什么：</b>液相色谱材料国产龙头（国产第二，市占率约 5–7%），"分析色谱 + 工业纯化"双平台，核心产品为<b>色谱柱（分析检测耗材）与色谱填料/层析介质（生物药分离纯化的核心生产耗材）</b>，2026H1 营收 2.80 亿（+53.2%）、归母净利 1.11 亿（+106.2%）、毛利率 75.3%。</li>
+    <li><b>与 CXO 的关系定位：</b>赛分科技<b>不是 CXO 企业，而是 CXO 的上游耗材供应商</b>——位于我们 CXO 四环节框架中"上游工具与材料"环节。色谱填料是 CDMO 生产生物药的必需耗材（填料每使用约 100–150 次即需更换，"药品不停产、填料需求就可持续"）。</li>
+    <li><b>直接服务 CXO 的实证：</b>药明康德（603259）是其分析色谱客户；信达生物（1801.HK）旗下 CDMO 采用其千升级 Protein A 填料建成全国首批 2 万升抗体产线；义翘神州等 CRO 型公司亦在客户名单中；并曾与博格隆在 CDMO 层析介质项目中同场竞标。</li>
+    <li><b>合作大于竞争：</b>与 CXO 是供应商-客户关系 + "陪伴式出海"共生关系（复宏汉霖、百奥泰等海外获批项目选用其填料）；仅在与 CDMO 的纯化工艺开发技术服务上存在轻微功能重叠，且互补远大于替代。</li>
+    <li><b>CXO 趋势影响：</b>CXO 景气回升 → 产能扩张 → 填料采购放大，是<b>顺周期放大器</b>（需求弹性大于 CDMO 收入弹性本身，因耗材具复购属性）；国产替代 + 供应链安全是独立于周期的结构性 alpha。主要风险：估值 75 倍 PE(TTM) 处高位、多家股东减持进行中、境外收入阶段性下滑。</li>
+  </ul>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="k">现价（9/18 盘中）</div><div class="v up">33.26 元</div><div class="s">当日 +6.67%，盘中创历史新高 | westock</div></div>
+  <div class="kpi"><div class="k">2026H1 营收</div><div class="v up">2.80 亿</div><div class="s">同比 +53.2% | 中报</div></div>
+  <div class="kpi"><div class="k">2026H1 归母净利</div><div class="v up">1.11 亿</div><div class="s">同比 +106.2% | 中报</div></div>
+  <div class="kpi"><div class="k">毛利率（2026H1）</div><div class="v">75.3%</div><div class="s">分析色谱板块 78.4% | 中报</div></div>
+  <div class="kpi"><div class="k">PE(TTM) / PB</div><div class="v">75.5 / 9.98</div><div class="s">2026-09-18 | westock</div></div>
+</div>
+
+<nav class="toc">
+  <a href="#s1">① 公司基本情况</a><a href="#s2">② 主营业务与核心产品</a><a href="#s3">③ 财务表现</a><a href="#s4">④ 与 CXO 的关系（核心）</a><a href="#s5">⑤ CXO 趋势的影响</a><a href="#s6">⑥ 风险提示</a><a href="#s7">⑦ 分析结论</a>
+</nav>
+
+<!-- ================= 1 ================= -->
+<section id="s1">
+  <h2><span class="no">1</span>公司基本情况</h2>
+  <table>
+    <tr><td style="width:130px;">公司全称</td><td>苏州赛分科技股份有限公司（Sepax Technologies）</td></tr>
+    <tr><td>沿革</td><td>2002 年黄学英博士创立于美国特拉华州；2009 年落户苏州工业园区；2017 年设扬州生产基地（一期 2021 年投产）；2022 年成立美国生科（Sepax Bioscience）；<b>2025-01-10 科创板上市（当年科创板首只新股）</b>，发行价 4.32 元</td></tr>
+    <tr><td>实控人</td><td>黄学英（董事长兼总经理），直接持股 22.18%；南京大学硕士、斯坦福博士后，曾任职美国戴安（全球首台离子色谱厂商）与杜邦</td></tr>
+    <tr><td>规模</td><td>员工 417 人；总股本 4.16 亿股；苏州研发 + 扬州生产 + 美国基地三地布局，均通过 ISO 9001:2015 认证</td></tr>
+    <tr><td>行业归属</td><td>申万：医药生物 → 化学制药 → 原料药；概念：新材料、生物医药、专精特新"小巨人"（2024 年获认定）</td></tr>
+    <tr><td>行业地位</td><td>国内色谱填料市占率约 5–7%（国产第二，仅次于纳微科技 688690 的 18–21%）；全球少数同时掌握琼脂糖/PMA/PS-DVB/硅胶<b>四大基质底层技术</b>的厂商之一</td></tr>
+  </table>
+  <p class="src">来源：公司公告/招股书、百度百科（企业条目）、苏州人才平台企业信息、第三方市占率测算（智慧芽/研报引用，非一手，需核实）。</p>
+</section>
+
+<!-- ================= 2 ================= -->
+<section id="s2">
+  <h2><span class="no">2</span>主营业务、核心产品与目标市场</h2>
+  <p>公司主营<b>用于药物分析检测和分离纯化的液相色谱材料</b>，产品贯穿药物研发、IND 申报、临床试验、上市申请到商业化生产的全过程，形成三大板块：</p>
+  <table>
+    <tr><th style="width:110px;">板块</th><th>核心产品</th><th style="width:150px;">2026H1 收入 / 占比 / 同比</th><th>属性</th></tr>
+    <tr><td><b>分析色谱</b></td><td>色谱柱 1000+ 种（体积排阻/离子交换/亲和/疏水/反相；Antibodix、SRT、Zenix 等品牌），用于药物研发与质检的分析检测；新品 SRT-C SEC-300 Plus 在单抗/双抗/ADC 领域实现与国际标杆性能等效</td><td>0.67 亿 / 24.0% / +10.0%</td><td>毛利率 78.4%，高毛利基本盘</td></tr>
+    <tr><td><b>工业纯化</b></td><td>色谱填料（层析介质）100+ 种：亲和（<b>MabPurix 系列 Protein A</b>——中国首款通过 FDA DMF 备案的国产亲和填料）、离子交换、疏水、反相、复合模式；覆盖抗体、胰岛素、GLP-1、疫苗、重组蛋白、寡核苷酸</td><td>2.09 亿 / <b>74.6%</b> / <b>+73.3%</b></td><td>核心增长引擎，耗材复购属性</td></tr>
+    <tr><td><b>医疗诊断</b></td><td>GlyHb 糖化血红蛋白检测色谱柱及配套试剂/仪器（HbA1c 检测）</td><td>约 0.04 亿（含于其他）</td><td>IVD 耗材延伸</td></tr>
+  </table>
+
+  <h3>目标市场与客户结构</h3>
+  <ul style="margin:6px 0 6px 20px; font-size:13.5px;">
+    <li><b>国际药企：</b>罗氏、辉瑞、礼来、阿斯利康、再生元、Moderna、诺和诺德等（分析色谱为主）；全球累计客户超 5,000 家，境外收入占比 11.5%（2026H1）。</li>
+    <li><b>国内头部药企：</b>信达生物、复宏汉霖、甘李药业、齐鲁制药、国药中生、石药集团、金赛药业、诺泰生物、通化安睿特等（工业纯化深度绑定）。</li>
+    <li><b>CXO 类客户：</b>药明康德（603259）、义翘神州（北京）、康宁杰瑞等（详见第 4 节）。</li>
+    <li><b>仪器/渠道巨头（OEM 合作）：</b>与安捷伦自 2009 年起战略合作伙伴，与赛默飞、默克、VWR、Sigma-Aldrich 长期合作——分析色谱产品嵌入国际仪器巨头的渠道体系。</li>
+    <li><b>客户集中度：</b>百万级以上核心客户贡献工业纯化收入的 92.04%（2026H1）；超 179 个项目将公司色谱柱纳入正式分析方法（注册方法锁定效应）。</li>
+  </ul>
+
+  <h3>产能布局（供给端核心变量）</h3>
+  <table>
+    <tr><th>基地</th><th>产能</th><th>状态</th></tr>
+    <tr><td>扬州一期</td><td>工业纯化填料 24,760 升/年（8 条产线）</td><td>满负荷运转，订单交付率 100%，累计通过 127 家客户审计</td></tr>
+    <tr><td><b>扬州二期</b></td><td><b>新增 20 万升/年</b>（5000L 反应釜、单批次超 1000L）</td><td>2025-12 开工，<b>预计 2026 年底投产</b>，投产后总产能 22.48 万升/年</td></tr>
+    <tr><td>扬州三期</td><td>年产 3,000 公斤蛋白 + 18 吨硅胶基质填料（投资约 3 亿）</td><td>已签入园协议，预计 2027 年 1 月开工——向上游核心原料（蛋白配基）自给延伸</td></tr>
+    <tr><td>美国生科</td><td>新增 5 万升/年</td><td>特拉华州推进中（土地许可/环评/设计），形成"中国+美国"双供应链</td></tr>
+  </table>
+  <p class="src">来源：公司 2025 年报（2026-04-21 披露）、2026 半年报（2026-08-27 披露）、上证报/证券时报报道、公司投资者关系活动记录（2026-04-28/29）。</p>
+</section>
+
+<!-- ================= 3 ================= -->
+<section id="s3">
+  <h2><span class="no">3</span>近年财务表现</h2>
+  <div id="c1" class="chart"></div>
+  <div class="note">2021–2023 为 IPO 招股书/年报口径（2023 全年为由 2024 年增速反推的计算值）；2024/2025 为年报数；2026H1 为半年数。收入增速从 2025 年的 +27.7% 加速至 2026H1 的 +53.2%，利润增速（+106.2%）远超收入——规模效应与产品结构优化（高毛利工业纯化占比提升）共同驱动。</div>
+  <div id="c2" class="chart2"></div>
+  <ul style="margin:6px 0 6px 20px; font-size:13.5px;">
+    <li><b>盈利质量：</b>2026H1 毛利率 75.3%、净利率 39.7%、ROE(TTM) 13.2%；毛利率水平在 A 股耗材/材料类公司中居前（对比多元吸附材料龙头蓝晓科技约 51%——纯色谱填料赛道享有显著毛利率溢价）。</li>
+    <li><b>财务结构：</b>资产负债率仅 11.8%，货币资金 2.13 亿覆盖有息负债（0.97 亿）；经营现金流 2026H1 净额 0.86 亿（TTM 1.53 亿），现金流健康。</li>
+    <li><b>增长结构：</b>抗体药物收入 1.46 亿（+122.6%）为最大引擎；生物类似药新增收入 +111.3%；双抗/ADC 新增合作项目 35 个；GLP-1 领域 2025H1 相关产品销售额曾同比 +177.5%。</li>
+    <li><b>瑕疵：</b>境外收入 2026H1 同比 -3.5%（全球化仍处投入期）；Q1 经营现金流为负（-919 万，回款节奏问题，H1 已转正）。</li>
+  </ul>
+  <p class="src">来源：westock-data 财务接口（2026-09-18 检索）、公司定期报告。</p>
+</section>
+
+<!-- ================= 4 ================= -->
+<section id="s4">
+  <h2><span class="no">4</span>与 CXO 行业的关系（核心章节）</h2>
+
+  <h3>4.1 产业链定位：CXO 的"上游工具与材料"环节</h3>
+  <div class="chain">
+    <div class="stage hl">
+      <h4>上游工具与材料</h4>
+      <p><b>赛分科技在此</b>：色谱填料/层析介质、色谱柱；同环节还有试剂（皓元/毕得）、模式动物（昭衍/药康）、设备等</p>
+    </div>
+    <div class="stage">
+      <h4>CRO（研发外包）</h4>
+      <p>药物发现、临床前安评、临床试验服务——研发期消耗其<b>分析色谱柱</b>做检测</p>
+    </div>
+    <div class="stage">
+      <h4>CDMO（生产外包）</h4>
+      <p>临床/商业化生产——生产中大量消耗其<b>层析介质</b>做下游纯化（核心耗材）</p>
+    </div>
+    <div class="stage">
+      <h4>CSO（销售外包）</h4>
+      <p>学术推广、销售渠道——与赛分业务<b>基本无交集</b></p>
+    </div>
+  </div>
+  <p><b>一句话定位：赛分科技是"给 CXO 和药企卖铲子的铲子"——生物药产业链最上游的纯化耗材供应商。</b>色谱填料在抗体生产成本中占可观比重（下游纯化是生物药生产工艺中耗材支出最大的环节之一），且属于<b>需定期更换的复购型耗材</b>：亲和填料每使用约 100–150 次即需更换（董事长黄学英原话："药品不停产，填料需求就可持续"）。</p>
+
+  <h3>4.2 是否直接/间接服务 CXO 企业：有实证</h3>
+  <table>
+    <tr><th style="width:190px;">CXO 类客户/项目</th><th>关系性质</th><th>证据要点</th></tr>
+    <tr><td><b>信达生物（1801.HK）旗下 CDMO</b></td><td>直接供货</td><td>2025 年交付千升级 Protein A 亲和填料及阳离子交换填料，助力其<b>落地全国首批 2 万升规模抗体生产</b>——验证 2000mm 装柱级别的规模化供应能力（2025 年报）</td></tr>
+    <tr><td><b>药明康德（603259）</b></td><td>直接客户（分析色谱）</td><td>苏州人才平台客户名单明确在列；CRO 实验室的检测/质控环节消耗色谱柱</td></tr>
+    <tr><td><b>义翘神州（北京）</b></td><td>直接客户</td><td>重组蛋白/生物试剂服务商（CRO 属性），历史客户名单在列</td></tr>
+    <tr><td><b>复宏汉霖 / 百奥泰</b></td><td>药企客户 + 出海共生</td><td>其海外获批上市项目选用赛分填料——中国 CDMO/药企承接海外订单时带动国产填料"伴随出海"</td></tr>
+    <tr><td>CDMO 层析介质采购竞标</td><td>竞争参与</td><td>工商中标记录显示曾与博格隆（国产层析介质同行）在相关项目同场竞标——CDMO 是国产填料厂商共同争夺的客户群</td></tr>
+    <tr><td>安捷伦 / 赛默飞 / 默克 / VWR</td><td>OEM/渠道合作</td><td>非 CXO，但属"嵌入国际仪器巨头渠道"的间接服务路径——仪器巨头再服务其终端药企/CXO 客户</td></tr>
+  </table>
+  <div class="ok"><b>判定：</b>赛分产品<b>直接和间接服务于 CXO 企业</b>——CRO 端消耗其分析色谱柱（检测质控），CDMO 端消耗其层析介质（生产纯化，单项目用量大、复购持续）。CXO 是其工业纯化板块最重要的增量客户群之一。</div>
+
+  <h3>4.3 合作模式</h3>
+  <ul style="margin:6px 0 6px 20px; font-size:13.5px;">
+    <li><b>产品销售 + 全流程技术服务：</b>向 CXO/药企提供填料筛选、工艺优化、寿命验证、工艺验证、层析柱填装等配套服务——本质是"耗材 + 工艺 know-how"捆绑，黏性强（更换填料需重做工艺验证，法规成本高，客户轻易不换供应商）。</li>
+    <li><b>注册锁定：</b>8 大产品系列完成 FDA DMF 备案——CDMO/药企用其填料向 FDA 申报时可直接引用备案编号，降低注册负担；179+ 个项目将赛分色谱柱写入正式分析方法（换供应商=变更注册方法）。</li>
+    <li><b>伴随出海：</b>三条路径——①项目出海（一带一路抗体 III 期项目大额续购）；②客户出海（复宏汉霖/甘李/百奥泰海外获批项目带国产填料出海）；③直接外销 + 美国本土产能（服务欧美药企及 CDMO 的供应链安全诉求）。</li>
+    <li><b>资本协同：</b>2026 年 6 月参与 AI 蛋白质设计平台"分子之心"A 轮融资（色谱纯化 × 蛋白质工程协同，向综合工艺解决方案服务商转型）。</li>
+  </ul>
+
+  <h3>4.4 竞争关系辨析</h3>
+  <table>
+    <tr><th style="width:150px;">对象</th><th>关系</th><th>说明</th></tr>
+    <tr><td>与 CRO/CDMO</td><td><b>供应商-客户，合作绝对主导</b></td><td>不存在服务替代关系；仅在"纯化工艺开发技术服务"上与 CDMO 的工艺开发部门有轻微功能重叠，但赛分不承接生产、不碰客户的分子资产，定位互补</td></tr>
+    <tr><td>与国际填料巨头</td><td><b>正面竞争（国产替代主战场）</b></td><td>Cytiva、默克 Life Science、赛默飞、Tosoh 主导全球市场；赛分在性能对标（如 MabPurix A65 动态载量与 Cytiva 持平）基础上以供货周期/价格/本土服务抢份额</td></tr>
+    <tr><td>与国产同业</td><td><b>同环节竞争</b></td><td>纳微科技（688690，国产第一，规模约为赛分 2.3 倍但净利率更低）、博格隆、蓝晓科技、月旭科技——在 CDMO 项目、药企产线导 入上直接竞标</td></tr>
+    <tr><td>与 CSO</td><td><b>无实质关联</b></td><td>赛分产品不涉及药品销售推广环节</td></tr>
+  </table>
+  <p class="src">来源：公司 2025 年报/2026 半年报、苏州人才大数据平台企业客户名单、证券时报 IPO 报道、东方财富董事长专访（2026）、工商中标记录、第三方竞争格局测算（需核实）。</p>
+</section>
+
+<!-- ================= 5 ================= -->
+<section id="s5">
+  <h2><span class="no">5</span>CXO 行业发展趋势对其业务的影响</h2>
+
+  <h3>5.1 正面传导（顺风）</h3>
+  <div class="risk-grid">
+    <div class="risk-card op"><h4>① CXO 产能扩张 → 填料采购放大 <span class="lvl hi">弹性放大器</span></h4><p>CDMO/药企建产线（如 2 万升抗体罐）必须装填千升级填料，投产后按批次复购——赛分收入的<b>顺周期弹性大于 CDMO 收入本身</b>。2026H1 工业纯化 +73.3% 已验证传导（同期 A 股 CXO 板块营收 +23.3%）。</p></div>
+    <div class="risk-card op"><h4>② 国产替代 + 供应链安全 <span class="lvl hi">结构性 alpha</span></h4><p>地缘背景下，国内外 CDMO/药企均强调供应链多元化；累计落地 108 个（截至 2025 年底）进口替代项目中，临床 III 期及商业化阶段项目占比持续提升——替代正从研发端走向生产端（价值量大十倍）。</p></div>
+    <div class="risk-card op"><h4>③ 中国创新药出海潮 <span class="lvl mid">伴随出海</span></h4><p>License-out 高景气（2026H1 总金额 997 亿美元）→ 中国药企/CDMO 海外建厂与海外获批放量 → 带动国产填料出海；赛分"项目出海 + 客户出海 + 美国本土产能"三条路径直接受益。</p></div>
+    <div class="risk-card op"><h4>④ 新分子形态放量 <span class="lvl mid">赛道红利</span></h4><p>GLP-1、双抗、ADC、寡核苷酸等新分子管线进入商业化，纯化耗材需求结构性增长——GLP-1 相关产品 2025H1 销售额 +177.5%，双抗/ADC 新增合作项目 35 个（2026H1）。</p></div>
+    <div class="risk-card op"><h4>⑤ 融资回暖传导 <span class="lvl mid">研发端修复</span></h4><p>Biotech 融资改善 → CRO 及药企研发活动回暖 → 分析色谱柱（研发检测耗材）需求修复。2025 年国内研发需求曾"阶段性收缩"，公司靠存量客户仍保持增长；周期反转时该板块具备修复弹性。</p></div>
+  </div>
+
+  <h3>5.2 负面/风险传导</h3>
+  <div class="risk-grid">
+    <div class="risk-card rk"><h4>① CXO 景气下行会直接传导 <span class="lvl hi">已发生过</span></h4><p>2024–2025 年国内生物药研发需求收缩阶段，公司分析色谱增速降至个位数（2026H1 +10.0%）；若 CDMO 扩产放缓/砍资本开支，填料大单节奏将同步放缓。</p></div>
+    <div class="risk-card rk"><h4>② 客户集中 + 项目依赖 <span class="lvl mid">结构性</span></h4><p>百万级客户占工业纯化收入 92%；单一大项目（如某 2 万升产线）的采购节奏对季度业绩扰动大。</p></div>
+    <div class="risk-card rk"><h4>③ 竞争加剧 <span class="lvl mid">格局风险</span></h4><p>纳微科技规模领先且资本开支强度更高；国际巨头可能以降价/捆绑销售防守；第二梯队（博格隆等）在 CDMO 项目上价格竞争。</p></div>
+    <div class="risk-card rk"><h4>④ 自身交易层面 <span class="lvl hi">现实压制</span></h4><p>PE(TTM) 75.5 倍、PB 9.98 倍处高位；疌泉成达（已降至 4.99% 并拟再减 1%）、安徽同华（拟减 2.5%）、周金清/陆民（拟合计减 3%）多路减持进行中；技术指标超买（RSI6 83）。</p></div>
+  </div>
+</section>
+
+<!-- ================= 6/7 ================= -->
+<section id="s7">
+  <h2><span class="no">6</span>分析结论</h2>
+  <ol style="margin:8px 0 8px 22px;">
+    <li><b>身份判定：</b>赛分科技是 CXO 产业链<b>上游工具与材料环节</b>的纯化耗材供应商，不提供研发外包（CRO）、生产外包（CDMO）或销售外包（CSO）服务，<b>本身不是 CXO 企业</b>；但其收入与 CXO 行业的产能周期、研发景气高度正相关，是 CXO 主线的"卖水人"型关联标的。</li>
+    <li><b>受益逻辑排序：</b>CXO 产能扩张（CDMO 建线+复购）＞ 国产替代（结构性）＞ 出海（伴随+自建）＞ 研发回暖（分析色谱修复）。其中前两条已在其 2026H1 业绩（工业纯化 +73.3%、毛利率 75%+）中得到充分验证。</li>
+    <li><b>相对于直接买 CXO 的差异化价值：</b>①耗材复购属性使收入平滑度优于项目制 CDMO；②国产替代提供独立于周期的成长来源；③毛利率（75%）显著高于 CXO 板块（药明康德约 40%、临床前 CRO 约 30–40%）。代价是：估值更贵（75 倍 vs CXO 龙头约 40–60 倍）、市值更小更波动。</li>
+    <li><b>核心跟踪变量：</b>扬州二期投产进度（2026 年底，产能 ×10 的兑现）、单季工业纯化增速与毛利率、临床 III 期/商业化替代项目数（决定收入质量）、境外收入拐点、减持与解禁节奏。</li>
+    <li><b>证伪条件：</b>若 CDMO 扩产资本开支掉头向下、或临床后期项目替代停滞（项目数环比不再增长）、或二期投产后爬坡不及预期导致折旧侵蚀毛利率，则"高估值+高增速"组合面临双杀风险。</li>
+  </ol>
+</section>
+
+<section>
+  <h2><span class="no">附</span>数据来源说明</h2>
+  <ul class="sources">
+    <li>公司 2025 年年度报告（2026-04-21 披露）、2026 年半年度报告（2026-08-27 披露）—— 财务、分板块、产能、客户与项目数据（一手来源）。</li>
+    <li>westock-data 行情/财务/技术指标接口（2026-09-18 盘中）—— 现价、市值、PE/PB、区间涨跌、股东户数。</li>
+    <li>苏州人才大数据平台企业信息 —— 历史客户名单（含药明康德、义翘神州等）。</li>
+    <li>媒体报道：证券时报（年报/三季报/IPO 报道）、上证报（半年报报道）、东方财富（董事长黄学英专访）。</li>
+    <li>公司投资者关系活动记录表（2026-04-28/29，官网 PDF）。</li>
+    <li>第三方市占率与竞争格局（智慧芽/券商研报引用）—— 非一手来源，需核实原文。</li>
+    <li>所有行情数据为 2026-09-18 盘中快照；2023 年全年营收为按 2024 年披露增速反推的计算值。</li>
+  </ul>
+</section>
+
+<div class="disclaimer">
+  <b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。标注"需核实"的数据来自第三方二次引用，使用前请以公司公告及原始出处为准。
+</div>
+
+</div>
+
+<script>
+(function(){
+  var blue = '#1f5fbf', red = '#c0392b', green = '#1e8449';
+  var axisCommon = {
+    axisLine: {lineStyle: {color: '#c3ccd6'}},
+    axisLabel: {color: '#4a5a6a', fontSize: 11},
+    splitLine: {lineStyle: {color: '#eef2f6'}}
+  };
+  var c1 = echarts.init(document.getElementById('c1'));
+  c1.setOption({
+    tooltip: {trigger: 'axis'},
+    legend: {data: ['营业收入(亿元)', '归母净利润(亿元)', '营收同比(%)'], top: 0, textStyle: {fontSize: 12}},
+    grid: {left: 50, right: 55, top: 46, bottom: 30},
+    xAxis: Object.assign({type: 'category', data: ['2021', '2022', '2023*', '2024', '2025', '2026H1']}, axisCommon, {splitLine: {show: false}}),
+    yAxis: [
+      Object.assign({type: 'value', name: '亿元'}, axisCommon),
+      Object.assign({type: 'value', name: '%', axisLabel: {formatter: '{value}%', color: '#4a5a6a', fontSize: 11}}, axisCommon)
+    ],
+    series: [
+      {name: '营业收入(亿元)', type: 'bar', barWidth: 28, data: [1.55, 2.13, 2.45, 3.15, 4.03, 2.80], itemStyle: {color: blue}, label: {show: true, position: 'top', fontSize: 10.5, color: '#1c2733'}},
+      {name: '归母净利润(亿元)', type: 'bar', barWidth: 28, data: [0.21, 0.47, 0.52, 0.85, 1.27, 1.11], itemStyle: {color: '#7ea6e0'}},
+      {name: '营收同比(%)', type: 'line', yAxisIndex: 1, data: [null, 37.4, 15.0, 28.7, 27.7, 53.2], itemStyle: {color: red}, lineStyle: {width: 2.5}, symbolSize: 7}
+    ]
+  });
+  var c2 = echarts.init(document.getElementById('c2'));
+  c2.setOption({
+    tooltip: {trigger: 'axis', axisPointer: {type: 'shadow'}},
+    legend: {data: ['2025 全年', '2026H1'], top: 0, textStyle: {fontSize: 12}},
+    grid: {left: 50, right: 30, top: 46, bottom: 30},
+    xAxis: Object.assign({type: 'category', data: ['工业纯化', '分析色谱', '医疗诊断及其他'], axisLabel: {interval: 0, color: '#4a5a6a', fontSize: 11}}, axisCommon, {splitLine: {show: false}}),
+    yAxis: Object.assign({type: 'value', name: '亿元'}, axisCommon),
+    series: [
+      {name: '2025 全年', type: 'bar', barWidth: 30, data: [2.72, 1.30, 0.01], itemStyle: {color: '#9db8dd'}, label: {show: true, position: 'top', fontSize: 10.5, color: '#4a5a6a'}},
+      {name: '2026H1', type: 'bar', barWidth: 30, data: [2.09, 0.67, 0.04], itemStyle: {color: blue}, label: {show: true, position: 'top', fontSize: 10.5, color: '#1c2733'}}
+    ]
+  });
+  window.addEventListener('resize', function(){ c1.resize(); c2.resize(); });
+})();
+</script>
+</body>
+</html>

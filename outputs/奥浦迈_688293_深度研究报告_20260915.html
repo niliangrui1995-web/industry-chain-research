@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>奥浦迈（688293.SH）深度研究报告 · 2026-09-15</title>
+<style>
+  :root{
+    --ink:#14181f; --ink2:#3d4756; --ink3:#6b7684;
+    --line:#e2e6ec; --line2:#eef1f5;
+    --bg:#ffffff; --bg2:#f7f9fb; --bg3:#f2f5f9;
+    --red:#c8102e; --redbg:#fdf0f2;
+    --green:#0f7b4f; --greenbg:#eef8f3;
+    --blue:#1a5fb4; --bluebg:#eef4fd;
+    --amber:#9a6400; --amberbg:#fdf6e7;
+    --violet:#5b3fa8; --violetbg:#f3f0fc;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:0 0 64px;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14.5px; line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+  /* ---------- header ---------- */
+  header{border-bottom:1px solid var(--line);background:var(--bg2);padding:34px 0 26px;margin-bottom:30px}
+  .kicker{font-size:12px;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;font-weight:600}
+  h1{font-size:27px;line-height:1.35;margin:10px 0 6px;letter-spacing:-.2px}
+  h1 small{display:block;font-size:14px;font-weight:500;color:var(--ink3);letter-spacing:0;margin-top:8px}
+  .metaline{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink2)}
+  .chip.ok{border-color:#bfe2d0;background:var(--greenbg);color:var(--green);font-weight:600}
+  .chip.warn{border-color:#f0dcae;background:var(--amberbg);color:var(--amber);font-weight:600}
+
+  /* ---------- typography ---------- */
+  h2{font-size:19px;margin:44px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--ink);letter-spacing:-.1px}
+  h2 .n{color:var(--ink3);font-weight:600;margin-right:9px;font-variant-numeric:tabular-nums}
+  h3{font-size:15.5px;margin:26px 0 9px;color:var(--ink)}
+  h4{font-size:14px;margin:20px 0 7px;color:var(--ink2)}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:5px 0}
+  strong{font-weight:650}
+  code{background:var(--bg3);padding:1px 5px;border-radius:4px;font-size:12.5px;font-family:ui-monospace,Menlo,Consolas,monospace}
+  .muted{color:var(--ink3)}
+  .small{font-size:12.5px;line-height:1.7}
+
+  /* ---------- callouts ---------- */
+  .verdict{border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:8px;background:var(--bg2);padding:18px 20px;margin:18px 0}
+  .verdict h3{margin-top:0}
+  .box{border:1px solid var(--line);border-radius:8px;padding:14px 17px;margin:14px 0;background:#fff}
+  .box.red{border-left:4px solid var(--red);background:var(--redbg)}
+  .box.green{border-left:4px solid var(--green);background:var(--greenbg)}
+  .box.blue{border-left:4px solid var(--blue);background:var(--bluebg)}
+  .box.amber{border-left:4px solid var(--amber);background:var(--amberbg)}
+  .box.violet{border-left:4px solid var(--violet);background:var(--violetbg)}
+  .box .t{font-weight:650;display:block;margin-bottom:5px;font-size:13.5px}
+
+  /* ---------- tables ---------- */
+  .tw{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:8px}
+  table{border-collapse:collapse;width:100%;font-size:13px;background:#fff}
+  th,td{padding:8px 11px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap}
+  th{background:var(--bg3);font-weight:650;color:var(--ink2);font-size:12.5px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left;white-space:normal}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(even){background:#fcfdfe}
+  td.pos{color:var(--red);font-weight:600}
+  td.neg{color:var(--green);font-weight:600}
+  caption{caption-side:bottom;text-align:left;font-size:12px;color:var(--ink3);padding:8px 11px;background:var(--bg2)}
+  .yr{background:var(--bg2)!important;font-weight:650}
+
+  /* ---------- bar visuals ---------- */
+  .chart{border:1px solid var(--line);border-radius:8px;padding:18px;margin:16px 0;background:#fff}
+  .chart .ct{font-size:13px;font-weight:650;margin-bottom:3px}
+  .chart .cs{font-size:12px;color:var(--ink3);margin-bottom:14px}
+  .bars{display:grid;gap:9px}
+  .bar{display:grid;grid-template-columns:52px 1fr 92px;align-items:center;gap:10px;font-size:12.5px}
+  .bar .lb{color:var(--ink2);font-variant-numeric:tabular-nums}
+  .bar .tr{height:16px;background:var(--bg3);border-radius:4px;overflow:hidden}
+  .bar .fl{height:100%;border-radius:4px;background:var(--blue)}
+  .bar .fl.r{background:var(--red)}
+  .bar .fl.a{background:var(--amber)}
+  .bar .vl{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+  .stack{display:flex;height:34px;border-radius:6px;overflow:hidden;border:1px solid var(--line);margin:6px 0 12px}
+  .stack div{display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:600}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--ink2);margin-top:4px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  /* ---------- misc ---------- */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:820px){.grid2{grid-template-columns:1fr}}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13px;margin:8px 0}
+  .kv dt{color:var(--ink3)}
+  .kv dd{margin:0;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+  .tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:4px;border:1px solid var(--line);background:#fff;color:var(--ink3);margin-right:5px;vertical-align:middle}
+  .tag.official{background:var(--greenbg);border-color:#bfe2d0;color:var(--green)}
+  .tag.ir{background:var(--bluebg);border-color:#c3d8f5;color:var(--blue)}
+  .tag.sec{background:var(--amberbg);border-color:#f0dcae;color:var(--amber)}
+  .tag.vendor{background:var(--violetbg);border-color:#d8cdf5;color:var(--violet)}
+  .tag.gap{background:var(--redbg);border-color:#f2c9d1;color:var(--red)}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--ink3);line-height:1.8}
+  .toc{border:1px solid var(--line);border-radius:8px;background:var(--bg2);padding:16px 20px;margin:22px 0}
+  .toc ol{columns:2;column-gap:34px;margin:6px 0 0;padding-left:20px;font-size:13px}
+  .toc a{color:var(--ink2);text-decoration:none}
+  .toc a:hover{color:var(--blue)}
+  @media (max-width:820px){.toc ol{columns:1}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="kicker">上市公司深度研究 · 证据优先</div>
+    <h1>奥浦迈（688293.SH）深度研究：细胞培养基龙头并购转型 CRDMO
+      <small>上海奥浦迈生物科技股份有限公司 · 上海证券交易所科创板 · 报告币种人民币（CNY）· 研究截止 2026-09-15 收盘</small>
+    </h1>
+    <div class="metaline">
+      <span class="chip">收盘价 ¥64.23（-4.25%）</span>
+      <span class="chip">总市值 ¥91.31 亿</span>
+      <span class="chip">2026H1 营收 ¥4.537 亿（+155.2%）</span>
+      <span class="chip">2026H1 归母 ¥1.240 亿</span>
+      <span class="chip ok">财务证据审计：PASS / publishable（5/5）</span>
+      <span class="chip warn">thesis_status：mixed</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="verdict">
+  <h3>结论先行</h3>
+  <p><strong>这是一家“真龙头 + 大并购”双重叙事的公司：培养基主业确实在高质量放量，但报表利润的质量被并购会计处理显著放大，而并购标的本身的战略必要性存在公司内部（独立董事）与监管层面的公开争议。</strong></p>
+  <ul>
+    <li><strong>生意质量：分层。</strong>细胞培养基是典型的高转换成本耗材生意——客户在临床前选定供应商后通常终身绑定，2026H1 培养基收入 2.08 亿元、同比 +34.0%，商业化管线从 2021 年的 1 个增至 18 个，已进入 Lonza、三星生物合格供应商名录。<span class="tag ir">company_ir</span> 但同属体内的 CDMO 服务 2026H1 毛利率为 <strong>-49.5%</strong>，是持续的现金与利润消耗项。</li>
+    <li><strong>利润质量：需要大幅打折看。</strong>2026H1 归母净利润 1.240 亿元中，<strong>约 6,099 万元来自并购形成的金融负债公允价值变动收益</strong>（不涉及经营现金流），另有 PPA 摊销等负向影响；公司自己披露的“剔除并购会计处理后核心主业利润”约 7,468 万元。<span class="tag official">official_disclosure</span></li>
+    <li><strong>预期与估值：</strong>按项目口径的事件前一致预期检验，最新单季扣非年化（1.7906 亿元）高于事件前 FY2026 归母共识（1.6224 亿元）约 <strong>+10.4%</strong>，状态 <code>above</code>（2 家样本，小样本）。当前市值对应 PE（用户口径，单季扣非×4）<strong>51.0×</strong>、PE(TTM) 约 <strong>71.3×</strong>。</li>
+    <li><strong>最大风险：</strong>5.84 亿元商誉（占归母净资产 18.6%）叠加“分期未发行股份对价”按公允价值计量的金融负债——<strong>股价上涨会增加利润、股价下跌会侵蚀利润</strong>，报表利润与股价形成正反馈循环，这在估值下行时是放大器而非缓冲垫。</li>
+  </ul>
+  <p class="small muted">本文所有市值、单季年化、PE、同比比例均已通过项目 <code>financial-evidence-audit</code> 核验（见附录 D）。缺少可靠证据的项目一律标注为 <span class="tag gap">证据缺口</span>，不做补造。</p>
+</div>
+
+<div class="toc">
+  <div class="kicker">目录</div>
+  <ol>
+    <li><a href="#s1">公司基本情况与主营业务</a></li>
+    <li><a href="#s2">核心技术与竞争优势（护城河可证伪）</a></li>
+    <li><a href="#s3">近三年财务表现与盈利能力</a></li>
+    <li><a href="#s4">所属产业链：行业格局与市场规模</a></li>
+    <li><a href="#s5">主要客户与竞争对手</a></li>
+    <li><a href="#s6">近期资本运作与潜在风险</a></li>
+    <li><a href="#s7">未来发展趋势</a></li>
+    <li><a href="#s8">基本面综合评估</a></li>
+    <li><a href="#appx">附录：数据来源、审计与证据缺口</a></li>
+  </ol>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s1"><span class="n">一</span>公司基本情况与主营业务</h2>
+
+<h3>1.1 主体确认</h3>
+<div class="grid2">
+  <div class="box">
+    <div class="kv">
+      <dt>证券简称 / 代码</dt><dd>奥浦迈 / 688293.SH</dd>
+      <dt>上市地 / 板块</dt><dd>上交所科创板（GP-A-KCB）</dd>
+      <dt>上市日期</dt><dd>2022-09-02</dd>
+      <dt>发行价</dt><dd>¥80.20</dd>
+      <dt>成立日期</dt><dd>2013-11-27</dd>
+      <dt>注册地</dt><dd>上海市浦东新区紫萍路 908 弄 28 号</dd>
+      <dt>董事长 / 总经理</dt><dd>肖志华（代行董事会秘书职责）</dd>
+      <dt>所属行业</dt><dd>医药生物 —— 生物制药上游（生命科学耗材）+ CXO</dd>
+    </div>
+  </div>
+  <div class="box blue">
+    <span class="t">一句话定义这门生意</span>
+    <p class="small">向生物药企业“卖配方 + 卖工艺”：一方面提供<strong>细胞培养基</strong>这类高转换成本的核心生产耗材（存量复购 + 随客户管线推进而放量），另一方面提供<strong>细胞株构建到商业化生产的 CDMO 服务</strong>与 2026 年起并入的<strong>临床前 CRO 服务</strong>，试图把“研发—生产—全球化”的链条一次性卖给同一个客户。</p>
+    <p class="small muted">收入性质：培养基为高频复购耗材（客户管线越靠后，用量呈升—百升—千升级放大）；CDMO 与 CRO 为项目制服务收入，确认周期通常 3–6 个月起，波动大于产品收入。</p>
+  </div>
+</div>
+
+<h3>1.2 业务结构：从“培养基 + CDMO”到“培养基 + CRDMO”</h3>
+<p>公司在 2026 年 1 月完成对<strong>澎立生物医药技术（上海）股份有限公司</strong>100% 股权的资产过户并自购买日起纳入合并报表，业务形态由“细胞培养产品 + CDMO”升级为“细胞培养产品 + CRDMO（临床前 CRO + CDMO）”。<span class="tag official">official_disclosure</span></p>
+
+<div class="chart">
+  <div class="ct">2026H1 收入结构（合计 ¥4.537 亿）</div>
+  <div class="cs">数据来源：2026 年半年度报告、2026-08-31 投资者关系活动记录表（公司口径）</div>
+  <div class="stack">
+    <div style="width:45.85%;background:#1a5fb4">培养基 45.85%</div>
+    <div style="width:5.24%;background:#9a6400">CDMO</div>
+    <div style="width:40.12%;background:#0f7b4f">澎立·药物临床前CRO</div>
+    <div style="width:4.55%;background:#5b3fa8">器械CRO</div>
+    <div style="width:2.66%;background:#6b7684">动物</div>
+    <div style="width:1.58%;background:#d5dbe3"></div>
+  </div>
+  <div class="legend">
+    <span><i class="sw" style="background:#1a5fb4"></i>细胞培养产品 ¥2.08 亿（+34.0%）</span>
+    <span><i class="sw" style="background:#9a6400"></i>CDMO 服务 ¥2,376.86 万（+6.72%）</span>
+    <span><i class="sw" style="background:#0f7b4f"></i>澎立生物合计 ¥2.22 亿（公司口径占总收入 48.85%）</span>
+    <span><i class="sw" style="background:#d5dbe3"></i>其他/内部抵销 1.58%</span>
+  </div>
+  <p class="small muted" style="margin:12px 0 0">澎立生物内部拆分：药物临床前 CRO ¥1.82 亿 / 医疗器械临床前 CRO ¥2,064.16 万 / 实验动物销售 ¥1,208.72 万（三项相加 2.147 亿元，与公司口径 2.22 亿元存在小额差异，公司未逐项对账）。</p>
+</div>
+
+<div class="tw">
+<table>
+  <caption>分业务收入与盈利特征（公司公告与投资者关系口径）</caption>
+  <thead>
+    <tr><th>业务板块</th><th>2024A 收入</th><th>2025A 收入</th><th>2025A 毛利率</th><th>2026H1 收入</th><th>2026H1 同比</th><th>2026H1 毛利率</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>细胞培养产品（培养基）</td><td>约 ¥2.44 亿</td><td>¥3.00 亿</td><td class="pos">69.30%</td><td>¥2.08 亿</td><td class="pos">+34.0%</td><td>未单独披露</td></tr>
+    <tr><td>— 其中 CHO 培养基</td><td>¥1.99 亿</td><td>¥2.61 亿</td><td class="pos">73.1%</td><td>—</td><td class="pos">+31.2%（2025A）</td><td>—</td></tr>
+    <tr><td>CDMO 服务</td><td>约 ¥5,256 万</td><td>¥5,398.06 万</td><td class="neg">负（2024 年 -25.29%）</td><td>¥2,376.86 万</td><td>+6.72%</td><td class="neg">-49.51%</td></tr>
+    <tr><td>澎立生物（临床前 CRO）</td><td>—</td><td>¥4.41 亿</td><td>未披露</td><td>¥2.22 亿</td><td>首次并表</td><td>未披露</td></tr>
+    <tr class="yr"><td>合计营业收入</td><td>¥2.9724 亿</td><td>¥3.5491 亿</td><td>50.85%</td><td>¥4.5369 亿</td><td class="pos">+155.2%</td><td>46.05%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box amber">
+  <span class="t">读表要点</span>
+  <p class="small">培养基毛利率 69.3%（2025A）与 CDMO 毛利率 -49.5%（2026H1）是同一张报表里两个极端。<strong>合并毛利率的下滑（63.97% → 46.05%）主要不是培养基变差，而是低毛利/负毛利的服务业务与并表标的稀释所致。</strong>2025 年报将 D3 工厂折旧与运营费用的成本归集口径变化（2024 年部分计入管理费用、2025 年全部计入成本）列为 CDMO 毛利率下降的重要原因。<span class="tag sec">credible_secondary</span></p>
+</div>
+
+<h3>1.3 产能与研发平台</h3>
+<ul>
+  <li><strong>规模生产能力：</strong>可实现单批次 2,000kg（干粉）/ 2,000L（液体）培养基大规模生产。<span class="tag sec">credible_secondary</span></li>
+  <li><strong>CDMO 产能：</strong>D3 工厂 2025 年进入正式生产阶段，并通过关键客户与欧盟质量授权人（QP）现场审计，具备覆盖临床 III 期及商业化生产阶段的生物药 CDMO 服务能力。<span class="tag sec">credible_secondary</span></li>
+  <li><strong>研发投入：</strong>2025 年研发费用 4,837.58 万元（费用率 13.63%）；2026H1 研发费用 3,625.75 万元（费用率 7.99%，因并表收入基数大幅上升而摊薄）。美国研发中心已全面投入使用。</li>
+  <li><strong>产品矩阵：</strong>目录培养基超过 100 种；2026H1 完成定制化培养基开发项目 11 个，其中完成交付放大 7 个；推进 CHO 系列、293/CHO-S 瞬转体系、细胞治疗（NK / 肌卫星 / MSC）无血清无异源培养基等方向。</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="s2"><span class="n">二</span>核心技术与竞争优势（可证伪护城河）</h2>
+
+<p>按项目方法，护城河必须逐项给出支持证据与反证问题，并说明摧毁条件。高毛利、高市占率、高研发投入本身不构成护城河。</p>
+
+<div class="tw">
+<table>
+  <thead>
+    <tr><th>护城河类型</th><th>支持证据</th><th>反证 / 削弱证据</th><th>当前判断</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>转换成本</strong><br><span class="small muted">（最强一项）</span></td>
+      <td>培养基关键成分变更需按《已上市生物制品药学变更研究技术指导原则》提交说明与更新材料，临床阶段换供应商需额外工艺验证甚至补充临床研究；新进入者产品需客户 3–5 年验证才能完成商业导入。</td>
+      <td>国际三巨头仍占抗体/蛋白药高端培养基超 80%（2020 年口径）；部分客户推进双供/标准化以压价；集采降价压力向上游传导。</td>
+      <td class="pos">宽，且在以商业化管线占比提升的过程中变宽</td>
+    </tr>
+    <tr>
+      <td><strong>技术 / 配方</strong></td>
+      <td>CHO、HEK293、疫苗、昆虫细胞、干细胞等平台；性能指标（表达滴度、糖型修饰、电荷异质性、去岩藻糖化）达到或优于国际竞品；大规模生产工艺（锤磨等）影响批间差与稳定性。</td>
+      <td>配方壁垒可被长期研发投入追赶；公司在最高端（如部分特种细胞系、临床后期复杂分子）仍非默认首选。</td>
+      <td class="pos">中等偏强，但领先幅度难以量化</td>
+    </tr>
+    <tr>
+      <td><strong>规模 / 成本</strong></td>
+      <td>单批次 2,000kg 干粉级产能；国产培养基价格约为进口的 1/10–1/3，响应周期 2–4 周 vs 进口 3 个月以上。</td>
+      <td>澳斯康单批次可生产 6 吨（亚洲第一），规模上并不落后；价格优势同时意味着毛利率上限受制。</td>
+      <td>中等</td>
+    </tr>
+    <tr>
+      <td><strong>客户 / 渠道</strong></td>
+      <td>服务客户逾 300 家（含百济神州、信达生物等，二级来源）；已进入 Lonza、三星生物合格供应商名录；通过 GSK、默沙东现场审计；临床及商业化管线 381 个，商业化项目 18 个。</td>
+      <td>客户重叠性是并购逻辑之一（两家公司重叠客户约 200 余家），但重叠客户不等于可交叉销售的确定收入。</td>
+      <td class="pos">正面，但“进入名录”≠ 量产订单</td>
+    </tr>
+    <tr>
+      <td><strong>网络效应</strong></td>
+      <td>不明显。管线数据库与配方经验有一定数据积累效应。</td>
+      <td>不存在需求侧网络效应。</td>
+      <td class="muted">弱</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box green">
+  <span class="t">护城河趋势判断（过去 3–5 年）</span>
+  <p class="small">变宽证据：临床及商业化管线从 2021 年水平增长至 2026H1 的 381 个，商业化项目 18 个，商业化管线收入贡献已接近 40%；国产化率从 2017 年的约 19% 提升至 2025 年的约 40.2%。<br>
+  变窄证据：毛利率从 2022 年的 63.97% 一路降至 2026H1 的 46.05%；CDMO 板块持续负毛利。<br>
+  <strong>摧毁条件：</strong>① 客户在商业化阶段大规模推进双供/更换供应商；② 集采把降价压力压实到上游，培养基毛利率跌破约 60%；③ 国际厂商在中国区大幅降价换份额。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s3"><span class="n">三</span>近三年财务表现与盈利能力</h2>
+
+<h3>3.1 三年一期的收入与利润轨迹</h3>
+
+<div class="tw">
+<table>
+  <caption>口径：合并报表、PRC GAAP、人民币。2022 年及以前为比较期。数据来源：公司定期报告（经聚源数据镜像核验）</caption>
+  <thead>
+    <tr><th>指标</th><th>2021A</th><th>2022A</th><th>2023A</th><th>2024A</th><th>2025A</th><th>2026H1</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>营业收入（亿元）</td><td>2.127</td><td>2.944</td><td>2.431</td><td>2.972</td><td>3.549</td><td class="pos">4.537</td></tr>
+    <tr><td>营业收入同比</td><td>+70.2%</td><td>+38.4%</td><td class="neg">-17.4%</td><td class="pos">+22.3%</td><td class="pos">+19.4%</td><td class="pos">+155.2%</td></tr>
+    <tr><td>归母净利润（万元）</td><td>6,039</td><td>10,537</td><td>5,404</td><td>2,105</td><td>4,170</td><td class="pos">12,403</td></tr>
+    <tr><td>归母净利润同比</td><td>+416.9%</td><td>+74.5%</td><td class="neg">-48.7%</td><td class="neg">-61.0%</td><td class="pos">+98.1%</td><td class="pos">+230.3%</td></tr>
+    <tr><td>扣非归母净利润（万元）</td><td>4,954</td><td>8,880</td><td>3,472</td><td>659</td><td>2,085</td><td>4,936</td></tr>
+    <tr><td>销售毛利率</td><td>59.88%</td><td>63.97%</td><td>58.85%</td><td>53.03%</td><td>50.85%</td><td class="neg">46.05%</td></tr>
+    <tr><td>归母净利率</td><td>28.40%</td><td>35.80%</td><td>22.23%</td><td class="neg">7.08%</td><td>11.75%</td><td class="pos">27.34%</td></tr>
+    <tr><td>加权 ROE</td><td>11.44%</td><td>9.39%</td><td>2.48%</td><td class="neg">0.99%</td><td>1.99%</td><td>4.32%</td></tr>
+    <tr><td>研发费用（万元）</td><td>1,969</td><td>3,320</td><td>4,306</td><td>3,419</td><td>4,838</td><td>3,626</td></tr>
+    <tr><td>研发费用率</td><td>9.26%</td><td>11.28%</td><td>17.71%</td><td>11.50%</td><td>13.63%</td><td>7.99%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="chart">
+  <div class="ct">营业收入与归母净利润趋势（亿元）</div>
+  <div class="cs">2019–2022 为上市前后高速扩张期；2023–2024 为投融资寒冬下的下行与筑底期；2025 起主业回暖，2026 起并表澎立生物</div>
+  <div class="bars">
+    <div class="bar"><span class="lb">2021</span><span class="tr"><span class="fl" style="width:47%;background:#1a5fb4"></span></span><span class="vl">2.13 / 0.60</span></div>
+    <div class="bar"><span class="lb">2022</span><span class="tr"><span class="fl" style="width:65%;background:#1a5fb4"></span></span><span class="vl">2.94 / 1.05</span></div>
+    <div class="bar"><span class="lb">2023</span><span class="tr"><span class="fl" style="width:54%;background:#1a5fb4"></span></span><span class="vl">2.43 / 0.54</span></div>
+    <div class="bar"><span class="lb">2024</span><span class="tr"><span class="fl" style="width:65%;background:#1a5fb4"></span></span><span class="vl">2.97 / 0.21</span></div>
+    <div class="bar"><span class="lb">2025</span><span class="tr"><span class="fl" style="width:78%;background:#1a5fb4"></span></span><span class="vl">3.55 / 0.42</span></div>
+    <div class="bar"><span class="lb">2026H1</span><span class="tr"><span class="fl" style="width:100%;background:#c8102e"></span></span><span class="vl">4.54 / 1.24</span></div>
+  </div>
+  <p class="small muted" style="margin:12px 0 0">条长表示营业收入相对 2026H1 的比例；尾数为“营业收入 / 归母净利润”。</p>
+</div>
+
+<div class="chart">
+  <div class="ct">盈利能力趋势：毛利率持续下滑，扣非 ROE 仍处低位</div>
+  <div class="cs">毛利率（蓝）与扣非归母 ROE（红）</div>
+  <div class="bars">
+    <div class="bar"><span class="lb">2022</span><span class="tr"><span class="fl" style="width:63.97%;background:#1a5fb4"></span></span><span class="vl">63.97%</span></div>
+    <div class="bar"><span class="lb">2023</span><span class="tr"><span class="fl" style="width:58.85%;background:#1a5fb4"></span></span><span class="vl">58.85%</span></div>
+    <div class="bar"><span class="lb">2024</span><span class="tr"><span class="fl" style="width:53.03%;background:#1a5fb4"></span></span><span class="vl">53.03%</span></div>
+    <div class="bar"><span class="lb">2025</span><span class="tr"><span class="fl" style="width:50.85%;background:#1a5fb4"></span></span><span class="vl">50.85%</span></div>
+    <div class="bar"><span class="lb">2026H1</span><span class="tr"><span class="fl" style="width:46.05%;background:#c8102e"></span></span><span class="vl">46.05%</span></div>
+  </div>
+  <div class="bars" style="margin-top:12px">
+    <div class="bar"><span class="lb">2022</span><span class="tr"><span class="fl r" style="width:4.06%"></span></span><span class="vl">扣非ROE 4.06%</span></div>
+    <div class="bar"><span class="lb">2023</span><span class="tr"><span class="fl r" style="width:1.61%"></span></span><span class="vl">1.61%</span></div>
+    <div class="bar"><span class="lb">2024</span><span class="tr"><span class="fl r" style="width:0.31%"></span></span><span class="vl">0.31%</span></div>
+    <div class="bar"><span class="lb">2025</span><span class="tr"><span class="fl r" style="width:0.99%"></span></span><span class="vl">0.99%</span></div>
+    <div class="bar"><span class="lb">2026H1</span><span class="tr"><span class="fl r" style="width:1.57%"></span></span><span class="vl">1.57%</span></div>
+  </div>
+</div>
+
+<h3>3.2 财务传导链验证</h3>
+<p>按 <code>终端需求 → 产品/服务 → 量/价/份额/利用率 → 毛利/费用 → 现金流</code> 逐级验证：</p>
+
+<div class="tw">
+<table>
+  <thead>
+    <tr><th>传导环节</th><th>可核验证据</th><th>结论</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>终端需求</td>
+      <td>2025 年下半年起生物药 CXO 需求逐步复苏（创新药 BD 交易升温、License-out 加速）；2026H1 国内创新药 BD 81 笔、总额约 1,100 亿美元。</td>
+      <td class="pos">真实改善，但传导到培养基有滞后</td>
+    </tr>
+    <tr>
+      <td>销量 / 结构</td>
+      <td>培养基收入 2026H1 +34.0%，境外 2025A +51.9%（1.10 亿元）；商业化管线占比提升带来单位用量放大。</td>
+      <td class="pos">增长来自销量与结构，而非单纯价格</td>
+    </tr>
+    <tr>
+      <td>价格 / 份额</td>
+      <td>国产培养基价格约为进口 1/10–1/3，国产化率提升是份额驱动而非提价驱动。</td>
+      <td class="muted">份额驱动型增长，价格是压制项</td>
+    </tr>
+    <tr>
+      <td>利用率</td>
+      <td>CDMO 毛利率 -49.51%，公司明确因 D3 厂房投产初期折旧与运营费用全额计入成本、产能利用率仍在爬坡。</td>
+      <td class="neg">负毛利是利用率问题，修复需时间</td>
+    </tr>
+    <tr>
+      <td>费用</td>
+      <td>2026H1 财务费用由上年同期 -1,047.32 万元转为 +273.08 万元（并购相关负债与租赁）；管理费用率因股份支付与未投产创新药基地折旧而偏高。</td>
+      <td class="neg">费用端有刚性压力</td>
+    </tr>
+    <tr>
+      <td>现金流</td>
+      <td>2026H1 经营活动现金流净额 1.0555 亿元（上年同期 0.6134 亿元）；2025 全年 1.0339 亿元。经营现金流/扣非归母 = 2.14×，即扣非利润有较强现金支撑。</td>
+      <td class="pos">扣非层面的现金转换尚可</td>
+    </tr>
+    <tr>
+      <td><strong>一次性项目</strong></td>
+      <td>2026H1 归母 1.240 亿元 vs 扣非 0.494 亿元，差额约 0.747 亿元，其中约 0.61 亿元为并购金融负债公允价值变动收益。并购 PPA 减少归母净利 1,163.64 万元。</td>
+      <td class="neg">利润表被会计处理显著放大</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box red">
+  <span class="t">利润桥：为什么“+230% 归母增速”需要打折理解</span>
+  <p class="small">公司自行披露的拆分（2026H1，<span class="tag official">official_disclosure</span>）：</p>
+  <ul class="small">
+    <li>澎立生物贡献净利润约 <strong>3,000 万元</strong>；奥浦迈原有产品与服务贡献净利润约 <strong>4,400 万元</strong>；</li>
+    <li>收购形成的特定会计处理净影响 <strong>＋5,000 万元</strong>：其中未发行股份对价的金融负债公允价值下降带来利润总额 <strong>＋6,100 万元</strong>，并购资产评估增值的折旧/摊销与存货结转带来 <strong>－1,100 万元</strong>；</li>
+    <li><strong>剔除并购会计处理后，核心主业利润约 7,400 万元，较上年同期增长约 3,600 万元。</strong></li>
+    <li>PPA 影响预计 2026 / 2027 / 2028 年分别约为 1,800 万元 / 600 万元 / 800 万元。</li>
+  </ul>
+  <p class="small"><strong>结论：</strong>以“核心主业利润”为基准看，2026H1 的同比增速远低于报表的 +230%，更接近 +93%（7,468 万 vs 约 3,868 万的上年同口径）。<em>注：上年同口径基数为公司口径推算，标记为 inference。</em></p>
+</div>
+
+<h3>3.3 单季表现与关键缺口</h3>
+<div class="tw">
+<table>
+  <thead>
+    <tr><th>单季</th><th>营业收入</th><th>归母净利润</th><th>扣非归母净利润</th><th>备注</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>2025Q4</td><td>¥0.8339 亿</td><td class="neg">-772.7 万</td><td class="neg">-1,652.0 万</td><td>单季亏损，含 CDMO 亏损扩大与资产减值</td></tr>
+    <tr><td>2026Q1</td><td>¥1.8216 亿</td><td>3,922.9 万</td><td>459.3 万</td><td>澎立生物并表；金融负债公允价值变动贡献约 +2,910 万</td></tr>
+    <tr class="yr"><td>2026Q2</td><td>¥2.7153 亿</td><td class="pos">8,480.4 万</td><td class="pos">4,476.4 万</td><td>收入与扣非均创单季新高</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small muted">2026Q2 扣非归母 = 2026H1 扣非（4,935.72 万）− 2026Q1 扣非（459.33 万）= <strong>4,476.39 万元</strong>（derived_quarter，已通过审计）。该值年化 ×4 = 1.7906 亿元。</p>
+
+<div class="box amber">
+  <span class="t">季节性提醒（项目口径强制提示）</span>
+  <p class="small">单季年化对季节性、费用节奏、政府补贴与周期价格高度敏感。2026Q1 扣非仅 459 万元而 Q2 为 4,476 万元，<strong>季度间波动极大，用 Q2 单季年化（1.79 亿元）外推全年存在系统性高估风险</strong>；澎立生物管理层的表述也指出“整体节奏符合季节性规律”。</p>
+</div>
+
+<h3>3.4 财务质量检查</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>检查项</th><th>2026-06-30 数值</th><th>判断</th></tr></thead>
+  <tbody>
+    <tr><td>商誉</td><td>¥5.8356 亿</td><td class="neg">占归母净资产 18.6%、占总资产 15.6%；不摊销，减值直接冲击利润</td></tr>
+    <tr><td>归母净资产</td><td>¥31.41 亿</td><td>较 2025 年末 21.00 亿大幅增长，主因发行股份购买资产</td></tr>
+    <tr><td>资产负债率</td><td>16.02%</td><td class="pos">低；但 Q1 一度高达 36.53%（未付现金对价计入其他应付款 10.25 亿）</td></tr>
+    <tr><td>货币资金 + 交易性金融资产</td><td>¥11.77 亿</td><td class="pos">有息负债 ¥2.44 亿（含租赁负债 ¥1.23 亿），净现金约 ¥9.33 亿</td></tr>
+    <tr><td>应收账款</td><td>¥2.4130 亿</td><td class="neg">较 2025 年末 1.0206 亿激增（并表 + 账期），2026H1 计提应收账款坏账 1,068.54 万元</td></tr>
+    <tr><td>存货</td><td>¥1.8338 亿</td><td>较 2025 年末 0.7379 亿激增（并表），H1 计提存货跌价 144.70 万元</td></tr>
+    <tr><td>2026H1 减值合计</td><td>¥1,160.54 万</td><td class="neg">应收账款坏账 1,068.54 万 + 存货跌价 144.70 万 − 转回 52.70 万</td></tr>
+    <tr><td>经营现金流 / 扣非归母</td><td>2.14×</td><td class="pos">扣非利润有现金支撑；但报表归母利润的现金支撑仅 0.85×</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box violet">
+  <span class="t">关键会计机制的“反身性”（本报告最重要的技术点）</span>
+  <p class="small">并购中“后两期未发行股份对价”在购买日仍取决于未来业绩承诺完成情况，被确认为<strong>金融负债并按公允价值后续计量</strong>。这意味着：</p>
+  <ul class="small">
+    <li><strong>股价上涨</strong> → 该负债公允价值下降 → 确认公允价值变动收益 → <strong>利润增加</strong>（2026H1 即 +6,098.58 万元利润总额）；</li>
+    <li><strong>股价下跌</strong> → 该负债公允价值上升 → 确认损失 → <strong>利润减少</strong>。</li>
+  </ul>
+  <p class="small"><strong>推论：</strong>公司报表利润与自身股价形成正反馈。在市场情绪上行期，这会制造“业绩超预期”的错觉；在估值回落期，它会成为利润的额外杀伤。评估该公司必须把这一项与经营利润严格剥离。<span class="tag official">official_disclosure</span></p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s4"><span class="n">四</span>所属产业链：行业格局与市场规模</h2>
+
+<h3>4.1 公司在产业链中的位置</h3>
+<p>奥浦迈处于<strong>生物制药产业链上游</strong>（细胞培养基与生物药工艺服务），下游为单抗/重组蛋白/疫苗/CGT 等生物药企业与科研机构，上游为氨基酸、维生素、血清、无机盐等原料供应商及培养设备/耗材供应商。培养基是生物制药上游原材料与耗材中<strong>市场规模最大的单一品类</strong>（2020 年全球约占生物制药耗材市场的 35%）。</p>
+
+<h3>4.2 市场规模：多口径并存，需注意口径冲突</h3>
+<div class="tw">
+<table>
+  <caption>不同研究机构对中国细胞培养基市场规模的估计存在明显口径差异，本报告并列展示而不取平均</caption>
+  <thead><tr><th>口径 / 来源</th><th>规模</th><th>增速 / 预测</th><th>可信度说明</th></tr></thead>
+  <tbody>
+    <tr><td>中国细胞培养基市场（智研咨询，2025 年）</td><td>¥38.13 亿元</td><td>+14.2% YoY；国产化率 40.2%</td><td><span class="tag sec">credible_secondary</span> 机构测算</td></tr>
+    <tr><td>中国细胞培养基市场（观研天下口径，经券商引用）</td><td>2024 年 3.24 亿美元</td><td>2029E 6.83 亿美元；2020–2029 CAGR 14.0%</td><td><span class="tag sec">credible_secondary</span></td></tr>
+    <tr><td>中国细胞培养基市场（Frost &amp; Sullivan，较早版本）</td><td>2021 年 26 亿元</td><td>2026E 71 亿元；CAGR 22.0%</td><td><span class="tag sec">credible_secondary</span> 与上面口径差异大</td></tr>
+    <tr><td>全球细胞培养基市场（Frost &amp; Sullivan）</td><td>2021 年 20.82 亿美元</td><td>2026E 34.66 亿美元；CAGR 10.7%</td><td><span class="tag sec">credible_secondary</span></td></tr>
+    <tr><td>中国生物药市场（券商引用）</td><td>2024 年 5,348 亿元</td><td>2029E 9,048 亿元；CAGR 11.3%</td><td><span class="tag sec">credible_secondary</span></td></tr>
+  </tbody>
+</table>
+</div>
+<div class="box amber">
+  <span class="t">口径提示</span>
+  <p class="small">“38.13 亿元（2025）”与“71 亿元（2026E）”之间无法用增速解释，属<strong>不同统计口径</strong>（是否含血清、科研级、耗材捆绑等）。投资含义上应只取方向性结论：<strong>中国市场增速高于全球（约 9–14% vs 全球 10% 左右），国产化率仍处 40% 附近，高端替代空间未被填满。</strong>任何引用单一数字推导公司收入空间的做法都不可靠。</p>
+</div>
+
+<h3>4.3 竞争格局：国际三巨头主导高端，国产梯队分化</h3>
+<div class="chart">
+  <div class="ct">2020 年中国细胞培养基市场份额（整体口径）</div>
+  <div class="cs">数据来源：Frost &amp; Sullivan 口径，经券商与研究机构引用（历史快照，非当前）</div>
+  <div class="bars">
+    <div class="bar"><span class="lb">Gibco</span><span class="tr"><span class="fl" style="width:34.2%;background:#6b7684"></span></span><span class="vl">34.2%</span></div>
+    <div class="bar"><span class="lb">HyClone</span><span class="tr"><span class="fl" style="width:17.4%;background:#6b7684"></span></span><span class="vl">17.4%</span></div>
+    <div class="bar"><span class="lb">Millipore</span><span class="tr"><span class="fl" style="width:13.1%;background:#6b7684"></span></span><span class="vl">13.1%</span></div>
+    <div class="bar"><span class="lb">澳斯康</span><span class="tr"><span class="fl" style="width:7.1%;background:#0f7b4f"></span></span><span class="vl">7.1%</span></div>
+    <div class="bar"><span class="lb">奥浦迈</span><span class="tr"><span class="fl" style="width:3.5%;background:#1a5fb4"></span></span><span class="vl">3.5%</span></div>
+    <div class="bar"><span class="lb">其他</span><span class="tr"><span class="fl" style="width:24.7%;background:#d5dbe3"></span></span><span class="vl">24.7%</span></div>
+  </div>
+  <p class="small muted" style="margin:12px 0 0">在<strong>蛋白及抗体药高端培养基</strong>细分口径下，2020 年 Gibco 约 30%，三大进口品牌合计超 80%，奥浦迈约 6.3%、国产第一。2021 年（新冠期间）澳斯康份额一度升至 12.3%、奥浦迈 4.9%。</p>
+</div>
+
+<p class="small"><span class="tag gap">证据缺口</span> 上述份额数据的最新年份（2025–2026）未在公开来源中取得可核验的更新版本。因此“奥浦迈国产第一”这一说法在<strong>整体培养基口径</strong>下未必成立（历史数据显示澳斯康整体份额高于奥浦迈，奥浦迈的优势集中在<strong>高端/抗体药培养基</strong>口径）。公司自身表述为“在国内细胞培养行业处于绝对领先地位”，属 <span class="tag ir">management_claim</span>，需与第三方口径区分。</p>
+
+<h3>4.4 需求侧的三个结构性驱动</h3>
+<ol>
+  <li><strong>用量随临床阶段阶梯放大。</strong>细胞株构建阶段仅需数升，中试扩展至百升级，商业化阶段达千升级至万升级。这是培养基企业“管线漏斗”逻辑的物理基础。</li>
+  <li><strong>中国创新药 License-out 带动培养基出海。</strong>2025 年中国 License-out 交易 158 笔、总金额 1,357 亿美元；2026H1 国内创新药 BD 81 笔、约 1,100 亿美元。客户管线出海会带动上游耗材进入海外生产体系。</li>
+  <li><strong>集采与生物类似药专利悬崖。</strong>集采压低终端药价 → 药企向上游控成本 → 加速国产替代；2027–2028 年海外多款重磅生物药专利到期，生物类似药的成本竞争会把培养基工艺（提高表达量）推到关键位置。</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="s5"><span class="n">五</span>主要客户与竞争对手</h2>
+
+<h3>5.1 客户：证据等级分层</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>客户相关事实</th><th>证据等级</th><th>可支撑的结论强度</th></tr></thead>
+  <tbody>
+    <tr><td>2026H1 临床及商业化管线 381 个（较 2025 年末净增 54 个），其中临床 III 期 38 个、商业化 18 个；商业化管线收入贡献接近 40%</td><td><span class="tag official">official_disclosure</span> 半年报 / 业绩会记录</td><td class="pos">强——可支撑“客户管线持续后推”</td></tr>
+    <tr><td>已进入 Lonza、三星生物等国际头部 CDMO 的合格供应商名录</td><td><span class="tag ir">company_ir</span> 业绩会问答</td><td>中——<strong>名录 ≠ 量产订单/收入</strong></td></tr>
+    <tr><td>已通过 GSK、默沙东等 MNC 的现场审计</td><td><span class="tag sec">credible_secondary</span> 券商研报</td><td>中——需公司公告或财报确认收入贡献</td></tr>
+    <tr><td>服务客户逾 300 家，含百济神州、信达生物等</td><td><span class="tag sec">credible_secondary</span> 研究机构</td><td>弱至中——属行业机构整理，非官方客户清单</td></tr>
+    <tr><td>澎立生物核心业务 2026H1 新签订单约 2.3 亿元（+约 60%），国内 +70%~80%、海外 +40%~50%；在手订单同比超 80%</td><td><span class="tag official">official_disclosure</span> 业绩会记录</td><td class="pos">强——订单是可核验的经营指标</td></tr>
+    <tr><td>前五大客户集中度、单一大客户收入占比</td><td><span class="tag gap">证据缺口</span></td><td>未能取得可核验数值，不做估计</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>5.2 竞争对手对照</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>赛道</th><th>主要竞争者</th><th>相对位势</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>细胞培养基</strong><br>（公司核心业务）</td>
+      <td>国际：赛默飞 Gibco、丹纳赫 Cytiva/HyClone、默克 MilliporeSigma<br>国内：澳斯康生物、源培生物、上海倍谙基、甘肃健顺、苏州依科赛、上海多宁、近岸蛋白</td>
+      <td>国际三巨头凭技术积淀、配方专利、GMP 质量体系与平台化服务主导高端；国产厂商以性价比、定制响应速度与供应链自主性突围。奥浦迈在<strong>抗体/蛋白药高端培养基</strong>口径为国产第一，但整体口径份额并非第一。</td>
+    </tr>
+    <tr>
+      <td><strong>生物药 CDMO</strong></td>
+      <td>药明生物、三星生物、Lonza、国内多家 CDMO</td>
+      <td>奥浦迈体量极小（2026H1 收入仅 2,376.86 万元）且<strong>毛利率为负</strong>，属“以培养基带动服务”的补充型业务，尚不具备与头部 CDMO 竞争的成本与产能地位。</td>
+    </tr>
+    <tr>
+      <td><strong>临床前 CRO</strong><br>（澎立生物）</td>
+      <td>药明康德、昭衍新药、美迪西、益诺思等</td>
+      <td>澎立生物国内最早将 hCD34 人源化免疫系统小鼠及其分支品系投入服务，以<strong>药效学评价（药理药效）与自免模型</strong>为特色，2025 年获“中国新药临床前 CRO TOP20”。属细分专精型而非平台型龙头。</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s6"><span class="n">六</span>近期资本运作与潜在风险</h2>
+
+<h3>6.1 核心资本运作：14.505 亿元收购澎立生物</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>要素</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td>交易结构</td><td>发行股份及支付现金购买澎立生物 100% 股权，并募集配套资金（不超过 3.62 亿元）</td></tr>
+    <tr><td>交易作价</td><td><strong>¥145,050.07 万元（14.505 亿元）</strong>：现金对价 71,001.37 万元 + 股份对价 74,048.70 万元</td></tr>
+    <tr><td>发行价格 / 股数</td><td>¥32.00 / 股；发行 23,140,206 股（向 31 名交易对方）</td></tr>
+    <tr><td>估值与增值率</td><td>评估基准日 2024-12-31，澎立生物归母净资产账面 92,705.58 万元，评估值 145,200 万元，<strong>增值率 56.62%</strong></td></tr>
+    <tr><td>形成商誉</td><td class="neg">¥5.8356 亿元（2026-06-30 合并报表口径，占归母净资产 18.6%）</td></tr>
+    <tr><td>业绩承诺</td><td>2025 / 2026 / 2027 年扣非归母净利润分别不低于 <strong>5,200 / 6,500 / 7,800 万元</strong></td></tr>
+    <tr><td>承诺完成情况</td><td>2025 年实际扣非归母 5,104.90 万元，<strong>完成率 98.17%</strong>（已达 90% 以上，触发发行业绩对赌股份的 40%）</td></tr>
+    <tr><td>并购隐含市盈率</td><td>按三年平均承诺扣非 6,500 万元计约 <strong>22.3×</strong>，显著高于市场上并购常见的 10–12× 区间</td></tr>
+    <tr><td>并购时点</td><td>2025 年 5 月签署《业绩承诺及补偿协议》→ 2025-12-08 上交所并购重组委审核通过 → 2026 年 1 月完成过户并并表</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box red">
+  <span class="t">治理争议（必须有意识地纳入判断）</span>
+  <ul class="small">
+    <li><strong>独立董事多次投反对/弃权票。</strong>独立董事陶化安在重组相关议案上多次投出弃权票与反对票，公开理由为“公司现阶段不具有并购的必要性”，认为公司主要目标应是提升培养基产品利润、减少 CDMO 亏损，而本次并购无助于实现该目标。</li>
+    <li><strong>交易所曾在重组审核问询函中就此问询</strong>，要求公司解释独立董事异议原因及拟采取的措施。</li>
+    <li><strong>差异化定价</strong>：本次并购对不同交易对方采用差异化定价，引发市场争议。</li>
+    <li><strong>估值倒挂</strong>：收购估值较澎立生物 IPO 前融资峰值估值（32.20 亿元）缩水约 54.94%，较其 IPO 发行估值（24.04 亿元）缩水约 39.64%——澎立生物曾于 2023 年 3 月申报科创板 IPO，2024 年 2 月撤回申请。</li>
+  </ul>
+  <p class="small muted">上述内容标注为 <span class="tag sec">credible_secondary</span>（主流财经媒体报道公司公告与董事会决议内容）。治理与战略争议本身不构成投资结论，但它显著降低了“并购协同”这一叙事被无条件接受的可信度。</p>
+</div>
+
+<h3>6.2 其他资本运作与股东行为</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>事项</th><th>时间</th><th>内容与解读</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>PE 股东持续减持</td>
+      <td>2026-05-12 起；2026-08-10、09-02、09-14</td>
+      <td class="neg">2026-05-12 披露部分持股 5% 以上股东减持计划；至 2026H1，上海磐信、国寿成达、华杰投资持股比例<strong>均已降至 5% 以下</strong>。2026-09-14 上海磐信再抛不超 3% 的新减持计划，媒体测算或套现约 2.86 亿元，距上一轮减持完成仅 12 天。</td>
+    </tr>
+    <tr>
+      <td>股权激励（两期并行）</td>
+      <td>2026-07-16 至 2026-09-01</td>
+      <td>2026 年限制性股票与股票增值权激励计划首次授予（2026-08-05）；同时 2023 年激励计划首次授予第三个归属期 / 预留第二个归属期归属条件达成，并调整授予价格、作废部分已授予未归属限制性股票。<span class="tag gap">稀释效应定量影响未取得可核验数值</span></td>
+    </tr>
+    <tr>
+      <td>中期分红</td>
+      <td>2026-08-30</td>
+      <td class="pos">拟每 10 股派现金红利 2.00 元（含税），合计约 2,843.88 万元，占 2026H1 归母净利润的 22.93%。在商誉与并购杠杆并存的背景下仍实施分红，属正面信号。</td>
+    </tr>
+    <tr>
+      <td>续聘会计师事务所</td>
+      <td>2026-08-30</td>
+      <td>正常治理事项。</td>
+    </tr>
+    <tr>
+      <td>独立董事离任</td>
+      <td>2026-09-11</td>
+      <td class="muted">文光伟辞去独立董事等职位；在马雪寒（董事会秘书，2024-10-30 辞职）之后，管理层/董事会层面的人事变动较频繁，值得持续观察。</td>
+    </tr>
+    <tr>
+      <td>解禁与限售流通</td>
+      <td>2026-06-29、2026-07-28</td>
+      <td>配套募集资金部分新增股份 2026-06-29 上市；2026-07-28 首期一次性发行股份部分限售股上市流通（含上海景数 2,145,470 股、苏州一元幂方 664,610 股等），带来阶段性供给压力。</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>6.3 潜在风险清单（按重要性排序）</h3>
+<ol>
+  <li><strong>商誉减值风险（高）。</strong>5.84 亿元商誉占归母净资产 18.6%。2025 年承诺完成率 98.17%——<strong>首年即未达 100%</strong>。若 2026 年 6,500 万元承诺不能完成，减值与对赌补偿将同时触发。<span class="tag official">official_disclosure</span></li>
+  <li><strong>利润与股价的反身性风险（高）。</strong>并购金融负债公允价值随股价波动，下跌时转为利润侵蚀项；同时，若股价大幅下跌，作为对价的股份价值缩水可能反过来影响交易对方履约意愿与业绩承诺执行质量（属 inference，需跟踪）。</li>
+  <li><strong>CDMO 持续亏损风险（中高）。</strong>2024 年毛利率 -25.29%、2025H1 -47.53%、2026H1 -49.51%，尚未出现收窄拐点；D3 厂房折旧刚性，利用率提升是唯一出路。</li>
+  <li><strong>股东减持与流动性风险（中高）。</strong>三家 PE 股东已降至 5% 以下，新的减持计划持续出台；叠加解禁供给，短期股价承压。</li>
+  <li><strong>并购整合风险（中）。</strong>两家公司客户重叠约 200 余家，交叉销售的兑现需时间；“整合协同”目前仍是叙事而非财务事实。</li>
+  <li><strong>高估值风险（中）。</strong>PE(TTM) 约 71.3×、PB 约 2.91×；若主业利润增速低于预期，估值缺乏安全边际。</li>
+  <li><strong>技术与竞争风险（中）。</strong>国际三巨头在高端市场仍具品牌与平台优势；国内澳斯康等对手规模不弱。</li>
+  <li><strong>政策与集采传导风险（中）。</strong>集采虽加速国产替代，但同时向上游压实价格。</li>
+  <li><strong>财务费用与汇率风险（低中）。</strong>2026H1 财务费用由净收入转为净支出；澎立生物 2026Q1 曾受汇兑损失约 400 万元影响。</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="s7"><span class="n">七</span>未来发展趋势</h2>
+
+<h3>7.1 公司战略路径</h3>
+<p>公司明确表述的战略是：坚持“细胞培养产品 + CRDMO 服务”一体化，打造覆盖“研发—生产—全球化”的一体化生物药创新服务平台，成为“全球生物医药产业可信赖的核心合作伙伴”。<span class="tag official">official_disclosure</span></p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>方向</th><th>已有进展</th><th>兑现所需条件 / 观察点</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>培养基主业放量</strong></td>
+      <td>商业化管线 18 个、收入贡献接近 40%；2026H1 收入 +34.0%；公司预期培养基毛利率维持在 70% 左右</td>
+      <td>商业化管线终端产品能否放量至销售峰值（公司承认过去几年受客户商业化节奏与靶点市场空间限制）</td>
+    </tr>
+    <tr>
+      <td><strong>海外扩张</strong></td>
+      <td>2025 年境外收入 1.10 亿元（+51.9%）；进入 Lonza、三星生物名录；通过 GSK、默沙东审计；澎立生物加州实验室 + 奥浦迈美国实验室</td>
+      <td>从“通过审计/进入名录”到“产生规模化收入”的跨越；2027–2028 年海外生物类似药专利悬崖是窗口期</td>
+    </tr>
+    <tr>
+      <td><strong>CDMO 减亏</strong></td>
+      <td>在手订单持续累积增长（管理层表述）；公司称将“更快实现 CDMO 服务板块减亏目标”，预期 2026 年 CDMO 收入同比增长</td>
+      <td><strong>负毛利能否收窄</strong>是最硬的验证点</td>
+    </tr>
+    <tr>
+      <td><strong>CRO 业务兑现</strong></td>
+      <td>澎立生物 2026H1 新签订单约 2.3 亿元（+约 60%）；在手订单同比超 80%</td>
+      <td>订单 → 收入 → 利润的转化，以及 2026 年 6,500 万元承诺的完成率</td>
+    </tr>
+    <tr>
+      <td><strong>平台协同</strong></td>
+      <td>客户重叠约 200 余家；服务链条贯通抗体发现、药效药代毒理、细胞株构建、中试到商业化生产</td>
+      <td>重叠客户是否产生可归因的交叉销售收入</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>7.2 需求侧的行业判断</h3>
+<ul>
+  <li><strong>CXO 需求自 2025 年下半年起复苏。</strong>公司指出 CDMO 服务阶段集中在相对后期的流程，对需求复苏的反应<strong>存在滞后</strong>；培养基则受益于早研项目数量多而形成的“长尾滚雪球”效应。</li>
+  <li><strong>AI 制药 / 计算设计</strong>被券商视为潜在的市场扩容因素（中信建投），公司未披露相关定量影响。<span class="tag sec">credible_secondary</span></li>
+  <li><strong>国产替代方向未变。</strong>终端药价下行 + 供应链自主可控诉求，共同支撑国产培养基份额继续提升。</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="s8"><span class="n">八</span>基本面综合评估</h2>
+
+<h3>8.1 四层结论（可分列，不强制同一名次）</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>维度</th><th>评级</th><th>依据</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>business_quality</strong><br>生意质量</td>
+      <td class="pos">中上（分层）</td>
+      <td>培养基：高转换成本 + 高毛利（69.3%）+ 客户管线漏斗，属优质耗材生意；CDMO：负毛利，是拖累；临床前 CRO：细分专精、订单增速快，但并非平台型龙头。<strong>护城河真实存在，但集中在培养基单一板块。</strong></td>
+    </tr>
+    <tr>
+      <td><strong>earnings_elasticity</strong><br>业绩弹性</td>
+      <td class="pos">高（含扭曲）</td>
+      <td>2026H1 收入 +155.2%、归母 +230.3%；培养基 +34.0%、CRO 新签 +60%。弹性来自“培养基放量 + 并表 + 会计处理”三重叠加，其中会计处理部分不可持续且方向可逆。</td>
+    </tr>
+    <tr>
+      <td><strong>valuation_expectation</strong><br>估值与预期</td>
+      <td class="neg">偏贵，安全边际薄</td>
+      <td>PE(TTM) ≈ 71.3×、PE(用户口径，单季扣非×4) ≈ 51.0×、PB ≈ 2.91×。事件前共识检验显示单季扣非年化高于共识约 +10.4%（<code>above</code>，小样本），但主要来自 Q2 单季高基数效应，<strong>不足以支撑把年化利润当作常态利润</strong>。</td>
+    </tr>
+    <tr>
+      <td><strong>trading_elasticity</strong><br>交易弹性</td>
+      <td class="pos">高</td>
+      <td>2026-09-15 收盘 ¥64.23，52 周区间 ¥33.93–73.15，近 60 日 +60.45%、年初至今 +31.62%、近 10 日 +19.92%；换手率 5.31%。CRO 景气 + 中报高增 + 概念催化（含猴痘概念）共同驱动，波动率高。</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="verdict">
+  <h3>thesis_status：<span style="color:#9a6400">mixed</span></h3>
+  <p><strong>支持项：</strong>培养基主业的高质量放量是可核验事实（+34.0%、商业化管线 18 个、境外 +51.9%、经营现金流 2.14× 覆盖扣非利润）；国产替代与出海窗口期明确；中期分红实施。<br>
+  <strong>削弱项：</strong>报表利润严重依赖不可持续且方向可逆的会计处理；CDMO 负毛利无拐点；5.84 亿元商誉叠加 98.17% 的首年承诺完成率；独立董事公开反对并购；PE 股东持续减持；估值已计入较多乐观预期。</p>
+  <p class="small muted">评级说明：<code>supported</code>（逻辑被证据支持）| <code>mixed</code>（多空证据并存，方向未定）| <code>weakened</code>（逻辑被削弱）| <code>insufficient</code>（证据不足）。</p>
+</div>
+
+<h3>8.2 最强空头论点（先说最强的，再说反证）</h3>
+<div class="box red">
+  <span class="t">最强空头论点</span>
+  <p class="small"><strong>市场把一次“由股价上涨自己制造出来的利润”误读成了经营拐点，并据此支付了 70 倍 TTM 市盈率。</strong></p>
+  <p class="small">2026H1 归母净利润 1.240 亿元中，仅 0.494 亿元是扣非利润；约 0.61 亿元来自并购金融负债公允价值变动——<strong>这一收益的成因是公司股价在报告期内上涨，而非任何经营活动</strong>。剔除该收益与 PPA 影响后，核心主业利润约 0.747 亿元。与此同时：① CDMO 毛利率 -49.51%，无改善迹象；② 澎立生物首年业绩承诺完成率仅 98.17%，2026 年需从 5,105 万元跳升至 6,500 万元（+27%）；③ 三家 PE 股东在 5% 以下继续减持，最新计划拟再减 3%。<strong>当股价从上行转为下行时，同一个会计机制会将这部分收益反转为损失，报表会同时承受“主业增速回落 + 公允价值反转 + 商誉减值”三重压力。</strong></p>
+  <p class="small"><strong>反证（必须同时承认）：</strong>① 扣非利润本身确实在改善（2025 年扣非 +216.57%，2026H1 扣非同比约 +64%），且经营现金流 1.0555 亿元、是扣非利润的 2.14 倍；② 培养基收入 +34.0% 与商业化管线收入占比接近 40% 是真实的结构改善；③ 商誉减值需以澎立生物业绩不达预期为前提，而目前其新签订单 +60%、在手订单同比 +80% 以上，短期触发概率不高；④ 并购金融负债的公允价值变动在股价下跌时确实会侵蚀利润，但同时也意味着未来分期发行的股份数量按约定执行，公司并未因此多支付现金。</p>
+</div>
+
+<h3>8.3 情景分析（不使用固定 PE 阈值，仅给经营假设与失效条件）</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>情景</th><th>核心经营假设</th><th>利润与现金流含义</th><th>失效条件</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="pos"><strong>base</strong></td>
+      <td>培养基维持 25%–35% 增长；澎立生物完成 2026 年 6,500 万元承诺；CDMO 负毛利收窄但未转正；股价大致横盘</td>
+      <td>报表归母利润延续增长，但增速较 2026H1 大幅回落；公允价值变动贡献趋于中性；经营现金流持续为正</td>
+      <td>若培养基增速跌破 20% 或澎立承诺完成率低于 90%，base 不再成立</td>
+    </tr>
+    <tr>
+      <td><strong>adverse</strong></td>
+      <td>培养基增速降至 15%–20%；CDMO 毛利率仍低于 -30%；澎立生物 2026 年承诺勉强达成或小幅未达；创新药一级融资降温使早研管线新增放缓</td>
+      <td>核心主业利润增速接近个位数；PPA 摊销（2027 年约 600 万元）继续压制；商誉减值测试出现压力但未计提</td>
+      <td>若出现商誉部分减值或对赌补偿，则进入 severe</td>
+    </tr>
+    <tr>
+      <td class="neg"><strong>severe</strong></td>
+      <td>股价显著下行导致金融负债公允价值反转；澎立生物 2026 年承诺未达 90% 触发补偿；CDMO 负毛利长期化；客户在商业化阶段引入双供</td>
+      <td>报表利润可能同比转负；商誉减值一次性冲击净资产；公允价值损失与商誉减值相互叠加</td>
+      <td>三者同时发生即为 severe；任一项单独发生可归入 adverse</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>8.4 领先跟踪指标（按优先级）</h3>
+<ol>
+  <li><strong>CDMO 板块毛利率（季度）。</strong>从 -49.51% 是否收窄。这是“服务业务是否有价值”的唯一硬证据，也是公司自设的年度目标。</li>
+  <li><strong>澎立生物的季度收入与扣非利润兑现进度。</strong>对照 2026 年 6,500 万元承诺，以及在手订单（2026H1 已超上年同期 80%）的转化率。</li>
+  <li><strong>培养基商业化管线数量与商业化收入占比。</strong>商业化项目从 18 个是否继续增加、占比是否突破 40%。</li>
+  <li><strong>并购金融负债的公允价值变动明细（半年报/年报附注）。</strong>该项在利润总额中的符号与金额——这是判断“报表利润是否还有质量”的直接开关。</li>
+  <li><strong>5% 以下股东的减持进度与减持方式（集中竞价/大宗）。</strong>直接决定阶段性供给压力。</li>
+  <li><strong>商誉减值测试的关键假设披露</strong>（澎立生物预测期收入增长率、折现率）。<span class="tag gap">证据缺口</span> 目前未取得可核验的披露细节。</li>
+  <li><strong>境外收入占比。</strong>2025 年 30.90%（1.10 亿元）→ 2026H1 约 36.6%（约 1.66 亿元，二手来源转述，未直接核验原表）→ 是否延续提升。</li>
+</ol>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="appx"><span class="n">附录</span>数据来源、审计与证据缺口</h2>
+
+<h3>A. 证据标签说明</h3>
+<p class="small">
+<span class="tag official">official_disclosure</span> 公司公告、定期报告、法定披露 —— 可支撑公司事实与财务数据<br>
+<span class="tag ir">company_ir</span> 投资者关系记录、业绩会问答 —— 可支撑公司口径与管理层表述<br>
+<span class="tag sec">credible_secondary</span> 券商研报、具名研究机构、主流财经媒体 —— 背景与交叉验证<br>
+<span class="tag vendor">market_data_vendor</span> 行情与估值快照 —— 仅支撑市场状态，不支撑真实受益<br>
+<span class="tag gap">证据缺口</span> 未取得可核验来源，本报告不做补造
+</p>
+
+<h3>B. 主要数据来源（按时点）</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>数据/事实</th><th>来源</th><th>时点</th></tr></thead>
+  <tbody>
+    <tr><td>2026-09-15 收盘价 ¥64.23、总市值 ¥91.31 亿、PE/PB 快照</td><td><span class="tag vendor">腾讯自选股行情接口</span></td><td>2026-09-15 收盘</td></tr>
+    <tr><td>2021–2026H1 三大报表数据</td><td><span class="tag official">公司定期报告</span>（经行情厂商结构化镜像核验）</td><td>2026-08-30 披露</td></tr>
+    <tr><td>2026H1 分业务收入、利润桥、PPA 与金融负债影响、中期分红</td><td><span class="tag official">2026-08-30 半年报</span>；<span class="tag ir">2026-08-31 投资者关系活动记录表</span></td><td>2026-08-30 / 09-01</td></tr>
+    <tr><td>2026H1 业绩预告与计提资产减值</td><td><span class="tag official">公告 2026-069 / 2026-070</span></td><td>2026-07-22</td></tr>
+    <tr><td>并购交易结构、作价、发行价格与股数</td><td><span class="tag official">上交所披露的重组报告书及决议公告</span></td><td>2025-06-06</td></tr>
+    <tr><td>业绩承诺条款与 2025 年完成情况</td><td><span class="tag official">《业绩承诺及补偿协议》与专项审核报告转述</span></td><td>2025-05-28 / 2026-06-03</td></tr>
+    <tr><td>独立董事异议、交易所问询、差异化定价与估值倒挂</td><td><span class="tag sec">主流财经媒体</span>（长江商报、经济参考报）</td><td>2025-06-10 / 2025-09 系列</td></tr>
+    <tr><td>事件前 FY2026 一致预期（华源证券 1.61 亿、东吴证券 1.6348 亿）</td><td><span class="tag sec">券商研报原文</span></td><td>2026-07-25 / 2026-05-06</td></tr>
+    <tr><td>行业规模、竞争格局、份额数据</td><td><span class="tag sec">智研咨询、Frost &amp; Sullivan、观研天下（经券商引用）</span></td><td>历史快照，口径不一</td></tr>
+    <tr><td>股东结构与减持进展</td><td><span class="tag official">2026-06-30 股东名册</span> + <span class="tag sec">减持公告与新闻</span></td><td>2026-06-30 / 09-14</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>C. 强制审计结果</h3>
+<div class="box green">
+  <span class="t">financial-evidence-audit：PASS / publishable（退出码 0）</span>
+  <div class="tw" style="margin:10px 0 6px">
+  <table>
+    <thead><tr><th>检查</th><th>类型</th><th>状态</th><th>产出</th></tr></thead>
+    <tbody>
+      <tr><td>C1</td><td>cross_source（2026H1 营业收入）</td><td class="pos">PASS</td><td>¥453,690,008.08（半年报 / 业绩预告 / IR 记录三方一致，容差 1.5%）</td></tr>
+      <tr><td>C2</td><td>market_cap（总市值）</td><td class="pos">PASS</td><td><strong>¥9,131,437,729.77</strong>（64.23 × 142,167,799 股）</td></tr>
+      <tr><td>C3</td><td>expectation_gap（事件前预期）</td><td class="pos">PASS · above</td><td>单季扣非年化 <strong>¥179,055,635.28</strong>；事件前 FY2026 归母共识 <strong>¥162,240,000</strong>；缺口 <strong>+¥16,815,635.28</strong>（<strong>+10.36%</strong>）；<code>formal_surprise_status=N/A</code></td></tr>
+      <tr><td>C4</td><td>valuation · pe_user_defined</td><td class="pos">PASS</td><td><strong>50.998×</strong>（市值 ÷ 单季扣非×4）</td></tr>
+      <tr><td>C5</td><td>percentage（FY2025 营收同比）</td><td class="pos">PASS</td><td><strong>+19.4021%</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">输入文件：<code>outputs/evidence-audit-688293-20260915.json</code>；结果文件：<code>outputs/audit-result-688293-20260915.json</code>；审计器版本 1.4.2；<code>as_of = 2026-09-15T21:09+08:00</code>。</p>
+  <p class="small muted">事件定义：2026 年半年度报告首次披露（2026-08-30T15:31+08:00）。单季事实：2026Q2 扣非归母 = 半年报扣非 4,935.72 万 − 一季报扣非 459.33 万 = 4,476.39 万（derived_quarter）。一致预期样本：华源证券（2026-07-25，1.61 亿）、东吴证券（2026-05-06，1.6348 亿），2 家，<strong>属小样本</strong>；已排除国信证券预测（其 2026E 营收 4.24 亿元口径不含澎立生物并表，与其他机构口径不一致）。</p>
+</div>
+
+<h3>D. 证据缺口与不确定项（不做补造）</h3>
+<ul class="small">
+  <li><span class="tag gap">证据缺口</span> 前五大客户集中度、单一大客户收入占比：未取得可核验数值。</li>
+  <li><span class="tag gap">证据缺口</span> 2026H1 培养基板块单独毛利率、澎立生物毛利率：公司未单独披露。</li>
+  <li><span class="tag gap">证据缺口</span> 2026H1 境外收入（约 1.66 亿元、占比约 36.6%）：来自二手来源转述半年报，未直接核验原表。</li>
+  <li><span class="tag gap">证据缺口</span> 商誉减值测试的关键假设（预测期增长率、折现率）：未取得披露细节。</li>
+  <li><span class="tag gap">证据缺口</span> 2025–2026 年最新的中国细胞培养基市场份额数据：公开来源仅到 2020–2021 年。</li>
+  <li><span class="tag gap">证据缺口</span> 2026 年限制性股票与股票增值权的完整稀释测算。</li>
+  <li><span class="tag gap">证据缺口</span> 客户关系（百济神州、信达生物）仅见二级来源整理，未获公司官方客户清单确认。</li>
+  <li><span class="tag sec">口径冲突</span> 中国细胞培养基市场规模在不同机构间的估计差异无法调和，本报告仅取方向性结论。</li>
+  <li><span class="tag sec">小样本</span> 事件前一致预期仅 2 家机构，样本量低于 3 家门槛，置信度受限。</li>
+</ul>
+
+<h3>E. 本报告不做什么</h3>
+<p class="small">本报告不提供仓位建议、买卖动作、目标价或收益承诺。判断研究资格与条件性投资吸引力可以，但在缺少组合约束、持有期限与风险承受能力的情况下，不编造个性化建议。所有前瞻性表述均为情景假设，非预测承诺。</p>
+
+<footer>
+  <div>报告生成：2026-09-15 · 研究截止 2026-09-15 收盘 · 报告币种 CNY · 数据口径：合并报表 / PRC GAAP</div>
+  <div>标的：上海奥浦迈生物科技股份有限公司（688293.SH，上交所科创板）</div>
+  <div>市值、单季年化、预期差、PE 与同比比例已通过 <code>financial-evidence-audit</code> 核验（PASS / publishable）。</div>
+  <div>本报告仅供研究参考，不构成任何投资建议。行情与财务数据可能存在延迟，以上市公司与交易所官方披露为准。</div>
+</footer>
+
+</div>
+</body>
+</html>

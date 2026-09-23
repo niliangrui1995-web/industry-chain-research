@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>持仓组合投资分析报告：奥浦迈 + 益诺思 - 2026-09-19</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 1080px; margin: 0 auto; padding: 24px; background: #f7f8fa; color: #1f2937; }
+  h1 { font-size: 26px; } h2 { font-size: 20px; margin-top: 0; }
+  .decision-card { color: white; padding: 28px 32px; border-radius: 16px; margin-bottom: 24px; }
+  .sell { background: linear-gradient(135deg, #dc2626, #ef4444); }
+  .hold { background: linear-gradient(135deg, #d97706, #f59e0b); }
+  .decision-card h1 { font-size: 40px; margin: 0 0 4px 0; }
+  .badges span { background: rgba(255,255,255,0.25); padding: 4px 12px; border-radius: 20px; font-size: 13px; margin-right: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 18px; }
+  .grid-item { background: rgba(255,255,255,0.18); padding: 12px 14px; border-radius: 10px; }
+  .grid-item .k { font-size: 12px; opacity: 0.85; } .grid-item .v { font-size: 20px; font-weight: 700; margin-top: 2px; }
+  .chart-card { background: white; padding: 24px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { border: 1px solid #e5e7eb; padding: 7px 10px; text-align: left; }
+  th { background: #f3f4f6; }
+  .tag-sell { color: #dc2626; font-weight: 700; } .tag-hold { color: #d97706; font-weight: 700; }
+  details { margin-bottom: 10px; } summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+  .disclaimer { color: #6b7280; font-size: 13px; padding: 16px; border-top: 1px solid #e5e7eb; margin-top: 24px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 800px){ .two-col, .grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<h1>📊 持仓组合投资分析报告（完整模式 · 5阶段）</h1>
+<p style="color:#6b7280">分析日期 2026-09-19 ｜ 数据截至 2026-09-18 收盘 ｜ 当前持仓：奥浦迈50% + 益诺思50%（满仓单一赛道）｜ 数据来源：NeoData 金融数据服务 + 通达信本地行情交叉验证</p>
+
+<!-- 1. 决策卡片 -->
+<div class="decision-card sell">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+    <div><div style="font-size:15px;opacity:.9">益诺思 688710（收盘 94.92 元）</div><h1>🔴 SELL 减仓</h1>
+    <div class="badges"><span>信心水平：高（8/10）</span><span>风险等级：高</span><span>半仓 100份 → 周五前 ≤25份</span></div></div>
+  </div>
+  <div class="grid">
+    <div class="grid-item"><div class="k">第一减仓区</div><div class="v">95.5 - 97.1</div></div>
+    <div class="grid-item"><div class="k">第二减仓区</div><div class="v">98 - 100</div></div>
+    <div class="grid-item"><div class="k">止损价（收盘）</div><div class="v">86.2（MA20）</div></div>
+    <div class="grid-item"><div class="k">回补条件</div><div class="v">85下方+资金转暖</div></div>
+  </div>
+</div>
+
+<div class="decision-card hold">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+    <div><div style="font-size:15px;opacity:.9">奥浦迈 688293（收盘 70.70 元）</div><h1>🟡 HOLD 持有</h1>
+    <div class="badges"><span>信心水平：中高（7/10）</span><span>风险等级：中</span><span>冲高兑现1/4，10/14前 ≤30%</span></div></div>
+  </div>
+  <div class="grid">
+    <div class="grid-item"><div class="k">冲高减仓区</div><div class="v">73 - 75.5</div></div>
+    <div class="grid-item"><div class="k">突破目标价</div><div class="v">80（站稳75.5后）</div></div>
+    <div class="grid-item"><div class="k">止损价（收盘）</div><div class="v">62.6 减半 / 61.4 清</div></div>
+    <div class="grid-item"><div class="k">建议仓位</div><div class="v">组合 30%</div></div>
+  </div>
+</div>
+
+<div class="chart-card" style="background:#eff6ff;border-left:5px solid #2563eb">
+  <b>组合目标仓位：奥浦迈 30% + 益诺思 ≤15% + 现金 ≥55%</b><br>
+  <span style="font-size:14px">核心逻辑：行业β（十五五规划+License-out 997亿美元）是真的，奥浦迈α是真的，但满仓价格跑在验证前面。益诺思三线资金派发背离（近5日主力-2179万、大涨日超大单-1148万、融资余额-16.6%）+估值定价2027-2028年，先减；奥浦迈趋势+资金面全场最健康，持有但10/14磐信减持窗口前收敛。现金是三季报验证期最便宜的期权。</span>
+</div>
+
+<!-- 2. 雷达图 -->
+<div class="chart-card">
+  <h2>📊 综合评分雷达图（0-10 分，来自四位分析师+风险主管）</h2>
+  <div style="max-width:560px;margin:0 auto"><canvas id="radarChart"></canvas></div>
+  <table style="margin-top:14px"><tr><th>维度</th><th>奥浦迈</th><th>益诺思</th><th>要点</th></tr>
+  <tr><td>技术面</td><td>7.0</td><td>6.5</td><td>奥：强趋势+超买长上影；益：双底反弹+抵强压带</td></tr>
+  <tr><td>基本面</td><td>7.0</td><td>6.5</td><td>奥：主业+34%但60%利润为一次性收益；益：订单+176%但2026E PE 83-103x</td></tr>
+  <tr><td>新闻面</td><td>5.5</td><td>7.0</td><td>奥：磐信连环减持悬顶；益：拐点+政策共振、年内无解禁</td></tr>
+  <tr><td>情绪面</td><td>6.5</td><td>5.5</td><td>奥：主力回流+龙虎榜机构；益：大涨日主力派发、融资骤降</td></tr>
+  <tr><td>风险面（调整后）</td><td>6.0</td><td>5.0</td><td>风险主管综合评分 6/10（中性偏谨慎）</td></tr></table>
+</div>
+
+<!-- 3. 价格走势 -->
+<div class="two-col">
+<div class="chart-card">
+  <h2>📈 奥浦迈近60日走势（含 MA20/MA60、目标/止损线）</h2>
+  <canvas id="priceApm"></canvas>
+</div>
+<div class="chart-card">
+  <h2>📈 益诺思近60日走势（含 MA20/MA60、目标/止损线）</h2>
+  <canvas id="priceYnk"></canvas>
+</div>
+</div>
+
+<!-- 4. 多空论点对比 -->
+<div class="chart-card">
+  <h2>⚖️ 多空论点权重对比（研究主管裁决后，多头 42 : 55 空头）</h2>
+  <div style="max-width:760px;margin:0 auto"><canvas id="bbChart"></canvas></div>
+</div>
+
+<!-- 5. 风险评估三角 -->
+<div class="chart-card">
+  <h2>📋 风险评估：三方评分（越低=嫌计划太保守，越高=嫌计划太激进）</h2>
+  <div class="two-col">
+    <div style="max-width:420px;margin:0 auto"><canvas id="riskChart"></canvas></div>
+    <div>
+      <table>
+        <tr><th>风险分析师</th><th>评分</th><th>立场</th></tr>
+        <tr><td>激进派</td><td>4.0</td><td>太保守：点火周砍仓=踏空主升，主张组合65%仓位</td></tr>
+        <tr><td>中性派</td><td>5.5</td><td>方向对、节奏放宽：价格+时间双触发替代日历式减仓</td></tr>
+        <tr><td>保守派</td><td>7.0</td><td>太激进：应先卖不等冲高、现金≥60%，警告共振回撤-13%~-19%</td></tr>
+        <tr><th>风险主管终裁</th><th>6.0</th><th>中性偏谨慎：采信中性节奏+保守止损哲学，组合回撤敞口压至-6%~-8%</th></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 6. 详细文本区 -->
+<div class="chart-card">
+  <h2>📝 最终执行方案（风险主管终裁版，下周 9/21-9/25）</h2>
+  <h3>益诺思 688710 — SELL（信心 高）</h3>
+  <table>
+    <tr><th>触发条件</th><th>操作（以当前持仓=100份计）</th></tr>
+    <tr><td>周一高开/平开冲 95.5-97.1</td><td>限价拆3笔卖 50 份（间隔15分钟+）；14:30 未成交尾盘补足</td></tr>
+    <tr><td>周一低开破 90</td><td>看 MA5(89.4-90.2)：缩量企稳等反抽；放量击穿 89.4 当日卖 50 份</td></tr>
+    <tr><td>周三收盘仍站不上 95.5（时间止损）</td><td>无条件减至 ≤25 份</td></tr>
+    <tr><td>冲 98-100</td><td>再减至 ≤25 份（冲过则 ≤15 份）；放量站稳 97.1 → 剩余挂 100/102/103.7，100 附近必兑现一半</td></tr>
+    <tr><td>收盘破 86.2（MA20）</td><td>清剩余全部</td></tr>
+    <tr><td>回补</td><td>85 元下方（2027E PE 40x 内）+ 主力资金转净流入，缺一不可</td></tr>
+  </table>
+  <h3>奥浦迈 688293 — HOLD（信心 中高）</h3>
+  <table>
+    <tr><th>触发条件</th><th>操作</th></tr>
+    <tr><td>冲 73-75.5 不过（上影/缩量）</td><td>卖 25 份；压仓分两段：10/9 前 ≤40%、10/13 前 ≤30%</td></tr>
+    <tr><td>放量(&gt;700万股)收盘站稳 75.5</td><td>取消减仓看 80，80/82/84 各卖 10 份；回踩 73-74 不破才接回</td></tr>
+    <tr><td>缩量回踩 65-68 企稳</td><td>持有不加仓（三季报扣非验证前不加进攻仓）</td></tr>
+    <tr><td>收盘破 63.0 / 62.6 / 61.4</td><td>预警 → 减半 → 清仓；盘中例外：放量击穿 62.6 且 CRO 指数同步跌超 2% → 当日减半</td></tr>
+    <tr><td>事件</td><td>盯中期分红（每10股派2元）除权登记公告；10/14 磐信减持窗口开启</td></tr>
+  </table>
+  <h3>组合级风控（凌驾个股）</h3>
+  <table>
+    <tr><th>触发</th><th>动作</th></tr>
+    <tr><td>CRO 指数单日跌超 2% 且超大单净流出</td><td>当日 14:30 后益诺思卖 25 份 + 奥浦迈卖 15 份</td></tr>
+    <tr><td>两票同日收盘破各自 MA20（61.4 / 86.2）</td><td>益诺思清零 + 奥浦迈降至 30 份</td></tr>
+    <tr><td>板块单日跌超 3%（黑天鹅）</td><td>益诺思清零 + 奥浦迈 30 份 + 现金 ≥85%</td></tr>
+    <tr><td>镜像回补：指数放量站稳 + 两票同日突破压力（75.5/97.1）</td><td>允许奥浦迈回补至组合 40%</td></tr>
+  </table>
+
+  <h3>多维分析摘要</h3>
+  <details><summary>技术面（奥 7.0 / 益 6.5）</summary><p>奥浦迈：标准多头排列，MACD 红柱无背离，但 RSI 73.4 超买、9-18 放量冲高 75.50 留 4.8 元长上影。益诺思：小双底（76.77/77.92）颈线突破后反弹，MACD 零轴金叉动能健康，但量比 0.79 缩量、J 值 109.6 过热，正抵 95.5-100 强压带下沿。共性：都不宜追高，MA20（61.4/86.2）为去留最后防线。</p></details>
+  <details><summary>基本面（奥 7.0 / 益 6.5）</summary><p>奥浦迈：H1 营收 +155%（含并表），扣非 +66.87%，培养基主业 +34%、境外 +142%，但 60% 归母利润为并购重估一次性收益，2026E PE 58-66x 高于同业。益诺思：新签订单 +175.56%、在手 22.47 亿（≈2026E 收入 2 倍）、扣非同步扭亏、经营现金流 +4179%，但 2026E PE 83-103x 已定价 2027-2028 年业绩。</p></details>
+  <details><summary>新闻面（奥 5.5 / 益 7.0）</summary><p>共用催化：9/18 十部门《医药工业发展"十五五"规划》（创新药年均增速 20%+）、H1 License-out 997 亿美元且 BD 前置临床前。奥浦迈：磐信 10/14 起再减持 ≤3%（约 2.86 亿元，上轮结束仅 12 天）。益诺思：年内无大额解禁，但现价贴近机构平均目标价 96.8 元。</p></details>
+  <details><summary>情绪面（奥 6.5 / 益 5.5）</summary><p>奥浦迈：近5日主力 +8018 万、9/8 涨停龙虎榜三机构席位+沪股通，但融资余额 2 连降。益诺思：9/18 大涨 5.24% 当日主力净流出 1169 万、超大单 -1148 万、散户 +1169 万对等接盘；融资余额 5 日 -16.64%——三线资金同向指认派发。板块：PE-TTM 33x 历史高位，9/18 上涨由中小资金推动（超大单净流出 2 亿）。</p></details>
+
+  <h3>关键催化剂 & 风险事件</h3>
+  <table>
+    <tr><th>日期</th><th>事件</th><th>方向</th></tr>
+    <tr><td>9 月下旬（待定）</td><td>奥浦迈中期分红除权登记公告（每10股派2元）</td><td>中性/注意跳空</td></tr>
+    <tr><td>10/14 起</td><td>奥浦迈股东磐信减持窗口（≤3%，约2.86亿元）开启</td><td>❌ 压制</td></tr>
+    <tr><td>10 月下旬</td><td>两票三季报：奥浦迈看扣非（≥1.2亿年化验证）、益诺思看毛利率+新签持续性</td><td>关键验证点</td></tr>
+    <tr><td>持续</td><td>十五五规划政策发酵、创新药 BD 出海、实验猴价翻倍</td><td>✅ 板块β</td></tr>
+    <tr><td>持续</td><td>板块 PE-TTM 33x 历史高位 + 主力未进场，退潮共振风险</td><td>❌ 最大风险</td></tr>
+  </table>
+</div>
+
+<div class="disclaimer">⚠️ 本报告由交易分析团队（技术/基本面/新闻/情绪四位分析师 + 多空研究员 + 研究主管 + 交易员 + 三方风险分析师 + 风险主管，共 12 角色）基于公开信息生成，数据来源 NeoData 金融数据服务与通达信本地行情（截至 2026-09-18）。所有内容仅供参考，不构成任何投资建议或个股推荐。投资有风险，决策需谨慎。</div>
+
+<script>
+const dates = ["06-29","06-30","07-01","07-02","07-03","07-06","07-07","07-08","07-09","07-10","07-13","07-14","07-15","07-16","07-17","07-20","07-21","07-22","07-23","07-24","07-27","07-28","07-29","07-30","07-31","08-03","08-04","08-05","08-06","08-07","08-10","08-11","08-12","08-13","08-14","08-17","08-18","08-19","08-20","08-21","08-24","08-25","08-26","08-27","08-28","08-31","09-01","09-02","09-03","09-04","09-07","09-08","09-09","09-10","09-11","09-14","09-15","09-16","09-17","09-18"];
+const apm = [41.40,41.49,44.49,42.91,44.11,44.25,42.19,40.80,43.10,48.39,46.40,51.00,53.95,54.40,51.82,54.00,56.22,59.44,56.52,52.87,55.14,53.22,53.08,50.78,49.40,48.79,54.83,54.60,53.76,63.22,66.85,63.71,61.84,67.53,66.37,66.50,64.55,60.38,63.90,61.75,58.18,59.33,57.42,56.98,55.10,53.10,53.56,55.88,55.93,54.62,56.91,68.29,70.98,66.86,65.10,67.08,64.23,67.05,70.11,70.70];
+const ynk = [68.08,67.20,68.38,65.00,62.67,64.02,65.08,64.26,64.89,77.87,84.02,81.08,81.00,76.57,65.40,69.30,75.04,80.60,80.07,76.90,78.83,77.47,77.90,70.80,71.21,69.13,74.30,77.40,77.88,90.69,89.01,93.85,92.39,95.20,95.50,100.04,98.30,91.07,100.10,95.25,89.89,97.97,93.97,90.17,86.97,86.10,81.74,79.70,78.12,79.70,78.87,82.13,85.00,84.45,82.96,87.30,85.16,89.38,90.19,94.92];
+function sma(arr,n){return arr.map((_,i)=>i<n-1?null:arr.slice(i-n+1,i+1).reduce((a,b)=>a+b)/n);}
+function line(v){return dates.map(()=>v);}
+
+new Chart(document.getElementById('radarChart'),{type:'radar',data:{labels:['技术面','基本面','新闻面','情绪面','风险面'],datasets:[
+ {label:'奥浦迈 688293',data:[7.0,7.0,5.5,6.5,6.0],borderColor:'#d97706',backgroundColor:'rgba(217,119,6,0.15)',pointBackgroundColor:'#d97706'},
+ {label:'益诺思 688710',data:[6.5,6.5,7.0,5.5,5.0],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.12)',pointBackgroundColor:'#dc2626'}]},
+ options:{scales:{r:{min:0,max:10,ticks:{stepSize:2}}},plugins:{legend:{position:'bottom'}}}});
+
+function priceChart(id,closes,target,stop,name){
+ new Chart(document.getElementById(id),{type:'line',data:{labels:dates,datasets:[
+  {label:name+' 收盘',data:closes,borderColor:'#2563eb',borderWidth:2,pointRadius:0,tension:0.15},
+  {label:'MA20',data:sma(closes,20),borderColor:'#f59e0b',borderWidth:1.5,pointRadius:0,borderDash:[6,3]},
+  {label:'MA60',data:sma(closes,60),borderColor:'#6b7280',borderWidth:1.5,pointRadius:0,borderDash:[2,3]},
+  {label:'目标/兑现区 '+target,data:line(target),borderColor:'#dc2626',borderWidth:1.2,pointRadius:0,borderDash:[10,5]},
+  {label:'止损 '+stop,data:line(stop),borderColor:'#16a34a',borderWidth:1.2,pointRadius:0,borderDash:[10,5]}
+ ]},options:{interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:14,font:{size:11}}}},scales:{x:{ticks:{maxTicksLimit:10}}}}});
+}
+priceChart('priceApm',apm,80,62.6,'奥浦迈');
+priceChart('priceYnk',ynk,100,86.2,'益诺思');
+
+new Chart(document.getElementById('bbChart'),{type:'bar',data:{labels:[
+ '多头:行业β政策+订单','多头:奥扣非α真实+资金健康','多头:益订单锁定+现金流','多头:益技术动能健康','多头:奥减持已定价(下调)','多头:益左侧预期差(下调)',
+ '空头:益主力派发三线背离','空头:组合高相关回撤','空头:奥PEG假设激进','空头:益估值透支','空头:板块高位主力缺席','空头:磐信减持绞索','空头:奥利润含金量'],
+ datasets:[{label:'裁决后权重(1-10)',data:[9,9,9,7,5,3,-9,-8,-8,-8,-7,-7,-6],
+  backgroundColor:['#16a34a','#16a34a','#16a34a','#16a34a','#86c89b','#86c89b','#dc2626','#dc2626','#dc2626','#dc2626','#e47373','#e47373','#e47373']}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>Math.abs(c.raw)}}},scales:{x:{min:-10,max:10,title:{display:true,text:'← 空头权重 | 多头权重 →'}}}}});
+
+new Chart(document.getElementById('riskChart'),{type:'radar',data:{labels:['激进派','保守派','中性派'],datasets:[
+ {label:'三方风险评分',data:[4,7,5.5],borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,0.15)',pointBackgroundColor:'#7c3aed'},
+ {label:'终裁综合 6.0',data:[6,6,6],borderColor:'#dc2626',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},
+ options:{scales:{r:{min:0,max:10,ticks:{stepSize:2}}},plugins:{legend:{position:'bottom'}}}});
+</script>
+</body>
+</html>

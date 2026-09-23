@@ -1,0 +1,332 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "688293-opm-20260915",
+  "as_of": "2026-09-15T21:09:00+08:00",
+  "sources": [
+    {
+      "id": "S_H1",
+      "source_type": "official_filing",
+      "origin_id": "issuer:688293:2026-interim-report",
+      "locator": "issuer:688293:2026-interim-report:consolidated-financial-statements",
+      "source_date": "2026-08-30",
+      "checked_at": "2026-09-15T21:09:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_IR",
+      "source_type": "company_ir",
+      "origin_id": "issuer:688293:2026H1-earnings-call-record",
+      "locator": "sse:688293:investor-relations-activity-record:2026-08-31",
+      "source_date": "2026-09-01",
+      "checked_at": "2026-09-15T21:09:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_PRE",
+      "source_type": "official_filing",
+      "origin_id": "issuer:688293:2026-069-h1-preannouncement",
+      "locator": "sse:688293:announcement:2026-069",
+      "source_date": "2026-07-22",
+      "checked_at": "2026-09-15T21:09:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_FY25",
+      "source_type": "official_filing",
+      "origin_id": "issuer:688293:FY2025-annual-report",
+      "locator": "issuer:688293:FY2025-annual-report:consolidated-financial-statements",
+      "source_date": "2026-04-23",
+      "checked_at": "2026-09-15T21:09:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_FY24",
+      "source_type": "official_filing",
+      "origin_id": "issuer:688293:FY2024-annual-report",
+      "locator": "issuer:688293:FY2024-annual-report:consolidated-financial-statements",
+      "source_date": "2025-04-16",
+      "checked_at": "2026-09-15T21:09:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_WS_Q",
+      "source_type": "market_data_vendor",
+      "origin_id": "vendor:westock:sh688293:quote-snapshot",
+      "locator": "westock:quote:sh688293:2026-09-15",
+      "source_date": "2026-09-15",
+      "checked_at": "2026-09-15T21:09:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_HY",
+      "source_type": "credible_secondary",
+      "origin_id": "broker:huayuan:688293:2026-07-25-coverage",
+      "locator": "broker-research:huayuan:688293:2026-07-25",
+      "source_date": "2026-07-25",
+      "checked_at": "2026-09-15T21:09:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_DW",
+      "source_type": "credible_secondary",
+      "origin_id": "broker:soochow:688293:2026-05-06-review",
+      "locator": "broker-research:soochow:688293:2026-05-06",
+      "source_date": "2026-05-06",
+      "checked_at": "2026-09-15T21:09:00+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_H1_REV",
+      "metric": "revenue",
+      "value": "453690008.08",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-08-30",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_H1"]
+    },
+    {
+      "id": "F_H1_REV_IR",
+      "metric": "revenue",
+      "value": "454000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-09-01",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_IR"]
+    },
+    {
+      "id": "F_H1_REV_PRE",
+      "metric": "revenue",
+      "value": "450000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-01-01",
+        "end": "2026-06-30",
+        "frequency": "half",
+        "label": "2026H1"
+      },
+      "available_at": "2026-07-22",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_PRE"]
+    },
+    {
+      "id": "F_PRICE",
+      "metric": "close_price",
+      "value": "64.23",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-15T15:00:00+08:00"
+      },
+      "basis": "unadjusted_close",
+      "source_refs": ["S_WS_Q"]
+    },
+    {
+      "id": "F_SHARES",
+      "metric": "total_shares_outstanding",
+      "value": "142167799",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-06-30T00:00:00+08:00"
+      },
+      "basis": "total_shares_outstanding",
+      "source_refs": ["S_H1"]
+    },
+    {
+      "id": "F_MC_EXPECTED",
+      "metric": "total_market_cap",
+      "value": "9133000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "instant",
+        "as_of": "2026-09-15T15:00:00+08:00"
+      },
+      "basis": "total_market_cap",
+      "source_refs": ["S_WS_Q"]
+    },
+    {
+      "id": "F_Q2_DED",
+      "metric": "deducted_attributable_net_profit",
+      "value": "44763908.82",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2026-04-01",
+        "end": "2026-06-30",
+        "frequency": "quarter",
+        "label": "2026Q2 derived"
+      },
+      "available_at": "2026-08-30T15:31:00+08:00",
+      "basis": "derived_single_quarter_deducted_attributable_net_profit_prc_gaap",
+      "source_refs": ["S_H1"]
+    },
+    {
+      "id": "F_CONS",
+      "metric": "fy_attributable_net_profit",
+      "value": "162.24",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1000000",
+      "period": {
+        "kind": "estimate",
+        "expectation_as_of": "2026-05-06",
+        "target_start": "2026-01-01",
+        "target_end": "2026-12-31",
+        "frequency": "year",
+        "label": "FY2026E consensus (2-sample mean: Huayuan 161.00, Soochow 163.48)"
+      },
+      "basis": "pre_event_fy_attributable_net_profit_consensus_prc_gaap",
+      "source_refs": ["S_HY", "S_DW"]
+    },
+    {
+      "id": "F_FY25_REV",
+      "metric": "revenue",
+      "value": "354913388.11",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "frequency": "year",
+        "label": "FY2025"
+      },
+      "available_at": "2026-04-23",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_FY25"]
+    },
+    {
+      "id": "F_FY24_REV",
+      "metric": "revenue",
+      "value": "297242180.57",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {
+        "kind": "duration",
+        "start": "2024-01-01",
+        "end": "2024-12-31",
+        "frequency": "year",
+        "label": "FY2024"
+      },
+      "available_at": "2025-04-16",
+      "basis": "reported_consolidated_prc_gaap",
+      "source_refs": ["S_FY24"]
+    }
+  ],
+  "checks": [
+    {
+      "id": "C1",
+      "kind": "cross_source",
+      "materiality": "material",
+      "target": { "fact_id": "F_H1_REV" },
+      "references": [
+        { "fact_id": "F_H1_REV_IR" },
+        { "fact_id": "F_H1_REV_PRE" }
+      ],
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "any_credible",
+        "required_anchor_tier": "official"
+      },
+      "tolerance": { "relative_pct": "1.5", "absolute_base": "0" }
+    },
+    {
+      "id": "C2",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": { "fact_id": "F_PRICE" },
+      "shares": { "fact_id": "F_SHARES" },
+      "expected": { "fact_id": "F_MC_EXPECTED" },
+      "capitalization_basis": "total",
+      "max_share_age_days": 120,
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official"
+      },
+      "tolerance": { "relative_pct": "1", "absolute_base": "0" }
+    },
+    {
+      "id": "C3",
+      "kind": "expectation_gap",
+      "materiality": "material",
+      "quarterly_low": { "fact_id": "F_Q2_DED" },
+      "quarterly_high": { "fact_id": "F_Q2_DED" },
+      "consensus": { "fact_id": "F_CONS" },
+      "annualization_factor": "4",
+      "event_at": "2026-08-30T15:31:00+08:00",
+      "comparison_basis": "annualized_quarterly_deducted_vs_fy_attributable_consensus",
+      "company_metric": "deducted_attributable_net_profit",
+      "consensus_metric": "fy_attributable_net_profit",
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "any_credible",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "C4",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pe_user_defined",
+      "numerator": { "check_id": "C2", "output": "value" },
+      "denominator_low": { "check_id": "C3", "output": "annualized_low" },
+      "denominator_high": { "check_id": "C3", "output": "annualized_high" },
+      "valuation_basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+      "source_gate": {
+        "min_independent_origins": 2,
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official"
+      }
+    },
+    {
+      "id": "C5",
+      "kind": "percentage",
+      "materiality": "material",
+      "mode": "change",
+      "current": { "fact_id": "F_FY25_REV" },
+      "base": { "fact_id": "F_FY24_REV" },
+      "period_relation": "yoy",
+      "output_metric": "revenue_yoy_pct",
+      "output_basis": "reported_consolidated_prc_gaap_yoy",
+      "source_gate": {
+        "min_independent_origins": 1,
+        "counted_tier": "official",
+        "required_anchor_tier": "official"
+      }
+    }
+  ]
+}

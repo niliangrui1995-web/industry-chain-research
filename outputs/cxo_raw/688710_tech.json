@@ -1,0 +1,28 @@
+{
+  "msg": "操作成功",
+  "suc": true,
+  "traceId": "40438960b2d0415daf51a4cc95320865",
+  "code": "200",
+  "data": {
+    "seParams": {},
+    "requestId": "40438960b2d0415daf51a4cc95320865",
+    "apiData": {
+      "apiRecall": [],
+      "entity": [
+        {
+          "code": "DEA.N",
+          "name": "EASTERLY GOVERNMENT PROPERTIES, INC."
+        },
+        {
+          "code": "688710.SH",
+          "name": "益诺思"
+        },
+        {
+          "code": "MA.N",
+          "name": "万事达"
+        }
+      ]
+    },
+    "extraParams": {}
+  }
+}

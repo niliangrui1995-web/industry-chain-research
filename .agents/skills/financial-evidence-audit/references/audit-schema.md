@@ -150,7 +150,7 @@ Check 只能引用前序 PASS check。输出继承全部上游 `source_ids` 和 
 }
 ```
 
-`counted_tier` 和非 `none` 的 `required_anchor_tier` 可为 `official`、`vendor_or_official`、`any_credible`。独立数量只计算满足 `counted_tier` 的 distinct origin。
+`counted_tier` 和非 `none` 的 `required_anchor_tier` 可为 `official`、`vendor_or_official`、`any_credible`；`required_anchor_tier` 另接受合法值 `none`，表示不强制 anchor 层级。独立数量只计算满足 `counted_tier` 的 distinct origin。anchor 与 counted origin 都只在该 check 参与门统计的来源集合内查找，而集合的构成随 check 而异 —— `cross_source` 只喂入 `references`（target 自身来源不计入），细则见 [1. cross_source](#1-cross_source)。
 
 集合来源门通过还不够。每个非缺失决策输入必须独立拥有相应 accepted 来源：`cross_source` reference 要 credible；market-cap price 要 vendor/official、shares 至少 credible；expectation quarter 要 official、consensus 要 market-data vendor 或 credible-secondary；valuation/percentage 计算输入至少 credible。`market_cap.expected`、`valuation.expected_low/high`、`percentage.expected` 是待核对 claim，可来自 credible 或 `report_under_audit`，但后者永远不计 gate origin/anchor。派生引用只有在上游 check PASS 后才可进入本门，因此不会误伤已逐项验证的合法派生值。
 
@@ -183,6 +183,8 @@ Check 只能引用前序 PASS check。输出继承全部上游 `source_ids` 和 
 ```
 
 Target 可来自 `report_under_audit` 或 credible source，但每个 reference 必须各自有 credible source，不能让 lead-only reference 借另一 reference 的官方来源搭便车。除 target-reference 外，还检查全部 reference-reference pair。所有被比较 fact 必须具有相同 metric；相同 origin 出现不同值直接报 `ORIGIN_INTERNAL_CONFLICT`。
+
+**来源门只统计 `references`**（重要）：本 check 的 `source_gate` 输入集合就是 `references`，target 自身的来源既不进 `independent_origins`，也不充当 anchor。因此当 target 已是官方原文（或 `report_under_audit`）、只想用次级来源做交叉核验时，若沿用 `required_anchor_tier=official`，会因 references 中没有官方来源而报 `MISSING_REQUIRED_SOURCE` —— 这并不代表数字有问题。此时应显式写 `required_anchor_tier: "none"`，把门收敛为只约束 `counted_tier` 与 `min_independent_origins`；反之，若确实要求 references 中必须含官方 anchor（例如报告值与官方值对撞），才保留 `official`。`none` 只关闭 anchor 要求，不放宽 counted origin 的数量与层级。
 
 ## 2. market_cap
 
@@ -367,7 +369,35 @@ percentage = (actual - consensus) / abs(consensus) * 100
 
 `change` 使用 `current/base`，relation 可为 `sequential`、`yoy` 或 `qoq`，要求 current/base metric 与 basis 完全相同；`output_metric` 固定为 `<input_metric>_<relation>_pct`，`output_basis` 固定为 `<input_basis>_<relation>`，不能把 revenue 变化率标成 `eps_qoq_pct`。`qoq/yoy` 两个输入除各自满足 frequency 跨度门外，跨度差不得超过 15 天。如填写 expected，必须填写 tolerance。
 
-`ratio` 使用 `numerator/denominator` 且要求 `period_relation=same`；`output_basis` 固定为 `<numerator_basis>_over_<denominator_basis>`。可审计配对包括 gross/operating/net/attributable/deducted margin，普通公司 cash-dividend payout、profit/FCF/operating-cash-flow coverage，以及收益型行业的显式合同：`cash_distribution` 除以 `affo|ffo|distributable_amount|net_investment_income` 为 `distribution_payout_pct`，反向为 `distribution_coverage_pct`；另支持 `distributable_profit`、`capital_available_for_distribution` 与 cash dividend 的 payout/coverage。未知配对只能使用 `calc` 做非准出计算，在 audit 中报 `UNSUPPORTED_RATIO_CONTRACT`。
+`ratio` 使用 `numerator/denominator` 且要求 `period_relation=same`；`output_basis` 固定为 `<numerator_basis>_over_<denominator_basis>`，而 `output_metric` **不是自由文本**：必须精确等于下表 `(numerator, denominator)` 映射的 `_pct` 名（例如 `gross_profit/revenue` 只能写 `gross_margin_pct`），否则报 `METRIC_MISMATCH` 并在错误信息中给出期望值。可审计配对包括 gross/operating/net/attributable/deducted margin，普通公司 cash-dividend payout、profit/FCF/operating-cash-flow coverage，以及收益型行业的显式合同：`cash_distribution` 除以 `affo|ffo|distributable_amount|net_investment_income` 为 `distribution_payout_pct`，反向为 `distribution_coverage_pct`；另支持 `distributable_profit`、`capital_available_for_distribution` 与 cash dividend 的 payout/coverage。未知配对只能使用 `calc` 做非准出计算，在 audit 中报 `UNSUPPORTED_RATIO_CONTRACT`。
+
+ratio 的 `(numerator, denominator)` 与 `output_metric` 是固定映射，写错即 `METRIC_MISMATCH`：
+
+| numerator / denominator | 必需 `output_metric` |
+|---|---|
+| `gross_profit` / `revenue` | `gross_margin_pct` |
+| `operating_profit` / `revenue` | `operating_margin_pct` |
+| `net_profit` / `revenue` | `net_margin_pct` |
+| `attributable_net_profit` / `revenue` | `attributable_net_margin_pct` |
+| `deducted_attributable_net_profit` / `revenue` | `deducted_attributable_net_margin_pct` |
+| `cash_dividend` / `net_profit` | `dividend_payout_pct` |
+| `cash_dividend` / `attributable_net_profit` | `dividend_payout_pct` |
+| `net_profit` / `cash_dividend` | `dividend_coverage_pct` |
+| `attributable_net_profit` / `cash_dividend` | `dividend_coverage_pct` |
+| `free_cash_flow` / `cash_dividend` | `fcf_dividend_coverage_pct` |
+| `operating_cash_flow` / `cash_dividend` | `operating_cash_flow_dividend_coverage_pct` |
+| `cash_distribution` / `affo` | `distribution_payout_pct` |
+| `cash_distribution` / `ffo` | `distribution_payout_pct` |
+| `cash_distribution` / `distributable_amount` | `distribution_payout_pct` |
+| `cash_distribution` / `net_investment_income` | `distribution_payout_pct` |
+| `affo` / `cash_distribution` | `distribution_coverage_pct` |
+| `ffo` / `cash_distribution` | `distribution_coverage_pct` |
+| `distributable_amount` / `cash_distribution` | `distribution_coverage_pct` |
+| `net_investment_income` / `cash_distribution` | `distribution_coverage_pct` |
+| `cash_dividend` / `distributable_profit` | `dividend_payout_pct` |
+| `distributable_profit` / `cash_dividend` | `dividend_coverage_pct` |
+| `cash_dividend` / `capital_available_for_distribution` | `dividend_payout_pct` |
+| `capital_available_for_distribution` / `cash_dividend` | `dividend_coverage_pct` |
 
 所有 ratio 输入必须具备上述 `accounting_context`（显式或已知 basis 解析），且 `reporting_scope`、`accounting_framework` 相同；任何范围缺失报 `MISSING_ACCOUNTING_CONTEXT`，即使 supporting check 也阻断准出。Margin 还必须有相同的 `measurement_basis`，但自由文本 basis 可使用不同指标标签，例如同一 reported context 的 `reported_gross_profit` 与 `reported_revenue` 可以配对。若 margin 两侧都是 `adjusted` 或 `issuer_defined`，还必须各自提供相同的 `measurement_definition`，指向同一份有来源的调整/计量定义；缺失定义阻断，不能因均叫 adjusted 就假定口径一致。Payout/coverage 则按指标白名单允许不同计量性质和不同 basis，例如同一合并范围、同一 US GAAP 底层报表的 `reported_cash_distribution` 与 `reported_affo`；该例两项均需显式元数据，AFFO 的 `measurement_basis` 按原文取 `issuer_defined` 或 `adjusted`。工具检查声明的合同，不替代原文对 AFFO 调整项与分派归属的核验。审计结果的 `details.accounting_contexts` 保留两侧口径，不能通过拼接 `output_basis` 洗掉母公司/合并报表冲突。
 `qoq` 要求两个季度期末相隔 75-110 天；`yoy` 要求可比期间期末相隔 350-380 天，避免把跨季或跨年数据贴错标签。

@@ -1,0 +1,590 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.2",
+  "audit_id": "molecular-blocks-3way-20260916",
+  "input_sha256": "625b00401b7c9e9e838df94172c9c448d35a0352d280b259b84378eeeff96cc0",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 9,
+    "verified_count": 9,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_MCAP_BD",
+      "kind": "market_cap",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_TDXQ",
+          "S_WSQ"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "vendor:tdx:quote-snapshot",
+          "vendor:tencent-westock:quote-snapshot"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "5522956749.96",
+          "metric": "total_market_cap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "total_market_cap",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "price * shares",
+        "capitalization_basis": "total"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_PE_BD",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_TDXQ",
+          "S_WSFIN",
+          "S_WSQ"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "vendor:tdx:quote-snapshot",
+          "vendor:tencent-westock:financial-statements",
+          "vendor:tencent-westock:quote-snapshot"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "30.406463687518473482119311149283662650354342520202",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "ttm_attributable_net_profit",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "30.406463687518473482119311149283662650354342520202",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "ttm_attributable_net_profit",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "ttm_attributable_net_profit",
+        "state": "meaningful"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_PB_BD",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_TDXQ",
+          "S_WSFIN",
+          "S_WSQ"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "vendor:tdx:quote-snapshot",
+          "vendor:tencent-westock:financial-statements",
+          "vendor:tencent-westock:quote-snapshot"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "2.6786679615465418895080036555244300565854686992258",
+          "metric": "pb",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "equity_attributable_to_parent",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "2.6786679615465418895080036555244300565854686992258",
+          "metric": "pb",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "equity_attributable_to_parent",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "equity_attributable_to_parent",
+        "state": "meaningful"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_MCAP_HY",
+      "kind": "market_cap",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_TDXQ",
+          "S_WSQ"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "vendor:tdx:quote-snapshot",
+          "vendor:tencent-westock:quote-snapshot"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "19353128368.16",
+          "metric": "total_market_cap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "total_market_cap",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "price * shares",
+        "capitalization_basis": "total"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_PE_HY",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_TDXQ",
+          "S_WSFIN",
+          "S_WSQ"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "vendor:tdx:quote-snapshot",
+          "vendor:tencent-westock:financial-statements",
+          "vendor:tencent-westock:quote-snapshot"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "74.651684999289187440050013472072994085712598976848",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "ttm_attributable_net_profit",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "74.651684999289187440050013472072994085712598976848",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "ttm_attributable_net_profit",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "ttm_attributable_net_profit",
+        "state": "meaningful"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_PB_HY",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_TDXQ",
+          "S_WSFIN",
+          "S_WSQ"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "vendor:tdx:quote-snapshot",
+          "vendor:tencent-westock:financial-statements",
+          "vendor:tencent-westock:quote-snapshot"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "5.8396373657735850108827929802281693970631602561257",
+          "metric": "pb",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "equity_attributable_to_parent",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "5.8396373657735850108827929802281693970631602561257",
+          "metric": "pb",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "equity_attributable_to_parent",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "equity_attributable_to_parent",
+        "state": "meaningful"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_MCAP_YS",
+      "kind": "market_cap",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_TDXQ",
+          "S_WSQ"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "vendor:tdx:quote-snapshot",
+          "vendor:tencent-westock:quote-snapshot"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "10310903738.1",
+          "metric": "total_market_cap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "total_market_cap",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "price * shares",
+        "capitalization_basis": "total"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_PE_YS",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_TDXQ",
+          "S_WSFIN",
+          "S_WSQ"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "vendor:tdx:quote-snapshot",
+          "vendor:tencent-westock:financial-statements",
+          "vendor:tencent-westock:quote-snapshot"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "48.940535439378140047999283354642626340125494731794",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "ttm_attributable_net_profit",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "48.940535439378140047999283354642626340125494731794",
+          "metric": "pe",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "ttm_attributable_net_profit",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "ttm_attributable_net_profit",
+        "state": "meaningful"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_PB_YS",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_TDXQ",
+          "S_WSFIN",
+          "S_WSQ"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "vendor:tdx:quote-snapshot",
+          "vendor:tencent-westock:financial-statements",
+          "vendor:tencent-westock:quote-snapshot"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "2.2583349894648802049348069813594266925948343296304",
+          "metric": "pb",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "equity_attributable_to_parent",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "2.2583349894648802049348069813594266925948343296304",
+          "metric": "pb",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "equity_attributable_to_parent",
+          "source_ids": [
+            "S_TDXQ",
+            "S_WSFIN",
+            "S_WSQ"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "equity_attributable_to_parent",
+        "state": "meaningful"
+      },
+      "issues": []
+    }
+  ]
+}
+exit=0

@@ -1,0 +1,4 @@
+样本文件: BJ920045_fixed.json
+顶层键: ['code', 'name', 'block', 'bars']
+bar 字段: ['date', 'open', 'high', 'low', 'close', 'volume', 'vol', 'amount', 'turnover', 'preclose', 'src']
+根数: 131 区间 2026-03-16 ~ 2026-09-21

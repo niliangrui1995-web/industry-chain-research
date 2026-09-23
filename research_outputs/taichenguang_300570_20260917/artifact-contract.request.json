@@ -1,0 +1,10 @@
+{
+  "schema_version": "moss-html-artifact/v1",
+  "artifact_id": "taichenguang-300570-research-dashboard",
+  "artifact_kind": "dashboard",
+  "brand": {
+    "name": "太辰光（300570）深度研究",
+    "tone": "editorial",
+    "density": "balanced"
+  }
+}

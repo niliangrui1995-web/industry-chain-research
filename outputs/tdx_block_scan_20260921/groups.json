@@ -1,0 +1,2517 @@
+{
+ "SH688205": {
+  "name": "德科立",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 5
+ },
+ "SH603186": {
+  "name": "华正新材",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 6
+ },
+ "SH688143": {
+  "name": "长盈通",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 5
+ },
+ "SZ301511": {
+  "name": "德福科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SZ002080": {
+  "name": "中材科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 4
+ },
+ "SZ002886": {
+  "name": "沃特股份",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SH688432": {
+  "name": "有研硅",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 6
+ },
+ "SZ300499": {
+  "name": "高澜股份",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH688300": {
+  "name": "联瑞新材",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SZ300757": {
+  "name": "罗博特科",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH600641": {
+  "name": "先导基电",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH688048": {
+  "name": "长光华芯",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "BJ920045": {
+  "name": "蘅东光",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SZ300548": {
+  "name": "长芯博创",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SZ301591": {
+  "name": "肯特股份",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH601869": {
+  "name": "长飞光纤",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 6
+ },
+ "SH601208": {
+  "name": "东材科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH603228": {
+  "name": "景旺电子",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH688498": {
+  "name": "源杰科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SZ300408": {
+  "name": "三环集团",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "临界突破"
+  ],
+  "ndim": 5
+ },
+ "SH600487": {
+  "name": "亨通光电",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 6
+ },
+ "SZ300684": {
+  "name": "中石科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SH688183": {
+  "name": "生益电子",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SZ300489": {
+  "name": "光智科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH600183": {
+  "name": "生益科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 5
+ },
+ "SH600176": {
+  "name": "中国巨石",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ301128": {
+  "name": "强瑞技术",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SH688256": {
+  "name": "寒武纪",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ000636": {
+  "name": "风华高科",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "临界突破"
+  ],
+  "ndim": 5
+ },
+ "SZ002837": {
+  "name": "英维克",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH600522": {
+  "name": "中天科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ300857": {
+  "name": "协创数据",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH603893": {
+  "name": "瑞芯微",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SH600330": {
+  "name": "天通股份",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 5
+ },
+ "SZ300395": {
+  "name": "菲利华",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SZ002008": {
+  "name": "大族激光",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ300394": {
+  "name": "天孚通信",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SH688195": {
+  "name": "腾景科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH688313": {
+  "name": "仕佳光子",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SH603256": {
+  "name": "宏和科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ300502": {
+  "name": "新易盛",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SH688361": {
+  "name": "中科飞测",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SZ002536": {
+  "name": "飞龙股份",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SZ300570": {
+  "name": "太辰光",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SZ301536": {
+  "name": "星宸科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH688167": {
+  "name": "炬光科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH688008": {
+  "name": "澜起科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH688025": {
+  "name": "杰普特",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SZ002463": {
+  "name": "沪电股份",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "临界突破"
+  ],
+  "ndim": 5
+ },
+ "SH688800": {
+  "name": "瑞可达",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SZ300308": {
+  "name": "中际旭创",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH600378": {
+  "name": "昊华科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH603738": {
+  "name": "泰晶科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH688668": {
+  "name": "鼎通科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "临界突破"
+  ],
+  "ndim": 5
+ },
+ "SZ301205": {
+  "name": "联特科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH688627": {
+  "name": "精智达",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH601138": {
+  "name": "工业富联",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SZ300285": {
+  "name": "国瓷材料",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH603163": {
+  "name": "圣晖集成",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ300088": {
+  "name": "长信科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ002851": {
+  "name": "麦格米特",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ301526": {
+  "name": "国际复材",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ001309": {
+  "name": "德明利",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ002938": {
+  "name": "鹏鼎控股",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH601133": {
+  "name": "XD柏诚股",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ301377": {
+  "name": "鼎泰高科",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ002050": {
+  "name": "三花智控",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ300476": {
+  "name": "胜宏科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ002384": {
+  "name": "东山精密",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ301217": {
+  "name": "铜冠铜箔",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH688126": {
+  "name": "沪硅产业",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH688630": {
+  "name": "芯碁微装",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "临界突破"
+  ],
+  "ndim": 5
+ },
+ "SZ002975": {
+  "name": "博杰股份",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SZ300620": {
+  "name": "光库科技",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SZ301200": {
+  "name": "大族数控",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ002428": {
+  "name": "云南锗业",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH603929": {
+  "name": "亚翔集成",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH688549": {
+  "name": "中巨芯",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ002415": {
+  "name": "海康威视",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": false,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": false,
+   "above_m20": false,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "趋势走坏"
+  ],
+  "ndim": 2
+ },
+ "SH688146": {
+  "name": "中船特气",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH688783": {
+  "name": "西安奕材",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ000657": {
+  "name": "中钨高新",
+  "block": "AI硬件",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SZ000504": {
+  "name": "南华生物",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": false,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 4
+ },
+ "SH688222": {
+  "name": "成都先导",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": false,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 4
+ },
+ "SH688293": {
+  "name": "奥浦迈",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 5
+ },
+ "SZ000739": {
+  "name": "普洛药业",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 5
+ },
+ "SZ301080": {
+  "name": "百普赛斯",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 5
+ },
+ "SH688758": {
+  "name": "赛分科技",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 5
+ },
+ "SZ002821": {
+  "name": "凯莱英",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SZ300347": {
+  "name": "泰格医药",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "临界突破"
+  ],
+  "ndim": 5
+ },
+ "SZ300363": {
+  "name": "博腾股份",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH688202": {
+  "name": "美迪西",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH688690": {
+  "name": "纳微科技",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH688621": {
+  "name": "阳光诺和",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 5
+ },
+ "SZ301230": {
+  "name": "泓博医药",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": false,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "短线过热"
+  ],
+  "ndim": 4
+ },
+ "SH688131": {
+  "name": "XD皓元医",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SH688428": {
+  "name": "诺诚健华",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SH688796": {
+  "name": "百奥赛图",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SH688046": {
+  "name": "药康生物",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SH688073": {
+  "name": "毕得医药",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SH603259": {
+  "name": "药明康德",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SH688331": {
+  "name": "荣昌生物",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "临界突破",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH688710": {
+  "name": "益诺思",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SZ301047": {
+  "name": "义翘神州",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SZ002653": {
+  "name": "海思科",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SZ300725": {
+  "name": "药石科技",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SZ300298": {
+  "name": "三诺生物",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续",
+   "临界突破"
+  ],
+  "ndim": 6
+ },
+ "SZ300633": {
+  "name": "开立医疗",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH603127": {
+  "name": "昭衍新药",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 5
+ },
+ "SH688161": {
+  "name": "威高骨科",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SZ300759": {
+  "name": "康龙化成",
+  "block": "关注个股",
+  "cond": {
+   "d_up": true,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "趋势延续"
+  ],
+  "ndim": 6
+ },
+ "SH601101": {
+  "name": "昊华能源",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH601088": {
+  "name": "中国神华",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH600546": {
+  "name": "山煤国际",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SZ300760": {
+  "name": "迈瑞医疗",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": false,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 3
+ },
+ "SH688271": {
+  "name": "联影医疗",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": false,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "趋势走坏"
+  ],
+  "ndim": 3
+ },
+ "SH601225": {
+  "name": "陕西煤业",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH688235": {
+  "name": "百济神州",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": true,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH601898": {
+  "name": "中煤能源",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": false,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 3
+ },
+ "SH688016": {
+  "name": "心脉医疗",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": true,
+   "mom_strong": true,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "趋势走坏",
+   "低位修复"
+  ],
+  "ndim": 5
+ },
+ "SH688617": {
+  "name": "惠泰医疗",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": false,
+   "above_m20": false,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 3
+ },
+ "SH600188": {
+  "name": "兖矿能源",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": false,
+   "deep_pullback": false
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH601699": {
+  "name": "潞安环能",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": true,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": true,
+   "deep_pullback": true
+  },
+  "tags": [
+   "中性观察"
+  ],
+  "ndim": 4
+ },
+ "SH688578": {
+  "name": "艾力斯",
+  "block": "关注个股",
+  "cond": {
+   "d_up": false,
+   "w_ok": false,
+   "mom_up": false,
+   "mom_strong": false,
+   "pos_ok": true,
+   "rsi_ok": true,
+   "vp_ok": true,
+   "above_m20": false,
+   "near_break": false,
+   "deep_pullback": true
+  },
+  "tags": [
+   "趋势走坏"
+  ],
+  "ndim": 3
+ }
+}

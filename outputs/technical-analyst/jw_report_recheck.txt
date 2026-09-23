@@ -1,0 +1,4 @@
+lines=484 bad_char=0 marker=True anchor=1
+dead_cross_evidence=12  has_table_A=True
+免责声明在末尾: True
+h2 序列: ['## 一、技术指标逐项读数与信号解读', '## 二、周期与关键位', '## 三、量价背离与形态信号', '## 四、结论与风险点', '## 五、方法与口径说明', '## 免责声明']

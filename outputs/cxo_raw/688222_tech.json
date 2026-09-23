@@ -1,0 +1,28 @@
+{
+  "msg": "操作成功",
+  "suc": true,
+  "traceId": "a22b9ea9b54b42148fd9d23f475090a7",
+  "code": "200",
+  "data": {
+    "seParams": {},
+    "requestId": "a22b9ea9b54b42148fd9d23f475090a7",
+    "apiData": {
+      "apiRecall": [],
+      "entity": [
+        {
+          "code": "DEA.N",
+          "name": "EASTERLY GOVERNMENT PROPERTIES, INC."
+        },
+        {
+          "code": "MA.N",
+          "name": "万事达"
+        },
+        {
+          "code": "688222.SH",
+          "name": "成都先导"
+        }
+      ]
+    },
+    "extraParams": {}
+  }
+}

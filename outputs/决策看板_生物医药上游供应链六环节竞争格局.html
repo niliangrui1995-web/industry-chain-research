@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+  data-moss-artifact-mode="interactive-web"
+  data-moss-visual-baseline="technical-signal"
+  data-moss-render-seed="6effcd8e450b461f">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>生物医药上游供应链六环节竞争格局 · 决策看板</title>
+<style>
+:root{
+  --moss-color-primary:#123A5E;
+  --moss-color-secondary:#5A6B7B;
+  --moss-color-accent:#C2452D;
+  --moss-color-surface:#F8FBFC;
+  --moss-color-text:#102A36;
+  --moss-font-display:"Bahnschrift", "Segoe UI", "Microsoft YaHei", sans-serif;
+  --moss-font-body:"Segoe UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --moss-type-ratio:1.180;
+  --moss-space-unit:6px;
+  --moss-radius:3px;
+  --moss-shadow:0 14px 40px rgba(11, 60, 93, 0.14);
+  --moss-motion-duration:360ms;
+  --moss-motion-easing:cubic-bezier(0.2, 0.8, 0.2, 1);
+  --moss-tone:analytical;
+  --moss-density:dense;
+
+  --ink:#102A36;
+  --ink-soft:#4A5C68;
+  --ink-faint:#7C8B96;
+  --line:#DCE6EC;
+  --line-strong:#C3D2DC;
+  --bg:#F8FBFC;
+  --panel:#FFFFFF;
+  --wash:#EEF5F9;
+  --up:#C2452D;
+  --neutral:#5A6B7B;
+  --cool:#2F6E8F;
+  --flag:#8A6D1F;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--moss-font-body);
+  font-size:14px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px 96px;}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  background:rgba(248,251,252,.92);
+  backdrop-filter:saturate(1.2) blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-in{max-width:1280px;margin:0 auto;padding:10px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.brandmark{font-family:var(--moss-font-display);font-weight:700;letter-spacing:.02em;color:var(--moss-color-primary);font-size:15px;white-space:nowrap;}
+.brandmark span{color:var(--moss-color-accent);}
+.navlinks{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto;}
+.navlinks a{
+  font-size:12.5px;color:var(--ink-soft);text-decoration:none;
+  padding:5px 10px;border-radius:var(--moss-radius);border:1px solid transparent;white-space:nowrap;
+  transition:color var(--moss-motion-duration) var(--moss-motion-easing),
+             border-color var(--moss-motion-duration) var(--moss-motion-easing),
+             background var(--moss-motion-duration) var(--moss-motion-easing);
+}
+.navlinks a:hover,.navlinks a:focus-visible{color:var(--moss-color-primary);border-color:var(--line-strong);background:#fff;outline:none;}
+
+/* ---------- hero ---------- */
+.hero{padding:54px 0 30px;border-bottom:1px solid var(--line);}
+.eyebrow{
+  font-family:var(--moss-font-display);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--moss-color-accent);margin:0 0 14px;
+}
+h1.title{
+  font-family:var(--moss-font-display);font-weight:700;
+  font-size:clamp(30px,4.4vw,50px);line-height:1.14;letter-spacing:-.01em;
+  margin:0 0 16px;color:var(--moss-color-primary);
+}
+.hero-sub{font-size:16px;color:var(--ink-soft);max-width:820px;margin:0 0 26px;}
+.metastrip{display:flex;gap:0;flex-wrap:wrap;border-top:1px solid var(--line);}
+.metastrip div{
+  padding:12px 22px 10px 0;margin-right:22px;border-right:1px solid var(--line);
+}
+.metastrip div:last-child{border-right:none;}
+.metastrip dt{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 3px;}
+.metastrip dd{margin:0;font-size:14px;font-weight:600;color:var(--moss-color-primary);}
+
+/* ---------- verdict bands ---------- */
+.verdicts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:34px 0 8px;}
+.vcard{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--moss-radius);
+  padding:22px 24px;box-shadow:var(--moss-shadow);position:relative;overflow:hidden;
+}
+.vcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--moss-color-accent);}
+.vcard.b::before{background:var(--neutral);}
+.vlabel{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 8px;}
+.vname{font-family:var(--moss-font-display);font-size:26px;font-weight:700;color:var(--moss-color-primary);margin:0 0 12px;line-height:1.2;}
+.vreasons{margin:0;padding-left:18px;}
+.vreasons li{margin-bottom:6px;font-size:13.5px;color:var(--ink-soft);}
+.vconf{margin-top:14px;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--line);padding-top:10px;}
+.vconf b{color:var(--cool);font-weight:600;}
+
+/* ---------- section shell ---------- */
+section{padding-top:52px;}
+.sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--moss-color-primary);padding-bottom:10px;margin-bottom:22px;}
+.sec-num{
+  font-family:var(--moss-font-display);font-size:13px;font-weight:700;color:#fff;
+  background:var(--moss-color-primary);padding:2px 9px;border-radius:2px;letter-spacing:.06em;
+}
+h2{font-family:var(--moss-font-display);font-size:23px;font-weight:700;margin:0;color:var(--moss-color-primary);letter-spacing:-.005em;}
+.sec-note{font-size:12.5px;color:var(--ink-faint);margin-left:auto;text-align:right;max-width:420px;}
+h3{font-family:var(--moss-font-display);font-size:17px;font-weight:700;margin:26px 0 10px;color:var(--moss-color-primary);}
+h4{font-size:14px;font-weight:700;margin:16px 0 6px;color:var(--ink);}
+p{margin:0 0 12px;}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--moss-radius);padding:20px 22px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+
+/* ---------- question tree ---------- */
+.qtree{list-style:none;margin:0;padding:0;counter-reset:q;}
+.qtree li{
+  counter-increment:q;position:relative;padding:9px 0 9px 44px;border-bottom:1px dashed var(--line);font-size:14px;
+}
+.qtree li:last-child{border-bottom:none;}
+.qtree li::before{
+  content:"Q" counter(q);position:absolute;left:0;top:9px;
+  font-family:var(--moss-font-display);font-size:11px;font-weight:700;color:var(--moss-color-primary);
+  border:1px solid var(--line-strong);padding:1px 6px;border-radius:2px;background:var(--wash);
+}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);background:var(--panel);}
+.stat{padding:16px 18px;border-right:1px solid var(--line);}
+.stat:last-child{border-right:none;}
+.stat b{display:block;font-family:var(--moss-font-display);font-size:27px;color:var(--moss-color-primary);line-height:1.1;}
+.stat span{font-size:12px;color:var(--ink-faint);}
+
+/* ---------- dashboard cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.segcard{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--moss-radius);
+  padding:18px;display:flex;flex-direction:column;gap:12px;
+  transition:box-shadow var(--moss-motion-duration) var(--moss-motion-easing),
+             transform var(--moss-motion-duration) var(--moss-motion-easing),
+             border-color var(--moss-motion-duration) var(--moss-motion-easing);
+}
+.segcard:hover,.segcard:focus-within{box-shadow:var(--moss-shadow);transform:translateY(-2px);border-color:var(--line-strong);}
+.segcard.top{border-top:3px solid var(--moss-color-accent);}
+.segcard.hot{border-top:3px solid var(--neutral);}
+.segname{font-family:var(--moss-font-display);font-size:17px;font-weight:700;color:var(--moss-color-primary);margin:0;}
+.segbadges{display:flex;gap:6px;flex-wrap:wrap;}
+.badge{font-size:11px;padding:2px 8px;border-radius:2px;border:1px solid var(--line-strong);color:var(--ink-soft);background:var(--wash);}
+.badge.hi{background:#FBEEEC;border-color:#E8C9C1;color:var(--up);font-weight:700;}
+.badge.mid{background:#EDF4F8;border-color:#C9DCE6;color:var(--cool);}
+.dims{display:grid;grid-template-columns:auto 1fr auto;gap:4px 8px;align-items:center;font-size:12px;}
+.dims .k{color:var(--ink-faint);white-space:nowrap;}
+.dims .v{color:var(--ink);}
+.bar{height:6px;background:var(--wash);border-radius:2px;overflow:hidden;min-width:56px;}
+.bar i{display:block;height:100%;background:var(--cool);}
+.bar i.a{background:var(--moss-color-accent);}
+.bar i.n{background:var(--neutral);}
+.segnote{font-size:12.5px;color:var(--ink-soft);border-top:1px dashed var(--line);padding-top:9px;margin:0;}
+
+/* ---------- ranked list ---------- */
+.rank{list-style:none;margin:0;padding:0;}
+.rank li{
+  display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start;
+  padding:14px 0;border-bottom:1px solid var(--line);
+}
+.rank li:last-child{border-bottom:none;}
+.rk{
+  font-family:var(--moss-font-display);font-size:20px;font-weight:700;color:#fff;
+  background:var(--neutral);text-align:center;line-height:34px;border-radius:2px;
+}
+.rank li:first-child .rk{background:var(--moss-color-accent);}
+.rank li:nth-child(2) .rk{background:var(--cool);}
+.rt{font-family:var(--moss-font-display);font-size:16px;font-weight:700;color:var(--moss-color-primary);margin:0 0 4px;}
+.rd{font-size:13px;color:var(--ink-soft);margin:0 0 4px;}
+.rh{font-size:12px;color:var(--ink-faint);}
+.rh b{color:var(--cool);}
+
+/* ---------- quadrant ---------- */
+.quad-wrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--moss-radius);padding:18px;}
+.quad-wrap svg{display:block;width:100%;height:auto;}
+.qlegend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--ink-soft);}
+.qlegend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+.qlegend .l1::before{background:var(--moss-color-accent);}
+.qlegend .l2::before{background:var(--cool);}
+.qlegend .l3::before{background:var(--neutral);}
+.qlegend .l4::before{background:var(--flag);}
+
+/* ---------- tables ---------- */
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--moss-radius);background:var(--panel);}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:12.8px;}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;}
+thead th{background:var(--moss-color-primary);color:#fff;font-weight:600;font-size:12px;letter-spacing:.02em;white-space:nowrap;}
+tbody tr:nth-child(even){background:#FAFCFD;}
+tbody tr:hover{background:var(--wash);}
+td.seg{font-family:var(--moss-font-display);font-weight:700;color:var(--moss-color-primary);white-space:nowrap;}
+.tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:2px;background:var(--wash);border:1px solid var(--line-strong);color:var(--ink-soft);}
+.tag.hot{background:#FBEEEC;border-color:#E8C9C1;color:var(--up);font-weight:700;}
+.tag.cool{background:#EDF4F8;border-color:#C9DCE6;color:var(--cool);}
+.na{color:var(--ink-faint);font-style:normal;}
+
+/* ---------- segment deep blocks ---------- */
+.segblock{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--moss-radius);
+  margin-bottom:20px;overflow:hidden;
+}
+.seghead{
+  display:flex;align-items:center;gap:12px;padding:14px 20px;
+  background:var(--wash);border-bottom:1px solid var(--line);
+}
+.seghead .idx{font-family:var(--moss-font-display);font-size:12px;font-weight:700;color:#fff;background:var(--moss-color-primary);padding:2px 8px;border-radius:2px;}
+.seghead h3{margin:0;font-size:18px;}
+.seghead .pill{margin-left:auto;font-size:11.5px;padding:3px 10px;border-radius:2px;border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);}
+.segbody{padding:6px 20px 20px;}
+.mini{width:100%;min-width:0;font-size:12.8px;margin:8px 0 14px;border:none;}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;}
+.mini th{background:#E7EFF4;color:var(--moss-color-primary);font-weight:600;width:132px;white-space:nowrap;}
+.mini tr:nth-child(even){background:#FAFCFD;}
+.mini tr:hover{background:#fff;}
+.plist{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 0;}
+.plist span{font-size:11.5px;padding:2px 8px;border-radius:2px;background:#fff;border:1px solid var(--line-strong);color:var(--ink);}
+.plist span.o{background:#F3F6F8;color:var(--ink-soft);}
+.b4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 4px;}
+.b4 div{background:var(--wash);border:1px solid var(--line);border-radius:2px;padding:10px 12px;}
+.b4 b{display:block;font-size:11.5px;color:var(--moss-color-primary);margin-bottom:4px;letter-spacing:.04em;}
+.b4 p{margin:0;font-size:12.3px;color:var(--ink-soft);line-height:1.5;}
+ul.tight{margin:6px 0 4px;padding-left:18px;}
+ul.tight li{margin-bottom:5px;font-size:13px;color:var(--ink-soft);}
+
+/* ---------- downstream ---------- */
+.dd{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.ddcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--moss-radius);padding:18px;}
+.ddcard h4{margin-top:0;font-family:var(--moss-font-display);font-size:18px;color:var(--moss-color-primary);}
+.ddorder{list-style:none;margin:0 0 12px;padding:0;}
+.ddorder li{font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line);color:var(--ink-soft);}
+.ddorder li:last-child{border-bottom:none;}
+.ddorder li b{color:var(--ink);}
+.ddorder li:nth-child(1) b{color:var(--moss-color-accent);}
+.ddtext{font-size:12.8px;color:var(--ink-soft);margin:0;}
+
+/* ---------- actions ---------- */
+.act{border-left:3px solid var(--cool);background:var(--panel);border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 18px;margin-bottom:12px;border-radius:0 var(--moss-radius) var(--moss-radius) 0;}
+.act h4{margin:0 0 6px;font-size:14.5px;color:var(--moss-color-primary);}
+.act p{margin:0 0 6px;font-size:12.8px;color:var(--ink-soft);}
+.act p b{color:var(--ink);}
+.act .stop{color:var(--up);}
+
+/* ---------- conflict / gap ---------- */
+.cf{border:1px solid var(--line);border-radius:var(--moss-radius);background:var(--panel);padding:14px 18px;margin-bottom:12px;}
+.cf h4{margin:0 0 6px;font-size:14px;color:var(--moss-color-primary);}
+.cf ul{margin:0;padding-left:18px;}
+.cf li{font-size:12.8px;color:var(--ink-soft);margin-bottom:4px;}
+.cf .handle{font-size:12.3px;color:var(--cool);margin-top:7px;padding-top:7px;border-top:1px dashed var(--line);}
+
+/* ---------- evidence ---------- */
+.evtool{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;}
+.evtool input{
+  font-family:var(--moss-font-body);font-size:13px;padding:7px 11px;border:1px solid var(--line-strong);
+  border-radius:2px;background:#fff;color:var(--ink);min-width:260px;
+}
+.evtool input:focus{outline:2px solid var(--cool);outline-offset:1px;}
+.evtool .count{font-size:12.5px;color:var(--ink-faint);}
+.evid{font-family:var(--moss-font-display);font-weight:700;color:var(--moss-color-primary);white-space:nowrap;}
+.lvl{font-size:11px;padding:1px 7px;border-radius:2px;border:1px solid var(--line-strong);background:var(--wash);color:var(--ink-soft);white-space:nowrap;}
+.lvl.p{background:#EDF4F8;border-color:#C9DCE6;color:var(--cool);font-weight:700;}
+.lvl.n{background:#FCF6EF;border-color:#E8DCC4;color:var(--flag);}
+
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-faint);}
+footer b{color:var(--ink-soft);}
+
+@media (max-width:1080px){
+  .cards,.dd,.grid3{grid-template-columns:1fr 1fr;}
+  .b4{grid-template-columns:1fr 1fr;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .stat{border-bottom:1px solid var(--line);}
+}
+@media (max-width:760px){
+  .wrap{padding:0 16px 64px;}
+  .topbar-in{padding:8px 16px;}
+  .verdicts,.grid2,.cards,.dd,.grid3{grid-template-columns:1fr;}
+  .b4{grid-template-columns:1fr;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .sec-note{margin-left:0;text-align:left;max-width:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{transition:none !important;animation:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brandmark">产业链投研 <span>·</span> 上游供应链</div>
+    <nav class="navlinks" aria-label="章节导航">
+      <a href="#sec-converge">研究收束</a>
+      <a href="#sec-dashboard">战场仪表盘</a>
+      <a href="#sec-value">钱在哪里</a>
+      <a href="#sec-battle">仗怎么打</a>
+      <a href="#sec-segments">六环节深析</a>
+      <a href="#sec-table">横向对比</a>
+      <a href="#sec-downstream">下游传导</a>
+      <a href="#sec-actions">现在做什么</a>
+      <a href="#sec-evidence">证据链</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">生物医药上游供应链 · 竞争格局决策看板</p>
+    <h1 class="title">六环节竞争格局：<br>谁还有替代空间，谁已经在贴身肉搏</h1>
+    <p class="hero-sub">覆盖重组蛋白/抗体/试剂、分子砌块、实验动物与疾病模型、细胞与微生物培养基、层析填料、制药装备六个环节，逐环节拆解规模、集中度、参与者、国产化率、四维壁垒、定价毛利与 3–5 年趋势，并给出国产替代空间与竞争烈度的横向排序。</p>
+    <dl class="metastrip">
+      <div><dt>研究时点</dt><dd>2026-09-22</dd></div>
+      <div><dt>财务基准</dt><dd>2026H1（2026-06-30）</dd></div>
+      <div><dt>地域口径</dt><dd>中国市场为主 + 全球对标</dd></div>
+      <div><dt>证据条数</dt><dd>42 条（一手 1 / 非一手 41）</dd></div>
+      <div><dt>口径冲突</dt><dd>7 组，并列不平均</dd></div>
+    </dl>
+
+    <div class="verdicts">
+      <div class="vcard">
+        <p class="vlabel">当前国产替代空间最大</p>
+        <p class="vname">层析填料（层析介质 / 色谱介质）</p>
+        <ul class="vreasons">
+          <li>外资绝对份额最高：Cytiva 单家中国市占约 50%（另一口径约 80%），国际厂商合计占中国超 50%</li>
+          <li>国产化率最低：纳微国内市占约 15%–25%，赛分工业纯化市占约 1.02%</li>
+          <li>毛利最高：赛分 2026H1 综合毛利率 75.32%，分析色谱 75% 以上</li>
+          <li>切换成本极高：验证周期 1–3 年，进入 III 期/商业化即锁定，分析色谱复购率 &gt;90%</li>
+          <li>需求三浪叠加：单抗纯化占生产成本 65% 以上，填料占药物生产成本 30% 以上</li>
+        </ul>
+        <p class="vconf"><b>置信度：高</b>　由份额、毛利、切换成本三条相互独立的证据共同支持　证据 E-011 / E-013 / E-014 / E-015 / E-017</p>
+      </div>
+      <div class="vcard b">
+        <p class="vlabel">竞争最激烈</p>
+        <p class="vname">制药装备</p>
+        <ul class="vreasons">
+          <li>集中度最低：2020 年 CR5 仅 14.7%，东富龙 4.1%、楚天 3.8%；另一口径东富龙 13.7%、楚天 10.2%</li>
+          <li>产品结构低附加值：药用包装机械占 55.7%，制剂机械仅 5.8%</li>
+          <li>行业增速降至个位数：2025 年中国市场约 784 亿元，同比 +5.5%</li>
+          <li>高端国产化率不足 30%，国产厂商在中低端同质化厮杀</li>
+          <li>下游资本开支波动 + 集采压缩利润 + 应收账款风险，毛利率下行压力最直接</li>
+        </ul>
+        <p class="vconf"><b>置信度：中高</b>　次激烈为分子砌块（同质化价格战）　证据 E-006 / E-007 / E-008 / E-009 / E-026 / E-030</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1 研究收束区 -->
+  <section id="sec-converge">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>研究收束区</h2>
+      <p class="sec-note">问题树 · 证据覆盖 · 冲突与缺口。本节定义本报告回答什么、不回答什么。</p>
+    </div>
+
+    <div class="grid2">
+      <div class="panel">
+        <h4>本研究将要验证的关键问题</h4>
+        <ol class="qtree">
+          <li>六个环节当前各自的规模、增速与集中度如何？</li>
+          <li>谁在赚钱：海外龙头与国产厂商各自的份额、定价与毛利？</li>
+          <li>国产替代走到哪一步：国产化率、替代进展、剩余空间？</li>
+          <li>壁垒由什么构成：技术工艺 / 客户认证与切换成本 / 规模化与成本 / 渠道与服务响应？</li>
+          <li>未来 3–5 年格局往哪走：国产替代、价格战、出海、技术迭代？</li>
+          <li>下游 ADC / GLP-1 / CGT 三浪如何差异化传导到六个环节？</li>
+          <li>国产替代空间最大的是哪个环节？竞争最激烈的是哪个环节？</li>
+        </ol>
+      </div>
+      <div class="panel">
+        <h4>证据覆盖</h4>
+        <div class="stats" style="margin-bottom:14px;">
+          <div class="stat"><b>42</b><span>证据总条数</span></div>
+          <div class="stat"><b>1</b><span>一手官方（E-038）</span></div>
+          <div class="stat"><b>41</b><span>非一手，需核实原文</span></div>
+          <div class="stat"><b>7</b><span>口径冲突组</span></div>
+        </div>
+        <h4>关键限制</h4>
+        <ul class="tight">
+          <li>除 E-038（国家药监局 CGT 审评征求意见稿）为一手官方政策外，其余均为券商研报、研究机构、行业媒体或自媒体转引。</li>
+          <li>六环节市场规模普遍存在 2–10 倍口径冲突，一律并列标注，不做平均、不做加权。</li>
+          <li>环节排序主要依据份额结构、壁垒强度与毛利水平，不依赖绝对值口径。</li>
+          <li>CR3/CR5 仅制药装备（2020）与重组蛋白科研试剂国产前三（2024）有可比数据，其余标 N/A。</li>
+          <li>本报告为环节级竞争格局判断，不构成个股推荐或投资建议。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 战场仪表盘 -->
+  <section id="sec-dashboard">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>战场仪表盘</h2>
+      <p class="sec-note">评级为本报告基于当期公开证据的综合判断，非厂商官方分级；口径冲突已在证据链并列标注。</p>
+    </div>
+
+    <div class="cards">
+      <article class="segcard top">
+        <p class="segname">层析填料</p>
+        <div class="segbadges"><span class="badge hi">替代空间 第 1</span><span class="badge">竞争烈度 中</span></div>
+        <div class="dims">
+          <span class="k">替代空间</span><span class="bar"><i class="a" style="width:100%"></i></span><span class="v">最大</span>
+          <span class="k">竞争壁垒</span><span class="bar"><i style="width:92%"></i></span><span class="v">高</span>
+          <span class="k">毛利水平</span><span class="bar"><i class="a" style="width:95%"></i></span><span class="v">75.32%</span>
+          <span class="k">行业增速</span><span class="bar"><i style="width:88%"></i></span><span class="v">+21.56%</span>
+        </div>
+        <p class="segnote">替代空间与壁垒双高，是当前最优赛道。Cytiva 已用本土品牌「瑞予」下探普惠市场，价格战与替代窗口并行。</p>
+      </article>
+
+      <article class="segcard hot">
+        <p class="segname">制药装备</p>
+        <div class="segbadges"><span class="badge">替代空间 第 2</span><span class="badge hi">竞争烈度 第 1</span></div>
+        <div class="dims">
+          <span class="k">替代空间</span><span class="bar"><i style="width:78%"></i></span><span class="v">大但分散</span>
+          <span class="k">竞争壁垒</span><span class="bar"><i class="n" style="width:40%"></i></span><span class="v">中低</span>
+          <span class="k">毛利水平</span><span class="bar"><i class="n" style="width:38%"></i></span><span class="v">31%</span>
+          <span class="k">行业增速</span><span class="bar"><i class="n" style="width:24%"></i></span><span class="v">+5.5%</span>
+        </div>
+        <p class="segnote">低集中度 + 低增速 + 低端产能过剩 = 红海。仅生物工艺装备与出海是结构性亮点。</p>
+      </article>
+
+      <article class="segcard">
+        <p class="segname">细胞培养基</p>
+        <div class="segbadges"><span class="badge">替代空间 第 3</span><span class="badge">竞争烈度 中</span></div>
+        <div class="dims">
+          <span class="k">替代空间</span><span class="bar"><i style="width:70%"></i></span><span class="v">大</span>
+          <span class="k">竞争壁垒</span><span class="bar"><i style="width:88%"></i></span><span class="v">高</span>
+          <span class="k">毛利水平</span><span class="bar"><i class="n" style="width:30%"></i></span><span class="v">净利率 ~11.7%</span>
+          <span class="k">行业增速</span><span class="bar"><i style="width:62%"></i></span><span class="v">+14.2%</span>
+        </div>
+        <p class="segnote">国产化率已达 40.2%，剩余空间集中在高端 CHO 与 CGT 培养基；关键组分仍「二次卡脖子」。</p>
+      </article>
+
+      <article class="segcard">
+        <p class="segname">重组蛋白 / 抗体 / 试剂</p>
+        <div class="segbadges"><span class="badge">替代空间 第 4</span><span class="badge">竞争烈度 中</span></div>
+        <div class="dims">
+          <span class="k">替代空间</span><span class="bar"><i style="width:55%"></i></span><span class="v">中</span>
+          <span class="k">竞争壁垒</span><span class="bar"><i style="width:70%"></i></span><span class="v">中高</span>
+          <span class="k">毛利水平</span><span class="bar"><i class="a" style="width:100%"></i></span><span class="v">91.16%</span>
+          <span class="k">行业增速</span><span class="bar"><i style="width:58%"></i></span><span class="v">CAGR ~17.8%</span>
+        </div>
+        <p class="segnote">毛利最高的环节（百普赛斯 2025 综合毛利率 91.16%）。科研端国产约三成，增量在 GMP 级与 CGT 原料。</p>
+      </article>
+
+      <article class="segcard">
+        <p class="segname">分子砌块</p>
+        <div class="segbadges"><span class="badge">替代空间 第 5</span><span class="badge mid">竞争烈度 第 2</span></div>
+        <div class="dims">
+          <span class="k">替代空间</span><span class="bar"><i style="width:48%"></i></span><span class="v">中</span>
+          <span class="k">竞争壁垒</span><span class="bar"><i class="n" style="width:42%"></i></span><span class="v">中低</span>
+          <span class="k">毛利水平</span><span class="bar"><i class="n" style="width:0%"></i></span><span class="v na">N/A</span>
+          <span class="k">行业增速</span><span class="bar"><i style="width:50%"></i></span><span class="v">中</span>
+        </div>
+        <p class="segnote">国内企业全球市占不足 1%，但常规品类国内国产化率已过半。壁垒在手性 / 氘代 / 独特结构；价格战是主要风险。</p>
+      </article>
+
+      <article class="segcard">
+        <p class="segname">实验动物与疾病模型</p>
+        <div class="segbadges"><span class="badge">替代空间 第 6</span><span class="badge">竞争烈度 中</span></div>
+        <div class="dims">
+          <span class="k">替代空间</span><span class="bar"><i class="n" style="width:18%"></i></span><span class="v">小</span>
+          <span class="k">竞争壁垒</span><span class="bar"><i style="width:58%"></i></span><span class="v">中</span>
+          <span class="k">毛利水平</span><span class="bar"><i style="width:66%"></i></span><span class="v">65%–68.5%</span>
+          <span class="k">行业增速</span><span class="bar"><i style="width:72%"></i></span><span class="v">CAGR 18.1%</span>
+        </div>
+        <p class="segnote">小鼠模型已高度国产化，替代空间最小；真正的稀缺资源是实验猴（2026 年现货 18–20 万元/只）。</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 3 钱在哪里 -->
+  <section id="sec-value">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>钱在哪里：国产替代空间排序</h2>
+      <p class="sec-note">替代空间 = 外资当前份额 × 可替代市场规模 × 国产化推进斜率。本节为定性排序，不做精确加总。</p>
+    </div>
+
+    <div class="panel">
+      <ol class="rank">
+        <li>
+          <span class="rk">1</span>
+          <div>
+            <p class="rt">层析填料</p>
+            <p class="rd">Cytiva 单家约 50% 份额 + 国产合计仍处低位 + 毛利 75%+ + 切换成本锁定</p>
+            <p class="rh">兑现窗口：<b>3–5 年内是国产替代主战场</b></p>
+          </div>
+        </li>
+        <li>
+          <span class="rk">2</span>
+          <div>
+            <p class="rt">制药装备</p>
+            <p class="rd">高端国产化率 &lt;30%，市场体量最大（784–875 亿元）</p>
+            <p class="rh">兑现窗口：<b>高端突破慢、低端已过剩，空间难以转化为利润</b></p>
+          </div>
+        </li>
+        <li>
+          <span class="rk">3</span>
+          <div>
+            <p class="rt">细胞培养基</p>
+            <p class="rd">外资三家占超 60%，国产化率 40.2% 仍在爬坡</p>
+            <p class="rh">兑现窗口：<b>剩余空间集中在高端 CHO 与 CGT 培养基</b></p>
+          </div>
+        </li>
+        <li>
+          <span class="rk">4</span>
+          <div>
+            <p class="rt">重组蛋白 / 抗体 / 试剂</p>
+            <p class="rd">科研试剂国产约三成、诊断原料约四成</p>
+            <p class="rh">兑现窗口：<b>GMP 级与 CGT 原料为增量方向</b></p>
+          </div>
+        </li>
+        <li>
+          <span class="rk">5</span>
+          <div>
+            <p class="rt">分子砌块</p>
+            <p class="rd">国内企业全球市占 &lt;1%，但国内常规品类国产化率已过半</p>
+            <p class="rh">兑现窗口：<b>手性 / 氘代 / PEG Linker 仍有空间</b></p>
+          </div>
+        </li>
+        <li>
+          <span class="rk">6</span>
+          <div>
+            <p class="rt">实验动物与疾病模型</p>
+            <p class="rd">小鼠模型已高度国产化</p>
+            <p class="rh">兑现窗口：<b>稀缺性转向实验猴资源与价格，而非替代份额</b></p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4 仗怎么打 -->
+  <section id="sec-battle">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>仗怎么打：壁垒强度 × 国产化空间</h2>
+      <p class="sec-note">横轴为国产替代空间（小 → 大），纵轴为竞争壁垒强度（低 → 高）。</p>
+    </div>
+
+    <div class="quad-wrap">
+      <svg viewBox="0 0 900 560" role="img" aria-label="壁垒强度与国产化空间四象限图">
+        <rect x="0" y="0" width="900" height="560" fill="#FFFFFF"/>
+        <line x1="90" y1="30" x2="90" y2="470" stroke="#102A36" stroke-width="1.5"/>
+        <line x1="90" y1="470" x2="860" y2="470" stroke="#102A36" stroke-width="1.5"/>
+        <line x1="475" y1="30" x2="475" y2="470" stroke="#C3D2DC" stroke-width="1" stroke-dasharray="5 4"/>
+        <line x1="90" y1="250" x2="860" y2="250" stroke="#C3D2DC" stroke-width="1" stroke-dasharray="5 4"/>
+
+        <rect x="475" y="30" width="385" height="220" fill="#FBEEEC" opacity="0.55"/>
+        <rect x="90" y="30" width="385" height="220" fill="#EDF4F8" opacity="0.55"/>
+        <rect x="475" y="250" width="385" height="220" fill="#F3F6F8" opacity="0.7"/>
+        <rect x="90" y="250" width="385" height="220" fill="#FCF6EF" opacity="0.6"/>
+
+        <text x="667" y="58" text-anchor="middle" font-family="Bahnschrift, Segoe UI, Microsoft YaHei, sans-serif" font-size="15" font-weight="700" fill="#123A5E">战略高地</text>
+        <text x="667" y="78" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11.5" fill="#4A5C68">高壁垒 × 大空间</text>
+        <text x="282" y="58" text-anchor="middle" font-family="Bahnschrift, Segoe UI, Microsoft YaHei, sans-serif" font-size="15" font-weight="700" fill="#123A5E">攻坚区</text>
+        <text x="282" y="78" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11.5" fill="#4A5C68">高壁垒 × 中空间</text>
+        <text x="667" y="278" text-anchor="middle" font-family="Bahnschrift, Segoe UI, Microsoft YaHei, sans-serif" font-size="15" font-weight="700" fill="#123A5E">规模战区</text>
+        <text x="667" y="298" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11.5" fill="#4A5C68">低中壁垒 × 大空间</text>
+        <text x="282" y="278" text-anchor="middle" font-family="Bahnschrift, Segoe UI, Microsoft YaHei, sans-serif" font-size="15" font-weight="700" fill="#123A5E">效率战区</text>
+        <text x="282" y="298" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11.5" fill="#4A5C68">中低壁垒 × 中空间</text>
+
+        <g font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="12" fill="#102A36">
+          <circle cx="690" cy="150" r="30" fill="#C2452D"/>
+          <text x="690" y="148" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="12">层析</text>
+          <text x="690" y="163" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="12">填料</text>
+          <text x="690" y="200" text-anchor="middle" fill="#4A5C68" font-size="11">优先配置</text>
+
+          <circle cx="330" cy="120" r="28" fill="#2F6E8F"/>
+          <text x="330" y="118" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="11.5">细胞</text>
+          <text x="330" y="132" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="11.5">培养基</text>
+          <text x="330" y="170" text-anchor="middle" fill="#4A5C68" font-size="11">看管线绑定数</text>
+
+          <circle cx="196" cy="196" r="26" fill="#2F6E8F"/>
+          <text x="196" y="194" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="11">重组蛋白</text>
+          <text x="196" y="208" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="11">/试剂</text>
+          <text x="196" y="242" text-anchor="middle" fill="#4A5C68" font-size="11">看 GMP 与出海</text>
+
+          <circle cx="690" cy="382" r="30" fill="#5A6B7B"/>
+          <text x="690" y="380" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="12">制药</text>
+          <text x="690" y="395" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="12">装备</text>
+          <text x="690" y="432" text-anchor="middle" fill="#4A5C68" font-size="11">只选高端+出海</text>
+
+          <circle cx="340" cy="368" r="28" fill="#8A6D1F"/>
+          <text x="340" y="366" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="11.5">分子</text>
+          <text x="340" y="380" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="11.5">砌块</text>
+          <text x="340" y="416" text-anchor="middle" fill="#4A5C68" font-size="11">看公斤级转化</text>
+
+          <circle cx="150" cy="430" r="27" fill="#5A6B7B"/>
+          <text x="150" y="428" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="11">实验</text>
+          <text x="150" y="442" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="11">动物</text>
+          <text x="150" y="472" text-anchor="middle" fill="#4A5C68" font-size="10.5">存量+猴资源</text>
+        </g>
+
+        <text x="475" y="500" text-anchor="middle" font-family="Bahnschrift, Segoe UI, sans-serif" font-size="12.5" font-weight="700" fill="#123A5E">国产替代空间（小 → 大）</text>
+        <text x="34" y="250" text-anchor="middle" transform="rotate(-90 34 250)" font-family="Bahnschrift, Segoe UI, sans-serif" font-size="12.5" font-weight="700" fill="#123A5E">壁垒强度（低 → 高）</text>
+      </svg>
+      <div class="qlegend">
+        <span class="l1">战略高地（层析填料）</span>
+        <span class="l2">攻坚区（培养基、重组蛋白/试剂）</span>
+        <span class="l3">规模战区（制药装备）/ 存量区（实验动物）</span>
+        <span class="l4">效率战区（分子砌块）</span>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:18px;">
+      <div class="panel">
+        <h4>战略高地 · 优先配置</h4>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:0;">层析填料：技术 + 量产 + 客户验证三重壁垒已成型，替代红利确定性最高。跟踪国产厂商在临床后期与商业化项目的转化，而非仅看收入增速。</p>
+      </div>
+      <div class="panel">
+        <h4>攻坚区 · 选龙头</h4>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:0;">细胞培养基与重组蛋白/试剂：以中试工艺管线数量、GMP 级收入占比和 CGT 业务增速为核心观察指标，龙头之外的第二梯队难以形成规模优势。</p>
+      </div>
+      <div class="panel">
+        <h4>规模战区 · 回避低端</h4>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:0;">制药装备：只选高端突破与出海兑现的标的，回避以包装机械为主的低附加值业务。核对外海收入占比与毛利率是否同步改善。</p>
+      </div>
+      <div class="panel">
+        <h4>效率战区 / 存量区 · 看结构</h4>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:0;">分子砌块看公斤级占比与 SKU 转化效率，警惕价格战；实验动物看人源化/定制化溢价与实验猴价格，替代空间已不大。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 六环节逐一深度分析 -->
+  <section id="sec-segments">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2>六环节逐一深度分析</h2>
+      <p class="sec-note">每环节固定八项：市场规模口径 / 集中度 / 参与者 / 国产化率与进展 / 四维壁垒 / 定价与毛利 / 代表公司财务 / 3–5 年趋势。</p>
+    </div>
+
+    <!-- S5 层析填料 -->
+    <article class="segblock" id="seg-filler">
+      <div class="seghead">
+        <span class="idx">环节 01</span>
+        <h3>层析填料（层析介质 / 色谱介质）</h3>
+        <span class="pill">替代空间 第 1 · 竞争烈度 中</span>
+      </div>
+      <div class="segbody">
+        <h4>市场规模与增速（四套口径并存，并列不平均）</h4>
+        <table class="mini">
+          <tr><th>华创证券（前瞻转引）</th><td>中国 2025 年 167 亿元 → 2026E 203 亿元（+21.56%）；生物药色谱介质 2025 年 108 亿元 → 2026E 132 亿元（+22.22%）　<span class="tag">E-011</span></td></tr>
+          <tr><th>智研咨询</th><td>中国 2024 年 128.86 亿元，2025E 145.97 亿元；2025E 需求 224.42 万升　<span class="tag">E-012</span></td></tr>
+          <tr><th>远瞻慧库</th><td>中国 2023 年 112 亿元 → 2026 年 203 亿元，CAGR 21.92%　<span class="tag">E-014</span></td></tr>
+          <tr><th>纳微口径（同花顺转引）</th><td>中国 2025 年约 55 亿元（2023–2025E CAGR 20%）；全球 2025 年约 50 亿美元，2023–2025E CAGR 16%　<span class="tag">E-013</span></td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--up);"><b>口径提示：</b>四套口径量级相差约 3 倍，不可平均。替代空间的结论基于份额结构与壁垒，不依赖绝对值。</p>
+
+        <h4>市场集中度</h4>
+        <table class="mini">
+          <tr><th>CR3 / CR5</th><td><span class="na">N/A</span>（无可靠同口径全市场 CR3/CR5 数据）</td></tr>
+          <tr><th>外资份额</th><td>Cytiva 中国市占约 50%（证券日报，2026-03）／约 80%（远瞻慧库，2025-05）；全球约 35%。国际主流厂商合计占中国超 50%　<span class="tag">E-014</span> <span class="tag">E-015</span></td></tr>
+          <tr><th>国产份额</th><td>纳微国内市占约 25%（同花顺）／24%（雪球）／27%（萝卜投研）／15%–20%（另一口径）；全球约 2%，居第七。赛分 2023 年国内分析色谱 5.16%、工业纯化 1.02%。国内能稳定量产高端产品者仅 3 家　<span class="tag">E-013</span> <span class="tag">E-014</span> <span class="tag">E-017</span> <span class="tag">E-018</span></td></tr>
+        </table>
+
+        <h4>主要参与者</h4>
+        <p style="margin-bottom:2px;font-size:12.5px;color:var(--ink-faint);">海外龙头</p>
+        <div class="plist"><span class="o">Cytiva（Danaher）</span><span class="o">Merck KGaA</span><span class="o">Thermo Fisher</span><span class="o">Tosoh</span><span class="o">Bio-Rad</span><span class="o">Purolite</span></div>
+        <p style="margin:8px 0 2px;font-size:12.5px;color:var(--ink-faint);">国内厂商</p>
+        <div class="plist"><span>纳微科技（688690）</span><span>赛分科技（688758）</span><span>蓝晓科技（300487）</span><span>博格隆</span><span>汉邦科技</span></div>
+
+        <h4>国产化率与进口替代进展</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">国产化率仍处低位。纳微 2025 年色谱填料与层析介质收入 5.52 亿元（+23%），常熟 50 万升已投产、南通 50 万升 2026 年底建成（2027 年全面投产），总产能将超 100 万升；赛分 2025 年工业纯化 + 分析色谱合计 3.99 亿元，工业纯化收入 +44.99%，扬州二期投产后总产能超 22 万升/年 + 美国特拉华 5 万升；MabPurix 为中国首款通过 FDA DMF 备案的国产亲和填料，8 个主要产品系列全部完成备案；截至 2026 年 6 月工业纯化项目累计 1281 个（临床后期及商业化 125 个）。　<span class="tag">E-011</span> <span class="tag">E-015</span> <span class="tag">E-016</span> <span class="tag">E-017</span></p>
+
+        <h4>核心竞争壁垒（四维）</h4>
+        <div class="b4">
+          <div><b>技术工艺</b><p>微球粒径精准控制与功能化修饰需 &gt;20 年积累，小试到量产存在巨大工艺鸿沟。纳微粒径 CV&lt;5%，优于国际品牌 10%。</p></div>
+          <div><b>客户认证与切换成本</b><p>供应商验证周期 1–3 年，需完成工艺验证与药品申报审批；进入 III 期/商业化后几乎不换，分析色谱复购率 &gt;90%。</p></div>
+          <div><b>规模化与成本</b><p>规模化量产与批次一致性要求极严苛，国内能稳定量产高端产品者仅 3 家。</p></div>
+          <div><b>渠道与服务响应</b><p>国产交期 2 周 vs 进口 6–12 个月；FDA DMF 备案可支持中美双报。</p></div>
+        </div>
+
+        <h4>定价与毛利</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">赛分科技 2026H1 综合毛利率 75.32%，分析色谱毛利率 75% 以上。国产价格较进口低 20%–40%（纳微口径）／为进口的 1/3–1/2（赛分口径）／进口高出国产约 30%（另一口径），三种口径并列。填料占药物生产成本 30% 以上，单抗下游纯化占生产成本 65% 以上。　<span class="tag">E-011</span> <span class="tag">E-013</span> <span class="tag">E-017</span></p>
+
+        <h4>代表公司财务</h4>
+        <table class="mini">
+          <tr><th>纳微科技</th><td>2025 年色谱填料与层析介质收入 5.52 亿元（+23%）；多肽填料收入约 1.47 亿元（+63%）；中小分子项目合计 2.70 亿元（+50%）；胰岛素/多肽细分市占 &gt;40%，ADC 层析介质约 15%　<span class="tag">E-011</span> <span class="tag">E-016</span></td></tr>
+          <tr><th>赛分科技</th><td>2026H1 综合毛利率 75.32%；百万级以上客户贡献工业纯化收入 92.04%，III 期及商业化阶段收入占工业纯化 66.93%；全球客户超 5000 家　<span class="tag">E-017</span></td></tr>
+          <tr><th>蓝晓科技</th><td>2025 年生命科学板块吸附材料销售收入 6.36 亿元　<span class="tag">E-011</span></td></tr>
+        </table>
+
+        <h4>未来 3–5 年竞争趋势</h4>
+        <ul class="tight">
+          <li>Cytiva 以本土品牌「瑞予」下探普惠市场（2026-03），价格竞争向下延伸，国产替代窗口与价格战并行。</li>
+          <li>纳微 + 赛分双龙头格局已定，产能集中释放（纳微 2027 年总产能 &gt;100 万升）。</li>
+          <li>GLP-1 多肽纯化是最大增量来源；ADC 与 CGT 提供第二、第三增长曲线。</li>
+          <li>集采与供应链安全持续强化国产替代动机。</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- S6 制药装备 -->
+    <article class="segblock" id="seg-equipment">
+      <div class="seghead">
+        <span class="idx">环节 02</span>
+        <h3>制药装备</h3>
+        <span class="pill">替代空间 第 2 · 竞争烈度 第 1</span>
+      </div>
+      <div class="segbody">
+        <h4>市场规模与增速</h4>
+        <table class="mini">
+          <tr><th>灼识咨询</th><td>中国 2015 年 299 亿元 → 2020 年 538 亿元（CAGR 12.47%）→ 2025E 875 亿元（CAGR 10.22%）；全球 2020 年 2385 亿元 → 2025E 3357 亿元　<span class="tag">E-006</span></td></tr>
+          <tr><th>国投证券（2026-08-09）</th><td>2025 年全球 236.7 亿美元；中国约 784 亿元（<b>+5.5%</b>）　<span class="tag">E-007</span></td></tr>
+          <tr><th>新浪财经 / 智研</th><td>中国 2024 年超 800 亿元，2025 年 +8%–10%，有望破 900 亿元　<span class="tag">E-008</span></td></tr>
+        </table>
+
+        <h4>市场集中度（两口径冲突但结论一致）</h4>
+        <table class="mini">
+          <tr><th>灼识咨询口径</th><td>2020 年 CR5 仅 <b>14.7%</b>：东富龙 4.1%、楚天科技 3.8%、SYNTEGON 2.5%、奥星生命科技 2.3%、Cytiva 2.0%　<span class="tag">E-006</span></td></tr>
+          <tr><th>新浪/智研口径</th><td>东富龙 13.7%、楚天科技 10.2%、新华医疗 5.4%、迦南科技 5.1%　<span class="tag">E-008</span></td></tr>
+          <tr><th>口径说明</th><td>两者差异极大，疑为统计范围不同（全制药机械 vs 制药装备）。<b>但两口径一致指向集中度低、龙头份额个位数至低双位数</b>，不改变「竞争最激烈」的判断。</td></tr>
+        </table>
+
+        <h4>主要参与者</h4>
+        <p style="margin-bottom:2px;font-size:12.5px;color:var(--ink-faint);">海外龙头</p>
+        <div class="plist"><span class="o">Sartorius</span><span class="o">Syntegon</span><span class="o">IMA</span><span class="o">B+S</span><span class="o">Glatt</span><span class="o">GEA</span><span class="o">Cytiva</span></div>
+        <p style="margin:8px 0 2px;font-size:12.5px;color:var(--ink-faint);">国内厂商</p>
+        <div class="plist"><span>东富龙（300171）</span><span>楚天科技（300358）</span><span>新华医疗（600587）</span><span>迦南科技（300412）</span><span>奥星生命科技</span><span>泰林生物（300813）</span></div>
+
+        <h4>国产化率与进口替代进展</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">高端设备国产化率不足 30%，生物反应器、层析系统等核心设备仍由外资主导。东富龙冻干机国内市占约 50%，生物工艺板块 2025 年 +29.8%，海外业务 +63.7%（占比 37.8%）；楚天科技并购德国 ROMACO 补齐固体制剂短板。连续制药生产线 2025 年 48.6 亿元（+19.3%），国产设备占比 63.4%，小分子占新增订单 63.2%、生物药占 24.7%。产品结构上，药用包装机械占 55.7%、原料药机械 25.4%、制剂机械仅 5.8%——低附加值产能过剩、高附加值产能不足。　<span class="tag">E-007</span> <span class="tag">E-008</span> <span class="tag">E-009</span> <span class="tag">E-010</span></p>
+
+        <h4>核心竞争壁垒（四维）</h4>
+        <div class="b4">
+          <div><b>技术工艺</b><p>中低。国产集中于中低端；高端无菌、CIP/SIP、自动化与连续制造壁垒高。</p></div>
+          <div><b>客户认证与切换成本</b><p>中。设备为资本开支型采购，验证与 GMP 合规形成一定粘性。</p></div>
+          <div><b>规模化与成本</b><p>中。规模制造与交付能力是国产优势，但未转化为定价权。</p></div>
+          <div><b>渠道与服务响应</b><p>中。快速交付与及时售后是国产相对外资的核心优势。</p></div>
+        </div>
+
+        <h4>定价与毛利</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">东富龙 2026Q1 毛利率回升至 31%（+6.1pct），是结构性改善信号；但行业整体面临竞争加剧导致毛利率下行、应收账款与现金流风险。　<span class="tag">E-007</span></p>
+
+        <h4>代表公司财务</h4>
+        <table class="mini">
+          <tr><th>东富龙</th><td>冻干机国内市占约 50%；生物工艺板块 2025 年 +29.8%，海外业务 2025 年 +63.7%（占比 37.8%）；2026Q1 毛利率 31%（+6.1pct）　<span class="tag">E-007</span></td></tr>
+          <tr><th>楚天科技</th><td>并购德国 ROMACO，形成「液体制剂 + 固体制剂 + 生物药」三板块；2025 年起转向高毛利项目，合同负债持续正增长　<span class="tag">E-007</span></td></tr>
+        </table>
+
+        <h4>未来 3–5 年竞争趋势</h4>
+        <ul class="tight">
+          <li>低端同质化产能出清，龙头市占率缓慢提升。</li>
+          <li>生物工艺装备（单抗、疫苗、CGT、GLP-1 多肽、合成生物）是技术壁垒最高、增速最快的细分。</li>
+          <li>出海成为产能释放主通道（2025 年中国制药设备出口增速 11.8%）。</li>
+          <li>连续制造与「设备 + 工艺 + 数据」一体化方案是差异化方向。</li>
+          <li>主要风险：下游资本开支周期波动、集采压缩利润、GMP 合规升级、应收账款与现金流风险。</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- S4 培养基 -->
+    <article class="segblock" id="seg-media">
+      <div class="seghead">
+        <span class="idx">环节 03</span>
+        <h3>细胞与微生物培养基</h3>
+        <span class="pill">替代空间 第 3 · 竞争烈度 中</span>
+      </div>
+      <div class="segbody">
+        <h4>市场规模与增速（三套口径并存）</h4>
+        <table class="mini">
+          <tr><th>华创证券</th><td>中国 2025 年 38.13 亿元，同比 <b>+14.2%</b>；另有机构统计 46.2 亿元　<span class="tag">E-001</span></td></tr>
+          <tr><th>观研天下 / 沙利文</th><td>中国 2020 年 2.10 亿美元 → 2024 年 3.24 亿美元 → 2029E 6.83 亿美元，CAGR 14.00%（2020–2029E）　<span class="tag">E-002</span></td></tr>
+          <tr><th>Frost &amp; Sullivan</th><td>中国 2021 年 26.3 亿元（2017–2021 CAGR 44.0%）→ 2026E 71 亿元　<span class="tag">E-003</span></td></tr>
+        </table>
+
+        <h4>市场集中度</h4>
+        <table class="mini">
+          <tr><th>CR3 / CR5</th><td><span class="na">N/A</span>（无可靠同口径数据）</td></tr>
+          <tr><th>外资份额</th><td>赛默飞 Gibco + 丹纳赫 Cytiva/HyClone + 默克 MilliporeSigma 三家合计占中国超 60%（2021 口径 62.9%）；全球前五合计约 78.1%　<span class="tag">E-001</span> <span class="tag">E-003</span></td></tr>
+          <tr><th>国产份额</th><td>澳斯康市占超 30%（<b>口径存疑，疑为国产口径</b>）；奥浦迈在中高端蛋白抗体培养基市占 6.3%，国产第一、总排名第四（2021 口径）　<span class="tag">E-003</span> <span class="tag">E-004</span></td></tr>
+        </table>
+
+        <h4>主要参与者</h4>
+        <p style="margin-bottom:2px;font-size:12.5px;color:var(--ink-faint);">海外龙头</p>
+        <div class="plist"><span class="o">Thermo Fisher（Gibco）</span><span class="o">Danaher（Cytiva / HyClone）</span><span class="o">Merck KGaA（MilliporeSigma）</span><span class="o">Sartorius</span></div>
+        <p style="margin:8px 0 2px;font-size:12.5px;color:var(--ink-faint);">国内厂商</p>
+        <div class="plist"><span>奥浦迈（688293）</span><span>澳斯康 / 健顺生物</span><span>倍谙基</span><span>多宁生物</span><span>近岸蛋白</span></div>
+
+        <h4>国产化率与进口替代进展</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">2025 年国产化率 40.2%（2020 年 22.8%）；观研口径 2024 年 37.4%；F&amp;S 口径 2021 年 33.7%（无血清 29.6%）。奥浦迈截至 2025 年末 327 个已确定中试工艺管线使用其培养基（较 2024 年末 +80）；澳斯康单批次 6 吨量产；多宁生物在 BLA/商业化阶段项目数居国产首位；倍谙基疫苗培养基领先。无血清培养基占比 2025 年约 65% → 2026E 72%。<b>关键限制：成品培养基已国产化，但重组蛋白、脂质、部分微量元素等关键组分仍依赖欧美供应商，存在「二次卡脖子」。</b>　<span class="tag">E-001</span> <span class="tag">E-003</span> <span class="tag">E-004</span> <span class="tag">E-005</span></p>
+
+        <h4>核心竞争壁垒（四维）</h4>
+        <div class="b4">
+          <div><b>技术工艺</b><p>高。配方含 70–100 种成分，需工艺优化与补料策略；批间一致性极难，研磨工艺为核心。</p></div>
+          <div><b>客户认证与切换成本</b><p>高。依据《已上市生物制品药学变更研究技术指导原则》，培养基成分变更属重大变更，临床 III 期后几乎不换供应商。</p></div>
+          <div><b>规模化与成本</b><p>中高。干粉/液体产线规模化（澳斯康单批次 6 吨、健顺千吨级）。</p></div>
+          <div><b>渠道与服务响应</b><p>中高。国产现货最快 1 个工作日，定制响应优于进口。</p></div>
+        </div>
+
+        <h4>定价与毛利</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">国产价格约为进口的 50%–70%。奥浦迈 2025 年营收 3.5491 亿元、归母净利 4169.85 万元，净利率约 11.7%——<b>培养基环节国产厂商当前盈利能力显著低于层析填料与重组蛋白环节</b>。　<span class="tag">E-003</span> <span class="tag">E-005</span></p>
+
+        <h4>代表公司财务</h4>
+        <table class="mini">
+          <tr><th>奥浦迈</th><td>2025 年营收 3.5491 亿元（+19.40%），归母净利 4169.85 万元（+98.07%）；培养基收入 3.00 亿元（+23%），其中 CHO 培养基 2.61 亿元（+31.2%）；截至 2025 年末 327 个已确定中试工艺管线　<span class="tag">E-004</span> <span class="tag">E-005</span></td></tr>
+        </table>
+
+        <h4>未来 3–5 年竞争趋势</h4>
+        <ul class="tight">
+          <li>无血清 / 化学成分确定培养基占比持续提升（2026E 达 72%）。</li>
+          <li>CGT 与病毒载体培养基是新增量（奥浦迈 CGT 业务近两年营收增速超 80%）。</li>
+          <li>上游关键组分国产化是下一道关卡。</li>
+          <li>集采与医保谈判持续强化下游药企降本动机，加速本土化供应。</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- S1 重组蛋白 -->
+    <article class="segblock" id="seg-reagent">
+      <div class="seghead">
+        <span class="idx">环节 04</span>
+        <h3>重组蛋白 / 抗体 / 试剂</h3>
+        <span class="pill">替代空间 第 4 · 竞争烈度 中</span>
+      </div>
+      <div class="segbody">
+        <h4>市场规模与增速（口径严重冲突）</h4>
+        <table class="mini">
+          <tr><th>Frost &amp; Sullivan</th><td>全球 2024 年约 30 亿美元 / 中国约 4 亿美元，CAGR 约 17.8%　<span class="tag">E-023</span></td></tr>
+          <tr><th>三个皮匠（转引）</th><td>中国 2026 年约 820 亿元，国产占比 41%　<span class="tag">E-024</span></td></tr>
+          <tr><th>另一口径</th><td>全口径 450 亿元，其中科研级约 40 亿元　<span class="tag">E-024</span></td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--up);"><b>口径提示：</b>三套口径量级相差一个数量级，不可平均。本报告环节排序依据份额结构（国产前三明确）与毛利水平，不依赖绝对值。</p>
+
+        <h4>市场集中度</h4>
+        <table class="mini">
+          <tr><th>CR3 / CR5</th><td><span class="na">N/A</span>（无可靠同口径全市场 CR3/CR5 数据）</td></tr>
+          <tr><th>国产前三（2024）</th><td>百普赛斯 28.21%、义翘神州 14.37%、近岸蛋白 6.74%（中国重组蛋白科研试剂国产份额，太平洋证券）　<span class="tag">E-019</span></td></tr>
+          <tr><th>外资份额</th><td>全球由 Thermo Fisher、Merck KGaA、Bio-Techne 主导；R&amp;D Systems / PeproTech / BioVision 占高端科研试剂约 90%　<span class="tag">E-025</span></td></tr>
+        </table>
+
+        <h4>主要参与者</h4>
+        <p style="margin-bottom:2px;font-size:12.5px;color:var(--ink-faint);">海外龙头</p>
+        <div class="plist"><span class="o">Thermo Fisher</span><span class="o">Merck KGaA（Sigma-Aldrich）</span><span class="o">Bio-Techne（R&amp;D Systems）</span><span class="o">PeproTech</span><span class="o">BioVision</span></div>
+        <p style="margin:8px 0 2px;font-size:12.5px;color:var(--ink-faint);">国内厂商</p>
+        <div class="plist"><span>百普赛斯（301080）</span><span>义翘神州（301047）</span><span>近岸蛋白（688137）</span><span>诺唯赞（688105）</span><span>菲鹏生物</span></div>
+
+        <h4>国产化率与进口替代进展</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">诊断原料国产化率约四成、科研试剂约三成（机构口径）。百普赛斯 GMP 级国内市占约 28%，海外收入占比 63.76%，覆盖全球 Top20 药企 17 家；替代路径正从科研端向 GMP 级生产原料升级，CGT 原料（细胞因子、Cas9 酶、无血清培养基）是增量最快方向。　<span class="tag">E-020</span> <span class="tag">E-024</span></p>
+
+        <h4>核心竞争壁垒（四维）</h4>
+        <div class="b4">
+          <div><b>技术工艺</b><p>中高。SKU 广度、表达与制备平台、批间一致性、GMP 级供应能力。</p></div>
+          <div><b>客户认证与切换成本</b><p>中。科研端替换相对容易；GMP / 质控端绑定较深。</p></div>
+          <div><b>规模化与成本</b><p>中。规模化放大与成本控制在 GMP 级才构成壁垒。</p></div>
+          <div><b>渠道与服务响应</b><p>中高。海外渠道与注册覆盖（百普赛斯海外收入占比 63.76%）。</p></div>
+        </div>
+
+        <h4>定价与毛利</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">本环节是六环节中毛利最高的：百普赛斯 2025 年综合毛利率 91.16%（重组蛋白业务 90.35%）；义翘神州 2025 年毛利率 73.29%；近岸蛋白 2025 年毛利率 67.11%。高端科研试剂进口溢价显著。　<span class="tag">E-020</span> <span class="tag">E-021</span> <span class="tag">E-022</span></p>
+
+        <h4>代表公司财务</h4>
+        <table class="mini">
+          <tr><th>百普赛斯</th><td>2025 年营收 8.38 亿元（+29.94%），重组蛋白占 81.01%，综合毛利率 91.16%，海外收入占比 63.76%　<span class="tag">E-020</span></td></tr>
+          <tr><th>义翘神州</th><td>2025 年营收 6.996 亿元（+14%），归母净利 1.477 亿元（+21.17%），毛利率 73.29%　<span class="tag">E-021</span></td></tr>
+          <tr><th>近岸蛋白</th><td>2025 年营收 1.46 亿元（+14.8%），毛利率 67.11%　<span class="tag">E-022</span></td></tr>
+        </table>
+
+        <h4>未来 3–5 年竞争趋势</h4>
+        <ul class="tight">
+          <li>从科研试剂向 GMP 级生产原料升级，CGT 原料为增量最快方向。</li>
+          <li>出海成为第二增长曲线（百普赛斯海外收入占比已超六成）。</li>
+          <li>集中度向具备 SKU 广度 + GMP 能力 + 海外渠道的头部集中。</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- S2 分子砌块 -->
+    <article class="segblock" id="seg-block">
+      <div class="seghead">
+        <span class="idx">环节 05</span>
+        <h3>分子砌块</h3>
+        <span class="pill">替代空间 第 5 · 竞争烈度 第 2</span>
+      </div>
+      <div class="segbody">
+        <h4>市场规模与增速（三套口径，量级差 10 倍以上）</h4>
+        <table class="mini">
+          <tr><th>太平洋证券 / 华经</th><td>全球 2026E 546 亿美元（2012 年 319 亿 → 2020 年 441 亿）　<span class="tag">E-030</span></td></tr>
+          <tr><th>雪球（转引）</th><td>全球 2025 年约 250 亿美元；国内 2025 年约 80 亿元　<span class="tag">E-030</span></td></tr>
+          <tr><th>凯康镁（转引）</th><td>全球 2025 年 45 亿美元；中国 12 亿美元　<span class="tag">E-030</span></td></tr>
+        </table>
+        <p style="font-size:12.5px;color:var(--up);"><b>口径提示：</b>三套口径量级相差超过 10 倍，并列标注，只用方向性判断，不做加总或平均。</p>
+
+        <h4>市场集中度</h4>
+        <table class="mini">
+          <tr><th>CR3 / CR5</th><td><span class="na">N/A</span>（无可靠同口径数据）</td></tr>
+          <tr><th>外资份额</th><td>Sigma-Aldrich（Merck KGaA，约 30 万种产品）2021 年全球市占 17.39%；Combi-Blocks、Enamine、TCI、Alfa Aesar 为主要海外厂商　<span class="tag">E-026</span></td></tr>
+          <tr><th>国产份额</th><td>国内企业全球市占普遍不足 1%。毕得医药公斤级以下产品国内市占 2019 年 39.57% → 2021 年 48.36%　<span class="tag">E-026</span> <span class="tag">E-027</span></td></tr>
+        </table>
+
+        <h4>主要参与者</h4>
+        <p style="margin-bottom:2px;font-size:12.5px;color:var(--ink-faint);">海外龙头</p>
+        <div class="plist"><span class="o">Sigma-Aldrich（Merck KGaA）</span><span class="o">Combi-Blocks</span><span class="o">Enamine</span><span class="o">TCI</span><span class="o">Alfa Aesar（Thermo Fisher）</span></div>
+        <p style="margin:8px 0 2px;font-size:12.5px;color:var(--ink-faint);">国内厂商</p>
+        <div class="plist"><span>毕得医药（688073）</span><span>皓元医药（688131）</span><span>药石科技（300725）</span><span>昊帆生物（301393，合成试剂）</span><span>键凯科技（688356，PEG 修饰材料）</span></div>
+
+        <h4>国产化率与进口替代进展</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">分品类国产化率（凯康镁口径，非一手，需核实原文）：常规杂环 45%→60%、硼酸酯 50%→68%、手性 35%→50%、PEG Linker 40%→60%、氘代 25%→40%。毕得医药在库 7.5 万–11.7 万种，常备现货 7.33 万种；皓元医药分子砌块 2025 年 5.63 亿元（+35%），ADC 领域领先；药石科技 &gt;35% 库存为独特结构，向 CDMO 纵向延伸。　<span class="tag">E-027</span> <span class="tag">E-028</span> <span class="tag">E-029</span> <span class="tag">E-031</span></p>
+
+        <h4>核心竞争壁垒（四维）</h4>
+        <div class="b4">
+          <div><b>技术工艺</b><p>中低。常规品类同质化；壁垒集中在手性合成、氘代、独特结构。</p></div>
+          <div><b>客户认证与切换成本</b><p>低。目录品替换容易；公斤级与工艺开发阶段绑定加深。</p></div>
+          <div><b>规模化与成本</b><p>中。SKU 数量 × 现货率 × 成本效率决定竞争力。</p></div>
+          <div><b>渠道与服务响应</b><p>中。交付速度与现货率（毕得常备现货 7.33 万种）。</p></div>
+        </div>
+
+        <h4>定价与毛利</h4>
+        <p style="font-size:13px;color:var(--ink-soft);"><span class="na">N/A</span>　本轮未取得代表公司可靠当期毛利率数据，不作推算。</p>
+
+        <h4>代表公司财务</h4>
+        <table class="mini">
+          <tr><th>皓元医药</th><td>工具化合物 + 生化试剂收入 14.28 亿元；分子砌块收入 5.63 亿元（+35%）；ADC 领域领先　<span class="tag">E-028</span></td></tr>
+          <tr><th>毕得医药</th><td>在库 7.5 万–11.7 万种，常备现货 7.33 万种；公斤级以下国内市占 2019 年 39.57% → 2021 年 48.36%　<span class="tag">E-027</span></td></tr>
+          <tr><th>药石科技</th><td>分子砌块库超 1.9 万–16 万种（不同口径），&gt;35% 库存为独特结构　<span class="tag">E-029</span></td></tr>
+        </table>
+
+        <h4>未来 3–5 年竞争趋势</h4>
+        <ul class="tight">
+          <li>从「卖目录」走向「卖公斤级 + 工艺开发」，与 CDMO 边界融合。</li>
+          <li>ADC Linker/Payload 与 GLP-1 多肽合成试剂是需求弹性最大的细分。</li>
+          <li>同质化价格竞争为主要风险，胜出依赖 SKU 广度与公斤级转化能力。</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- S3 实验动物 -->
+    <article class="segblock" id="seg-animal">
+      <div class="seghead">
+        <span class="idx">环节 06</span>
+        <h3>实验动物与疾病模型</h3>
+        <span class="pill">替代空间 第 6 · 竞争烈度 中</span>
+      </div>
+      <div class="segbody">
+        <h4>市场规模与增速</h4>
+        <table class="mini">
+          <tr><th>机构口径 A</th><td>全球 2023 年 107 亿美元 / 中国 57 亿元，2022–2027 CAGR 18.1%（全球 9%）　<span class="tag">E-032</span></td></tr>
+          <tr><th>Frost &amp; Sullivan</th><td>中国啮齿类 2019 年 33 亿元 → 2024E 98 亿元 → 2030E 272 亿元；小鼠模型 2019 年 28 亿元 → 2024E 84 亿元 → 2030E 236 亿元（CAGR 18.5%–18.8%）　<span class="tag">E-033</span></td></tr>
+          <tr><th>机构口径 B</th><td>2025 年中国整体市场规模约 128.6 亿元　<span class="tag">E-035</span></td></tr>
+        </table>
+
+        <h4>市场集中度</h4>
+        <table class="mini">
+          <tr><th>CR3 / CR5</th><td><span class="na">N/A</span>（无可靠同口径数据）</td></tr>
+          <tr><th>历史 CR4</th><td>2019 年中国成品小鼠模型 CR4 约 30%，药康生物 6.0% 居第二；2025 年集中度仍低　<span class="tag">E-034</span> <span class="tag">E-035</span></td></tr>
+          <tr><th>分项份额</th><td>SPF 小鼠：维通利华 18.3%（年出货 325 万只）、南模生物 15.7%、药康生物 14.1%、斯莱克 14.1%；定制化模型：百奥赛图 18.2%（不同统计口径，不可直接相加）　<span class="tag">E-035</span></td></tr>
+        </table>
+
+        <h4>主要参与者</h4>
+        <p style="margin-bottom:2px;font-size:12.5px;color:var(--ink-faint);">海外龙头</p>
+        <div class="plist"><span class="o">Charles River</span><span class="o">Jackson Laboratory</span><span class="o">Taconic</span><span class="o">Envigo</span></div>
+        <p style="margin:8px 0 2px;font-size:12.5px;color:var(--ink-faint);">国内厂商</p>
+        <div class="plist"><span>药康生物（688046）</span><span>百奥赛图（2315.HK）</span><span>南模生物（688265）</span><span>维通利华</span><span>斯莱克</span><span>昭衍新药（603127，实验猴）</span></div>
+
+        <h4>国产化率与进口替代进展</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">小鼠模型环节已高度国产化，替代空间最小。真正稀缺资源是非人灵长类（实验猴）：昭衍新药存栏约 5 万只，2026 年现货价 18–20 万元/只（中检院 6 月中标价 17.8 万元，预算 19 万元）；药明康德 1.5–2 万只、康龙化成 0.9–1 万只、益诺思 2800–3000 只、美迪西 2000–2300 只、博济医药 &lt;1000 只。药康生物拥有 &gt;22,000 种小鼠品系、29 万笼产能，定制交付 28 天（行业 42 天），并并购美国 BioProfile 推进出海。　<span class="tag">E-035</span> <span class="tag">E-036</span></p>
+
+        <h4>核心竞争壁垒（四维）</h4>
+        <div class="b4">
+          <div><b>技术工艺</b><p>中。基因编辑品系库广度与繁育技术；人源化/疾病模型壁垒显著高于基础品系。</p></div>
+          <div><b>客户认证与切换成本</b><p>中。模型一旦用于长期研究即具粘性；定制模型绑定更深。</p></div>
+          <div><b>规模化与成本</b><p>中高。笼位产能（药康 29 万笼、南模 14 万笼）与交付周期。</p></div>
+          <div><b>渠道与服务响应</b><p>中。出海布局（药康并购美国 BioProfile）。</p></div>
+        </div>
+
+        <h4>定价与毛利</h4>
+        <p style="font-size:13px;color:var(--ink-soft);">百奥赛图定制化模型毛利率 68.5%；南模生物毛利率 65.2%。人源化与疾病模型毛利显著高于基础品系，结构升级是毛利提升的主线。实验猴价格是安评 CRO 的成本与产能双重约束。　<span class="tag">E-035</span></p>
+
+        <h4>代表公司财务</h4>
+        <table class="mini">
+          <tr><th>昭衍新药</th><td>2025 年归母净利润同比 <b>+302.08%</b>（实验猴价格驱动）；存栏约 5 万只　<span class="tag">E-036</span></td></tr>
+          <tr><th>百奥赛图</th><td>定制化模型市占 18.2%，年交付 &gt;12 万只，毛利率 68.5%　<span class="tag">E-035</span></td></tr>
+          <tr><th>药康生物</th><td>&gt;22,000 品系，29 万笼满产，定制交付 28 天 vs 行业 42 天　<span class="tag">E-035</span></td></tr>
+        </table>
+
+        <h4>未来 3–5 年竞争趋势</h4>
+        <ul class="tight">
+          <li>人源化与疾病模型占比提升，带动结构毛利率上行。</li>
+          <li>实验猴价格与存栏是安评 CRO 的产能与成本约束，2026 年现货 18–20 万元/只。</li>
+          <li>FDA 减少动物实验导向下，「野化鼠」等替代路径受关注。</li>
+          <li>国产加速出海（药康并购美国 BioProfile）。</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- 6 横向对比总表 -->
+  <section id="sec-table">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <h2>横向对比总表</h2>
+      <p class="sec-note">按国产替代空间排序。所有数字均保留来源口径，冲突口径在单元格内并列标注。</p>
+    </div>
+
+    <div class="tscroll">
+      <table>
+        <thead>
+          <tr>
+            <th>环节</th>
+            <th>市场规模（中国，最近可得口径）</th>
+            <th>集中度</th>
+            <th>海外龙头</th>
+            <th>国产代表</th>
+            <th>国产化率</th>
+            <th>核心壁垒</th>
+            <th>定价 / 毛利</th>
+            <th>替代空间</th>
+            <th>竞争烈度</th>
+            <th>3–5 年趋势</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="seg">层析填料</td>
+            <td>145.97 亿 – 167 亿元（2025，四套口径并存；纳微口径仅 55 亿元）</td>
+            <td>N/A（Cytiva 单家 50%–80%，国际合计 &gt;50%）</td>
+            <td>Cytiva、Merck、Thermo Fisher、Tosoh、Bio-Rad</td>
+            <td>纳微科技、赛分科技、蓝晓科技、博格隆</td>
+            <td>低（纳微国内 15%–25%，赛分工业纯化 1.02%）</td>
+            <td>高：微球技术 &gt;20 年积累 + 1–3 年验证 + 量产工艺鸿沟</td>
+            <td>高：赛分 2026H1 综合毛利率 75.32%</td>
+            <td><span class="tag hot">最大（1）</span></td>
+            <td><span class="tag">中</span></td>
+            <td>双龙头格局已定；Cytiva 下探普惠市场；GLP-1 多肽为最大增量</td>
+          </tr>
+          <tr>
+            <td class="seg">制药装备</td>
+            <td>784 亿 – 875 亿元（2025）</td>
+            <td>CR5 14.7%（2020，灼识）；另一口径东富龙 13.7%、楚天 10.2%</td>
+            <td>Sartorius、Syntegon、IMA、B+S、Glatt</td>
+            <td>东富龙、楚天科技、新华医疗、迦南科技</td>
+            <td>高端 &lt;30%</td>
+            <td>中低（国产集中于中低端；高端壁垒高）</td>
+            <td>低：东富龙 2026Q1 毛利率 31%</td>
+            <td><span class="tag">大但分散（2）</span></td>
+            <td><span class="tag hot">最高（1）</span></td>
+            <td>低端出清、龙头缓慢集中；生物工艺装备与出海是唯一亮点</td>
+          </tr>
+          <tr>
+            <td class="seg">细胞培养基</td>
+            <td>26.3 亿 – 46.2 亿元（不同年度/口径）；2025 年 38.13 亿元（+14.2%）</td>
+            <td>N/A（外资三家 &gt;60%）</td>
+            <td>Thermo Fisher(Gibco)、Danaher(Cytiva/HyClone)、Merck</td>
+            <td>奥浦迈、澳斯康/健顺、倍谙基、多宁生物</td>
+            <td>40.2%（2025）／37.4%（2024）／33.7%（2021）</td>
+            <td>高：配方 70–100 成分 + 批间一致性 + 法规重大变更</td>
+            <td>国产价格为进口 50%–70%；奥浦迈净利率约 11.7%</td>
+            <td><span class="tag">大（3）</span></td>
+            <td><span class="tag">中</span></td>
+            <td>无血清占比升至 72%（2026E）；CGT 培养基高增；关键组分仍「二次卡脖子」</td>
+          </tr>
+          <tr>
+            <td class="seg">重组蛋白 / 抗体 / 试剂</td>
+            <td>中国约 4 亿美元（F&amp;S，2024）／820 亿元（三个皮匠，2026E）——口径冲突</td>
+            <td>国产前三：百普赛斯 28.21%、义翘 14.37%、近岸 6.74%（2024）</td>
+            <td>Thermo Fisher、Merck KGaA、Bio-Techne</td>
+            <td>百普赛斯、义翘神州、近岸蛋白、诺唯赞</td>
+            <td>科研约三成、诊断原料约四成</td>
+            <td>中高：SKU 广度 + 批间一致性 + GMP 级供应</td>
+            <td>最高：百普赛斯 2025 综合毛利率 91.16%</td>
+            <td><span class="tag">中（4）</span></td>
+            <td><span class="tag">中</span></td>
+            <td>向 GMP 级与 CGT 原料升级；出海为第二曲线</td>
+          </tr>
+          <tr>
+            <td class="seg">分子砌块</td>
+            <td>全球 45 亿 – 546 亿美元（三套口径）；国内 2025 年约 80 亿元</td>
+            <td>N/A（Sigma-Aldrich 全球 17.39%，2021）</td>
+            <td>Sigma-Aldrich、Combi-Blocks、Enamine、TCI、Alfa Aesar</td>
+            <td>毕得医药、皓元医药、药石科技、昊帆生物</td>
+            <td>分品类 25%–68%（氘代最低 25%→40%）</td>
+            <td>中低：同质化；壁垒在手性 / 氘代 / 独特结构</td>
+            <td class="na">N/A</td>
+            <td><span class="tag">中（5）</span></td>
+            <td><span class="tag cool">中高（2）</span></td>
+            <td>向公斤级与工艺开发延伸；ADC / GLP-1 拉动；价格战风险</td>
+          </tr>
+          <tr>
+            <td class="seg">实验动物与疾病模型</td>
+            <td>中国 57 亿元（2023）／128.6 亿元（2025 口径）／小鼠 84 亿元（2024E）</td>
+            <td>N/A（2019 年成品小鼠 CR4 约 30%）</td>
+            <td>Charles River、Jackson Lab、Taconic</td>
+            <td>药康生物、百奥赛图、南模生物、维通利华、昭衍新药（猴）</td>
+            <td>小鼠已高度国产化；稀缺性在实验猴</td>
+            <td>中：品系库 + 笼位产能；猴资源为政策型壁垒</td>
+            <td>中高：百奥赛图定制化 68.5%、南模 65.2%</td>
+            <td><span class="tag">小（6）</span></td>
+            <td><span class="tag">中</span></td>
+            <td>人源化/定制化溢价提升；猴价 18–20 万元/只；出海与替代路径并行</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7 下游需求传导 -->
+  <section id="sec-downstream">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <h2>下游需求传导专章：ADC · GLP-1 · CGT</h2>
+      <p class="sec-note">三浪对上游六环节的传导强度差异显著。传导强度为定性排序，未做需求量精确测算。</p>
+    </div>
+
+    <div class="dd">
+      <div class="ddcard">
+        <h4>GLP-1（多肽）</h4>
+        <ol class="ddorder">
+          <li><b>层析填料（最强）</b></li>
+          <li>分子砌块 / 合成试剂</li>
+          <li>制药装备（多肽产能建设）</li>
+        </ol>
+        <p class="ddtext">多肽纯化环节 90% 以上成本集中在色谱填料。纳微 2025 年多肽填料收入约 1.47 亿元（+63%），中小分子项目合计 2.70 亿元（+50%），核心客户含药明康德、翰宇、诺泰、健元。全球合规多肽合成产能不足需求一半，多肽工厂从建设到欧美 GMP 认证需 3–4 年，2026–2028 年持续供不应求；药明康德多肽固相合成产能超 10 万升（2026 年再增 3 万升）、康龙化成 2 万升、凯莱英 4.5 万升 + 2.4 万升在建。同步受益：固相合成载体（蓝晓科技）、缩合试剂（昊帆生物）、PEG 修饰材料（键凯科技）。　<span class="tag">E-016</span> <span class="tag">E-041</span></p>
+      </div>
+
+      <div class="ddcard">
+        <h4>ADC</h4>
+        <ol class="ddorder">
+          <li><b>分子砌块（Linker/Payload）</b></li>
+          <li>层析填料</li>
+          <li>重组蛋白 / 试剂（质控）</li>
+          <li>培养基（抗体表达）</li>
+        </ol>
+        <p class="ddtext">皓元医药分子砌块 2025 年 5.63 亿元（+35%），ADC 领域领先；纳微 ADC 层析介质市占约 15%。截至 2025 年，中国 ADC 项目超 80 个（聚焦 HER2、CLDN18.2 等靶点），生物类似药项目 130 余个、双特异性抗体近 50 项、CAR-T 项目超 70 个。ADC 是分子砌块环节从「目录销售」走向「公斤级供应」的最直接驱动力。　<span class="tag">E-013</span> <span class="tag">E-028</span> <span class="tag">E-042</span></p>
+      </div>
+
+      <div class="ddcard">
+        <h4>CGT（细胞与基因治疗）</h4>
+        <ol class="ddorder">
+          <li><b>细胞培养基（最强）</b></li>
+          <li>重组蛋白 / GMP 级试剂</li>
+          <li>一次性耗材与设备</li>
+          <li>层析填料（相对间接）</li>
+        </ol>
+        <p class="ddtext">奥浦迈 CGT 业务近两年营收增速超 80%；百普赛斯覆盖国内 90% CGT 药企，CGT 原料毛利率稳定 70% 以上，GMP 级试剂价格为普通实验室试剂的 3–5 倍。<b>政策催化（一手）：2026-07-03 国家药监局发布《关于优化细胞与基因治疗药品审评审批有关事项的公告（征求意见稿）》，设 30 日创新药临床审评快速通道等五项简化。</b>国内 CGT 市场 2023 年 33.81 亿元 → 2024 年 88.48 亿元 → 2025 年 186.31 亿元（+110.24%），2026E 248.75 亿元；CGT CDMO 2025 年 128.6 亿元（+29.4%），CR5 81.3%。　<span class="tag">E-037</span> <span class="tag">E-038</span> <span class="tag">E-039</span> <span class="tag">E-040</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 现在做什么 -->
+  <section id="sec-actions">
+    <div class="sec-head">
+      <span class="sec-num">08</span>
+      <h2>现在做什么</h2>
+      <p class="sec-note">每条建议均给出成立条件、观察指标、停止条件与验证动作。环节级配置建议，不构成个股推荐。</p>
+    </div>
+
+    <div class="act">
+      <h4>优先配置层析填料，跟踪临床后期与商业化项目的转化</h4>
+      <p><b>成立条件：</b>国产填料持续切入 III 期/商业化项目，且单价不出现断崖式下跌。</p>
+      <p><b>观察指标：</b>纳微 / 赛分工业纯化收入增速；临床后期及商业化项目数量（赛分 2026H1 为 125 个）；产能投放节奏（纳微南通 2026 年底建成、2027 年投产）；毛利率是否守住 70% 以上。</p>
+      <p class="stop"><b>停止条件：</b>进口厂商（Cytiva「瑞予」）降价幅度超过 40% 且国产品牌同步跟降，或国产项目转化为商业化订单的节奏连续两个报告期停滞。</p>
+      <p><b>验证动作：</b>逐季核对公司公告中的临床后期/商业化项目数与填料收入拆分，不使用券商推算值替代披露值。</p>
+    </div>
+
+    <div class="act">
+      <h4>培养基与重组蛋白/试剂：选管线绑定数量与 GMP 级能力领先的龙头</h4>
+      <p><b>成立条件：</b>中试工艺管线数与商业化项目数持续增长。</p>
+      <p><b>观察指标：</b>奥浦迈已确定中试工艺管线数（2025 年末 327 个）；百普赛斯 GMP 级收入占比与海外收入占比；CGT 业务增速。</p>
+      <p class="stop"><b>停止条件：</b>管线数环比停止增长，或核心客户流失。</p>
+      <p><b>验证动作：</b>以年报/半年报披露的管线数量与项目阶段交叉验证。</p>
+    </div>
+
+    <div class="act">
+      <h4>制药装备：只选高端突破与出海兑现，回避低端同质化</h4>
+      <p><b>成立条件：</b>生物工艺板块增速显著高于公司整体、海外收入占比持续提升。</p>
+      <p><b>观察指标：</b>东富龙海外收入占比（2025 年 37.8%）与毛利率（2026Q1 31%）；楚天科技合同负债与高毛利项目占比；下游药企资本开支周期。</p>
+      <p class="stop"><b>停止条件：</b>行业增速连续两年低于 5%，且龙头毛利率回落至 25% 以下。</p>
+      <p><b>验证动作：</b>核对季报毛利率与合同负债，跟踪制药设备出口增速（2025 年 11.8%）。</p>
+    </div>
+
+    <div class="act">
+      <h4>实验动物：关注人源化/定制化溢价与实验猴价格</h4>
+      <p><b>成立条件：</b>猴价维持高位且存栏不出现大规模释放。</p>
+      <p><b>观察指标：</b>实验猴现货价（2026 年 18–20 万元/只）；昭衍新药等存栏变化；人源化模型收入占比。</p>
+      <p class="stop"><b>停止条件：</b>猴价回落至 10 万元/只以下，或 FDA 替代路径政策加速落地。</p>
+      <p><b>验证动作：</b>以中检院/行业招标价与公司公告存栏为准，不使用媒体传闻价。</p>
+    </div>
+
+    <div class="act">
+      <h4>分子砌块：看公斤级转化与现金效率，警惕价格战</h4>
+      <p><b>成立条件：</b>公斤级收入占比提升且毛利率不下降。</p>
+      <p><b>观察指标：</b>皓元 / 毕得公斤级收入占比；SKU 数与现货率；ADC / GLP-1 相关订单。</p>
+      <p class="stop"><b>停止条件：</b>毛利率连续两个报告期下滑，且存货周转恶化。</p>
+      <p><b>验证动作：</b>以定期报告分品类收入与毛利率为准——<b>本轮未取得可靠当期毛利率数据，需先补齐再决策</b>。</p>
+    </div>
+  </section>
+
+  <!-- 9 证据链 -->
+  <section id="sec-evidence">
+    <div class="sec-head">
+      <span class="sec-num">09</span>
+      <h2>证据链与来源</h2>
+      <p class="sec-note">E-001 – E-042。等级标注：<span class="lvl p">一手官方</span> 仅 E-038；其余 <span class="lvl n">非一手</span> 需核实原文。</p>
+    </div>
+
+    <div class="evtool">
+      <input id="evq" type="search" placeholder="检索证据：输入环节名、公司名、机构名或关键词" aria-label="证据检索">
+      <span class="count" id="evcount">共 42 条</span>
+    </div>
+
+    <div class="tscroll">
+      <table id="evtable">
+        <thead>
+          <tr><th>编号</th><th>来源</th><th>等级</th><th>时间</th><th>事实陈述</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="evid">E-001</td><td>三个皮匠报告（转引华创证券《细胞培养基国产替代潜力巨大》）</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>2025 年中国细胞培养基市场 38.13 亿元，同比 +14.2%；国产化率 40.2%（2020 年 22.8%）；进口依存度由 72% 降至 56%；赛默飞、丹纳赫、默克三家占中国超 60%；全球前五合计约 78.1%；无血清占比 2025 年约 65%、2026E 72%</td></tr>
+          <tr><td class="evid">E-002</td><td>观研天下 / 沙利文（多宁生物招股书）</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>中国培养基市场 2020 年 2.10 亿美元 → 2024 年 3.24 亿美元 → 2029E 6.83 亿美元，CAGR 14.00%；2024 年国产占比 37.4%，2020 年 22.8%；2021 年无血清占 72.5%</td></tr>
+          <tr><td class="evid">E-003</td><td>三个皮匠报告（转引 Frost &amp; Sullivan）</td><td><span class="lvl n">非一手</span></td><td>2023–2026</td><td>中国培养基 2021 年 26.3 亿元，2017–2021 CAGR 44.0%，2026E 71 亿元；2021 年 Gibco+Hyclone+Merck 合计 62.9%；国产化率 33.7%（无血清 29.6%）；奥浦迈中高端蛋白抗体培养基市占 6.3%，国产第一、总排名第四</td></tr>
+          <tr><td class="evid">E-004</td><td>三个皮匠报告汇总</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>澳斯康市占率超 30%（口径存疑）、单批次 6 吨量产；奥浦迈 2025 年培养基营收 3.00 亿元（+23%），其中 CHO 2.61 亿元（+31.2%）；倍谙基疫苗培养基领先；健顺生物年产能千吨级</td></tr>
+          <tr><td class="evid">E-005</td><td>奥浦迈 2025 年报口径（媒体转引）</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>2025 年营收 35491.34 万元（+19.40%），归母净利 4169.85 万元（+98.07%）；截至 2025 年末 327 个已确定中试工艺管线使用其培养基（较 2024 年末 +80）</td></tr>
+          <tr><td class="evid">E-006</td><td>灼识咨询（东富龙公司投资价值分析报告，2023-05-24）</td><td><span class="lvl n">非一手</span></td><td>2023</td><td>中国制药装备 2015 年 299 亿元 → 2020 年 538 亿元（CAGR 12.47%）→ 2025E 875 亿元；全球 2020 年 2385 亿元 → 2025E 3357 亿元；2020 年中国 CR5 仅 14.7%，东富龙 4.1%、楚天 3.8%、SYNTEGON 2.5%、奥星 2.3%、Cytiva 2.0%</td></tr>
+          <tr><td class="evid">E-007</td><td>国投证券《周期之下寻成长，出海开启新篇章——制药装备行业深度分析》（2026-08-09）</td><td><span class="lvl n">非一手</span></td><td>2026-08-09</td><td>2025 年全球制药装备 236.7 亿美元；中国约 784 亿元（+5.5%）；东富龙冻干机国内市占约 50%，生物工艺板块 2025 年 +29.8%，海外业务 +63.7%（占比 37.8%），2026Q1 毛利率回升至 31%（+6.1pct）；楚天科技并购德国 ROMACO</td></tr>
+          <tr><td class="evid">E-008</td><td>新浪财经 / 智研咨询（2025-05-29）</td><td><span class="lvl n">非一手</span></td><td>2025-05</td><td>2024 年中国制药机械规模超 800 亿元，2025 年 +8%–10%、有望破 900 亿元；东富龙 13.7%、楚天 10.2%、新华医疗 5.4%、迦南科技 5.1%；药用包装机械占 55.7%、原料药机械 25.4%、制剂机械 5.8%</td></tr>
+          <tr><td class="evid">E-009</td><td>三个皮匠报告（《医药设备》百科词条整理）</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>2025 年中国制药装备约 784 亿元；高端设备国产化率不足 30%；低端产能过剩；东富龙 4.1%、楚天 3.8%，合计不足 25%；中国制药设备出口增速 11.8%</td></tr>
+          <tr><td class="evid">E-010</td><td>New Life Instrument（英文行业站）</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>2025 年中国连续制药生产线行业 48.6 亿元（+19.3%），国产设备占比 63.4%；小分子化药占新增产线订单 63.2%，生物药占 24.7%</td></tr>
+          <tr><td class="evid">E-011</td><td>华创证券《华创医药周周谈·第 172 期：国内色谱填料行业近况更新》（2026-04-24）</td><td><span class="lvl n">非一手</span></td><td>2026-04-24</td><td>2025 年中国色谱介质市场 167 亿元，2026E 203 亿元（+21.56%）；生物药色谱介质 2025 年 108 亿元 → 2026E 132 亿元；国际厂商占中国超 50%；纳微 2025 年填料收入 5.52 亿元；赛分 2025 年工业纯化+分析色谱 3.99 亿元；蓝晓科技生命科学板块 6.36 亿元；单抗下游纯化占总成本 65% 以上，填料占药物生产成本 30% 以上</td></tr>
+          <tr><td class="evid">E-012</td><td>智研咨询《中国色谱介质行业市场动态分析》</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>2024 年中国色谱介质市场 128.86 亿元，2025E 145.97 亿元；2025E 需求 224.42 万升；Cytiva、Thermo Fisher、Tosoh 等占中国超 50%</td></tr>
+          <tr><td class="evid">E-013</td><td>同花顺投顾平台（AI 整理，纳微科技财报分析）</td><td><span class="lvl n">非一手·需核实</span></td><td>2026</td><td>全球色谱填料 2025 年需求约 50 亿美元；中国 2025 年约 55 亿元；2024 年中国约 46 亿元，纳微收入 4.2 亿元、市占率约 25% 第一，全球约 2% 第七；胰岛素/多肽细分 &gt;40%，ADC 层析介质约 15%；粒径 CV&lt;5%（国际 10%）；交期 2 周 vs 进口 6–12 个月；价格低 20%–40%</td></tr>
+          <tr><td class="evid">E-014</td><td>远瞻慧库《2025 年纳微科技分析》（2025-05-16）</td><td><span class="lvl n">非一手</span></td><td>2025-05-16</td><td>Cytiva 全球份额约 35%、中国约 80%；纳微+博格隆合计约 5%；中国色谱填料市场 2023 年 112 亿元 → 2026 年 203 亿元，CAGR 21.92%；国内能稳定量产高端产品者仅 3 家；纳微 2024 年客户 792 家，战略客户销售 2.24 亿元占填料收入 49.67%</td></tr>
+          <tr><td class="evid">E-015</td><td>证券日报网《填料市场或迎变局 思拓凡发布新品牌「瑞予」》（2026-03-16）</td><td><span class="lvl n">非一手</span></td><td>2026-03-16</td><td>思拓凡（Cytiva）国内填料市占率约 50%；发布本土品牌「瑞予」首款蛋白 A 亲和填料，主攻普惠市场；目标 3–5 年内 50% 中国营收由本土制造支持；纳微 2025 年填料收入 +23%；赛分 2025 年工业纯化收入 +44.99%</td></tr>
+          <tr><td class="evid">E-016</td><td>东北证券《纳微科技(688690)：深耕微球色谱填料 领跑国产替代浪潮》（2026-05-27）</td><td><span class="lvl n">非一手</span></td><td>2026-05-27</td><td>2025 年纳微多肽填料收入约 1.47 亿元（+63%）；中小分子项目合计 2.70 亿元（+50%）；核心客户含药明康德、翰宇、诺泰、健元；常熟 50 万升已投产，南通 50 万升 2026 年底建成、2027 年全面投产，总产能超 100 万升；全球 GLP-1 市场 2030E 908 亿美元</td></tr>
+          <tr><td class="evid">E-017</td><td>雪球（赛分科技公司分析整理）</td><td><span class="lvl n">非一手·自媒体</span></td><td>2026</td><td>扬州二期投产后总产能超 22 万升/年，美国特拉华新增 5 万升；累计服务超 30 个出海项目；全球客户超 5000 家；MabPurix 为中国首款通过 FDA DMF 备案的国产亲和填料，8 个系列全部完成备案；2023 年国内分析色谱市占约 5.16%、工业纯化约 1.02%；2026H1 综合毛利率 75.32%；截至 2026 年 6 月工业纯化项目累计 1281 个（临床后期及商业化 125 个）；百万级以上客户贡献工业纯化收入 92.04%</td></tr>
+          <tr><td class="evid">E-018</td><td>萝卜投研《CXO 实验耗材重点公司梳理》/ 题材研究室</td><td><span class="lvl n">非一手·自媒体</span></td><td>2026</td><td>纳微层析填料国产市占率第一约 27%，赛分第二约 22%（疑为国产厂商间相对份额）；另一口径纳微 2025 年国内市占 15%–20%；外资产品较国产高约 30%、交期 3–6 个月</td></tr>
+          <tr><td class="evid">E-019</td><td>太平洋证券（转引）</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>2024 年中国重组蛋白科研试剂国产份额前三：百普赛斯 28.21%、义翘神州 14.37%、近岸蛋白 6.74%</td></tr>
+          <tr><td class="evid">E-020</td><td>百普赛斯 2025 年经营数据（媒体/机构转引）</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>2025 年营收 8.38 亿元（+29.94%），重组蛋白占 81.01%，毛利率 90.35%（综合 91.16%），海外收入占比 63.76%，覆盖全球 Top20 药企 17 家，GMP 级国内市占约 28%</td></tr>
+          <tr><td class="evid">E-021</td><td>义翘神州 2025 年经营数据（媒体转引）</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>2025 年营收 6.996 亿元（+14%），归母净利 1.477 亿元（+21.17%），毛利率 73.29%</td></tr>
+          <tr><td class="evid">E-022</td><td>近岸蛋白 2025 年经营数据（媒体转引）</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>2025 年营收 1.46 亿元（+14.8%），毛利率 67.11%</td></tr>
+          <tr><td class="evid">E-023</td><td>Frost &amp; Sullivan（转引）</td><td><span class="lvl n">非一手</span></td><td>2024</td><td>全球重组蛋白试剂 2024 年约 30 亿美元、中国约 4 亿美元、CAGR 约 17.8%</td></tr>
+          <tr><td class="evid">E-024</td><td>搜狐 / 智研瞻、三个皮匠（转引）</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>口径 A：中国重组蛋白全口径 450 亿元（科研级约 40 亿元）；口径 B：2026 年约 820 亿元、国产占比 41%；诊断原料国产化率约四成、科研试剂约三成</td></tr>
+          <tr><td class="evid">E-025</td><td>行业研究整理</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>全球重组蛋白/科研试剂由 Thermo Fisher、Merck KGaA、Bio-Techne 主导；R&amp;D Systems / PeproTech / BioVision 占高端科研试剂约 90%</td></tr>
+          <tr><td class="evid">E-026</td><td>华经 / 券商研究（转引）</td><td><span class="lvl n">非一手</span></td><td>2022–2025</td><td>Sigma-Aldrich（默克）约 30 万种产品，2021 年全球市占 17.39%；Combi-Blocks、Enamine、TCI、Alfa Aesar 为主要海外厂商；国内企业全球市占普遍不足 1%</td></tr>
+          <tr><td class="evid">E-027</td><td>毕得医药招股书 / 券商研究（转引）</td><td><span class="lvl n">非一手</span></td><td>2022–2025</td><td>在库 7.5 万–11.7 万种，常备现货 7.33 万种；公斤级以下产品国内市占 2019 年 39.57% → 2021 年 48.36%</td></tr>
+          <tr><td class="evid">E-028</td><td>皓元医药 2025 年经营数据（媒体转引）</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>工具化合物+生化试剂收入 14.28 亿元；分子砌块收入 5.63 亿元（+35%）；ADC 领域领先</td></tr>
+          <tr><td class="evid">E-029</td><td>药石科技公开资料（转引）</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>分子砌块库超 1.9 万–16 万种（不同口径），&gt;35% 库存为独特结构，向 CDMO 纵向延伸</td></tr>
+          <tr><td class="evid">E-030</td><td>太平洋证券 / 华经 / 雪球 / 凯康镁（多来源转引）</td><td><span class="lvl n">非一手·口径冲突</span></td><td>2025–2026</td><td>全球分子砌块规模三套口径：2026E 546 亿美元（太平洋/华经）；2025 年约 250 亿美元、国内约 80 亿元（雪球）；2025 年全球 45 亿美元、中国 12 亿美元（凯康镁）</td></tr>
+          <tr><td class="evid">E-031</td><td>凯康镁（转引）</td><td><span class="lvl n">非一手·需核实</span></td><td>2025</td><td>分子砌块分品类国产化率：常规杂环 45%→60%、硼酸酯 50%→68%、手性 35%→50%、PEG Linker 40%→60%、氘代 25%→40%</td></tr>
+          <tr><td class="evid">E-032</td><td>行业研究（转引）</td><td><span class="lvl n">非一手</span></td><td>2023</td><td>2023 年全球模式动物市场 107 亿美元、中国 57 亿元，2022–2027 CAGR 18.1%（全球 9%）</td></tr>
+          <tr><td class="evid">E-033</td><td>Frost &amp; Sullivan（转引）</td><td><span class="lvl n">非一手</span></td><td>2024</td><td>中国啮齿类实验动物市场 2019 年 33 亿元 → 2024E 98 亿元 → 2030E 272 亿元；小鼠模型 2019 年 28 亿元 → 2024E 84 亿元 → 2030E 236 亿元（CAGR 18.5%–18.8%）</td></tr>
+          <tr><td class="evid">E-034</td><td>Frost &amp; Sullivan / 药康生物招股书（转引）</td><td><span class="lvl n">非一手</span></td><td>2019–2021</td><td>2019 年中国成品小鼠模型 CR4 约 30%，药康生物 6.0% 居第二</td></tr>
+          <tr><td class="evid">E-035</td><td>行业研究 / 公司公告整理</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>2025 年整体市场规模约 128.6 亿元，集中度低；维通利华 SPF 小鼠 18.3%（年出货 325 万只）、南模生物 15.7%、药康生物 14.1%、斯莱克 14.1%；百奥赛图定制化 18.2%、毛利率 68.5%、年交付 &gt;12 万只；药康 &gt;22,000 品系、29 万笼、定制交付 28 天 vs 行业 42 天、并购美国 BioProfile；南模毛利率 65.2%、14 万笼</td></tr>
+          <tr><td class="evid">E-036</td><td>公司公告 / 媒体整理</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>昭衍新药实验猴存栏约 5 万只，2025 年归母净利润同比 +302.08%；猴价 2026 年现货 18–20 万元/只，中检院 6 月中标 17.8 万元 → 预算 19 万元；药明康德 1.5–2 万只、康龙化成 0.9–1 万只、益诺思 2800–3000 只、美迪西 2000–2300 只、博济医药 &lt;1000 只</td></tr>
+          <tr><td class="evid">E-037</td><td>中康医药产业研究院 / 中信建投 / 中邮证券（转引）</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>国内 CGT 市场 2023 年 33.81 亿元（+113.64%）→ 2024 年 88.48 亿元 → 2025 年 186.31 亿元（+110.24%），2026E 248.75 亿元；CGT CDMO 2025 年 128.6 亿元（+29.4%），2026E 166.5 亿元，未来五年 CAGR 14.3%，CR5 81.3%</td></tr>
+          <tr><td class="evid">E-038</td><td>国家药监局《关于优化细胞与基因治疗药品审评审批有关事项的公告（征求意见稿）》</td><td><span class="lvl p">一手官方</span></td><td>2026-07-03</td><td>从五维度简化 CGT 药物审评机制：设 30 日创新药临床审评快速通道、聚焦肿瘤/罕见病/神经退行性疾病、支持全球同步多中心临床、完善载体与细胞产品分类审批标准、简化境外成熟疗法进口流程</td></tr>
+          <tr><td class="evid">E-039</td><td>行业统计 / CDE 公开申报数据（转引）</td><td><span class="lvl n">非一手</span></td><td>2026-06</td><td>截至 2026 年 6 月底全球 CGT 在研管线超 2000 条，中国在研占比超 35%；2025 年末至 2026H1 CDE 受理 CGT 相关临床申请超 21 项</td></tr>
+          <tr><td class="evid">E-040</td><td>中信建投 / 中邮证券 / 媒体整理</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>奥浦迈 CGT 业务近两年营收增速超 80%；百普赛斯覆盖国内 90% CGT 药企，CGT 原料毛利率稳定 70% 以上；GMP 级试剂价格为普通实验室试剂的 3–5 倍</td></tr>
+          <tr><td class="evid">E-041</td><td>新浪财经 / 东北证券 / 媒体整理</td><td><span class="lvl n">非一手</span></td><td>2026</td><td>全球 GLP-1 市场规模已达 711 亿美元（口径待核），2030E 908 亿美元；全球合规多肽合成产能不足需求一半；多肽工厂从建设到欧美 GMP 认证需 3–4 年，2026–2028 年供不应求；药明康德多肽固相合成产能超 10 万升、康龙化成 2 万升、凯莱英 4.5 万升 + 2.4 万升在建；多肽纯化 90% 以上成本集中在色谱填料</td></tr>
+          <tr><td class="evid">E-042</td><td>赛分科技 2025 年报（华创证券转引）</td><td><span class="lvl n">非一手</span></td><td>2025</td><td>截至 2025 年，中国生物类似药项目 130 余个（覆盖 TNF-α、VEGF 等 9 大靶点），ADC 项目超 80 个（HER2、CLDN18.2 等），双特异性抗体近 50 项，CAR-T 项目超 70 个</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>口径冲突与缺口</h3>
+    <div class="cf">
+      <h4>1. 重组蛋白市场规模</h4>
+      <ul>
+        <li>Frost &amp; Sullivan：全球 2024 年约 30 亿美元 / 中国约 4 亿美元</li>
+        <li>三个皮匠：中国 2026 年约 820 亿元、国产占比 41%</li>
+        <li>另一口径：全口径 450 亿元，科研级约 40 亿元</li>
+      </ul>
+      <p class="handle">处理方式：并列标注，不平均。环节排序不依赖绝对值，改用份额结构与毛利水平。</p>
+    </div>
+    <div class="cf">
+      <h4>2. 分子砌块全球规模</h4>
+      <ul>
+        <li>太平洋 / 华经：2026E 546 亿美元</li>
+        <li>雪球：2025 年约 250 亿美元、国内约 80 亿元</li>
+        <li>凯康镁：2025 年全球 45 亿美元、中国 12 亿美元</li>
+      </ul>
+      <p class="handle">处理方式：量级相差 10 倍以上，并列标注，结论只用方向性判断。</p>
+    </div>
+    <div class="cf">
+      <h4>3. 培养基中国规模</h4>
+      <ul>
+        <li>华创：2025 年 38.13 亿元（+14.2%）</li>
+        <li>观研 / 沙利文：2024 年 3.24 亿美元</li>
+        <li>Frost &amp; Sullivan：2021 年 26.3 亿元 → 2026E 71 亿元</li>
+      </ul>
+      <p class="handle">处理方式：并列标注，以「2025 年约 38 亿元」为主口径。</p>
+    </div>
+    <div class="cf">
+      <h4>4. 色谱介质中国规模</h4>
+      <ul>
+        <li>华创：2025 年 167 亿元 → 2026E 203 亿元</li>
+        <li>智研：2024 年 128.86 亿元、2025E 145.97 亿元</li>
+        <li>远瞻慧库：2023 年 112 亿元 → 2026 年 203 亿元</li>
+        <li>纳微口径：2025 年约 55 亿元</li>
+      </ul>
+      <p class="handle">处理方式：量级差约 3 倍，并列标注。替代空间结论基于份额与壁垒，不依赖绝对规模。</p>
+    </div>
+    <div class="cf">
+      <h4>5. 纳微国内市占 / Cytiva 中国市占</h4>
+      <ul>
+        <li>纳微：25%（同花顺）/ 24%（雪球）/ 27%（萝卜投研）/ 15%–20%（另一口径）</li>
+        <li>Cytiva：约 50%（证券日报）/ 约 80%（远瞻慧库）</li>
+      </ul>
+      <p class="handle">处理方式：并列标注。不论采用哪一口径，国产合计份额均显著低于外资，不改变排序结论。</p>
+    </div>
+    <div class="cf">
+      <h4>6. 制药装备集中度与龙头份额</h4>
+      <ul>
+        <li>灼识：2020 年 CR5 14.7%，东富龙 4.1%、楚天 3.8%</li>
+        <li>新浪 / 智研：东富龙 13.7%、楚天 10.2%、新华医疗 5.4%、迦南 5.1%</li>
+      </ul>
+      <p class="handle">处理方式：疑为统计范围不同；两口径一致指向低集中度，不改变「竞争最激烈」结论。</p>
+    </div>
+    <div class="cf">
+      <h4>7. 国产填料 / 培养基相对进口价格</h4>
+      <ul>
+        <li>培养基：国产为进口的 50%–70%</li>
+        <li>赛分口径：国产为进口的 1/3–1/2</li>
+        <li>纳微口径：国产低 20%–40%</li>
+        <li>另一口径：进口高出国产约 30%</li>
+      </ul>
+      <p class="handle">处理方式：并列标注，不做统一折算。</p>
+    </div>
+
+    <h3>数据缺口（N/A）</h3>
+    <div class="panel">
+      <ul class="tight">
+        <li>六环节统一口径 CR3/CR5：仅制药装备（2020）与重组蛋白科研试剂国产前三（2024）有可比数据；培养基、层析填料、分子砌块、实验动物的 CR3/CR5 无可靠同口径数据 → 标 N/A，仅给可得单项份额。</li>
+        <li>分子砌块代表公司当期毛利率：本轮未取得可靠数据 → N/A。</li>
+        <li>澳斯康「市占超 30%」的统计口径（国产口径 vs 全市场口径）未获一手确认 → 标注存疑。</li>
+        <li>全球 GLP-1 市场规模 711 亿美元的统计时点与口径未确认 → 保留为机构口径。</li>
+        <li>多数规模与份额数据来自券商研报、行业媒体与自媒体转引，未取得一手统计原文 → 证据等级为「非一手来源，需核实原文」。</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>研究时点</b> 2026-09-22　·　<b>财务基准</b> 2026H1（as_of=2026-06-30）　·　<b>行情参考</b> 2026-09-21 收盘　·　<b>地域</b> 中国市场为主 + 全球对标</p>
+    <p>本报告为环节级竞争格局判断，所有关键数字均标注来源编号、时间、口径与证据等级；口径冲突一律并列标注，不做平均或加权；缺值写 N/A，不补造精确数字。<b>本报告不构成个股推荐或投资建议</b>，公司层面数据以定期报告原文为准。</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var q = document.getElementById('evq');
+  var tbl = document.getElementById('evtable');
+  if(!q || !tbl) return;
+  var rows = Array.prototype.slice.call(tbl.tBodies[0].rows);
+  var total = rows.length;
+  var out = document.getElementById('evcount');
+  q.addEventListener('input', function(){
+    var k = q.value.trim().toLowerCase();
+    var shown = 0;
+    rows.forEach(function(r){
+      var hit = !k || r.textContent.toLowerCase().indexOf(k) >= 0;
+      r.style.display = hit ? '' : 'none';
+      if(hit) shown++;
+    });
+    out.textContent = k ? ('匹配 ' + shown + ' / ' + total + ' 条') : ('共 ' + total + ' 条');
+  });
+})();
+</script>
+
+</body>
+</html>

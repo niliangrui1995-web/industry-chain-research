@@ -1,0 +1,28 @@
+{
+  "msg": "操作成功",
+  "suc": true,
+  "traceId": "a1b9344c29344b61b1d5f10e9e01ecc1",
+  "code": "200",
+  "data": {
+    "seParams": {},
+    "requestId": "a1b9344c29344b61b1d5f10e9e01ecc1",
+    "apiData": {
+      "apiRecall": [],
+      "entity": [
+        {
+          "code": "DEA.N",
+          "name": "EASTERLY GOVERNMENT PROPERTIES, INC."
+        },
+        {
+          "code": "MA.N",
+          "name": "万事达"
+        },
+        {
+          "code": "688758.SH",
+          "name": "赛分科技"
+        }
+      ]
+    },
+    "extraParams": {}
+  }
+}

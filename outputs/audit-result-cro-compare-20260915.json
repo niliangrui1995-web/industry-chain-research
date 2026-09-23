@@ -1,0 +1,843 @@
+{
+  "schema_version": "1.0",
+  "tool_version": "1.4.2",
+  "audit_id": "cro-compare-688202-688710-20260915",
+  "input_sha256": "e94b5781876e86344e570a2417040097e53b8f52d55c48788584712bc07fc44d",
+  "verdict": "PASS",
+  "release_status": "publishable",
+  "summary": {
+    "checks_total": 12,
+    "verified_count": 12,
+    "material_failure_count": 0,
+    "warning_count": 0,
+    "blocking_warning_count": 0
+  },
+  "global_issues": [],
+  "excluded_sources": [],
+  "checks": [
+    {
+      "id": "C_XS_MDX",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_MDX_IR"
+        ],
+        "counted_tier": "any_credible",
+        "required_anchor_tier": "none",
+        "independent_origins": [
+          "media:irnews:sh688202:2026h1-summary"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "761474155.85",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "S_MDX_H1",
+            "S_MDX_IR"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_XS_YNS",
+      "kind": "cross_source",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_YNS_MEDIA"
+        ],
+        "counted_tier": "any_credible",
+        "required_anchor_tier": "none",
+        "independent_origins": [
+          "media:sdenews:cxo-2026h1-orders"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "464985867.8",
+          "metric": "revenue",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap",
+          "source_ids": [
+            "S_YNS_H1",
+            "S_YNS_MEDIA"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "details": {
+        "reference_count": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "C_MC_MDX",
+      "kind": "market_cap",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_MDX_H1",
+          "S_MDX_VENDOR"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "issuer:sh688202:2026-interim-report",
+          "vendor:westock:sh688202:quote"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "13233690124",
+          "metric": "total_market_cap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "total_market_cap",
+          "source_ids": [
+            "S_MDX_H1",
+            "S_MDX_VENDOR"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "price * shares",
+        "capitalization_basis": "total"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_MC_YNS",
+      "kind": "market_cap",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "verified",
+      "source_gate": {
+        "source_ids": [
+          "S_YNS_H1",
+          "S_YNS_VENDOR"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "vendor_or_official",
+        "independent_origins": [
+          "issuer:sh688710:2026-interim-report",
+          "vendor:westock:sh688710:quote"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "12005824013.4",
+          "metric": "total_market_cap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "total_market_cap",
+          "source_ids": [
+            "S_YNS_H1",
+            "S_YNS_VENDOR"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "price * shares",
+        "capitalization_basis": "total"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_REV_MDX",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_MDX_25H1",
+          "S_MDX_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:sh688202:2025-interim-report",
+          "issuer:sh688202:2026-interim-report"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "40.907465665257623534110220442867648022388785179794",
+          "metric": "revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap_yoy",
+          "source_ids": [
+            "S_MDX_25H1",
+            "S_MDX_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "yoy",
+        "contracted_output_metric": "revenue_yoy_pct",
+        "contracted_output_basis": "reported_consolidated_prc_gaap_yoy"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_REV_YNS",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_YNS_25H1",
+          "S_YNS_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:sh688710:2025-interim-report",
+          "issuer:sh688710:2026-interim-report"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "23.920700536890061600740680665238826975560777757817",
+          "metric": "revenue_yoy_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_consolidated_prc_gaap_yoy",
+          "source_ids": [
+            "S_YNS_25H1",
+            "S_YNS_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "(current - base) / abs(base) * 100",
+        "state": "meaningful",
+        "period_relation": "yoy",
+        "contracted_output_metric": "revenue_yoy_pct",
+        "contracted_output_basis": "reported_consolidated_prc_gaap_yoy"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_GM_MDX",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_MDX_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:sh688202:2026-interim-report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "31.597112964579151054847976558546783410180525564057",
+          "metric": "gross_margin_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_gross_profit_over_reported_consolidated_prc_gaap",
+          "source_ids": [
+            "S_MDX_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator * 100",
+        "state": "meaningful",
+        "period_relation": "same",
+        "contracted_output_metric": "gross_margin_pct",
+        "contracted_output_basis": "reported_gross_profit_over_reported_consolidated_prc_gaap",
+        "accounting_contexts": {
+          "numerator": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          },
+          "denominator": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "issues": []
+    },
+    {
+      "id": "C_GM_YNS",
+      "kind": "percentage",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_YNS_H1"
+        ],
+        "counted_tier": "official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:sh688710:2026-interim-report"
+        ],
+        "independent_origin_count": 1,
+        "minimum_required": 1,
+        "anchor_present": true
+      },
+      "outputs": {
+        "value": {
+          "value": "31.568466920189697859888377450597435124887466526139",
+          "metric": "gross_margin_pct",
+          "unit": "percent",
+          "currency": null,
+          "period": {
+            "kind": "duration",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "frequency": "half",
+            "label": "2026H1"
+          },
+          "basis": "reported_gross_profit_over_reported_consolidated_prc_gaap",
+          "source_ids": [
+            "S_YNS_H1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator * 100",
+        "state": "meaningful",
+        "period_relation": "same",
+        "contracted_output_metric": "gross_margin_pct",
+        "contracted_output_basis": "reported_gross_profit_over_reported_consolidated_prc_gaap",
+        "accounting_contexts": {
+          "numerator": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          },
+          "denominator": {
+            "reporting_scope": "consolidated",
+            "accounting_framework": "prc_gaap",
+            "measurement_basis": "reported"
+          }
+        }
+      },
+      "issues": []
+    },
+    {
+      "id": "C_EXP_MDX",
+      "kind": "expectation_gap",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "above",
+      "source_gate": {
+        "source_ids": [
+          "S_MDX_H1",
+          "S_MDX_Q1",
+          "S_MDX_ZSSEC"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:sh688202:2026-interim-report",
+          "issuer:sh688202:2026-q1-report"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "annualized_low": {
+          "value": "128602227.6",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "2026Q2"
+          },
+          "basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+          "source_ids": [
+            "S_MDX_H1",
+            "S_MDX_Q1",
+            "S_MDX_ZSSEC"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "annualized_high": {
+          "value": "128602227.6",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "2026Q2"
+          },
+          "basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+          "source_ids": [
+            "S_MDX_H1",
+            "S_MDX_Q1",
+            "S_MDX_ZSSEC"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "gap_low": {
+          "value": "78602227.6",
+          "metric": "expectation_gap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "2026Q2"
+          },
+          "basis": "annualized_quarterly_deducted_vs_fy_attributable_consensus",
+          "source_ids": [
+            "S_MDX_H1",
+            "S_MDX_Q1",
+            "S_MDX_ZSSEC"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "gap_high": {
+          "value": "78602227.6",
+          "metric": "expectation_gap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "2026Q2"
+          },
+          "basis": "annualized_quarterly_deducted_vs_fy_attributable_consensus",
+          "source_ids": [
+            "S_MDX_H1",
+            "S_MDX_Q1",
+            "S_MDX_ZSSEC"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "annualization_factor": "4",
+        "annualized_core_gap_status": "above",
+        "formal_surprise_status": "N/A",
+        "comparison_basis": "annualized_quarterly_deducted_vs_fy_attributable_consensus"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_EXP_YNS",
+      "kind": "expectation_gap",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "below",
+      "source_gate": {
+        "source_ids": [
+          "S_YNS_H1",
+          "S_YNS_HYZQ",
+          "S_YNS_Q1"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:sh688710:2026-interim-report",
+          "issuer:sh688710:2026-q1-report"
+        ],
+        "independent_origin_count": 2,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "annualized_low": {
+          "value": "96302644.36",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "2026Q2"
+          },
+          "basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+          "source_ids": [
+            "S_YNS_H1",
+            "S_YNS_HYZQ",
+            "S_YNS_Q1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "annualized_high": {
+          "value": "96302644.36",
+          "metric": "deducted_attributable_net_profit",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "2026Q2"
+          },
+          "basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+          "source_ids": [
+            "S_YNS_H1",
+            "S_YNS_HYZQ",
+            "S_YNS_Q1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "gap_low": {
+          "value": "-27697355.64",
+          "metric": "expectation_gap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "2026Q2"
+          },
+          "basis": "annualized_quarterly_deducted_vs_fy_attributable_consensus",
+          "source_ids": [
+            "S_YNS_H1",
+            "S_YNS_HYZQ",
+            "S_YNS_Q1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "gap_high": {
+          "value": "-27697355.64",
+          "metric": "expectation_gap",
+          "unit": "currency",
+          "currency": "CNY",
+          "period": {
+            "kind": "duration",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "frequency": "quarter",
+            "label": "2026Q2"
+          },
+          "basis": "annualized_quarterly_deducted_vs_fy_attributable_consensus",
+          "source_ids": [
+            "S_YNS_H1",
+            "S_YNS_HYZQ",
+            "S_YNS_Q1"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "annualization_factor": "4",
+        "annualized_core_gap_status": "below",
+        "formal_surprise_status": "N/A",
+        "comparison_basis": "annualized_quarterly_deducted_vs_fy_attributable_consensus"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_PE_MDX",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_MDX_H1",
+          "S_MDX_Q1",
+          "S_MDX_VENDOR",
+          "S_MDX_ZSSEC"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:sh688202:2026-interim-report",
+          "issuer:sh688202:2026-q1-report",
+          "vendor:westock:sh688202:quote"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "102.90405050495408370360141413289173849427161866674",
+          "metric": "pe_user_defined",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+          "source_ids": [
+            "S_MDX_H1",
+            "S_MDX_Q1",
+            "S_MDX_VENDOR",
+            "S_MDX_ZSSEC"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "102.90405050495408370360141413289173849427161866674",
+          "metric": "pe_user_defined",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+          "source_ids": [
+            "S_MDX_H1",
+            "S_MDX_Q1",
+            "S_MDX_VENDOR",
+            "S_MDX_ZSSEC"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+        "state": "meaningful"
+      },
+      "issues": []
+    },
+    {
+      "id": "C_PE_YNS",
+      "kind": "valuation",
+      "materiality": "material",
+      "status": "PASS",
+      "verified": true,
+      "state": "meaningful",
+      "source_gate": {
+        "source_ids": [
+          "S_YNS_H1",
+          "S_YNS_HYZQ",
+          "S_YNS_Q1",
+          "S_YNS_VENDOR"
+        ],
+        "counted_tier": "vendor_or_official",
+        "required_anchor_tier": "official",
+        "independent_origins": [
+          "issuer:sh688710:2026-interim-report",
+          "issuer:sh688710:2026-q1-report",
+          "vendor:westock:sh688710:quote"
+        ],
+        "independent_origin_count": 3,
+        "minimum_required": 2,
+        "anchor_present": true
+      },
+      "outputs": {
+        "low": {
+          "value": "124.66764638901967530562210617993044692755309092117",
+          "metric": "pe_user_defined",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+          "source_ids": [
+            "S_YNS_H1",
+            "S_YNS_HYZQ",
+            "S_YNS_Q1",
+            "S_YNS_VENDOR"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        },
+        "high": {
+          "value": "124.66764638901967530562210617993044692755309092117",
+          "metric": "pe_user_defined",
+          "unit": "multiple",
+          "currency": null,
+          "period": {
+            "kind": "instant",
+            "as_of": "2026-09-15T15:00:00+08:00"
+          },
+          "basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+          "source_ids": [
+            "S_YNS_H1",
+            "S_YNS_HYZQ",
+            "S_YNS_Q1",
+            "S_YNS_VENDOR"
+          ],
+          "missing_reason": null,
+          "information_at": null,
+          "accounting_context": null
+        }
+      },
+      "details": {
+        "formula": "numerator / denominator",
+        "valuation_basis": "latest_single_quarter_deducted_attributable_net_profit_x4",
+        "state": "meaningful"
+      },
+      "issues": []
+    }
+  ]
+}

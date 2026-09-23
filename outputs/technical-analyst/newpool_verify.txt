@@ -1,0 +1,9 @@
+csv_lines: 127
+header: ﻿block,code,name,close,pct_today,trend,score,ma_status,macd,kdj,rsi,vol_ratio,support,resistance,one_liner
+block dist: {'1': 42, '2': 84}
+unique codes: 126
+has 688796: True
+md_len: 18874 bad_char: 0 marker: False
+mtime md: 15:33:03
+mtime csv: 15:28:53
+json entries: 126

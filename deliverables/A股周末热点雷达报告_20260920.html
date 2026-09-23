@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>全网热点雷达 · SWEEP 扫描报告</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f4f7fb; --panel:#ffffff; --line:#dbe3ee; --txt:#16243a;
+  --dim:#5b6b82; --blue:#0C447C; --az:#378ADD; --am:#BA7517; --mg:#C2185B;
+  --ok:#15803D;
+}
+body{background:var(--bg); color:var(--txt); min-height:100vh;
+  font-family:"PingFang SC","Microsoft YaHei",ui-sans-serif,system-ui,sans-serif;
+  font-size:14px; line-height:1.6; padding:22px; overflow-x:hidden}
+.wrap{position:relative; z-index:1; max-width:1320px; margin:0 auto}
+
+/* ---------- boot banner (R0 秒开 + 极速全网情报官) ---------- */
+.boot-label{font-size:10px; color:var(--dim); letter-spacing:2.5px; margin-bottom:6px;
+  display:flex; gap:12px; align-items:center; flex-wrap:wrap; text-transform:uppercase}
+.boot-label b{color:var(--blue); letter-spacing:1.5px}
+.boot-label .live{display:inline-flex; align-items:center; gap:6px; color:var(--ok); font-weight:700; letter-spacing:2px}
+.boot-label .live::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--ok);
+  box-shadow:0 0 0 0 rgba(21,128,61,.5); animation:ping 1.6s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(21,128,61,.5)}100%{box-shadow:0 0 0 8px rgba(21,128,61,0)}}
+.boot{position:relative; height:6px; border-radius:999px; background:#e6ecf3; overflow:hidden; margin-bottom:16px}
+.boot::before{content:""; position:absolute; left:-30%; top:0; bottom:0; width:30%;
+  background:linear-gradient(90deg, transparent, var(--az), transparent);
+  animation:scan 2.4s linear infinite}
+@keyframes scan{to{left:100%}}
+
+/* ---------- HUD ---------- */
+.hud{border:1px solid var(--line); background:var(--panel); padding:18px 22px;
+  margin-bottom:18px; border-radius:14px; position:relative}
+.hud-top{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.logo{font-size:22px; font-weight:700; color:var(--blue); letter-spacing:2px;
+  display:flex; align-items:baseline; gap:10px}
+.logo small{font-size:10px; color:var(--dim); letter-spacing:1.5px; font-weight:500}
+.prof{font-size:10px; color:var(--az); background:#eef5fc; border:1px solid rgba(55,138,221,.3);
+  padding:3px 10px; border-radius:999px; letter-spacing:1.5px; font-weight:700; text-transform:uppercase}
+.trust{font-size:10px; color:var(--ok); display:inline-flex; align-items:center; gap:5px;
+  letter-spacing:1px; font-weight:600}
+.trust::before{content:"\2713"; font-weight:700; font-size:12px}
+.modechip{display:inline-block; padding:3px 10px; border:1px solid var(--az); color:var(--az);
+  background:var(--bg); font-size:11px; letter-spacing:2px; border-radius:999px; font-weight:700}
+.clock{margin-left:auto; color:var(--dim); font-size:12px; letter-spacing:1px;
+  display:flex; gap:8px; align-items:center}
+.clock .el{color:var(--ok); font-weight:800; font-size:14px}
+.stats{display:grid; grid-template-columns:repeat(7, 1fr); gap:14px; margin-top:16px;
+  padding-top:16px; border-top:1px dashed var(--line)}
+@media(max-width:1040px){.stats{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{display:flex; flex-direction:column; gap:2px}
+.stat b{font-size:20px; color:var(--blue); letter-spacing:.5px; font-weight:700}
+.stat span{font-size:10px; color:var(--dim); letter-spacing:1.5px}
+.stat.spd b{color:var(--ok)}
+.stat.peak b{color:var(--am)}
+
+/* ---------- channel distribution ---------- */
+.card{border:1px solid var(--line); background:var(--panel); padding:16px 18px;
+  border-radius:14px; position:relative; margin-bottom:18px}
+.card h3{font-size:10px; color:var(--dim); letter-spacing:2.5px; font-weight:700;
+  margin-bottom:12px; text-transform:uppercase}
+.dist{display:flex; height:10px; border:1px solid var(--line); overflow:hidden; border-radius:999px}
+.dist i{display:block; height:100%; transition:.4s}
+.dist i:hover{filter:brightness(.92)}
+.distlg{display:flex; flex-wrap:wrap; gap:8px 12px; margin-top:10px; font-size:11px; color:var(--dim)}
+.distlg span{display:inline-flex; align-items:center; gap:5px}
+.distlg b{width:8px; height:8px; border-radius:50%; display:inline-block}
+
+/* ---------- main grid ---------- */
+.grid{display:grid; grid-template-columns:360px 1fr; gap:18px; align-items:start}
+@media(max-width:1040px){.grid{grid-template-columns:1fr}}
+
+/* ---------- radar (elevated) ---------- */
+.radar-box{display:flex; justify-content:center; padding:8px 0 4px; position:relative}
+.radar{width:300px; height:300px; position:relative; border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, #ffffff, #eef3f9 70%, #e3ecf5);
+  border:1.5px solid rgba(55,138,221,.25);
+  box-shadow:inset 0 0 30px rgba(55,138,221,.06), 0 6px 24px rgba(12,68,124,.08)}
+.ring{position:absolute; inset:0; border:1px solid rgba(55,138,221,.18); border-radius:50%}
+.ring:nth-child(2){inset:14%; border-color:rgba(55,138,221,.24)}
+.ring:nth-child(3){inset:28%; border-color:rgba(55,138,221,.32)}
+.ring:nth-child(4){inset:42%; border-color:rgba(55,138,221,.42); border-style:dashed}
+.cross{position:absolute; inset:0}
+.cross i{position:absolute; background:rgba(55,138,221,.16)}
+.cross i:nth-child(1){left:50%; top:0; bottom:0; width:1px}
+.cross i:nth-child(2){top:50%; left:0; right:0; height:1px}
+.hub{position:absolute; left:50%; top:50%; width:12px; height:12px; border-radius:50%;
+  background:var(--blue); transform:translate(-50%,-50%);
+  box-shadow:0 0 0 4px rgba(12,68,124,.18), 0 0 0 10px rgba(12,68,124,.06)}
+.hub::after{content:"\25C8"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  color:#fff; font-size:9px; font-weight:700; line-height:1}
+.sweep{position:absolute; inset:0; border-radius:50%;
+  background:conic-gradient(from 0deg, rgba(55,138,221,.38), rgba(55,138,221,.12) 30deg, rgba(55,138,221,.03) 60deg, transparent 90deg);
+  animation:spin 3.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.blip{position:absolute; width:9px; height:9px; border-radius:50%; transform:translate(-50%,-50%);
+  animation:pulse 2s ease-in-out infinite;
+  box-shadow:0 0 0 3px rgba(255,255,255,.85), 0 0 10px currentColor}
+@keyframes pulse{0%,100%{opacity:1; transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:.6; transform:translate(-50%,-50%) scale(.75)}}
+.radar-label{position:absolute; left:50%; bottom:-24px; transform:translateX(-50%);
+  font-size:9px; color:var(--dim); letter-spacing:4px; font-weight:700}
+
+/* ---------- tag cloud ---------- */
+.cloud{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+.tg{font-size:11px; padding:3px 9px; border:1px solid var(--line); color:var(--dim);
+  border-radius:999px; background:#fafcfe}
+.tg.on{border-color:var(--az); color:var(--az); background:#eef5fc; font-weight:600}
+
+/* ---------- signals ---------- */
+.items{display:flex; flex-direction:column; gap:10px}
+.item{border:1px solid var(--line); border-left:3px solid var(--az); background:var(--panel);
+  padding:13px 15px; display:grid; grid-template-columns:44px 1fr 130px; gap:14px;
+  align-items:center; transition:.18s; border-radius:10px}
+.item:hover{transform:translateX(4px); border-color:#b9c7da; background:#fbfdff}
+.item.top3{border-color:var(--am); border-left-color:var(--am); background:#fffaf0;
+  box-shadow:0 2px 12px rgba(186,117,23,.12)}
+.item.top3 .rank{color:var(--am)}
+.rank{font-size:22px; font-weight:700; color:#9aa7b8; letter-spacing:-1px}
+.item:hover .rank{color:var(--az)}
+.tt{font-size:14px; color:#16243a; margin-bottom:5px; line-height:1.45; font-weight:600}
+.meta{font-size:11px; color:var(--dim); display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+.chip{border:1px solid var(--line); padding:1px 6px; border-radius:6px; font-size:10px; background:#fafcfe}
+.chip.tag{color:var(--az); border-color:rgba(55,138,221,.4); background:#eef5fc; font-weight:600}
+.up{color:var(--ok); font-weight:700} .down{color:#94a3b8} .new{color:var(--mg); font-weight:700}
+.right{text-align:right}
+.heat{font-size:20px; font-weight:700; letter-spacing:-.5px}
+.bar{height:4px; background:#e6ecf3; margin-top:5px; overflow:hidden; border-radius:999px; position:relative}
+.bar i{display:block; height:100%; width:0; animation:grow .9s cubic-bezier(.2,.9,.2,1) forwards}
+@keyframes grow{to{width:var(--w)}}
+
+/* ---------- empty ---------- */
+.empty{text-align:center; padding:46px 20px; color:var(--dim)}
+.empty b{display:block; font-size:15px; color:#334155; margin-bottom:8px}
+
+/* ---------- footer ---------- */
+.foot{margin-top:18px; border:1px solid var(--line); background:var(--panel);
+  padding:12px 18px; display:flex; gap:18px; flex-wrap:wrap;
+  font-size:11px; color:var(--dim); letter-spacing:1px; border-radius:14px; align-items:center}
+.foot b{color:var(--blue)}
+.foot .ok{color:var(--ok); font-weight:700}
+
+/* ---------- mobile ---------- */
+@media(max-width:760px){
+  body{padding:12px}
+  .item{grid-template-columns:34px 1fr; gap:10px}
+  .item .right{grid-column:1/-1; text-align:left; margin-top:4px}
+  .stat b{font-size:17px}
+  .logo{font-size:18px}
+  .radar{width:240px; height:240px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="boot-label">
+    <span class="live">LIVE</span>
+    <span>\u25C8 雷达开机 \u00B7 <b>极速全网情报官</b> \u00B7 真实信源 \u00B7 可溯不编造</span>
+  </div>
+  <div class="boot"></div>
+
+  <div class="hud">
+    <div class="hud-top">
+      <div class="logo">\u25C8 全网热点雷达<small>HOTSPOT RADAR \u00B7 v1.1</small></div>
+      <span class="prof">极速全网情报官</span>
+      <span class="trust">真实信源 \u00B7 可溯不编造</span>
+      <span class="modechip">SWEEP</span>
+      <div class="clock">2026-09-20 03:50 \u00B7 耗时 <span class="el">36.5s</span></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>21</b><span>signals 信号</span></div>
+      <div class="stat"><b>14</b><span>tags 标签</span></div>
+      <div class="stat"><b>14</b><span>sources 信源</span></div>
+      <div class="stat"><b>10</b><span>channels 频道</span></div>
+      <div class="stat peak"><b>95</b><span>peak heat 峰值</span></div>
+      <div class="stat"><b>MISS</b><span>cache 缓存</span></div>
+      <div class="stat spd"><b>36.5s</b><span>elapsed 极速</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>// CHANNEL DISTRIBUTION 频道分布</h3>
+    <div class="dist"><i style="width:28.57%;background:#B7791F" title="财经投资 6条"></i><i style="width:14.29%;background:#2563EB" title="政策民生 3条"></i><i style="width:14.29%;background:#0C447C" title="科技AI 3条"></i><i style="width:9.52%;background:#0891B2" title="能源双碳 2条"></i><i style="width:9.52%;background:#059669" title="出海跨境 2条"></i><i style="width:4.76%;background:#92710A" title="房产家居 1条"></i><i style="width:4.76%;background:#0F766E" title="医疗健康 1条"></i><i style="width:4.76%;background:#EA580C" title="消费零售 1条"></i><i style="width:4.76%;background:#C2185B" title="游戏电竞 1条"></i><i style="width:4.76%;background:#4F46E5" title="商业航天 1条"></i></div>
+    <div class="distlg"><span><b style="background:#B7791F"></b>财经投资 6</span><span><b style="background:#2563EB"></b>政策民生 3</span><span><b style="background:#0C447C"></b>科技AI 3</span><span><b style="background:#0891B2"></b>能源双碳 2</span><span><b style="background:#059669"></b>出海跨境 2</span><span><b style="background:#92710A"></b>房产家居 1</span><span><b style="background:#0F766E"></b>医疗健康 1</span><span><b style="background:#EA580C"></b>消费零售 1</span><span><b style="background:#C2185B"></b>游戏电竞 1</span><span><b style="background:#4F46E5"></b>商业航天 1</span></div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="card" style="margin-bottom:0">
+        <h3>// RADAR SWEEP 扫描态势</h3>
+        <div class="radar-box">
+          <div class="radar">
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="cross"><i></i><i></i></div>
+            <div class="sweep"></div>
+            <div class="hub"></div>
+            <div class="blip" style="left:86.7%;top:75.1%;background:#B7791F;color:#B7791F;animation-delay:0.00s"></div><div class="blip" style="left:77.1%;top:84.1%;background:#2563EB;color:#2563EB;animation-delay:0.11s"></div><div class="blip" style="left:65.6%;top:90.1%;background:#0C447C;color:#0C447C;animation-delay:0.22s"></div><div class="blip" style="left:53.1%;top:92.3%;background:#0C447C;color:#0C447C;animation-delay:0.33s"></div><div class="blip" style="left:40.6%;top:91.0%;background:#0891B2;color:#0891B2;animation-delay:0.44s"></div><div class="blip" style="left:29.0%;top:86.2%;background:#92710A;color:#92710A;animation-delay:0.55s"></div><div class="blip" style="left:19.5%;top:78.2%;background:#0F766E;color:#0F766E;animation-delay:0.66s"></div><div class="blip" style="left:12.9%;top:67.8%;background:#B7791F;color:#B7791F;animation-delay:0.77s"></div><div class="blip" style="left:9.8%;top:56.0%;background:#2563EB;color:#2563EB;animation-delay:0.88s"></div><div class="blip" style="left:10.5%;top:44.0%;background:#0C447C;color:#0C447C;animation-delay:0.99s"></div><div class="blip" style="left:14.5%;top:32.8%;background:#B7791F;color:#B7791F;animation-delay:1.10s"></div><div class="blip" style="left:21.6%;top:23.6%;background:#059669;color:#059669;animation-delay:1.21s"></div><div class="blip" style="left:31.0%;top:16.9%;background:#B7791F;color:#B7791F;animation-delay:1.32s"></div><div class="blip" style="left:41.8%;top:13.9%;background:#EA580C;color:#EA580C;animation-delay:1.43s"></div><div class="blip" style="left:52.8%;top:13.7%;background:#B7791F;color:#B7791F;animation-delay:1.54s"></div><div class="blip" style="left:63.1%;top:16.7%;background:#059669;color:#059669;animation-delay:1.65s"></div><div class="blip" style="left:72.2%;top:22.3%;background:#C2185B;color:#C2185B;animation-delay:1.76s"></div><div class="blip" style="left:78.9%;top:30.4%;background:#4F46E5;color:#4F46E5;animation-delay:1.87s"></div>
+            <div class="radar-label">RADAR</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h3>// ACTIVE TAGS 已锁定标签</h3>
+        <div class="cloud"><span class="tg on">A股复盘</span><span class="tg on">证监会监管</span><span class="tg on">货币政策</span><span class="tg on">外围市场</span><span class="tg on">算力</span><span class="tg on">半导体</span><span class="tg on">创新药</span><span class="tg on">房地产</span><span class="tg on">油价地缘</span><span class="tg on">重大公告</span><span class="tg on">消费</span><span class="tg on">商业航天</span><span class="tg on">游戏电竞</span><span class="tg on">产业政策</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>// SIGNALS 信号列表 \u00B7 真实信源可溯</h3>
+      <div class="items"><div class="item top3" style="border-left-color:#B7791F">
+  <div class="rank">1</div>
+  <div>
+    <div class="tt">周五A股放量大涨：沪指收复3900点（+0.94%），科创50涨2.89%，两市成交2.08万亿放量2540亿，超4230只个股上涨</div>
+    <div class="meta">
+      <span class="chip tag">A股复盘</span>
+      <span>财经投资</span>
+      <span class="chip">华尔街见闻</span><span class="chip">证券时报</span>
+      <span>09-18 15:00</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#C2185B">95</div>
+    <div class="bar"><i style="--w:95%;background:#B7791F"></i></div>
+  </div>
+</div><div class="item top3" style="border-left-color:#2563EB">
+  <div class="rank">2</div>
+  <div>
+    <div class="tt">证监会首批“吹哨人”奖励公示：拟奖励17起案件线索（信披违规10起、私募违规3起、内幕交易等），单笔上限100万元，9/18-12/18申领登记</div>
+    <div class="meta">
+      <span class="chip tag">证监会监管</span>
+      <span>政策民生</span>
+      <span class="chip">证监会官网</span><span class="chip">上海证券报</span><span class="chip">中国新闻网</span>
+      <span>09-18 晚间</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#C2185B">92</div>
+    <div class="bar"><i style="--w:92%;background:#2563EB"></i></div>
+  </div>
+</div><div class="item top3" style="border-left-color:#0C447C">
+  <div class="rank">3</div>
+  <div>
+    <div class="tt">算力大单密集落地：并行科技签19.13亿元GPU算力协议（60个月）；此前赛意信息64.5亿、康惠股份17.2亿跨界算力，A股算力订单潮延续</div>
+    <div class="meta">
+      <span class="chip tag">算力</span>
+      <span>科技AI</span>
+      <span class="chip">证券时报</span><span class="chip">华尔街见闻</span>
+      <span>09-18 晚间</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#C2185B">90</div>
+    <div class="bar"><i style="--w:90%;background:#0C447C"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#0C447C">
+  <div class="rank">4</div>
+  <div>
+    <div class="tt">半导体成最强主线：科创综指周涨逾7%，电子行业主力净流入872亿元；存储/HBM紧缺涨价预期发酵，芯片指数5连阳</div>
+    <div class="meta">
+      <span class="chip tag">半导体</span>
+      <span>科技AI</span>
+      <span class="chip">证券时报</span><span class="chip">东方财富</span>
+      <span>09-18</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#BA7517">88</div>
+    <div class="bar"><i style="--w:88%;background:#0C447C"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#0891B2">
+  <div class="rank">5</div>
+  <div>
+    <div class="tt">中东扰动持续：利雅得首拉防空警报、沙特东西输油管道受损评估中；美军称霍尔木兹海峡主航道已扫雷；布油约105美元三连跌；国内成品油9/24窗口预计上调约620元/吨</div>
+    <div class="meta">
+      <span class="chip tag">油价地缘</span>
+      <span>能源双碳</span>
+      <span class="chip">财联社</span><span class="chip">华尔街见闻</span><span class="chip">金联创</span>
+      <span>09-19</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#BA7517">87</div>
+    <div class="bar"><i style="--w:87%;background:#0891B2"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#92710A">
+  <div class="rank">6</div>
+  <div>
+    <div class="tt">新版《住房公积金管理条例》9/20正式施行：1999年以来最大修订，提取情形6→9种（新增装修、物业费），租房提取取消收入门槛，贷款审查15天缩至10天</div>
+    <div class="meta">
+      <span class="chip tag">房地产</span>
+      <span>房产家居</span>
+      <span class="chip">新华社</span><span class="chip">证券时报</span><span class="chip">今日头条</span>
+      <span>09-20 起施行</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#BA7517">86</div>
+    <div class="bar"><i style="--w:86%;background:#92710A"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#0F766E">
+  <div class="rank">7</div>
+  <div>
+    <div class="tt">十部门联合发文：医药工业“十五五”规划落地，顶层定调支持创新药、高端器械、医疗科技升级，机构视为四季度防守+修复主线</div>
+    <div class="meta">
+      <span class="chip tag">创新药</span>
+      <span>医疗健康</span>
+      <span class="chip">东方财富</span><span class="chip">券商研报</span>
+      <span>09-18</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#BA7517">85</div>
+    <div class="bar"><i style="--w:85%;background:#0F766E"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#B7791F">
+  <div class="rank">8</div>
+  <div>
+    <div class="tt">美联储三年来首次加息25bp至3.75%-4.00%，市场定价10月再加息概率55%；10年期美债收益率重回5%；道指周跌1.7%创3月以来最差，费半指数周五涨2.78%</div>
+    <div class="meta">
+      <span class="chip tag">外围市场</span>
+      <span>财经投资</span>
+      <span class="chip">第一财经</span><span class="chip">Kitco</span><span class="chip">华尔街见闻</span>
+      <span>09-18/19</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#BA7517">84</div>
+    <div class="bar"><i style="--w:84%;background:#B7791F"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#2563EB">
+  <div class="rank">9</div>
+  <div>
+    <div class="tt">国常会：部署实施医疗康复护理扩容提升工程，审议通过《中医药传统知识保护条例（草案）》，研究推动体育赛事健康发展</div>
+    <div class="meta">
+      <span class="chip tag">产业政策</span>
+      <span>政策民生</span>
+      <span class="chip">新华社</span><span class="chip">新华财经</span>
+      <span>09-18</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#BA7517">82</div>
+    <div class="bar"><i style="--w:82%;background:#2563EB"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#0C447C">
+  <div class="rank">10</div>
+  <div>
+    <div class="tt">胜宏科技：惠州mSAP车间满足1.6T光模块生产需求，在手订单饱满、产能利用率良好；管理层对股权激励50%增长考核目标表信心</div>
+    <div class="meta">
+      <span class="chip tag">算力</span>
+      <span>科技AI</span>
+      <span class="chip">华尔街见闻</span>
+      <span>09-19</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#BA7517">80</div>
+    <div class="bar"><i style="--w:80%;background:#0C447C"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#B7791F">
+  <div class="rank">11</div>
+  <div>
+    <div class="tt">财政部：1-8月全国一般公共预算收入同比+5.7%；证券交易印花税2160亿元，同比大增82%（市场活跃度佐证）</div>
+    <div class="meta">
+      <span class="chip tag">A股复盘</span>
+      <span>财经投资</span>
+      <span class="chip">新华财经</span><span class="chip">财政部</span>
+      <span>09-18</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#BA7517">78</div>
+    <div class="bar"><i style="--w:78%;background:#B7791F"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#059669">
+  <div class="rank">12</div>
+  <div>
+    <div class="tt">商务部回应美《2026年格雷厄姆制裁俄伊法案》成法：反对次级制裁与最高100%“次级关税”，保留采取一切必要措施权利</div>
+    <div class="meta">
+      <span class="chip tag">贸易摩擦</span>
+      <span>出海跨境</span>
+      <span class="chip">商务部网站</span><span class="chip">华尔街见闻</span>
+      <span>09-19</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#059669">76</div>
+    <div class="bar"><i style="--w:76%;background:#059669"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#B7791F">
+  <div class="rank">13</div>
+  <div>
+    <div class="tt">9月LPR报价9/20出炉：路透调查21家机构全部预期按兵不动（1年期3.0%、5年期以上3.5%，或连续16个月不变）；机构称年内降准降息窗口或在三季度末至四季度初</div>
+    <div class="meta">
+      <span class="chip tag">货币政策</span>
+      <span>财经投资</span>
+      <span class="chip">路透社</span><span class="chip">重庆晨报</span>
+      <span>09-20 公布</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#B7791F">74</div>
+    <div class="bar"><i style="--w:74%;background:#B7791F"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#EA580C">
+  <div class="rank">14</div>
+  <div>
+    <div class="tt">西贝回应“彻底倒闭”传闻：全国门店正常运营；有门店称工资推迟10天发放，储值金可退；贾国龙妻子张丽平质押西贝股权540万元</div>
+    <div class="meta">
+      <span class="chip tag">消费</span>
+      <span>消费零售</span>
+      <span class="chip">财联社</span><span class="chip">潇湘晨报</span><span class="chip">华尔街见闻</span>
+      <span>09-19</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#EA580C">70</div>
+    <div class="bar"><i style="--w:70%;background:#EA580C"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#B7791F">
+  <div class="rank">15</div>
+  <div>
+    <div class="tt">安德利（605198）拟7.93亿元现金收购甬强科技62.06%股权取得控制权，切入集成电路电子信息互连材料</div>
+    <div class="meta">
+      <span class="chip tag">重大公告</span>
+      <span>财经投资</span>
+      <span class="chip">公司公告</span><span class="chip">央广网</span>
+      <span>09-18 晚间</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#B7791F">68</div>
+    <div class="bar"><i style="--w:68%;background:#B7791F"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#059669">
+  <div class="rank">16</div>
+  <div>
+    <div class="tt">商务部回应“欧盟希望中国自愿限制混动汽车对欧出口”：所谓自愿出口限制严重违反世贸规则，中方坚决反对</div>
+    <div class="meta">
+      <span class="chip tag">贸易摩擦</span>
+      <span>出海跨境</span>
+      <span class="chip">新华财经</span><span class="chip">商务部</span>
+      <span>09-18</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#059669">66</div>
+    <div class="bar"><i style="--w:66%;background:#059669"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#C2185B">
+  <div class="rank">17</div>
+  <div>
+    <div class="tt">2026亚运会开幕，电竞首次作为正式项目纳入，游戏板块迎事件催化</div>
+    <div class="meta">
+      <span class="chip tag">游戏电竞</span>
+      <span>游戏电竞</span>
+      <span class="chip">东方财富</span>
+      <span>09-19</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#C2185B">65</div>
+    <div class="bar"><i style="--w:65%;background:#C2185B"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#4F46E5">
+  <div class="rank">18</div>
+  <div>
+    <div class="tt">长二丁火箭成功发射银河航天4颗SAR卫星，具星上智能处理与在轨即时解译能力，赋能太空智能基础设施</div>
+    <div class="meta">
+      <span class="chip tag">商业航天</span>
+      <span>商业航天</span>
+      <span class="chip">华尔街见闻</span><span class="chip">央视</span>
+      <span>09-19 18:50</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#4F46E5">63</div>
+    <div class="bar"><i style="--w:63%;background:#4F46E5"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#2563EB">
+  <div class="rank">19</div>
+  <div>
+    <div class="tt">广西印发金融业发展“十五五”规划：鼓励上市公司并购重组和再融资，支持发展新质生产力，引导现金分红</div>
+    <div class="meta">
+      <span class="chip tag">产业政策</span>
+      <span>政策民生</span>
+      <span class="chip">财联社</span>
+      <span>09-19</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#2563EB">62</div>
+    <div class="bar"><i style="--w:62%;background:#2563EB"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#0891B2">
+  <div class="rank">20</div>
+  <div>
+    <div class="tt">世界最大盐穴压缩空气储能电站（江苏金坛二期，中国电建参建）2号机组整组启动：350MW×2、储能8小时、效率超70%、核心装备100%国产化</div>
+    <div class="meta">
+      <span class="chip tag">新能源</span>
+      <span>能源双碳</span>
+      <span class="chip">华尔街见闻</span>
+      <span>09-19</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#0891B2">60</div>
+    <div class="bar"><i style="--w:60%;background:#0891B2"></i></div>
+  </div>
+</div><div class="item" style="border-left-color:#B7791F">
+  <div class="rank">21</div>
+  <div>
+    <div class="tt">公告速览：视源股份特定股东（视欣、视迅）减持预披露；杰普特控股股东权益变动触及5%整数倍并修订定增预案；国机精工高管小额增持</div>
+    <div class="meta">
+      <span class="chip tag">重大公告</span>
+      <span>财经投资</span>
+      <span class="chip">巨潮资讯</span><span class="chip">公司公告</span>
+      <span>09-19</span>
+      <span class="down">— 平稳</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="heat" style="color:#B7791F">55</div>
+    <div class="bar"><i style="--w:55%;background:#B7791F"></i></div>
+  </div>
+</div></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>\u25C8 引擎 <b>Hotspot Radar v1.1</b></span>
+    <span>标签库 <b>917</b> 标签 / 27 频道</span>
+    <span>档位 <b>SWEEP</b></span>
+    <span>生成 <b>2026-09-20 03:50</b></span>
+    <span style="margin-left:auto">耗时 <b class="ok">36.5s</b> \u00B7 状态 <b class="ok">NOMINAL</b> \u00B7 真实信源可溯</span>
+  </div>
+
+</div>
+</body>
+</html>

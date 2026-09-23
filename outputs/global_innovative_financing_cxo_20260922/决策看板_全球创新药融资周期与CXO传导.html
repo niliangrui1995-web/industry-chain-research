@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN" data-moss-artifact-mode="interactive-web" data-moss-visual-baseline="editorial-impact" data-moss-render-seed="bc18799c8b17fc9c">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全球创新药融资周期及其对中国 CXO 的传导影响</title>
+<style>
+:root {
+  --moss-color-primary: #17213D;
+  --moss-color-secondary: #F2EDE4;
+  --moss-color-accent: #E4572E;
+  --moss-color-surface: #FFFDF8;
+  --moss-color-text: #10131A;
+  --moss-font-display: Georgia, "Times New Roman", serif;
+  --moss-font-body: "Aptos", "Segoe UI", "Microsoft YaHei", sans-serif;
+  --moss-type-ratio: 1.250;
+  --moss-space-unit: 8px;
+  --moss-radius: 4px;
+  --moss-shadow: 0 22px 70px rgba(23, 33, 61, 0.18);
+  --moss-motion-duration: 520ms;
+  --moss-motion-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --moss-tone: editorial;
+  --moss-density: balanced;
+  --ink-soft: #566071;
+  --line: #D9D7D0;
+  --paper: #F7F4EE;
+  --fact: #17213D;
+  --forward: #E4572E;
+  --ok: #2E6B57;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--paper); }
+body { margin: 0; color: var(--moss-color-text); background: var(--paper); font-family: var(--moss-font-body); line-height: 1.62; }
+a { color: inherit; }
+.topbar { position: sticky; top: 0; z-index: 20; background: rgba(247,244,238,.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav { max-width: 1240px; margin: 0 auto; padding: 12px 28px; display: flex; gap: 18px; overflow-x: auto; white-space: nowrap; }
+.nav a { text-decoration: none; color: var(--ink-soft); font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+.nav a:hover, .nav a:focus { color: var(--forward); }
+.hero { background: var(--moss-color-primary); color: #FFFDF8; padding: 76px max(28px, calc((100vw - 1240px)/2)) 68px; position: relative; overflow: hidden; }
+.hero:after { content: ""; position: absolute; width: 440px; height: 440px; right: -100px; top: -170px; border: 1px solid rgba(255,255,255,.17); border-radius: 50%; box-shadow: 0 0 0 38px rgba(255,255,255,.045), 0 0 0 76px rgba(255,255,255,.03); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr); gap: 56px; align-items: end; position: relative; z-index: 1; }
+.eyebrow, .section-heading > span { color: var(--forward); font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.hero h1 { font-family: var(--moss-font-display); font-size: clamp(40px, 6vw, 78px); line-height: 1.02; margin: 20px 0 22px; max-width: 900px; font-weight: 700; }
+.hero .subtitle { max-width: 720px; margin: 0; color: #D9DEEA; font-size: 17px; }
+.hero-meta { border-left: 1px solid rgba(255,255,255,.32); padding-left: 24px; color: #D9DEEA; font-size: 13px; }
+.hero-meta strong { color: #FFFDF8; font-size: 20px; display: block; margin-top: 4px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+.thesis { margin: -28px auto 72px; position: relative; z-index: 2; display: grid; grid-template-columns: 1.25fr .75fr .75fr; gap: 1px; background: var(--line); box-shadow: var(--moss-shadow); }
+.thesis > div { background: var(--moss-color-surface); padding: 26px; min-height: 166px; }
+.thesis .label { display: block; color: var(--ink-soft); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; }
+.thesis strong { display: block; font-family: var(--moss-font-display); font-size: 22px; line-height: 1.22; color: var(--moss-color-primary); }
+.thesis p { margin: 10px 0 0; color: var(--ink-soft); font-size: 13px; }
+.section { padding: 76px 0; border-top: 1px solid var(--line); scroll-margin-top: 54px; }
+.section-heading { max-width: 890px; margin-bottom: 34px; }
+.section-heading h2 { font-family: var(--moss-font-display); color: var(--moss-color-primary); font-size: clamp(32px, 4vw, 52px); line-height: 1.1; margin: 12px 0 16px; }
+.section-heading p { margin: 0; color: var(--ink-soft); font-size: 16px; max-width: 800px; }
+.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); margin: 28px 0 36px; }
+.metric { background: var(--moss-color-surface); padding: 22px; min-height: 144px; }
+.metric-label { font-size: 12px; color: var(--ink-soft); font-weight: 700; }
+.metric strong { display: block; color: var(--moss-color-primary); font-family: var(--moss-font-display); font-size: 34px; margin: 10px 0 6px; }
+.metric-note { color: var(--ink-soft); font-size: 12px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); background: var(--moss-color-surface); }
+table { width: 100%; border-collapse: collapse; min-width: 880px; font-size: 13px; }
+th { text-align: left; color: var(--moss-color-primary); background: var(--moss-color-secondary); padding: 13px 14px; font-size: 11px; letter-spacing: .05em; white-space: nowrap; }
+td { padding: 14px; border-top: 1px solid var(--line); vertical-align: top; min-width: 130px; }
+tr:hover td { background: #FCFAF5; }
+.evidence-badge { display: inline-block; margin: 2px 4px 2px 0; padding: 2px 6px; border: 1px solid #C9C6BD; color: var(--moss-color-primary); background: #FFFDF8; border-radius: 3px; font-size: 10px; font-weight: 800; text-decoration: none; }
+.evidence-badge:hover { border-color: var(--forward); color: var(--forward); }
+.scenario-band { display: grid; grid-template-columns: 1fr 280px; background: var(--moss-color-primary); color: #FFFDF8; margin: 32px 0; border-left: 7px solid var(--forward); }
+.scenario-band > div { padding: 26px; }
+.scenario-band p { margin: 10px 0 0; color: #E7E9F0; }
+.window { border-left: 1px solid rgba(255,255,255,.2); display: flex; flex-direction: column; justify-content: center; }
+.window .eyebrow { color: #F4A88F; }
+.window strong { font-family: var(--moss-font-display); font-size: 28px; margin: 6px 0; }
+.window small { color: #D9DEEA; }
+.two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 28px; }
+.note-panel { padding: 22px; border: 1px solid var(--line); border-top: 3px solid var(--moss-color-primary); background: var(--moss-color-surface); }
+.note-panel.caution { border-top-color: var(--forward); }
+.note-panel h3 { margin: 0 0 9px; font-family: var(--moss-font-display); color: var(--moss-color-primary); }
+.note-panel p { margin: 0; color: var(--ink-soft); font-size: 13px; }
+.signal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.signal { background: var(--moss-color-surface); border: 1px solid var(--line); border-top: 3px solid var(--forward); padding: 18px; min-height: 280px; }
+.signal-top { display: flex; justify-content: space-between; gap: 8px; align-items: start; }
+.signal-name { font-weight: 800; color: var(--moss-color-primary); line-height: 1.2; }
+.signal p { color: var(--ink-soft); font-size: 12px; margin: 15px 0 0; }
+.signal .stop { color: #8A3B27; border-top: 1px dashed #E7B0A1; padding-top: 12px; }
+.tag { display: inline-block; padding: 3px 7px; background: #E8E7E1; color: var(--ink-soft); font-size: 10px; font-weight: 800; border-radius: 2px; white-space: nowrap; }
+.tag.orange { background: #FBE4DC; color: #9B3C25; }
+.rule-box { margin-top: 22px; border: 1px dashed var(--forward); padding: 18px 20px; color: #7B3A28; background: #FFF8F5; font-size: 13px; }
+.segment-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+.segment { padding: 20px; background: var(--moss-color-surface); border-top: 4px solid var(--moss-color-primary); border-bottom: 1px solid var(--line); }
+.segment-name { font-family: var(--moss-font-display); color: var(--moss-color-primary); font-size: 23px; line-height: 1.15; margin-bottom: 15px; }
+.segment p { color: var(--ink-soft); font-size: 12px; margin: 10px 0 0; }
+.na { color: var(--forward); font-weight: 800; }
+.leading { color: var(--ok) !important; border-top: 1px dashed #A9C7BA; padding-top: 12px; }
+.transmission { min-width: 1040px; }
+.winner-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); margin-top: 28px; }
+.winner-strip > div { background: var(--moss-color-primary); color: #FFFDF8; padding: 28px; }
+.winner-strip > div + div { background: var(--forward); }
+.winner-label { display: block; font-size: 11px; letter-spacing: .12em; font-weight: 800; opacity: .8; margin-bottom: 9px; }
+.winner-strip strong { font-family: var(--moss-font-display); font-size: 30px; display: block; }
+.winner-strip p { color: #F7EDE8; font-size: 13px; margin-bottom: 0; }
+.company-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.company-check { background: var(--moss-color-surface); border: 1px solid var(--line); padding: 22px; }
+.company-head { display: flex; justify-content: space-between; gap: 14px; align-items: start; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.company-head h3 { margin: 0; color: var(--moss-color-primary); font-family: var(--moss-font-display); font-size: 22px; }
+.company-check p { font-size: 13px; color: var(--ink-soft); margin: 14px 0 0; }
+.company-check .risk { color: #8A3B27; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); }
+.dashboard-col { background: var(--moss-color-surface); padding: 24px; min-height: 220px; }
+.dashboard-col:nth-child(2) { background: #F0F4F2; }
+.dashboard-col:nth-child(3) { background: #F5F0E9; }
+.dashboard-col:nth-child(4) { background: #FFF1EB; }
+.dashboard-col h3 { color: var(--moss-color-primary); font-family: var(--moss-font-display); font-size: 22px; margin: 0 0 15px; }
+.dashboard-col ul, .limitations { padding-left: 19px; margin: 0; color: var(--ink-soft); font-size: 13px; }
+.dashboard-col li, .limitations li { margin: 9px 0; }
+.section-limitations { background: #EFECE5; }
+.limitations { max-width: 860px; font-size: 14px; }
+.section-evidence { padding-bottom: 100px; }
+.evidence-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.evidence-item { background: var(--moss-color-surface); border: 1px solid var(--line); padding: 20px; scroll-margin-top: 60px; }
+.evidence-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.evidence-id { color: var(--forward); font-weight: 900; letter-spacing: .06em; }
+.confidence { color: var(--ink-soft); font-size: 11px; margin-left: auto; }
+.evidence-item h3 { color: var(--moss-color-primary); font-size: 16px; line-height: 1.3; margin: 12px 0 9px; }
+.evidence-item p { color: var(--ink-soft); font-size: 12px; margin: 7px 0; }
+.source-link { margin-top: 12px; color: var(--forward); font-size: 12px; font-weight: 800; }
+.source-link a { text-decoration: none; }
+.local-source { color: var(--ink-soft); font-weight: 600; }
+.footer { background: var(--moss-color-primary); color: #D9DEEA; padding: 26px 28px; font-size: 12px; }
+.footer-inner { max-width: 1240px; margin: 0 auto; display: flex; justify-content: space-between; gap: 20px; }
+@media (max-width: 980px) {
+  .hero-grid, .thesis, .two-column, .winner-strip { grid-template-columns: 1fr; }
+  .hero-meta, .window { border-left: 0; border-top: 1px solid rgba(255,255,255,.2); }
+  .metric-grid, .segment-grid, .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+  .signal-grid { grid-template-columns: repeat(2, 1fr); }
+  .evidence-list, .company-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .hero { padding: 54px 20px 48px; }
+  .wrap { padding: 0 20px; }
+  .nav { padding-left: 20px; }
+  .hero h1 { font-size: 43px; }
+  .section { padding: 54px 0; }
+  .metric-grid, .segment-grid, .signal-grid, .dashboard-grid { grid-template-columns: 1fr; }
+  .thesis { margin-top: -18px; }
+  .footer-inner { display: block; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+</style>
+</head>
+<body>
+<header class="topbar"><nav class="nav" aria-label="章节导航"><a href="#historical">01 历史复盘</a><a href="#forecast">02 前瞻预警</a><a href="#chain">03 CXO 传导</a><a href="#company_checks">04 经营验证</a><a href="#dashboard">05 跟踪看板</a><a href="#limitations">06 边界限制</a><a href="#evidence">证据台账</a></nav></header>
+<header class="hero"><div class="hero-grid"><div><span class="eyebrow">投资研究 / GLOBAL BIOTECH FINANCING × CHINA CXO</span><h1>全球创新药融资周期及其对中国 CXO 的传导影响</h1><p class="subtitle">历史事实、周期推演与产业链传导的投资研究看板。截至 2026-09-22，严格区分已发生的历史事实与基于假设的前瞻判断。</p></div><div class="hero-meta"><div>研究范围</div><strong>全球创新药融资 + 中国 CXO</strong><div style="margin-top:18px">决策场景</div><strong>投资研究</strong></div></div></header>
+<main class="wrap">
+<section class="thesis" aria-label="核心判断"><div><span class="label">核心结论</span><strong>2021 年是广泛早期融资、一级市场估值扩张和二级市场高风险偏好的共同顶点；2025-2026 年更像总额修复但资本集中于后期、确定性和 AI/平台资产的选择性复苏。</strong><p>历史事实中高到高；传导顺序和环节判断中等；前瞻时间窗口低到中等。</p></div><div><span class="label">前瞻窗口</span><strong>在融资、退出和宏观条件持续改善的假设下，下一轮高位区间可能落在 2027H2-2029H1；该窗口是情景推断，不是时间点预测。</strong><p>仅在融资、退出和宏观条件满足时成立。</p></div><div><span class="label">传导排序</span><strong>最快：上游工具与材料：订单频率高、交付周期短，最早反映项目重启。</strong><p>最大弹性：CDMO/CRDMO：项目阶段升级和产能利用率改善带来最大收入与利润弹性，但确认最慢、波动最大。</p></div></section>
+<section id="historical" class="section section-fact">
+      <div class="section-heading"><span>PART 01 / 已发生的历史事实</span><h2>2021：融资顶点不是单一事件</h2><p>2021 年的顶点由流动性、二级市场估值、退出锚和一级市场风险偏好共同构成；其后是二级先转弱、一级结构性收缩、CXO 再滞后的链式反应。</p></div>
+      <div class="metric-grid"><div class="metric"><div class="metric-label">Evaluate Vantage 私募融资</div><strong>$28.45B</strong><div class="metric-note">2021 年；514 笔；多来源口径之一</div></div><div class="metric"><div class="metric-label">大额融资</div><strong>216 / 93</strong><div class="metric-note">≥$50M / ≥$100M 轮次</div></div><div class="metric"><div class="metric-label">IPO 结果</div><strong>约 80% 破发</strong><div class="metric-note">2021 年 IPO 类别年末低于发行价的比例</div></div><div class="metric"><div class="metric-label">货币条件</div><strong>0%-0.25%</strong><div class="metric-note">2021 年美国联邦基金利率目标区间</div></div></div>
+      <div class="table-wrap"><table><thead><tr><th>维度</th><th>已发生事实</th><th>作用逻辑</th><th>时序判断</th><th>证据</th></tr></thead><tbody><tr><td>宏观流动性</td><td>联邦基金利率维持 0%-0.25%；大部分时间每月购买 800 亿美元国债和 400 亿美元 MBS；11 月开始 Taper，12 月加快缩减。</td><td>低利率、QE 和风险资产久期扩张抬高未盈利创新药远期现金流估值，降低融资门槛。</td><td>先行驱动；Taper 是边际拐点，不是当日断崖。</td><td><a class="evidence-badge" href="#evidence-E-001">E-001</a></td></tr><tr><td>资本市场表现</td><td>2021 年私募融资达到 28.45B 美元；≥50M 美元 216 轮，≥100M 美元 93 轮。</td><td>融资规模和大额轮次扩张，说明风险资本供给与风险偏好同步上行。</td><td>与一级顶点同期。</td><td><a class="evidence-badge" href="#evidence-E-002">E-002</a></td></tr><tr><td>IPO 与二级市场</td><td>2021 年 78 家生物技术公司 IPO 融资达到 50M 美元以上，合计近 14B 美元；约 80% 年末低于发行价。</td><td>二级市场先提供高估值退出锚，随后破发和指数回撤削弱 crossover 资金和再融资能力。</td><td>二级市场转弱领先一级结构性收缩。</td><td><a class="evidence-badge" href="#evidence-E-003">E-003</a></td></tr><tr><td>估值与阶段</td><td>78 家 IPO 中 52 家处于临床前或 Phase I；高估值与临床证据脱节。</td><td>估值依赖退出和叙事，数据验证不足使市场对临床失败更敏感。</td><td>泡沫化是顶部前的领先信号。</td><td><a class="evidence-badge" href="#evidence-E-003">E-003</a></td></tr><tr><td>政策与研发效率</td><td>中国 NMPA 后续于 2025 年公告 No.86 增设符合条件创新药 IND 30 个工作日通道。</td><td>政策改善影响研发项目可行性和资金周转，属于结构性支撑；不应倒推为 2021 顶点的直接原因。</td><td>政策支持滞后于 2021 全球融资拐点。</td><td><a class="evidence-badge" href="#evidence-E-008">E-008</a></td></tr><tr><td>二级到一级机制</td><td>估值上涨→IPO/SPAC/crossover 退出锚→早期融资扩张；二级破发→一级转向后期资产、轮次延后、条款变严。</td><td>资本市场价格信号经退出和再融资机制传导到新项目成立和研发外包预算。</td><td>一级总额通常滞后于二级价格变化。</td><td><a class="evidence-badge" href="#evidence-E-002">E-002</a> <a class="evidence-badge" href="#evidence-E-003">E-003</a></td></tr><tr><td>对 CXO 的滞后传导</td><td>资金到账→项目启动→早期工具/材料→发现和临床前 CRO→临床 CRO→CMC/CDMO→收入与利润。</td><td>订单、交付、收入、利润和现金流依次确认，不能把融资或订单直接等同 CXO 当期利润。</td><td>经营数据相对融资存在多阶段滞后。</td><td><a class="evidence-badge" href="#evidence-E-010">E-010</a> <a class="evidence-badge" href="#evidence-E-011">E-011</a></td></tr></tbody></table></div>
+    </section><section id="forecast" class="section section-forward-section">
+      <div class="section-heading"><span>PART 02 / 基于假设的前瞻判断</span><h2>下一轮高位：看扩散，不只看总额</h2><p>2025-2026 的融资修复尚未证明重回 2021 年式广泛早期繁荣。真正接近周期顶部，需要看到早期融资、IPO、M&amp;A、license-out 和估值同时扩散。</p></div>
+      <div class="scenario-band"><div><span class="eyebrow">前瞻假设</span><p>融资修复延续，退出市场没有系统性关闭，后期临床和平台资产继续获得资本，宏观利率不出现快速且持续的再收紧。</p></div><div class="window"><span class="eyebrow">情景窗口</span><strong>2027H2-2029H1</strong><small>置信度：低到中等</small></div></div>
+      <div class="two-column"><div class="note-panel"><h3>复苏的支持证据</h3><p>PitchBook 统计 2025 年全球 biopharma VC deal value 约 33.8B 美元、1,171 笔，连续第二年上升；但早期融资占比降至 32%，资本更集中于较大、较后期和更确定性资产。</p></div><div class="note-panel caution"><h3>反方情景</h3><p>若 IPO/M&amp;A 退出继续受限，局部泡沫可能更早见顶；若早期融资占比回升、临床成功率改善且退出面扩大，周期可能延长。</p></div></div>
+      <div class="signal-grid"><article class="signal signal-forward"><div class="signal-top"><span class="signal-name">货币政策转向</span><span class="tag orange">领先</span></div><p><b>观察：</b>FOMC 利率路径、实际利率、信用利差、融资成本</p><p><b>含义：</b>折现率上升，先压缩未盈利和早期资产估值。</p><p class="stop"><b>停止条件：</b>实际利率和信用利差持续上行，同时早期融资占比下降。</p></article><article class="signal signal-forward"><div class="signal-top"><span class="signal-name">IPO 通道收紧</span><span class="tag orange">同期至领先</span></div><p><b>观察：</b>IPO 数量、发行折价、首日/30 日破发率、撤回率</p><p><b>含义：</b>退出锚失效，crossover 资金减少，一级轮次延后。</p><p class="stop"><b>停止条件：</b>发行量下降且破发/撤回连续两个观察期恶化。</p></article><article class="signal signal-forward"><div class="signal-top"><span class="signal-name">估值泡沫化</span><span class="tag orange">领先</span></div><p><b>观察：</b>早期轮次估值/融资额、无临床数据资产占比、独角兽融资集中度</p><p><b>含义：</b>资本从可验证数据转向叙事溢价，脆弱性上升。</p><p class="stop"><b>停止条件：</b>估值上升与临床/BD 数据脱钩。</p></article><article class="signal signal-forward"><div class="signal-top"><span class="signal-name">重大临床失败</span><span class="tag orange">事件领先、融资滞后</span></div><p><b>观察：</b>关键 III 期失败、监管否决、同靶点安全事件</p><p><b>含义：</b>改变成功率和可比估值，可能造成赛道级重估。</p><p class="stop"><b>停止条件：</b>同机制或同赛道连续出现失败/安全事件。</p></article><article class="signal signal-forward"><div class="signal-top"><span class="signal-name">license-out 降温</span><span class="tag orange">同期至滞后</span></div><p><b>观察：</b>交易数、首付款、中后期交易占比、里程碑兑现</p><p><b>含义：</b>资产定价和退出需求走弱，融资质量先恶化、总额后反映。</p><p class="stop"><b>停止条件：</b>首付款和中后期交易连续两个季度下降。</p></article></div>
+      <div class="rule-box"><b>顶部组合判据：</b>单一信号不构成顶部。更可靠的顶部组合是：IPO 破发率上升且发行量下降；早期融资占比下降、单笔金额被少数大项目抬高；license-out 首付款和中后期交易连续两个季度下降；同时实际利率或信用利差上行。</div>
+    </section><section id="chain" class="section section-chain">
+      <div class="section-heading"><span>PART 03 / 中国 CXO 传导</span><h2>最快看上游，最大看 CDMO</h2><p>同一融资回暖对四个环节不是同步冲击；早期预算先改变工具和材料采购，后期项目升级才改变 CDMO 的收入和利用率。</p></div>
+      <div class="segment-grid"><article class="segment"><div class="segment-name">上游工具与材料</div><p><b>代表公司：</b>毕得医药、皓元医药、药石科技、义翘神州、药康生物、南模生物、奥浦迈、纳微科技、赛分科技、东富龙、楚天科技</p><p><b>集中度：</b><span class="na">N/A：缺少同口径 CR5/CRn 市场份额</span></p><p><b>进入壁垒：</b>SKU/库存、模型库、质量验证、客户交付、设备认证</p><p><b>竞争：</b>中高；普通试剂/砌块价格竞争更明显，验证型材料和装备替换较慢</p><p class="leading"><b>先行指标：</b>Biotech 融资到账、立项数、实验室采购、复购率、库存周转</p></article><article class="segment"><div class="segment-name">临床前 CRO</div><p><b>代表公司：</b>昭衍新药、益诺思、美迪西、药明康德 Testing、康龙化成实验室服务、睿智医药</p><p><b>集中度：</b><span class="na">N/A：缺少同口径 CR5/CRn 市场份额</span></p><p><b>进入壁垒：</b>GLP 资质、NHP 资源、数据完整性、复杂模型、国际申报经验</p><p><b>竞争：</b>中等；传统动物试验面临价格和工作量压力，复杂模型和国际申报黏性更强</p><p class="leading"><b>先行指标：</b>PCC、IND 准备、GLP 新签/在手、实验室利用率</p></article><article class="segment"><div class="segment-name">临床 CRO</div><p><b>代表公司：</b>泰格医药、诺思格、博济医药、阳光诺和、万邦医药、方达控股、普蕊斯</p><p><b>集中度：</b><span class="na">N/A：缺少同口径 CR5/CRn 市场份额</span></p><p><b>进入壁垒：</b>中心资源、PI/KOL 网络、患者招募、数据质量、注册能力</p><p><b>竞争：</b>中高；标准服务竞争强，项目取消、入组和回款放大波动</p><p class="leading"><b>先行指标：</b>IND 获批、新启动试验、研究中心启动、患者入组</p></article><article class="segment"><div class="segment-name">CDMO/CRDMO</div><p><b>代表公司：</b>药明康德、凯莱英、博腾股份、九洲药业、药石科技、皓元医药、药明生物、药明合联、圣诺生物、奥浦迈</p><p><b>集中度：</b><span class="na">N/A：跨小分子、多肽、生物药、CGT 的同口径份额未形成</span></p><p><b>进入壁垒：</b>工艺开发、放大、EHS、质量体系、全球监管检查、技术转移、客户迁移成本</p><p><b>竞争：</b>中高；成熟产能可能过剩，复杂工艺和商业化项目壁垒更高</p><p class="leading"><b>先行指标：</b>II/III 期推进、技术转移、验证批、商业化订单、产能利用率</p></article></div>
+      <div class="table-wrap"><table class="transmission"><thead><tr><th>环节</th><th>需求传导</th><th>订单恢复弹性</th><th>议价能力</th><th>产能利用率</th><th>受益节奏</th></tr></thead><tbody><tr><td>上游工具与材料</td><td>立项、实验室采购、早研预算最先传导</td><td>快；低基数、订单频率高</td><td>普通 SKU 弱；验证型材料/设备较强</td><td>变化快；设备受验收滞后</td><td>最快，通常领先 1-2 个阶段</td></tr><tr><td>临床前 CRO</td><td>PCC、IND 准备、GLP 新签和在手项目</td><td>中等；受取消和价格影响</td><td>复杂模型、GLP 资质、国际申报较强</td><td>实验室和动物设施逐步爬坡</td><td>早于临床 CRO，晚于工具材料</td></tr><tr><td>临床 CRO</td><td>IND 获批、试验启动、患者入组</td><td>中等偏慢；项目周期长</td><td>中心资源和数据质量较强，标准服务竞争激烈</td><td>人员/中心利用率改善但回款慢</td><td>通常滞后于临床前</td></tr><tr><td>CDMO/CRDMO</td><td>II/III 期、技术转移、临床批、商业化放量</td><td>最大；阶段升级带来高弹性</td><td>商业化、复杂工艺和验证产能强；普通产能受压</td><td>对利润和现金流影响最大</td><td>最慢但弹性最大</td></tr></tbody></table></div>
+      <div class="winner-strip"><div><span class="winner-label">最快受益</span><strong>上游工具与材料</strong><p>预算恢复后即可触发采购，收入确认短，订单和复购较早可见。</p></div><div><span class="winner-label">最大弹性</span><strong>CDMO / CRDMO</strong><p>阶段升级、技术转移和利用率改善叠加，金额与利润弹性最大，但确认最慢。</p></div></div>
+    </section><section id="company_checks" class="section section-checks"><div class="section-heading"><span>PART 04 / 经营验证</span><h2>订单改善必须穿透到现金流</h2><p>融资、订单、收入、利润和现金流必须按顺序验证。单一订单增速或单季利润不能替代经营穿透。</p></div><div class="company-grid"><article class="company-check"><div class="company-head"><h3>药明康德 603259.SH</h3><span><a class="evidence-badge" href="#evidence-E-010">E-010</a> <a class="evidence-badge" href="#evidence-E-011">E-011</a> <a class="evidence-badge" href="#evidence-E-012">E-012</a></span></div><p><b>事实：</b>2026H1 营收 288.97 亿元、扣非归母净利润 105.72 亿元、经营现金流 96.99 亿元；TTM 扣非 182.31 亿元；Q2 扣非 62.97 亿元，同比约 +93.57%。</p><p><b>解读：</b>经营兑现较强，是融资回暖向后端需求传导的验证样本，但不是行业整体证据。</p><p class="risk"><b>风险：</b>BIOSECURE 已成法；2026-08-07 获得的是针对 1260H 认定的初步禁令，不是实体诉讼终局胜诉；另有 DEL 数据未授权访问事件。</p></article><article class="company-check"><div class="company-head"><h3>凯莱英 002821.SZ</h3><span><a class="evidence-badge" href="#evidence-E-013">E-013</a></span></div><p><b>事实：</b>2026H1 扣非 5.25 亿元；Q2 扣非同比约 -3.12%。</p><p><b>解读：</b>订单/后端需求改善不自动等于利润同步修复。</p><p class="risk"><b>风险：</b>需跟踪订单交付、产品结构、毛利率和产能利用率。</p></article><article class="company-check"><div class="company-head"><h3>药石科技 300725.SZ / 皓元医药 688131.SH</h3><span><a class="evidence-badge" href="#evidence-E-014">E-014</a></span></div><p><b>事实：</b>药石 H1 收入同比 +15.19%、扣非 +40.70%；皓元收入 +25.71%、扣非 +10.21%。</p><p><b>解读：</b>前端材料与后端业务改善可能不同步，跨层公司不能用单一景气指标解释。</p><p class="risk"><b>风险：</b>高增长需继续验证现金转换、库存与分部结构。</p></article><article class="company-check"><div class="company-head"><h3>博腾股份 300363.SZ / 泰格医药 300347.SZ / 昭衍新药 603127.SH</h3><span><a class="evidence-badge" href="#evidence-E-015">E-015</a></span></div><p><b>事实：</b>博腾 H1 归母为负；泰格临床主业恢复但归母受投资损益影响；昭衍扣非含生物资产公允价值影响。</p><p><b>解读：</b>利润表一次性项目会扭曲行业周期判断。</p><p class="risk"><b>风险：</b>不能用单一 PE 或净利同比作横向结论。</p></article></div></section><section id="dashboard" class="section section-dashboard"><div class="section-heading"><span>PART 05 / 跟踪看板</span><h2>用组合信号确认，而不是追逐单点叙事</h2><p>用组合信号确认周期状态，不用单点交易叙事替代证据链。</p></div><div class="dashboard-grid"><article class="dashboard-col"><h3>全球融资</h3><ul><li>VC 总额与笔数</li><li>早期融资占比与中位数</li><li>IPO 数量、发行折价与破发率</li><li>M&amp;A 金额与退出面</li><li>license-out 首付款与中后期比例</li></ul></article><article class="dashboard-col"><h3>CXO 订单</h3><ul><li>Biotech 融资到账与项目启动</li><li>CRO 新签、活跃客户、FTE 利用率</li><li>GLP 在手与实验室利用率</li><li>临床中心启动与入组</li><li>CDMO 技术转移、合同负债与商业化订单</li></ul></article><article class="dashboard-col"><h3>经营穿透</h3><ul><li>收入与毛利率</li><li>应收、库存与回款</li><li>产能利用率</li><li>资本开支回报</li><li>经营现金流</li></ul></article><article class="dashboard-col"><h3>停止条件</h3><ul><li>融资总额由少数大单抬高但早期占比继续下降</li><li>IPO 破发/撤回连续恶化</li><li>license-out 首付款下降</li><li>订单高增但应收、库存、CAPEX 和利用率恶化</li><li>政策或数据安全事件造成客户迁移</li></ul></article></div></section><section id="limitations" class="section section-limitations"><div class="section-heading"><span>PART 06 / 边界与限制</span><h2>哪些地方不能下确定性结论</h2></div><ul class="limitations"><li>四个 CXO 环节的 CR5/CRn 市场份额：N/A；现有材料只支持代表公司、壁垒和定性竞争格局。</li><li>DealForma、Evaluate、PitchBook 等统计对象和样本定义不同；口径冲突并列保留，不简单平均。</li><li>2025-2026 融资修复不能直接等同 2021 年广泛早期融资繁荣；PitchBook 的早期融资占比下降是关键反证。</li><li>未取得合格事件前一致预期原文，因此不输出正式预期差、目标价、仓位或收益概率。</li><li>前瞻时间窗口和最快/最大弹性判断均是条件性推断，必须由组合信号和公司经营数据验证。</li></ul></section>
+<section id="evidence" class="section section-evidence"><div class="section-heading"><span>APPENDIX / 证据台账</span><h2>证据、口径与来源</h2><p>每条记录保留来源类型、发布日期、统计截止期、地域、对象、口径、单位和置信度；不同统计口径不做简单平均。</p></div><div class="evidence-list"><article class="evidence-item" id="evidence-E-001"><div class="evidence-head"><span class="evidence-id">E-001</span><span class="tag">official_fact</span><span class="confidence">置信度：high</span></div><h3>Federal Reserve / New York Fed 2021 Open Market Operations</h3><p><b>发布日期：</b>2022　<b>统计截止：</b>2021　<b>地域：</b>United States</p><p><b>对象：</b>FOMC monetary policy implementation　<b>口径：</b>2021 federal funds target range and asset purchases　<b>单位：</b>USD / percentage</p><p>2021 年维持 0%-0.25%；11 月开始减速购买，12 月加快缩减。</p><div class="source-link"><a href="https://www.newyorkfed.org/medialibrary/media/markets/omo/omo2021-pdf.pdf" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-002"><div class="evidence-head"><span class="evidence-id">E-002</span><span class="tag">institutional_view</span><span class="confidence">置信度：high</span></div><h3>Evaluate Vantage Pharma and Medtech Review 2021</h3><p><b>发布日期：</b>2022-02　<b>统计截止：</b>2021　<b>地域：</b>Global</p><p><b>对象：</b>Biopharma venture financing　<b>口径：</b>Investment, financing count, average financing, large rounds　<b>单位：</b>USD billion / count / USD million</p><p>2021 investment 28.45B、514 笔；平均 55.56M；≥50M 216 笔；≥100M 93 笔。</p><div class="source-link"><a href="https://image.e.evaluate.com/Web/A5CPDLD/%7B3ce9dc24-2a8b-4b9c-86af-6a5578dd84d6%7D_jn371-vantage-2021-review-report.pdf" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-003"><div class="evidence-head"><span class="evidence-id">E-003</span><span class="tag">institutional_view</span><span class="confidence">置信度：high</span></div><h3>BioPharma Dive / SVB Leerink 2021 biotech IPO review</h3><p><b>发布日期：</b>2022-01　<b>统计截止：</b>2021-12-31　<b>地域：</b>United States / Global sample</p><p><b>对象：</b>Biotech IPO cohort　<b>口径：</b>78 IPOs raising at least 50M; aftermarket performance　<b>单位：</b>count / USD billion / percentage</p><p>合计近 14B；约 80% 年末低于发行价；52 家处于临床前或 Phase I。</p><div class="source-link"><a href="https://www.biopharmadive.com/news/biotech-ipo-performance-investors-2021/616808" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-004"><div class="evidence-head"><span class="evidence-id">E-004</span><span class="tag">institutional_view</span><span class="confidence">置信度：medium-high</span></div><h3>PitchBook Q4 2025 Biopharma VC Trends</h3><p><b>发布日期：</b>2026-02-13　<b>统计截止：</b>2025-12-31　<b>地域：</b>Global</p><p><b>对象：</b>Biopharma VC　<b>口径：</b>Deal value, deal count, stage mix, exits and IPO　<b>单位：</b>USD billion / count / percentage</p><p>2025 deal value 33.8B、1,171 笔；早期融资占比约 32%；资本更集中于后期和确定性资产。</p><div class="source-link"><a href="https://pitchbook.com/news/reports/q4-2025-biopharma-vc-trends" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-005"><div class="evidence-head"><span class="evidence-id">E-005</span><span class="tag">official_fact</span><span class="confidence">置信度：high</span></div><h3>NMPA Announcement No.86 (2025)</h3><p><b>发布日期：</b>2025-09-09　<b>统计截止：</b>2025-09-09　<b>地域：</b>China</p><p><b>对象：</b>Innovative drug IND review and approval　<b>口径：</b>Eligible Class I innovative drugs 30-day pathway　<b>单位：</b>working days</p><p>符合条件的 1 类创新药 IND 受理后 30 个工作日内完成审评审批；复杂问题可回到 60 日。</p><div class="source-link"><a href="https://english.nmpa.gov.cn/2025-10/14/c_1138494.htm" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-006"><div class="evidence-head"><span class="evidence-id">E-006</span><span class="tag">official_fact</span><span class="confidence">置信度：high</span></div><h3>FY2026 NDAA / BIOSECURE policy analysis</h3><p><b>发布日期：</b>2026-08　<b>统计截止：</b>2026-08　<b>地域：</b>United States / China</p><p><b>对象：</b>BIOSECURE Act and 1260H　<b>口径：</b>Enacted framework, designation paths and preliminary injunction　<b>单位：</b>legal status</p><p>BIOSECURE 于 2025-12-18 成法；2026-06 DoD 更新 1260H；2026-08-07 对药明康德列名给予初步禁令；非终局胜诉。</p><div class="source-link"><a href="https://www.dlapiper.com/en-us/insights/publications/2026/08/us-china-life-sciences-policy-developments-top-points-for-companies" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-007"><div class="evidence-head"><span class="evidence-id">E-007</span><span class="tag">official_fact</span><span class="confidence">置信度：high</span></div><h3>WuXi AppTec 1260H preliminary injunction coverage</h3><p><b>发布日期：</b>2026-08-07　<b>统计截止：</b>2026-08-07　<b>地域：</b>United States / China</p><p><b>对象：</b>WuXi AppTec litigation　<b>口径：</b>Preliminary injunction against enforcement of designation　<b>单位：</b>legal status</p><p>初步禁令只处理诉讼期间执行，不等同于实体争议最终裁判。</p><div class="source-link"><a href="https://www.govinfo.gov/content/pkg/USCOURTS-dcd-1_26-cv-02069/pdf/USCOURTS-dcd-1_26-cv-02069-0.pdf" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-008"><div class="evidence-head"><span class="evidence-id">E-008</span><span class="tag">official_fact</span><span class="confidence">置信度：high</span></div><h3>WuXi AppTec DEL platform announcement</h3><p><b>发布日期：</b>2026-08-24　<b>统计截止：</b>2026-08-24　<b>地域：</b>China / Global clients</p><p><b>对象：</b>Data security incident　<b>口径：</b>Unauthorized access to part of DEL platform data　<b>单位：</b>event status</p><p>公司称已联系受影响客户；截至公告尚未发现数据公开或滥用，不能简化为没有数据风险。</p><div class="source-link"><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0824/2026082401999.pdf" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-009"><div class="evidence-head"><span class="evidence-id">E-009</span><span class="tag">local_research</span><span class="confidence">置信度：medium-high</span></div><h3>CXO产业链表_20260909.xlsx XML extract</h3><p><b>发布日期：</b>2026-09-09　<b>统计截止：</b>2026-09-09　<b>地域：</b>China</p><p><b>对象：</b>CXO industry chain mapping　<b>口径：</b>Four segments, cross-layer companies, leading indicators　<b>单位：</b>qualitative mapping</p><p>文件只证明定位、指标和壁垒，不证明收入占比、客户、订单或市场份额。</p><div class="source-link"><span class="local-source">local:D:/vcp_hunter/产业链投研/CXO产业链表_20260909.xlsx</span></div></article><article class="evidence-item" id="evidence-E-010"><div class="evidence-head"><span class="evidence-id">E-010</span><span class="tag">official_fact</span><span class="confidence">置信度：high</span></div><h3>WuXi AppTec 2026 interim report</h3><p><b>发布日期：</b>2026-08-04　<b>统计截止：</b>2026-06-30　<b>地域：</b>China</p><p><b>对象：</b>WuXi AppTec 603259.SH　<b>口径：</b>H1 revenue, deducted profit, operating cash flow and order disclosure　<b>单位：</b>CNY billion</p><p>H1 revenue 28.897B、deducted 10.572B、OCF 9.699B；持续经营在手订单 66.43B。订单不等同收入。</p><div class="source-link"><a href="https://static.cninfo.com.cn/finalpage/2026-08-04/1225455027.PDF" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-011"><div class="evidence-head"><span class="evidence-id">E-011</span><span class="tag">calculated_fact</span><span class="confidence">置信度：high</span></div><h3>Local financial calculation based on WuXi AppTec filings</h3><p><b>发布日期：</b>2026-09-06　<b>统计截止：</b>2026-06-30　<b>地域：</b>China</p><p><b>对象：</b>WuXi AppTec 603259.SH　<b>口径：</b>Q2 and TTM deducted net profit　<b>单位：</b>CNY billion / percentage</p><p>TTM=FY2025+2026H1-2025H1；TTM deducted 18.231B；Q2 6.297B，YoY 93.57%。</p><div class="source-link"><a href="https://static.cninfo.com.cn/finalpage/2026-04-28/1225200544.PDF" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-012"><div class="evidence-head"><span class="evidence-id">E-012</span><span class="tag">official_fact</span><span class="confidence">置信度：high</span></div><h3>WuXi AppTec 2025 annual report and HKEX capital disclosures</h3><p><b>发布日期：</b>2026-03-24　<b>统计截止：</b>2026-06-30　<b>地域：</b>China / Global</p><p><b>对象：</b>WuXi AppTec financial and capital structure　<b>口径：</b>FY2025 deducted profit and share capital basis　<b>单位：</b>CNY billion / shares</p><p>FY2025 deducted 13.241B；派生估值需按当期股本和股价审计，本文不把投资收益计入核心 TTM。</p><div class="source-link"><a href="https://static.cninfo.com.cn/finalpage/2026-03-24/1225025225.PDF" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-013"><div class="evidence-head"><span class="evidence-id">E-013</span><span class="tag">official_fact</span><span class="confidence">置信度：high</span></div><h3>凯莱英 2026 interim report</h3><p><b>发布日期：</b>2026-08-25　<b>统计截止：</b>2026-06-30　<b>地域：</b>China</p><p><b>对象：</b>凯莱英 002821.SZ　<b>口径：</b>H1 and Q2 deducted net profit　<b>单位：</b>CNY billion / percentage</p><p>H1 deducted 0.525B；Q2 deducted YoY -3.12%。</p><div class="source-link"><a href="https://static.cninfo.com.cn/finalpage/2026-08-25/1225496302.PDF" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-014"><div class="evidence-head"><span class="evidence-id">E-014</span><span class="tag">official_fact</span><span class="confidence">置信度：high</span></div><h3>药石科技 and 皓元医药 2026 interim reports</h3><p><b>发布日期：</b>2026-08　<b>统计截止：</b>2026-06-30　<b>地域：</b>China</p><p><b>对象：</b>药石科技 300725.SZ / 皓元医药 688131.SH　<b>口径：</b>H1 revenue and deducted profit growth　<b>单位：</b>percentage</p><p>药石收入 +15.19%、扣非 +40.70%；皓元收入 +25.71%、扣非 +10.21%。</p><div class="source-link"><a href="https://static.cninfo.com.cn/finalpage/2026-08-11/1225465764.PDF" target="_blank" rel="noopener">打开来源</a></div></article><article class="evidence-item" id="evidence-E-015"><div class="evidence-head"><span class="evidence-id">E-015</span><span class="tag">official_fact</span><span class="confidence">置信度：medium-high</span></div><h3>Local CXO company interim financial snapshots</h3><p><b>发布日期：</b>2026-08　<b>统计截止：</b>2026-06-30　<b>地域：</b>China</p><p><b>对象：</b>博腾、泰格、昭衍　<b>口径：</b>Cross-company financial quality and non-recurring item checks　<b>单位：</b>CNY / percentage</p><p>博腾 H1 归母为负；泰格受投资损益影响；昭衍扣非含生物资产公允价值影响。</p><div class="source-link"><a href="https://static.cninfo.com.cn/finalpage/2026-08-22/1225492110.PDF" target="_blank" rel="noopener">打开来源</a></div></article></div></section>
+</main>
+<footer class="footer"><div class="footer-inner"><span>产业链投研 · 全球创新药融资周期与中国 CXO</span><span>研究时点：2026-09-22 · 仅作研究参考，不构成个性化投资建议</span></div></footer>
+</body>
+</html>

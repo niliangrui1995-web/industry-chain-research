@@ -1,0 +1,28 @@
+{
+  "msg": "操作成功",
+  "suc": true,
+  "traceId": "26879101b80a42e4a767a824a82d0b88",
+  "code": "200",
+  "data": {
+    "seParams": {},
+    "requestId": "26879101b80a42e4a767a824a82d0b88",
+    "apiData": {
+      "apiRecall": [],
+      "entity": [
+        {
+          "code": "DEA.N",
+          "name": "EASTERLY GOVERNMENT PROPERTIES, INC."
+        },
+        {
+          "code": "MA.N",
+          "name": "万事达"
+        },
+        {
+          "code": "688238.SH",
+          "name": "和元生物"
+        }
+      ]
+    },
+    "extraParams": {}
+  }
+}

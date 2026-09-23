@@ -1,0 +1,311 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "molecular-blocks-3way-20260916",
+  "as_of": "2026-09-16T03:40:00+08:00",
+  "sources": [
+    {
+      "id": "S_WSQ",
+      "source_type": "market_data_vendor",
+      "origin_id": "vendor:tencent-westock:quote-snapshot",
+      "locator": "westock-mcp data_quote codes=sh688073,sh688131,sz300725 snapshot 2026-09-15",
+      "source_date": "2026-09-15",
+      "checked_at": "2026-09-16T03:30:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_TDXQ",
+      "source_type": "market_data_vendor",
+      "origin_id": "vendor:tdx:quote-snapshot",
+      "locator": "tdx-connector tdx_quotes 688073/688131/300725 hasCwInfo=1 snapshot 2026-09-15",
+      "source_date": "2026-09-15",
+      "checked_at": "2026-09-16T03:30:00+08:00",
+      "status": "accepted"
+    },
+    {
+      "id": "S_WSFIN",
+      "source_type": "market_data_vendor",
+      "origin_id": "vendor:tencent-westock:financial-statements",
+      "locator": "westock-mcp data_finance type=income/balance fields=all as of 2026-06-30 report period",
+      "source_date": "2026-08-28",
+      "checked_at": "2026-09-16T03:30:00+08:00",
+      "status": "accepted"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F_PRICE_BD",
+      "metric": "close_price",
+      "value": "60.77",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-09-15T15:00:00+08:00"},
+      "basis": "unadjusted_close",
+      "source_refs": ["S_WSQ", "S_TDXQ"]
+    },
+    {
+      "id": "F_SHARES_BD",
+      "metric": "total_shares",
+      "value": "90882948",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-09-15T15:00:00+08:00"},
+      "basis": "total_shares_outstanding",
+      "source_refs": ["S_WSQ", "S_TDXQ"]
+    },
+    {
+      "id": "F_MCAP_VENDOR_BD",
+      "metric": "total_market_cap",
+      "value": "5523000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-09-15T15:00:00+08:00"},
+      "basis": "total_market_cap",
+      "source_refs": ["S_WSQ"]
+    },
+    {
+      "id": "F_TTMNP_BD",
+      "metric": "attributable_net_profit",
+      "value": "181637588.86",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2025-07-01", "end": "2026-06-30", "frequency": "ttm", "label": "TTM 2026H1"},
+      "available_at": "2026-08-28",
+      "basis": "ttm_attributable_net_profit",
+      "source_refs": ["S_WSFIN"]
+    },
+    {
+      "id": "F_EQUITY_BD",
+      "metric": "equity_attributable_to_parent",
+      "value": "2061829547.09",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-06-30T00:00:00+08:00"},
+      "available_at": "2026-08-28",
+      "basis": "equity_attributable_to_parent",
+      "source_refs": ["S_WSFIN"]
+    },
+    {
+      "id": "F_PRICE_HY",
+      "metric": "close_price",
+      "value": "90.76",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-09-15T15:00:00+08:00"},
+      "basis": "unadjusted_close",
+      "source_refs": ["S_WSQ", "S_TDXQ"]
+    },
+    {
+      "id": "F_SHARES_HY",
+      "metric": "total_shares",
+      "value": "213234116",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-09-15T15:00:00+08:00"},
+      "basis": "total_shares_outstanding",
+      "source_refs": ["S_WSQ", "S_TDXQ"]
+    },
+    {
+      "id": "F_MCAP_VENDOR_HY",
+      "metric": "total_market_cap",
+      "value": "19353000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-09-15T15:00:00+08:00"},
+      "basis": "total_market_cap",
+      "source_refs": ["S_WSQ"]
+    },
+    {
+      "id": "F_TTMNP_HY",
+      "metric": "attributable_net_profit",
+      "value": "259245700.46",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2025-07-01", "end": "2026-06-30", "frequency": "ttm", "label": "TTM 2026H1"},
+      "available_at": "2026-08-27",
+      "basis": "ttm_attributable_net_profit",
+      "source_refs": ["S_WSFIN"]
+    },
+    {
+      "id": "F_EQUITY_HY",
+      "metric": "equity_attributable_to_parent",
+      "value": "3314097632.43",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-06-30T00:00:00+08:00"},
+      "available_at": "2026-08-27",
+      "basis": "equity_attributable_to_parent",
+      "source_refs": ["S_WSFIN"]
+    },
+    {
+      "id": "F_PRICE_YS",
+      "metric": "close_price",
+      "value": "44.10",
+      "unit": "currency_per_share",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-09-15T15:00:00+08:00"},
+      "basis": "unadjusted_close",
+      "source_refs": ["S_WSQ", "S_TDXQ"]
+    },
+    {
+      "id": "F_SHARES_YS",
+      "metric": "total_shares",
+      "value": "233807341",
+      "unit": "share",
+      "currency": null,
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-09-15T15:00:00+08:00"},
+      "basis": "total_shares_outstanding",
+      "source_refs": ["S_WSQ", "S_TDXQ"]
+    },
+    {
+      "id": "F_MCAP_VENDOR_YS",
+      "metric": "total_market_cap",
+      "value": "10311000000",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-09-15T15:00:00+08:00"},
+      "basis": "total_market_cap",
+      "source_refs": ["S_WSQ"]
+    },
+    {
+      "id": "F_TTMNP_YS",
+      "metric": "attributable_net_profit",
+      "value": "210682283.01",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "duration", "start": "2025-07-01", "end": "2026-06-30", "frequency": "ttm", "label": "TTM 2026H1"},
+      "available_at": "2026-08-11",
+      "basis": "ttm_attributable_net_profit",
+      "source_refs": ["S_WSFIN"]
+    },
+    {
+      "id": "F_EQUITY_YS",
+      "metric": "equity_attributable_to_parent",
+      "value": "4565710484.14",
+      "unit": "currency",
+      "currency": "CNY",
+      "scale": "1",
+      "period": {"kind": "instant", "as_of": "2026-06-30T00:00:00+08:00"},
+      "available_at": "2026-08-11",
+      "basis": "equity_attributable_to_parent",
+      "source_refs": ["S_WSFIN"]
+    }
+  ],
+  "checks": [
+    {
+      "id": "C_MCAP_BD",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": {"fact_id": "F_PRICE_BD"},
+      "shares": {"fact_id": "F_SHARES_BD"},
+      "expected": {"fact_id": "F_MCAP_VENDOR_BD"},
+      "capitalization_basis": "total",
+      "max_share_age_days": 120,
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "vendor_or_official"},
+      "tolerance": {"relative_pct": "1", "absolute_base": "0"}
+    },
+    {
+      "id": "C_PE_BD",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pe",
+      "numerator": {"check_id": "C_MCAP_BD", "output": "value"},
+      "denominator_low": {"fact_id": "F_TTMNP_BD"},
+      "denominator_high": {"fact_id": "F_TTMNP_BD"},
+      "valuation_basis": "ttm_attributable_net_profit",
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "vendor_or_official"}
+    },
+    {
+      "id": "C_PB_BD",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pb",
+      "numerator": {"check_id": "C_MCAP_BD", "output": "value"},
+      "denominator_low": {"fact_id": "F_EQUITY_BD"},
+      "denominator_high": {"fact_id": "F_EQUITY_BD"},
+      "valuation_basis": "equity_attributable_to_parent",
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "vendor_or_official"}
+    },
+    {
+      "id": "C_MCAP_HY",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": {"fact_id": "F_PRICE_HY"},
+      "shares": {"fact_id": "F_SHARES_HY"},
+      "expected": {"fact_id": "F_MCAP_VENDOR_HY"},
+      "capitalization_basis": "total",
+      "max_share_age_days": 120,
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "vendor_or_official"},
+      "tolerance": {"relative_pct": "1", "absolute_base": "0"}
+    },
+    {
+      "id": "C_PE_HY",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pe",
+      "numerator": {"check_id": "C_MCAP_HY", "output": "value"},
+      "denominator_low": {"fact_id": "F_TTMNP_HY"},
+      "denominator_high": {"fact_id": "F_TTMNP_HY"},
+      "valuation_basis": "ttm_attributable_net_profit",
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "vendor_or_official"}
+    },
+    {
+      "id": "C_PB_HY",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pb",
+      "numerator": {"check_id": "C_MCAP_HY", "output": "value"},
+      "denominator_low": {"fact_id": "F_EQUITY_HY"},
+      "denominator_high": {"fact_id": "F_EQUITY_HY"},
+      "valuation_basis": "equity_attributable_to_parent",
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "vendor_or_official"}
+    },
+    {
+      "id": "C_MCAP_YS",
+      "kind": "market_cap",
+      "materiality": "material",
+      "price": {"fact_id": "F_PRICE_YS"},
+      "shares": {"fact_id": "F_SHARES_YS"},
+      "expected": {"fact_id": "F_MCAP_VENDOR_YS"},
+      "capitalization_basis": "total",
+      "max_share_age_days": 120,
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "vendor_or_official"},
+      "tolerance": {"relative_pct": "1", "absolute_base": "0"}
+    },
+    {
+      "id": "C_PE_YS",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pe",
+      "numerator": {"check_id": "C_MCAP_YS", "output": "value"},
+      "denominator_low": {"fact_id": "F_TTMNP_YS"},
+      "denominator_high": {"fact_id": "F_TTMNP_YS"},
+      "valuation_basis": "ttm_attributable_net_profit",
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "vendor_or_official"}
+    },
+    {
+      "id": "C_PB_YS",
+      "kind": "valuation",
+      "materiality": "material",
+      "metric": "pb",
+      "numerator": {"check_id": "C_MCAP_YS", "output": "value"},
+      "denominator_low": {"fact_id": "F_EQUITY_YS"},
+      "denominator_high": {"fact_id": "F_EQUITY_YS"},
+      "valuation_basis": "equity_attributable_to_parent",
+      "source_gate": {"min_independent_origins": 2, "counted_tier": "vendor_or_official", "required_anchor_tier": "vendor_or_official"}
+    }
+  ]
+}

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关注个股与AI硬件 · 下午明天筛选 · 腾讯自选股 · K线大师</title>
+<style>
+:root {
+  /* 腾讯自选股浅色高级风（与回测报告统一） */
+  --bg-primary: #F7F5F3; --bg-secondary: #FFFFFF; --bg-card: #FFFFFF;
+  --bg-elevated: #FAFAF9; --bg-warm: #FDF9F4; --bg-dark: #2D2926;
+  --text-primary: #1F1B17; --text-secondary: #5C5652;
+  --text-muted: #8A8480; --text-light: #B8B2AE;
+  --accent: #B8491C; --accent-light: #FBEEE0; --accent-dark: #8B3510;
+  --border: #E8E4DE; --border-dark: #D4CEC6;
+  /* A 股涨红跌绿（不随主题翻转） */
+  --up: #C53030; --dn: #2F855A; --neu: #8A8480;
+  --b1: #2B6CB0; --o1: #B8491C; --p1: #B8491C;
+  /* 兼容别名：body 组件沿用的旧变量名 */
+  --accent-hover: var(--accent-dark); --border-light: #F0EEEC;
+  --red: var(--up); --green: var(--dn); --gold: var(--accent); --blue: var(--b1);
+}
+html { overflow-x: clip; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+/* html body.sb-report：选择器高于 App 预览注入的 HTML_PREVIEW_BASE_STYLE（纯 body{}），
+   避免被盖成白底/14px 无衬线/padding:24px。安全清洗不动，只抗样式覆盖。 */
+html body.sb-report {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', Georgia, 'PingFang SC', serif;
+  background: var(--bg-primary); color: var(--text-primary);
+  line-height: 1.8; font-size: 16px; -webkit-font-smoothing: antialiased;
+  /* clip 而非 hidden：同样防横向溢出，但不会创建滚动容器、不破坏图表卡的 position:sticky 吸顶。 */
+  overflow-x: clip; max-width: 100%;
+}
+/* 多端防裁切总闸：所有报告内容容器不得横向撑破；长文/多节点自动换行。
+   表格横滑走 .table-scroll（见下），不靠页面级滚动。 */
+.wrap, .sec, .prop-card, .voice-card, .passage-card, .conclusion-card, .card,
+.note-item, .qa-card, .trigger-wrap, .conclusion-wrap, .one, .lead, .pc-main,
+.ltxt, .sv-txt, .nn-val, .ev-txt, .hero-dek, .cc-headline, .cc-action-detail {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+img, svg, video, canvas { max-width: 100%; height: auto; }
+h1, h2, h3, h4 { font-family: inherit; font-weight: 600; letter-spacing: 0.02em; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+.prose { max-width: 760px; margin: 0 auto; }
+.prose p { font-size: 1.05rem; line-height: 1.9; margin-bottom: 20px; color: var(--text-primary); }
+.section-head { max-width: 1100px; display: grid; grid-template-columns: 120px 1fr; gap: 32px; align-items: baseline; margin: 0 auto 48px; padding: 0 48px; }
+.section-num { font-size: 0.9rem; color: var(--accent); letter-spacing: 0.15em; border-top: 1px solid var(--accent); padding-top: 8px; }
+.section-title { font-size: 2rem; }
+.section-lede { color: var(--text-muted); margin-top: 6px; font-size: 1rem; }
+section { padding: 72px 0; }
+
+/* ===== Nav · 腾讯自选股品牌头（shell 接管；标签由 body 的 data-nav 动态生成） ===== */
+nav { position: sticky; top: 0; z-index: 100; height: 64px; display: flex; align-items: center; gap: 16px; padding: 0 48px; background: rgba(247,245,243,0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+.nav-logo { display: inline-flex; align-items: center; gap: 10px; font-size: 1.05rem; font-weight: 700; color: var(--text-primary); letter-spacing: 0.05em; flex-shrink: 0; font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", BlinkMacSystemFont, sans-serif; }
+.nav-logo img { height: 28px; width: auto; object-fit: contain; flex-shrink: 0; display: block; }
+/* flex:1 1 0 + min-width:0 是关键：缺 min-width:0 时 flex 子项不收缩，overflow:hidden 会直接裁掉多出的标签而不触发滚动（手机端只剩两个、无法滑动）。右侧淡出提示还有更多。 */
+.nav-container { flex: 1 1 0; min-width: 0; overflow: hidden; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent); }
+.nav-links { display: flex; gap: 10px; overflow-x: auto; min-width: 0; -ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-right: 22px; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a { color: var(--text-secondary); font-size: 0.95rem; white-space: nowrap; flex-shrink: 0; padding: 6px 12px; border-radius: 8px; border: 1px solid transparent; transition: color .25s, background-color .25s, border-color .25s; }
+.nav-links a:hover { color: var(--accent); }
+.nav-links a.active { color: var(--accent); background: var(--accent-light); font-weight: 700; border-color: var(--accent); box-shadow: 0 1px 5px rgba(184,73,28,0.10); }
+/* sticky nav 锚点防遮挡 */
+section[id], [id].conclusion-card { scroll-margin-top: 80px; }
+
+/* ===== Hero ===== */
+.hero { max-width: 1100px; margin: 0 auto; padding: 96px 48px 48px; }
+.kicker { color: var(--accent); font-size: 0.9rem; letter-spacing: 0.15em; font-weight: 500; margin-bottom: 24px; }
+.hero h1 { font-size: 3rem; line-height: 1.25; margin-bottom: 24px; max-width: 900px; }
+.hero-dek { max-width: 760px; font-size: 1.15rem; color: var(--text-secondary); line-height: 1.9; margin-bottom: 40px; }
+.host { display: inline-flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--text-muted); }
+.host img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+
+/* ===== Module 1 · Conclusion Card ===== */
+.conclusion-wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+.conclusion-card {
+  padding: 40px 48px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-left: 6px solid var(--accent); border-radius: 20px;
+  box-shadow: 0 4px 28px rgba(217, 119, 6, 0.06);
+}
+#conclusion { padding: 0; }
+#conclusion .section-head { margin-bottom: 48px; }
+.cc-question {
+  font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.05em;
+  margin-bottom: 8px; text-transform: uppercase;
+}
+.cc-question-text {
+  font-size: 1.4rem; font-weight: 600; color: var(--text-primary);
+  margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px dashed var(--border);
+}
+.cc-question-text::before { content: "「"; color: var(--accent); }
+.cc-question-text::after { content: "」"; color: var(--accent); }
+
+.cc-snapshot { margin-bottom: 32px; }
+.cc-snapshot-label {
+  font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.18em;
+  font-weight: 600; margin-bottom: 14px; text-transform: uppercase;
+}
+.cc-snapshot-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--bg-elevated); border: 1px solid var(--border-light);
+  border-radius: 12px; overflow: hidden;
+}
+.cc-snap-cell {
+  padding: 16px 20px;
+  border-right: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-elevated);
+}
+.cc-snap-cell:nth-child(4n) { border-right: none; }
+.cc-snap-cell:nth-last-child(-n+4) { border-bottom: none; }
+.cc-snap-cell-label {
+  font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.cc-snap-cell-value {
+  font-size: 1.4rem; font-weight: 600; color: var(--text-primary);
+  font-variant-numeric: tabular-nums; line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+.cc-snap-cell-sub {
+  font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.cc-snap-up { color: var(--red); }
+.cc-snap-down { color: var(--green); }
+
+.cc-headline-label {
+  font-size: 0.8rem; color: var(--accent); letter-spacing: 0.2em;
+  font-weight: 600; margin-bottom: 14px; text-transform: uppercase;
+}
+.cc-headline {
+  font-size: 1.15rem; font-weight: 500; color: var(--text-primary);
+  letter-spacing: 0.01em; line-height: 1.75;
+  margin-bottom: 32px; padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.cc-headline strong { font-weight: 700; color: var(--text-primary); }
+.cc-headline em { font-style: normal; font-weight: 700; color: var(--red); }
+
+.cc-actions-intro {
+  font-size: 0.95rem; color: var(--text-muted); letter-spacing: 0.02em;
+  margin-bottom: 18px;
+}
+.cc-actions {
+  display: flex; flex-direction: column;
+  margin-bottom: 28px;
+}
+.cc-action-row {
+  display: grid; grid-template-columns: 180px 1fr;
+  gap: 28px; padding: 18px 0; align-items: baseline;
+  border-bottom: 1px dashed var(--border-light);
+}
+.cc-action-row:last-child { border-bottom: none; }
+.cc-action-label {
+  font-weight: 600; color: var(--accent); font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+.cc-action-detail {
+  color: var(--text-primary); font-size: 1rem; line-height: 1.85;
+}
+.cc-action-detail strong { color: var(--text-primary); font-weight: 600; }
+
+.cc-vote {
+  display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+  padding-top: 20px; border-top: 1px dashed var(--border);
+}
+.cc-vote-label { font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.05em; }
+.cc-vote-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.85rem; color: var(--text-secondary);
+  padding: 4px 12px; background: var(--bg-elevated); border-radius: 999px;
+  border: 1px solid var(--border-light);
+}
+.cc-vote-tag .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ===== Module 2 · Voice Card（团队型专家专用，单专家面板不使用） ===== */
+.voice-stack { max-width: 1100px; margin: 0 auto; padding: 0 48px; display: flex; flex-direction: column; gap: 24px; }
+.voice-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 36px; min-width: 0; }
+.voice-head { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border-light); }
+.voice-head img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+.voice-name { font-weight: 600; font-size: 1.1rem; flex: 1; }
+.voice-card ol, .voice-card ul { padding-left: 20px; }
+.voice-card li { margin-bottom: 12px; line-height: 1.8; }
+.voice-card strong { color: var(--text-primary); font-weight: 600; }
+.voice-card h4 { margin: 20px 0 10px; font-size: 1.05rem; color: var(--text-primary); }
+.voice-card p { margin-bottom: 14px; line-height: 1.85; color: var(--text-secondary); }
+.voice-card table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.95rem; margin: 16px 0; }
+.voice-card th, .voice-card td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border-light); white-space: normal; min-width: 88px; }
+.voice-card th { color: var(--text-muted); font-weight: 500; background: var(--bg-elevated); font-size: 0.85rem; }
+
+/* ===== 报告表格 · 多端自适应（scroll 容器 + 单元格 min-width 自动分流 wrap/scroll） =====
+   机制：表外套 .table-scroll 横滑容器 + 每格给 min-width。列少 → 表的最小宽度小于视口，
+   自然放得下、单元格内换行、不出现滚动；列多 → 最小宽度超出视口，在容器内横向滑动，
+   不再被页面级 overflow-x:clip 裁掉。列越多越倾向滚动、越少越倾向换行，全自动、覆盖所有断点。 */
+.table-scroll {
+  overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; margin: 16px 0;
+  /* 滚动阴影：仅在内容真的溢出、可左右滑时，边缘才出现淡阴影提示（滚到头自动消失） */
+  background:
+    linear-gradient(to right, var(--bg-card) 30%, rgba(255,255,255,0)),
+    linear-gradient(to right, rgba(255,255,255,0), var(--bg-card) 70%) 100% 0,
+    radial-gradient(farthest-side at 0 50%, rgba(31,27,23,.10), rgba(31,27,23,0)),
+    radial-gradient(farthest-side at 100% 50%, rgba(31,27,23,.10), rgba(31,27,23,0)) 100% 0;
+  background-repeat: no-repeat;
+  background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+.table-scroll > table { margin: 0; min-width: 100%; }
+/* 兜底：模型偶尔漏套 .table-scroll 时，裸表自身也能横滑（不被裁切）；套了容器的表不受影响 */
+.voice-card > table, .passage-card > table, .trigger-wrap > .trigger-table {
+  display: block; overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.voice-card .pull-quote { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin: 16px 0; color: var(--text-secondary); font-style: italic; }
+
+/* ===== Module 3a · Notes List（团队型专家专用，单专家面板不使用） ===== */
+.notes-stack { max-width: 1100px; margin: 0 auto; padding: 0 48px; display: flex; flex-direction: column; gap: 16px; }
+.note-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; display: grid; grid-template-columns: 56px 1fr; gap: 20px; align-items: baseline; }
+.note-num { font-size: 1.6rem; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1; opacity: 0.6; }
+.note-body h4 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary); }
+.note-body p { font-size: 0.98rem; line-height: 1.85; color: var(--text-secondary); margin: 0 0 12px; }
+.note-body p:last-child { margin-bottom: 0; }
+.note-body p strong { color: var(--text-primary); }
+
+/* ===== Module 3b · Q&A Card（团队型专家专用，单专家面板不使用） ===== */
+.qa-stack { max-width: 1100px; margin: 0 auto; padding: 0 48px; display: flex; flex-direction: column; gap: 18px; }
+.qa-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px 32px; }
+.qa-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; letter-spacing: 0.06em; padding: 4px 12px; border-radius: 999px; background: var(--bg-warm); color: var(--text-secondary); margin-bottom: 14px; font-weight: 500; }
+.qa-tag.tag-key { background: #FEF3C7; color: #B45309; }
+.qa-tag.tag-confuse { background: #FEE2E2; color: #B91C1C; }
+.qa-tag.tag-miss { background: #DBEAFE; color: #1D4ED8; }
+.qa-tag.tag-meta { background: #EDE9FE; color: #6D28D9; }
+.qa-question { font-size: 1.15rem; font-weight: 600; color: var(--text-primary); margin-bottom: 14px; line-height: 1.5; }
+.qa-question::before { content: "Q. "; color: var(--accent); font-weight: 700; }
+.qa-answer { color: var(--text-secondary); font-size: 1rem; line-height: 1.85; }
+.qa-answer::before { content: "A. "; color: var(--text-muted); font-weight: 600; margin-right: 4px; }
+.qa-answer p { margin-bottom: 12px; }
+.qa-answer p:last-child { margin-bottom: 0; }
+.qa-answer strong { color: var(--text-primary); }
+
+/* ===== Module 4 · Trigger Table（关键变量触发表） ===== */
+.trigger-wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+.trigger-table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; font-variant-numeric: tabular-nums; }
+.trigger-table th, .trigger-table td { padding: 18px 22px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+.trigger-table tr:last-child td { border-bottom: none; }
+.trigger-table th { background: var(--bg-elevated); color: var(--text-muted); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+.trigger-var { font-weight: 600; color: var(--text-primary); font-size: 1.02rem; min-width: 120px; max-width: 40%; }
+.trigger-var .now { display: block; font-weight: 400; color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; letter-spacing: 0; text-transform: none; }
+.trigger-action { color: var(--text-secondary); font-size: 0.98rem; line-height: 1.85; }
+.trigger-action strong { color: var(--text-primary); font-weight: 600; }
+.trigger-action .up { color: var(--red); font-weight: 600; }
+.trigger-action .down { color: var(--green); font-weight: 600; }
+
+/* ===== Sub-section divider（用于 Module 3 内部 3a / 3b 分隔） ===== */
+.subsection-label { max-width: 1100px; margin: 48px auto 20px; padding: 0 48px; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; }
+.subsection-label:first-of-type { margin-top: 0; }
+
+/* ===== Passage Card（兜底承接：4 模块外的非标内容） ===== */
+.passage-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px; max-width: 1100px; margin: 0 auto 24px; }
+.passage-card h3 { font-size: 1.3rem; margin-bottom: 16px; color: var(--text-primary); }
+.passage-card h4 { font-size: 1.05rem; margin: 24px 0 10px; color: var(--text-primary); }
+.passage-card p { font-size: 1rem; line-height: 1.9; margin-bottom: 16px; color: var(--text-secondary); }
+.passage-card ul, .passage-card ol { padding-left: 22px; margin-bottom: 16px; }
+.passage-card li { margin-bottom: 8px; line-height: 1.85; color: var(--text-secondary); }
+.passage-card strong { color: var(--text-primary); font-weight: 600; }
+.passage-card table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.95rem; margin: 16px 0 24px; }
+.passage-card th, .passage-card td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; white-space: normal; min-width: 88px; }
+.passage-card th { color: var(--text-muted); font-weight: 500; background: var(--bg-elevated); letter-spacing: 0.04em; font-size: 0.85rem; }
+
+/* ===== Footer · 风险提示（腾讯自选股统一，shell 接管） ===== */
+.disclaimer { margin-top: 72px; padding: 40px 48px 56px; border-top: 1px solid var(--border); background: var(--bg-warm); }
+.disclaimer-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+.disclaimer-title { font-size: 0.82rem; font-weight: 600; color: var(--text-light); letter-spacing: 0.2em; margin-bottom: 14px; }
+.disclaimer-list { list-style: none; padding: 0; margin: 0; }
+.disclaimer-list li { font-size: 0.85rem; line-height: 1.9; color: var(--text-muted); margin-bottom: 4px; }
+.disclaimer-bottom { margin-top: 18px; font-size: 0.78rem; color: var(--text-light); letter-spacing: 0.05em; }
+
+/* ===== Responsive · 移动端适配 ===== */
+/* 平板 / 窄窗 */
+@media (max-width: 900px) {
+  .container, .voice-stack, .qa-stack, .trigger-wrap, .notes-stack, .subsection-label, .conclusion-wrap { padding-left: 20px; padding-right: 20px; }
+  .hero { padding: 72px 20px 40px; }
+  .section-head { padding: 0 20px; grid-template-columns: 80px 1fr; gap: 20px; }
+  section { padding: 56px 0; }
+  .hero h1 { font-size: 2.2rem; }
+  .conclusion-card { padding: 28px 24px; }
+  .cc-headline { font-size: 1.05rem; line-height: 1.7; }
+  .cc-action-row { grid-template-columns: 1fr; gap: 6px; }
+  .cc-snapshot-grid { grid-template-columns: repeat(2, 1fr); }
+  .cc-snap-cell:nth-child(4n) { border-right: 1px solid var(--border-light); }
+  .cc-snap-cell:nth-child(2n) { border-right: none; }
+  .cc-snap-cell:nth-last-child(-n+4) { border-bottom: 1px solid var(--border-light); }
+  .cc-snap-cell:nth-last-child(-n+2) { border-bottom: none; }
+  nav { padding: 0 20px; gap: 12px; }
+  .voice-card, .passage-card { padding: 24px; }
+  .qa-card { padding: 22px; }
+  .trigger-table th, .trigger-table td { padding: 14px; }
+  .note-item { padding: 20px; grid-template-columns: 1fr; gap: 8px; }
+}
+/* 手机 */
+@media (max-width: 560px) {
+  .container, .voice-stack, .qa-stack, .trigger-wrap, .notes-stack, .subsection-label, .conclusion-wrap { padding-left: 16px; padding-right: 16px; }
+  .hero { padding: 56px 16px 32px; }
+  .hero h1 { font-size: 1.7rem; line-height: 1.3; }
+  .hero-dek { font-size: 1rem; }
+  .kicker { font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .host img { width: 34px; height: 34px; }
+  section { padding: 44px 0; }
+  .section-head { grid-template-columns: 1fr; gap: 4px; padding: 0 16px; margin-bottom: 28px; }
+  .section-num { border-top: none; padding-top: 0; }
+  .section-title, .section-head h2 { font-size: 1.5rem; }
+  .conclusion-card { padding: 22px 18px; border-left-width: 4px; }
+  .cc-question-text { font-size: 1.15rem; }
+  .cc-snapshot-grid { grid-template-columns: 1fr 1fr; }
+  .cc-snap-cell { padding: 12px 14px; }
+  .cc-snap-cell-value { font-size: 1.2rem; }
+  .cc-headline { font-size: 1rem; }
+  /* nav 品牌头压缩，锚点保持横滚 */
+  nav { padding: 0 16px; height: 56px; }
+  .nav-logo { font-size: 0.95rem; gap: 8px; }
+  .nav-logo img { height: 24px; width: auto; }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 0.9rem; }
+  .voice-card, .passage-card { padding: 18px 16px; }
+  .voice-head img { width: 40px; height: 40px; }
+  .voice-name { font-size: 1rem; }
+  .qa-card { padding: 18px 16px; }
+  .qa-question { font-size: 1.05rem; }
+  /* 表格：横滑由 .table-scroll 容器统一负责（见基类）；手机端只压缩留白 + 收窄 min-width，
+     让 2-3 列窄表尽量在屏内换行放下、不触发滚动，宽表才滚 */
+  .voice-card th, .voice-card td, .passage-card th, .passage-card td { min-width: 72px; padding: 9px 10px; }
+  .trigger-table th, .trigger-table td { padding: 12px 14px; }
+  .trigger-var { min-width: 104px; font-size: 0.95rem; }
+  .trigger-action { font-size: 0.92rem; }
+  .disclaimer { padding: 32px 20px 44px; }
+  .disclaimer-title { letter-spacing: 0.15em; }
+}
+</style>
+
+<style>
+/* ============================================================================
+   K线大师技术面板 · 固定组件 CSS（panel.css）
+   由 render.py 通过 --panel-css 注入到共享 shell（skills/md-to-html/shell.html）。模型只产出带正确 class 的 body 结构 + K线数据岛，
+   不再自己写 style 标签，杜绝面板组件 CSS 被模型重写时丢失或改坏。
+   品牌头 nav / footer / 设计 tokens / 基础 body 由共享 shell 提供，这里只写本面板专属内容样式。
+============================================================================ */
+
+/* ===== 容器 ===== */
+.wrap{ max-width:min(960px,100%); margin:0 auto; padding:8px 18px 40px; min-width:0; box-sizing:border-box; }
+
+/* ===== Hero（紧凑双行） ===== */
+.hdr{ padding:14px 0 16px; border-bottom:1px solid var(--border); margin-bottom:18px; }
+.hdr-row1{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }
+.hero-tag{ font-size:12px; font-weight:600; color:var(--accent); background:var(--accent-light);
+  padding:3px 10px; border-radius:5px; letter-spacing:.08em;
+  font-family:-apple-system,PingFang SC,sans-serif; flex-shrink:0; }
+.hdr-row1 h1{ font-size:24px; font-weight:900; letter-spacing:.01em; margin:0; }
+.hdr-row1 h1 .code{ font-weight:400; color:var(--text-muted); font-size:15px; margin-left:6px;
+  font-family:ui-monospace,monospace; }
+.hdr-row2{ display:flex; align-items:center; gap:8px; margin-top:6px; font-size:13px; color:var(--text-muted);
+  font-family:-apple-system,PingFang SC,sans-serif; flex-wrap:wrap; }
+.hdr-row2 .dot-sep{ width:3px; height:3px; border-radius:50%; background:var(--border-dark); flex-shrink:0; }
+
+/* ===== Section 卡 ===== */
+.sec{ background:var(--bg-card); border:1px solid var(--border); border-radius:16px;
+  padding:20px 22px; margin-bottom:14px; box-shadow:0 1px 3px #1f1b170a,0 8px 24px #1f1b1708;
+  scroll-margin-top:60px; min-width:0; max-width:100%; box-sizing:border-box; overflow-wrap:anywhere; }
+.sec-head{ margin-bottom:14px; }
+.sec-num{ font-size:13px; color:var(--accent); font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  font-family:-apple-system,PingFang SC,sans-serif; }
+.sec-t{ font-size:20px; color:var(--text-primary); font-weight:700; margin-top:4px; }
+.sec-q{ font-size:14px; color:var(--text-muted); margin-top:5px; font-style:italic; }
+
+/* ===== 结论标签 + lead ===== */
+.tags{ display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+.tag{ font-size:13px; padding:4px 13px; border-radius:20px; font-weight:600; background:var(--accent-light); color:var(--accent);
+  font-family:-apple-system,PingFang SC,sans-serif; }
+.lead{ font-size:16px; line-height:1.85; overflow-wrap:anywhere; }
+.lead b.r{ color:var(--up); } .lead b.g{ color:var(--dn); }
+.note{ font-size:13px; color:var(--text-muted); margin-top:12px; }
+
+/* ===== 三问速答 ===== */
+.q3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr)); gap:10px; }
+.q{ background:var(--bg-elevated); border:1px solid var(--border-dark); border-radius:12px; padding:13px 15px; min-width:0; overflow-wrap:anywhere; }
+.q .ttl{ font-size:13px; color:var(--text-muted); margin-bottom:5px; }
+.q .ans{ font-size:14px; }
+
+/* ===== 图表卡（随页滚动，不吸顶） ===== */
+.chartcard{ position:relative; }
+.charttip{ font-size:14px; font-weight:600; margin:0 0 8px 2px; color:var(--text-primary);
+  display:flex; align-items:center; gap:6px; }
+.banner{ font-size:13px; color:var(--b1); background:#2b6cb014; border-radius:8px; padding:9px 12px;
+  margin-bottom:10px; min-height:20px; line-height:1.5; }
+.banner.idle{ color:var(--text-muted); background:var(--bg-elevated); }
+#chart{ width:100%; height:180px; }
+#volchart{ width:100%; height:52px; margin-top:4px; }
+@media(max-height:680px){#chart{height:150px;}}
+
+/* ===== 9 维度（增强交互暗示） ===== */
+.dim-interact-hint{ display:flex; align-items:center; gap:8px; margin-bottom:14px;
+  padding:10px 14px; border-radius:10px; background:linear-gradient(135deg,#2b6cb014,#2b6cb008);
+  border:1px dashed #2b6cb055; font-size:13px; color:var(--b1); font-weight:500;
+  font-family:-apple-system,PingFang SC,sans-serif; line-height:1.5; }
+.dim-interact-hint .hint-icon{ font-size:18px; flex-shrink:0; animation:hintBounce 2s ease-in-out infinite; }
+@keyframes hintBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+.dimlist{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:8px; }
+@media(max-width:560px){.dimlist{grid-template-columns:1fr;}}
+.dim{ display:flex; align-items:flex-start; gap:9px; border:1px solid var(--border-dark); border-radius:10px;
+  padding:10px 12px; background:var(--bg-card); transition:all .2s ease; position:relative; overflow:hidden; min-width:0; }
+.dim.clickable{ cursor:pointer; }
+.dim.clickable::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:linear-gradient(180deg,var(--b1),#2b6cb044); opacity:0; transition:opacity .2s; border-radius:0 2px 2px 0; }
+.dim.clickable:hover::before{ opacity:1; }
+.dim.clickable:hover{ border-color:var(--b1); background:#2b6cb00a; transform:translateY(-1px);
+  box-shadow:0 3px 10px #2b6cb01a; }
+.dim.active{ border-color:var(--b1); border-width:1.5px; background:#2b6cb00f; transform:none; box-shadow:none; }
+.dim.active::before{ opacity:1; background:var(--b1); }
+.idxnum{ width:20px; height:20px; border-radius:50%; background:var(--bg-elevated); color:var(--text-muted);
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;
+  font-family:-apple-system,PingFang SC,sans-serif; }
+.dim.active .idxnum{ background:var(--b1); color:#fff; }
+.dimmain{ flex:1; min-width:0; overflow-wrap:break-word; word-break:normal; }
+.dimrow{ display:flex; align-items:center; gap:6px; margin-bottom:3px; flex-wrap:wrap; }
+.dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.dot.r{ background:var(--up); } .dot.r2{ background:#d97706; } .dot.g{ background:var(--dn); } .dot.n{ background:var(--neu); }
+.dn{ font-size:13px; font-weight:600; }
+.pill{ font-size:11px; padding:1px 8px; border-radius:5px; font-family:-apple-system,PingFang SC,sans-serif; }
+.pill.r{ background:var(--accent-light); color:var(--up); }
+.pill.r2{ background:#fef3f0; color:#d97706; }
+.pill.g{ background:#2f855a1f; color:var(--dn); }
+.pill.n{ background:var(--bg-elevated); color:var(--text-muted); }
+.seeimg{ font-size:11px; font-weight:600; color:var(--b1); background:#fff; border:1px solid #2b6cb066;
+  padding:3px 9px; border-radius:7px; margin-left:auto; white-space:nowrap; display:inline-flex; align-items:center; gap:3px;
+  transition:all .16s; box-shadow:0 1px 2px #2b6cb01f; font-family:-apple-system,PingFang SC,sans-serif; }
+.dim.clickable:hover .seeimg{ background:#2b6cb014; border-color:var(--b1); }
+.dim.active .seeimg{ background:var(--b1); border-color:var(--b1); color:#fff; box-shadow:none; }
+.dim.active .seeimg::after{ content:'\2713 已显示'; }
+.dim:not(.active) .seeimg::after{ content:'在图上看'; }
+@keyframes breathe{0%,100%{box-shadow:0 1px 2px #2b6cb01f;}50%{box-shadow:0 0 0 3px #2b6cb029;}}
+.dim.hintpulse:not(.active) .seeimg{ animation:breathe 1.8s ease-in-out 3; }
+.dd{ font-size:12.5px; color:var(--text-secondary); line-height:1.5; }
+.data{ display:flex; flex-wrap:wrap; gap:4px; margin:4px 0; }
+.chip{ font-size:11px; color:var(--text-secondary); background:var(--bg-elevated); border:1px solid var(--border);
+  border-radius:4px; padding:1px 6px; font-variant-numeric:tabular-nums; }
+.chip b{ color:var(--text-primary); font-weight:700; margin-left:1px; }
+.chip.warn b{ color:var(--up); } .chip.good b{ color:var(--dn); }
+
+/* ===== 情景路标（紧凑） ===== */
+.roadmap{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+@media(max-width:560px){.roadmap{grid-template-columns:1fr;}}
+.road{ border-radius:10px; padding:10px 12px; border:1px solid var(--border); }
+.road.up{ background:var(--accent-light); border-color:#f3cdc9; }
+.road.down{ background:#2f855a12; border-color:#c6e2d4; }
+.roadhd{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.roadtag{ font-size:11px; font-weight:700; padding:2px 8px; border-radius:5px;
+  font-family:-apple-system,PingFang SC,sans-serif; }
+.roadtag.up{ background:var(--up); color:#fff; } .roadtag.down{ background:var(--dn); color:#fff; }
+.roadcond{ font-size:13px; color:var(--text-primary); font-weight:600; }
+.roadcond b{ font-variant-numeric:tabular-nums; }
+.road.up .roadcond b{ color:var(--up); } .road.down .roadcond b{ color:var(--dn); }
+.roadbody{ font-size:12.5px; color:var(--text-secondary); line-height:1.5; margin-top:4px; }
+.roadbody b{ font-variant-numeric:tabular-nums; color:var(--text-primary); }
+.roadtip{ font-size:12px; color:var(--text-muted); margin-top:8px; }
+
+/* ===== 矛盾裁决 + 免责 ===== */
+.verdict{ margin-top:14px; padding:13px 15px; background:var(--bg-warm); border:1px solid #f3d9b8;
+  border-radius:12px; font-size:13.5px; line-height:1.6; }
+.verdict b{ color:var(--accent); }
+.insight-slot{ display:block; margin:14px 0 0; padding:13px 16px; border-radius:11px;
+  background:linear-gradient(135deg,#b8491c14,#b8491c0a); border-left:3px solid var(--accent);
+  font-size:14px; color:var(--text-secondary); line-height:1.85; }
+.insight-slot:before{ content:"\1F4A1 AI 解读："; color:var(--accent); font-weight:600; margin-right:8px; }
+</style>
+<!-- App 预览抗注入：放在 panel 之后；选择器仍须高于前端后注入的 body/table/td/th 兜底皮肤 -->
+<style id="sb-preview-resilience">
+html body.sb-report {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-size: 16px !important;
+  line-height: 1.8 !important;
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', Georgia, 'PingFang SC', serif !important;
+}
+html body.sb-report .table-scroll > table,
+html body.sb-report .sec table,
+html body.sb-report .voice-card table,
+html body.sb-report .passage-card table {
+  border-collapse: collapse;
+  max-width: none;
+  width: 100%;
+}
+html body.sb-report .table-scroll th,
+html body.sb-report .table-scroll td,
+html body.sb-report .sec th,
+html body.sb-report .sec td {
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 9px 12px;
+}
+html body.sb-report .table-scroll th,
+html body.sb-report .sec th {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+</style>
+</head>
+<body class="sb-report">
+
+<nav>
+  <div class="nav-logo"><img src="https://st.gtimg.com/design/69dd1574ec3baa04f6d939868ba7245b.png" alt="腾讯自选股"></div>
+  <div class="nav-container"><div class="nav-links" id="navlinks">
+
+  </div></div>
+</nav>
+
+<section data-nav="核心结论">
+  <h2>核心结论（2026-09-23 10:48 盘中）</h2>
+  <p><strong>两个板块今天走出了完全不同的结构：</strong>「关注个股」是 CXO 集体放量爆发日——奥浦迈 +16.7%、益诺思 +14.0%、义翘神州 +10.9%、百普赛斯 +10.4%，12 只以上个股放量突破 60 日新高，但两日暴涨后乖离 MA20 普遍 25%~40%，短线超买风险集中；「AI硬件」是高位分化日——中石科技 +10.9%（两日+24%）、瑞芯微量比 4.87 领涨 PCB 材料/半导体材料补涨线，而高位光模块（中际旭创/新易盛/天孚）集体缩量整理。板块口径：GZGG.blk=关注个股 42 只、AIYJ.blk=AI硬件 84 只（与 9/22 一致）。</p>
+  <table>
+    <tr><th>维度</th><th>关注个股板块</th><th>AI硬件板块</th></tr>
+    <tr><td>今日盘面</td><td>CXO 放量普涨，煤炭全绿</td><td>材料/检测补涨，光模块缩量整理</td></tr>
+    <tr><td>趋势状态</td><td>强多头加速（超买）</td><td>多头结构内轮动</td></tr>
+    <tr><td>量能</td><td>量比 2~5 倍集中放量</td><td>补涨线放量、高位线缩量</td></tr>
+    <tr><td>风险等级</td><td>高（乖离大、振幅 10%~17%）</td><td>中高（轮动快）</td></tr>
+  </table>
+</section>
+
+<section data-nav="下午名单">
+  <h2>下午重点关注（10:48 口径）</h2>
+  <h3>关注个股（5 只）</h3>
+  <table>
+    <tr><th>代码</th><th>名称</th><th>现价</th><th>涨幅</th><th>入选理由</th><th>下午盯什么</th></tr>
+    <tr><td>688293</td><td>奥浦迈</td><td>88.06</td><td class="up">+16.7%</td><td>量比2.7 放量跳空突破 60 日高 78.94，突破力度全板块最强</td><td>88.45 站稳与否；乖离 MA20 达 40% 回踩剧烈属正常</td></tr>
+    <tr><td>688710</td><td>益诺思</td><td>104.40</td><td class="up">+14.0%</td><td>量比 4.98 板块最强，一举突破 20/60 日双高；昨日 RSI6 仅 57.9，低位启动型放量反转</td><td>105.5 上方承接；回踩不破 100 即突破有效</td></tr>
+    <tr><td>301047</td><td>义翘神州</td><td>151.03</td><td class="up">+10.9%</td><td>连续第 2 日放量大涨（两日+28%），突破 140.81 后加速</td><td>154（今日高）；连续超买后盘中剧震</td></tr>
+    <tr><td>301080</td><td>百普赛斯</td><td>131.14</td><td class="up">+10.4%</td><td>两日+23%，突破 129.86 前高，量比 2.32 持续放量</td><td>135（今日高）；MA5 107 为强弱分界</td></tr>
+    <tr><td>688578</td><td>艾力斯</td><td>111.80</td><td class="up">+8.7%</td><td>量比 4.41，昨日 RSI6 仅 51.5 板块内少数未超买者，距 60 日高 138.3 尚有 24% 空间</td><td>112.9 → 115.9；回踩 108 不破为强</td></tr>
+  </table>
+  <p>情绪观察（不入选）：南华生物——量比 29.76 天量、换手 27.4%、触涨停回落，巨量分歧，风险极高。</p>
+  <h3>AI硬件（5 只）</h3>
+  <table>
+    <tr><th>代码</th><th>名称</th><th>现价</th><th>涨幅</th><th>入选理由</th><th>下午盯什么</th></tr>
+    <tr><td>300684</td><td>中石科技</td><td>123.89</td><td class="up">+10.9%</td><td>两日+24%，量比 3.03，突破 116.66 创 60 日新高</td><td>126.99 站稳与否；乖离 MA20 达 34%</td></tr>
+    <tr><td>603893</td><td>瑞芯微</td><td>224.83</td><td class="up">+3.2%</td><td>量比 4.87 连续两日巨量，突破 20 日高，距 60 日高仅 4%</td><td>227.3 → 233.88；量能持续性是核心</td></tr>
+    <tr><td>688432</td><td>有研硅</td><td>55.57</td><td class="up">+5.7%</td><td>放量站上 MA5，20 日高 60.59/60.78 双阻力近在咫尺</td><td>60.6~60.8 突破即新高；回踩 54.6</td></tr>
+    <tr><td>688300</td><td>联瑞新材</td><td>185.89</td><td class="up">+4.9%</td><td>昨日 MACD 死叉今日放量反转收复 MA20，RSI6 仅 51.3 的低位修复型突破</td><td>站上 186 修复确认；回踩 178 之上正常</td></tr>
+    <tr><td>601208</td><td>东材科技</td><td>54.69</td><td class="up">+4.8%</td><td>量比 2.24，逼近 20 日高 55.5，多头排列初期</td><td>55.5 突破与否；MA5 52.6 支撑</td></tr>
+  </table>
+  <p>情绪观察（不入选）：先导基电——触涨停 48.11 后回落，5 日+46%，极端超买高波动。</p>
+</section>
+
+<section data-nav="明天名单">
+  <h2>明天重点关注</h2>
+  <h3>关注个股（5 只）</h3>
+  <table>
+    <tr><th>代码</th><th>名称</th><th>核心逻辑</th><th>明天验证位</th></tr>
+    <tr><td>688710</td><td>益诺思</td><td>巨量反转突破后看回踩确认</td><td>站稳 100 看 105.5→110；跌破 99.9 突破失败</td></tr>
+    <tr><td>688578</td><td>艾力斯</td><td>指标位置最低的启动股，空间最大（60日高 138.3）</td><td>站上 MA60 115 中期反转确认；支撑 108/105</td></tr>
+    <tr><td>603127</td><td>昭衍新药</td><td>放量收复全部均线，MACD 金叉 3 日，位置不高</td><td>51.5 → 55.7；回踩 46 不破为强</td></tr>
+    <tr><td>688131</td><td>皓元医药</td><td>量比 4.51 突破 20/60 日双高，金叉 3 日</td><td>109.8 之上持续；回踩 104.5 不破即有效</td></tr>
+    <tr><td>603259</td><td>药明康德</td><td>板块普涨日中军滞涨（+0.5%），若行情延续有补涨空间</td><td>171.2/173.6 前高；跌破 MA10 159 转弱</td></tr>
+  </table>
+  <h3>AI硬件（5 只）</h3>
+  <table>
+    <tr><th>代码</th><th>名称</th><th>核心逻辑</th><th>明天验证位</th></tr>
+    <tr><td>688630</td><td>芯碁微装</td><td>距 20 日高 446.55 一步，金叉 5 日且指标不超买</td><td>446.55 突破打开空间；MA20 413 守住即强</td></tr>
+    <tr><td>688008</td><td>澜起科技</td><td>站稳 MA60 第 2 日，位置不高（60日区间 27%）</td><td>230 → 233.2；MA60 216 生命线</td></tr>
+    <tr><td>301511</td><td>德福科技</td><td>强多头（MA20 斜率 6.5% 全板块最陡），指标不极端</td><td>118.5（20日高）；MA20 100.4 趋势底线</td></tr>
+    <tr><td>300570</td><td>太辰光</td><td>缩量整理未破位，趋势完好，等再度放量</td><td>243 → 251.8；跌破 MA5 220.6 转整理</td></tr>
+    <tr><td>688825</td><td>长鑫科技</td><td>新股逼近上市高 61.80（长周期指标 N/A，波动大）</td><td>61.8 突破=全面新高；回踩 56.4（MA20）</td></tr>
+  </table>
+  <p><strong>明天盯防：</strong>德科立收 220.0 恰在 MA5/MA10 下方，收复 MA10 与否是强多头趋势分水岭；高位光模块三剑客缩量整理方向未明；亨通光电冲高回落 -2.95% 看 MA10 附近承接。</p>
+</section>
+
+<section data-nav="风险提示">
+  <h2>风险提示</h2>
+  <ol>
+    <li>CXO 两日暴涨后乖离 MA20 普遍 25%~40%、RSI6 多在 85+，超买风险集中释放时波动剧烈，下午冲高回落概率不低。</li>
+    <li>南华生物、先导基电为天量/触涨停回落的高分歧情绪股，仅作情绪温度计。</li>
+    <li>AI硬件内部轮动快（昨日光模块 → 今日 PCB 材料），追高轮动末端风险大于收益。</li>
+    <li>10:48 快照与收盘可能差异较大（上午 CXO 多股振幅 10%~17%），以价位验证为准，不以前三日涨幅外推。</li>
+    <li>大智慧量比/换手为盘中累计折算值，盘中持续放大属正常。</li>
+  </ol>
+</section>
+
+
+<footer class="disclaimer">
+  <div class="disclaimer-inner">
+    <div class="disclaimer-title">⚠ 风险提示</div>
+    <ul class="disclaimer-list">
+      <li>本报告由 AI 基于公开信息自动生成，仅供研究参考，不构成任何投资建议或个股推荐。</li>
+      <li>报告为单一专家视角分析，历史与当前数据不代表未来表现，结论可能在不同市场环境下失效。</li>
+      <li>股市有风险，投资需谨慎，请根据自身风险承受能力审慎决策。</li>
+    </ul>
+    <div class="disclaimer-bottom">腾讯自选股 · K线大师 · Generated 2026-09-23</div>
+  </div>
+</footer>
+
+<script>
+/* 顶部导航 sticky 高亮：滚动到哪个分区，对应标签点亮（标签由 render.py 按 data-nav 注入） */
+(function () {
+  var links = [].slice.call(document.querySelectorAll("#navlinks a"));
+  if (!links.length) return;
+  var ids = links.map(function (a) { return a.getAttribute("href").slice(1); });
+  var nav = document.querySelector("nav");
+  function onScroll() {
+    var navH = (nav && nav.offsetHeight) || 0;
+    var line = navH + (window.innerHeight - navH) * 0.2;
+    var cur = ids[0];
+    ids.forEach(function (id) {
+      var t = document.getElementById(id);
+      if (t && t.getBoundingClientRect().top <= line) cur = id;
+    });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8)
+      cur = ids[ids.length - 1];
+    links.forEach(function (a) {
+      a.classList.toggle("active", a.getAttribute("href") === "#" + cur);
+    });
+  }
+  links.forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      var t = document.getElementById(a.getAttribute("href").slice(1));
+      if (t) t.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>

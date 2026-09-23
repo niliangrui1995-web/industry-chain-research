@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>分子砌块三强深度对比：毕得医药 vs 皓元医药 vs 药石科技 — 股价弹性排序</title>
+<style>
+  :root{
+    --bg:#1E1E1E; --bg2:#252526; --bg3:#2D2D30; --line:#3E3E42;
+    --fg:#D4D4D4; --dim:#9DA5B4; --green:#00E676; --green-dim:#00B85C;
+    --amber:#FFB74D; --red:#FF5252; --blue:#4FC3F7; --purple:#BA68C8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--fg);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.7;padding:24px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{color:var(--green);font-size:26px;margin-bottom:6px}
+  h2{color:var(--green);font-size:20px;margin:36px 0 14px;padding-left:12px;border-left:4px solid var(--green)}
+  h3{color:var(--blue);font-size:16px;margin:20px 0 8px}
+  .sub{color:var(--dim);font-size:13px;margin-bottom:18px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+  th{background:var(--bg3);color:var(--green);padding:8px 10px;text-align:right;border:1px solid var(--line);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  td{padding:7px 10px;border:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+  tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+  .up{color:var(--red)} .down{color:var(--green-dim)} .hi{color:var(--green);font-weight:700}
+  .warn{color:var(--amber)} .bad{color:var(--red)}
+  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;margin-left:6px;vertical-align:middle}
+  .t-hi{background:rgba(0,230,118,.15);color:var(--green);border:1px solid var(--green-dim)}
+  .t-mid{background:rgba(255,183,77,.12);color:var(--amber);border:1px solid var(--amber)}
+  .t-low{background:rgba(255,82,82,.12);color:var(--red);border:1px solid var(--red)}
+  .t-inf{background:rgba(79,195,247,.12);color:var(--blue);border:1px solid var(--blue)}
+  .rank{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+  .rank .r{flex:1;min-width:280px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .r1{border-top:4px solid var(--green)} .r2{border-top:4px solid var(--amber)} .r3{border-top:4px solid var(--red)}
+  .r h4{font-size:17px;margin-bottom:6px}
+  .r .medal{font-size:22px;margin-right:6px}
+  .kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+  .kv .k{background:var(--bg3);border-radius:8px;padding:10px 12px;text-align:center}
+  .kv .k b{display:block;font-size:19px;color:var(--green)}
+  .kv .k span{font-size:12px;color:var(--dim)}
+  .bar-row{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+  .bar-row .lbl{width:120px;color:var(--dim);text-align:right}
+  .bar-track{flex:1;background:var(--bg3);border-radius:4px;height:18px;position:relative}
+  .bar-fill{height:100%;border-radius:4px}
+  .bar-val{width:90px;font-size:12.5px}
+  ul{margin:6px 0 6px 22px} li{margin:4px 0}
+  .note{font-size:12.5px;color:var(--dim);margin-top:8px}
+  .sim input[type=range]{width:100%}
+  .sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+  .sim-cell{background:var(--bg3);border-radius:8px;padding:12px;text-align:center}
+  .sim-cell .big{font-size:22px;font-weight:700}
+  .footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+  code{background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>分子砌块三强深度对比：毕得医药 · 皓元医药 · 药石科技</h1>
+<div class="sub">研究截止：2026-09-16 ｜ 行情快照：2026-09-15 收盘 ｜ 财报口径：2025 年报 + 2026 中报（PRC-GAAP 合并报表）｜ 估值数字已通过 financial-evidence-audit 审计（PASS / publishable，9/9 checks）｜ 本报告为研究分析，不构成投资建议</div>
+
+<!-- ============ 0. 结论速览 ============ -->
+<h2>0. 结论速览：股价弹性排序</h2>
+<div class="card">
+  <p style="font-size:15px"><b>股价弹性（上涨空间 × 爆发概率）排序：<span class="hi">毕得医药（688073）＞ 药石科技（300725）＞ 皓元医药（688131）</span></b></p>
+  <p class="note">一句话逻辑：弹性 = 业绩弹性 ÷ 已定价程度。毕得「利润加速 + 最低估值 + 最小市值 + 滞涨筹码」四重错配最大；药石「拐点确立 + 海外大药企放量」但毛利率下行未止；皓元基本面动能最强，但 75 倍 PE 与「H2 需翻倍」的共识已把弹性预支。</p>
+</div>
+<div class="rank">
+  <div class="r r1">
+    <h4><span class="medal">🥇</span>毕得医药 688073 <span class="tag t-hi">弹性首选</span></h4>
+    <p>市值 <b>55.2 亿</b>（最小）｜ PE(TTM) <b>30.4</b>（最低）｜ 2026E PE <b>≈24</b></p>
+    <p>2026H1 归母 <span class="up">+40.7%</span>、扣非 <span class="up">+41%</span>；毛利率 50.4% 创上市新高；边际扣非率 <b>44%</b>（每 1 元新收入落 4 毛 4 扣非）；净现金约 7 亿；YTD 仅 +1.4% 且近 20 日回调 24%，筹码位置最好。</p>
+  </div>
+  <div class="r r2">
+    <h4><span class="medal">🥈</span>药石科技 300725 <span class="tag t-mid">拐点弹性</span></h4>
+    <p>市值 <b>103.1 亿</b> ｜ PE(TTM) <b>48.9</b> ｜ 2026E PE <b>≈42.5</b></p>
+    <p>2025 年利润坑（-16%）后 2026H1 归母 <span class="up">+37.2%</span> 拐点确立；海外占比 73% 三家最高、深度绑定 MNC 大药企（大药企收入 +40%）；CDMO 收入 +30%。但毛利率 38%→31% 趋势性下移压制估值天花板。</p>
+  </div>
+  <div class="r r3">
+    <h4><span class="medal">🥉</span>皓元医药 688131 <span class="tag t-low">弹性已预支</span></h4>
+    <p>市值 <b>193.5 亿</b>（最大）｜ PE(TTM) <b>74.7</b>（最贵）｜ 2026E PE <b>≈56</b></p>
+    <p>收入增速最快（H1 <span class="up">+25.7%</span>）、ADC CDMO 故事最性感，但增收不增利：边际扣非率仅 <b>4.3%</b>；共识隐含 2026H2 归母需 <span class="bad">+95%</span> 才能兑现，miss 风险大；负债率 50%、商誉 3.8 亿、半年财务费用 0.7 亿。</p>
+  </div>
+</div>
+
+<!-- ============ 1. 数据口径 ============ -->
+<h2>1. 数据口径与证据等级</h2>
+<div class="card">
+  <ul>
+    <li>行情/估值快照：腾讯自选股 + 通达信双厂商交叉（2026-09-15 收盘），市值、PE(TTM)、PB 经 <code>financial-evidence-audit</code> 审计：<b>PASS / publishable</b>（市值×3、PE×3、PB×3 全过）。皓元 PB 自算 5.84 vs 厂商快照 6.01，差异源于每股净资产口径（自算用归母净资产 33.14 亿），报告以自算口径为准。</li>
+    <li>财务数据：厂商聚合的定期报告数据（🟡 中置信度，已与东方财富主营构成交叉一致）；2026E-2028E 为券商一致预期厂商快照（🟡，非事件前共识，未经 expectation-gap 审计）。</li>
+    <li>业务结构：2025 年报分产品拆分（东方财富 F9 聚合，源自年报）；行业格局数据来自公开行业研究与公司披露（🟡 多方印证）。</li>
+    <li>前瞻性测算（共识反推、弹性模拟器）标注 <span class="tag t-inf">推算</span>，非审计范围。</li>
+  </ul>
+</div>
+
+<!-- ============ 2. 主营业务与产品结构 ============ -->
+<h2>2. 主营业务与产品结构：三家已走向三种模式</h2>
+<div class="card">
+  <table>
+    <tr><th>维度</th><th>毕得医药</th><th>皓元医药</th><th>药石科技</th></tr>
+    <tr><td>一句话模式</td><td>纯分子砌块「现货大卖场」：多、快、好、省</td><td>前端试剂 + 后端 CDMO「前后端一体化」</td><td>原创砌块设计 + CRDMO「纵向做深」</td></tr>
+    <tr><td>核心收入（2025A）</td><td>药物分子砌块 10.88 亿（82.2%）</td><td>分子砌块/工具化合物/生化试剂 19.91 亿（69.2%）</td><td>药物开发及商业化阶段 16.59 亿（84.0%，含 CDMO）</td></tr>
+    <tr><td>第二曲线</td><td>科学试剂 1.47 亿 + 生命科学试剂 0.89 亿</td><td>原料药/中间体/制剂 CDMO 8.72 亿（30.3%）</td><td>药物研究阶段产品 3.09 亿（15.6%）</td></tr>
+    <tr><td>核心板块毛利率</td><td>砌块 45.6%（杂环类 47.6% 最高）</td><td>前端 61.9%（最高）/ 后端仅 13.6%</td><td>研究阶段 56.4% / 开发商业化 25.8%</td></tr>
+    <tr><td>品种库</td><td>上架超 100 万种、常备现货 11.7 万种（行业第一）</td><td>砌块约 9.5 万种 + 生命科学试剂累计 15.9 万种</td><td>超 20 万种，原创新颖骨架 IP 壁垒最深</td></tr>
+    <tr><td>海外收入占比</td><td>57.4%（境外毛利率 52.2% vs 境内 34.3%）</td><td>40.2%</td><td>72.7%（最高）</td></tr>
+  </table>
+  <p class="note">分子砌块业务体量排名：毕得 10.88 亿 ＞ 药石 8.10 亿（发现 2.75 + 开发 5.35）＞ 皓元 5.63 亿。毕得是三家唯一以砌块为绝对主业的公司；药石把砌块当 CDMO 获客入口；皓元以工具化合物为前端引擎、砌块仅占其前端收入 28%。</p>
+</div>
+
+<!-- ============ 3. 营收与利润 ============ -->
+<h2>3. 营收与利润：规模、增速与趋势</h2>
+<div class="card">
+  <table>
+    <tr><th>报告期</th><th>毕得营收(亿)</th><th>皓元营收(亿)</th><th>药石营收(亿)</th><th>毕得归母(亿)</th><th>皓元归母(亿)</th><th>药石归母(亿)</th></tr>
+    <tr><td>2024A</td><td>11.02 <span class="down">(+0.9%)</span></td><td>22.70 <span class="up">(+20.8%)</span></td><td>16.89 <span class="down">(-2.1%)</span></td><td>1.17 <span class="up">(+7.2%)</span></td><td>2.02 <span class="up">(+58.2%)</span></td><td>2.20 <span class="up">(+11.2%)</span></td></tr>
+    <tr><td>2025A</td><td>13.24 <span class="up">(+20.1%)</span></td><td>28.77 <span class="up">(+26.7%)</span></td><td>19.74 <span class="up">(+16.9%)</span></td><td>1.52 <span class="up">(+29.2%)</span></td><td>2.40 <span class="up">(+19.0%)</span></td><td>1.84 <span class="down">(-16.3%)</span></td></tr>
+    <tr><td>2026H1</td><td>6.83 <span class="down">(+8.8%)</span></td><td>16.48 <span class="up">(+25.7%)</span></td><td>10.59 <span class="up">(+15.2%)</span></td><td>1.03 <span class="up">(+40.7%)</span></td><td>1.71 <span class="up">(+12.8%)</span></td><td>0.99 <span class="up">(+37.2%)</span></td></tr>
+    <tr><td>2026Q1 单季</td><td>3.23 (+9.1%)</td><td>7.29 (+20.2%)</td><td>5.08 (+11.7%)</td><td>0.47 <span class="up">(+52.6%)</span></td><td>0.68 (+8.7%)</td><td>0.49 <span class="up">(+36.6%)</span></td></tr>
+    <tr><td>2026Q2 单季</td><td>3.60 (+8.6%)</td><td>9.19 <span class="up">(+30.4%)</span></td><td>5.51 (+18.7%)</td><td>0.56 <span class="up">(+32.2%)</span></td><td>1.03 (+15.6%)</td><td>0.51 <span class="up">(+37.7%)</span></td></tr>
+  </table>
+  <h3>关键观察</h3>
+  <ul>
+    <li><b>收入规模</b>：皓元（28.8 亿）＞ 药石（19.7 亿）＞ 毕得（13.2 亿）；<b>归母规模</b>：皓元 ≈ 药石 ＞ 毕得，但毕得 2026H1 利润增速三家最快。</li>
+    <li><b>增速结构</b>：皓元收入动能最强（Q2 +30.4%），毕得收入增速放缓至个位数（Q1 +9.1% / Q2 +8.6%）——毕得的高利润增速是<b>毛利率驱动</b>而非收入驱动，这是其弹性来源也是最大脆弱点。</li>
+    <li><b>药石拐点</b>：2025 年利润 -16%（主动加大早期 CMC/FTE 导入型投入 + 研究阶段收入 -2%），2026H1 重回 +37%，且 2025H2 基数低，全年修复可见度高。</li>
+    <li><b>皓元 2025Q4 异常</b>：单季归母仅 315 万（-94.6%），含费用/减值集中确认——这压低了 2025 基数，也是共识给 2026 高增的部分原因。</li>
+  </ul>
+</div>
+
+<!-- ============ 4. 盈利能力 ============ -->
+<h2>4. 毛利率与净利率：利润弹性藏在边际扣非率里</h2>
+<div class="card">
+  <table>
+    <tr><th>指标</th><th>毕得医药</th><th>皓元医药</th><th>药石科技</th></tr>
+    <tr><td>毛利率 2024A</td><td>41.3%</td><td>48.0%</td><td>38.1%</td></tr>
+    <tr><td>毛利率 2025A</td><td>44.5%</td><td>47.1%</td><td>30.8%</td></tr>
+    <tr><td>毛利率 2026H1</td><td class="hi">50.4%（+6.2pct YoY）</td><td>50.8%</td><td class="warn">32.5%（低位徘徊）</td></tr>
+    <tr><td>净利率 2026H1</td><td class="hi">15.1%</td><td>9.8%</td><td>9.4%</td></tr>
+    <tr><td>扣非净利率 2026H1</td><td class="hi">12.2%</td><td>9.4%</td><td>7.9%</td></tr>
+    <tr><td><b>边际扣非率</b>（2026H1 Δ扣非/Δ营收）</td><td class="hi">44.1%</td><td class="bad">4.3%</td><td>17.4%</td></tr>
+    <tr><td>ROE(TTM)</td><td>8.8%</td><td>7.8%</td><td>4.6%</td></tr>
+    <tr><td>研发费用率 2025A</td><td>4.7%（0.63 亿）</td><td class="hi">8.3%（2.38 亿）</td><td>5.5%（1.09 亿）</td></tr>
+    <tr><td>财务费用 2026H1</td><td>0.21 亿</td><td class="bad">0.70 亿（占归母 41%）</td><td>0.21 亿</td></tr>
+  </table>
+  <h3>边际扣非率：最能说明问题的单一指标</h3>
+  <div class="bar-row"><span class="lbl">毕得医药</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:var(--green)"></div></div><span class="bar-val hi">44.1%</span></div>
+  <div class="bar-row"><span class="lbl">药石科技</span><div class="bar-track"><div class="bar-fill" style="width:35%;background:var(--amber)"></div></div><span class="bar-val warn">17.4%</span></div>
+  <div class="bar-row"><span class="lbl">皓元医药</span><div class="bar-track"><div class="bar-fill" style="width:9%;background:var(--red)"></div></div><span class="bar-val bad">4.3%</span></div>
+  <p class="note">毕得每多做 1 元收入落下 0.44 元扣非（经营杠杆极强，源于海外高毛利占比提升 + 现货结构升级）；皓元上半年多做了 3.37 亿收入却只多落 0.14 亿扣非——收入放量被低毛利后端（13.6%）、费用与利息吞噬；药石居中，CDMO 规模效应初步显现但毛利率仍在低位。<b>皓元的利润对收入的弹性是三家中最弱的。</b></p>
+</div>
+
+<!-- ============ 5. 研发与客户 ============ -->
+<h2>5. 研发投入、管线布局与客户结构</h2>
+<div class="card">
+  <table>
+    <tr><th>维度</th><th>毕得医药</th><th>皓元医药</th><th>药石科技</th></tr>
+    <tr><td>研发方向</td><td>每周新增 SKU 500+，覆盖 700+ 靶点；横向扩品类即研发</td><td>XDC（ADC）、PROTAC、多肽、小核酸全布局；AI 赋能合成</td><td>原创砌块设计 + 连续流/绿色化学 + AI 逆合成；ADC linker-payload 技术领先</td></tr>
+    <tr><td>管线/项目储备</td><td>无 CDMO 管线，品种即管线（现货 11.7 万种）</td><td>创新药 CRDMO 累计 1049 个项目，140+ 进入临床 II/III 期及商业化；在手订单 6.7 亿+（+30%）</td><td>砌块→CDMO 转化漏斗；公斤级临床阶段批量订单为主</td></tr>
+    <tr><td>客户数量</td><td>8000+ 家，分散（中小 Biotech + 高校为主）</td><td>1.5 万+ 家；科研客户 Nature/Science/Cell 发文约 7.2 万篇</td><td>全球前 20 大药企八成合作；2025 年大药企收入 +40%</td></tr>
+    <tr><td>客户质量特征</td><td>长尾分散、订单稳定、现金流好（2026Q1 经营现金流 +456%）</td><td>科研+产业双覆盖，国内创新药企覆盖广</td><td>MNC 大药企深度绑定，客户层级最高</td></tr>
+    <tr><td>竞争地位</td><td>国内砌块收入第一；现货储备第一；全球 CR5&lt;30% 分散格局下的品类王</td><td>均衡型第二梯队领头；ADC CDMO 稀缺标的（重庆基地过欧盟 QP 审计）</td><td>原创设计第一梯队；砌块→CRDMO 转化最深</td></tr>
+  </table>
+  <p class="note">行业背景（🟡 行业研究口径）：2025 年全球分子砌块市场约 185 亿元，预计 2032 年约 297 亿元（CAGR ≈7%）；全球前五大厂商合计份额不足 30%，默克 Sigma-Aldrich 市占率也不超 10%。驱动：全球创新药投融资回暖、国内 BD 交易创纪录、ADC/多肽/PROTAC 新分子需求、供应链「中国+1」。</p>
+</div>
+
+<!-- ============ 6. 资产负债表 ============ -->
+<h2>6. 资产负债表安全垫（2026H1）</h2>
+<div class="card">
+  <table>
+    <tr><th>指标</th><th>毕得医药</th><th>皓元医药</th><th>药石科技</th></tr>
+    <tr><td>货币资金</td><td>8.42 亿</td><td>15.70 亿</td><td>6.48 亿</td></tr>
+    <tr><td>有息负债</td><td>1.37 亿</td><td class="bad">24.01 亿（含可转债）</td><td>1.22 亿</td></tr>
+    <tr><td>净现金</td><td class="hi">+7.05 亿（占市值 12.8%）</td><td class="bad">-8.31 亿（净债务）</td><td class="hi">+5.26 亿</td></tr>
+    <tr><td>资产负债率</td><td>17.2%</td><td class="bad">50.0%</td><td>15.2%</td></tr>
+    <tr><td>商誉</td><td>0.08 亿</td><td class="warn">3.78 亿</td><td class="warn">3.56 亿</td></tr>
+  </table>
+</div>
+
+<!-- ============ 7. 估值 ============ -->
+<h2>7. 估值对比（2026-09-15 收盘，审计 PASS）</h2>
+<div class="card">
+  <table>
+    <tr><th>指标</th><th>毕得医药</th><th>皓元医药</th><th>药石科技</th></tr>
+    <tr><td>收盘价（元）</td><td>60.77</td><td>90.76</td><td>44.10</td></tr>
+    <tr><td>总市值（亿元）🟢已审计</td><td class="hi">55.23</td><td>193.53</td><td>103.11</td></tr>
+    <tr><td>PE(TTM)🟢已审计</td><td class="hi">30.4</td><td>74.7</td><td>48.9</td></tr>
+    <tr><td>PB🟢已审计（自算口径）</td><td>2.68</td><td>5.84</td><td>2.26</td></tr>
+    <tr><td>2026E 归母共识（亿）🟡</td><td>2.28（+50.2%）</td><td>3.43（+43.1%）</td><td>2.42（+31.9%）</td></tr>
+    <tr><td>2026E PE🟡</td><td class="hi">24.2</td><td>56.4</td><td>42.5</td></tr>
+    <tr><td>2027E PE🟡</td><td class="hi">19.4</td><td>39.8</td><td>31.6</td></tr>
+    <tr><td>PEG（2026E PE / 26E 增速）🟡</td><td class="hi">0.48</td><td>1.31</td><td>1.33</td></tr>
+    <tr><td>股息率 TTM</td><td>1.8%</td><td>0.25%</td><td>0.86%</td></tr>
+    <tr><td>年初至今 / 近 20 日</td><td>+1.4% / <span class="down">-23.7%</span></td><td>+26.2% / -9.6%</td><td>+15.5% / -15.6%</td></tr>
+  </table>
+  <p class="note">三家覆盖机构都极少（厂商口径各约 1 家预测机构）——板块整体处于低覆盖状态，共识本身的代表性有限，预期差更多由业绩验证驱动而非研报驱动。</p>
+</div>
+
+<!-- ============ 8. 弹性测算 ============ -->
+<h2>8. 弹性测算：共识反推 + 业绩弹性/市值 <span class="tag t-inf">推算</span></h2>
+<div class="card">
+  <h3>① 共识反推：2026H2 需要多高的增速才能兑现全年共识？</h3>
+  <table>
+    <tr><th>项目</th><th>毕得医药</th><th>皓元医药</th><th>药石科技</th></tr>
+    <tr><td>2026E 归母共识（亿）</td><td>2.28</td><td>3.43</td><td>2.42</td></tr>
+    <tr><td>2026H1 已实现（亿）</td><td>1.03</td><td>1.71</td><td>0.99</td></tr>
+    <tr><td>H2 所需（亿）</td><td>1.25</td><td>1.72</td><td>1.43</td></tr>
+    <tr><td>2025H2 实际（亿）</td><td>0.78</td><td>0.88（Q4 异常低）</td><td>1.11</td></tr>
+    <tr><td><b>隐含 H2 所需增速</b></td><td class="warn">+59%</td><td class="bad">+95%</td><td class="hi">+29%</td></tr>
+    <tr><td>对照 H1 实际增速</td><td>+40.7%（差距可控，毛利率仍在爬坡）</td><td>+12.8%（差距悬殊）</td><td>+37.2%（已超所需）</td></tr>
+  </table>
+  <h3>② 业绩弹性 ÷ 市值：同样 1 元扣非增量，谁对市值推动最大？</h3>
+  <div class="bar-row"><span class="lbl">毕得 Δ扣非/市值</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:var(--green)"></div></div><span class="bar-val hi">0.44%（半年）</span></div>
+  <div class="bar-row"><span class="lbl">药石 Δ扣非/市值</span><div class="bar-track"><div class="bar-fill" style="width:48%;background:var(--amber)"></div></div><span class="bar-val warn">0.24%</span></div>
+  <div class="bar-row"><span class="lbl">皓元 Δ扣非/市值</span><div class="bar-track"><div class="bar-fill" style="width:15%;background:var(--red)"></div></div><span class="bar-val bad">0.07%</span></div>
+  <p class="note">2026H1 扣非增量相对当前市值的「浓度」：毕得是皓元的约 6 倍。小市值 + 高边际利润率意味着同样的产业景气改善，对毕得利润表和估值表的冲击都被放大。</p>
+
+  <h3>③ 三滑块敏感性模拟器（拖动看三家隐含空间）</h3>
+  <div class="sim card" style="background:var(--bg3)">
+    <div style="font-size:13px">
+      <label>2026E 归母达成率（相对共识 2.28 / 3.43 / 2.42 亿）：<b id="vAch">100%</b></label>
+      <input type="range" id="sAch" min="60" max="140" value="100" oninput="runSim()">
+      <label>目标 PE（倍）：<b id="vPe">30</b></label>
+      <input type="range" id="sPe" min="15" max="75" value="30" oninput="runSim()">
+      <label>估值切换年份利润乘数（2027E/2026E 共识增速：毕得 +25%、皓元 +42%、药石 +35%；100%=用 2026E）：<b id="vYr">100%</b></label>
+      <input type="range" id="sYr" min="100" max="130" value="100" oninput="runSim()">
+    </div>
+    <div class="sim-grid">
+      <div class="sim-cell"><div>毕得医药</div><div class="big" id="rBD" style="color:var(--green)">—</div><div style="font-size:12px;color:var(--dim)" id="dBD"></div></div>
+      <div class="sim-cell"><div>皓元医药</div><div class="big" id="rHY" style="color:var(--amber)">—</div><div style="font-size:12px;color:var(--dim)" id="dHY"></div></div>
+      <div class="sim-cell"><div>药石科技</div><div class="big" id="rYS" style="color:var(--blue)">—</div><div style="font-size:12px;color:var(--dim)" id="dYS"></div></div>
+    </div>
+    <p class="note">公式：隐含市值 = 2026E 共识归母 × 达成率 × 利润乘数 × 目标 PE；空间 = 隐含市值/当前市值 − 1。第三滑块 100% 以上时按各公司 2027E 共识增速线性外推（毕得 25% / 皓元 42% / 药石 35%）。</p>
+  </div>
+</div>
+
+<!-- ============ 9. 催化剂与风险 ============ -->
+<h2>9. 潜在催化剂与主要风险</h2>
+<div class="card">
+  <table>
+    <tr><th></th><th>催化剂</th><th>主要风险</th></tr>
+    <tr><td><b>毕得医药</b></td><td>① 海外高毛利占比继续提升 → 毛利率每 +1pct ≈ 增厚扣非约 1300 万/年；② 创新药投融资回暖 + BD 创纪录 → 研发端现货采购放量；③ 2026 三季报验证毛利率持续性；④ 低基数下全年利润 +40~50% 可见度较高；⑤ 1.8% 股息 + 净现金 7 亿提供安全垫</td><td>① <b>收入增速已放缓至个位数</b>，若毛利率见顶，利润增速将快速向收入增速收敛（利润弹性=毛利率弹性，当前盈利高增的脆弱性所在）；② 大卖场模式标准化产品价格竞争；③ 无 CDMO 二曲线，天花板依赖品类扩张</td></tr>
+    <tr><td><b>药石科技</b></td><td>① CDMO 收入 +30% 放量 + 产能利用率提升 → 毛利率修复是最大的利润弹性来源；② MNC 大药企收入 +40%，「中国+1」供应链转移直接受益；③ ADC linker-payload 技术优势变现；④ 2025 低基数下 2026-2027 连续 30%+ 利润修复路径清晰</td><td>① 毛利率 38%→31% 趋势性下移未确认见底（结构向低毛利 CDMO 倾斜是主动选择）；② CDMO 行业价格竞争；③ 商誉 3.56 亿；④ 49 倍 TTM 已部分定价修复预期</td></tr>
+    <tr><td><b>皓元医药</b></td><td>① 重庆 ADC CDMO 基地过欧盟 QP 审计，XDC 一站式稀缺产能释放（2026 最大看点）；② 在手订单 6.7 亿+（+30%）；③ 后端毛利率 13.6% 若修复至行业中枢，利润弹性巨大；④ ADC 商业化浪潮主题催化</td><td>① <b>估值已充分定价</b>（PE 74.7/56.4 双高）；② 共识隐含 H2 归母 +95%，兑现难度大，miss 即戴维斯双杀；③ 财务费用 0.7 亿/半年 + 24 亿有息负债 + 50% 负债率；④ 商誉 3.78 亿；⑤ 边际扣非率仅 4.3%，增收不增利格局未破</td></tr>
+  </table>
+</div>
+
+<!-- ============ 10. 最终结论 ============ -->
+<h2>10. 最终排序与判断依据</h2>
+<div class="card">
+  <h3>🥇 第一：毕得医药 —— 「错配最大」的弹性标的</h3>
+  <ul>
+    <li><b>估值-成长错配最深</b>：PEG 0.48（皓元/药石约 1.3），2026E PE 24 倍对 +50% 共识增速，板块唯一「低估值 + 利润加速」组合。</li>
+    <li><b>业绩弹性/市值浓度最高</b>：半年 Δ扣非/市值 0.44%，是皓元的 6 倍；55 亿市值下，利润每超预期 1000 万 ≈ 1.8% 的市值重估空间。</li>
+    <li><b>盈利质量三中最优</b>：净利率 15.1% 最高、边际扣非率 44% 最高、净现金 7 亿、负债率 17%、商誉近零、股息 1.8%。</li>
+    <li><b>筹码位置最好</b>：YTD +1.4% 显著滞涨于皓元（+26%）与药石（+16%），近 20 日 -23.7% 完成一轮风险释放。</li>
+    <li><b>承认脆弱点</b>：收入增速仅个位数，若 2026Q3 毛利率环比走平，利润增速故事降档——这是把「第一」让给别人的唯一路径。跟踪指标：单季毛利率、海外收入占比、SKU/现货扩张速度。</li>
+  </ul>
+  <h3>🥈 第二：药石科技 —— 「拐点 + 海外」的中等弹性</h3>
+  <ul>
+    <li>2026H1 +37% 拐点已确认，共识对 H2 的要求（+29%）是三家中<b>最容易兑现</b>的——预期差方向偏正。</li>
+    <li>海外 73% + MNC 大药企 +40% 是地缘供应链重构的最直接受益者；CDMO 放量提供 2027 年续力。</li>
+    <li>排第二而非第一的原因：毛利率下行趋势未确认见底（「以利润率换规模」的主动转型），49 倍 TTM 不算便宜，市值是毕得的 1.9 倍，弹性浓度被稀释。</li>
+  </ul>
+  <h3>🥉 第三：皓元医药 —— 基本面最强，但弹性已被预支</h3>
+  <ul>
+    <li>收入动能、管线广度、ADC CDMO 稀缺性都是三家最强，<b>作为「公司」它可能是最好的，作为「股票」它当前是最贵的</b>。</li>
+    <li>PE(TTM) 74.7 / 2026E 56.4，隐含 H2 需 +95% 才能 match 共识；边际扣非率 4.3% 说明收入放量暂未转化为利润；高负债 + 高商誉 + 高财务费用放大下行波动。</li>
+    <li>排序靠后 ≠ 看空：若重庆 ADC 基地订单超预期、后端毛利率修复，它具备主题爆发力，但那是「事件博弈」而非「赔率优势」。适合等回调或订单验证后再评估。</li>
+  </ul>
+</div>
+
+<!-- ============ 11. 方法论与审计 ============ -->
+<h2>11. 方法论局限与审计说明</h2>
+<div class="card">
+  <ul>
+    <li><b>审计覆盖</b>：三家总市值、PE(TTM)、PB 共 9 项经 financial-evidence-audit 核验（PASS / publishable，退出码 0），双厂商（腾讯自选股 + 通达信）独立来源交叉，容忍度 1%。财务序列数据为厂商聚合口径（🟡），未逐项回公告原文；决策前建议核对 2026 中报 PDF 原文。</li>
+    <li><b>未审计项</b>：2026E-2028E 共识为厂商快照（非事件前 PIT 共识），「共识反推 H2 所需增速」与模拟器为 <span class="tag t-inf">推算</span>；皓元 2025Q4 利润异常低的原因（费用/减值/利息集中）未逐项拆分至附注，已作为不确定性保留。</li>
+    <li><b>数字自审</b>：边际扣非率、Δ扣非/市值、H2 所需增速均由报告内披露的原始数重算（如毕得 (0.836−0.592)/(6.828−6.275)=44.1%）；跨节口径不一致处已注明（皓元 PB 自算 vs 厂商快照）。</li>
+    <li><b>业务口径警示</b>：三家「分子砌块收入」统计口径不同（毕得按化学结构、药石按应用阶段、皓元并入前端板块），横向对比已尽量调整但不可视为严格同口径。</li>
+    <li>本报告不构成投资建议；排序基于公开数据与显性假设，失效条件见第 9、10 节跟踪指标。</li>
+  </ul>
+</div>
+
+<div class="footer">
+  数据截至 2026-09-15 收盘 / 2026 中报 ｜ 来源：腾讯自选股、通达信、东方财富（主营构成）、公司定期报告、公开行业研究 ｜ 审计：financial-evidence-audit v1.4.2（audit_id: molecular-blocks-3way-20260916, PASS/publishable）｜ 生成：WorkBuddy 创新药&生物制药深度投研
+</div>
+
+</div>
+<script>
+const D = {
+  BD:{np:2.28, mc:55.23, g27:0.25},
+  HY:{np:3.43, mc:193.53, g27:0.42},
+  YS:{np:2.42, mc:103.11, g27:0.35}
+};
+function runSim(){
+  const ach = +document.getElementById('sAch').value;
+  const pe  = +document.getElementById('sPe').value;
+  const yr  = +document.getElementById('sYr').value;
+  document.getElementById('vAch').textContent = ach + '%';
+  document.getElementById('vPe').textContent = pe;
+  document.getElementById('vYr').textContent = yr + '%';
+  for (const k in D){
+    const d = D[k];
+    const mult = 1 + (yr-100)/100 * d.g27 / 0.30; // 100~130% 映射到 0~1×2027E增速
+    const npEff = d.np * ach/100 * mult;
+    const mcEff = npEff * pe;
+    const up = (mcEff/d.mc - 1) * 100;
+    const el = document.getElementById('r'+k);
+    el.textContent = (up>=0?'+':'') + up.toFixed(1) + '%';
+    el.style.color = up>=0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('d'+k).textContent =
+      '隐含市值 ' + mcEff.toFixed(0) + ' 亿（归母 ' + npEff.toFixed(2) + ' 亿 × ' + pe + 'x）';
+  }
+}
+runSim();
+</script>
+</body>
+</html>

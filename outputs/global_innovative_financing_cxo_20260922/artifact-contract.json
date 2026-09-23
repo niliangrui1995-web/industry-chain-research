@@ -1,0 +1,44 @@
+{
+  "schema_version": "moss-html-artifact/v1",
+  "artifact_id": "global-innovative-financing-cxo-20260922",
+  "artifact_kind": "dashboard",
+  "artifact_mode": "interactive-web",
+  "page_profile": null,
+  "visual_baseline": "editorial-impact",
+  "brand": {
+    "name": "产业链投研",
+    "primary_color": "#17213D",
+    "secondary_color": "#F2EDE4",
+    "accent_color": "#E4572E",
+    "display_font": "Georgia, \"Times New Roman\", serif",
+    "body_font": "\"Aptos\", \"Segoe UI\", \"Microsoft YaHei\", sans-serif",
+    "tone": "editorial",
+    "density": "balanced",
+    "logo_path": null
+  },
+  "tokens": {
+    "--moss-color-primary": "#17213D",
+    "--moss-color-secondary": "#F2EDE4",
+    "--moss-color-accent": "#E4572E",
+    "--moss-color-surface": "#FFFDF8",
+    "--moss-color-text": "#10131A",
+    "--moss-font-display": "Georgia, \"Times New Roman\", serif",
+    "--moss-font-body": "\"Aptos\", \"Segoe UI\", \"Microsoft YaHei\", sans-serif",
+    "--moss-type-ratio": "1.250",
+    "--moss-space-unit": "8px",
+    "--moss-radius": "4px",
+    "--moss-shadow": "0 22px 70px rgba(23, 33, 61, 0.18)",
+    "--moss-motion-duration": "520ms",
+    "--moss-motion-easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+    "--moss-tone": "editorial",
+    "--moss-density": "balanced"
+  },
+  "requirements": {
+    "print_preflight": false,
+    "self_contained": false,
+    "network_assets": true,
+    "motion": true
+  },
+  "content_source": "frozen_delivery_package.json",
+  "render_seed": "bc18799c8b17fc9c"
+}

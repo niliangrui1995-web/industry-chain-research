@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CXO 股价弹性筛选 · 三强名单（2026-09-16）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; background:#f5f6f8; color:#1c2733; line-height:1.65; padding:28px 18px; }
+.wrap { max-width:1080px; margin:0 auto; }
+h1 { font-size:24px; margin-bottom:6px; }
+.sub { color:#5c6b7a; font-size:13px; margin-bottom:22px; }
+h2 { font-size:17px; margin:30px 0 12px; padding-left:10px; border-left:4px solid #0f6e56; }
+h3 { font-size:14.5px; margin:16px 0 8px; }
+.card { background:#fff; border-radius:12px; padding:20px 22px; margin-bottom:16px; box-shadow:0 1px 4px rgba(20,40,60,.07); }
+.tldr { background:#eef7f2; border:1px solid #bfe0d2; }
+.tldr .rank { display:flex; gap:14px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed #cbe4d8; }
+.tldr .rank:last-child { border-bottom:none; }
+.tldr .no { min-width:34px; height:34px; border-radius:50%; color:#fff; font-weight:700; display:flex; align-items:center; justify-content:center; font-size:16px; }
+.tldr .rk b { font-size:15px; }
+.tldr .rk p { font-size:13px; color:#3d4c5a; margin-top:2px; }
+table { width:100%; border-collapse:collapse; font-size:13px; background:#fff; }
+th { background:#eef2f6; color:#33475b; text-align:left; padding:8px 10px; border-bottom:2px solid #d5dee6; font-weight:600; }
+td { padding:7px 10px; border-bottom:1px solid #e8edf2; vertical-align:top; }
+tr:hover td { background:#f7fafc; }
+.up { color:#d63c3c; font-weight:600; }
+.down { color:#0d8a4f; font-weight:600; }
+.tag { display:inline-block; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:600; margin:1px 3px 1px 0; }
+.t1 { background:#fdeeee; color:#c0392b; } .t2 { background:#fef4e6; color:#b9770e; } .t3 { background:#eaf3f8; color:#2471a3; }
+.dim { color:#7b8a99; font-size:12px; }
+.stock { border-left:5px solid; }
+.s1 { border-color:#c0392b; } .s2 { border-color:#b9770e; } .s3 { border-color:#2471a3; }
+.stock .hd { display:flex; flex-wrap:wrap; gap:8px; align-items:baseline; margin-bottom:8px; }
+.stock .hd b { font-size:16px; }
+.kv { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:8px 18px; font-size:13px; margin:8px 0; }
+.kv .k { color:#5c6b7a; font-size:12px; }
+.risk { background:#fdf6f4; border-radius:8px; padding:10px 14px; font-size:12.5px; color:#7c3a2d; margin-top:10px; }
+.src { font-size:12px; color:#7b8a99; margin-top:14px; border-top:1px dashed #d8e0e7; padding-top:10px; }
+.disc { font-size:12px; color:#8b98a6; background:#f0f2f5; border-radius:8px; padding:12px 16px; margin-top:24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>CXO 股价弹性筛选：三强名单</h1>
+<div class="sub">前提假设：创新药融资确定回暖（2026H1 全球投融资 267.6 亿美元 +58.5%）｜数据时点：2026-09-16 09:30 盘中快照（westock-data）｜排序依据：业绩弹性 × 市值 × 估值位置 × 已兑现涨幅</div>
+
+<div class="card tldr">
+  <h3 style="margin-top:0">结论速览（弹性从高到低）</h3>
+  <div class="rank"><div class="no" style="background:#c0392b">1</div><div class="rk"><b>美迪西（688202）· 临床前 CRO</b><p>扭亏拐点 × 新签订单 +104.7% × 133 亿小市值，三重弹性叠加；"利好催化 → 股价"放大倍数全板块最高。</p></div></div>
+  <div class="rank"><div class="no" style="background:#b9770e">2</div><div class="rk"><b>泰格医药（300347）· 临床 CRO 龙头</b><p>年内 -1.45% 全板块最落后 + PB 分位 44.8% 未透支 + 扣非拐点确认（+31.8%），"补涨 + 估值修复"确定性最高的弹性标的。</p></div></div>
+  <div class="rank"><div class="no" style="background:#2471a3">3</div><div class="rk"><b>益诺思（688710）· 临床前安评（国资）</b><p>新签订单 +175.6% 全板块最强 + 利润基数极低，弹性大但年初至今已涨 95.9%，部分弹性已兑现，列第三。</p></div></div>
+</div>
+
+<h2>一、筛选逻辑：环节弹性 → 个股弹性</h2>
+<div class="card">
+<p style="font-size:13.5px">股价弹性 = <b>业绩弹性（订单→报表的传导斜率）</b> × <b>市值倒数（小盘放大）</b> × <b>估值空间（未透支程度）</b> × <b>催化剂密度</b>。先看环节：</p>
+<table style="margin-top:12px">
+<thead><tr><th>环节（催化敏感度降序）</th><th>业绩弹性来源</th><th>估值/涨幅状态（2026-09-16）</th><th>环节弹性判断</th></tr></thead>
+<tbody>
+<tr><td><b>临床前 CRO 二线</b>（美迪西、益诺思）</td><td>新签 +105%~176%，量价齐升（猴价传导），扭亏/低基数 → 报表斜率最陡</td><td>美迪西 YTD +75.5%（仍亏损）、益诺思 YTD +95.9%</td><td class="up">最高</td></tr>
+<tr><td>上游模式动物（药康）</td><td>猴价一年翻倍、供给缺口刚性</td><td>药康 YTD +112.3%，PE 72×，透支最多</td><td>高但已大部分兑现</td></tr>
+<tr><td><b>临床 CRO（泰格）</b></td><td>扣非 +31.8% 拐点、新签单价回正、海外订单近翻倍、2027 利润释放前置</td><td>YTD <span class="down">-1.45%</span>、PB 分位 44.8%，板块唯一未涨的弹性环节</td><td class="up">高（补涨型）</td></tr>
+<tr><td>CDMO 龙头（药明）</td><td>在手订单 +25%、指引上调</td><td>YTD +76.3%、PE 21.8×，业绩强但已定价</td><td>配置属性 &gt; 弹性属性</td></tr>
+<tr><td>CDMO 二线（博腾）</td><td>利用率深坑修复，早期管线回流</td><td>仍在亏损，兑现节奏最慢（12-24 个月）</td><td>远期弹性、近期弱</td></tr>
+<tr><td>上游砌块（毕得）</td><td>有量无价，净利 +40.7% 但提价难</td><td>YTD +2.8%，PE 30.8×</td><td>中低</td></tr>
+</tbody></table>
+</div>
+
+<h2>二、订单爆发 vs 股价兑现：谁还有"预期差"</h2>
+<div class="card">
+<div id="chart1" style="width:100%;height:380px;"></div>
+<p class="dim" style="margin-top:8px">新签订单增速为 2026H1 口径（泰格为 2026Q1 净新增订单口径，同比 +20%）；YTD 为年初至今涨跌幅（2026-09-16 盘中）。数据来源：westock-data、公司中报/业绩会（非一手口径已交叉验证）。</p>
+<p style="font-size:13.5px;margin-top:10px">读图要点：<b>订单柱远高于涨幅柱 = 预期差</b>。美迪西（+105% vs +76%）与益诺思（+176% vs +96%）订单斜率仍领先股价；<b>泰格是唯一的"负涨幅 + 订单拐点"组合</b>；药明（+40% vs +76%）则相反——股价已跑在订单前面。</p>
+</div>
+
+<h2>三、三强个股详析</h2>
+
+<div class="card stock s1">
+<div class="hd"><b>① 美迪西 688202</b><span class="tag t1">临床前 CRO · 一体化</span><span class="dim">市值 133 亿｜PE(TTM) 亏损｜PB 6.64｜YTD +75.5%</span></div>
+<div class="kv">
+<div><div class="k">弹性来源 1：扭亏拐点</div>2026H1 亏损收窄；此前对 H2 的情景网格测算显示，25 格敏感性下 H2 扣非增量整体为正且分布优于同业，Q3 若扭亏即构成最大单季报表弹性（内部情景测算，参数略）</div>
+<div><div class="k">弹性来源 2：订单翻倍</div>2026H1 新签 12.33 亿元，同比 +104.7%</div>
+<div><div class="k">弹性来源 3：经营杠杆</div>产能利用率从深坑修复，收入恢复而成本刚性小，边际扣非率高（此前测算两者边际扣非率显著高于收入增速）</div>
+</div>
+<p style="font-size:13.5px"><b>基本面支撑</b>：药物发现 + 安评一体化直连 IND 前置环节（融资回暖传导第一站）；猴价上行传导至新签单价；境内需求回暖直接受益。<b>入选理由</b>：扭亏（利润弹性无穷大级别）× 订单翻倍 × 133 亿小市值，三重放大叠加，是催化敏感度最高的标的。</p>
+<div class="risk">风险：PB 6.64 不便宜；YTD +75.5% 已有涨幅；扭亏时点若晚于 Q3 则存在回撤风险；猴价成本端双向波动。</div>
+</div>
+
+<div class="card stock s2">
+<div class="hd"><b>② 泰格医药 300347</b><span class="tag t2">临床 CRO 龙头</span><span class="dim">市值 480 亿｜PE(TTM) 525（分母失真，扣非滚动约 114×）｜PB 2.46（分位 44.8%）｜YTD -1.45%</span></div>
+<div class="kv">
+<div><div class="k">弹性来源 1：补涨空间</div>年初至今 -1.45%，为八只候选中唯一下跌，而同期板块 +21%~+112%；公募医药仓位近三年低配，筹码出清充分</div>
+<div><div class="k">弹性来源 2：估值未透支</div>PB 2.46 处历史 44.8% 分位（中性偏低），是三者中唯一"估值有空间"的标的</div>
+<div><div class="k">弹性来源 3：拐点已确认</div>2026H1 扣非 2.78 亿元 +31.8%；新签单价重回增长；北美在研项目 59 个（+45%）、新增海外订单同比近翻倍</div>
+</div>
+<p style="font-size:13.5px"><b>基本面支撑</b>：临床 CRO 龙头（国内临床外包市占率约 10.9%，2025，中邮证券）；行业出清 69%（HGRAC 登记数 195→60 家）后的格局红利；MRCT 扩容承接中国 BD 出海。<b>入选理由</b>：弹性来自"补涨 + 估值修复 + 拐点确认"三因素共振，且催化剂就在眼前——临床 CRO 签单旺季集中在 Q3 末至 Q4，叠加 9 月医保谈判与 WCLC/ESMO 学术窗口。</p>
+<div class="risk">风险：表观 PE(TTM) 525× 由微利分母失真造成，市场情绪差时易被误读；利润全面释放要到 2027 年（低价存量单出清节奏）；H1 归母报表亏损（非经常项拖累）。</div>
+</div>
+
+<div class="card stock s3">
+<div class="hd"><b>③ 益诺思 688710</b><span class="tag t3">临床前安评 · 国资（国药系）</span><span class="dim">市值 122 亿｜PE(TTM) 511（低基数失真）｜PB 5.15｜YTD +95.9%</span></div>
+<div class="kv">
+<div><div class="k">弹性来源 1：订单最强</div>2026H1 新签 14.66 亿元，同比 +175.6%；在手订单 22.47 亿元，较年初 +80.1%</div>
+<div><div class="k">弹性来源 2：利润低基数</div>当期利润极低（表观 PE 511×），订单向报表转化时 EPS 斜率全板块最陡</div>
+<div><div class="k">弹性来源 3：资源禀赋</div>国资背景 + GLP 资质 + 猴源保障（国内猴源最可靠的四家之一）</div>
+</div>
+<p style="font-size:13.5px"><b>基本面支撑</b>：安评为融资回暖传导第一站，量价齐升（猴价传导新签单价）；生物药安评能力对接 CGT/ADC 等新分子红利。<b>入选理由</b>：低基数 × 全板块最强订单增速，弹性量级与美迪西同档；因 YTD 已涨 95.9%、弹性兑现度最高，排序降至第三。</p>
+<div class="risk">风险：涨幅透支最多、流通盘小波动剧烈；PB 5.15 偏高；利润兑现节奏依赖 Q3/Q4 报表验证。</div>
+</div>
+
+<h2>四、落选说明与跟踪指标</h2>
+<div class="card">
+<table>
+<thead><tr><th>落选标的</th><th>环节</th><th>落选主因</th></tr></thead>
+<tbody>
+<tr><td>昭衍新药 603127</td><td>临床前安评龙头</td><td>H1 净利 +1127% 主要靠生物资产公允价值（利润质量偏一次性），股价已提前反映，且 9 月跌破 MA20/MA60、板块内技术面最弱</td></tr>
+<tr><td>药康生物 688046</td><td>模式动物</td><td>逻辑最硬但 YTD +112% 透支最多、PE 72×，前瞻弹性收敛</td></tr>
+<tr><td>药明康德 603259</td><td>CDMO 龙头</td><td>业绩确定性最高，但 4733 亿市值 + YTD +76%，属配置型而非弹性型</td></tr>
+<tr><td>博腾股份 300363</td><td>CDMO 二线</td><td>亏损中，弹性依赖早期管线回流（滞后 12-24 个月），时点最差</td></tr>
+<tr><td>毕得医药 688073</td><td>上游砌块/试剂</td><td>有量无价（净利 +40.7% 但无提价能力），弹性中低</td></tr>
+</tbody></table>
+<h3>跟踪与证伪指标</h3>
+<table>
+<thead><tr><th>指标</th><th>验证对象</th><th>阈值/信号</th></tr></thead>
+<tbody>
+<tr><td>Q3 单季扣非（10 月下旬三季报）</td><td>美迪西/益诺思</td><td>美迪西单季扭亏 = 弹性兑现；继续亏损则逻辑降级</td></tr>
+<tr><td>新签订单单价（业绩会口径）</td><td>泰格/美迪西</td><td>泰格连续两季单价上行确认临床段量价齐升</td></tr>
+<tr><td>Q3 末-Q4 签单旺季数据</td><td>泰格</td><td>净新增订单增速较 H1 加速</td></tr>
+<tr><td>猴价（中检院/中科院采购中标价）</td><td>美迪西/益诺思成本与订单价</td><td>高位续涨 = 量价齐升延续；快速回落 = 情绪降温信号</td></tr>
+<tr><td>全球/中国一级融资额、BD 首付款</td><td>全链条</td><td>连续两季回落则整个弹性逻辑证伪</td></tr>
+</tbody></table>
+</div>
+
+<div class="card">
+<h3 style="margin-top:0">数据来源与口径</h3>
+<p class="dim">行情/估值/技术面：westock-data，2026-09-16 09:30 盘中快照（未收盘，以收盘为准）；估值分位：neodata（泰格 PB 分位 44.8%、PE 分位 99.9%）。订单与中报：公司 2026 中报及业绩会（经 VCBeat、界面新闻 2026-09-14、东方财富 2026-09-10、中邮证券 2026-09-03/09-14 研报交叉印证，属非一手来源，需核实原文）。美迪西 H2 扣非弹性为本项目前期情景网格测算（前瞻推算，非审计事实）。行业格局数据（临床 CRO 出清 69%、泰格市占率 10.9%）出自中邮证券研报，非一手来源。</p>
+</div>
+
+<div class="disc"><b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。</div>
+</div>
+
+<script>
+var c1 = echarts.init(document.getElementById('chart1'));
+c1.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['新签订单同比(%)', '年初至今涨幅(%)'] },
+  grid: { left: 60, right: 60, top: 40, bottom: 40 },
+  xAxis: { type: 'category', data: ['美迪西', '益诺思', '昭衍新药', '泰格医药*', '药明康德'] },
+  yAxis: [
+    { type: 'value', name: '订单同比(%)' },
+    { type: 'value', name: 'YTD涨幅(%)' }
+  ],
+  series: [
+    { name: '新签订单同比(%)', type: 'bar', data: [104.7, 175.6, 98.0, 20.0, 40.0],
+      itemStyle: { color: '#2471a3' }, label: { show: true, position: 'top', fontSize: 11 } },
+    { name: '年初至今涨幅(%)', type: 'bar', yAxisIndex: 1, data: [75.5, 95.9, 21.8, -1.45, 76.3],
+      itemStyle: { color: function(p){ return p.value >= 0 ? '#d63c3c' : '#0d8a4f'; } },
+      label: { show: true, position: 'top', fontSize: 11 } }
+  ]
+});
+</script>
+</body>
+</html>

@@ -2208,6 +2208,50 @@ class FinancialEvidenceAuditTests(unittest.TestCase):
         )
         self.assertFalse(source_issue["provisional_eligible"])
 
+    def test_cross_source_gate_counts_references_only_and_supports_anchor_none(
+        self,
+    ) -> None:
+        # cross_source 的来源门只统计 references，target 自身来源不计入
+        # independent_origins，也不充当 anchor。官方 target + 次级 reference 时，
+        # 沿用 required_anchor_tier=official 会误报 MISSING_REQUIRED_SOURCE。
+        payload = self.valid_cross_source_payload()
+        payload["sources"][1]["source_type"] = "credible_secondary"
+        payload["checks"][0]["source_gate"] = gate(1, "any_credible", "official")
+        code, result = self.audit(payload)
+        self.assertEqual(code, 1)
+        self.assertIn(
+            "MISSING_REQUIRED_SOURCE",
+            {issue["code"] for issue in result["checks"][0]["issues"]},
+        )
+        self.assertEqual(
+            result["checks"][0]["source_gate"]["independent_origin_count"], 1
+        )
+
+        # 显式 anchor none 后，门只约束 counted_tier 与独立来源数，审计通过。
+        payload["checks"][0]["source_gate"] = gate(1, "any_credible", "none")
+        code, result = self.audit(payload)
+        self.assertEqual(code, 0, result)
+        self.assertTrue(result["checks"][0]["source_gate"]["anchor_present"])
+
+        # target 的官方来源不计入独立来源数量：target 与 reference 合计有 2 个
+        # 不同 origin，但门只看到 reference 侧的 1 个，minimum=2 仍然失败。
+        payload = self.valid_cross_source_payload()
+        payload["sources"][1]["source_type"] = "credible_secondary"
+        payload["sources"].append(
+            source("S_TARGET_OFFICIAL", "official_filing", "issuer:FY2025:interim")
+        )
+        payload["facts"][0]["source_refs"] = ["S_TARGET_OFFICIAL"]
+        payload["checks"][0]["source_gate"] = gate(2, "any_credible", "none")
+        code, result = self.audit(payload)
+        self.assertEqual(code, 1)
+        self.assertIn(
+            "MISSING_REQUIRED_SOURCE",
+            {issue["code"] for issue in result["checks"][0]["issues"]},
+        )
+        self.assertEqual(
+            result["checks"][0]["source_gate"]["independent_origin_count"], 1
+        )
+
     def test_excluded_source_is_retained_but_cannot_be_referenced(self) -> None:
         payload = self.valid_cross_source_payload()
         payload["sources"].append(

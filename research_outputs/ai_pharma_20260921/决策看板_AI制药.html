@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-moss-artifact-mode="interactive-web" data-moss-visual-baseline="editorial-impact" data-moss-render-seed="85f4de2c63fed19a">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>决策看板 · 中国AI制药行业研究（2026-09）</title>
+<style>
+:root{
+  --moss-color-primary: #0E1B2C;
+  --moss-color-secondary: #16324F;
+  --moss-color-accent: #E4572E;
+  --moss-color-surface: #FFFDF8;
+  --moss-color-text: #10131A;
+  --moss-font-display: Georgia, "Times New Roman", serif;
+  --moss-font-body: "Aptos", "Segoe UI", "Microsoft YaHei", sans-serif;
+  --moss-type-ratio: 1.250;
+  --moss-space-unit: 8px;
+  --moss-radius: 4px;
+  --moss-shadow: 0 22px 70px rgba(23, 33, 61, 0.18);
+  --moss-motion-duration: 520ms;
+  --moss-motion-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --moss-tone: editorial;
+  --moss-density: dense;
+}
+:root{
+  --bg:#0B1420; --bg2:#0E1B2C; --panel:#13273E; --panel2:#16324F; --line:#27435F;
+  --ink:#E8EEF5; --ink2:#A9BACB; --ink3:#7E93A8;
+  --acc:#E4572E; --acc2:#F2A33C; --teal:#2FB3A3; --blue:#4C9BE0; --purple:#9B7ED9; --red:#E05A5A; --green:#3FBF7F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--moss-font-body);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+h1,h2,h3,.disp{font-family:var(--moss-font-display);font-weight:700;letter-spacing:.2px}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+/* header */
+header.hero{background:linear-gradient(135deg,#0E1B2C 0%,#13273E 60%,#1B3A57 100%);border-bottom:1px solid var(--line);padding:56px 0 40px;position:relative;overflow:hidden}
+header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(228,87,46,.18),transparent 65%)}
+.kicker{color:var(--acc2);font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:clamp(28px,4.4vw,46px);line-height:1.25;max-width:900px}
+.hero .sub{color:var(--ink2);margin-top:16px;max-width:860px;font-size:16px}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.chip{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:99px;padding:5px 14px;font-size:12.5px;color:var(--ink2)}
+.chip b{color:var(--ink);font-weight:600}
+/* nav */
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(11,20,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:10px;padding-bottom:10px}
+nav.toc a{white-space:nowrap;color:var(--ink2);font-size:13px;padding:6px 12px;border-radius:99px;border:1px solid transparent}
+nav.toc a:hover{color:var(--ink);border-color:var(--line);text-decoration:none;background:rgba(255,255,255,.04)}
+/* sections */
+section{padding:44px 0 8px}
+.sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--acc);padding-bottom:10px;margin-bottom:22px}
+.sec-head .no{font-family:var(--moss-font-display);color:var(--acc);font-size:15px;font-weight:700}
+.sec-head h2{font-size:clamp(21px,2.6vw,28px)}
+.lead{color:var(--ink2);max-width:960px;margin-bottom:18px}
+.lead b,.body b{color:var(--ink)}
+.small{font-size:12.5px;color:var(--ink3)}
+/* grid cards */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:960px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.card h3{font-size:17px;margin-bottom:8px}
+.card.accent{border-top:3px solid var(--acc)}
+/* tags */
+.tag{display:inline-block;font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:var(--ink2);margin:1px 3px 1px 0;vertical-align:middle}
+.tag.hk{color:var(--blue);border-color:rgba(76,155,224,.5)}
+.tag.pre{color:var(--acc2);border-color:rgba(242,163,60,.5)}
+.tag.fact{color:var(--green);border-color:rgba(63,191,127,.5)}
+.tag.view{color:var(--purple);border-color:rgba(155,126,217,.5)}
+.tag.inf{color:var(--acc2);border-color:rgba(242,163,60,.5)}
+.tag.risk{color:var(--red);border-color:rgba(224,90,90,.5)}
+/* evidence badge */
+a.ev{display:inline-block;font-size:10.5px;line-height:1;padding:2.5px 6px;margin:0 2px;border-radius:4px;background:rgba(76,155,224,.14);color:var(--blue);border:1px solid rgba(76,155,224,.35);vertical-align:super;font-family:var(--moss-font-body)}
+a.ev:hover{background:rgba(76,155,224,.3);text-decoration:none}
+/* tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:760px}
+th{background:var(--panel2);color:var(--ink);text-align:left;padding:10px 12px;font-weight:600;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid rgba(39,67,95,.55);color:var(--ink2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td b{color:var(--ink)}
+td .cname{color:var(--ink);font-weight:600;white-space:nowrap}
+/* insight blocks */
+.insight{border-left:3px solid var(--teal);background:rgba(47,179,163,.07);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;color:var(--ink2)}
+.insight b{color:var(--teal)}
+.warn{border-left:3px solid var(--red);background:rgba(224,90,90,.07);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;color:var(--ink2)}
+.warn b{color:var(--red)}
+/* dashboard */
+.dash-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}
+@media(max-width:960px){.dash-kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.dash-kpis{grid-template-columns:1fr}}
+.kpi{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.kpi .lab{font-size:12px;color:var(--ink3);letter-spacing:1px}
+.kpi .val{font-family:var(--moss-font-display);font-size:24px;color:var(--ink);margin:6px 0 4px}
+.kpi .note{font-size:12px;color:var(--ink2)}
+/* bar chart */
+.chart{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;margin:14px 0}
+.bars{display:flex;align-items:flex-end;gap:8px;height:220px;padding-top:10px}
+.bar-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0}
+.bar{width:70%;max-width:44px;background:linear-gradient(180deg,var(--blue),#2C6EA8);border-radius:4px 4px 0 0;position:relative;transition:height var(--moss-motion-duration) var(--moss-motion-easing)}
+.bar.est{background:repeating-linear-gradient(135deg,rgba(76,155,224,.85) 0 6px,rgba(76,155,224,.45) 6px 12px)}
+.bar .bv{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--ink2);white-space:nowrap}
+.bl{margin-top:8px;font-size:11px;color:var(--ink3);text-align:center}
+/* hbar */
+.hbar-row{display:grid;grid-template-columns:150px 1fr 120px;gap:10px;align-items:center;margin:9px 0;font-size:13px}
+.hbar{height:20px;border-radius:4px;background:linear-gradient(90deg,var(--acc),#B23A18)}
+.hbar.b2{background:linear-gradient(90deg,var(--teal),#1E7A6F)}
+.hbar.b3{background:linear-gradient(90deg,var(--purple),#6A4FA8)}
+.hbar-lab{color:var(--ink2)}
+.hbar-val{color:var(--ink);font-weight:600;text-align:right;font-size:13px}
+@media(max-width:560px){.hbar-row{grid-template-columns:110px 1fr 90px}}
+/* matrix */
+.matrix{position:relative;height:430px;background:linear-gradient(180deg,rgba(22,50,79,.35),rgba(19,39,62,.6));border:1px solid var(--line);border-radius:10px;margin:14px 0;overflow:hidden}
+.matrix .axis-x,.matrix .axis-y{position:absolute;font-size:12px;color:var(--ink3)}
+.matrix .axis-x{bottom:10px;left:50%;transform:translateX(-50%)}
+.matrix .axis-y{top:50%;left:10px;transform:rotate(-90deg) translateX(50%);transform-origin:left center}
+.matrix .qx{position:absolute;font-size:11.5px;color:var(--ink3)}
+.dot{position:absolute;transform:translate(-50%,-50%);text-align:center;z-index:2}
+.dot .p{width:14px;height:14px;border-radius:50%;margin:0 auto 4px;border:2px solid rgba(255,255,255,.55)}
+.dot .n{font-size:12px;color:var(--ink);white-space:nowrap;background:rgba(11,20,32,.72);padding:1px 7px;border-radius:99px;border:1px solid var(--line)}
+/* profile */
+.profile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;margin:16px 0}
+.profile h3{font-size:19px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 24px;margin-top:14px}
+@media(max-width:760px){.pgrid{grid-template-columns:1fr}}
+.pitem{font-size:13.5px;color:var(--ink2)}
+.pitem .pl{font-size:11.5px;color:var(--ink3);letter-spacing:1px;margin-bottom:3px;text-transform:uppercase}
+.pitem b{color:var(--ink)}
+/* risk */
+.risk-card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:16px 18px}
+.risk-card h3{font-size:15.5px;margin-bottom:6px}
+.risk-card p{font-size:13px;color:var(--ink2);margin:6px 0}
+.lvl{font-size:11px;padding:2px 8px;border-radius:99px;margin-left:8px}
+.lvl.h{background:rgba(224,90,90,.18);color:var(--red)}
+.lvl.m{background:rgba(242,163,60,.15);color:var(--acc2)}
+.lvl.l{background:rgba(63,191,127,.15);color:var(--green)}
+/* evidence list */
+.ev-list{counter-reset:ev}
+.ev-item{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:8px 0;font-size:13px;color:var(--ink2)}
+.ev-item .eid{font-weight:700;color:var(--blue);margin-right:8px}
+.ev-item a.back{margin-left:10px;font-size:12px}
+details{margin:10px 0;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.02)}
+details summary{cursor:pointer;padding:10px 14px;color:var(--ink2);font-size:13px}
+details .dt-body{padding:0 14px 14px}
+footer{border-top:1px solid var(--line);margin-top:48px;padding:28px 0 56px;color:var(--ink3);font-size:12.5px}
+.concl{background:linear-gradient(160deg,#16324F,#13273E);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin:16px 0}
+.concl ol{margin-left:20px;color:var(--ink2)}
+.concl ol li{margin:8px 0}
+.concl b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">MOSS 行业研究 · 投资研究视角 · 深度行业研究</div>
+    <h1>中国 AI 制药公司图谱与横向对比<br>技术路径、商业模式与风险的行业级判断</h1>
+    <p class="sub">覆盖 8 家原生 AI 制药代表公司（晶泰控股、英矽智能、百图生科、深势科技、剂泰科技、望石智慧、冰洲石生物、宇道生物）与 A 股可比标的映射层。结论基于截至 2026 年 9 月 21 日可查公开资料，事实、机构观点与推断全程分层标注。</p>
+    <div class="meta-row">
+      <span class="chip">研究执行时点 <b>2026-09-21</b></span>
+      <span class="chip">数据口径 <b>官方披露优先 · 最新已发布</b></span>
+      <span class="chip">研究深度 <b>深度行业研究（第三类）</b></span>
+      <span class="chip">交付 <b>HTML + XLSX</b></span>
+      <span class="chip">证据 <b>E-001 ~ E-018</b></span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#sec-board">决策看板</a>
+  <a href="#sec-industry">行业基础盘</a>
+  <a href="#sec-profiles">公司图谱</a>
+  <a href="#sec-compare">横向对比</a>
+  <a href="#sec-risk">风险审查</a>
+  <a href="#sec-ashare">A股映射</a>
+  <a href="#sec-trend">趋势判断</a>
+  <a href="#sec-evidence">证据链</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ============ 0. 决策看板 ============ -->
+<section id="sec-board">
+  <div class="sec-head"><span class="no">00</span><h2>决策看板</h2></div>
+
+  <div class="card" style="margin-bottom:20px">
+    <h3>研究收束区（可审计路径）</h3>
+    <p class="pitem"><span class="pl">范围与问题树</span>纳入：中国大陆注册/主要运营的 8 家原生 AI 制药公司 + A 股映射层；排除：纯 AI 医疗影像/诊断、海外公司（仅作参照）。验证的五个关键问题：①各家统一维度事实；②技术路径差异化是否构成壁垒；③六类风险的证据分层；④A股可比标的映射关系；⑤行业阶段与 2-3 年趋势信号。</p>
+    <p class="pitem" style="margin-top:10px"><span class="pl">证据地图</span>实际检索维度：行业规模与阶段（2 轮）、8 家公司逐家核验（4 轮）、A 股映射（1 轮），共采纳 18 组来源：交易所/公司业绩公告与官方新闻稿（E-004/006/007/011/014/015）为硬证据；券商研报与权威媒体（E-001/002/003/008/012/016/017）为次级证据；行业咨询机构（E-018）仅作机构观点。</p>
+    <p class="pitem" style="margin-top:10px"><span class="pl">分歧与缺口</span>中国 AI 制药市场规模口径冲突显著（F&S 口径 2024E 约 7.3 亿元 vs Grand View 2025 年约 1.34 亿美元 vs 个别咨询"百亿级"），本报告并列呈现两个可核验口径、其余降级为低置信（见 1.4）。未上市公司融资以公开报道最近轮次为准，可能存在未披露轮次（假设）；腾讯新闻一篇稿件中"76 亿元收入"归属无法确认，已弃用。</p>
+    <p class="pitem" style="margin-top:10px"><span class="pl">结论形成</span>所有公司层事实均可回溯至 E-xxx；壁垒与趋势判断为证据化推断（标注<span class="tag inf">推断</span>），并给出可推翻条件；不含任何投资建议与收益承诺。</p>
+  </div>
+
+  <h3 style="margin:6px 0 4px">一、战场仪表盘</h3>
+  <div class="dash-kpis">
+    <div class="kpi"><div class="lab">行业阶段判断</div><div class="val">商业化验证期</div><div class="note">从技术验证转向"交作业"：首个 AI 全程研发药物进入 III 期<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a></div></div>
+    <div class="kpi"><div class="lab">中国市场规模（F&amp;S 口径）</div><div class="val">≈20.4 亿元</div><div class="note">2026E，2024E-2028E CAGR≈68%<a class="ev" href="#e-001" data-evidence-id="E-001">E-001</a></div></div>
+    <div class="kpi"><div class="lab">全球 AI 管线临床存量</div><div class="val">170+ 条</div><div class="note">截至 2026-06，十余款冲刺 III 期<a class="ev" href="#e-003" data-evidence-id="E-003">E-003</a></div></div>
+    <div class="kpi"><div class="lab">决策窗口期</div><div class="val">2026-2029</div><div class="note">Rentosertib III 期结果预计 2029 年前后读出，是行业估值之锚<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a></div></div>
+  </div>
+  <div class="insight"><b>核心判断（一句话）：</b>中国 AI 制药已从"讲故事"进入"交作业"阶段——港股三小龙 2026H1 均交出可验证的收入/临床答卷（英矽扭亏、晶泰 AI4S 翻倍、剂泰制剂新药完成 III 期），行业价值评估的锚正在从"模型能力"切换到"人体数据与 BD 现金流"；但 III 期成败未揭晓前，板块整体仍属高波动、证据驱动的主题投资，而非确定性成长。<a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a><a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a><a class="ev" href="#e-012" data-evidence-id="E-012">E-012</a><span class="tag inf">推断</span></div>
+
+  <h3 style="margin:22px 0 4px">二、钱在哪里（价值环节分层）</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>价值环节</th><th>代表主体</th><th>兑现方式</th><th>当前证据强度</th></tr>
+    <tr><td><b>管线 BD / 授权交易</b>（弹性最大）</td><td>英矽智能、冰洲石、宇道</td><td>首付款 + 里程碑 + 分成；英矽 2026 年签约约 73 亿美元<a class="ev" href="#e-006" data-evidence-id="E-006">E-006</a></td><td><span class="tag fact">已兑现</span> 首付款驱动英矽 2026H1 扭亏<a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a></td></tr>
+    <tr><td><b>AI4S 基础设施 / 平台服务</b>（复购型收入）</td><td>晶泰、深势、百图</td><td>机器人实验室部署、软件/SaaS、模型授权；晶泰 AI4S 收入 +136.4%<a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a></td><td><span class="tag fact">放量中</span> 复购与粘性待更长周期验证</td></tr>
+    <tr><td><b>药物递送 / 制剂技术</b>（稀缺卡位）</td><td>剂泰科技</td><td>平台合作 + 产品合作双轮；MTS-004 完成 III 期<a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a></td><td><span class="tag fact">已兑现</span> 2026H1 营收 1.543 亿元<a class="ev" href="#e-012" data-evidence-id="E-012">E-012</a></td></tr>
+    <tr><td><b>A股"CRO+AI"与上游卖水人</b>（确定性最高）</td><td>成都先导、泓博、皓元、百普赛斯等</td><td>AI 提升既有主业效率与订单；AI 候选分子爆发带动上游需求<a class="ev" href="#e-016" data-evidence-id="E-016">E-016</a></td><td><span class="tag fact">现金流稳定</span> 但 AI 概念纯度低、弹性弱</td></tr>
+  </table></div>
+
+  <h3 style="margin:22px 0 4px">三、仗怎么打（技术覆盖 × 商业模式 2×2）</h3>
+  <div class="matrix" id="mx">
+    <span class="axis-x">商业模式：平台/服务导向 ←→ 自研管线导向</span>
+    <span class="axis-y">技术覆盖：专精单点 ←→ 全栈/多模态</span>
+    <span class="qx" style="top:12px;left:14px">全栈平台型（卖水+生态）</span>
+    <span class="qx" style="top:12px;right:14px">全栈管线型（端到端制药）</span>
+    <span class="qx" style="bottom:28px;left:14px">专精工具型</span>
+    <span class="qx" style="bottom:28px;right:14px">专精管线型</span>
+    <div class="dot" style="left:42%;top:18%"><div class="p" style="background:#4C9BE0"></div><div class="n">晶泰控股</div></div>
+    <div class="dot" style="left:78%;top:16%"><div class="p" style="background:#E4572E"></div><div class="n">英矽智能</div></div>
+    <div class="dot" style="left:16%;top:22%"><div class="p" style="background:#9B7ED9"></div><div class="n">百图生科</div></div>
+    <div class="dot" style="left:10%;top:34%"><div class="p" style="background:#2FB3A3"></div><div class="n">深势科技</div></div>
+    <div class="dot" style="left:58%;top:56%"><div class="p" style="background:#F2A33C"></div><div class="n">剂泰科技</div></div>
+    <div class="dot" style="left:48%;top:64%"><div class="p" style="background:#3FBF7F"></div><div class="n">望石智慧</div></div>
+    <div class="dot" style="left:84%;top:74%"><div class="p" style="background:#E05A5A"></div><div class="n">冰洲石生物</div></div>
+    <div class="dot" style="left:90%;top:84%"><div class="p" style="background:#8FC1E8"></div><div class="n">宇道生物</div></div>
+  </div>
+  <p class="small">定位为基于第 04 章事实的定性判断（示意，非精确评分）：纵轴综合模型模态广度与干湿闭环/自动化能力，横轴综合收入结构与管线自有程度。</p>
+
+  <h3 style="margin:22px 0 4px">四、现在做什么（跟踪指标与验证动作）</h3>
+  <div class="grid g3">
+    <div class="card accent"><h3>临床验证信号</h3><p class="pitem">Rentosertib III 期入组进度与中期分析（预计 2029 年前后读出）；剂泰 MTS-004 获批进度；宇道 NTS071 II 期推进；望石 SWA1211 临床数据。<b>停止条件</b>：首个 AI 全程药物 III 期失败且机制归因于 AI 设计本身，行业估值逻辑需整体下修。<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a><a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a></p></div>
+    <div class="card accent"><h3>商业化信号</h3><p class="pitem">英矽 BD 首付款/里程碑到账节奏与新增签约额；晶泰 AI4S 复购率与机器人实验室部署台数；剂泰平台合作伙伴数。<b>验证动作</b>：每季财报核对"剔除一次性首付款后的经常性收入增速"。<a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a><a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a></p></div>
+    <div class="card accent"><h3>资本与政策信号</h3><p class="pitem">百图生科港股 IPO 进程（2026-03 保密递表）；未上市公司下一轮融资估值；药监局"AI+药品监管"落地细则。<b>观察点</b>：IPO 窗口是否持续向未盈利 AI 制药开放。<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a><a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a></p></div>
+  </div>
+</section>
+
+<!-- ============ 1. 行业基础盘 ============ -->
+<section id="sec-industry">
+  <div class="sec-head"><span class="no">01</span><h2>行业基础盘与当前态势</h2></div>
+
+  <p class="lead"><b>定义与边界：</b>本报告所称"AI 制药"（AI Drug Discovery / AIDD）指以人工智能为核心驱动力、直接参与药物发现与开发全流程（靶点发现、分子设计、合成筛选、制剂递送、临床预测）的公司与业务；不含以 AI 影像/诊断为主的 AI 医疗。按主体分为三类：<b>原生 AI 制药公司</b>（自研 AI 引擎为核心资产）、<b>CRO/药企的 AI 赋能</b>（AI 为工具）、<b>科技巨头布局</b>（百度/字节/腾讯等，平台或投资逻辑）。</p>
+
+  <div class="grid g3">
+    <div class="card"><h3>驱动力 · 技术</h3><p class="pitem">生成式 AI 与科学智能体从单点工具走向端到端闭环：晶泰提出科学自主发现 L1-L5 分级并在部分场景达 L4<a class="ev" href="#e-005" data-evidence-id="E-005">E-005</a>；深势 DPA-4 在材料/小分子权威榜单列世界第一<a class="ev" href="#e-010" data-evidence-id="E-010">E-010</a>；机构口径：AI 可将早期研发周期压缩 30-50%、成本降 20-40%<a class="ev" href="#e-018" data-evidence-id="E-018">E-018</a><span class="tag view">机构观点</span></p></div>
+    <div class="card"><h3>驱动力 · 政策</h3><p class="pitem">2026 年《政府工作报告》首次将生物医药列为新兴支柱产业；《医药工业数智化转型实施方案(2025-2030)》持续推进；2026 年 4 月药监局发布"人工智能+药品监管"实施意见，目标 2030 年初步构建融合创新体系；FDA/EMA 2026 年 1 月联合发布"良好 AI 实践"十项原则<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a><a class="ev" href="#e-003" data-evidence-id="E-003">E-003</a></p></div>
+    <div class="card"><h3>驱动力 · 资本</h3><p class="pitem">2025-2026 全球 AI 制药投融资近 60 亿美元<a class="ev" href="#e-003" data-evidence-id="E-003">E-003</a>；港股成主要退出通道：英矽 IPO 募 22.77 亿港元（1427 倍超购）<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a>、剂泰募超 21 亿港元（6911 倍认购）<a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a>、百图 2026-03 保密递表<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a>；未上市融资分化，头部仍能拿大钱（深势 C 轮超 8 亿元、宇道 C1 轮数千万美元）<a class="ev" href="#e-010" data-evidence-id="E-010">E-010</a><a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a></p></div>
+  </div>
+
+  <h3 style="margin:26px 0 6px">1.4 市场规模：两个可核验口径并列</h3>
+  <p class="lead">口径一为野村引用的弗若斯特沙利文（F&amp;S）"中国 AI 药物发现"收入序列；口径二为 Grand View Research"中国 AI 药物发现"收入（美元）。两者统计对象相近但数值差异明显，报告不做平均，并列呈现并标注为机构估算。<a class="ev" href="#e-001" data-evidence-id="E-001">E-001</a><a class="ev" href="#e-002" data-evidence-id="E-002">E-002</a></p>
+
+  <div class="chart">
+    <h3 style="font-size:15px;margin-bottom:4px">中国 AI 药物发现市场规模（F&amp;S 口径，亿元人民币；2024 起为预测值）</h3>
+    <div class="bars">
+      <div class="bar-col"><div class="bar" style="height:2%"><span class="bv">0.7</span></div><div class="bl">2019</div></div>
+      <div class="bar-col"><div class="bar" style="height:3%"><span class="bv">0.9</span></div><div class="bl">2020</div></div>
+      <div class="bar-col"><div class="bar" style="height:4%"><span class="bv">1.4</span></div><div class="bl">2021</div></div>
+      <div class="bar-col"><div class="bar" style="height:6%"><span class="bv">2.4</span></div><div class="bl">2022</div></div>
+      <div class="bar-col"><div class="bar" style="height:9%"><span class="bv">4.1</span></div><div class="bl">2023</div></div>
+      <div class="bar-col"><div class="bar est" style="height:14%"><span class="bv">7.3</span></div><div class="bl">2024E</div></div>
+      <div class="bar-col"><div class="bar est" style="height:22%"><span class="bv">12.1</span></div><div class="bl">2025E</div></div>
+      <div class="bar-col"><div class="bar est" style="height:36%"><span class="bv">20.4</span></div><div class="bl">2026E</div></div>
+      <div class="bar-col"><div class="bar est" style="height:61%"><span class="bv">35.2</span></div><div class="bl">2027E</div></div>
+      <div class="bar-col"><div class="bar est" style="height:100%"><span class="bv">58.6</span></div><div class="bl">2028E</div></div>
+    </div>
+    <p class="small" style="margin-top:10px">来源：野村《中国 AI 价值链》(2026-09-11) 引 F&amp;S<a class="ev" href="#e-001" data-evidence-id="E-001">E-001</a>；斜纹柱 = 预测值（机构观点）。对照口径：Grand View Research 中国 2025 年 1.336 亿美元、2026E 1.695 亿美元、2026-2033 CAGR 27.3%<a class="ev" href="#e-002" data-evidence-id="E-002">E-002</a>。两口径差异主要来自统计范围与汇率/收入确认口径，置信度：中。</p>
+    <details><summary>查看数据表</summary><div class="dt-body tbl-wrap"><table style="min-width:520px"><tr><th>年份</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024E</th><th>2025E</th><th>2026E</th><th>2027E</th><th>2028E</th></tr><tr><td><b>规模（亿元）</b></td><td>0.7</td><td>0.9</td><td>1.4</td><td>2.4</td><td>4.1</td><td>7.3</td><td>12.1</td><td>20.4</td><td>35.2</td><td>58.6</td></tr><tr><td><b>同比</b></td><td>—</td><td>29%</td><td>56%</td><td>71%</td><td>71%</td><td>78%</td><td>66%</td><td>69%</td><td>73%</td><td>66%</td></tr></table></div></details>
+  </div>
+
+  <div class="chart">
+    <h3 style="font-size:15px;margin-bottom:8px">港股三小龙 2026H1 收入对比（统一折算人民币，亿元）</h3>
+    <div class="hbar-row"><span class="hbar-lab">英矽智能 03696.HK</span><div class="hbar" style="width:100%"></div><span class="hbar-val">≈7.6（1.063亿美元）</span></div>
+    <div class="hbar-row"><span class="hbar-lab">晶泰控股 02228.HK</span><div class="hbar b2" style="width:52%"></div><span class="hbar-val">3.94</span></div>
+    <div class="hbar-row"><span class="hbar-lab">剂泰科技 07666.HK</span><div class="hbar b3" style="width:20%"></div><span class="hbar-val">1.54</span></div>
+    <p class="small" style="margin-top:8px">来源：各公司 2026 中报/公告<a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a><a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a><a class="ev" href="#e-012" data-evidence-id="E-012">E-012</a>。英矽按 1 美元≈7.15 元人民币折算（<span class="tag inf">推算</span>，仅用于同图比较）；注意收入结构差异：英矽 97% 来自授权/管线开发（含首付款确认），晶泰受去年同期 5100 万美元首付款高基数扰动，剂泰基数极低（+13399%）。</p>
+  </div>
+
+  <div class="insight"><b>态势诊断：</b>行业规模仍小（中国 2026E 约 20 亿元，F&amp;S 口径），但三个"质变"已在 2026 年发生：①全球首个 AI 全程研发药物进入 III 期（英矽 Rentosertib）；②头部公司首次实现半年度盈利（英矽 2026H1 经调整利润 0.51 亿美元）；③IPO 通道打开且认购极度火爆（剂泰 6911 倍）。<b>这意味着</b>：行业叙事从"AI 能否做药"转向"AI 做的药能否通过 III 期、BD 现金流能否持续"——估值锚切换阶段，波动会显著放大。<span class="tag inf">推断</span></div>
+</section>
+
+<!-- ============ 2. 公司图谱 ============ -->
+<section id="sec-profiles">
+  <div class="sec-head"><span class="no">02</span><h2>公司图谱：8 家统一维度档案</h2></div>
+  <p class="lead">每家公司按统一六维整理：业务定位 / 技术平台与模型 / 研发方向 / 管线阶段 / 代表性合作与临床进展 / 融资与商业模式。<span class="tag fact">事实</span>均可回溯证据；查不到的字段标注 N/A。</p>
+
+  <div class="profile">
+    <h3>晶泰控股 XtalPi <span class="tag hk">港股 02228.HK</span><span class="tag fact">已商业化</span></h3>
+    <div class="pgrid">
+      <div class="pitem"><div class="pl">业务定位</div>AI+机器人驱动的药物发现与 AI4S（AI for Science）基础设施平台；"量子物理+AI+机器人实验"全栈。2026H1 收入结构：药物发现解决方案 50.8% / AI4S 智慧解决方案 49.2%。<a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a></div>
+      <div class="pitem"><div class="pl">技术平台与模型</div>小分子、大分子、多肽、小核酸四大技术平台；300+ 自动化实验工站；科学智能体+机器人实验室+自主合成的全栈 AI4S 基础设施；2026-07 发布 XtalPi Science 平台；科学自主发现 L1-L5 分级，部分场景达 L4。<a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a><a class="ev" href="#e-005" data-evidence-id="E-005">E-005</a></div>
+      <div class="pitem"><div class="pl">研发方向</div>小分子、抗体/双抗、多肽（口服环肽）、小核酸、分子胶；并向材料、新能源等 AI4S 场景外溢。</div>
+      <div class="pitem"><div class="pl">管线阶段</div>合作及自研管线：3 条临床阶段、10+ 条 IND 获批/准备、近 10 条 PCC；公司预计 2027 年 10+ 条进入临床。<a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a></div>
+      <div class="pitem"><div class="pl">代表性合作</div>礼来：潜在总额最高 2.5 亿美元小分子管线合作 + 3.45 亿美元 AI 双抗研发及平台授权（已收到第二笔 1900 万美元付款）；2026H1 向礼来上海交付千万级化合物存储管理系统；孵化投资剂泰科技并获 IPO 回报。<a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a><a class="ev" href="#e-005" data-evidence-id="E-005">E-005</a><a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a></div>
+      <div class="pitem"><div class="pl">财务与商业模式</div>2026H1 收入 3.936 亿元（-23.9%，剔除高基数 +73.8%），AI4S 收入 1.935 亿元（+136.4%）；净亏损 2.249 亿元、经调整净亏损 1.055 亿元；现金 86.7 亿元。模式：平台服务+模型授权+管线交易+生态投资，复购型收入占比提升。<a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a></div>
+    </div>
+    <div class="insight"><b>差异化要点：</b>业界唯一"机器人实验室+智能体+自主合成"全栈闭环，每月产生 5 万+条反应产率数据、累计 50 万+条真实实验记录（约 80% 为公开文献稀缺的失败负样本）——<b>自有数据壁垒</b>是其与纯算法公司的核心分界。<a class="ev" href="#e-005" data-evidence-id="E-005">E-005</a></div>
+  </div>
+
+  <div class="profile">
+    <h3>英矽智能 Insilico Medicine <span class="tag hk">港股 03696.HK</span><span class="tag fact">2026H1 扭亏</span></h3>
+    <div class="pgrid">
+      <div class="pitem"><div class="pl">业务定位</div>端到端生成式 AI 驱动的创新药 Biotech：自研 Pharma.AI 平台 + 自有管线 + 对外 BD 授权三轮驱动。2025-12-30 港交所主板上市（8.05 条），IPO 募 22.77 亿港元。<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a></div>
+      <div class="pitem"><div class="pl">技术平台与模型</div>Pharma.AI 四大板块：PandaOmics（靶点发现）、Chemistry42（生成化学/分子设计）、临床医学与科研板块；PandaClaw/LabClaw 智能体、LifeStar2 自动化实验室、ScienceMMAI Gym 基础模型训练框架。<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a><a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a></div>
+      <div class="pitem"><div class="pl">研发方向</div>小分子为主（纤维化、肿瘤、免疫、代谢、衰老），新靶点发现+新分子生成双新。</div>
+      <div class="pitem"><div class="pl">管线阶段</div>累计提名 31 款 PCC、13 款获 IND 批件；2026 年前 8 个月提名 9 款 PCC（年度纪录）。核心管线 Rentosertib（ISM001-055，TNIK 靶点，特发性肺纤维化）：<b>全球首个 AI 发现靶点+AI 设计分子的药物</b>，2026-07 中国启动 III 期、2026-09-10 北京协和医院完成 III 期首例入组；从靶点发现到 III 期约 5 年（传统 8-10 年）。<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a><a class="ev" href="#e-006" data-evidence-id="E-006">E-006</a></div>
+      <div class="pitem"><div class="pl">代表性合作</div>2026 年内签约合作总额约 73 亿美元（2021 年来累计近 110 亿美元）：礼来、施维雅、SK 生物制药、武田（最高 6 亿美元）、海正药业、美纳里尼等。<a class="ev" href="#e-006" data-evidence-id="E-006">E-006</a><a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a></div>
+      <div class="pitem"><div class="pl">财务与商业模式</div>2026H1 收入 1.063 亿美元（+287.2%），药物发现及管线开发占 97.1%；毛利率 90.3%；期内利润 0.36 亿美元、经调整利润 0.51 亿美元（首次半年度盈利）；现金+定存约 4.67 亿美元。模式：管线授权（首付款+里程碑）为主、平台订阅为辅。<a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a></div>
+    </div>
+    <div class="insight"><b>差异化要点：</b>唯一把"AI 新靶点+AI 新分子"推到 III 期的公司，端到端闭环已被人体临床推进验证；BD 引擎行业最强。<b>但</b>盈利主要由一次性首付款驱动，可持续性取决于后续里程碑到账与新签节奏——<span class="tag inf">推断</span> 经常性收入质量需在后续财报持续检验。<a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a></div>
+  </div>
+
+  <div class="profile">
+    <h3>百图生科 BioMap <span class="tag pre">未上市（2026-03 港股保密递表）</span></h3>
+    <div class="pgrid">
+      <div class="pitem"><div class="pl">业务定位</div>2020 年 8 月由李彦宏牵头创立（任董事长）、CEO 刘维（原百度风投 CEO）；定位"生物计算引擎驱动的创新药物研发平台"，不做药、做行业底层大模型基础设施。<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a></div>
+      <div class="pitem"><div class="pl">技术平台与模型</div>xTrimo V4 全模态生命科学大模型（2680 亿参数、300+ 任务 SOTA，覆盖蛋白质/DNA/RNA/细胞等模态）；BioMap OS 研发操作系统（五大功能单元、近百模块）；"算法预测—实验验证—数据反哺—模型迭代"干湿闭环。<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a></div>
+      <div class="pitem"><div class="pl">研发方向</div>大分子/蛋白质为核心：抗体设计、蛋白药物、RNA（RNAGenesis）、免疫重编程（ImmuBot）；靶点发现。</div>
+      <div class="pitem"><div class="pl">管线阶段</div>自主管线处于<b>临床前</b>；60+ 概念验证（PoC）项目。<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a></div>
+      <div class="pitem"><div class="pl">代表性合作</div>赛诺菲：1000 万美元预付款、潜在交易总额超 10 亿美元（基础大模型合作模式）；石药集团、大北农等；服务 800+ 机构用户、30+ 头部企业客户。<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a></div>
+      <div class="pitem"><div class="pl">融资与商业模式</div>累计融资超 2 亿美元（GGV 纪源、君联、蓝驰、百度等；2024 年香港投资管理有限公司领投）；2025-09 李彦宏及百度实体退出直接股东（上市前股权优化）；2026-03 保密递表港交所（中金/大摩/瑞银）。模式：模型授权+研发服务+里程碑。尚未盈利。<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a></div>
+    </div>
+    <div class="insight"><b>差异化要点：</b>走"大模型即服务"最难但天花板最高的路线，对标 DeepMind/BioNeMo 的平台逻辑。<b>风险点</b>：收入兑现依赖客户管线成功、自身无临床阶段资产，IPO 估值短板明显（<span class="tag inf">推断</span>，亦见 E-009 媒体观点）。<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a></div>
+  </div>
+
+  <div class="profile">
+    <h3>深势科技 DP Technology <span class="tag pre">未上市（C 轮，估值超 60 亿元）</span></h3>
+    <div class="pgrid">
+      <div class="pitem"><div class="pl">业务定位</div>2018 年创立（张林峰/孙伟杰，鄂维南院士学派）；AI for Science 基础设施公司，制药为其生命科学板块之一（另有材料、能源、电池）。2020 年"深度势能"分子模拟获戈登·贝尔奖。<a class="ev" href="#e-010" data-evidence-id="E-010">E-010</a></div>
+      <div class="pitem"><div class="pl">技术平台与模型</div>玻尔·科研空间站（Bohrium）为枢纽的"读算做智"体系；DPA-4 模型（Matbench Discovery 与 SPICE-MACE-OFF 世界第一）；Hermite® 药物设计、Piloteye® 电池设计、SciMaster 科学智能体、赛博实验室。<a class="ev" href="#e-010" data-evidence-id="E-010">E-010</a></div>
+      <div class="pitem"><div class="pl">研发方向</div>微观尺度模拟（量子精度分子动力学）、小分子/药物计算设计、材料与电池；不自研药物管线。</div>
+      <div class="pitem"><div class="pl">管线阶段</div>N/A（无自研药物管线，为平台/工具公司）；服务客户 100+ 条研发管线。<a class="ev" href="#e-010" data-evidence-id="E-010">E-010</a></div>
+      <div class="pitem"><div class="pl">代表性合作</div>复星医药、国药集团、翰森制药、华东医药、东阳光药、齐鲁制药等 70+ 生命科学企业；宁德时代、比亚迪等材料客户；玻尔·科学导航服务 1000+ 高校、300 万+ 科学家。<a class="ev" href="#e-010" data-evidence-id="E-010">E-010</a></div>
+      <div class="pitem"><div class="pl">融资与商业模式</div>融资：天使（2020，BV 百度风投）→A（2021，高瓴创投）→B（2022，启明创投）→B+（2023.8 超 7 亿元，华为哈勃等）→B++（2024.1 数亿元）→C（2025.12 超 8 亿元，达晨财智/京国瑞/联想创投/元禾璞华等），估值超 60 亿元。模式：Science as a Service（软件订阅+算力+研发服务+智能体）。<a class="ev" href="#e-010" data-evidence-id="E-010">E-010</a></div>
+    </div>
+    <div class="insight"><b>差异化要点：</b>底层物理建模能力（DeePMD 学派）+ 最广泛的科研用户网络，是八家中"科学基础设施"属性最强、药物管线风险敞口最小的公司；收入多元但单客价值与药企深度绑定弱于晶泰。<span class="tag inf">推断</span></div>
+  </div>
+
+  <div class="profile">
+    <h3>剂泰科技 METiS TechBio <span class="tag hk">港股 07666.HK</span><span class="tag fact">AI 药物递送第一股</span></h3>
+    <div class="pgrid">
+      <div class="pitem"><div class="pl">业务定位</div>2020 年由陈红敏（美国工程院院士）、赖才达（MIT）、王文首（MIT）创立；全球首家 AI 驱动纳米递送（LNP/制剂）平台公司，2026-05-13 港股上市（发行价 10.50 港元，首日 +170%，收盘市值 274 亿港元，募超 21 亿港元，6911 倍认购）。晶泰科技为最早投资人。<a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a></div>
+      <div class="pitem"><div class="pl">技术平台与模型</div>NanoForge 全球首个 AI 纳米递送平台：千万级可电离脂质库（全球最大）、唯一脂质从头生成算法与脂质语言模型；四大解决方案 AiLNP（递送系统）、AiRNA（mRNA 序列）、AiProtein（蛋白/抗体）、AiTEM（小分子制剂）；智能体 ALAN。<a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a></div>
+      <div class="pitem"><div class="pl">研发方向</div>药物递送（肝/肺/心脏/肌肉/肿瘤/免疫/中枢/胃肠 8 器官靶向，肝靶向效率超基准 20 倍）、mRNA 疗法、小分子制剂改良、动物健康。<a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a></div>
+      <div class="pitem"><div class="pl">管线阶段</div>10+ 管线：3 条临床、1 条 pre-NDA、4 条临床前、2 条动物保健。MTS-004（假性延髓情绪失控 PBA）：<b>中国首个完成 III 期临床的 AI 赋能制剂新药</b>（3 个月完成 2 万种配方筛选），有望填补国内空白；肝癌 mRNA 管线获 FDA 孤儿药资格并进入临床。<a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a></div>
+      <div class="pitem"><div class="pl">代表性合作</div>30+ 全球制药/生物技术合作伙伴；AiTEM 在恒瑞医药本地化部署；与普洛药业"AI+CDMO"合作；2026-07 赖才达在联合国 AI for Good 峰会发表主旨演讲。<a class="ev" href="#e-012" data-evidence-id="E-012">E-012</a></div>
+      <div class="pitem"><div class="pl">财务与商业模式</div>2025 年收入 1.05 亿元（主要为 MTS-004 合作首付款）；2026H1 营收 1.543 亿元（+13399%），经调整净亏损收窄 56.4%。模式："平台合作+产品合作"双轮驱动。<a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a><a class="ev" href="#e-012" data-evidence-id="E-012">E-012</a></div>
+    </div>
+    <div class="insight"><b>差异化要点：</b>卡位核酸/基因治疗时代"最后一公里"——递送系统是行业公认瓶颈，竞品少、卡位稀缺；制剂改良路径（MTS-004）临床与商业化确定性高于全新分子。<b>风险</b>：当前收入高度依赖单一产品合作，基数极低。<span class="tag inf">推断</span></div>
+  </div>
+
+  <div class="profile">
+    <h3>望石智慧 StoneWise <span class="tag pre">未上市（B+ 轮后）</span></h3>
+    <div class="pgrid">
+      <div class="pitem"><div class="pl">业务定位</div>2018 年成立（CEO 周杰龙）；AI 驱动小分子药物早研平台公司，"平台+产业合作+自研管线"多元体系。<a class="ev" href="#e-013" data-evidence-id="E-013">E-013</a></div>
+      <div class="pitem"><div class="pl">技术平台与模型</div>多模态 AI 3D 分子生成大模型（成果发表于 Nature Machine Intelligence 2024）；MolVado 小分子设计平台；MolVortex 早研智能体（2025）；数据资产：200 亿+ 小分子库、2 亿+ 虚拟复合物库、300 万+ 电子云密度库；自有国际标准化学实验室干湿闭环。<a class="ev" href="#e-013" data-evidence-id="E-013">E-013</a></div>
+      <div class="pitem"><div class="pl">研发方向</div>小分子（苗头化合物发现、骨架跃迁、成药性优化）；内部管线聚焦肿瘤与自免。</div>
+      <div class="pitem"><div class="pl">管线阶段</div>内部 10 余条管线；自研 HPK1 口服抑制剂 SWA1211 于 2025-06 获中美双报临床许可（全球首批 AI 参与设计进入临床的 HPK1 抑制剂）；助力客户发现 20+ 早期候选药物。<a class="ev" href="#e-013" data-evidence-id="E-013">E-013</a></div>
+      <div class="pitem"><div class="pl">代表性合作</div>客户 100+：武田、拜耳、辉瑞、齐鲁制药、微芯生物、泰德医药；某头部药企用 MolVado 3 个月获得全新骨架百纳摩尔级活性分子（传统 1-3 年、成本降约 80%）；2026-05 与广药集团、华为三方生态合作（国产算力+场景+技术）。<a class="ev" href="#e-013" data-evidence-id="E-013">E-013</a></div>
+      <div class="pitem"><div class="pl">融资与商业模式</div>B 轮+B+ 轮合计超 1 亿美元；2026-03 入选福布斯中国行业发展领军企业（唯一 AI 制药企业）。模式：平台服务（慢钱）+自研管线（远期弹性）。<a class="ev" href="#e-013" data-evidence-id="E-013">E-013</a></div>
+    </div>
+    <div class="insight"><b>差异化要点：</b>"AI 3D 分子生成+湿实验+化合物库+管线"全链路打通，生成式模型头对头复现能力有据（NMI 论文）；但平台服务收入爬坡慢、自研管线刚入临床，商业化节奏是主要不确定性。<span class="tag inf">推断</span><a class="ev" href="#e-013" data-evidence-id="E-013">E-013</a></div>
+  </div>
+
+  <div class="profile">
+    <h3>冰洲石生物 Accutar Biotech <span class="tag pre">未上市（私营）</span></h3>
+    <div class="pgrid">
+      <div class="pitem"><div class="pl">业务定位</div>2015 年创立（创始人 Dr. Jie Fan，师从美国国家科学院院士 Pavletich、博后师从诺奖得主 Blobel）；中美双布局，AI+物理建模驱动的靶向蛋白降解/诱导邻近新药公司。<a class="ev" href="#e-014" data-evidence-id="E-014">E-014</a></div>
+      <div class="pitem"><div class="pl">技术平台与模型</div>深度学习+物理建模+语言模型融合的干湿闭环；PROTAC、自有 PPI-TAC 平台、RIPTAC（调控性诱导邻近）新模态；含文献/专利检索等 FDA 申报辅助 AI 工具。<a class="ev" href="#e-014" data-evidence-id="E-014">E-014</a></div>
+      <div class="pitem"><div class="pl">研发方向</div>口服靶向蛋白降解剂（ER/AR/BTK）、诱导邻近新模态；肿瘤为主。</div>
+      <div class="pitem"><div class="pl">管线阶段</div>4 个项目获 FDA 临床许可：AC699（ERα 降解，I 期，FDA 快速通道，ASCO 2024 单药 ORR 21%、ESR1 突变亚组 50%）、AC0176（AR 降解，I 期，中美双报+快速通道）、AC0676（BTK PPI-TAC，I 期，ASH 2024 数据）、AC4847（PI3Kα，临床前）。<a class="ev" href="#e-014" data-evidence-id="E-014">E-014</a></div>
+      <div class="pitem"><div class="pl">代表性合作</div>2026-06/07 与广东东阳光药成立 NewCo 共同开发 RIPTAC 管线（首发 mCRPC，全球市场 2024 年约 120 亿美元）；与 Evommune 的 AI 药物发现合作。<a class="ev" href="#e-014" data-evidence-id="E-014">E-014</a></div>
+      <div class="pitem"><div class="pl">融资与商业模式</div>累计融资 N/A（公开报道未披露最新总额；早期获多家药企与一线 VC 支持）；模式：自研管线+NewCo 合资+平台合作。<a class="ev" href="#e-014" data-evidence-id="E-014">E-014</a></div>
+    </div>
+    <div class="insight"><b>差异化要点：</b>八家中临床资产最"实"的未上市公司（3 条 I 期口服降解剂均有中美监管认可与初步人体数据）；RIPTAC 卡位全球前沿（该领域仅 Halda/强生进入临床）。<b>风险</b>：早期临床样本小、尚未形成大额 BD，融资透明度低。<span class="tag inf">推断</span><a class="ev" href="#e-014" data-evidence-id="E-014">E-014</a></div>
+  </div>
+
+  <div class="profile">
+    <h3>宇道生物 Nutshell Therapeutics <span class="tag pre">未上市（2026-09 C1 轮）</span></h3>
+    <div class="pgrid">
+      <div class="pitem"><div class="pl">业务定位</div>2013 年成立（上海），创始人张健（上海交大特聘教授、AI+变构领域顶级科学家）；AI 原生 Biotech，专攻"难成药靶点"的变构药物。<a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a></div>
+      <div class="pitem"><div class="pl">技术平台与模型</div>AlloMatrix 蛋白构象调控数据库（全球规模领先、源于湿实验十余年积累）；AlloStar™ AI+物理计算平台；全球首个蛋白构象变化特异性分子力场 APSF；AlloWaves（隐藏位点识别）、AlloLig（Diffusion/Flow 生成式小分子设计）。<a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a></div>
+      <div class="pitem"><div class="pl">研发方向</div>变构小分子（激动/稳定/修复/调节/降解、PPI 促进或解离）；转录因子、翻译因子等传统难成药靶标；肿瘤、中枢神经、自免、代谢。</div>
+      <div class="pitem"><div class="pl">管线阶段</div>近 20 条自研管线。首发 NTS071/Dalretapopt（p53 Y220C 重激活剂）：国际多中心 I 期、即将 II 期——截至 2026-06 底入组 18 例，200mg+ 剂量组多例 PR、1 例 CR（初步数据，样本小）；生化活性优于 PMV 同靶点分子约 20 倍（公司口径）。NRF2 共价变构分子胶计划 2026Q4 中美同步 I 期。<a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a></div>
+      <div class="pitem"><div class="pl">代表性合作</div>与无锡国资/中国生物制药体系基金的产业协同（中生锡创鼎祺参投）；参照竞争：PMV Pharmaceuticals 同靶点 rezatapopt 已进入注册性 II 期。<a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a></div>
+      <div class="pitem"><div class="pl">融资与商业模式</div>2026-09-15 完成数千万美元 C1 轮（信宸资本、德诚资本联合领投，达晨财智、中生锡创鼎祺参投）；此前已完成多轮数千万美元融资。模式：自研管线导向的 AI Biotech。<a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a></div>
+    </div>
+    <div class="insight"><b>差异化要点：</b>变构（Allostery）是全球稀缺能力，宇道以"湿实验数据库+专用力场+生成式模型"构建纵深壁垒，首发管线已拿到人体 PoC 信号。<b>风险</b>：同靶点国际竞品进度领先（PMV 注册性 II 期），且早期数据样本极小。<span class="tag inf">推断</span><a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a></div>
+  </div>
+</section>
+
+<!-- ============ 3. 横向对比 ============ -->
+<section id="sec-compare">
+  <div class="sec-head"><span class="no">03</span><h2>横向对比总表与差异化分析</h2></div>
+  <div class="tbl-wrap"><table>
+    <tr><th>公司</th><th>资本状态</th><th>核心定位</th><th>模型/算法类型</th><th>研发方向</th><th>管线最高阶段</th><th>商业模式</th></tr>
+    <tr><td class="cname">晶泰控股</td><td>港股 02228</td><td>AI4S 全栈基础设施+药物发现</td><td>量子物理+生成/预测模型+机器人实验智能体</td><td>小分子/大分子/多肽/小核酸/材料</td><td>3 条临床（合作+自研）</td><td>平台服务+模型授权+管线交易+生态投资</td></tr>
+    <tr><td class="cname">英矽智能</td><td>港股 03696</td><td>端到端生成式 AI Biotech</td><td>多模态组学+生成化学（Chemistry42）+智能体</td><td>小分子（纤维化/肿瘤/衰老）</td><td><b>III 期（全球首个）</b></td><td>管线 BD 授权为主+平台订阅</td></tr>
+    <tr><td class="cname">百图生科</td><td>未上市（递表）</td><td>生命科学基础大模型</td><td>2680 亿参数全模态基座模型 xTrimo</td><td>大分子/蛋白/RNA/靶点</td><td>临床前</td><td>大模型即服务+研发服务+里程碑</td></tr>
+    <tr><td class="cname">深势科技</td><td>未上市（C 轮）</td><td>AI4S 科研基础设施</td><td>深度势能 DPA 系列（物理一致性 AI）</td><td>微观模拟/小分子设计/材料</td><td>N/A（无自研管线）</td><td>Science as a Service</td></tr>
+    <tr><td class="cname">剂泰科技</td><td>港股 07666</td><td>AI 纳米递送/制剂平台</td><td>脂质语言模型+从头生成算法+多尺度模拟</td><td>LNP 递送/mRNA/制剂改良</td><td><b>III 期完成（制剂改良）</b></td><td>平台合作+产品合作双轮</td></tr>
+    <tr><td class="cname">望石智慧</td><td>未上市（B+）</td><td>小分子早研平台+管线</td><td>多模态 AI 3D 分子生成大模型+智能体</td><td>小分子（肿瘤/自免）</td><td>I 期（中美双报）</td><td>平台服务+自研管线</td></tr>
+    <tr><td class="cname">冰洲石生物</td><td>未上市</td><td>靶向蛋白降解 AI Biotech</td><td>深度学习+物理建模+语言模型</td><td>PROTAC/PPI-TAC/RIPTAC</td><td>3 条 I 期（中美）</td><td>自研管线+NewCo+平台合作</td></tr>
+    <tr><td class="cname">宇道生物</td><td>未上市（C1）</td><td>变构药物 AI Biotech</td><td>专用力场 APSF+生成式 Diffusion/Flow</td><td>变构小分子/难成药靶点</td><td>I 期（国际多中心，将 II 期）</td><td>自研管线导向</td></tr>
+  </table></div>
+
+  <h3 style="margin:24px 0 8px">技术路径差异化亮点（要点）</h3>
+  <div class="grid g2">
+    <div class="card"><h3>自有数据壁垒</h3><p class="pitem">晶泰（50 万+条实验记录、80% 负样本）、宇道（十余年湿实验变构数据库 AlloMatrix）、望石（200 亿+ 小分子库+电子云密度库）——<b>专有湿实验数据是最难被通用大模型稀释的壁垒</b>，三家公司不约而同把"数据资产"置于模型之前。<a class="ev" href="#e-005" data-evidence-id="E-005">E-005</a><a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a><a class="ev" href="#e-013" data-evidence-id="E-013">E-013</a></p></div>
+    <div class="card"><h3>干湿实验闭环与自动化</h3><p class="pitem">晶泰（300+ 工站、L4 级自主发现）与英矽（LifeStar2）代表自动化实验的最高工程水平；望石、冰洲石、宇道为"自有实验室+模型迭代"中型闭环；百图、深势偏计算侧、湿实验依赖客户/合作方。<a class="ev" href="#e-005" data-evidence-id="E-005">E-005</a><a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a></p></div>
+    <div class="card"><h3>生成式模型水平</h3><p class="pitem">百图 xTrimo（2680 亿参数基座）与望石 3D 分子生成（NMI 论文、头对头复现领先）代表生成式模型的两个极端：通用基座 vs 垂直专精；宇道 AlloLig 与剂泰脂质语言模型则把生成式用于极细分设计空间。<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a><a class="ev" href="#e-013" data-evidence-id="E-013">E-013</a><a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a></p></div>
+    <div class="card"><h3>商业模式谱系</h3><p class="pitem">CRO/服务纯度：深势＞百图＞晶泰（平台服务为主但管线渐重）；管线纯度：宇道＞冰洲石＞英矽（BD 变现）＞望石；剂泰为"平台+产品"双轮的特殊混合。<b>服务型收入稳但天花板受客户预算约束，管线型弹性大但承担临床失败风险</b>——2026 年的市场定价明显偏向已有 BD/收入兑现者。<span class="tag inf">推断</span></p></div>
+  </div>
+</section>
+
+<!-- ============ 4. 风险审查 ============ -->
+<section id="sec-risk">
+  <div class="sec-head"><span class="no">04</span><h2>风险审查（六类，事实/推断分层）</h2></div>
+  <div class="grid g2">
+    <div class="risk-card"><h3>① 模型泛化与可解释性<span class="lvl h">行业级·高</span></h3><p><b>事实依据：</b>AI4S 领域公开基准显示，生成结果的物理一致性与化学合理性仍逊于第一性原理计算，缺乏成熟量化评测体系<a class="ev" href="#e-010" data-evidence-id="E-010">E-010</a>。<b>推断：</b>在训练分布外的新靶点/新骨架上，模型命中率可能显著下降；Rentosertib III 期是首个大规模"泛化检验"。<b>反证条件：</b>III 期达到主要终点且安全性清晰。</p></div>
+    <div class="risk-card"><h3>② 数据质量与合规<span class="lvl m">行业级·中</span></h3><p><b>事实依据：</b>投资机构尽调已将模型可解释性与数据合规列为核心否决项，2025 年因数据治理不达标终止的投资案例占 13%（咨询口径）<a class="ev" href="#e-003" data-evidence-id="E-003">E-003</a>；药监局"AI+药品监管"细则落地中<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a>。<b>推断：</b>使用患者数据训练、跨境数据流动的公司合规成本将上升。</p></div>
+    <div class="risk-card"><h3>③ 管线临床失败<span class="lvl h">公司级·高</span></h3><p><b>事实依据：</b>传统药物 III 期通过率历来有限，Rentosertib 最终结果预计 2029 年前后揭晓<a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a>；宇道 I 期样本仅 18 例<a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a>。<b>适用公司：</b>管线导向的英矽、宇道、冰洲石、望石敞口最大；平台型（深势、百图、晶泰服务侧）相对免疫。<b>推断：</b>任一标志性 III 期失败将引发板块性估值下修，不分公司基本面。</p></div>
+    <div class="risk-card"><h3>④ 商业模式可持续性<span class="lvl m">公司级·中高</span></h3><p><b>事实依据：</b>英矽 2026H1 扭亏主要由授权首付款确认驱动（占收入 97.1%）<a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a>；晶泰 2025 年同期亦受 5100 万美元首付款扰动<a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a>；百图收入依赖研发服务+里程碑、尚未盈利<a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a>。<b>推断：</b>"首付款驱动型盈利"波动大、不可线性外推；经常性收入（复购/订阅）占比是更真实的健康度指标。</p></div>
+    <div class="risk-card"><h3>⑤ 算力与人才依赖<span class="lvl m">行业级·中</span></h3><p><b>事实依据：</b>望石与华为/华鲲振宇共建国产算力方案、百图依托百度百舸算力集群<a class="ev" href="#e-013" data-evidence-id="E-013">E-013</a><a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a>；头部公司研发费用高增（晶泰 +66%）<a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a>。<b>推断：</b>跨学科人才（AI+药化+生物）稀缺是长期约束；算力国产化可降低地缘断供风险但抬升迁移成本。</p></div>
+    <div class="risk-card"><h3>⑥ 同质化竞争<span class="lvl m">行业级·中</span></h3><p><b>事实依据：</b>国内已有 120+ 家 AI 制药初创及跨界公司布局（咨询口径）<a class="ev" href="#e-003" data-evidence-id="E-003">E-003</a>；大药企自建 AI 平台（恒瑞灵枢等）挤压第三方服务空间<a class="ev" href="#e-016" data-evidence-id="E-016">E-016</a>。<b>推断：</b>缺乏专有数据或独特模态卡位的"通用 AIDD 平台"将最先陷入价格战；差异化（递送、变构、降解剂）公司的缓冲更厚。</p></div>
+  </div>
+</section>
+
+<!-- ============ 5. A股映射 ============ -->
+<section id="sec-ashare">
+  <div class="sec-head"><span class="no">05</span><h2>A 股映射层：可比标的与概念纯度</h2></div>
+  <p class="lead"><b>边界提示：</b>A 股目前没有"纯正 AI 制药"上市公司——相关标的均为"CRO/药企主业 + AI 工具"或上游服务商，AI 是效率变量而非核心资产，弹性逻辑与港股三小龙本质不同。<a class="ev" href="#e-016" data-evidence-id="E-016">E-016</a></p>
+  <div class="tbl-wrap"><table>
+    <tr><th>公司（代码）</th><th>AI 相关布局（事实）</th><th>与原生龙头的差距</th><th>概念纯度</th></tr>
+    <tr><td class="cname">成都先导 688222.SH</td><td>全球最大 DEL 库（5000 亿+ 分子）；"DEL+AI+自动化"平台 HAILO、智能体 HANDS；自研 HG254 完成 PCC；设灵擎数智、入股科迈生物（晶泰+百奥赛图创办）<a class="ev" href="#e-016" data-evidence-id="E-016">E-016</a></td><td>AI 服务于 DEL 筛选主业，无端到端自研管线</td><td><span class="tag inf">中</span></td></tr>
+    <tr><td class="cname">泓博医药 301230.SZ</td><td>DiOrion CADD/AIDD 平台累计服务 80 个新药项目，6 个进入 I 期、1 个进入 II 期，客户 40 家药企<a class="ev" href="#e-016" data-evidence-id="E-016">E-016</a></td><td>项目制 CRO 属性强，模型与数据资产披露有限</td><td><span class="tag inf">中</span></td></tr>
+    <tr><td class="cname">皓元医药 688131.SH</td><td>分子砌块+CDMO，MedChemAI 平台、一站式药物筛选平台<a class="ev" href="#e-016" data-evidence-id="E-016">E-016</a></td><td>AI 为辅助工具，收入贡献占比小</td><td><span class="tag inf">低-中</span></td></tr>
+    <tr><td class="cname">药明康德 603259.SH / 康龙化成 300759.SZ</td><td>AI 赋能 CRO 主业（内部研发工具）<a class="ev" href="#e-016" data-evidence-id="E-016">E-016</a></td><td>体量与业务本质均为综合 CRO</td><td><span class="tag inf">低</span></td></tr>
+    <tr><td class="cname">恒瑞医药 600276.SH 等创新药企</td><td>自建灵枢 AI 平台，覆盖分子、临床、药学全流程<a class="ev" href="#e-016" data-evidence-id="E-016">E-016</a></td><td>AI 是内部效率工具，估值由管线而非 AI 驱动</td><td><span class="tag inf">低</span></td></tr>
+    <tr><td class="cname">上游"卖水人"：百普赛斯、义翘神州、近岸蛋白、奥浦迈、纳微科技、百奥赛图(2315.HK)、华大智造</td><td>受益于 AI 候选分子爆发带来的蛋白表达、体外验证、模式动物、测序需求<a class="ev" href="#e-016" data-evidence-id="E-016">E-016</a></td><td>非 AI 公司，确定性最高、弹性最低</td><td><span class="tag inf">间接受益</span></td></tr>
+    <tr><td class="cname">参照：维亚生物 01873.HK（港股）</td><td>2025 年收入 17.29 亿元、净利 2.69 亿元；AIDD 累计参与 196 个项目，AI 相关收入约占 CRO 总收入 12%<a class="ev" href="#e-017" data-evidence-id="E-017">E-017</a></td><td>结构生物学+AI 的干湿闭环 CRO，是"CRO+AI"标尺</td><td><span class="tag inf">中</span></td></tr>
+  </table></div>
+  <div class="warn"><b>映射结论：</b>若投资目标是"AI 制药技术兑现"本身，A 股无直接标的，港股三小龙（晶泰/英矽/剂泰）才是纯度最高的载体；A 股标的是"产业景气外溢"逻辑——AI 候选分子增多 → CRO/上游订单增长，应以其主业景气度与估值定价，不宜按 AI 制药估值体系给予溢价。<span class="tag inf">推断</span></div>
+</section>
+
+<!-- ============ 6. 趋势判断 ============ -->
+<section id="sec-trend">
+  <div class="sec-head"><span class="no">06</span><h2>行业趋势判断与投资视角结论</h2></div>
+
+  <div class="grid g2">
+    <div class="card"><h3>趋势一：从"模型竞赛"到"数据与闭环竞赛"</h3><p class="pitem">通用大模型能力商品化后，竞争焦点转向专有湿实验数据、自动化实验规模与失败负样本积累（晶泰 50 万条实验记录、宇道十余年变构数据库为代表）。<b>成立条件：</b>公开数据红利见顶；<b>观察信号：</b>各公司自动化实验投入与自有数据披露。<span class="tag inf">推断</span><a class="ev" href="#e-005" data-evidence-id="E-005">E-005</a></p></div>
+    <div class="card"><h3>趋势二：2026-2029 为"临床交卷期"，估值锚切换</h3><p class="pitem">全球 170+ 条 AI 管线在临床、十余款冲刺 III 期；中国标志：Rentosertib III 期（2029 前后读出）、MTS-004 报产。<b>观察信号：</b>III 期入组与中期数据；<b>停止条件：</b>标志性 III 期失败且归因于 AI 设计。<span class="tag inf">推断</span><a class="ev" href="#e-003" data-evidence-id="E-003">E-003</a><a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a></p></div>
+    <div class="card"><h3>趋势三：商业模式向"平台复购+管线 BD"双轨收敛</h3><p class="pitem">纯服务（天花板低）与纯管线（风险高）都在向混合模式演化：晶泰做重管线与生态投资、英矽保留平台订阅、剂泰双轮驱动。<b>观察信号：</b>经常性收入占比与 BD 里程碑到账结构。<span class="tag inf">推断</span><a class="ev" href="#e-004" data-evidence-id="E-004">E-004</a><a class="ev" href="#e-007" data-evidence-id="E-007">E-007</a></p></div>
+    <div class="card"><h3>趋势四：资本通道打开但加速分化</h3><p class="pitem">港股 IPO 窗口开启（英矽、剂泰、百图递表），未上市头部仍能获大额融资（深势 C 轮、宇道 C1），但资本明显向"已验证平台+人体数据"集中。<b>观察信号：</b>百图 IPO 定价与认购倍数、后续递表公司数量。<span class="tag inf">推断</span><a class="ev" href="#e-009" data-evidence-id="E-009">E-009</a><a class="ev" href="#e-015" data-evidence-id="E-015">E-015</a></p></div>
+    <div class="card"><h3>趋势五：递送、变构、降解剂等"硬瓶颈"环节价值重估</h3><p class="pitem">行业从"找到分子"转向"把分子送到位/打到难靶点"：剂泰（递送）、宇道（变构）、冰洲石（降解/RIPTAC）卡位稀缺环节，竞品密度显著低于通用 AIDD。<span class="tag inf">推断</span><a class="ev" href="#e-011" data-evidence-id="E-011">E-011</a><a class="ev" href="#e-014" data-evidence-id="E-014">E-014</a></p></div>
+    <div class="card"><h3>趋势六：监管框架成型，合规成为竞争变量</h3><p class="pitem">药监局"AI+药品监管"2030 目标、FDA/EMA 良好 AI 实践原则落地，将抬高数据治理与模型文档化门槛，利好已建合规体系的头部。<span class="tag inf">推断</span><a class="ev" href="#e-008" data-evidence-id="E-008">E-008</a><a class="ev" href="#e-003" data-evidence-id="E-003">E-003</a></p></div>
+  </div>
+
+  <div class="concl">
+    <h3 style="margin-bottom:10px">投资视角总结论（非投资建议）</h3>
+    <ol>
+      <li><b>行业判断（推断）：</b>中国 AI 制药处于"成长期早期的商业化验证阶段"，2026 年是分水岭——技术叙事已被收入与临床数据部分兑现，板块从主题驱动转向证据驱动；未来 2-3 年最大的单一变量是 Rentosertib III 期结果。</li>
+      <li><b>公司分层（推断）：</b>第一梯队（已上市、有兑现）：英矽（BD 引擎+III 期管线，弹性与风险双高）、晶泰（基础设施+数据壁垒，确定性相对高）、剂泰（递送稀缺卡位+制剂确定性）；第二梯队（未上市、各有纵深）：深势（AI4S 基建、风险敞口最小）、百图（基座模型、兑现最慢）、望石（小分子生成+管线双线）；前沿期权型：冰洲石（降解剂临床资产）、宇道（变构+人体 PoC）。</li>
+      <li><b>A 股策略含义（推断）：</b>A 股无纯正标的，按"产业外溢"逻辑看待 CRO/上游，不付 AI 溢价；关注成都先导（DEL+AI 产出 PCC）、泓博医药（AIDD 项目转化）的基本面验证。</li>
+      <li><b>最大风险：</b>标志性 III 期失败引发板块性下修；首付款驱动型盈利不可持续；未上市公司信息透明度低、存在未披露融资/管线变动的可能。</li>
+      <li><b>验证动作：</b>季度跟踪三家港股财报的经常性收入；跟踪 Rentosertib 入组与百图 IPO；对未上市公司以官方新闻稿与工商/融资数据库交叉核验。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 7. 证据链 ============ -->
+<section id="sec-evidence">
+  <div class="sec-head"><span class="no">07</span><h2>证据链、数据来源与方法论</h2></div>
+  <p class="lead">方法论：官方披露（业绩公告、招股书、公司官网新闻稿）为硬证据；券商研报与权威媒体为次级证据；咨询机构估算标注为机构观点。市场规模口径冲突并列呈现、不做平均。所有推断均标注<span class="tag inf">推断</span>。数据局限性：未上市公司融资与管线以公开报道为准，可能存在未披露信息；部分合作金额为"潜在总额"，非确定收入。</p>
+  <div class="ev-list">
+    <div class="ev-item" id="e-001"><span class="eid">E-001</span>野村《中国 AI 价值链》(2026-09-11)：全球/中国 AI 药物发现市场规模（F&amp;S 口径）。<a href="https://ima.qq.com/wiki/?shareId=3023975b3f7ec01a30627b640a3d6bec9bfc1d963af80b8a67d7b6dc1ad0a6f7" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-industry">↩ 行业基础盘</a></div>
+    <div class="ev-item" id="e-002"><span class="eid">E-002</span>Grand View Research：中国 AI 药物发现市场展望（2025-2033）。<a href="https://www.grandviewresearch.com/horizon/outlook/artificial-intelligence-in-drug-discovery-market/china" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-industry">↩ 行业基础盘</a></div>
+    <div class="ev-item" id="e-003"><span class="eid">E-003</span>中研网《2026-2030 年智能制药产业全景透视与趋势研判》(2026-07)。<a href="https://m.chinairn.com/hyzx/20260723/17494472.shtml" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-board">↩ 决策看板</a></div>
+    <div class="ev-item" id="e-004"><span class="eid">E-004</span>晶泰控股 2026 年中期业绩公告 (2026-08-19) 及摘要。<a href="https://www.prnewswire.com/apac/zh/news-releases/2026-302855415.html" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-005"><span class="eid">E-005</span>界面新闻：晶泰 AI4S 商业化拐点分析 (2026-08-20)。<a href="https://www.toutiao.com/article/7676016829420978731/" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-006"><span class="eid">E-006</span>英矽智能官网：《细胞》封面研究及 2026 年合作/管线数据 (2026-09)。<a href="https://insilico.com/news_sc/cell180926cn-ai-longevity-discovery-toolkit" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-007"><span class="eid">E-007</span>英矽智能 2026H1 业绩点评（券商，2026-09-01）。<a href="https://gu.qq.com/resources/shy/news/detail-v2/index.html?t=1#/index?_tentrees_trans=0&id=SN2026090115110794f3ad57" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-008"><span class="eid">E-008</span>仪器信息网：从英矽智能 III 期临床看 AI 制药"交作业"时刻 (2026-09-17)。<a href="https://www.instrument.com.cn/news/20260917/979622.shtml" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-board">↩ 决策看板</a></div>
+    <div class="ev-item" id="e-009"><span class="eid">E-009</span>百图生科综合：网易《百度系三箭齐发冲刺港股》、正观新闻递表报道 (2026-03-18)。<a href="https://www.163.com/dy/article/KPDQK5KF0534AAOK.html" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-010"><span class="eid">E-010</span>深势科技 C 轮融资公告及报道 (2025-12-24/25，投中网/上证报)。<a href="https://finance.sina.cn/tech/2025-12-24/detail-inhcwhpr4579628.d.html" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-011"><span class="eid">E-011</span>剂泰科技港股上市报道（证券时报 2026-05-13、经济参考网 2026-05-14）。<a href="https://www.stcn.com/article/detail/3907879.html" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-012"><span class="eid">E-012</span>今日头条：CRO 概念股梳理含剂泰 2026H1 数据 (2026-09)。<a href="https://www.toutiao.com/a7686500517496898083" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-013"><span class="eid">E-013</span>望石智慧：新浪财经 AI Agent 行业报道 (2026-04-27)、腾讯新闻周杰龙访谈 (2026-03-31)。<a href="https://finance.sina.cn/2026-04-27/detail-inhvxtrc2339846.d.html" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-014"><span class="eid">E-014</span>冰洲石生物：protacs.com 公司页、Accutar 官网东阳光药 NewCo 公告 (2026-07)。<a href="https://www.accutarbio.com/chinas-hec-pharm-partners-with-u-s-ai-drug-discovery-company-accutar-to-form-a-newco-targeting-the-underserved-mcrpc-market" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-015"><span class="eid">E-015</span>宇道生物 C1 轮融资及管线数据（智药局/科创板日报/新浪财经，2026-09-15）。<a href="https://finance.sina.com.cn/roll/2026-09-15/doc-inirxats8585013.shtml" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-profiles">↩ 公司图谱</a></div>
+    <div class="ev-item" id="e-016"><span class="eid">E-016</span>腾讯新闻：大模型杀入新药研发，A 股标的梳理 (2026-09-17)。<a href="https://news.qq.com/rain/a/20260917A0F2OL00" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-ashare">↩ A股映射</a></div>
+    <div class="ev-item" id="e-017"><span class="eid">E-017</span>智慧芽 Synapse：泓博医药/维亚生物等行业梳理 (2026)。<a href="https://synapse.zhihuiya.com/organization/d821ce6df69a0080d5ebab3422be2dfb" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-ashare">↩ A股映射</a></div>
+    <div class="ev-item" id="e-018"><span class="eid">E-018</span>中研普华：2026 年 AI 制药行业发展现状与趋势分析 (2026-07)。<a href="https://big5.chinairn.com/news/20260706/172609533.shtml" target="_blank" rel="noopener">原始链接</a><a class="back" href="#sec-industry">↩ 行业基础盘</a></div>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <p>MOSS 行业研究 · 中国 AI 制药行业研究报告 v1.0 · 研究执行时点 2026-09-21 · 投资研究视角</p>
+  <p style="margin-top:6px">免责声明：本报告基于公开资料整理，区分事实、机构观点与推断，不构成任何投资建议、收益承诺或投资审批意见。管线、财务与融资数据以公司官方披露为最终依据。</p>
+</div></footer>
+
+</body>
+</html>

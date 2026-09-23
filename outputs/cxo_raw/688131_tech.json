@@ -1,0 +1,28 @@
+{
+  "msg": "操作成功",
+  "suc": true,
+  "traceId": "dcc9def25f8c4633be111e699bb7292c",
+  "code": "200",
+  "data": {
+    "seParams": {},
+    "requestId": "dcc9def25f8c4633be111e699bb7292c",
+    "apiData": {
+      "apiRecall": [],
+      "entity": [
+        {
+          "code": "DEA.N",
+          "name": "EASTERLY GOVERNMENT PROPERTIES, INC."
+        },
+        {
+          "code": "MA.N",
+          "name": "万事达"
+        },
+        {
+          "code": "688131.SH",
+          "name": "皓元医药"
+        }
+      ]
+    },
+    "extraParams": {}
+  }
+}

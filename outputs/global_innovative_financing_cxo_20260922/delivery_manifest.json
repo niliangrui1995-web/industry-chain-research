@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-22T02:50:00+08:00",
+  "updated_at": "2026-09-22T02:50:00+08:00",
+  "content_snapshot": {
+    "source_hash": "199424d05a7a10fbe439b1702860018619a6a6650d773576ac37f5b960aa0b3e",
+    "frozen": true
+  },
+  "required": [
+    {"name": "html"}
+  ],
+  "artifacts": [
+    {
+      "name": "html",
+      "status": "validated",
+      "validation_status": "passed",
+      "entrypoint": "artifact_contract.py resolve -> generate_report.py -> artifact_contract.py verify-html",
+      "path": "决策看板_全球创新药融资周期与CXO传导.html",
+      "output": "决策看板_全球创新药融资周期与CXO传导.html"
+    }
+  ],
+  "delivery_committed": true,
+  "presentation_ready": true
+}

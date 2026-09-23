@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>创新药融资周期、AI制药与CXO传导 | 2026-09-22</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+:root{
+  --bg:#f6f4ef; --paper:#fffdf9; --ink:#1c1917; --muted:#6b6560;
+  --line:#e6e1d8; --red:#b42318; --green:#0f766e; --amber:#b45309;
+  --blue:#1d4e89; --soft:#f3efe7; --fact:#e8f3ee; --judge:#fff4e5;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 "Source Han Sans SC","Noto Sans SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 22px 64px}
+header{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:22px}
+.kicker{color:var(--muted);letter-spacing:.12em;font-size:12px}
+h1{font-size:30px;line-height:1.25;margin:6px 0 8px;font-weight:700}
+h2{font-size:22px;margin:34px 0 12px;padding-top:8px;border-top:2px solid var(--ink)}
+h3{font-size:17px;margin:22px 0 8px}
+.sub{color:var(--muted);max-width:860px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 14px 12px}
+.card b{display:block;font-size:20px;line-height:1.2;margin:4px 0}
+.card span{color:var(--muted);font-size:12px}
+.tag{display:inline-block;border-radius:99px;padding:1px 8px;font-size:12px;font-weight:700}
+.fact{background:var(--fact);color:#065f46}
+.judge{background:var(--judge);color:#9a3412}
+.gap{background:#f3f4f6;color:#374151}
+.hi{color:var(--green)}.mid{color:var(--amber)}.lo{color:var(--red)}
+table{width:100%;border-collapse:collapse;background:var(--paper);font-size:13.5px;margin:10px 0 16px}
+th,td{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+th{background:#faf7f2;font-weight:650}
+.note{background:#faf7f2;border-left:3px solid var(--amber);padding:10px 12px;margin:10px 0 16px;font-size:13.5px}
+.chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+.node{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:150px}
+.node small{display:block;color:var(--muted)}
+.arrow{color:var(--muted);font-weight:700}
+.tabs{display:flex;gap:6px;margin:8px 0}
+button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 10px;cursor:pointer}
+button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chart{height:340px;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+.two{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+footer{margin-top:28px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:12px}
+@media(max-width:860px){.grid,.two{grid-template-columns:1fr}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="kicker">医药行业研究 · 周期 / AI / CXO · 截至 2026-09-22</div>
+  <h1>创新药融资已进入结构化上行，但尚未形成 2021 式全面泡沫</h1>
+  <p class="sub">结论先行。全文用【事实】与【判断】分开。数字只保留可追溯口径；同一指标跨库冲突时并列，不取平均数伪装精确。</p>
+</header>
+
+<section class="grid">
+  <div class="card"><span>【事实】中国一级峰值</span><b>&gt;160 亿美元</b><span>2021 · 医药魔方，IPO 前轮次</span></div>
+  <div class="card"><span>【事实】中国一级 2025</span><b>52.19 亿美元</b><span>445 起 · 医药魔方 MedAlpha，2026-01-07</span></div>
+  <div class="card"><span>【事实】美股 Biotech IPO</span><b>93 → 10 家</b><span>2021 → 2025 · Dealogic / Reuters 2026-01-14</span></div>
+  <div class="card"><span>【判断】本轮见顶窗口</span><b>2027H2–2029H1</b><span>基准情景 · 置信度：中</span></div>
+</section>
+
+<div class="note">
+<strong>三句话结论。</strong>
+【事实】2021 年中国创新药一级融资见顶，2022–2024 年回落，2025 年金额回升、事件数接近 2019 年，但远未回到峰值。
+【事实】美国公开市场退出在 2022–2025 年显著收缩，XBI 全年回报 2021、2022 年为负，2025 年修复。
+【判断】若融资进入新一轮上行，基准见顶不在 2026，而在 2027 年下半年至 2029 年上半年；最快受益的是已有订单可见度的小分子/多肽/ADC CDMO，弹性最大的是临床前安评与模式动物，但后者同时受动物试验替代政策约束。
+</div>
+
+<h2>一、历史复盘：2021 为什么是顶点</h2>
+<p>【判断】五因素不是同时发力。次序是：上市制度先打开退出 → 2020–2021 年零利率放大风险偏好 → 一级估值跟随二级与交叉轮上冲 → 2022 年 3 月起美联储加息从估值端倒灌 → 一级融资与 IPO 在 2022–2023 年确认见顶回落。政策不是 2021 年见顶的主因，支付与准入政策主要改变 2024 年以后的需求质量。</p>
+
+<div class="chain">
+  <div class="node"><b>2018–2019</b><small>18A / 科创板打开退出</small></div>
+  <div class="arrow">→</div>
+  <div class="node"><b>2020.03–2022.03</b><small>联邦基金利率 0–0.25%</small></div>
+  <div class="arrow">→</div>
+  <div class="node"><b>2021.02</b><small>XBI 日内高点约 174.8 美元</small></div>
+  <div class="arrow">→</div>
+  <div class="node"><b>2021 全年</b><small>一级融资与 IPO 数量见顶</small></div>
+  <div class="arrow">→</div>
+  <div class="node"><b>2022.03–2023.07</b><small>加息至 5.25–5.50%</small></div>
+  <div class="arrow">→</div>
+  <div class="node"><b>2022–2024</b><small>一级、IPO、破产同步恶化</small></div>
+</div>
+
+<h3>1. 五个维度对照</h3>
+<table>
+  <thead><tr><th>维度</th><th>标签</th><th>可核实事实</th><th>口径 / 来源 / 时点</th><th>对见顶的作用</th></tr></thead>
+  <tbody>
+    <tr><td>宏观流动性</td><td><span class="tag fact">事实</span></td><td>联邦基金目标利率 2020-03-16 起为 0–0.25%；2022-03-17 开始加息；2023-07-26 至 5.25–5.50%；2024-09 起降息，2024 年末 4.25–4.50%；2025-09-17、10-29、12-10 各降 25bp，至 3.50–3.75%。中国 1 年期 LPR 2021 年大部分时间为 3.85%，2022-08-22 为 3.65%，2024-10-21 为 3.10%，2025-05-20 为 3.00%，至 2026-04 仍为 3.00%。</td><td>美联储公开市场操作页；中国银行 LPR 报价页。检索日 2026-09-22。</td><td>领先。折现率上升直接压缩长久期 Biotech 估值，再传导至交叉轮和一级定价。</td></tr>
+    <tr><td>资本市场</td><td><span class="tag fact">事实</span></td><td>XBI 2021 年全年回报 -20.53%，2022 年 -25.76%，2025 年 +35.85%（NAV）。2021-02-09 日内高点约 174.79 美元；2022-05 低点约 61.78–62.81 美元，来源间有 1 美元级差异。美股 Biotech IPO：Dealogic 口径 2021 年 93 家、募资 160 亿美元，2025 年 10 家、募资 16 亿美元；BDO 口径 2021 年 104 家、2022 年 21 家、2023 年 19 家。</td><td>Vanguard/Morningstar XBI 年度 NAV；Reuters 2026-01-14 引 Dealogic；BDO 2024 春季简报。价格高点为第三方行情站，非 State Street 官方年报。</td><td>同步偏领先。二级价格和 IPO 折价是一级定价锚。</td></tr>
+    <tr><td>行业政策</td><td><span class="tag fact">事实</span></td><td>港交所 2018-04-30 起实施第 18A 章，未盈利生物科技公司可上市，市值门槛 15 亿港元，核心产品需过概念验证。科创板 2019-07 开板，第五套允许未盈利企业上市。2025-06-30/07-01，国家医保局与国家卫健委印发《支持创新药高质量发展的若干措施》，5 方面 16 条。2025-12-07 发布首版商保创新药目录，纳入 19 个药品，2026-01-01 执行。</td><td>港交所 2018-04-24 咨询总结及上市规则；中国政府网/新华社 2025-07-01；金融时报 2025-12-08。</td><td>2018–2019 是上行的制度前提，不是 2021 见顶触发器。2025 年支付政策改善商业化预期，属于新周期质量变量。</td></tr>
+    <tr><td>一二级估值</td><td><span class="tag fact">事实</span> <span class="tag gap">缺口</span></td><td>可核实的是价格与融资结果，不是全市场估值中位数。XBI 在 2021-02 见价格高点后，当年全年仍下跌。中国一级 2021 年“超过 160 亿美元”，2025 年医药魔方 MedAlpha 为 445 起、52.19 亿美元，接近其统计的 2019 年 52.74 亿美元。另一口径 2025 年国内一级 468 起、92.34 亿美元。</td><td>医药魔方 2026-01-07；高特佳/医药魔方十年回顾；中邮证券 2026-05-07 引医药魔方。一级投前估值中位数、EB/sales：<b>缺口</b>。</td><td>2021 年“故事可定价”转向 2023 年后“临床与退出可定价”。精确估值倍数不足以做全市场结论。</td></tr>
+    <tr><td>二级向一级传导</td><td><span class="tag fact">事实</span></td><td>2021 年美股 Biotech IPO 创纪录后，2022–2023 年 IPO 降至约 19–26 家；2023 年生物技术相关破产 18 家，为 2010 年以来高位，2022 年为 8 家。BioPharma Dive 跟踪口径：2023 年生物制药 VC 233 亿美元、2024 年 260 亿美元，轮次由 462 降至 416。中国 2025 年对外授权首付款约 70 亿美元，已高于同年医药魔方一级融资 52.19 亿美元。</td><td>Dealogic/BDO/Deloitte 引 S&P；BioPharma Dive 2024 回顾；医药魔方 2026-01-07 与益诺思 2025 年报摘要转引。</td><td>传导链是：IPO 折价/破发 → LP 出资放缓 → 后期交叉轮收缩 → 早期轮更难定价。2025 年起，BD 首付款部分替代股权融资。</td></tr>
+  </tbody>
+</table>
+
+<h3>2. 融资金额：只画同一口径内可核对的序列</h3>
+<div class="tabs">
+  <button class="on" onclick="show('c1','t1',this)">图</button>
+  <button onclick="show('t1','c1',this)">表</button>
+</div>
+<div id="c1" class="chart"></div>
+<table id="t1" style="display:none">
+  <thead><tr><th>序列</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>口径</th></tr></thead>
+  <tbody>
+    <tr><td>中国创新药一级，亿美元</td><td>&gt;160</td><td>缺口</td><td>缺口</td><td>缺口</td><td>52.19</td><td>医药魔方；2025 为 MedAlpha，445 起</td></tr>
+    <tr><td>全球生物制药 VC，亿美元</td><td>缺口</td><td>缺口</td><td>233</td><td>260</td><td>缺口</td><td>BioPharma Dive 跟踪，2024 回顾文章</td></tr>
+    <tr><td>美股 Biotech IPO 家数，Dealogic</td><td>93</td><td>缺口</td><td>缺口</td><td>26</td><td>10</td><td>Reuters 2026-01-14</td></tr>
+    <tr><td>美股 Biotech IPO 家数，BDO</td><td>104</td><td>21</td><td>19</td><td>缺口</td><td>缺口</td><td>BDO 2024 春季；与 Dealogic 不可相减</td></tr>
+  </tbody>
+</table>
+<p class="sub">中邮证券 2026-05-07 另引医药魔方：2025 年全球一级 344.44 亿美元、同比 -5.61%；中国 92.34 亿美元、同比 +93.35%；海外 252.10 亿美元、同比 -20.51%。该中国金额与 MedAlpha 52.19 亿美元冲突，<b>不并入上图</b>。可能差异是交叉轮、战略融资或 NewCo 股权是否计入，原文未给出可复算规则，故标口径冲突。</p>
+
+<h2>二、未来推演：新一轮上行的见顶窗口</h2>
+<div class="note">
+<strong>关键假设。</strong>
+① 2025–2026H1 的回暖会延续，而不是 2026 年即结束；② 美联储不在 2026–2027 年重新进入持续加息；③ 中国 18A/港股 IPO 通道不突然关闭；④ 中国对外授权不会在一年内腰斩；⑤ AI 只改变早期筛选效率，不在 3 年内替代临床与生产。任一假设失效，见顶窗口前移。
+</div>
+<p><span class="tag judge">判断</span> 基准情景：本轮一级市场金额高点落在 <b>2027 年下半年至 2029 年上半年</b>，置信度中。不是因为周期“应该”走 6–8 年，而是因为本轮缺少 2020–2021 年的零利率，资金向临床中后期和可授权资产集中，早期轮尚未恢复，泡沫形成速度应慢于上一轮。</p>
+<table>
+  <thead><tr><th>情景</th><th>见顶窗口</th><th>触发组合</th><th>置信度</th><th>证伪</th></tr></thead>
+  <tbody>
+    <tr><td>早顶</td><td>2026H2–2027H1</td><td>美联储重新加息 + 港股 18A 审核或定价失败 + 1–2 笔标志性授权延期/终止</td><td class="lo">低</td><td>2026 年全球一级金额继续同比上升且 IPO 折价未系统性扩大</td></tr>
+    <tr><td>基准</td><td>2027H2–2029H1</td><td>利率维持限制性、估值先于订单泡沫化、授权首付款增速降到个位数</td><td class="mid">中</td><td>2028 年前未出现估值、IPO、授权三项同时恶化</td></tr>
+    <tr><td>长周期</td><td>2029H2 以后</td><td>利率回到中性、并购持续消化资产、早期轮也恢复且临床成功率改善</td><td class="lo">低</td><td>早期种子/A 轮连续两年金额下降，或真实利率重新上行</td></tr>
+  </tbody>
+</table>
+<p class="sub">2026H1 全球/中国一级同比大增的具体金额，本次检索只见于二级转述，<b>未核到医药魔方原始库，故不作为见顶测算输入</b>。缺口。</p>
+
+<h3>见顶信号：看什么、去哪看、领先还是滞后</h3>
+<table>
+  <thead><tr><th>情形</th><th>观察指标</th><th>获取渠道</th><th>时序</th><th>预警阈值（判断）</th><th>证伪</th></tr></thead>
+  <tbody>
+    <tr><td>货币政策转向</td><td>联邦基金目标区间；点阵图中值；2 年期美债收益率</td><td>federalreserve.gov；美国财政部</td><td>领先 2–4 个季度</td><td>连续两次加息，或 2 年期收益率较阶段低点上升超过 100bp 且维持一个季度</td><td>加息但 XBI 与一级金额不同步下降，则利率不是主因</td></tr>
+    <tr><td>IPO 通道收紧</td><td>18A/科创板受理、上市家数、发行折价、上市后 30 日破发率</td><td>港交所披露易；上交所/巨潮</td><td>领先至同步</td><td>连续两个季度 Biotech IPO 低于 2024 年季度化水平，且中位数发行折价扩大</td><td>上市减少是供给不足而非需求不足</td></tr>
+    <tr><td>估值泡沫化</td><td>XBI 相对 2021-02 高点的距离；后期轮次估值/上一轮涨幅；无收入公司市值</td><td>State Street/交易所行情；公司公告</td><td>同步</td><td>无Ⅲ期数据公司批量获得 2021 年式发行估值，且上市 90 日跌破发行价比例高于 50%</td><td>估值上升伴随订单、授权首付款同比例上升</td></tr>
+    <tr><td>重大临床失败</td><td>P0 级终止：Ⅲ期主要终点失败、监管拒批、同类机制黑框或撤市</td><td>ClinicalTrials.gov；FDA/EMA/CDE；公司公告</td><td>同步，对同靶点领先；对融资滞后 1–2 季</td><td>同一机制 6 个月内两起注册性失败</td><td>失败局限单资产，授权与融资总额不降</td></tr>
+    <tr><td>License-out 降温</td><td>交易数、首付款、总金额、临床前占比、终止/退回</td><td>公司公告；医药魔方仅作二级索引</td><td>领先 CXO 订单 1–3 季</td><td>首付款连续两个季度同比下降，且总金额下降不是结构变化造成</td><td>总金额降但首付款升，说明交易更真实</td></tr>
+    <tr><td>AI 商业化不及预期</td><td>AI 相关首付款确认收入、自有管线进入Ⅱ/Ⅲ期数、合作终止</td><td>公司年报收入附注；CT.gov</td><td>滞后于主题交易，领先于“AI 替代 CXO”叙事</td><td>头部合作只确认里程碑、不形成重复订单；Ⅱ期成功率回落至历史均值</td><td>AI 合作收入连续两年增速高于传统发现业务</td></tr>
+  </tbody>
+</table>
+
+<h2>三、CXO 传导：不是全链条同时受益</h2>
+<p>【事实】2025 年已能看到订单修复，但收入修复分环节。药明康德化学收入与在手订单强，泰格收入仅低个位数增长、订单双位数增长，昭衍新签订单增长但非临床收入仍下降。这本身就是传导时滞的证据。</p>
+
+<table>
+  <thead><tr><th>公司 / 环节</th><th>2025 已核实经营事实</th><th>来源</th></tr></thead>
+  <tbody>
+    <tr><td>药明康德 603259 / 2359.HK<br>发现到生产平台</td><td>收入 454.6 亿元，同比 +15.8%；持续经营收入 434.2 亿元，+21.4%；持续经营在手订单 580.0 亿元，+28.8%。化学收入 364.7 亿元，+25.5%。</td><td>公司官网业绩新闻，2026-03-23；上证报同日</td></tr>
+    <tr><td>泰格医药 300347 / 3347.HK<br>临床 CRO</td><td>收入 68.33 亿元；净新增合同 101.58 亿元，+20.6%；待执行合同 182.02 亿元，+15.4%。公司称 2025 年新订单均价企稳。</td><td>公司新闻稿 2026-03-30；港交所 2026-03-30 业绩公告</td></tr>
+    <tr><td>凯莱英 002821 / 06821.HK<br>CDMO</td><td>收入 66.70 亿元，+14.91%；在手订单 13.85 亿美元，+31.65%。小分子收入 47.35 亿元，仅 +3.59%。</td><td>港交所 2025 年报；巨潮董事会工作报告，2026-03-31</td></tr>
+    <tr><td>昭衍新药 603127 / 6127.HK<br>临床前安评 / 模式动物</td><td>收入 16.58 亿元，-17.87%；非临床服务收入 15.7704 亿元，低于 2024 年 19.17487 亿元；在手订单及新签订单均约 26 亿元。</td><td>港交所 2026-03-30 业绩公告；公司 2025 年报</td></tr>
+    <tr><td>行业需求侧</td><td>2025 年药物临床试验登记 5,215 项，+6.4%；其中新药临床试验 2,997 项，+18%；国际多中心 410 项，占新药试验 13.7%。</td><td>国家医保局转引 CDE《中国新药注册临床试验进展年度报告（2025）》，2026-06-23；河北省卫健委转载健康报口径一致</td></tr>
+  </tbody>
+</table>
+
+<h3>1. 四环节竞争格局</h3>
+<table>
+  <thead><tr><th>环节</th><th>主要参与者</th><th>集中度</th><th>进入壁垒</th><th>竞争强度</th><th>证据边界</th></tr></thead>
+  <tbody>
+    <tr><td>上游工具与材料</td><td>试剂耗材：进口品牌与国产替代并存；模式动物：昭衍、药康及地方繁育机构；设备：色谱、质谱、反应器以进口为主</td><td><span class="tag gap">缺口</span> 无可靠份额，不算 HHI</td><td>试剂看品牌与批次质量；模式动物看种源、检疫、伦理与产能周期；设备看装机与验证</td><td>试剂中高；合规模式动物中；通用设备高</td><td>只有公司收入与订单，没有行业出货量</td></tr>
+    <tr><td>临床前 CRO</td><td>药明康德生物学/测试、康龙实验室、昭衍、美迪西及大量区域实验室</td><td>平台公司强，安评专项不构成寡头。<span class="tag gap">缺口</span></td><td>GLP、设施、病理与动物资源；新方法学需要数据资产</td><td>高。昭衍 2025 毛利率仍受前期价格战滞后影响</td><td>不可把“订单恢复”写成“份额提升”</td></tr>
+    <tr><td>临床 CRO</td><td>泰格、药明康德相关临床服务、全球 IQVIA/ICON/PPD 等</td><td>中国临床 CRO 泰格自称份额第一；全球份额本次未核</td><td>治疗领域团队、医院网络、数据质量、国际多中心运营</td><td>中高，2025 年公司称竞争趋于良性，均价企稳</td><td>“份额第一”是公司表述，未附第三方口径</td></tr>
+    <tr><td>CDMO</td><td>药明康德、凯莱英、药明生物、博腾；多肽/ADC/寡核苷酸为能力分层</td><td>商业化阶段高于临床早期。<span class="tag gap">缺口</span> 无全球份额</td><td>GMP、FDA/EMA 检查记录、产能、工艺与客户验证</td><td>早期项目高；后期与商业化中低，头部占优</td><td>订单高增不等于当期产能利用率高</td></tr>
+  </tbody>
+</table>
+
+<h3>2. 融资回暖的四维传导</h3>
+<table>
+  <thead><tr><th>环节</th><th>需求传导</th><th>订单弹性</th><th>议价能力</th><th>产能利用率</th><th>受益节奏</th></tr></thead>
+  <tbody>
+    <tr><td>上游工具材料</td><td>融资和新增管线先增加试剂、耗材、动物使用；设备滞后于产能扩张</td><td>耗材高、设备低</td><td>合规耗材中等；动物资源阶段性强；通用设备弱</td><td>耗材随订单即时；设备取决于资本开支</td><td>耗材最快，设备最慢</td></tr>
+    <tr><td>临床前 CRO</td><td>新分子、新模态和授权前验证直接增加毒理、药代、安评</td><td>高。昭衍新签约 26 亿元，但 2025 收入仍降</td><td>2023–2025 弱，2026 才可能修复</td><td>历史产能尚未完全消化。<span class="tag gap">缺口</span></td><td>订单先行，收入滞后 2–4 个季度以上</td></tr>
+    <tr><td>临床 CRO</td><td>融资后 IND、国际多中心和授权后全球试验转化而来</td><td>中高。泰格净新增 +20.6%，收入仅 +3.5%</td><td>2025 均价企稳，尚未证明重回涨价</td><td>人员而非厂房是瓶颈，利用率披露缺口</td><td>慢于临床前，快于商业化生产</td></tr>
+    <tr><td>CDMO</td><td>后期临床、商业化和多肽/ADC 产能最直接；早期融资只影响小批量</td><td>分化。凯莱英在手订单 +31.65%，但小分子收入只 +3.59%</td><td>后期与短缺工艺强；早期小分子弱</td><td>药明康德毛利率改善说明利用率/结构改善；全行业利用率缺口</td><td>已有后期管线者最快，纯早期产能慢</td></tr>
+  </tbody>
+</table>
+
+<div class="tabs">
+  <button class="on" onclick="show('c2','t2',this)">图：已发生的订单与收入差</button>
+  <button onclick="show('t2','c2',this)">表</button>
+</div>
+<div id="c2" class="chart"></div>
+<table id="t2" style="display:none">
+  <thead><tr><th>观察</th><th>订单/在手</th><th>收入增速</th><th>含义</th></tr></thead>
+  <tbody>
+    <tr><td>药明康德持续经营</td><td>在手订单 +28.8%</td><td>收入 +21.4%</td><td>订单已较大比例转化为收入</td></tr>
+    <tr><td>泰格医药</td><td>净新增合同 +20.6%</td><td>收入 +3.48%</td><td>临床执行滞后</td></tr>
+    <tr><td>凯莱英</td><td>在手订单 +31.65%</td><td>收入 +14.91%；小分子仅 +3.59%</td><td>增量在新模态，不在传统小分子</td></tr>
+    <tr><td>昭衍新药</td><td>新签约 +41%（相对 2024 年约 18.4 亿元）</td><td>非临床收入 -17.75%</td><td>典型的订单领先、收入滞后</td></tr>
+  </tbody>
+</table>
+
+<h3>3. AI 制药：替代还是增量</h3>
+<p><span class="tag fact">事实</span> IQVIA Institute 2026-05-14 称，最近三年窗口内，新兴生物制药公司中“经核实使用 AI”的项目Ⅰ期成功率 75%，高于同类非 AI 项目；Ⅱ期成功率与非 AI 同类持平；Ⅲ期数量还不够分析。样本经过筛选且较小，行业整体成功率并未较上年改变。AI 使用最多的是已知靶点上的分子发现，其次才是靶点发现。</p>
+<p><span class="tag judge">判断</span> 未来 3 年 AI 对 CXO 主要是<b>增量</b>，不是替代。它提高早期候选数量和部分早期成功率，从而增加 IND、临床前评价和临床样本；它替代的是低附加值的文献阅读、部分虚拟筛选和文书，不替代 GLP 动物/新方法学评价、医院临床执行和 GMP 生产。若 FDA 推动减少动物试验，替代压力首先打在传统动物安评，而不是全部临床前 CRO。</p>
+<table>
+  <thead><tr><th>环节</th><th>AI 影响</th><th>方向</th><th>置信度</th><th>证伪</th></tr></thead>
+  <tbody>
+    <tr><td>试剂耗材</td><td>筛选量上升增加高值试剂；自动化可能减少人工操作耗材</td><td>净增量</td><td class="mid">中</td><td>实验通量下降而软件支出上升</td></tr>
+    <tr><td>模式动物</td><td>新方法学、类器官、器官芯片替代部分常规毒理；复杂生殖毒性和致癌试验仍在</td><td>结构替代 + 复杂项目增量</td><td class="mid">中</td><td>监管明确允许关键毒理完全不用动物且客户迅速切换</td></tr>
+    <tr><td>设备</td><td>自动化实验和数据中心需求增加，传统单机不一定增加</td><td>结构增量</td><td class="lo">低</td><td>客户把预算从设备转到软件订阅</td></tr>
+    <tr><td>临床前 CRO</td><td>虚拟筛选替代部分湿实验；更多候选进入验证则增加安评</td><td>净增量，内部结构重分配</td><td class="mid">中</td><td>候选数量不增、仅缩短发现时间</td></tr>
+    <tr><td>临床 CRO</td><td>方案、监查、医学写作提效，但患者入组和现场执行不减</td><td>服务工时替代，项目数增量</td><td class="hi">高</td><td>单项目人工工时下降幅度大于项目数增长</td></tr>
+    <tr><td>CDMO</td><td>AI 不生产药品；更多分子进入后期会增加工艺开发和商业化生产</td><td>中期增量</td><td class="hi">高</td><td>AI 只提高发现数量、不提高进入临床比例</td></tr>
+  </tbody>
+</table>
+
+<h3>4. 谁最快，谁弹性最大</h3>
+<div class="two">
+  <div class="card">
+    <span class="tag judge">判断 · 置信度中高</span>
+    <h3>受益速度最快：已具备后期/新模态产能的 CDMO</h3>
+    <p>依据不是“融资一暖就下单”，而是 2025 年订单已经在手：药明康德在手订单 +28.8% 且收入已同向增长；凯莱英在手订单 +31.65%，增量明确来自化学大分子和生物大分子。先行指标：商业化及Ⅲ期项目数、多肽/ADC 反应釜利用率、在手订单金额与取消率。</p>
+  </div>
+  <div class="card">
+    <span class="tag judge">判断 · 置信度中</span>
+    <h3>受益弹性最大：临床前安评与合规模式动物</h3>
+    <p>昭衍新签约 +41%、收入仍 -17.75%，说明经营杠杆还没释放。一旦新签转化为收入、价格停止下降，利润弹性会大于已经高利用率的 CDMO。约束同样大：动物试验替代、生物资产公允价值波动、历史低价订单。先行指标：新签单价、取消率、实验猴价格、未完成履约义务转化为收入的比例。</p>
+  </div>
+</div>
+<p><span class="tag judge">判断</span> 临床 CRO 是“慢但稳”的第二梯队。泰格订单增 20.6%、收入只增 3.5%，符合临床试验 12–24 个月执行周期。上游通用试剂和设备只有在新增实验通量或新产能确认后才受益，不能把主题热度直接映射为收入。</p>
+
+<h2>四、数据缺口与不可外推项</h2>
+<table>
+  <thead><tr><th>缺口</th><th>为什么不用记忆补齐</th><th>若要补，去哪里</th></tr></thead>
+  <tbody>
+    <tr><td>2022–2024 年中国创新药一级逐年金额</td><td>本次只核到 2021 峰值与 2025 两个锚，中间年份存在口径冲突</td><td>医药魔方原始导出，固定“不含 IPO、增发、并购”</td></tr>
+    <tr><td>2025 年中国一级 52.19 与 92.34 亿美元冲突</td><td>不能平均，也不能挑选更有利的数字</td><td>核对是否纳入战略轮、交叉轮、NewCo 股权</td></tr>
+    <tr><td>全球一级 2026H1 同比</td><td>只见二级转述，未核原始库</td><td>医药魔方/PitchBook 原始统计</td></tr>
+    <tr><td>全市场一级估值中位数、PS、融资后估值</td><td>没有可复算样本</td><td>公司公告中的投前估值，只做披露样本</td></tr>
+    <tr><td>CXO 四环节市场份额、HHI、产能利用率</td><td>无可靠份额就不计算 HHI</td><td>公司产能与行业出货；监管检查不是份额</td></tr>
+    <tr><td>AI 项目Ⅲ期成功率和行业总规模</td><td>IQVIA 明确写样本小、Ⅲ期不足</td><td>等待后续年度报告，不引用无出处的市场规模</td></tr>
+  </tbody>
+</table>
+
+<h2>五、跟踪清单</h2>
+<table>
+  <thead><tr><th>频率</th><th>指标</th><th>作用</th></tr></thead>
+  <tbody>
+    <tr><td>每次 FOMC</td><td>联邦基金目标区间、点阵图</td><td>领先信号</td></tr>
+    <tr><td>月度</td><td>1 年期 LPR、美债 2 年期收益率</td><td>中国流动性与全球风险偏好</td></tr>
+    <tr><td>季度</td><td>医药魔方固定口径一级金额、18A 上市与破发、授权首付款</td><td>判断周期位置</td></tr>
+    <tr><td>季度</td><td>药明康德在手订单、泰格净新增与取消、凯莱英新模态订单、昭衍新签单价</td><td>判断传导是否兑现</td></tr>
+    <tr><td>年度</td><td>CDE 临床试验登记、IQVIA AI 队列成功率</td><td>区分需求增量与叙事</td></tr>
+  </tbody>
+</table>
+
+<footer>
+本页不构成投资建议。事实数据截至检索日 2026-09-22；前瞻窗口是条件判断，不是预测承诺。行情与第三方数据库均低于公司公告、监管机构和央行原文。
+</footer>
+</div>
+<script>
+function show(a,b,btn){
+  document.getElementById(a).style.display = a.startsWith('c') ? 'block' : 'table';
+  document.getElementById(b).style.display = 'none';
+  var parent = btn.parentNode;
+  var buttons = parent.querySelectorAll('button');
+  for (var i = 0; i < buttons.length; i++) buttons[i].className = '';
+  btn.className = 'on';
+  if (window.charts) {
+    for (var k in window.charts) window.charts[k].resize();
+  }
+}
+window.charts = {};
+window.charts.c1 = echarts.init(document.getElementById('c1'));
+window.charts.c1.setOption({
+  tooltip: {trigger: 'axis'},
+  legend: {data: ['生物制药VC（十亿美元）','美股Biotech IPO（Dealogic，家）']},
+  grid: {left: 50, right: 40, bottom: 40, top: 40},
+  xAxis: {type: 'category', data: ['2021','2022','2023','2024','2025']},
+  yAxis: [{type: 'value', name: '十亿美元'}, {type: 'value', name: '家数'}],
+  series: [
+    {name: '生物制药VC（十亿美元）', type: 'bar', data: [null, null, 23.3, 26.0, null]},
+    {name: '美股Biotech IPO（Dealogic，家）', type: 'line', yAxisIndex: 1, data: [93, null, null, 26, 10]}
+  ]
+});
+window.charts.c2 = echarts.init(document.getElementById('c2'));
+window.charts.c2.setOption({
+  tooltip: {trigger: 'axis', formatter: '{b}<br/>{a0}: {c0}%<br/>{a1}: {c1}%'},
+  legend: {data: ['订单或在手订单同比','对应收入同比']},
+  grid: {left: 50, right: 20, bottom: 40, top: 40},
+  xAxis: {type: 'category', data: ['药明康德','泰格医药','凯莱英','昭衍新药']},
+  yAxis: {type: 'value', name: '同比 %', axisLabel: {formatter: '{value}%'}},
+  series: [
+    {name: '订单或在手订单同比', type: 'bar', data: [28.8, 20.6, 31.65, 41.3]},
+    {name: '对应收入同比', type: 'bar', data: [21.4, 3.48, 14.91, -17.75]}
+  ]
+});
+window.addEventListener('resize', function(){
+  window.charts.c1.resize();
+  window.charts.c2.resize();
+});
+</script>
+</body>
+</html>

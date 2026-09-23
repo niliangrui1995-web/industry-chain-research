@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美迪西 vs 益诺思 深度对比研究 | 临床前 CRO 双雄 | 2026-09-15</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a1d21; --ink2:#4a5058; --ink3:#7a828c;
+    --line:#e3e6ea; --line2:#eef1f4;
+    --up:#c0392b; --down:#1e8449; --neu:#2f6fb5;
+    --mdx:#1a5fb4; --yns:#0f7b4f; --warn:#9a6400; --purple:#5b3fa8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 24px 72px}
+  header.hd{background:linear-gradient(135deg,#ffffff 0%,#f0f4f9 100%);
+    border:1px solid var(--line);border-radius:14px;padding:28px 30px;margin-bottom:24px}
+  .kicker{font-size:12px;letter-spacing:.14em;color:var(--ink3);text-transform:uppercase;margin-bottom:10px}
+  h1{margin:0 0 8px;font-size:29px;line-height:1.3;letter-spacing:-.01em}
+  .sub{color:var(--ink2);font-size:14px;margin:0}
+  .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:#eef2f7;border:1px solid var(--line);border-radius:999px;
+    padding:4px 12px;font-size:12.5px;color:var(--ink2)}
+  .chip.pass{background:#eaf6ee;border-color:#c6e6d2;color:#1e8449;font-weight:600}
+  h2{font-size:20px;margin:38px 0 14px;padding-left:12px;border-left:4px solid var(--mdx);line-height:1.4}
+  h3{font-size:16.5px;margin:24px 0 10px;color:var(--ink)}
+  h4{font-size:14.5px;margin:18px 0 8px;color:var(--ink2)}
+  p{margin:10px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:14px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.6px;background:var(--card)}
+  th,td{padding:9px 11px;border-bottom:1px solid var(--line2);text-align:right;vertical-align:top}
+  th{background:#f2f5f9;color:var(--ink2);font-weight:600;border-bottom:1px solid var(--line);
+    position:sticky;top:0}
+  th:first-child,td:first-child{text-align:left}
+  tbody tr:hover{background:#fafbfc}
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+  .tbl-wrap table{margin:0}
+  .up{color:var(--up);font-weight:600}
+  .mdx{color:var(--mdx);font-weight:600}
+  .yns{color:var(--yns);font-weight:600}
+  .down{color:var(--down);font-weight:600}
+  .neu{color:var(--neu);font-weight:600}
+  .muted{color:var(--ink3)}
+  .small{font-size:12.6px}
+  .strong{font-weight:700}
+  .tag{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:6px;
+    border:1px solid var(--line);background:#f3f5f8;color:var(--ink2);margin-right:5px;white-space:nowrap}
+  .tag.off{background:#eaf6ee;border-color:#c6e6d2;color:#1e8449}
+  .tag.mgmt{background:#fdf6e7;border-color:#f0e0b8;color:#8a5a00}
+  .tag.sec{background:#eef4fb;border-color:#cbdcf0;color:#1a5fb4}
+  .tag.inf{background:#f0eef9;border-color:#d8d0ef;color:#5b3fa8}
+  .tag.gap{background:#fdecec;border-color:#f5cfcf;color:#a33}
+  .bars{display:flex;flex-direction:column;gap:9px;margin:14px 0}
+  .brow{display:grid;grid-template-columns:104px 1fr 96px;align-items:center;gap:10px;font-size:13px}
+  .btrack{background:#eef1f4;border-radius:5px;height:20px;position:relative;overflow:hidden}
+  .bfill{height:100%;border-radius:5px;display:flex;align-items:center;padding-left:7px;
+    color:#fff;font-size:11.5px;font-weight:600;white-space:nowrap}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.4px;color:var(--ink2);margin-top:10px}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:middle}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px}
+  .kpi .k{font-size:12px;color:var(--ink3);margin-bottom:5px}
+  .kpi .v{font-size:21px;font-weight:700;letter-spacing:-.01em}
+  .kpi .d{font-size:12.2px;color:var(--ink3);margin-top:3px}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:6px 0}
+  .callout{border-left:4px solid var(--warn);background:#fffbf0;border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0}
+  .callout.bear{border-color:#a33;background:#fdf3f3}
+  .callout.ok{border-color:#1e8449;background:#f2faf5}
+  .callout.info{border-color:var(--mdx);background:#f2f7fd}
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;margin:16px 0}
+  .vs>div{padding:14px 16px}
+  .vs .l{background:#f4f8fd;border:1px solid #d7e5f5;border-radius:10px 0 0 10px;border-right:none}
+  .vs .r{background:#f3faf6;border:1px solid #d3ebdc;border-radius:0 10px 10px 0;border-left:none}
+  .vs .m{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink3);font-size:12px;padding:0 10px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.3px}
+  .scroll-x{overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hd">
+  <div class="kicker">上市公司深度研究 · 同业对比</div>
+  <h1>美迪西（688202.SH） vs 益诺思（688710.SH）</h1>
+  <p class="sub">临床前 CRO 双雄的正面对撞 —— 订单都爆发了，但赚到的钱不一样、风险不一样、价格也不一样</p>
+  <div class="meta">
+    <span class="chip">研究截止：2026-09-15 收盘</span>
+    <span class="chip">上交所科创板 · 人民币报表</span>
+    <span class="chip pass">财务证据审计 PASS / publishable（12/12）</span>
+    <span class="chip">数据源：公司公告与半年报 / 交易所问询函回复 / 行情厂商 / 卖方研报</span>
+  </div>
+</header>
+
+<!-- ============ 0 结论速览 ============ -->
+<h2>0. 结论速览</h2>
+
+<div class="callout info">
+  <strong>一句话结论：</strong>两家都是"订单已经爆发、利润刚刚转正"的临床前 CRO，但<b>驱动力完全不同</b>——益诺思靠<b>稀缺的安评资源与国药系背景</b>拿到最猛的订单（2026H1 新签 +175.6%），代价是利润兑现滞后、估值最贵、且刚被交易所问询；美迪西靠<b>一体化平台与真实国际化</b>（境外收入占 45.7%）修出更快的毛利率与现金流，代价是<b>无实际控制人、家族股东在 98 元高位密集减持、客户回款质量差</b>。两者 2026H1 毛利率已被拉到几乎相同的 31.6%，但"谁的 31.6% 更可持续"是本报告要回答的核心问题。
+</div>
+
+<div class="tbl-wrap">
+<table>
+  <thead>
+    <tr><th>维度</th><th>美迪西 688202</th><th>益诺思 688710</th><th>谁更优</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>生意定位</td><td>临床前一体化 CRO<br><span class="muted small">药物发现 + 药学研究 + 临床前研究</span></td><td>非临床安评专才<br><span class="muted small">96.9% 收入来自非临床，其中 80–90% 为安评</span></td><td class="neu">各有取舍</td></tr>
+    <tr><td>2026H1 营收 / 同比</td><td>¥7.6147 亿 / <span class="up">+40.91%</span></td><td>¥4.6499 亿 / <span class="up">+23.92%</span></td><td class="mdx">美迪西（规模+增速）</td></tr>
+    <tr><td>2026H1 归母 / 扣非</td><td>¥5,160 万 / ¥4,303 万</td><td>¥3,917 万 / ¥3,290 万</td><td class="mdx">美迪西（绝对额）</td></tr>
+    <tr><td>2026H1 毛利率</td><td>31.597%</td><td>31.568%</td><td class="neu">几乎持平</td></tr>
+    <tr><td>单季 Q2 毛利率</td><td><span class="up">36.69%</span>（环比 +10.6pct）</td><td>32.23%（环比 +1.5pct）</td><td class="mdx">美迪西（修复斜率）</td></tr>
+    <tr><td>单季 Q2 净利率</td><td>9.07%</td><td><span class="up">10.58%</span></td><td class="yns">益诺思（费用更省）</td></tr>
+    <tr><td>2026H1 新签订单</td><td>¥12.33 亿 / <span class="up">+104.74%</span></td><td><span class="up">¥14.66 亿 / +175.56%</span></td><td class="yns">益诺思</td></tr>
+    <tr><td>在手订单 / 合同负债</td><td>未披露 / ¥1.874 亿</td><td><span class="up">¥22.47 亿</span> / <span class="up">¥7.546 亿</span></td><td class="yns">益诺思（远超）</td></tr>
+    <tr><td>境外收入占比</td><td><span class="up">45.70%</span>（¥3.48 亿）</td><td>4.24%（¥0.20 亿）</td><td class="mdx">美迪西（国际化真实落地）</td></tr>
+    <tr><td>单季扣非年化 vs 事件前共识</td><td><span class="up">above（+157.2%）</span></td><td><span class="down">below（−22.34%）</span></td><td class="mdx">美迪西（预期差方向）</td></tr>
+    <tr><td>2026H2 扣非弹性（基准情景 Δ扣非）</td><td class="up"><b>+¥2.28 亿</b></td><td class="up">+¥0.71 亿</td><td class="up">美迪西（3.20×，详见第 13 节）</td></tr>
+    <tr><td>PE（用户口径，单季扣非×4）</td><td><span class="up">102.90×</span></td><td><span class="down">124.67×</span></td><td class="mdx">美迪西（相对便宜）</td></tr>
+    <tr><td>PE（TTM）</td><td>不适用（TTM 亏损）</td><td>503.46×</td><td class="mdx">美迪西</td></tr>
+    <tr><td>减值结构</td><td><span class="down">信用减值（客户欠款）¥2,556 万</span></td><td>存货/合同履约成本减值 ¥1,730 万</td><td class="neu">风险性质不同</td></tr>
+    <tr><td>治理</td><td><span class="down">无实际控制人 + 家族股东高位减持 1.68%</span></td><td>国药集团系合计 34.41% 控股 + <span class="down">刚收交易所问询函</span></td><td class="yns">益诺思（股权稳定）</td></tr>
+    <tr><td>thesis_status</td><td class="strong">mixed</td><td class="strong">mixed</td><td class="neu">—</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="small muted">注：PE（用户口径）与预期差数字经 <code>financial-evidence-audit</code> 核验通过；口径定义见第 11 节与附录。</p>
+
+<!-- ============ 1 标的核验 ============ -->
+<h2>1. 标的核验与研究口径</h2>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>项目</th><th>美迪西</th><th>益诺思</th></tr></thead>
+  <tbody>
+    <tr><td>证券代码</td><td>688202.SH</td><td>688710.SH</td></tr>
+    <tr><td>上市日期 / 发行价</td><td>2019-11-05 / ¥41.50</td><td>2024-09-03 / ¥19.06</td></tr>
+    <tr><td>注册与办公地</td><td>上海浦东（张江、川沙、南汇 + 波士顿）</td><td>上海浦东（郭守敬路）</td></tr>
+    <tr><td>董事长</td><td>CHUN-LIN CHEN（创始人）</td><td>常艳</td></tr>
+    <tr><td>总股本</td><td>134,352,184 股</td><td>140,979,615 股</td></tr>
+    <tr><td>2026-09-15 收盘</td><td>¥98.50（<span class="up">+1.56%</span>）</td><td>¥85.16（<span class="down">−2.45%</span>）</td></tr>
+    <tr><td>总市值（已审计）</td><td>¥132.3369 亿</td><td>¥120.0582 亿</td></tr>
+    <tr><td>PB</td><td>6.61×</td><td>5.07×</td></tr>
+    <tr><td>52 周区间</td><td>50.50 – 113.60</td><td>40.26 – 103.69</td></tr>
+    <tr><td>近 60 日 / 年初至今</td><td><span class="up">+52.93% / +74.65%</span></td><td><span class="up">+39.17% / +92.89%</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>关键背景：</strong>用户此前研究的奥浦迈（688293）以 14.505 亿元收购澎立生物（临床前 CRO），使"临床前 CRO 的真实经营质量"成为产业链投研的必答题。美迪西与益诺思正是这条赛道上<b>体量最接近、业务最纯、且都已经历完整下行周期</b>的两个可比较样本——它们的 2023–2026 财务轨迹，可以直接用来检验"临床前 CRO 是否真的反转"。</p>
+
+<!-- ============ 2 生意本质 ============ -->
+<h2>2. 生意本质：两家到底在卖什么</h2>
+
+<div class="vs">
+  <div class="l">
+    <h4 style="margin-top:0">美迪西 —— "临床前百货公司"</h4>
+    <p class="small">客户、为什么付费、替代方案、锁定来源、核心利润变量。</p>
+    <ul class="small">
+      <li><b>客户：</b>全球 2,000+ 家客户，以国内中小 Biotech 为主，同时覆盖恒瑞、正大天晴、扬子江等大型药企与海外客户。</li>
+      <li><b>为什么付费：</b>要"一站式"——从靶点验证、药物发现、原料药与制剂、到药理毒理和 IND 申报，一个供应商全包，省掉多供应商协调成本。</li>
+      <li><b>替代方案：</b>药企自建临床前部门；或分别采购药明康德、康龙化成、昭衍新药等。</li>
+      <li><b>锁定来源：</b>数据与方法的连贯性（同一体系从发现到申报）+ 多国 GLP 资质（NMPA、FDA、OECD、AAALAC）。<b>但可替代性明显高于纯安评</b>——客户可在早期发现阶段用美迪西、后期安评换昭衍。</li>
+      <li><b>核心利润变量：</b><span class="strong">产能利用率 × 人均产出 × 订单价格</span>——人力密集型，2026H1 员工 2,780 人（+22.52%），收入增速必须跑赢人头增速才能摊薄成本。</li>
+    </ul>
+  </div>
+  <div class="m">VS</div>
+  <div class="r">
+    <h4 style="margin-top:0">益诺思 —— "安评专卖店"</h4>
+    <p class="small">同一套问题，答案结构明显不同。</p>
+    <ul class="small">
+      <li><b>客户：</b>1,100+ 家制药公司、研发机构与科研院所；前五大客户仅占 16.56%，<b>无单一大客户依赖</b>（但 2025 年第一大客户收入 −71.58%）。</li>
+      <li><b>为什么付费：</b><b>强制合规需求</b>——任何新药进临床前必须完成 GLP 安全性评价，这是无法跳过的刚需环节，且 ADC/双多抗/CGT/小核酸的毒理复杂度远高于小分子。</li>
+      <li><b>替代方案：</b>昭衍新药（国内安评第一）、药明康德测试业务。<b>可替代供应商极少</b>——受 GLP 资质、实验猴资源与历史数据积累三重约束。</li>
+      <li><b>锁定来源：</b><span class="up">稀缺资源 + 转换成本</span>——实验猴（恒河猴/食蟹猴）供给偏紧且价格上行；安评报告与药监沟通的连续性使客户极少中途换供应商。</li>
+      <li><b>核心利润变量：</b><span class="strong">实验猴采购成本 vs 报价 × 产能爬坡</span>——成本端随猴价、收入端随议价能力，两边都在动，毛利率因此最敏感。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout">
+<strong>结构性差异（本报告最重要的观察之一）：</strong>安评是<b>刚需 + 稀缺资源</b>生意，需求弹性小、进入壁垒高，但正因为是长周期（常规整套 IND 安评 6–9 个月，NDA/BLA 阶段可达 6 个月–3 年）刚需，<b>收入确认严重滞后于订单</b>——益诺思 6–9 个月才结转收入，所以"订单爆发"与"利润爆发"之间有 2–3 个季度的时滞。美迪西的一体化模式周期更短、收入传导更快，但对客户融资环境的依赖也更大（中小 Biotech 拿不到钱就不下单）。
+</div>
+
+<!-- ============ 3 财务 ============ -->
+<h2>3. 财务表现对比（2023 – 2026H1）</h2>
+
+<h3>3.1 营收与利润轨迹</h3>
+<div class="tbl-wrap">
+<table>
+  <thead>
+    <tr><th>单位：亿元</th><th colspan="4">美迪西 688202</th><th colspan="4">益诺思 688710</th></tr>
+    <tr><th></th><th>2023</th><th>2024</th><th>2025</th><th>2026H1</th><th>2023</th><th>2024</th><th>2025</th><th>2026H1</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>营业收入</td><td>13.6563</td><td>10.3775</td><td>11.6306</td><td>7.6147</td><td>10.3843</td><td>11.4167</td><td>8.1133</td><td>4.6499</td></tr>
+    <tr><td>营收同比</td><td class="down">−17.68%</td><td class="down">−24.01%</td><td class="up">+12.08%</td><td class="up">+40.91%</td><td class="up">+20.32%</td><td class="up">+9.94%</td><td class="down">−28.94%</td><td class="up">+23.92%</td></tr>
+    <tr><td>归母净利润</td><td class="down">−0.3321</td><td class="down">−3.3085</td><td class="down">−1.6783</td><td class="up">0.5160</td><td class="up">1.9445</td><td class="up">1.4778</td><td class="down">−0.3052</td><td class="up">0.3917</td></tr>
+    <tr><td>扣非净利润</td><td class="down">−0.5762</td><td class="down">−3.4771</td><td class="down">−1.8116</td><td class="up">0.4303</td><td class="up">1.7445</td><td class="up">1.2539</td><td class="down">−0.5390</td><td class="up">0.3290</td></tr>
+    <tr><td>毛利率</td><td>23.77%</td><td class="down">6.31%</td><td>17.36%</td><td class="up">31.60%</td><td class="up">43.62%</td><td>33.62%</td><td class="down">25.96%</td><td>31.57%</td></tr>
+    <tr><td>加权 ROE</td><td class="down">−1.75%</td><td class="down">−14.24%</td><td class="down">−8.26%</td><td class="up">2.63%</td><td class="up">12.85%</td><td>7.76%</td><td class="down">−1.29%</td><td>1.67%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>营收规模（亿元）</h4>
+<div class="bars">
+  <div class="brow"><span class="muted small">美迪西 2023</span><div class="btrack"><div class="bfill" style="width:97.5%;background:var(--mdx)">13.66</div></div><span class="small muted">基数峰值</span></div>
+  <div class="brow"><span class="muted small">美迪西 2024</span><div class="btrack"><div class="bfill" style="width:74.1%;background:var(--mdx)">10.38</div></div><span class="small muted">−24.0%</span></div>
+  <div class="brow"><span class="muted small">美迪西 2025</span><div class="btrack"><div class="bfill" style="width:83.1%;background:var(--mdx)">11.63</div></div><span class="small muted">+12.1%</span></div>
+  <div class="brow"><span class="muted small">美迪西 26H1</span><div class="btrack"><div class="bfill" style="width:54.4%;background:var(--mdx)">7.61</div></div><span class="small up">+40.9%</span></div>
+  <div class="brow"><span class="muted small">益诺思 2023</span><div class="btrack"><div class="bfill" style="width:74.1%;background:var(--yns)">10.38</div></div><span class="small muted">+20.3%</span></div>
+  <div class="brow"><span class="muted small">益诺思 2024</span><div class="btrack"><div class="bfill" style="width:81.5%;background:var(--yns)">11.42</div></div><span class="small muted">+9.9%</span></div>
+  <div class="brow"><span class="muted small">益诺思 2025</span><div class="btrack"><div class="bfill" style="width:57.9%;background:var(--yns)">8.11</div></div><span class="small down">−28.9%</span></div>
+  <div class="brow"><span class="muted small">益诺思 26H1</span><div class="btrack"><div class="bfill" style="width:33.2%;background:var(--yns)">4.65</div></div><span class="small up">+23.9%</span></div>
+</div>
+
+<h4>毛利率轨迹 —— 两条完全相反的曲线，2026H1 收敛于 31.6%</h4>
+<div class="bars">
+  <div class="brow"><span class="muted small">美迪西 2023</span><div class="btrack"><div class="bfill" style="width:23.8%;background:#7fa8d9">23.8%</div></div><span class="small muted">起点低</span></div>
+  <div class="brow"><span class="muted small">美迪西 2024</span><div class="btrack"><div class="bfill" style="width:6.3%;background:#7fa8d9"></div></div><span class="small down">6.3% 谷底</span></div>
+  <div class="brow"><span class="muted small">美迪西 2025</span><div class="btrack"><div class="bfill" style="width:17.4%;background:#5a8ac9">17.4%</div></div><span class="small up">修复中</span></div>
+  <div class="brow"><span class="muted small">美迪西 26H1</span><div class="btrack"><div class="bfill" style="width:31.6%;background:var(--mdx)">31.6%</div></div><span class="small up">追平并反超</span></div>
+  <div class="brow"><span class="muted small">益诺思 2023</span><div class="btrack"><div class="bfill" style="width:43.6%;background:#6fbf95">43.6%</div></div><span class="small muted">高位起点</span></div>
+  <div class="brow"><span class="muted small">益诺思 2024</span><div class="btrack"><div class="bfill" style="width:33.6%;background:#57ae83">33.6%</div></div><span class="small down">平滑下行</span></div>
+  <div class="brow"><span class="muted small">益诺思 2025</span><div class="btrack"><div class="bfill" style="width:26.0%;background:#3d9d70">26.0%</div></div><span class="small down">谷底</span></div>
+  <div class="brow"><span class="muted small">益诺思 26H1</span><div class="btrack"><div class="bfill" style="width:31.6%;background:var(--yns)">31.6%</div></div><span class="small up">V 型反转</span></div>
+</div>
+<p class="small muted">读法：美迪西是"谷底反弹型"（6.3% → 31.6%），益诺思是"高位下行后反转型"（43.6% → 26.0% → 31.6%）。美迪西 2024 年的 6.3% 毛利率说明其一体化平台在需求冰点时的固定成本刚性极强；益诺思 2023 年的 43.6% 则说明安评在供给紧张时拥有真正的定价权。两者 2026H1 几乎相等，但<b>成因不同、可持续性不同</b>。</p>
+
+<h3>3.2 2026 单季拆分：Q2 是真正的分水岭</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>2026Q2 单季</th><th>美迪西</th><th>益诺思</th><th>解读</th></tr></thead>
+  <tbody>
+    <tr><td>营业收入</td><td>¥3.9683 亿（<span class="up">+45.19%</span>）</td><td>¥2.5491 亿（<span class="up">+53.51%</span>）</td><td>益诺思 Q2 环比 +21.3%，动能更陡</td></tr>
+    <tr><td>归母净利润</td><td>¥3,598.7 万</td><td>¥2,696.4 万</td><td>—</td></tr>
+    <tr><td>扣非净利润</td><td>¥3,215.1 万</td><td>¥2,407.6 万</td><td>均已审计核验</td></tr>
+    <tr><td>单季毛利率</td><td><span class="up">36.69%</span></td><td>32.23%</td><td>美迪西 Q2 环比 +10.6pct，修复更猛</td></tr>
+    <tr><td>单季净利率</td><td>9.07%</td><td><span class="up">10.58%</span></td><td>益诺思费用率更低（H1 合计 19.0% vs 22.31%）</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>费用率结构差异（2026H1）</h4>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>费用率</th><th>美迪西</th><th>益诺思</th><th>差异成因</th></tr></thead>
+  <tbody>
+    <tr><td>销售费用率</td><td>5.99%</td><td>3.10%</td><td>美迪西客户更分散、获客成本更高</td></tr>
+    <tr><td>管理费用率</td><td>7.81%</td><td>11.10%</td><td>益诺思国资体系管理架构更重（含股份支付等）</td></tr>
+    <tr><td>研发费用率</td><td>7.06%</td><td>5.30%</td><td>美迪西投 NAMs / AI 平台更多</td></tr>
+    <tr><td>财务费用率</td><td class="down">+1.46%</td><td class="up">−0.50%</td><td><b>关键差异</b>：美迪西有息负债 ¥2.227 亿 + 汇兑损失；益诺思净现金 ¥14.93 亿</td></tr>
+    <tr><td><b>合计</b></td><td>22.31%</td><td><b>19.00%</b></td><td>益诺思靠"零负债 + 低销售投入"扳回净利率</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+<strong>财务质量的第一个分水岭：</strong>美迪西的毛利率更高（Q2 36.69% vs 32.23%），但净利率更低（9.07% vs 10.58%）——差额来自<b>财务费用与销售费用</b>。美迪西有 ¥2.227 亿有息负债且承担汇兑损失，益诺思持有 ¥14.93 亿现金。这意味着在需求二次走弱的情形下，<b>益诺思的利润下行保护更强</b>。
+</div>
+
+<h3>3.3 现金流与资产负债表</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>2026H1</th><th>美迪西</th><th>益诺思</th></tr></thead>
+  <tbody>
+    <tr><td>经营活动现金流净额</td><td>¥1.348 亿（<span class="up">+80.53%</span>）</td><td><span class="up">¥2.841 亿</span></td></tr>
+    <tr><td>货币资金</td><td>¥2.885 亿</td><td><span class="up">¥14.930 亿</span></td></tr>
+    <tr><td>有息负债</td><td class="down">¥2.227 亿</td><td>¥1.303 亿（主要为租赁负债）</td></tr>
+    <tr><td>合同负债（预收）</td><td>¥1.874 亿</td><td><span class="up">¥7.546 亿</span>（较 2025 末 +65.3%）</td></tr>
+    <tr><td>资产负债率</td><td>30.48%</td><td>35.41%（其中 57% 为合同负债等经营性负债）</td></tr>
+    <tr><td>流动比率 / 速动比率</td><td>1.84 / 1.57</td><td>2.28 / 1.79</td></tr>
+    <tr><td>应收账款周转率</td><td class="down">1.78 次</td><td><span class="up">1.95 次</span></td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>益诺思的资产负债表显著更"厚"</strong>：14.93 亿现金、7.55 亿合同负债（相当于 1.6 倍年化收入），且负债结构以预收款为主，是典型的"订单已锁、现金已到"状态。美迪西账面现金 2.885 亿、有息负债 2.227 亿，净现金仅约 0.66 亿，<b>抗风险垫子薄</b>。</p>
+
+<!-- ============ 4 订单 ============ -->
+<h2>4. 订单与需求传导 —— 本报告的核心证据</h2>
+
+<p>对 CRO 而言，<b>新签订单是最领先的经营指标</b>（领先收入约 2–4 个季度），在手订单与合同负债决定未来 12–18 个月的收入可见度。这是两家公司差异最大的地方。</p>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>订单指标</th><th>美迪西</th><th>益诺思</th><th>来源等级</th></tr></thead>
+  <tbody>
+    <tr><td>2025 全年新签订单</td><td>约 ¥16.1 亿（<span class="up">+47%</span>）</td><td>¥11.35 亿（<span class="up">+38.62%</span>）</td><td><span class="tag sec">定期报告</span><span class="tag">卖方测算</span></td></tr>
+    <tr><td>2025 年末在手订单</td><td>未披露</td><td>¥12.48 亿（+28.23%）</td><td><span class="tag sec">问询函回复</span></td></tr>
+    <tr><td>2026Q1 新签订单</td><td>未单列</td><td>¥7.31 亿（<span class="up">+198.79%</span>，环比 +106.99%）</td><td><span class="tag sec">定期报告</span></td></tr>
+    <tr><td><b>2026H1 新签订单</b></td><td><b>¥12.33 亿（+104.74%）</b></td><td><b class="up">¥14.66 亿（+175.56%）</b></td><td><span class="tag sec">半年报</span><span class="tag">行业汇总</span></td></tr>
+    <tr><td>2026H1 末在手订单</td><td>未披露</td><td><b class="up">¥22.47 亿</b>（较 2025 末 +80.1%）</td><td><span class="tag mgmt">业绩会纪要</span></td></tr>
+    <tr><td>2026H1 境内新签订单同比</td><td><span class="up">+148.22%</span></td><td>—</td><td><span class="tag sec">半年报</span></td></tr>
+    <tr><td>2026H1 境外新签订单同比</td><td>+45.96%</td><td>+38.1%</td><td><span class="tag sec">半年报 / IR</span></td></tr>
+    <tr><td>核心 IND+NDA 新签项目数同比</td><td>—</td><td>+33.0%</td><td><span class="tag mgmt">业绩会纪要</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout ok">
+<strong>订单层面，益诺思全面领先：</strong>2026H1 新签订单 ¥14.66 亿（美迪西 ¥12.33 亿），增速 +175.6%（美迪西 +104.7%），在手订单 ¥22.47 亿——相当于其 2025 年收入的 2.77 倍。合同负债 ¥7.546 亿是美迪西（¥1.874 亿）的 <b>4.03 倍</b>。这不是估值问题，是订单结构问题：<b>益诺思把未来 2 年的收入提前锁进了资产负债表。</b>
+</div>
+
+<div class="callout bear">
+<strong>但订单不等于利润——时滞是双刃剑：</strong>益诺思问询函明确披露"从订单签订到收入确认通常存在 <b>6–9 个月甚至更长</b>的执行周期"，且 2026H1 结转的收入主要来自 2024–2025 年的低价合同。这正是为什么益诺思订单 +175.6%、而收入只 +23.9%——<b>订单的高增长还没进入利润表</b>。反过来说，一旦高价订单开始结转，其利润弹性也会比美迪西更大。这是本报告认为益诺思"贵得有理由，但兑现需要耐心"的核心逻辑。
+</div>
+
+<!-- ============ 5 定价证据 ============ -->
+<h2>5. 定价与成本：来自交易所问询函的硬证据</h2>
+
+<p>益诺思因 2025 年报收到上交所问询函（上证科创公函〔2026〕0332 号），其回复披露了<b>行业级的定价与成本数据</b>——这是本次研究中价值最高的单一文件，也是判断"临床前 CRO 是否真反转"最硬的证据。</p>
+
+<h4>核心业务（非临床 IND + NDA）合同平均单价（万元/单）</h4>
+<div class="bars">
+  <div class="brow"><span class="muted small">2024H1</span><div class="btrack"><div class="bfill" style="width:85.2%;background:#8fb3d9">480.23</div></div><span class="small muted">前期高点</span></div>
+  <div class="brow"><span class="muted small">2024H2</span><div class="btrack"><div class="bfill" style="width:76.5%;background:#a33">430.79</div></div><span class="small down">价格战谷底</span></div>
+  <div class="brow"><span class="muted small">2025H1</span><div class="btrack"><div class="bfill" style="width:78.4%;background:#c08040">442.05</div></div><span class="small down">低位徘徊</span></div>
+  <div class="brow"><span class="muted small">2025H2</span><div class="btrack"><div class="bfill" style="width:100%;background:var(--up)">563.40</div></div><span class="small up">+27.4% 拐点</span></div>
+</div>
+<p class="small"><span class="tag sec">官网事实</span>来源：益诺思《关于 2025 年年度报告信息披露监管问询函的回复公告》。2025H2 单价较 2024H2 谷底回升 30.8%，<b>较 2024H1 前期高点还高出 17.3%</b>——这是行业价格拐点已被官方文件确认的直接证据。</p>
+
+<h4>同期成本与单价变动（2025 年）</h4>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>项目</th><th>变动幅度</th><th>含义</th></tr></thead>
+  <tbody>
+    <tr><td>涉猴安全性评价业务单价</td><td class="down">−25.25%</td><td>价格战主要发生在涉猴安评</td></tr>
+    <tr><td>非涉猴安全性评价业务单价</td><td class="down">−29.40%</td><td>非涉猴降幅更深</td></tr>
+    <tr><td>恒河猴平均出库成本单价</td><td class="up">−37.82%</td><td>猴价下行，成本端改善</td></tr>
+    <tr><td>食蟹猴平均出库成本单价</td><td class="up">−15.64%</td><td>降幅远小于报价降幅</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small"><span class="tag sec">官网事实</span><b>关键机制：</b>2025 年成本下降幅度低于报价下降幅度（涉猴报价 −25.25% vs 食蟹猴成本 −15.64%），导致毛利率被"剪刀差"压缩 7.66pct。2026 年猴价转为上行（美迪西 IR 确认"2026 年以来实验用猴价格呈上行趋势，整体供应偏紧"），<b>成本端开始反向施压</b>——这是两家 2026H2 毛利率的共同风险变量。</p>
+
+<div class="callout">
+<strong>一个必须记住的会计差异：</strong>昭衍新药对实验用猴采用<b>公允价值计量</b>，2025 年生物资产公允价值变动净收益 ¥4.757 亿元，远高于其实验室服务利润；益诺思采用<b>历史成本计量</b>（问询函回复明确说明），不确认猴子增值收益。因此<b>昭衍的高利润含大量非现金公允价值收益，而益诺思与美迪西的利润更接近真实经营</b>。做同业比较时若把昭衍的报表利润直接当作安评行业盈利基准，会系统性高估行业景气度。美迪西"有一定规模实验猴资源储备"，其计量方式需在年报附注中进一步核实。
+</div>
+
+<!-- ============ 6 减值 ============ -->
+<h2>6. 减值结构对比 —— 两家公司风险的"指纹"</h2>
+
+<p>下行周期中最能暴露商业模式弱点的，不是收入下滑，而是<b>减值损失计提在哪一类资产上</b>。两家的答案截然不同。</p>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>2026H1 减值计提</th><th>美迪西</th><th>益诺思</th></tr></thead>
+  <tbody>
+    <tr><td>信用减值损失（应收/其他应收坏账）</td><td class="down"><b>¥2,555.70 万</b></td><td>¥50.75 万</td></tr>
+    <tr><td>资产减值损失合计</td><td>−¥44.25 万</td><td class="down"><b>¥1,781.76 万</b></td></tr>
+    <tr><td>— 其中存货跌价 + 合同履约成本减值</td><td>计入上项</td><td class="down">¥1,730.03 万</td></tr>
+    <tr><td>— 其中合同资产 / 固定资产 / 其他</td><td>计入上项</td><td>¥51.73 万</td></tr>
+    <tr><td><b>合计</b></td><td><b>¥2,511.45 万</b></td><td><b>¥1,832.51 万</b></td></tr>
+    <tr><td><b>风险性质</b></td><td class="down">客户端 —— 收了服务收不到钱</td><td class="down">项目端 —— 项目做到一半被取消/变更</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>历史减值趋势印证</h4>
+<ul>
+  <li><b>美迪西：</b>2023 信用减值 ¥4,250 万 → 2024 信用减值 ¥1.208 亿（+184%）→ 2025 信用减值 ¥6,971 万 → 2026H1 ¥2,556 万。<b>应收账款质量是长期问题</b>，与"客户为中小 Biotech、融资寒冬下付不出款"直接对应。</li>
+  <li><b>益诺思：</b>存货跌价准备余额 2023/2024/2025 年末为 ¥—/¥1,798.95 万/¥2,872.60 万（+59.68%）；跌价计提比例 3.78% → 7.05% → <b>8.55%</b>；2025 年合同履约成本余额 ¥3.36 亿（+31.61%）。<b>项目端沉没成本是长期问题</b>，与"低价订单在成本上行期做不完"对应。</li>
+</ul>
+
+<div class="callout info">
+<strong>一个鲜活的微观样本（美迪西公告）：</strong>美迪西全资子公司美迪西普亚因合同纠纷被鸿绪生物起诉（本诉），遂提起反诉要求支付尾款。案由是 2020 年签署的多肽非临床安评合同，<b>项目已于 2023-12-14 取得 NMPA 临床批件、四份研究报告客户已签字确认，但第三期尾款 ¥55.76 万元至今未付</b>。<span class="tag sec">官网事实</span>金额极小，但模式意义很大：<b>它精确解释了美迪西 2026H1 那 ¥2,556 万信用减值损失的来源机制</b>——服务已完成、成果已交付、钱收不回来。这是评估美迪西利润质量时不可忽略的一条。
+</div>
+
+<!-- ============ 7 行业 ============ -->
+<h2>7. 产业链格局与市场规模</h2>
+
+<h3>7.1 所处环节</h3>
+<p>两家公司都处在<b>创新药产业链最前端的外包环节（临床前 CRO）</b>，上游是实验动物（实验猴）、试剂耗材与研发人员，下游是药企与 Biotech 的早期研发预算。传导链条为：<br>
+<span class="small"><b>生物医药一级投融资 + BD 交易（首付款）→ 药企/Biotech 研发预算 → 临床前外包订单 → 收入（滞后 6–9 个月）→ 利润（再滞后 1–2 个季度）</b></span></p>
+
+<h3>7.2 行业景气度：官方与卖方数据一致指向"订单端反转"</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>指标</th><th>数值</th><th>证据等级</th></tr></thead>
+  <tbody>
+    <tr><td>临床前 CRO 板块 2025 年收入增速</td><td class="down">−2.93%</td><td><span class="tag">卖方汇总</span></td></tr>
+    <tr><td>临床前 CRO 板块 2026Q1 收入增速</td><td class="up">+14.55%（板块收入 ¥14.90 亿）</td><td><span class="tag">卖方汇总</span></td></tr>
+    <tr><td>临床前 CRO 板块 2026Q1 净利率</td><td class="up">21.0%（连续两季大幅修复）</td><td><span class="tag">卖方汇总</span></td></tr>
+    <tr><td>昭衍新药 2026H1 新签订单</td><td class="up">¥20.2 亿（+98%）</td><td><span class="tag sec">公司披露</span></td></tr>
+    <tr><td>2026H1 国内创新药对外授权交易额</td><td class="up">突破 1,000 亿美元</td><td><span class="tag sec">工信部国新办发布会</span></td></tr>
+    <tr><td>全球 CRO 行业渗透率</td><td>2024 年 51.9% → 2029E 60.0%</td><td><span class="tag">弗若斯特沙利文</span></td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small muted">注：本表数据来自行业汇总与卖方研究（credible_secondary），用于判断行业方向；公司级硬事实仍以各公司公告为准。板块净利率 21% 与两家公司 2026H1 净利率（6.8% / 8.4%）的差异，主要来自口径与样本构成不同，不宜直接相减。</p>
+
+<h3>7.3 竞争格局</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>公司</th><th>定位</th><th>2026H1 新签订单</th><th>核心壁垒</th></tr></thead>
+  <tbody>
+    <tr><td><b>昭衍新药</b></td><td>国内安评第一（ADC 安评市占率据称超 40%）</td><td>¥20.2 亿（+98%）</td><td>猴资源储备最大 + 公允价值计量放大利润</td></tr>
+    <tr><td><b>益诺思</b></td><td>国内非临床安评前三（路演称细分第二）</td><td class="up">¥14.66 亿（+175.6%）</td><td>国药系央企背景 + 业务最纯净（96.9% 非临床）+ 历史成本计量（保守）</td></tr>
+    <tr><td><b>美迪西</b></td><td>临床前一体化平台</td><td>¥12.33 亿（+104.7%）</td><td>全链条一站式 + 中美欧 GLP 与 AAALAC 资质 + 波士顿基地</td></tr>
+    <tr><td>澎立生物（奥浦迈并购）</td><td>临床前 CRO（药物 + 器械）</td><td>—</td><td>2025 年业绩承诺完成率 98.17%（未达标）</td></tr>
+    <tr><td>药明康德 / 康龙化成</td><td>全产业链 CRDMO</td><td>康龙新签 +30% 以上</td><td>规模与全链条协同</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+<strong>竞争格局的关键判断：</strong>临床前 CRO 的竞争壁垒按"稀缺性"排序大致为：<b>实验猴资源 + GLP 资质 &gt; 历史数据与药监沟通记录 &gt; 一体化平台广度 &gt; 价格</b>。益诺思与昭衍站在壁垒最厚的一层（安评+猴），美迪西站在第三层（平台广度）。这解释了为什么在需求冰点时美迪西毛利率跌到 6.3% 而益诺思仍有 26.0%——<b>安评的定价权确实强于一体化平台</b>。但美迪西用国际化（境外收入 45.7%）部分对冲了这个劣势，这是益诺思目前明显欠缺的（境外仅 4.24%）。
+</div>
+
+<!-- ============ 8 护城河 ============ -->
+<h2>8. 护城河逐项证伪</h2>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>护城河维度</th><th>美迪西</th><th>益诺思</th></tr></thead>
+  <tbody>
+    <tr><td>定价权</td><td class="down">弱—中。2024 年毛利率 6.31% 说明需求冰点时几乎无定价权；2026H2 修复靠订单价格回升与产能利用率，而非自身议价</td><td class="neu">中—强。安评是强制刚需，2023 年 43.6% 毛利率印证；2025 年单价 −25% 是被动跟随行业价格战</td></tr>
+    <tr><td>转换成本</td><td class="neu">中。一体化数据连贯性有价值，但客户可在不同环节切换供应商</td><td class="up">强。安评报告与药监沟通的连续性 + 已入组试验难以中途更换，客户极少换供应商</td></tr>
+    <tr><td>规模效应</td><td class="neu">中。9.2 万平米实验室、2,780 人；固定成本刚性强（2024 年毛利率崩塌的原因）</td><td class="neu">中。南通募投项目 2025-05 转固，2026H1 仅贡献收入 ¥4,489.23 万，<b>仍处产能爬坡期</b></td></tr>
+    <tr><td>资源壁垒</td><td>弱—中。自有实验猴储备规模未明确披露，采购随行就市</td><td class="up">强。前五大供应商采购 ¥2.92 亿（占采购 55.28%）主要为实验猴；恒河猴/食蟹猴使用占比 21.99% / 78.01%</td></tr>
+    <tr><td>技术/资质壁垒</td><td class="up">强。NMPA + FDA + OECD GLP + AAALAC 四证齐备；GLP 实验室 2.9 万平米，服务范围 9 项；2015 年以来助 691 件 IND 获批（含 ADC 36 个、抗体 51 个、GLP-1 21 个）</td><td class="up">强。GLP 资质 + 覆盖双多抗/ADC/CGT/小核酸/mRNA/放射性药物；XDC 申报案例 260 余项、双多抗 220 余项、小核酸 170 余项；累计 NDA/BLA 成功 37 例、IND 710 余例</td></tr>
+    <tr><td>网络/生态</td><td class="neu">中。与英矽智能、晶泰科技、德睿智药等 AI 药企战略合作；与 Protheragen、才金医药、扬子江海路生物共建生态</td><td class="neu">中。国药系体系内产业协同（公立医院体系、国药系创新药企订单优先）</td></tr>
+    <tr><td><b>综合</b></td><td class="strong">中（广度型护城河）</td><td class="strong">中上（稀缺型护城河）</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 9 治理 ============ -->
+<h2>9. 管理层、治理与资本运作</h2>
+
+<div class="grid2">
+  <div class="card">
+    <h4 style="margin-top:0">美迪西 —— 无实际控制人的家族公司</h4>
+    <ul class="small">
+      <li><b>股权结构（2026-06-30）：</b>陈金章 12.18%、陈建煌 6.72%、陈春来 5.92%、王国林 4.76%、陈国兴 3.63%、CHUN-LIN CHEN 3.01%、MEDICILON INCORPORATED 2.64%。<b>董事会认定无控股股东、无实际控制人</b>（减持公告勾选"控股股东、实控人及一致行动人：否"，并称陈建煌为"原实际控制人"）。</li>
+      <li><b>减持（本报告最关注的治理信号）：</b>陈建煌 2026-08-14 公告拟减持不超 1.68%（2,257,396 股），期间 2026-09-07 至 12-04。其上一次减持在 2025 年 5 月，价格区间 <b>24.16–33.54 元</b>——<b>本次是在 98.50 元的价格上再抛</b>。</li>
+      <li>其他减持：林长青 −37.0 万股、广发医疗保健基金 −35.56 万股；高管李志刚 2026-08-17 以 104.29 元减持 5,200 股。</li>
+      <li>治理动作：取消监事会（监事杜柱、金伟春、蒋品）；无质押；无重大诉讼（子公司 ¥55.76 万反诉案除外）。</li>
+    </ul>
+    <div class="callout bear small"><b>判断：</b>无实际控制人 + 家族成员在高位密集减持，是美迪西最实质的公司治理瑕疵。<b>它不否定经营改善，但显著削弱了"内部人与中小股东利益一致"这一前提。</b></div>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-top:0">益诺思 —— 国药系央企控股 + 刚被交易所问询</h4>
+    <ul class="small">
+      <li><b>股权结构（2026-06-30）：</b>中国医药工业研究总院 20.62% + 中国医药投资 9.38% + 中国医药集团 4.41% = <b>国药集团系合计 34.41%</b>；上海翱鹏（员工持股平台）11.35%；上海张江生物医药基地 4.31%；上海科创投 3.31%；中国医药集团 4.41%。</li>
+      <li><b>减持：</b>张江生物医药基地 −352.8 万股、上海生物医药公共技术服务 −133.4 万股、先进制造产业投资基金 −127.1 万股、平安医疗健康基金 −47.1 万股。战略配售 2026-08-27 解禁 176.22 万股（占 0.125%，影响很小）。</li>
+      <li><b>交易所问询（核心风险）：</b>上交所就 2025 年报下发问询函，关注 ① 营收与毛利率双降；② 境外毛利率 41.25% 显著高于境内 24.81% 的合理性；③ Q4 收入全年最高但归母净利 −1,572.78 万；④ 收入季度波动与同行的可比性；⑤ 经营现金流与收入/利润不一致；⑥ 自主研发与受托研发的成本费用划分与工时系统。立信会计师事务所已出具回复意见。</li>
+      <li>治理动作：2026-06-29 临时股东会通过薪酬制度、增补高莉/翁少羽为非独立董事。</li>
+    </ul>
+    <div class="callout small"><b>判断：</b>央企控股带来订单确定性与资源倾斜，代价是管理层级更重（管理费用率 11.1%）。<b>交易所问询本身不是违规定论</b>，但问询覆盖面广、且集中在收入确认与境外毛利率这两个最核心的疑点上，属于需要在后续报表中持续验证的披露质量信号。</div>
+  </div>
+</div>
+
+<h3>9.1 资本运作一览</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>公司</th><th>事项</th><th>状态 / 影响</th></tr></thead>
+  <tbody>
+    <tr><td>美迪西</td><td>南汇园区募投项目"药物发现和药学研究及申报平台的实验室扩建项目"</td><td><span class="tag sec">官网事实</span>已逐步投入装修使用</td></tr>
+    <tr><td>美迪西</td><td>美国波士顿研发中心约 2,000 平米，2026-06 通过 AAALAC 认证</td><td><span class="tag sec">官网事实</span>已投用并创收，境外新签 +45.96%</td></tr>
+    <tr><td>美迪西</td><td>使用暂时闲置募集资金现金管理</td><td><span class="tag sec">官网事实</span>常规操作</td></tr>
+    <tr><td>益诺思</td><td>南通"高品质非临床创新药物综合评价平台扩建项目"（2025-05 转固）</td><td><span class="tag sec">官网事实</span>2026H1 收入 ¥4,489.23 万，<b>仍在爬坡</b></td></tr>
+    <tr><td>益诺思</td><td>拟并购临床 CRO 企业，向综合 CRO 转型</td><td><span class="tag mgmt">业绩会纪要</span><b>尚未见股东会议案或正式公告，需官方确认</b></td></tr>
+    <tr><td>益诺思</td><td>续聘会计师事务所（立信）</td><td><span class="tag sec">官网事实</span>2026-08-24</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 10 估值与预期差 ============ -->
+<h2>10. 估值与预期差（已审计）</h2>
+
+<h3>10.1 预期差：两家方向相反</h3>
+<p>按本项目固定口径（<b>最近单季扣非净利润 × 4</b> 对比<b>事件前</b> FY2026 归母共识），两家公司呈现出<b>完全相反的预期差方向</b>：</p>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>预期差计算</th><th>美迪西</th><th>益诺思</th></tr></thead>
+  <tbody>
+    <tr><td>2026Q2 单季扣非净利润</td><td>¥3,215.06 万</td><td>¥2,407.57 万</td></tr>
+    <tr><td>年化（×4）</td><td>¥1.2860 亿</td><td>¥0.9630 亿</td></tr>
+    <tr><td>事件前 FY2026 归母共识（代理值）</td><td>¥0.50 亿<br><span class="muted small">浙商证券 2026-06-16</span></td><td>¥1.24 亿<br><span class="muted small">华源证券 2026-07-07</span></td></tr>
+    <tr><td><b>缺口</b></td><td class="up"><b>+¥7,860.22 万</b></td><td class="down"><b>−¥2,769.74 万</b></td></tr>
+    <tr><td><b>状态</b></td><td class="up strong">above（+157.2%）</td><td class="down strong">below（−22.34%）</td></tr>
+    <tr><td>事件时点</td><td>2026-08-24 18:21（半年报）</td><td>2026-08-24 19:26（半年报）</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout bear">
+<strong>必须诚实说明的两个偏差（否则会误读这张表）：</strong>
+<ul style="margin-bottom:0">
+  <li><b>口径限制一：</b>合同固定要求"单季扣非年化"对比"全年归母共识"，两者跨指标、跨期间，本项目固定 <code>formal_surprise_status = N/A</code>，<b>不是正式的 beat/miss</b>。</li>
+  <li><b>口径限制二：</b>两家使用的"事件前共识"是<b>单一卖方报告作为代理值</b>（因缺少可核验的事件前多机构一致预期快照）。美迪西使用的浙商证券 2026-06-16 预测（¥0.50 亿）明显低于其后 westock 口径的 FY2026 共识（¥1.1798 亿），因此 <b>+157.2% 的缺口包含"共识本身过时/偏保守"的成分，不能理解为经营超预期 1.5 倍</b>。</li>
+</ul>
+</div>
+
+<p><strong>可比较的相对结论：</strong>若统一使用事件后最新 westock 口径共识（美迪西 FY2026 归母 ¥1.1798 亿、益诺思 ¥1.3231 亿），则两家分别为 <span class="up">+9.00%</span> 与 <span class="down">−27.21%</span>。<b>无论用哪一套共识，结论方向一致：美迪西的单季盈利能力已跑在市场预期之前，益诺思的单季盈利能力仍落后于市场预期。</b>这与"益诺思订单更猛但利润兑现更慢"的业务逻辑完全吻合。</p>
+
+<h3>10.2 估值对比</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>估值指标</th><th>美迪西</th><th>益诺思</th></tr></thead>
+  <tbody>
+    <tr><td>总市值（审计值）</td><td>¥132.3369 亿</td><td>¥120.0582 亿</td></tr>
+    <tr><td>PE（TTM，厂商）</td><td>不适用（TTM 归母 −¥1.0333 亿）</td><td>503.46×（TTM 归母 ¥0.2385 亿）</td></tr>
+    <tr><td><b>PE（用户口径，单季扣非×4）</b></td><td><b class="up">102.90×</b></td><td><b class="down">124.67×</b></td></tr>
+    <tr><td>PE（事件前共识）</td><td>264.67×（¥0.50 亿）</td><td>96.82×（¥1.24 亿）</td></tr>
+    <tr><td>PE（事件后共识 FY2026）</td><td>112.17×（¥1.1798 亿）</td><td>90.75×（¥1.3231 亿）</td></tr>
+    <tr><td>PE（共识 FY2027）</td><td>48.27×（¥2.7416 亿）</td><td><span class="up">38.69×</span>（¥3.1031 亿）</td></tr>
+    <tr><td>PE（共识 FY2028）</td><td>31.68×（¥4.1773 亿）</td><td><span class="up">23.71×</span>（¥5.0644 亿）</td></tr>
+    <tr><td>PB</td><td>6.61×</td><td>5.07×</td></tr>
+    <tr><td>机构目标价</td><td>—</td><td>¥96.80</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>估值结论：</strong>以"单季扣非年化"这一最即期口径看，<b>美迪西 102.90× 比益诺思 124.67× 便宜约 21%</b>；但拉长到共识的 FY2027/FY2028，<b>益诺思反而更便宜</b>（38.69× / 23.71× vs 美迪西 48.27× / 31.68×）。含义很清楚：<b>市场已把益诺思的订单储备（¥22.47 亿在手）提前折算成了远期利润，而对美迪西的远期增速要求更高。</b>换言之，益诺思的估值贵在"当期"，美迪西的估值贵在"远期"。若益诺思的订单按期结转、净利率如期提升到 15%，其远期估值消化速度会快于美迪西；若兑现不及预期，其当期 124.67× 的下杀空间也更大。</p>
+
+<!-- ============ 11 技术面 ============ -->
+<h2>11. 技术面与交易弹性（截至 2026-09-15）</h2>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>指标</th><th>美迪西（¥98.50）</th><th>益诺思（¥85.16）</th></tr></thead>
+  <tbody>
+    <tr><td>MACD（DIF / DEA / 柱）</td><td>0.774 / 1.484 / <span class="down">−1.419</span></td><td>−0.149 / 0.276 / <span class="down">−0.85</span></td></tr>
+    <tr><td>KDJ（K / D / J）</td><td>62.11 / 45.14 / <span class="up">96.06</span></td><td>68.94 / 53.87 / <span class="up">99.07</span></td></tr>
+    <tr><td>RSI（2 / 6 / 12 / 24）</td><td><span class="up">77.72</span> / 58.98 / 54.38 / 54.89</td><td>48.55 / 52.41 / 50.29 / 52.13</td></tr>
+    <tr><td>BOLL（上 / 中 / 下）</td><td>106.59 / 97.19 / 87.80（价在中轨上方）</td><td>99.30 / 86.83 / 74.37（价在中轨附近）</td></tr>
+    <tr><td>换手率 / 量比</td><td>4.79% / 0.88</td><td>1.97% / 0.56</td></tr>
+    <tr><td>近 20 日 / 60 日</td><td>−9.22% / <span class="up">+52.93%</span></td><td>−13.37% / <span class="up">+39.17%</span></td></tr>
+  </tbody>
+</table>
+</div>
+<p><b>解读：</b>两家均已走出 60 日大幅上涨（美迪西 +52.93%、益诺思 +39.17%），近 20 日同步回调（−9.22% / −13.37%）。<b>共同特征：MACD 柱状为负（中期动能转弱）+ KDJ J 值逼近 96–99（短期超买）</b>，即"高位滞涨、动能背离"。美迪西 RSI(2) 达 77.72，短线过热程度更高；益诺思换手率与量比仅为美迪西的一半，<b>交易拥挤度反而更低</b>。两者都处于"业绩已兑现、股价已抢跑、需要新催化（Q3 报表）才能继续向上"的位置。</p>
+
+<!-- ============ 12 情景与空头 ============ -->
+<h2>12. 情景分析、最强空头论点与失效条件</h2>
+
+<h3>12.1 情景框架（2026H2 – 2027）</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>情景</th><th>触发条件</th><th>美迪西路径</th><th>益诺思路径</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="neu"><b>基准（概率最高）</b></td>
+      <td>创新药投融资温和回暖持续；实验猴价格温和上行；订单按期结转</td>
+      <td>2026H2 收入延续 +30% 上下，毛利率守住 32–36%，全年归母接近共识 ¥1.18 亿</td>
+      <td>Q3 起高价订单结转，净利率向管理层指引的 15% 靠拢，全年归母接近共识 ¥1.32 亿</td>
+    </tr>
+    <tr>
+      <td class="up"><b>乐观</b></td>
+      <td>BD 交易持续放量（2026H1 已破 1,000 亿美元）+ 海外产能外溢；猴价上行带来安评量价齐升</td>
+      <td>境外收入占比突破 50%，中美双报收入继续翻倍；整合 AI/NAMs 平台提升客单价</td>
+      <td>在手订单 ¥22.47 亿快速转收入，全年新签落在管理层指引 ¥25–30 亿上沿；并购临床 CRO 落地，打开第二增长曲线</td>
+    </tr>
+    <tr>
+      <td class="down"><b>悲观</b></td>
+      <td>① 猴价上行快于报价上调 → 成本剪刀差反向；② 2024–2025 低价订单继续结转压制毛利率；③ 中小 Biotech 融资再度收紧 → 回款与减值恶化；④ 股东减持持续压制</td>
+      <td>毛利率回落，信用减值继续计提（参照 2024 年 ¥1.208 亿量级），重返亏损；无实控人结构下减持压力放大波动</td>
+      <td>净利润兑现持续低于订单表现，124.67× 当期 PE 面对 below 预期的业绩，估值与业绩双杀；问询函揭示的收入确认问题若在 2026 年报重现，将触发信任折价</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>12.2 最强空头论点</h3>
+<div class="grid2">
+  <div class="card">
+    <h4 style="margin-top:0">对美迪西：利润拐点是真的，但"谁在卖"比"赚了多少"更重要</h4>
+    <ol class="small">
+      <li><b>内部人信号压倒一切：</b>陈建煌在 2025 年 5 月以 24.16–33.54 元减持 2.23% 后，2026 年 8 月又在 98.50 元（约 3 倍价格）公告再减持 1.68%；高管李志刚 2026-08-17 以 104.29 元减持。<b>最了解公司的人选择在股价高位连续兑现。</b></li>
+      <li><b>基数幻觉：</b>2026H1 收入 +40.91% 的高增速建立在 2025H1 收入同比 −40.23% 的塌陷基数上，<b>两年复合后的实际收入仍低于 2023 年峰值</b>（2026H1 7.61 亿 vs 2023H1 约 8.72 亿）。</li>
+      <li><b>利润质量：</b>2026H1 归母 5,160 万中，扣除股份支付影响后为 6,614 万，即股份支付费用约 1,454 万；同时计提减值 2,511 万；财务费用率因汇兑损失上升 0.79pct。<b>报表利润是多重调整后的净结果</b>。</li>
+      <li><b>回款：</b>2024 信用减值 ¥1.208 亿 + 2025 ¥6,971 万 + 2026H1 ¥2,556 万；子公司在项目已获 IND 批件、报告已签字确认的前提下，仍要打官司追 ¥55.76 万尾款。<b>这是一个收不回钱的生意模式问题，不是偶发事件。</b></li>
+      <li><b>杠杆与汇率：</b>有息负债 ¥2.227 亿、净现金仅约 0.66 亿；境外收入占 45.7%，汇兑与地缘/关税敞口大。</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h4 style="margin-top:0">对益诺思：市场已经为"两三年后的利润"付了钱</h4>
+    <ol class="small">
+      <li><b>当期 PE 最高：</b>TTM PE 503×、用户口径 124.67×、PB 5.07×，而单季扣非年化相对事件前共识 <b>below −22.34%</b>——<b>估值与已实现盈利的方向是背离的</b>。</li>
+      <li><b>订单到利润的时滞被低估：</b>订单 +175.6%、收入只 +23.9%、扣非年化低于共识。2026H1 结转的是 2024H2–2025H1 的低价合同，而 2026H2 结转中低价订单占比仍达 70.75%（2025Q4 数据）。<b>"订单爆发"要真正变成"利润爆发"，最快也要到 2026Q4–2027H1。</b></li>
+      <li><b>成本端反向风险：</b>2025 年毛利率被压是因为"报价降幅 &gt; 成本降幅"；2026 年实验猴价格转为上行，若报价上调滞后，剪刀差会反向再压一次毛利率。管理层"Q3 净利率达 15%"的指引尚未被任何一期报表验证。</li>
+      <li><b>项目端减值系统性上升：</b>存货跌价计提比例 3.78% → 7.05% → 8.55%，2026H1 再提 ¥1,730 万。<b>低价订单在成本上行期"做不完、越做越亏"的风险，正在被逐季确认。</b></li>
+      <li><b>披露质量：</b>上交所问询函一次覆盖收入确认（是否有客户确认函）、境外毛利率异常（41.25% vs 24.81%）、Q4 收入最高却净利为负、经营现金流与利润不一致、研发成本费用划分与工时系统——<b>问询问题的密集度本身就是信号</b>。</li>
+      <li><b>国际化缺口：</b>境外收入仅 4.24%（美迪西 45.70%）。在国内价格战环境下，缺少海外高毛利订单缓冲。</li>
+    </ol>
+  </div>
+</div>
+
+<h3>12.3 论文失效条件（论文 = "临床前 CRO 周期反转成立"）</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>失效条件</th><th>观察窗口</th><th>对两家的含义</th></tr></thead>
+  <tbody>
+    <tr><td><b>订单增速连续两个季度回落</b>（新签同比转负或环比连续下滑）</td><td>2026Q3 / Q4 报表</td><td>对益诺思杀伤最大（在手订单是其主要估值支撑）；美迪西同样承压</td></tr>
+    <tr><td><b>毛利率未能守住 30%</b>（毛利率环比连续两季下滑）</td><td>2026Q3 起</td><td>两家共同失效，指向猴价上行吞噬利润</td></tr>
+    <tr><td><b>减值损失重回 2024 年量级</b>（美迪西信用减值 &gt; ¥1 亿；益诺思存货跌价比例 &gt; 10%）</td><td>2026 年报</td><td>盈利拐点证伪，重返亏损</td></tr>
+    <tr><td><b>益诺思 Q3 净利率未达管理层指引的 15%</b></td><td>2026Q3 报表</td><td>直接击穿"订单高增→利润高增"的核心叙事</td></tr>
+    <tr><td><b>美迪西大股东减持规模超出已公告的 1.68%</b></td><td>2026-09-07 至 12-04</td><td>强化治理折价；需重新评估管理层与股东利益一致性</td></tr>
+    <tr><td><b>益诺思问询函所涉收入确认问题在 2026 年报重现</b>（如无客户确认函的收入确认）</td><td>2026 年报 + 后续问询</td><td>触发信任折价，估值中枢下移</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>13. 未来两个季度扣非弹性测算（2026Q3 – Q4）</h2>
+
+<p>本节回答一个具体问题：<b>未来两个季度（2026Q3+Q4），美迪西和益诺思谁的扣非业绩弹性更大？</b>测算全部基于已审计的 2026 半年报与单季数据，参数完整列示，可逐项复算。</p>
+
+<div class="callout info">
+<strong>先讲清一个容易出错的地方：这里的"弹性"不能用同比增速衡量。</b>两家公司 2025H2 的扣非都是<b>负值</b>（美迪西 <span class="down">−¥1.5443 亿</span>、益诺思 <span class="down">−¥0.2134 亿</span>），对负基数计算同比增速在数学上无意义、符号还会反转。因此本节的弹性统一用两个口径：
+<ol style="margin:8px 0 0">
+  <li><b>Δ扣非绝对增量</b>（2026H2 扣非 − 2025H2 扣非）及其<b>占总市值比重</b>；</li>
+  <li><b>边际扣非率</b>（Δ扣非 ÷ Δ营业收入），衡量"每多 1 元收入能沉淀多少扣非"。</li>
+</ol>
+</div>
+
+<h3>13.1 基线：两家 2025H2 的起点相差 7.2 倍</h3>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>指标</th><th>美迪西 2025H2</th><th>美迪西 2026H1</th><th>益诺思 2025H2</th><th>益诺思 2026H1</th></tr></thead>
+  <tbody>
+    <tr><td>营业收入</td><td>¥6.23 亿</td><td>¥7.61 亿</td><td>¥4.36 亿</td><td>¥4.65 亿</td></tr>
+    <tr><td>毛利率</td><td class="down">13.99%</td><td>31.60%</td><td class="down">24.18%</td><td>31.57%</td></tr>
+    <tr><td>期间费用率（销售+管理+研发+财务）</td><td class="down">27.95%</td><td>22.31%</td><td class="down">22.12%</td><td>19.05%</td></tr>
+    <tr><td>净其他项（减值/税金等合成"拖累项"）</td><td class="down">−¥6,750 万</td><td>−¥2,769 万</td><td class="down">−¥3,032 万</td><td>−¥2,531 万</td></tr>
+    <tr><td><b>扣非净利润</b></td><td class="down strong">−¥1.5443 亿</td><td class="up strong">+¥0.4303 亿</td><td class="down strong">−¥0.2134 亿</td><td class="up strong">+¥0.3290 亿</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><b>这张表决定了本篇的全部结论。</b>美迪西 2025H2 的扣非亏损（−¥1.54 亿）是益诺思（−¥0.21 亿）的 <b>7.2 倍</b>——弹性测算的分母就在这里。同时要注意美迪西的<b>费用率从 2025H2 的 27.95% 降到 2026H1 的 22.31%</b>（降幅 5.64 pct），而益诺思仅从 22.12% 降到 19.05%（降幅 3.07 pct）：美迪西的成本结构弹性本来就更大。</p>
+
+<h3>13.2 季度颗粒度：两家的修复斜率</h3>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>单季</th><th>美迪西 收入</th><th>美迪西 毛利率</th><th>美迪西 扣非</th><th>益诺思 收入</th><th>益诺思 毛利率</th><th>益诺思 扣非</th></tr></thead>
+  <tbody>
+    <tr><td>2025Q3</td><td>¥3.03 亿</td><td>18.75%</td><td class="down">−¥2,814 万</td><td>¥1.95 亿</td><td>28.96%</td><td class="down">−¥220 万</td></tr>
+    <tr><td>2025Q4</td><td>¥3.20 亿</td><td class="down">9.49%</td><td class="down">−¥12,628 万</td><td>¥2.41 亿</td><td class="down">20.29%</td><td class="down">−¥1,914 万</td></tr>
+    <tr><td>2026Q1</td><td>¥3.65 亿</td><td>26.06%</td><td class="up">+¥1,088 万</td><td>¥2.10 亿</td><td>30.76%</td><td class="up">+¥882 万</td></tr>
+    <tr><td>2026Q2</td><td>¥3.97 亿</td><td class="up strong">36.69%</td><td class="up">+¥3,215 万</td><td>¥2.55 亿</td><td>32.23%</td><td class="up">+¥2,408 万</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+<strong>2025Q4 是两家共同的"利润坑"，但深度差 6.6 倍。</strong>美迪西 2025Q4 单季扣非 −¥12,628 万，益诺思 −¥1,914 万。而 2026Q2 两家单季扣非都已转正（美迪西 +¥3,215 万、益诺思 +¥2,408 万）。<b>从"深坑"回到"正值"的过程中，起点越低的那一方，Δ 的绝对额自然越大</b>——这不是文字游戏，而是真实的基期差异。
+</div>
+
+<p>另一条关键线索：<b>美迪西单季毛利率在四个季度里从 9.49%（2025Q4 谷底）一路升到 36.69%（2026Q2），提升了 27.20 pct</b>；益诺思同期从 20.29% 升到 32.23%，仅提升 11.94 pct。<b>美迪西的修复斜率更陡，意味着 2026H2 有更大的毛利释放空间可供假设。</b></p>
+
+<h3>13.3 情景假设（完整参数表，可复算）</h3>
+
+<p>为便于横向对比，<b>两家使用同一组收入增速假设</b>（谨慎 +20% / 基准 +30% / 乐观 +40%，均为 2026H2 对 2025H2 的同比），差异只体现在各自的毛利率、费用率与拖累项上。毛利率锚定各自 2026Q2 实际值并向两个方向展开，费用率以 2026H1 实际值为中枢做小幅经营杠杆。</p>
+
+<div class="grid2">
+<div>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>美迪西 参数</th><th>谨慎</th><th>基准</th><th>乐观</th></tr></thead>
+  <tbody>
+    <tr><td>2026H2 收入同比</td><td>+20.00%</td><td>+30.00%</td><td>+40.00%</td></tr>
+    <tr><td>2026H2 收入（亿元）</td><td>7.47</td><td><b>8.09</b></td><td>8.72</td></tr>
+    <tr><td>2026H2 毛利率</td><td>31.50%</td><td><b>34.00%</b></td><td>36.00%</td></tr>
+    <tr><td>期间费用率</td><td>22.50%</td><td><b>22.00%</b></td><td>21.50%</td></tr>
+    <tr><td>净其他项（万元）</td><td>−2,600</td><td><b>−2,400</b></td><td>−2,200</td></tr>
+  </tbody>
+</table>
+</div>
+</div>
+<div>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>益诺思 参数</th><th>谨慎</th><th>基准</th><th>乐观</th></tr></thead>
+  <tbody>
+    <tr><td>2026H2 收入同比</td><td>+20.00%</td><td>+30.00%</td><td>+40.00%</td></tr>
+    <tr><td>2026H2 收入（亿元）</td><td>5.23</td><td><b>5.67</b></td><td>6.11</td></tr>
+    <tr><td>2026H2 毛利率</td><td>30.50%</td><td><b>32.00%</b></td><td>33.50%</td></tr>
+    <tr><td>期间费用率</td><td>19.50%</td><td><b>19.00%</b></td><td>18.50%</td></tr>
+    <tr><td>净其他项（万元）</td><td>−2,600</td><td><b>−2,400</b></td><td>−2,200</td></tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+
+<ul class="small">
+  <li><b>收入增速的来源：</b>2026Q2 单季同比美迪西 +45.19%、益诺思 +53.51%，因此 +20%~+40% 是一个<b>偏保守的区间</b>——它隐含了下半年增速从 Q2 水平回落。若两家维持 Q2 同比，实际收入会高于本表的上限。</li>
+  <li><b>毛利率上限的约束：</b>美迪西乐观情景 36.00% <b>不超过</b>其 2026Q2 实际的 36.69%；益诺思乐观情景 33.50% 略高于其 2026Q2 实际的 32.23%。两家都未被假设"回到 2023 年的高毛利时代"。</li>
+  <li><b>净其他项：</b>取 −¥2,200 万 ~ −¥2,600 万，均<b>优于</b>各自 2026H1 实际（美迪西 −¥2,769 万、益诺思 −¥2,531 万），即假设减值与税金拖累继续小幅收敛。</li>
+  <li><b>计算式：</b><code>2026H2 扣非 = 2026H2 收入 × 毛利率 − 2026H2 收入 × 期间费用率 + 净其他项</code>；净其他项由 2026H1 实际反解得到（<code>扣非 − (毛利 − 期间费用)</code>）。</li>
+</ul>
+
+<h3>13.4 结果：2026H2 扣非弹性，美迪西是益诺思的 2.85–3.70 倍</h3>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>情景</th><th>美迪西 2026H2 扣非</th><th>美迪西 Δ扣非</th><th>益诺思 2026H2 扣非</th><th>益诺思 Δ扣非</th><th>弹性倍数</th></tr></thead>
+  <tbody>
+    <tr><td>谨慎（收入 +20%）</td><td class="up">+¥0.41 亿</td><td class="up">+¥1.96 亿</td><td class="up">+¥0.32 亿</td><td class="up">+¥0.53 亿</td><td class="up strong">3.70×</td></tr>
+    <tr style="background:#f7f9fc"><td><b>基准（收入 +30%）</b></td><td class="up">+¥0.73 亿</td><td class="up"><b>+¥2.28 亿</b></td><td class="up">+¥0.50 亿</td><td class="up"><b>+¥0.71 亿</b></td><td class="up strong">3.20×</td></tr>
+    <tr><td>乐观（收入 +40%）</td><td class="up">+¥1.04 亿</td><td class="up">+¥2.59 亿</td><td class="up">+¥0.70 亿</td><td class="up">+¥0.91 亿</td><td class="up strong">2.85×</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>Δ扣非 绝对额对比（条形长度 = Δ扣非金额）</h4>
+<div class="grid2">
+  <div><h4 style="margin-top:0" class="mdx">美迪西 688202</h4><div class="bars">
+<div class="brow"><div class="muted small">谨慎情景</div><div class="btrack"><div class="bfill" style="width:75.60%;background:#1a5fb4">1.96 亿</div></div><div class="small"><b>1.96 亿</b><br><span class="muted">Δ扣非/市值 1.48%</span></div></div>
+<div class="brow"><div class="muted small">基准情景</div><div class="btrack"><div class="bfill" style="width:87.92%;background:#1a5fb4">2.28 亿</div></div><div class="small"><b>2.28 亿</b><br><span class="muted">Δ扣非/市值 1.72%</span></div></div>
+<div class="brow"><div class="muted small">乐观情景</div><div class="btrack"><div class="bfill" style="width:100.00%;background:#1a5fb4">2.59 亿</div></div><div class="small"><b>2.59 亿</b><br><span class="muted">Δ扣非/市值 1.96%</span></div></div>
+</div></div>
+  <div><h4 style="margin-top:0" class="yns">益诺思 688710</h4><div class="bars">
+<div class="brow"><div class="muted small">谨慎情景</div><div class="btrack"><div class="bfill" style="width:58.19%;background:#0f7b4f">0.53 亿</div></div><div class="small"><b>0.53 亿</b><br><span class="muted">Δ扣非/市值 0.44%</span></div></div>
+<div class="brow"><div class="muted small">基准情景</div><div class="btrack"><div class="bfill" style="width:78.13%;background:#0f7b4f">0.71 亿</div></div><div class="small"><b>0.71 亿</b><br><span class="muted">Δ扣非/市值 0.59%</span></div></div>
+<div class="brow"><div class="muted small">乐观情景</div><div class="btrack"><div class="bfill" style="width:100.00%;background:#0f7b4f">0.91 亿</div></div><div class="small"><b>0.91 亿</b><br><span class="muted">Δ扣非/市值 0.76%</span></div></div>
+</div></div>
+</div>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>弹性质量指标</th><th>美迪西 谨慎</th><th>美迪西 基准</th><th>美迪西 乐观</th><th>益诺思 谨慎</th><th>益诺思 基准</th><th>益诺思 乐观</th></tr></thead>
+  <tbody>
+    <tr><td>Δ扣非 / 总市值</td><td class="up">1.48%</td><td class="up"><b>1.72%</b></td><td class="up">1.96%</td><td class="up">0.44%</td><td class="up"><b>0.59%</b></td><td class="up">0.76%</td></tr>
+    <tr><td>边际扣非率（Δ扣非 ÷ Δ收入）</td><td class="up">157.1%</td><td class="up"><b>121.8%</b></td><td class="up">103.9%</td><td class="up">60.7%</td><td class="up"><b>54.3%</b></td><td class="up">52.1%</td></tr>
+    <tr><td>隐含 2026 全年扣非（H1 实际 + H2 测算）</td><td>¥0.84 亿</td><td><b>¥1.16 亿</b></td><td>¥1.47 亿</td><td>¥0.64 亿</td><td><b>¥0.83 亿</b></td><td>¥1.02 亿</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><b>三个情景下美迪西的绝对增量都显著更大，而且它的质量指标同样更优。</b>边际扣非率是关键对比：美迪西 103.9%–157.1%（意味着每多做 1 元收入，扣非增量超过 1 元，因为同步释放了前期压在减值与固定成本里的亏损），益诺思仅 52.1%–60.7%（约 0.5 元）。换算成占市值比重，美迪西基准情景可释放 <b>1.72%</b> 的市值，益诺思仅 <b>0.59%</b>。</p>
+
+<h3>13.5 结论对假设是否稳健：5 × 5 敏感性网格</h3>
+
+<p>上面的三情景依赖具体参数。为避免"结论由参数挑出来的"，下面把 <b>收入同比（+10%~+50%）</b> 与 <b>毛利率</b> 交叉成 25 个格子，每格给出该组合下的 <b>2026H2 扣非净利润（亿元）</b>。颜色越深（偏红）表示扣非越高。</p>
+
+<h4 class="mdx">美迪西 688202 —— 2026H2 扣非（亿元）</h4>
+<div class="tbl-wrap"><table><thead><tr><th>美迪西｜行 = 毛利率<br><span class="muted small">费用率固定 22.0%</span></th><th>收入同比 +10%</th><th>收入同比 +20%</th><th>收入同比 +30%</th><th>收入同比 +40%</th><th>收入同比 +50%</th></tr></thead><tbody><tr><td><b>30.0%</b></td><td style="background:rgb(233,246,237);text-align:center">0.31</td><td style="background:rgb(233,243,234);text-align:center">0.36</td><td style="background:rgb(234,241,232);text-align:center">0.41</td><td style="background:rgb(235,239,230);text-align:center">0.46</td><td style="background:rgb(235,236,228);text-align:center">0.51</td></tr><tr><td><b>32.0%</b></td><td style="background:rgb(234,239,230);text-align:center">0.44</td><td style="background:rgb(235,236,228);text-align:center">0.51</td><td style="background:rgb(236,234,225);text-align:center">0.57</td><td style="background:rgb(237,231,222);text-align:center">0.63</td><td style="background:rgb(238,228,219);text-align:center">0.69</td></tr><tr><td><b>34.0%</b></td><td style="background:rgb(236,233,224);text-align:center">0.58</td><td style="background:rgb(237,230,221);text-align:center">0.66</td><td style="background:rgb(238,226,218);text-align:center" style="font-weight:700">0.73</td><td style="background:rgb(239,223,214);text-align:center">0.81</td><td style="background:rgb(240,219,211);text-align:center">0.88</td></tr><tr><td><b>36.0%</b></td><td style="background:rgb(238,227,218);text-align:center">0.72</td><td style="background:rgb(239,223,214);text-align:center">0.81</td><td style="background:rgb(241,219,211);text-align:center">0.89</td><td style="background:rgb(242,215,207);text-align:center">0.98</td><td style="background:rgb(243,211,203);text-align:center">1.07</td></tr><tr><td><b>38.0%</b></td><td style="background:rgb(240,221,212);text-align:center">0.86</td><td style="background:rgb(241,216,208);text-align:center">0.96</td><td style="background:rgb(243,212,203);text-align:center">1.06</td><td style="background:rgb(244,207,199);text-align:center">1.15</td><td style="background:rgb(246,203,195);text-align:center">1.25</td></tr></tbody></table></div>
+
+<h4 class="yns">益诺思 688710 —— 2026H2 扣非（亿元）</h4>
+<div class="tbl-wrap"><table><thead><tr><th>益诺思｜行 = 毛利率<br><span class="muted small">费用率固定 19.0%</span></th><th>收入同比 +10%</th><th>收入同比 +20%</th><th>收入同比 +30%</th><th>收入同比 +40%</th><th>收入同比 +50%</th></tr></thead><tbody><tr><td><b>28.0%</b></td><td style="background:rgb(233,246,237);text-align:center">0.19</td><td style="background:rgb(233,243,234);text-align:center">0.23</td><td style="background:rgb(234,241,232);text-align:center">0.27</td><td style="background:rgb(235,238,229);text-align:center">0.31</td><td style="background:rgb(236,236,227);text-align:center">0.35</td></tr><tr><td><b>30.0%</b></td><td style="background:rgb(234,239,231);text-align:center">0.29</td><td style="background:rgb(235,236,228);text-align:center">0.34</td><td style="background:rgb(236,233,225);text-align:center">0.38</td><td style="background:rgb(237,230,222);text-align:center">0.43</td><td style="background:rgb(238,227,219);text-align:center">0.48</td></tr><tr><td><b>32.0%</b></td><td style="background:rgb(236,233,225);text-align:center">0.38</td><td style="background:rgb(237,230,221);text-align:center">0.44</td><td style="background:rgb(238,226,218);text-align:center" style="font-weight:700">0.50</td><td style="background:rgb(239,223,214);text-align:center">0.55</td><td style="background:rgb(241,219,211);text-align:center">0.61</td></tr><tr><td><b>34.0%</b></td><td style="background:rgb(238,227,219);text-align:center">0.48</td><td style="background:rgb(239,223,215);text-align:center">0.54</td><td style="background:rgb(241,219,211);text-align:center">0.61</td><td style="background:rgb(242,215,207);text-align:center">0.68</td><td style="background:rgb(243,211,203);text-align:center">0.74</td></tr><tr><td><b>36.0%</b></td><td style="background:rgb(240,221,213);text-align:center">0.58</td><td style="background:rgb(241,217,208);text-align:center">0.65</td><td style="background:rgb(243,212,204);text-align:center">0.72</td><td style="background:rgb(244,207,199);text-align:center">0.80</td><td style="background:rgb(246,203,195);text-align:center">0.87</td></tr></tbody></table></div>
+
+<div class="callout ok">
+<strong>稳健性结论：益诺思的"最好情形"仍然够不到美迪西的"最差情形"。</strong>把两家的网格统一换成 <b>Δ扣非</b>（即 2026H2 扣非 − 2025H2 扣非）来看：
+<ul style="margin:8px 0 0">
+<li>美迪西 25 格中<b>最差</b>的一格（收入 +10%、毛利率 30%）对应的 Δ扣非 也有 <b class="up">+¥1.85 亿</b>；</li>
+<li>益诺思 25 格中<b>最好</b>的一格（收入 +50%、毛利率 36%）对应的 Δ扣非 仅 <b class="up">+¥1.09 亿</b>——<b>仍低于美迪西的最低格</b>。</li>
+</ul>
+<p style="margin:10px 0 0">也就是说，"未来两个季度美迪西扣非弹性更大"这一结论<b>不依赖对参数的微调</b>：在各自毛利率的合理区间内穷举 50 种组合，两家的 Δ扣非 分布<b>完全不重叠</b>。</p>
+</div>
+
+<p class="small muted">注：两家毛利率区间的选取不同（美迪西 30%–38%、益诺思 28%–36%），均以各自 2026Q2 实际值为中枢、上下各展开约 4 pct。美迪西网格费用率固定 22.00%、净其他项固定 −¥2,400 万；益诺思网格费用率固定 19.00%、净其他项固定 −¥2,400 万。加粗格为 13.3 中的基准参数组合。</p>
+
+<h3>13.6 换个角度看：谁需要"迈过陡坡"才能碰到共识</h3>
+
+<p>弹性大不大，还要看<b>市场已经把标准定在哪里</b>。用事件后共识（本项目可核验口径）反推：要达到 FY2026 全年归母共识，两家各自需要在 2026H2 做到多少？</p>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>共识达标测算（基准收入情景）</th><th>美迪西</th><th>益诺思</th></tr></thead>
+  <tbody>
+    <tr><td>2026H1 归母已实现</td><td class="up">¥0.5160 亿</td><td>¥0.3917 亿</td></tr>
+    <tr><td>事件前 FY2026 归母共识</td><td>¥0.50 亿<br><span class="muted small">浙商证券 2026-06-16</span></td><td>¥1.24 亿<br><span class="muted small">华源证券 2026-07-07</span></td></tr>
+    <tr><td><b>H1 已达成事件前共识的比例</b></td><td class="up strong">103.2%（已超越）</td><td class="down strong">31.6%</td></tr>
+    <tr><td>事件后 FY2026 归母共识</td><td>¥1.1798 亿</td><td>¥1.3231 亿</td></tr>
+    <tr><td>触及事件后共识所需的 2026H2 归母</td><td class="up">¥0.6638 亿</td><td class="down">¥0.9314 亿</td></tr>
+    <tr><td>对应所需的 2026H2 扣非</td><td class="up">¥0.5780 亿</td><td class="down">¥0.8686 亿</td></tr>
+    <tr><td><b>对应所需的 2026H2 毛利率</b></td><td class="up strong">32.11%</td><td class="down strong">38.55%</td></tr>
+    <tr><td>2026Q2 实际毛利率（可达性基准）</td><td>36.69%</td><td>32.23%</td></tr>
+    <tr><td><b>缺口</b></td><td class="up strong">−4.58 pct（比 Q2 更容易）</td><td class="down strong">+6.32 pct（必须超过 Q2）</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><b>这是本节最重要的一组对比。</b>美迪西的 2026H2 毛利率只要做到 <b>32.11%</b> 就能触及事件后共识，<b>比它 2026Q2 已经实现的 36.69% 低 4.58 pct</b>——门槛在它自己的能力范围内且有富余。而益诺思要达到 <b>38.55%</b>，<b>比其 2026Q2 实际的 32.23% 还要高 6.32 pct</b>。</p>
+
+<div class="callout bear">
+<strong>益诺思所需 38.55% 的单季毛利率意味着什么：</strong>翻查其历史单季数据，这一水平<b>高于 2024Q1（40.61%）之后的任何一个单季</b>（2024Q2 33.49%、2024Q3 34.77%、2024Q4 24.55%、2025Q1 28.25%、2025Q2 27.73%、2025Q3 28.96%、2025Q4 20.29%、2026Q1 30.76%、2026Q2 32.23%）。也就是说，<b>要碰到市场给它的全年共识，益诺思必须把毛利率送回 2024 年价格战尚未完全展开之前的水平。</b>这不是弹性问题，而是价格环境问题——而报价与实验猴成本的剪刀差方向，目前并不站在它这一边。
+</div>
+
+<p class="small">补充口径说明：事件前共识下，美迪西 H1 归母 0.5160 亿已单独超过事件前全年共识 0.5000 亿，H2 只需 −¥0.0160 亿归母即可达标（即"无门槛"）；益诺思事件前共识下则需 H2 毛利率 37.09%。本节正文采用事件后共识（更严格、时点更新）作为主口径。</p>
+
+
+<h3>13.7 本节结论与三个必须说明的风险</h3>
+
+<div class="callout ok">
+<strong>结论：未来两个季度（2026Q3+Q4），美迪西的扣非业绩弹性显著大于益诺思，三档情景下为 <span style="font-weight:700">2.85×–3.70×</span>。</strong>
+<ol style="margin:8px 0 0">
+  <li><b>弹性绝对值：</b>基准情景美迪西 Δ扣非 +¥2.28 亿 vs 益诺思 +¥0.71 亿。</li>
+  <li><b>质量指标：</b>边际扣非率 103.9%–157.1% vs 52.1%–60.7%；Δ扣非/市值 1.48%–1.96% vs 0.44%–0.76%。</li>
+  <li><b>共识可达性：</b>美迪西达标所需 H2 毛利率 32.11%（低于其 Q2 实际 36.69%）；益诺思需 38.55%（高于其 Q2 实际 32.23%）。</li>
+  <li><b>稳健性：</b>25 格敏感性网格中，益诺思的<b>最好格子</b>仍不及美迪西的<b>最差格子</b>。</li>
+</ol>
+</div>
+
+<h4>风险一：美迪西 2026Q2 的成本口径疑点（最需要核实的一条）</h4>
+<p>2026Q2 美迪西营业成本从 Q1 的 ¥2.70 亿<b>降至</b> ¥2.51 亿（环比 -6.8%），而同期收入<b>增长</b> 8.8%。毛利率由 26.06% 跳升到 36.69%，其中有相当部分来自"成本绝对额下降"而非收入放量。这可能来自产能利用率提升与境外高毛利订单占比上升（合理），也可能是成本重分类或年终奖结算节奏（一次性）。<b>若属后者，本节基准情景偏高。</b>需回 2026 年半年报附注与年报核实。</p>
+
+<h4>风险二：本节的"拖累项收敛"假设是顺周期的</h4>
+<p>测算把净其他项假设为 −¥2,200 万 ~ −¥2,600 万（优于两家 2026H1 实际），本质是假设减值不再恶化。美迪西的信用减值取决于中小 Biotech 融资环境，益诺思的存货跌价取决于低价订单清理进度。<b>若其中任一项重回 2024 年量级（美迪西 &gt; ¥1 亿、益诺思跌价比例 &gt; 10%），本节所有情景都会被下修</b>——而且美迪西的下修幅度会更大，因为它的净其他项在 2025H2 曾达 −¥6,750 万。</p>
+
+<h4>风险三：弹性 ≠ 胜率，也不等于股价弹性</h4>
+<p>弹性大的是<b>利润的绝对增量</b>，不是"更容易兑现"。且美迪西的治理折价（无实际控制人、陈建煌在 ¥98.50 公告减持不超 1.68%，窗口 2026-09-07 ~ 12-04）会在利润改善的同时压制估值；益诺思的央企控股与 ¥14.93 亿现金则提供了更强的下行保护。<b>弹性和安全性在这两家身上是分离的。</b></p>
+
+<p class="small muted"><span class="tag inf">推算</span>本节所有数字由同一套参数表在本机脚本中一次算出（参数见 13.3），未做人工取整后回填，因此表与表之间可交叉验证。模型假设的合成"净其他项"不区分减值、税金、少数股东损益与投资收益，仅为测算目的合成，不等于任何单一会计科目。<b>本节为前瞻性情景测算，不属于 <code>financial-evidence-audit</code> 的核验范围</b>——审计（12/12 PASS）覆盖的是 2023–2026H1 的历史已披露事实（见第 15 节），本节在其基础上外推。</p>
+
+
+<!-- ============ 14 综合评估 ============ -->
+<h2>14. 基本面综合评估</h2>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>评估维度</th><th>美迪西</th><th>益诺思</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td><b>business_quality</b></td><td>中（广度型）</td><td><b>中上（稀缺型）</b></td><td>益诺思护城河来自刚需 + 资源 + 转换成本；美迪西来自平台广度与国际资质</td></tr>
+    <tr><td><b>earnings_elasticity</b></td><td class="up"><b>高（未来两季）</b></td><td><b>中（弹性后置）</b></td><td>按第 13 节测算，2026H2 Δ扣非 美迪西 ¥2.28 亿 vs 益诺思 ¥0.71 亿（3.20×）；益诺思在手 ¥22.47 亿订单对应的是 2027 年的长跑道，而非未来两个季度</td></tr>
+    <tr><td><b>valuation_expectation</b></td><td>偏贵（当期 102.90×）</td><td>偏贵（当期 124.67×）</td><td>两家均已抢跑；益诺思贵在当期、便宜在远期，两者方向相反</td></tr>
+    <tr><td><b>trading_elasticity</b></td><td>高（60 日 +52.93%，换手 4.79%）</td><td>中—高（60 日 +39.17%，换手 1.97%）</td><td>美迪西交易更拥挤、波动更大</td></tr>
+    <tr><td><b>governance</b></td><td class="down">偏弱（无实控人 + 高位减持）</td><td class="neu">中（央企控股，但遭问询）</td><td>两种不同性质的治理风险</td></tr>
+    <tr><td><b>thesis_status</b></td><td class="strong">mixed</td><td class="strong">mixed</td><td>周期反转证据成立，但个股层面的利润质量与估值均有硬伤</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>14.1 三个选择题</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>如果你的关注点是</th><th>更匹配的标的</th><th>理由</th></tr></thead>
+  <tbody>
+    <tr><td>未来<b>两个季度</b>的业绩弹性</td><td class="mdx"><b>美迪西</b></td><td>2026H2 Δ扣非 ¥2.28 亿 vs ¥0.71 亿（3.20×）；边际扣非率 121.8% vs 54.3%（详见第 13 节）</td></tr>
+    <tr><td>景气反转的<b>确定性</b>与订单可见度</td><td class="yns"><b>益诺思</b></td><td>在手订单 ¥22.47 亿、合同负债 ¥7.55 亿、央企背景、安评稀缺性；收入可见度显著更高</td></tr>
+    <tr><td>当期<b>利润兑现</b>与估值相对便宜</td><td class="mdx"><b>美迪西</b></td><td>单季扣非年化 above 共识、Q2 毛利率 36.69% 修复更陡、当期 PE 低约 21%</td></tr>
+    <tr><td><b>国际化与出海</b>逻辑</td><td class="mdx"><b>美迪西</b></td><td>境外收入占 45.70%、波士顿 AAALAC 认证、中美双报收入 ¥1.67 亿（+93.46%）；益诺思境外仅 4.24%</td></tr>
+    <tr><td><b>资产负债表安全垫</b></td><td class="yns"><b>益诺思</b></td><td>现金 ¥14.93 亿 vs 美迪西净现金约 ¥0.66 亿且有息负债 ¥2.227 亿</td></tr>
+    <tr><td><b>治理与管理层一致性</b></td><td class="yns"><b>益诺思</b></td><td>央企系 34.41% 控股 vs 美迪西无实际控制人 + 家族股东 98 元高位减持</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>14.2 关键跟踪指标（6 个）</h3>
+<ol>
+  <li><b>2026Q3 单季净利率</b>——益诺思管理层指引"Q3 净利率达 15%"，这是检验订单→利润转化唯一可证伪的硬指标；美迪西关注毛利率能否守住 36% 以上。</li>
+  <li><b>新签订单同比与在手订单余额</b>——益诺思需验证全年 ¥25–30 亿；美迪西需验证 +104.7% 增速可持续性。</li>
+  <li><b>合同履约成本 / 存货跌价计提比例</b>——益诺思 8.55% 是否继续上升；这是低价订单沉没成本的直接读数。</li>
+  <li><b>应收账款与信用减值</b>——美迪西 2026 年报信用减值是否重回 ¥1 亿量级。</li>
+  <li><b>实验用猴价格与采购均价</b>——两家共同的成本变量，直接决定 2026H2–2027 毛利率方向。</li>
+  <li><b>2026Q3 单季毛利率的可比门槛</b>——按第 13 节测算，美迪西只需 32.11% 即可触及事件后共识（低于其 Q2 实际 36.69%），益诺思需 38.55%（高于其 Q2 实际 32.23%）。两者"实际可达性"的差距合计 10.90 pct（益诺思需向上突破 6.32 pct，美迪西尚有 4.58 pct 余量），是本节测算出的关键分水岭。</li>
+</ol>
+
+<!-- ============ 15 附录 ============ -->
+<h2>15. 附录：财务证据审计明细</h2>
+
+<p><b>裁决：<code>PASS / publishable</code>，12/12 项核验全部通过（material_fail = 0，warning = 0）。</b></p>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>检查 ID</th><th>类型</th><th>结果</th><th>核验值</th></tr></thead>
+  <tbody>
+    <tr><td>C_XS_MDX</td><td>cross_source</td><td class="up">PASS</td><td>美迪西 2026H1 营收 ¥761,474,155.85（半年报 ↔ 次级来源一致）</td></tr>
+    <tr><td>C_XS_YNS</td><td>cross_source</td><td class="up">PASS</td><td>益诺思 2026H1 营收 ¥464,985,867.80（半年报 ↔ 次级来源一致）</td></tr>
+    <tr><td>C_MC_MDX</td><td>market_cap</td><td class="up">PASS</td><td>¥13,233,690,124（¥98.50 × 134,352,184 股）</td></tr>
+    <tr><td>C_MC_YNS</td><td>market_cap</td><td class="up">PASS</td><td>¥12,005,824,013.4（¥85.16 × 140,979,615 股）</td></tr>
+    <tr><td>C_REV_MDX</td><td>percentage</td><td class="up">PASS</td><td>revenue_yoy = +40.9075%</td></tr>
+    <tr><td>C_REV_YNS</td><td>percentage</td><td class="up">PASS</td><td>revenue_yoy = +23.9207%</td></tr>
+    <tr><td>C_GM_MDX</td><td>percentage</td><td class="up">PASS</td><td>gross_margin = 31.5971%</td></tr>
+    <tr><td>C_GM_YNS</td><td>percentage</td><td class="up">PASS</td><td>gross_margin = 31.5685%</td></tr>
+    <tr><td>C_EXP_MDX</td><td>expectation_gap</td><td class="up">PASS</td><td>annualized = ¥128,602,227.6；gap = +¥78,602,227.6；状态 <b>above</b>；formal_surprise = N/A</td></tr>
+    <tr><td>C_EXP_YNS</td><td>expectation_gap</td><td class="up">PASS</td><td>annualized = ¥96,302,644.36；gap = −¥27,697,355.64；状态 <b>below</b>；formal_surprise = N/A</td></tr>
+    <tr><td>C_PE_MDX</td><td>valuation</td><td class="up">PASS</td><td>pe_user_defined = 102.904×</td></tr>
+    <tr><td>C_PE_YNS</td><td>valuation</td><td class="up">PASS</td><td>pe_user_defined = 124.668×</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>口径与证据等级说明</h4>
+<ul class="small">
+  <li><b>PE（用户口径 / pe_user_defined）：</b>总市值 ÷（最近单季扣非归母净利润 × 4）。固定 <code>valuation_basis = latest_single_quarter_deducted_attributable_net_profit_x4</code>。</li>
+  <li><b>预期差（expectation_gap）：</b>按项目合同比较"最新单季扣非 × 4"与"事件前 FY 归母共识"，跨指标跨期间，固定 <code>formal_surprise_status = N/A</code>，<b>不等同于正式 beat/miss</b>。事件前共识使用单一卖方报告作为可核验代理值，已在第 10.1 节列明偏差。</li>
+  <li><b>证据等级标注：</b><span class="tag sec">官网事实 / official</span>公告、交易所、公司 IR、定期报告、问询函回复；<span class="tag mgmt">管理层口径</span>业绩说明会与路演纪要，未经公告确认；<span class="tag">次级来源</span>行业汇总、卖方研究、媒体报道；<span class="tag inf">推算</span>本报告基于官方数据计算的派生值。</li>
+  <li><b>审计输入与结果文件：</b><code>outputs/evidence-audit-cro-compare-20260915.json</code>、<code>outputs/audit-result-cro-compare-20260915.json</code>（可复现，含 input_sha256）。</li>
+</ul>
+
+<h4>证据缺口（未做补造）</h4>
+<ul class="small">
+  <li>美迪西 2026H1 在手订单余额（未披露）；2026H1 末实验用猴储备规模与计量方式（需年报附注）。</li>
+  <li>益诺思 2026H1 分业务（安全性评价 / 药代 / 药效 / 早期成药性）的收入与毛利率拆分（半年报未按老口径全拆）。</li>
+  <li>益诺思"拟并购临床 CRO 企业"的标的、作价与业绩承诺——目前仅见于业绩会纪要，<b>无官方公告支撑</b>。</li>
+  <li>两家公司 2026H1 前五大客户集中度：美迪西未披露；益诺思仅披露 2025 年数据（16.56%）。</li>
+  <li>两家公司完整的股份支付费用与股权激励稀释测算。</li>
+</ul>
+
+<footer>
+  <p><b>研究截止：</b>2026-09-15 收盘 ｜ <b>报告生成：</b>2026-09-15</p>
+  <p><b>重要声明：</b>本报告为基于公开信息的基本面研究，结论为条件性判断，<b>不构成任何投资建议、目标价或买卖动作</b>。按本项目 <code>research-listed-company</code> 合同的硬性约束，在缺少组合约束、持有期限与风险承受能力的情况下，不编造仓位配置与个性化交易指令。所有决策关键数值已经 <code>financial-evidence-audit</code> 核验（PASS / publishable）；证据等级与已知缺口已在正文逐项标注，缺失数据一律标为 N/A，未做补造。</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "<string>", line 12, in <module>
+    for k,v in j.items():
+               ^^^^^^^
+AttributeError: 'list' object has no attribute 'items'
+=== CSV row ===
+  block        2
+  code         SH603228
+  name         景旺电子
+  close        110.16
+  pct_today    +5.47%
+  trend        震荡
+  score        71
+  ma_status    均线纠缠
+  macd         金叉(零上) DIF5.710/DEA5.662
+  kdj          K62.6/D67.2/J53.3
+  rsi          64.1
+  vol_ratio    量比1.10
+  support      107.28
+  resistance   113.60
+  one_liner    放量上涨(健康)，MACD金叉零上，RSI64，J53

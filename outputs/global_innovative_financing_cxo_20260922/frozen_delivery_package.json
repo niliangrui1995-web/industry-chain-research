@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "phase": "ready_to_present",
+  "selected_formats": ["html"],
+  "content_hash": "199424d05a7a10fbe439b1702860018619a6a6650d773576ac37f5b960aa0b3e",
+  "content": {
+    "title": "全球创新药融资周期及其对中国 CXO 的传导影响",
+    "subtitle": "历史事实、周期推演与产业链传导的投资研究看板",
+    "as_of": "2026-09-22",
+    "scope": "全球创新药融资 + 中国 CXO",
+    "decision_context": "投资研究",
+    "headline": {
+      "conclusion": "2021 年是广泛早期融资、一级市场估值扩张和二级市场高风险偏好的共同顶点；2025-2026 年更像总额修复但资本集中于后期、确定性和 AI/平台资产的选择性复苏。",
+      "forecast": "在融资、退出和宏观条件持续改善的假设下，下一轮高位区间可能落在 2027H2-2029H1；该窗口是情景推断，不是时间点预测。",
+      "fastest_beneficiary": "上游工具与材料：订单频率高、交付周期短，最早反映项目重启。",
+      "highest_elasticity": "CDMO/CRDMO：项目阶段升级和产能利用率改善带来最大收入与利润弹性，但确认最慢、波动最大。",
+      "confidence": "历史事实中高到高；传导顺序和环节判断中等；前瞻时间窗口低到中等。"
+    },
+    "sections": [
+      {
+        "id": "historical",
+        "kicker": "PART 01 / 已发生的历史事实",
+        "title": "2021：融资顶点不是单一事件",
+        "lead": "2021 年的顶点由流动性、二级市场估值、退出锚和一级市场风险偏好共同构成；其后是二级先转弱、一级结构性收缩、CXO 再滞后的链式反应。",
+        "blocks": [
+          {"type":"metric","label":"Evaluate Vantage 私募融资","value":"$28.45B","note":"2021 年；514 笔；多来源口径之一"},
+          {"type":"metric","label":"大额融资","value":"216 / 93","note":"≥$50M / ≥$100M 轮次"},
+          {"type":"metric","label":"IPO 结果","value":"约 80% 破发","note":"2021 年 IPO 类别年末低于发行价的比例"},
+          {"type":"metric","label":"货币条件","value":"0%-0.25%","note":"2021 年美国联邦基金利率目标区间"}
+        ],
+        "table": {
+          "headers": ["维度","已发生事实","作用逻辑","时序判断","证据"],
+          "rows": [
+            ["宏观流动性","联邦基金利率维持 0%-0.25%；大部分时间每月购买 800 亿美元国债和 400 亿美元 MBS；11 月开始 Taper，12 月加快缩减。","低利率、QE 和风险资产久期扩张抬高未盈利创新药远期现金流估值，降低融资门槛。","先行驱动；Taper 是边际拐点，不是当日断崖。","E-001"],
+            ["资本市场表现","2021 年私募融资达到 28.45B 美元；≥50M 美元 216 轮，≥100M 美元 93 轮。","融资规模和大额轮次扩张，说明风险资本供给与风险偏好同步上行。","与一级顶点同期。","E-002"],
+            ["IPO 与二级市场","2021 年 78 家生物技术公司 IPO 融资达到 50M 美元以上，合计近 14B 美元；约 80% 年末低于发行价。","二级市场先提供高估值退出锚，随后破发和指数回撤削弱 crossover 资金和再融资能力。","二级市场转弱领先一级结构性收缩。","E-003"],
+            ["估值与阶段","78 家 IPO 中 52 家处于临床前或 Phase I；高估值与临床证据脱节。","估值依赖退出和叙事，数据验证不足使市场对临床失败更敏感。","泡沫化是顶部前的领先信号。","E-003"],
+            ["政策与研发效率","中国 NMPA 后续于 2025 年公告 No.86 增设符合条件创新药 IND 30 个工作日通道。","政策改善影响研发项目可行性和资金周转，属于结构性支撑；不应倒推为 2021 顶点的直接原因。","政策支持滞后于 2021 全球融资拐点。","E-008"],
+            ["二级到一级机制","估值上涨→IPO/SPAC/crossover 退出锚→早期融资扩张；二级破发→一级转向后期资产、轮次延后、条款变严。","资本市场价格信号经退出和再融资机制传导到新项目成立和研发外包预算。","一级总额通常滞后于二级价格变化。","E-002,E-003"],
+            ["对 CXO 的滞后传导","资金到账→项目启动→早期工具/材料→发现和临床前 CRO→临床 CRO→CMC/CDMO→收入与利润。","订单、交付、收入、利润和现金流依次确认，不能把融资或订单直接等同 CXO 当期利润。","经营数据相对融资存在多阶段滞后。","E-010,E-011" ]
+          ]
+        }
+      },
+      {
+        "id": "forecast",
+        "kicker": "PART 02 / 基于假设的前瞻判断",
+        "title": "下一轮高位：看扩散，不只看总额",
+        "lead": "2025-2026 的融资修复尚未证明重回 2021 年式广泛早期繁荣。真正接近周期顶部，需要看到早期融资、IPO、M&A、license-out 和估值同时扩散。",
+        "scenario": {
+          "assumption": "融资修复延续，退出市场没有系统性关闭，后期临床和平台资产继续获得资本，宏观利率不出现快速且持续的再收紧。",
+          "window": "2027H2-2029H1",
+          "confidence": "低到中等",
+          "evidence_for_recovery": "PitchBook 统计 2025 年全球 biopharma VC deal value 约 33.8B 美元、1,171 笔，连续第二年上升；但早期融资占比降至 32%，资本更集中于较大、较后期和更确定性资产。",
+          "countercase": "若 IPO/M&A 退出继续受限，局部泡沫可能更早见顶；若早期融资占比回升、临床成功率改善且退出面扩大，周期可能延长。"
+        },
+        "signals": [
+          {"signal":"货币政策转向","observe":"FOMC 利率路径、实际利率、信用利差、融资成本","lead_lag":"领先","meaning":"折现率上升，先压缩未盈利和早期资产估值。","stop":"实际利率和信用利差持续上行，同时早期融资占比下降。"},
+          {"signal":"IPO 通道收紧","observe":"IPO 数量、发行折价、首日/30 日破发率、撤回率","lead_lag":"同期至领先","meaning":"退出锚失效，crossover 资金减少，一级轮次延后。","stop":"发行量下降且破发/撤回连续两个观察期恶化。"},
+          {"signal":"估值泡沫化","observe":"早期轮次估值/融资额、无临床数据资产占比、独角兽融资集中度","lead_lag":"领先","meaning":"资本从可验证数据转向叙事溢价，脆弱性上升。","stop":"估值上升与临床/BD 数据脱钩。"},
+          {"signal":"重大临床失败","observe":"关键 III 期失败、监管否决、同靶点安全事件","lead_lag":"事件领先、融资滞后","meaning":"改变成功率和可比估值，可能造成赛道级重估。","stop":"同机制或同赛道连续出现失败/安全事件。"},
+          {"signal":"license-out 降温","observe":"交易数、首付款、中后期交易占比、里程碑兑现","lead_lag":"同期至滞后","meaning":"资产定价和退出需求走弱，融资质量先恶化、总额后反映。","stop":"首付款和中后期交易连续两个季度下降。"}
+        ],
+        "top_rule": "单一信号不构成顶部。更可靠的顶部组合是：IPO 破发率上升且发行量下降；早期融资占比下降、单笔金额被少数大项目抬高；license-out 首付款和中后期交易连续两个季度下降；同时实际利率或信用利差上行。"
+      },
+      {
+        "id": "chain",
+        "kicker": "PART 03 / 中国 CXO 传导",
+        "title": "最快看上游，最大看 CDMO",
+        "lead": "同一融资回暖对四个环节不是同步冲击；早期预算先改变工具和材料采购，后期项目升级才改变 CDMO 的收入和利用率。",
+        "segments": [
+          {"name":"上游工具与材料","examples":"毕得医药、皓元医药、药石科技、义翘神州、药康生物、南模生物、奥浦迈、纳微科技、赛分科技、东富龙、楚天科技","concentration":"N/A：缺少同口径 CR5/CRn 市场份额","barriers":"SKU/库存、模型库、质量验证、客户交付、设备认证","competition":"中高；普通试剂/砌块价格竞争更明显，验证型材料和装备替换较慢","leading":"Biotech 融资到账、立项数、实验室采购、复购率、库存周转"},
+          {"name":"临床前 CRO","examples":"昭衍新药、益诺思、美迪西、药明康德 Testing、康龙化成实验室服务、睿智医药","concentration":"N/A：缺少同口径 CR5/CRn 市场份额","barriers":"GLP 资质、NHP 资源、数据完整性、复杂模型、国际申报经验","competition":"中等；传统动物试验面临价格和工作量压力，复杂模型和国际申报黏性更强","leading":"PCC、IND 准备、GLP 新签/在手、实验室利用率"},
+          {"name":"临床 CRO","examples":"泰格医药、诺思格、博济医药、阳光诺和、万邦医药、方达控股、普蕊斯","concentration":"N/A：缺少同口径 CR5/CRn 市场份额","barriers":"中心资源、PI/KOL 网络、患者招募、数据质量、注册能力","competition":"中高；标准服务竞争强，项目取消、入组和回款放大波动","leading":"IND 获批、新启动试验、研究中心启动、患者入组"},
+          {"name":"CDMO/CRDMO","examples":"药明康德、凯莱英、博腾股份、九洲药业、药石科技、皓元医药、药明生物、药明合联、圣诺生物、奥浦迈","concentration":"N/A：跨小分子、多肽、生物药、CGT 的同口径份额未形成","barriers":"工艺开发、放大、EHS、质量体系、全球监管检查、技术转移、客户迁移成本","competition":"中高；成熟产能可能过剩，复杂工艺和商业化项目壁垒更高","leading":"II/III 期推进、技术转移、验证批、商业化订单、产能利用率"}
+        ],
+        "transmission": [
+          {"segment":"上游工具与材料","demand":"立项、实验室采购、早研预算最先传导","elasticity":"快；低基数、订单频率高","pricing":"普通 SKU 弱；验证型材料/设备较强","utilization":"变化快；设备受验收滞后","pace":"最快，通常领先 1-2 个阶段"},
+          {"segment":"临床前 CRO","demand":"PCC、IND 准备、GLP 新签和在手项目","elasticity":"中等；受取消和价格影响","pricing":"复杂模型、GLP 资质、国际申报较强","utilization":"实验室和动物设施逐步爬坡","pace":"早于临床 CRO，晚于工具材料"},
+          {"segment":"临床 CRO","demand":"IND 获批、试验启动、患者入组","elasticity":"中等偏慢；项目周期长","pricing":"中心资源和数据质量较强，标准服务竞争激烈","utilization":"人员/中心利用率改善但回款慢","pace":"通常滞后于临床前"},
+          {"segment":"CDMO/CRDMO","demand":"II/III 期、技术转移、临床批、商业化放量","elasticity":"最大；阶段升级带来高弹性","pricing":"商业化、复杂工艺和验证产能强；普通产能受压","utilization":"对利润和现金流影响最大","pace":"最慢但弹性最大"}
+        ]
+      },
+      {
+        "id": "company_checks",
+        "kicker": "PART 04 / 经营验证",
+        "title": "订单改善必须穿透到现金流",
+        "checks": [
+          {"company":"药明康德 603259.SH","facts":"2026H1 营收 288.97 亿元、扣非归母净利润 105.72 亿元、经营现金流 96.99 亿元；TTM 扣非 182.31 亿元；Q2 扣非 62.97 亿元，同比约 +93.57%。","interpretation":"经营兑现较强，是融资回暖向后端需求传导的验证样本，但不是行业整体证据。","risk":"BIOSECURE 已成法；2026-08-07 获得的是针对 1260H 认定的初步禁令，不是实体诉讼终局胜诉；另有 DEL 数据未授权访问事件。","evidence":"E-010,E-011,E-012"},
+          {"company":"凯莱英 002821.SZ","facts":"2026H1 扣非 5.25 亿元；Q2 扣非同比约 -3.12%。","interpretation":"订单/后端需求改善不自动等于利润同步修复。","risk":"需跟踪订单交付、产品结构、毛利率和产能利用率。","evidence":"E-013"},
+          {"company":"药石科技 300725.SZ / 皓元医药 688131.SH","facts":"药石 H1 收入同比 +15.19%、扣非 +40.70%；皓元收入 +25.71%、扣非 +10.21%。","interpretation":"前端材料与后端业务改善可能不同步，跨层公司不能用单一景气指标解释。","risk":"高增长需继续验证现金转换、库存与分部结构。","evidence":"E-014"},
+          {"company":"博腾股份 300363.SZ / 泰格医药 300347.SZ / 昭衍新药 603127.SH","facts":"博腾 H1 归母为负；泰格临床主业恢复但归母受投资损益影响；昭衍扣非含生物资产公允价值影响。","interpretation":"利润表一次性项目会扭曲行业周期判断。","risk":"不能用单一 PE 或净利同比作横向结论。","evidence":"E-015"}
+        ]
+      },
+      {
+        "id": "dashboard",
+        "kicker": "PART 05 / 跟踪看板",
+        "title": "用组合信号确认，而不是追逐单点叙事",
+        "columns": [
+          {"title":"全球融资","items":["VC 总额与笔数","早期融资占比与中位数","IPO 数量、发行折价与破发率","M&A 金额与退出面","license-out 首付款与中后期比例"]},
+          {"title":"CXO 订单","items":["Biotech 融资到账与项目启动","CRO 新签、活跃客户、FTE 利用率","GLP 在手与实验室利用率","临床中心启动与入组","CDMO 技术转移、合同负债与商业化订单"]},
+          {"title":"经营穿透","items":["收入与毛利率","应收、库存与回款","产能利用率","资本开支回报","经营现金流"]},
+          {"title":"停止条件","items":["融资总额由少数大单抬高但早期占比继续下降","IPO 破发/撤回连续恶化","license-out 首付款下降","订单高增但应收、库存、CAPEX 和利用率恶化","政策或数据安全事件造成客户迁移"]}
+        ]
+      },
+      {
+        "id": "limitations",
+        "kicker": "PART 06 / 边界与限制",
+        "title": "哪些地方不能下确定性结论",
+        "items": [
+          "四个 CXO 环节的 CR5/CRn 市场份额：N/A；现有材料只支持代表公司、壁垒和定性竞争格局。",
+          "DealForma、Evaluate、PitchBook 等统计对象和样本定义不同；口径冲突并列保留，不简单平均。",
+          "2025-2026 融资修复不能直接等同 2021 年广泛早期融资繁荣；PitchBook 的早期融资占比下降是关键反证。",
+          "未取得合格事件前一致预期原文，因此不输出正式预期差、目标价、仓位或收益概率。",
+          "前瞻时间窗口和最快/最大弹性判断均是条件性推断，必须由组合信号和公司经营数据验证。"
+        ]
+      }
+    ]
+  },
+  "evidence": [
+    {"id":"E-001","type":"official_fact","source":"Federal Reserve / New York Fed 2021 Open Market Operations","url":"https://www.newyorkfed.org/medialibrary/media/markets/omo/omo2021-pdf.pdf","published":"2022","as_of":"2021","region":"United States","object":"FOMC monetary policy implementation","scope":"2021 federal funds target range and asset purchases","unit":"USD / percentage","note":"2021 年维持 0%-0.25%；11 月开始减速购买，12 月加快缩减。","confidence":"high"},
+    {"id":"E-002","type":"institutional_view","source":"Evaluate Vantage Pharma and Medtech Review 2021","url":"https://image.e.evaluate.com/Web/A5CPDLD/%7B3ce9dc24-2a8b-4b9c-86af-6a5578dd84d6%7D_jn371-vantage-2021-review-report.pdf","published":"2022-02","as_of":"2021","region":"Global","object":"Biopharma venture financing","scope":"Investment, financing count, average financing, large rounds","unit":"USD billion / count / USD million","note":"2021 investment 28.45B、514 笔；平均 55.56M；≥50M 216 笔；≥100M 93 笔。","confidence":"high"},
+    {"id":"E-003","type":"institutional_view","source":"BioPharma Dive / SVB Leerink 2021 biotech IPO review","url":"https://www.biopharmadive.com/news/biotech-ipo-performance-investors-2021/616808","published":"2022-01","as_of":"2021-12-31","region":"United States / Global sample","object":"Biotech IPO cohort","scope":"78 IPOs raising at least 50M; aftermarket performance","unit":"count / USD billion / percentage","note":"合计近 14B；约 80% 年末低于发行价；52 家处于临床前或 Phase I。","confidence":"high"},
+    {"id":"E-004","type":"institutional_view","source":"PitchBook Q4 2025 Biopharma VC Trends","url":"https://pitchbook.com/news/reports/q4-2025-biopharma-vc-trends","published":"2026-02-13","as_of":"2025-12-31","region":"Global","object":"Biopharma VC","scope":"Deal value, deal count, stage mix, exits and IPO","unit":"USD billion / count / percentage","note":"2025 deal value 33.8B、1,171 笔；早期融资占比约 32%；资本更集中于后期和确定性资产。","confidence":"medium-high"},
+    {"id":"E-005","type":"official_fact","source":"NMPA Announcement No.86 (2025)","url":"https://english.nmpa.gov.cn/2025-10/14/c_1138494.htm","published":"2025-09-09","as_of":"2025-09-09","region":"China","object":"Innovative drug IND review and approval","scope":"Eligible Class I innovative drugs 30-day pathway","unit":"working days","note":"符合条件的 1 类创新药 IND 受理后 30 个工作日内完成审评审批；复杂问题可回到 60 日。","confidence":"high"},
+    {"id":"E-006","type":"official_fact","source":"FY2026 NDAA / BIOSECURE policy analysis","url":"https://www.dlapiper.com/en-us/insights/publications/2026/08/us-china-life-sciences-policy-developments-top-points-for-companies","published":"2026-08","as_of":"2026-08","region":"United States / China","object":"BIOSECURE Act and 1260H","scope":"Enacted framework, designation paths and preliminary injunction","unit":"legal status","note":"BIOSECURE 于 2025-12-18 成法；2026-06 DoD 更新 1260H；2026-08-07 对药明康德列名给予初步禁令；非终局胜诉。","confidence":"high"},
+    {"id":"E-007","type":"official_fact","source":"WuXi AppTec 1260H preliminary injunction coverage","url":"https://www.govinfo.gov/content/pkg/USCOURTS-dcd-1_26-cv-02069/pdf/USCOURTS-dcd-1_26-cv-02069-0.pdf","published":"2026-08-07","as_of":"2026-08-07","region":"United States / China","object":"WuXi AppTec litigation","scope":"Preliminary injunction against enforcement of designation","unit":"legal status","note":"初步禁令只处理诉讼期间执行，不等同于实体争议最终裁判。","confidence":"high"},
+    {"id":"E-008","type":"official_fact","source":"WuXi AppTec DEL platform announcement","url":"https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0824/2026082401999.pdf","published":"2026-08-24","as_of":"2026-08-24","region":"China / Global clients","object":"Data security incident","scope":"Unauthorized access to part of DEL platform data","unit":"event status","note":"公司称已联系受影响客户；截至公告尚未发现数据公开或滥用，不能简化为没有数据风险。","confidence":"high"},
+    {"id":"E-009","type":"local_research","source":"CXO产业链表_20260909.xlsx XML extract","url":"local:D:/vcp_hunter/产业链投研/CXO产业链表_20260909.xlsx","published":"2026-09-09","as_of":"2026-09-09","region":"China","object":"CXO industry chain mapping","scope":"Four segments, cross-layer companies, leading indicators","unit":"qualitative mapping","note":"文件只证明定位、指标和壁垒，不证明收入占比、客户、订单或市场份额。","confidence":"medium-high"},
+    {"id":"E-010","type":"official_fact","source":"WuXi AppTec 2026 interim report","url":"https://static.cninfo.com.cn/finalpage/2026-08-04/1225455027.PDF","published":"2026-08-04","as_of":"2026-06-30","region":"China","object":"WuXi AppTec 603259.SH","scope":"H1 revenue, deducted profit, operating cash flow and order disclosure","unit":"CNY billion","note":"H1 revenue 28.897B、deducted 10.572B、OCF 9.699B；持续经营在手订单 66.43B。订单不等同收入。","confidence":"high"},
+    {"id":"E-011","type":"calculated_fact","source":"Local financial calculation based on WuXi AppTec filings","url":"https://static.cninfo.com.cn/finalpage/2026-04-28/1225200544.PDF","published":"2026-09-06","as_of":"2026-06-30","region":"China","object":"WuXi AppTec 603259.SH","scope":"Q2 and TTM deducted net profit","unit":"CNY billion / percentage","note":"TTM=FY2025+2026H1-2025H1；TTM deducted 18.231B；Q2 6.297B，YoY 93.57%。","confidence":"high"},
+    {"id":"E-012","type":"official_fact","source":"WuXi AppTec 2025 annual report and HKEX capital disclosures","url":"https://static.cninfo.com.cn/finalpage/2026-03-24/1225025225.PDF","published":"2026-03-24","as_of":"2026-06-30","region":"China / Global","object":"WuXi AppTec financial and capital structure","scope":"FY2025 deducted profit and share capital basis","unit":"CNY billion / shares","note":"FY2025 deducted 13.241B；派生估值需按当期股本和股价审计，本文不把投资收益计入核心 TTM。","confidence":"high"},
+    {"id":"E-013","type":"official_fact","source":"凯莱英 2026 interim report","url":"https://static.cninfo.com.cn/finalpage/2026-08-25/1225496302.PDF","published":"2026-08-25","as_of":"2026-06-30","region":"China","object":"凯莱英 002821.SZ","scope":"H1 and Q2 deducted net profit","unit":"CNY billion / percentage","note":"H1 deducted 0.525B；Q2 deducted YoY -3.12%。","confidence":"high"},
+    {"id":"E-014","type":"official_fact","source":"药石科技 and 皓元医药 2026 interim reports","url":"https://static.cninfo.com.cn/finalpage/2026-08-11/1225465764.PDF","published":"2026-08","as_of":"2026-06-30","region":"China","object":"药石科技 300725.SZ / 皓元医药 688131.SH","scope":"H1 revenue and deducted profit growth","unit":"percentage","note":"药石收入 +15.19%、扣非 +40.70%；皓元收入 +25.71%、扣非 +10.21%。","confidence":"high"},
+    {"id":"E-015","type":"official_fact","source":"Local CXO company interim financial snapshots","url":"https://static.cninfo.com.cn/finalpage/2026-08-22/1225492110.PDF","published":"2026-08","as_of":"2026-06-30","region":"China","object":"博腾、泰格、昭衍","scope":"Cross-company financial quality and non-recurring item checks","unit":"CNY / percentage","note":"博腾 H1 归母为负；泰格受投资损益影响；昭衍扣非含生物资产公允价值影响。","confidence":"medium-high"}
+  ],
+  "limitations": [
+    "CR5/CRn 市场份额缺少同口径可靠数据，统一写 N/A。",
+    "全球融资来源统计对象不同：VC deal value、私募融资、IPO 和更宽运营资本不能简单平均。",
+    "DealForma 两组口径冲突保留并列，不在本交付包中强行合并。",
+    "2025-2026 的选择性复苏不能直接外推成 2021 式广泛早期融资繁荣。",
+    "没有合格事件前一致预期原文，不输出正式预期差、目标价或收益概率。",
+    "前瞻窗口、最快受益和最大弹性均为条件性推断，需由连续经营数据验证。"
+  ],
+  "html_spec": {
+    "output_path": "决策看板_全球创新药融资周期与CXO传导.html",
+    "artifact_kind": "dashboard",
+    "artifact_mode": "interactive-web",
+    "visual_baseline": "editorial-impact",
+    "purpose": "为投资研究者提供一个可扫描、可追溯的融资周期与中国 CXO 传导决策看板。",
+    "required_sections": ["headline", "historical", "forecast", "chain", "company_checks", "dashboard", "limitations", "evidence"],
+    "information_architecture": ["结论先行", "历史事实", "前瞻假设", "四环节传导", "经营验证", "跟踪看板", "限制与证据"],
+    "visual_and_layout_constraints": ["浅色主题、深色文字、编辑杂志风", "桌面端为宽幅研究看板，移动端单列重排", "不使用网络字体、图片或 CDN", "历史事实使用深蓝与暖灰，前瞻假设使用橙色虚线和标签，避免把推断视觉化成事实", "表格可横向滚动，证据编号可点击跳转到证据区", "卡片只用于重复指标和信号，不将所有章节套入卡片"],
+    "interactions": ["点击目录跳转章节", "点击 E-编号跳转证据记录", "移动端折叠长表格为可滚动区域", "支持 prefers-reduced-motion"],
+    "evidence_and_data_rules": ["每个关键数字显示口径、截止期和证据编号", "N/A 不替换为估算", "前瞻判断显示假设、置信度和停止条件", "股价色彩规则不适用于本报告，不制作涨跌图"],
+    "fallbacks_and_acceptance": ["纯静态 HTML 可离线打开；交互失败时正文和表格仍完整可读", "UTF-8、标签配平、锚点唯一、无 None/nan/%s/替换字符", "根节点绑定 artifact contract，全部 --moss-* token 原值写入 :root", "证据 E-001 至 E-015 可跳转，外部链接使用 target=_blank 和 rel=noopener"]
+  }
+}

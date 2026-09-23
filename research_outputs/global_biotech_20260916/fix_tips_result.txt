@@ -1,0 +1,12 @@
+R1: replaced
+R2: SKIP old_count=0 :: "tip": "2024 全年：约 365 亿美元（按 E-011 中 2025 年 344.44 
+R3: replaced
+R4: replaced
+R5: replaced
+R6: SKIP old_count=0 :: "tip": "2024 全年：522 亿美元（94 笔；E-023 记为 519 亿，统计截止日差
+R7: SKIP old_count=0 :: "tip": "2026 上半年：超 997 亿美元（约 100 笔，保守口径；E-003 转述口径
+R8: replaced
+R9: replaced
+R10: replaced
+R11: replaced
+ALL_OK

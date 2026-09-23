@@ -1,0 +1,22 @@
+{
+  "content_source": "D:/vcp_hunter/产业链投研/research_outputs/ai_pharma_20260921/evidence_ledger.md (冻结, sha256=81c6326c3bc65b5ca6eefce17949c5ea9352956639904e6052102799dc904054)",
+  "output_path": "D:/vcp_hunter/产业链投研/research_outputs/ai_pharma_20260921/决策看板_AI制药.html",
+  "artifact_contract": "D:/vcp_hunter/产业链投研/research_outputs/ai_pharma_20260921/artifact-contract.json",
+  "expert_html_requirements": {
+    "required_sections": [
+      "决策看板(研究收束区+战场仪表盘+钱在哪里+仗怎么打+现在做什么)",
+      "行业基础盘(定义边界/阶段/驱动/市场规模/技术路线/商业模式)",
+      "公司图谱8家统一维度档案(晶泰控股/英矽智能/百图生科/深势科技/剂泰科技/望石智慧/冰洲石生物/宇道生物)",
+      "横向对比总表+技术路径差异化亮点",
+      "风险审查(六类风险,事实/推断分离)",
+      "A股映射层",
+      "行业趋势判断与投资视角结论(含成立条件/观察信号/停止条件)",
+      "证据链E-001至E-018页尾索引含双向跳转"
+    ],
+    "information_architecture": ["结论先行:看板在最前", "每个表格前后有洞察文字", "事实/机构观点/推断/假设分层标注"],
+    "visual_and_layout_constraints": ["深色主题咨询风驾驶舱", "契约token写入第一个:root块", "响应式:桌面多栏移动单栏", "prefers-reduced-motion降级"],
+    "interactions": ["证据徽章点击跳转页尾证据条目", "证据条目含返回引用位置链接", "图表配details数据表回退", "章节锚点导航"],
+    "evidence_and_data_rules": ["关键数字带E-xxx徽章", "预测/推算数据虚线或标签区分", "口径冲突并列呈现不平均", "查不到写N/A"],
+    "fallbacks_and_acceptance": ["无JS时全部内容可读", "verify-html契约校验通过", "中文UTF-8无乱码", "标签配平"]
+  }
+}

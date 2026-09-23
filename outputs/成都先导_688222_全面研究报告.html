@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成都先导（688222.SH）全面研究报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --ink:#1c2733; --ink2:#4a5a6a; --line:#dfe6ee; --bg:#f5f7fa; --card:#ffffff;
+    --blue:#1f5fbf; --blue-bg:#eaf1fc; --red:#c0392b; --green:#1e8449;
+    --amber:#b7791f; --amber-bg:#fdf6e7; --grey:#8a97a5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); line-height:1.75; font-size:15px;}
+  .wrap{max-width:1080px; margin:0 auto; padding:28px 20px 60px;}
+  header.hero{background:linear-gradient(135deg,#123f7a,#1f5fbf); color:#fff; border-radius:14px; padding:34px 38px; margin-bottom:22px;}
+  header.hero h1{font-size:26px; letter-spacing:.5px;}
+  header.hero .sub{margin-top:8px; font-size:13.5px; opacity:.92;}
+  header.hero .tags{margin-top:14px;}
+  header.hero .tag{display:inline-block; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.35); border-radius:20px; padding:2px 12px; font-size:12.5px; margin-right:8px;}
+  .concl{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--blue); border-radius:10px; padding:22px 26px; margin-bottom:22px; box-shadow:0 1px 4px rgba(20,40,80,.05);}
+  .concl h2{font-size:17px; color:var(--blue); margin-bottom:10px;}
+  .concl li{margin:6px 0 6px 20px;}
+  .concl b{color:var(--red);}
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:24px;}
+  .kpi{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .kpi .k{font-size:12.5px; color:var(--ink2);}
+  .kpi .v{font-size:20px; font-weight:700; color:var(--blue); margin-top:2px;}
+  .kpi .v.up{color:var(--red);}
+  .kpi .s{font-size:11px; color:var(--grey); margin-top:3px;}
+  section{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:24px 28px; margin-bottom:22px;}
+  section h2{font-size:19px; color:var(--ink); border-bottom:2px solid var(--blue-bg); padding-bottom:9px; margin-bottom:16px;}
+  section h2 .no{display:inline-block; background:var(--blue); color:#fff; border-radius:6px; font-size:13px; padding:1px 9px; margin-right:9px; vertical-align:2px;}
+  section h3{font-size:15.5px; color:var(--blue); margin:18px 0 8px;}
+  p{margin:7px 0;}
+  .note{font-size:12.5px; color:var(--grey); margin-top:6px;}
+  .src{font-size:12px; color:var(--grey); border-top:1px dashed var(--line); margin-top:14px; padding-top:8px;}
+  table{width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px;}
+  th{background:var(--blue-bg); color:var(--ink); text-align:left; padding:8px 10px; border:1px solid var(--line); font-weight:600;}
+  td{padding:7px 10px; border:1px solid var(--line); vertical-align:top;}
+  tr:nth-child(even) td{background:#fafbfd;}
+  .num{text-align:right; white-space:nowrap;}
+  .pos{color:var(--red); font-weight:600;}
+  .neg{color:var(--green); font-weight:600;}
+  .timeline{position:relative; margin:14px 0 6px 8px; padding-left:22px; border-left:3px solid var(--blue-bg);}
+  .tl-item{position:relative; margin-bottom:13px;}
+  .tl-item::before{content:""; position:absolute; left:-28.5px; top:7px; width:10px; height:10px; border-radius:50%; background:var(--blue); border:2px solid #fff; box-shadow:0 0 0 2px var(--blue-bg);}
+  .tl-item .t{font-weight:700; color:var(--blue); font-size:14px; margin-right:8px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:760px){.grid2{grid-template-columns:1fr;}}
+  .chart{width:100%; height:340px; margin:8px 0 2px;}
+  .chart2{width:100%; height:320px; margin:8px 0 2px;}
+  .warn{background:var(--amber-bg); border:1px solid #ecd9ae; border-radius:8px; padding:12px 16px; font-size:13.5px; margin:10px 0;}
+  .ok{background:#eef8f0; border:1px solid #cde8d3; border-radius:8px; padding:12px 16px; font-size:13.5px; margin:10px 0;}
+  .risk-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:760px){.risk-grid{grid-template-columns:1fr;}}
+  .risk-card{border:1px solid var(--line); border-radius:9px; padding:13px 16px;}
+  .risk-card h4{font-size:14px; margin-bottom:5px;}
+  .risk-card.op h4{color:var(--blue);}
+  .risk-card.rk h4{color:var(--red);}
+  .risk-card p{font-size:13px; color:var(--ink2); margin:0;}
+  .lvl{display:inline-block; font-size:11.5px; border-radius:4px; padding:0 6px; margin-left:6px; vertical-align:1px;}
+  .lvl.hi{background:#fdeaea; color:var(--red);}
+  .lvl.mid{background:var(--amber-bg); color:var(--amber);}
+  .lvl.lo{background:#eef2f6; color:var(--grey);}
+  .disclaimer{background:#eef1f5; border:1px solid var(--line); border-radius:10px; padding:18px 22px; font-size:12.8px; color:var(--ink2);}
+  .disclaimer b{color:var(--ink);}
+  .sources li{margin:4px 0 4px 20px; font-size:12.5px; color:var(--ink2);}
+  .toc{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 22px; margin-bottom:22px; font-size:13.5px;}
+  .toc a{color:var(--blue); text-decoration:none; margin-right:18px; white-space:nowrap;}
+  .toc a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>成都先导（688222.SH）全面研究报告</h1>
+  <div class="sub">全球领先的 DEL（DNA 编码化合物库）平台型药物发现企业 —— 深度研究 | 研究基准日：2026-09-16</div>
+  <div class="tags">
+    <span class="tag">科创板 · 2020-04-16 上市</span>
+    <span class="tag">医药生物 / 医疗服务 / 医疗研发外包</span>
+    <span class="tag">总市值 142.3 亿元（2026-09-16 盘中）</span>
+    <span class="tag">年初至今 +52.3%</span>
+  </div>
+</header>
+
+<div class="concl">
+  <h2>核心结论（先读）</h2>
+  <ul>
+    <li><b>定位稀缺：</b>公司不是传统 CXO 外包商，也非 Biotech，而是以 1.2 万亿级 DEL 化合物库为壁垒的<b>「平台型创新输出企业」</b>，通过「研发服务 + IP 转让/里程碑 + 远期药物上市」三层模式变现，客户覆盖全球 700+ 家（截至 2026H1）。</li>
+    <li><b>业绩已进入高增兑现期：</b>2026H1 营收 3.46 亿元（+52.4%）、归母净利 0.81 亿元（+61.2%）创历史同期新高；DEL 板块毛利率高达 77.4%，上半年完成 13 个项目化合物 IP 转让、贡献约 3,700 万元，商业模式闭环得到验证。</li>
+    <li><b>行业顺风明确：</b>全球 Biotech 融资回暖（2026H1 融资金额同比约 +38%）、中国创新药 License-out 上半年总金额 997 亿美元、CRO 订单「量价齐升」，药物发现早研环节最先受益。</li>
+    <li><b>主要约束：</b>PE(TTM) 约 102 倍 / PB 9.3 倍估值不低；2026Q2 扣非同比仅 +2.6%、毛利率环比下滑 3 个百分点（新业务摊薄）；股东减持（钧天拟清仓 1.63%）与 83% 海外收入的汇率敞口构成现实压制。</li>
+    <li><b>综合判断：</b>高壁垒、高景气、高估值、高波动的「四高」标的。5 家机构评级全部正面，2026E 归母净利一致预期约 1.42 亿元（+29.5%）；唯一公开目标价 42.20 元（中金，DCF）较 9/16 盘中价 35.51 元隐含约 19% 空间。核心观察点：<b>IP 转让/里程碑收入的可持续性、OBT 等新业务毛利率改善节奏、减持窗口的实际冲击</b>。</li>
+  </ul>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="k">现价（9/16 盘中）</div><div class="v up">35.51 元</div><div class="s">当日 +10.59% | westock</div></div>
+  <div class="kpi"><div class="k">2026H1 营收</div><div class="v up">3.46 亿</div><div class="s">同比 +52.4% | 中报</div></div>
+  <div class="kpi"><div class="k">2026H1 归母净利</div><div class="v up">0.81 亿</div><div class="s">同比 +61.2% | 中报</div></div>
+  <div class="kpi"><div class="k">DEL 库容量</div><div class="v">&gt;1.2 万亿</div><div class="s">另有 5000 亿类环肽 | 官网</div></div>
+  <div class="kpi"><div class="k">PE(TTM) / PB</div><div class="v">101.5 / 9.33</div><div class="s">2026-09-16 | westock</div></div>
+</div>
+
+<nav class="toc">
+  <a href="#s1">① 公司概况与发展历程</a><a href="#s2">② 主营业务与技术平台</a><a href="#s3">③ 管线与合作模式</a><a href="#s4">④ 财务表现</a><a href="#s5">⑤ 行业地位与竞争对比</a><a href="#s6">⑥ 估值与机构观点</a><a href="#s7">⑦ 机遇与风险</a><a href="#s8">⑧ 跟踪与证伪指标</a>
+</nav>
+
+<!-- ================= 1 ================= -->
+<section id="s1">
+  <h2><span class="no">1</span>公司基本情况与发展历程</h2>
+  <h3>1.1 基本信息</h3>
+  <table>
+    <tr><td style="width:130px;">公司全称</td><td>成都先导药物开发股份有限公司（HitGen Inc.）</td></tr>
+    <tr><td>成立 / 上市</td><td>2012-02-22 成立；2020-04-16 上交所科创板上市（「科创板西南第一股」），发行价 20.52 元</td></tr>
+    <tr><td>实际控制人</td><td>李进（JIN LI）博士，直接持股 20.43%，另通过宁波聚智先导间接持股约 8.4%（2024 年国信研报口径）</td></tr>
+    <tr><td>总部 / 布局</td><td>成都天府国际生物城；英国剑桥（Vernalis）、美国休斯顿设子公司；北京分公司 2020 年设立</td></tr>
+    <tr><td>员工 / 股本</td><td>员工 546 人（研发人员占比超 80%）；总股本 4.0068 亿股（全流通）</td></tr>
+    <tr><td>行业归属</td><td>申万：医药生物 → 医疗服务 → 医疗研发外包（CRO）；概念：CRO、创新药、AI 医疗、减肥药、沪股通等</td></tr>
+  </table>
+  <p class="src">来源：公司公告 / 工商登记信息（NeoData，2026-09 检索）、国信证券研究报告（2024-11-05）。研报数据为非一手来源，需核实原文。</p>
+
+  <h3>1.2 发展历程：从 DEL 技术攻关到平台型企业</h3>
+  <div class="timeline">
+    <div class="tl-item"><span class="t">2007</span>创始契机 —— GSK 收购 DEL 先驱 Praecis，向时任阿斯利康全球化合物科学总监的李进传递 DEL 技术潜力巨大的信号。</div>
+    <div class="tl-item"><span class="t">2012</span>李进辞去阿斯利康职务回国创业，创立成都先导，为国内及亚洲最早规模化从事 DEL 技术研发的公司。</div>
+    <div class="tl-item"><span class="t">2016</span>设立美国子公司，陆续与强生、辉瑞、默沙东、扬子江等达成研发合作，开启商业化（「走向市场」阶段）。</div>
+    <div class="tl-item"><span class="t">2018</span>公司开始实现盈利，进入快速发展阶段。</div>
+    <div class="tl-item"><span class="t">2020</span>4 月科创板上市；年底以 2,500 万美元收购英国 Vernalis (R&amp;D) 100% 股权，将技术版图从 DEL 扩展至 DEL+FBDD/SBDD；同年 HG030 内地权益对外转让，打通「新药在研项目权益转让」模式。</div>
+    <div class="tl-item"><span class="t">2021</span>自助式筛选产品 OpenDEL® 销量同比增长超 10 倍；与腾讯 AI Lab 合作开发分子骨架跃迁算法（GraphGMVAE）。</div>
+    <div class="tl-item"><span class="t">2023–2024</span>DEL 库突破 1.2 万亿分子；「DEL+AI+自动化」平台（HAILO）启动建设，向干湿闭环升级。</div>
+    <div class="tl-item"><span class="t">2025</span>全年营收 5.26 亿元（+23.1%）、归母净利 1.10 亿元（+113.2%）；年底增资控股摩熵智能，新增数据服务（DataSer）板块；累计服务全球客户超 600 家。</div>
+    <div class="tl-item"><span class="t">2026</span>1 月举办上市以来首届投资者开放日（主题「万亿种子·智擎未来」）；H1 业绩创历史同期新高；7 月合作伙伴 BioAge 的 BGE-102（NLRP3 抑制剂）进入 II 期临床；Wind ESG 评级升至 AA。</div>
+  </div>
+  <p class="src">来源：上海证券报对董事长李进的专访（2021）、公司官网新闻（2026-01 投资者开放日、2026-07 BioAge 公告）、国信证券研报（2024-11-05）。</p>
+</section>
+
+<!-- ================= 2 ================= -->
+<section id="s2">
+  <h2><span class="no">2</span>主营业务与核心技术平台</h2>
+
+  <h3>2.1 业务模式：三层变现结构</h3>
+  <p>公司聚焦<b>新药源头发现</b>环节（药物发现 + 临床前早期），围绕小分子与小核酸两条赛道，以三种方式变现，覆盖化合物库价值的整个生命周期：</p>
+  <table>
+    <tr><th style="width:130px;">变现层次</th><th>内容</th><th style="width:210px;">2026H1 表现</th></tr>
+    <tr><td><b>短期：研发服务</b></td><td>DEL 筛选 / 定制库、FBDD/SBDD、小核酸 CMC、TPD 等技术服务，客户定制 + 全时当量（FTE）两种收费</td><td>客户定制服务 2.02 亿（+48.3%）；FTE 0.86 亿（+38.9%）</td></tr>
+    <tr><td><b>中期：项目转让</b></td><td>不同阶段在研项目权益转让（IP 转让费 + 里程碑 + 销售分成）</td><td>上半年 13 个项目化合物 IP 转让，DEL 板块转让+里程碑约 3,700 万元</td></tr>
+    <tr><td><b>远期：药物上市</b></td><td>自研管线推进至临床及上市销售</td><td>HG146 处于 II 期临床（详见第 3 节）</td></tr>
+  </table>
+  <p class="src">来源：公司 2026 年半年报（2026-08-26 披露）、上证报/中证报报道（2026-08-26/27）。</p>
+
+  <h3>2.2 DEL 技术：万亿级「新药种子库」</h3>
+  <p><b>技术原理：</b>DEL 将每个小分子化合物与一段独特 DNA 序列编码连接，使海量化合物可混合于同一溶液中进行「一管筛选」——通过对结合靶点的分子测序解码，直接读出活性化合物结构。相比传统高通量筛选（HTS）数百万级库容、9–18 个月周期，DEL 可实现万亿级分子筛选、周期压缩至约 3 个月，成本更低、数量级完全不同。</p>
+  <div class="grid2">
+    <div class="ok">
+      <b>技术家底（截至 2026H1）</b>
+      <ul style="margin:6px 0 0 18px; font-size:13.5px;">
+        <li>DNA 编码小分子库：<b>&gt;1.2 万亿</b>种结构新颖、具多样性与类药性的化合物，基于数千种骨架合成——全球已知公开最大实体小分子 DEL 库之一</li>
+        <li>类环肽库：<b>&gt;5,000 亿</b>分子，含 1,500+ 种非天然氨基酸</li>
+        <li>特色库扩展：共价化合物库、分子胶库、分子片段库、蛋白降解化合物库、线性/环状多肽库</li>
+        <li>蛋白/蛋白-配体复合物结构解析 &gt;6,000 个（FBDD/SBDD 支撑）</li>
+        <li>筛选成功率约 75–80%，平均筛选周期缩至 3 个月内</li>
+      </ul>
+    </div>
+    <div class="warn">
+      <b>DEL vs 传统 HTS（管理层口径，2021 专访）</b>
+      <table style="margin:8px 0 0;">
+        <tr><th></th><th>传统 HTS</th><th>DEL（成都先导）</th></tr>
+        <tr><td>可筛选分子数</td><td>数百万级</td><td>万亿级</td></tr>
+        <tr><td>筛选周期</td><td>9–18 个月</td><td>约 3 个月</td></tr>
+        <tr><td>成本</td><td>较高</td><td>更低</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>2.3 四大核心技术平台 + HAILO</h3>
+  <table>
+    <tr><th style="width:120px;">平台</th><th>定位</th><th style="width:190px;">2026H1 收入 / 同比 / 毛利率</th></tr>
+    <tr><td><b>DEL</b></td><td>基石平台：库设计合成、筛选及拓展应用（DEL For：PPI、GPCR、E3 连接酶、共价靶点等；DEL Plus：DEL+Protein/Assay/AI）</td><td>1.66 亿 / +62.1% / <b>77.4%</b></td></tr>
+    <tr><td><b>FBDD/SBDD</b></td><td>分子片段 + 三维结构药物设计（英国 Vernalis，20+ 年积累）</td><td>0.85 亿 / +30.4% / 36.3%</td></tr>
+    <tr><td><b>OBT</b></td><td>寡核苷酸（小核酸）药物研发：核苷单体合成、GalNAc/C16 递送、CMC 及原料药 CDMO 一站式</td><td>0.54 亿 / <b>+94.0%</b> / 31.7%</td></tr>
+    <tr><td><b>TPD</b></td><td>靶向蛋白降解 / 临近诱导药物（E3 配体发现、分子胶、PROTAC、RIPTAC）</td><td>0.08 亿 / +12.3% / 44.4%</td></tr>
+    <tr><td><b>DataSer</b></td><td>数据服务（2025 年底控股摩熵智能新增）</td><td>0.15 亿 / 新增 / 11.9%</td></tr>
+  </table>
+  <p><b>HAILO 平台：</b>公司自研的「DEL + AI + 自动化」一体化分子优化平台（High-throughput AI-driven Lead Optimization），以高通量 DMTA（设计-合成-测试-分析）循环将传统「线性递进」筛选流程升级为<b>干湿闭环</b>。其差异化优势在于：DEL 筛选积累的上千个靶点、万亿化合物的真实实验数据（公域无法获取），可用于训练靶点-化合物亲和力预测模型与 AI 分子生成/评估。<b>AI 公司做不了的湿实验验证、CXO 公司缺的独占数据资产，是 HAILO 卡位的关键。</b></p>
+  <p class="src">来源：公司官网、公司 2026 年半年报、中金公司研报（2026-08-27，1H26 点评）、东吴证券研报（2026-09-09）。研报为非一手来源，需核实原文。</p>
+</section>
+
+<!-- ================= 3 ================= -->
+<section id="s3">
+  <h2><span class="no">3</span>主要管线与合作模式</h2>
+
+  <h3>3.1 自研管线（约 20 个内部新药项目，临床及临床前不同阶段）</h3>
+  <table>
+    <tr><th style="width:110px;">项目</th><th>靶点 / 适应症</th><th style="width:150px;">阶段</th><th>要点</th></tr>
+    <tr><td><b>HG146</b></td><td>复发/转移性腺样囊性癌（ACC，罕见恶性肿瘤）</td><td><b>临床 II 期</b></td><td>II 期显示较积极的有效性与安全性，大部分入组患者生活质量改善（2026-01 投资者开放日披露）</td></tr>
+    <tr><td><b>HGP3918</b>（PCC：HGC290）</td><td>IL-17A/AF 口服小分子抑制剂，银屑病等自身免疫病</td><td>临床前候选（PCC）确认</td><td>ADME/PK 特性优于同靶点在研口服小分子，临床前疗效显著（2026-01 披露）</td></tr>
+    <tr><td><b>HG254</b></td><td>RIPTAC（靶向临近诱导）项目</td><td>PCC 确认（4Q25 立项后完成）</td><td>HAILO 平台支持，已完成多轮 DMTA 优化（中金 1H26 点评）</td></tr>
+    <tr><td>HG030 等</td><td>——</td><td>已转让</td><td>2020 年 HG030 内地权益转让，标志项目转让模式落地；4 个项目曾获临床批件（2021 口径）</td></tr>
+  </table>
+  <p><b>参股/孵化 —— 先衍生物（小核酸）：</b>布局高血压、高血脂、高体脂等慢病小核酸管线。AGT 靶点超长效降压药 <b>LDR2402 已进入 II 期临床</b>（进度处于世界前列）；抗肥胖新药 LDR2515（INHBE 靶点）IND 已获 CDE 受理（2026 年初）。</p>
+  <p><b>合作项目验证案例：</b>合作伙伴 BioAge Labs（NASDAQ: BIOA）的口服 NLRP3 抑制剂 BGE-102（由成都先导平台发现/优化）于 2026 年 7 月完成心血管风险降低 II 期临床试验（QUELL-CV）首例给药——平台输出分子进入临床阶段的能力持续得到外部验证。</p>
+
+  <h3>3.2 合作模式与客户结构</h3>
+  <ul style="margin:6px 0 6px 20px;">
+    <li>截至 2026H1，累计服务全球客户 <b>700+ 家</b>，赋能数千个研发项目；截至 2025 年底为 600+ 家。</li>
+    <li>深度合作覆盖辉瑞、默沙东、强生、赛诺菲、阿斯利康、武田等跨国药企（公司历年披露口径：与逾 100 家公司建立合作）。自媒体称覆盖全球前 20 大药企中的 17 家、全球 DEL 商用服务市占率超 30% 居第一 —— <b>该数据来自今日头条自媒体（2025-11），非一手来源，仅供参考、需核实原文</b>。</li>
+    <li>收入地域：2025 年境外收入 4.38 亿元、占比 83.4% —— 全球化收入结构，但也带来显著汇率敞口。</li>
+    <li>2026H1 达成 13 个项目化合物 IP 转让，DEL 板块 IP 转让及里程碑费合计约 3,700 万元；近三年部分早期筛选项目转让陆续兑现里程碑收益，印证商业模式闭环。</li>
+  </ul>
+  <p class="src">来源：公司 2026 年半年报及官网公告、2026-01-06 投资者开放日新闻稿、上证报专访（2021）、今日头条（2025-11，自媒体，需核实）。</p>
+</section>
+
+<!-- ================= 4 ================= -->
+<section id="s4">
+  <h2><span class="no">4</span>近年财务表现与经营数据</h2>
+
+  <h3>4.1 年度趋势：收入加速、利润弹性放大</h3>
+  <div id="c1" class="chart"></div>
+  <div class="note">2022–2025 为年度数；2026H1 为半年数。营收增速 2023→2026H1 逐级抬升（12.6% → 15.0% → 23.1% → 52.4%），呈明显加速形态。</div>
+
+  <h3>4.2 单季度趋势</h3>
+  <div id="c3" class="chart2"></div>
+  <div class="note">单季度数据由累计数差分计算（2026H1 中报口径）。注意：2026Q2 归母净利 0.39 亿元（同比 +80.1%），但<b>扣非仅 0.37 亿元（同比 +2.6%）</b>，利润高增部分来自非经常性项目（公允价值变动损失由上年同期 1,707 万收窄至 90 万）。</div>
+
+  <h3>4.3 2026H1 分板块收入结构</h3>
+  <div id="c2" class="chart2"></div>
+
+  <h3>4.4 关键财务指标一览（2026H1）</h3>
+  <table>
+    <tr><th>指标</th><th class="num">2026H1</th><th class="num">同比</th><th>指标</th><th class="num">2026H1</th><th class="num">同比</th></tr>
+    <tr><td>营业收入</td><td class="num">3.46 亿元</td><td class="num pos">+52.4%</td><td>毛利率</td><td class="num">54.7%</td><td class="num pos">+0.9pct</td></tr>
+    <tr><td>归母净利润</td><td class="num">8,067.5 万元</td><td class="num pos">+61.2%</td><td>净利率</td><td class="num">23.0%</td><td class="num pos">+1.1pct</td></tr>
+    <tr><td>扣非归母净利润</td><td class="num">7,698.5 万元</td><td class="num pos">+42.8%</td><td>加权 ROE</td><td class="num">5.24%</td><td class="num pos">+1.72pct</td></tr>
+    <tr><td>研发费用</td><td class="num">4,489.8 万元</td><td class="num pos">+55.9%</td><td>研发费用率</td><td class="num">13.0%</td><td class="num">——</td></tr>
+    <tr><td>经营现金流净额</td><td class="num">1.21 亿元</td><td class="num pos">+9.4%</td><td>净现比</td><td class="num">150.0%</td><td class="num">——</td></tr>
+    <tr><td>总资产</td><td class="num">19.95 亿元</td><td class="num">+8.3%</td><td>资产负债率</td><td class="num">23.3%</td><td class="num">——</td></tr>
+    <tr><td>货币资金</td><td class="num">5.95 亿元</td><td class="num">——</td><td>商誉</td><td class="num">1.15 亿元</td><td class="num">——</td></tr>
+  </table>
+  <ul style="margin:6px 0 6px 20px; font-size:13.5px;">
+    <li><b>财务结构健康：</b>资产负债率仅 23.3%，流动比率 3.85、速动比率 3.70，货币资金 5.95 亿元，轻资产、低杠杆、现金充裕。</li>
+    <li><b>造血能力扎实：</b>净现比 150%，经营现金流对营收覆盖 167%；2025 全年经营现金流 2.16 亿元。</li>
+    <li><b>一次性拖累项：</b>2026H1 美元贬值带来汇兑损失约 1,417 万元，若剔除，利润总额约 1.01 亿元（东吴口径）。</li>
+    <li><b>增长质量瑕疵：</b>Q2 毛利率 53.3%，同比 -2.2pct、环比 -3.0pct——DEL（77.4%毛利率）之外的 OBT/TPD/DataSer（12–44% 毛利率）放量在摊薄整体毛利率；期间费用率 33.5%（+5.6pct），其中销售费用 +85.1%、财务费用 +200.1%（汇兑）。</li>
+    <li><b>历史基数提示：</b>2024H1 曾亏损（归母 -1,245 万），2025H1 起盈利低基数高增，当前利润率水平（净利率 23%）处于上市以来高位区间。</li>
+  </ul>
+  <p class="src">来源：公司 2024/2025 年报、2026 年一季报/半年报（westock-data 财务接口，2026-09-16 检索）；单季度为差分计算值。</p>
+</section>
+
+<!-- ================= 5 ================= -->
+<section id="s5">
+  <h2><span class="no">5</span>行业地位与主要竞争对手对比</h2>
+
+  <h3>5.1 竞争定位：三层坐标</h3>
+  <p>按国联民生研报的界定：相较同样拥有较大 DEL 库的<b>药明康德（603259）与 X-Chem</b>，成都先导并非纯 CXO 外包服务商；相较 <b>PeptiDream</b>（日本，环肽）等 Biotech，又具备平台型创新输出与服务能力。公司处于<b>「临床前药物发现 · 平台型创新输出」</b>生态位，可比公司为百奥赛图（2315.HK）、晶泰控股（2228.HK）。</p>
+
+  <h3>5.2 全球 DEL 及相邻技术玩家对比</h3>
+  <table>
+    <tr><th style="width:150px;">公司</th><th style="width:120px;">DEL 库规模</th><th>模式与定位</th><th>与成都先导对比</th></tr>
+    <tr><td><b>成都先导</b>（688222）</td><td><b>&gt;1.2 万亿</b>小分子 + 5,000 亿类环肽</td><td>服务 + IP 转让 + 自研管线三层变现</td><td>——</td></tr>
+    <tr><td>X-Chem（美国）</td><td>大容量（未披露精确值）</td><td>全球最早商业化 DEL 之一，筛选外包服务</td><td>先导库规模、筛选成功率与性价比占优；亚洲本地化 + 成本优势</td></tr>
+    <tr><td>药明康德（603259）</td><td>约 900 亿分子</td><td>全链条 CXO 巨头，DEL 为其中一环，服务客户超 1,200 家</td><td>库容为成都先导约 1/13；规模效应强但 DEL 非核心差异化</td></tr>
+    <tr><td>GSK / 安进（Nuevolution）</td><td>自用</td><td>药企内部 DEL 平台（GSK 最早将 DEL 产物推入临床），不对外服务</td><td>不构成直接商业竞争，但代表技术上限验证</td></tr>
+    <tr><td>Enamine（乌克兰）、DyNAbind（德国）</td><td>——</td><td>DEL 筛选服务 / DEL+AI 结合</td><td>细分市场玩家；自媒体口径 Enamine 全球市占率约 12%（需核实）</td></tr>
+    <tr><td>百奥赛图（2315.HK）</td><td>——（抗体发现）</td><td>基因编辑动物模型 + 抗体药物发现平台</td><td>同为「平台型创新输出」，技术路径不同（生物药 vs 小分子）</td></tr>
+    <tr><td>晶泰控股（2228.HK）</td><td>——（计算驱动）</td><td>AI + 量子物理药物发现</td><td>纯「干」路线；成都先导以「湿实验数据 + 干湿闭环」差异化</td></tr>
+    <tr><td>Schrödinger、Exscientia 等 AI 制药</td><td>——</td><td>计算/AI 设计小分子</td><td>潜在替代与互补并存；先导的独占实验数据是 AI 公司无法从公域获得的训练资产</td></tr>
+  </table>
+  <p class="src">来源：第一财经/新浪财经（国海证券观点）、晓经济竞争对手分析、公司官网、国联民生研报（2026-09-15）。库容与市占率数字部分来自媒体/研报二次引用，非一手来源，需核实原文。</p>
+
+  <h3>5.3 行业景气度（2026 年最新）</h3>
+  <ul style="margin:6px 0 6px 20px; font-size:13.5px;">
+    <li>2026H1 全球 Biotech 融资金额同比约 <b>+38%</b>，Q2 活跃度进一步提升（中信证券，2026-09）。</li>
+    <li>2026H1 中国创新药 License-out 交易总金额 <b>997 亿美元</b>，已披露首付款超 64.5 亿美元，Q1 单季即超 2024 全年；全球 TOP10 交易中国独占 8 席（医药魔方 / 国元国际）。</li>
+    <li>A 股 CXO 板块 2026H1 营收 556.2 亿元（+23.3%）；CRO 在手订单「量价齐升」，价格摆脱前期低位（美迪西、奥浦迈管理层口径）。</li>
+    <li>IQVIA 预测全球药品支出 2028 年增至约 2.3 万亿美元；FDA 数据显示小分子 NCE 占 2025 年获批新药 74%，小分子主导地位稳固。</li>
+    <li>传导节奏上，<b>药物发现（早研）环节最先受益于融资回暖</b>——Biotech 拿到钱后的第一笔支出即苗头化合物发现，这正是成都先导的收入入口。</li>
+  </ul>
+</section>
+
+<!-- ================= 6 ================= -->
+<section id="s6">
+  <h2><span class="no">6</span>估值、市场表现与机构观点</h2>
+
+  <h3>6.1 行情与估值（2026-09-16 盘中）</h3>
+  <div class="kpis" style="margin-bottom:10px;">
+    <div class="kpi"><div class="k">总市值</div><div class="v">142.3 亿元</div><div class="s">全流通</div></div>
+    <div class="kpi"><div class="k">PE(TTM) / 动态</div><div class="v">101.5 / 88.2</div><div class="s">静态 129.9</div></div>
+    <div class="kpi"><div class="k">PB / 股息率</div><div class="v">9.33 / 0.37%</div><div class="s">TTM 口径</div></div>
+    <div class="kpi"><div class="k">52 周区间</div><div class="v">21.33–42.85 元</div><div class="s">年初至今 +52.3%</div></div>
+  </div>
+  <p>年内波动极大（振幅 86.5%）：1 月冲高 42.85 元、3 月回落至 22.29 元低点、9 月中旬放量反弹（9/14 +6.6%、9/16 +10.6%）。短线技术面：均线多头排列、MACD 金叉，但 KDJ J 值触顶 99.99、RSI6 达 72，<b>明显超买</b>，追高风险需正视。</p>
+
+  <h3>6.2 机构盈利预测与评级（近 6 个月 5 家，全部正面）</h3>
+  <table>
+    <tr><th>机构</th><th>日期</th><th>评级</th><th class="num">2026E 归母净利</th><th>备注</th></tr>
+    <tr><td>国联民生</td><td>2026-09-15</td><td>推荐（首次）</td><td class="num">1.49 亿元</td><td>PS 估值法：先导 2026-2028 PS 17/14/11 倍，低于可比（百奥赛图、晶泰控股均值 27/20/15 倍）</td></tr>
+    <tr><td>天风证券</td><td>2026-09-02</td><td>增持</td><td class="num">1.44 亿元</td><td>预计 2026-2028 收入 6.79/8.30/10.04 亿元</td></tr>
+    <tr><td>中金公司</td><td>2026-08-27</td><td>跑赢行业</td><td class="num">1.46 亿元</td><td>目标价 <b>42.20 元</b>（DCF），隐含约 19% 上行空间</td></tr>
+    <tr><td>中泰证券</td><td>2026-05-26</td><td>买入</td><td class="num">1.36 亿元</td><td>——</td></tr>
+    <tr><td>兴业证券</td><td>2026-05-13</td><td>增持</td><td class="num">1.34 亿元</td><td>——</td></tr>
+  </table>
+  <p>一致预期：2026E 归母净利均值约 <b>1.42 亿元（+29.5%）</b>。国信证券（2026-09-05）更长口径预测 2026-2028 归母净利 1.55 / 2.21 / 3.01 亿元（+41.5% / +42.4% / +36.3%），对应 PE 83.7 / 58.8 / 43.1 倍、2028 年 ROE 升至 16%。</p>
+
+  <h3>6.3 资金面与筹码</h3>
+  <ul style="margin:6px 0 6px 20px; font-size:13.5px;">
+    <li><b>北向大幅加仓：</b>陆股通（香港中央结算）2026Q2 增持 1,015 万股至 1,631 万股，占比 +2.53pct 至 4.07%，跃居第五大流通股东；国泰科创板创新药 ETF、富国优化增强债券 C 新进十大流通股东。</li>
+    <li>公募 196 只基金合计持股 1,390 万股；股东户数 2.48 万户，环比 -4.0%，筹码集中。</li>
+    <li>9/16 主力净流入 4,170 万元（超大单 +2,375 万、大单 +1,794 万），小单净流出——机构/大资金进场、散户离场结构。</li>
+    <li><b>减持压力（关键压制）：</b>华博器械 5/29–8/11 已减持 0.97%（套现约 1.3 亿元）；<b>深圳钧天拟于 2026-09-03 至 12-02 清仓式减持全部剩余 654.37 万股（1.63%）</b>；十大股东中华博持股已降至 9.45%、钧天降至 1.63%。</li>
+  </ul>
+  <p class="src">来源：westock-data 行情/资金接口（2026-09-16 盘中）、公司股东公告（搜狐财经转载，2026-08）、各券商研报（NeoData）。研报与转载均为非一手来源，需核实原文。</p>
+</section>
+
+<!-- ================= 7 ================= -->
+<section id="s7">
+  <h2><span class="no">7</span>未来发展机遇与潜在风险</h2>
+  <div class="risk-grid">
+    <div class="risk-card op"><h4>机遇 1：行业景气上行 + 早研环节先受益 <span class="lvl hi">高确定性</span></h4><p>全球融资回暖、License-out 爆发、CRO 量价齐升；药物发现是最先受益环节，公司 DEL+62.1% 的增速已验证传导。</p></div>
+    <div class="risk-card op"><h4>机遇 2：商业模式从服务走向 IP 兑现 <span class="lvl hi">弹性大</span></h4><p>13 个 IP 转让 + 3,700 万里程碑费落地，DEL 毛利率 77.4% 且同比仍在提升；筛选→优化→IP 转让的价值链延伸提升单项目收入天花板。</p></div>
+    <div class="risk-card op"><h4>机遇 3：小核酸 OBT 接近翻倍增长 <span class="lvl mid">新增长极</span></h4><p>OBT +94.0%，核苷单体-递送-CMC 全线增长，第二条原料药产线启动建设；参股先衍生物 LDR2402 已进 II 期。</p></div>
+    <div class="risk-card op"><h4>机遇 4：DEL+AI 数据壁垒 + 国产仿制药企转型需求 <span class="lvl mid">长期逻辑</span></h4><p>万亿分子独占实验数据 + HAILO 干湿闭环，AI 难以绕开；国内数千家仿制药企向创新转型，带来增量早研外包需求。</p></div>
+    <div class="risk-card rk"><h4>风险 1：估值透支 <span class="lvl hi">高</span></h4><p>PE(TTM) 约 102 倍、PB 9.3 倍，按 2028E 预测净利 PE 仍达 43 倍；业绩兑现容错度低，任何季度不及预期都可能引发大幅回撤（年内振幅已 86.5%）。</p></div>
+    <div class="risk-card rk"><h4>风险 2：增长质量瑕疵 <span class="lvl mid">中</span></h4><p>2026Q2 扣非同比仅 +2.6%、毛利率环比 -3pct；新业务（OBT/TPD/DataSer）毛利率 12–44%，放量摊薄整体盈利结构。</p></div>
+    <div class="risk-card rk"><h4>风险 3：股东清仓式减持 <span class="lvl hi">高</span></h4><p>钧天 9/3–12/2 拟清仓 1.63%；华博器械累计减持后仍持 9.45%，后续或续有减持计划；原始股东退出形成持续抛压。</p></div>
+    <div class="risk-card rk"><h4>风险 4：汇率与地缘敞口 <span class="lvl mid">中</span></h4><p>境外收入占 83.4%，2026H1 汇兑损失 1,417 万元直接侵蚀利润；中美生物医药政策波动亦影响海外订单节奏。</p></div>
+    <div class="risk-card rk"><h4>风险 5：技术替代与竞争 <span class="lvl lo">中低</span></h4><p>AI-native 药物发现公司（Schrödinger 等）与大型 CXO（药明、CRL）若在 AI+DEL 率先突破，可能侵蚀份额；需求端与投融资环境高度相关，景气波动直接冲击早研订单。</p></div>
+    <div class="risk-card rk"><h4>风险 6：客户集中与新药研发固有风险 <span class="lvl lo">中低</span></h4><p>大客户依赖、项目转让节奏不均衡（季度间波动大）；自研管线（HG146 等）临床结果存在不确定性。</p></div>
+  </div>
+</section>
+
+<!-- ================= 8 ================= -->
+<section id="s8">
+  <h2><span class="no">8</span>跟踪与证伪指标</h2>
+  <table>
+    <tr><th style="width:230px;">跟踪指标</th><th>当前基准（2026H1）</th><th>信号解读</th></tr>
+    <tr><td>DEL 板块收入增速 &amp; IP 转让/里程碑金额</td><td>+62.1% / 约 3,700 万元、13 个项目</td><td>若 IP 转让金额环比持续抬升 → 商业模式升级逻辑强化；若骤降 → 「服务公司」估值锚下移</td></tr>
+    <tr><td>综合毛利率 / Q4 毛利率</td><td>54.7%（Q2 环比 -3.0pct）</td><td>连续两个季度环比下滑 → 新业务摊薄超预期；企稳回升 → 增长质量修复</td></tr>
+    <tr><td>OBT 板块增速与第二条原料药产线投产</td><td>+94.0%</td><td>小核酸景气度的公司内映射；产线投产节奏决定 CDMO 收入弹性</td></tr>
+    <tr><td>钧天减持进度（9/3–12/2，1.63%）</td><td>进行中</td><td>大宗折价成交 → 抛压实化；提前终止/届满未减 → 压制解除</td></tr>
+    <tr><td>陆股通持股比例</td><td>4.07%（Q2 +2.53pct）</td><td>外资定价权上升期估值更稳；快速回落 → 警惕</td></tr>
+    <tr><td>全球 Biotech 融资 / License-out 首付款</td><td>融资同比 +38% / 首付款 64.5 亿美元</td><td>早研订单的先行指标，拐点向下则业绩减速 lag 1–2 个季度</td></tr>
+    <tr><td>汇兑损益</td><td>H1 -1,417 万元</td><td>人民币兑美元若继续升值 → 全年利润弹性受损约 3–5%</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2><span class="no">附</span>数据来源说明</h2>
+  <ul class="sources">
+    <li>公司 2026 年半年度报告（2026-08-26 披露）及 2024/2025 年报、2026 年一季报 —— 营收、利润、分板块、现金流等核心财务数据（一手来源）。</li>
+    <li>westock-data 行情与财务接口（2026-09-16 盘中）—— 现价、市值、PE/PB、区间涨跌幅、资金流向、股东数据。</li>
+    <li>公司官网（hitgen.com）—— DEL 库容量、平台介绍、投资者开放日（2026-01-06）、BioAge 合作公告（2026-07-14）、Wind ESG（2026-07）。</li>
+    <li>券商研报（NeoData 检索，非一手来源，需核实原文）：中金公司 2026-08-27、国信证券 2026-09-05、东吴证券 2026-09-09、天风证券 2026-09-02、国联民生 2026-09-15、中信证券 CXO 中报总结 2026-09-11、国信证券 2024-11-05（历史沿革与股权）。</li>
+    <li>媒体报道：上海证券报董事长专访（2021，发展历程）、上证报/中证报中报报道（2026-08-26/27）、第一财经/新浪财经（DEL 行业格局，国海证券观点）、搜狐财经（钧天减持公告转载，2026-08）。</li>
+    <li>自媒体（今日头条 2025-11，仅供参考、需核实）：全球 DEL 市占率约 30%、前 20 大药企覆盖 17 家等口径。</li>
+    <li>所有行情数据为 2026-09-16 盘中快照，非收盘确认值；单季度财务数据为累计数差分计算。</li>
+  </ul>
+</section>
+
+<div class="disclaimer">
+  <b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。本报告中标注「需核实原文」的数据来自研报或媒体二次引用，使用前请以公司公告及原始出处为准。
+</div>
+
+</div>
+
+<script>
+(function(){
+  var blue = '#1f5fbf', red = '#c0392b', green = '#1e8449', grey = '#8a97a5';
+  var axisCommon = {
+    axisLine: {lineStyle: {color: '#c3ccd6'}},
+    axisLabel: {color: '#4a5a6a', fontSize: 11},
+    splitLine: {lineStyle: {color: '#eef2f6'}}
+  };
+
+  var c1 = echarts.init(document.getElementById('c1'));
+  c1.setOption({
+    tooltip: {trigger: 'axis'},
+    legend: {data: ['营业收入(亿元)', '归母净利润(亿元)', '营收同比(%)', '归母同比(%)'], top: 0, textStyle: {fontSize: 12}},
+    grid: {left: 50, right: 55, top: 46, bottom: 30},
+    xAxis: Object.assign({type: 'category', data: ['2022', '2023', '2024', '2025', '2026H1']}, axisCommon, {splitLine: {show: false}}),
+    yAxis: [
+      Object.assign({type: 'value', name: '亿元'}, axisCommon),
+      Object.assign({type: 'value', name: '%', axisLabel: {formatter: '{value}%', color: '#4a5a6a', fontSize: 11}}, axisCommon)
+    ],
+    series: [
+      {name: '营业收入(亿元)', type: 'bar', barWidth: 26, data: [3.30, 3.71, 4.27, 5.26, 3.46], itemStyle: {color: blue}},
+      {name: '归母净利润(亿元)', type: 'bar', barWidth: 26, data: [0.25, 0.41, 0.51, 1.10, 0.81], itemStyle: {color: '#7ea6e0'}},
+      {name: '营收同比(%)', type: 'line', yAxisIndex: 1, data: [6.0, 12.6, 15.0, 23.1, 52.4], itemStyle: {color: red}, lineStyle: {width: 2.5}},
+      {name: '归母同比(%)', type: 'line', yAxisIndex: 1, data: [-60.1, 61.2, 26.1, 113.2, 61.2], itemStyle: {color: green}, lineStyle: {width: 2.5}}
+    ]
+  });
+
+  var c3 = echarts.init(document.getElementById('c3'));
+  c3.setOption({
+    tooltip: {trigger: 'axis'},
+    legend: {data: ['单季营收(亿元)', '单季归母净利(亿元)'], top: 0, textStyle: {fontSize: 12}},
+    grid: {left: 50, right: 30, top: 46, bottom: 30},
+    xAxis: Object.assign({type: 'category', data: ['25Q1', '25Q2', '25Q3', '25Q4', '26Q1', '26Q2']}, axisCommon, {splitLine: {show: false}}),
+    yAxis: Object.assign({type: 'value', name: '亿元'}, axisCommon),
+    series: [
+      {name: '单季营收(亿元)', type: 'bar', barWidth: 28, data: [1.07, 1.20, 1.43, 1.56, 1.61, 1.85], itemStyle: {color: blue}},
+      {name: '单季归母净利(亿元)', type: 'line', data: [0.28, 0.22, 0.43, 0.17, 0.42, 0.39], itemStyle: {color: red}, lineStyle: {width: 2.5}, symbolSize: 7}
+    ]
+  });
+
+  var c2 = echarts.init(document.getElementById('c2'));
+  c2.setOption({
+    tooltip: {trigger: 'axis', axisPointer: {type: 'shadow'}},
+    legend: {data: ['收入(亿元)', '同比增速(%)'], top: 0, textStyle: {fontSize: 12}},
+    grid: {left: 50, right: 55, top: 46, bottom: 30},
+    xAxis: Object.assign({type: 'category', data: ['DEL', 'FBDD/SBDD', 'OBT(小核酸)', 'TPD', 'DataSer(数据)'], axisLabel: {interval: 0, color: '#4a5a6a', fontSize: 11}}, axisCommon, {splitLine: {show: false}}),
+    yAxis: [
+      Object.assign({type: 'value', name: '亿元'}, axisCommon),
+      Object.assign({type: 'value', name: '%', axisLabel: {formatter: '{value}%', color: '#4a5a6a', fontSize: 11}}, axisCommon)
+    ],
+    series: [
+      {name: '收入(亿元)', type: 'bar', barWidth: 34, data: [1.66, 0.85, 0.54, 0.08, 0.15], itemStyle: {color: blue}, label: {show: true, position: 'top', fontSize: 11, color: '#1c2733'}},
+      {name: '同比增速(%)', type: 'line', yAxisIndex: 1, data: [62.1, 30.4, 94.0, 12.3, null], itemStyle: {color: red}, lineStyle: {width: 2.5}, symbolSize: 7,
+       label: {show: true, position: 'top', formatter: '+{c}%', fontSize: 11, color: red}}
+    ]
+  });
+
+  window.addEventListener('resize', function(){
+    c1.resize(); c3.resize(); c2.resize();
+  });
+})();
+</script>
+</body>
+</html>
