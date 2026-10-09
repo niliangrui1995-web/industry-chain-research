@@ -8,16 +8,16 @@
     "SH": "007",
     "SZ": "001"
   },
-  "requested_start": "2026-09-29",
-  "backfill_start": "2026-09-29",
+  "requested_start": "2026-10-08",
+  "backfill_start": "2026-10-08",
   "requested_end": "2026-10-08",
   "network_requests": 2,
-  "sh_rows": 3683,
-  "sz_rows": 3683,
-  "common_rows": 3683,
-  "sh_latest": "2026-09-30",
-  "sz_latest": "2026-09-30",
-  "latest_common_date": "2026-09-30",
+  "sh_rows": 3684,
+  "sz_rows": 3684,
+  "common_rows": 3684,
+  "sh_latest": "2026-10-08",
+  "sz_latest": "2026-10-08",
+  "latest_common_date": "2026-10-08",
   "sh_only_dates": [],
   "sz_only_dates": [],
   "change_calendar_basis": "observed_sh_sz_date_union_with_local_tdx",
@@ -35,15 +35,15 @@
   "change_calendar_limitation": "本地 TDX 日历为厂商数据；覆盖范围以审计起止日为准，覆盖外双边缺失无法识别。",
   "incomplete_previous_session_dates": [],
   "changed_rows": {
-    "SH": 2,
-    "SZ": 2
+    "SH": 1,
+    "SZ": 1
   },
-  "new_common_dates": 2,
+  "new_common_dates": 1,
   "table_updated": true,
   "sample_status": "dfcf_vendor_only_unverified_by_exchange",
   "vendor_warning": "DFCF vendor data only; not validated against exchange official aggregates.",
-  "dfcf_sse_margin_sha256": "3b0c55c05080cb4e9b673a802d19d3e8dfc6dfbe77733b52f005049bfcda3d9b",
-  "dfcf_szse_margin_sha256": "923ee2e3c46a0e637e8e31bd0799011b5b2c2a24a81417b0f4a374ec6df224a6",
-  "dfcf_margin_balances_sha256": "4f596609a707cdb6ea47dad262f115be5952f7ce2f1e5449525c3ee2c0e0a328",
-  "updated_at_utc": "2026-10-08T16:11:58+00:00"
+  "dfcf_sse_margin_sha256": "f20c3f27a2075e57845da19232308544deda7d87cc453b55632d102a0aeeb0ae",
+  "dfcf_szse_margin_sha256": "2dff35eab17d86060bd32c5b184e1261b3df4b7cdec8f0cd8a23cbf5dfafeafd",
+  "dfcf_margin_balances_sha256": "4dcca8c2b700f32d6da581c94a2ce50dc882cc496172040a4f09aa030b84eff4",
+  "updated_at_utc": "2026-10-09T01:35:56+00:00"
 }
